@@ -1,1 +1,24 @@
-Hello {{ name }} aqui funciona!
+<!DOCTYPE html>
+<HTML>
+    <head>
+        <title>{% block titulo %}Sistema para la Planificaci&oacute;n Anual Operativa{% endblock %}</title>        
+    </head>
+    <body>    
+    <div id="contenedor"  >    
+      <div id="cabecera">
+            Cabecera
+      </div>     
+      <div id="menu">
+            {% block menu %}
+            <ul>
+                <li><a href="">Inicio</a></li>
+                <li><a href="Admin">Administraci&oacuten</a></li>
+            </ul>
+            {% endblock %}
+      </div>     
+      <div id="contenido" >        
+            {% block body %}{% endblock %}            
+      </div> 
+    </div>   
+    </body>
+</HTML>
