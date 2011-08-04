@@ -1,0 +1,3 @@
+MinSalSidPlaAdminBundle_homepage:
+    pattern:  /admin/
+    defaults: { _controller: MinSalSidPlaAdminBundle:Default:index }
