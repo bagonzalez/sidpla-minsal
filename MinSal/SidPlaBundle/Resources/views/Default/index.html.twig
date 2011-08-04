@@ -11,8 +11,8 @@
       <div id="menu">
             {% block menu %}
             <ul>
-                <li><a href="">Inicio</a></li>
-                <li><a href="admin">Administraci&oacute;n</a></li>
+                <li><a href="{{ path('MinSalSidPlaBundle_homepage') }}">Inicio</a></li>
+                <li><a href="{{ path('MinSalSidPlaAdminBundle_homepage') }}">Administraci&oacute;n</a></li>
             </ul>
             {% endblock %}
       </div>     
