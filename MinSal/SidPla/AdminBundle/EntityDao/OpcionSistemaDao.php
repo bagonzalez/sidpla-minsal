@@ -21,7 +21,7 @@ class OpcionSistemaDao
    	 *  Agrega una nueva OpcionSistema a la base de datos, recibe como parametros
    	 *  los datos para el nuevo registro. 
    	 *  
-   	 *  Retorna mensajes del sistema.
+   	 *  Retorna mensajes del sistema que indican si es exito o fracaso.
    	 */	
 
 	public function addOpcion($nombreOpcion, $descripcionOpcion) {
