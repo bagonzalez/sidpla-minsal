@@ -1,3 +1,7 @@
 MinSalSidPlaAdminBundle_homepage:
     pattern:  /admin/
     defaults: { _controller: MinSalSidPlaAdminBundle:Default:index }
+    
+MinSalSidPlaAdminBundle_crear:
+    pattern:  /admin/crearOpc
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminOpciones:addOcp }
