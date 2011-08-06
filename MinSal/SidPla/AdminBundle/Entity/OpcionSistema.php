@@ -5,17 +5,17 @@ namespace MinSal\SidPla\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * MinSal\SidPla\AdminBundle\Entity\OpcionSistema
- *
- * @ORM\Table()
+ * MinSal\SidPla\AdminBundle\Entity\OpcionSistema 
+ * 
  * @ORM\Entity
+ * @ORM\Table(name="sidpla_opcionsistema")
  */
 class OpcionSistema
 {
     /**
      * @var integer $idOpcionSistema
      *
-     * @ORM\Column(name="idOpcionSistema", type="integer")
+     * @ORM\Column(name="opcionsistema_codigo", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */ 
@@ -25,35 +25,35 @@ class OpcionSistema
     /**
      * @var string $nombreOpcion
      *
-     * @ORM\Column(name="nombreOpcion", type="string", length=15)
+     * @ORM\Column(name="opcionsistema_nombre", type="string", length=15)
      */
     private $nombreOpcion;
 
     /**
      * @var string $descripcionOpcion
      *
-     * @ORM\Column(name="descripcionOpcion", type="string", length=15)
+     * @ORM\Column(name="opcionsistema_descripcion", type="string", length=15)
      */
     private $descripcionOpcion;
 
     /**
      * @var string $enlace
      *
-     * @ORM\Column(name="enlace", type="string", length=150)
+     * @ORM\Column(name="opcionsistema_enlace", type="string", length=150)
      */
     private $enlace;
 
     /**
      * @var integer $idOpcionSistema2
      *
-     * @ORM\Column(name="idOpcionSistema2", type="integer")
+     * @ORM\Column(name="opcionsistema_codigo2", type="integer")
      */
     private $idOpcionSistema2;
 
     /**
      * @var integer $idRol
      *
-     * @ORM\Column(name="idRol", type="integer")
+     * @ORM\Column(name="rol_codigo", type="integer")
      */
     private $idRol;
 
