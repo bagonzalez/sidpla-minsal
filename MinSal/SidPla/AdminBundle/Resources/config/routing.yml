@@ -5,3 +5,10 @@ MinSalSidPlaAdminBundle_homepage:
 MinSalSidPlaAdminBundle_crear:
     pattern:  /admin/crearOpc
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminOpciones:addOcp }
+    
+MinSalSidPlaAdminBundle_nuevaOpc:
+    pattern:  /admin/nuevaOpc
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminOpciones:nuevaOpc }
+
+    
+    
