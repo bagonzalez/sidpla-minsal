@@ -50,12 +50,7 @@ class OpcionSistema
      */
     private $idOpcionSistema2;
 
-    /**
-     * @var integer $idRol
-     *
-     * @ORM\Column(name="rol_codigo", type="integer")
-     */
-    private $idRol;
+  
 
 
     /**
@@ -148,23 +143,5 @@ class OpcionSistema
         return $this->idOpcionSistema2;
     }
 
-    /**
-     * Set idRol
-     *
-     * @param integer $idRol
-     */
-    public function setIdRol(\integer $idRol)
-    {
-        $this->idRol = $idRol;
-    }
-
-    /**
-     * Get idRol
-     *
-     * @return integer 
-     */
-    public function getIdRol()
-    {
-        return $this->idRol;
-    }
+   
 }
