@@ -7,61 +7,36 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MinSal\SidPla\AdminBundle\Entity\RolSistema
  *
- * @ORM\Table()
+ * @ORM\Table(name="sidpla_rol")
  * @ORM\Entity
  */
 class RolSistema
-{
-    /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
+{  
 
     /**
      * @var integer $idRol
      *
-     * @ORM\Column(name="idRol", type="integer")
+     * @ORM\Column(name="rol_codigo", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $idRol;
 
     /**
      * @var string $nombreRol
      *
-     * @ORM\Column(name="nombreRol", type="string", length=10)
+     * @ORM\Column(name="rol_nombre", type="string", length=10)
      */
     private $nombreRol;
 
     /**
      * @var string $funcionesRol
      *
-     * @ORM\Column(name="funcionesRol", type="string", length=300)
+     * @ORM\Column(name="rol_funciones", type="string", length=300)
      */
-    private $funcionesRol;
+    private $funcionesRol;   
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set idRol
-     *
-     * @param integer $idRol
-     */
-    public function setIdRol($idRol)
-    {
-        $this->idRol = $idRol;
-    }
+    
 
     /**
      * Get idRol

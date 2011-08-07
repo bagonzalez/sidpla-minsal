@@ -1,7 +1,7 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
 
-<form action="{{ path('MinSalSidPlaAdminBundle_crearOpc') }}" method="post" {{ form_enctype(form) }}>
+<form action="{{ path('MinSalSidPlaAdminBundle_crearRol') }}" method="post" {{ form_enctype(form) }}>
     {{ form_widget(form) }}
     <input type="submit" />
 </form>
