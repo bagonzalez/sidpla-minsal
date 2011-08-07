@@ -3,7 +3,10 @@
     <head>
         <title>{% block titulo %}Sistema para la Planificaci&oacute;n Anual Operativa{% endblock %}</title>        
     </head>
-    <body>    
+    <body>   
+    {% block javascripts %}
+            <script src="{{ asset('/js/jquery-1.6.2.js') }}" type="text/javascript"></script>
+    {% endblock %} 
     <div id="contenedor"  >    
       <div id="cabecera">
             Cabecera
@@ -19,6 +22,6 @@
       <div id="contenido" >        
             {% block body %}{% endblock %}            
       </div> 
-    </div>   
+    </div>          
     </body>
 </HTML>

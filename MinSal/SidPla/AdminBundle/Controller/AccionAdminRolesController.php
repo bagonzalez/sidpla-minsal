@@ -79,6 +79,17 @@ class AccionAdminRolesController  extends Controller
                     array('form' => $form->createView(),  ));
             
 	}
+        
+        
+         public function consultarRolesAction()
+	{
+            $rol=new RolSistema();            
+            
+            $form = $this->createForm(new RolSistemaType() , $rol);
+            return $this->render('MinSalSidPlaAdminBundle:Default:rolFormTemplate.html.twig', 
+                    array('form' => $form->createView(),  ));
+            
+	}
 }
 
 ?>
