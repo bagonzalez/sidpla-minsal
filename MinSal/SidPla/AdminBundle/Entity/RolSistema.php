@@ -11,9 +11,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  */
 class RolSistema
-{  
-
-    /**
+{
+     /**
      * @var integer $idRol
      *
      * @ORM\Column(name="rol_codigo", type="integer")

@@ -18,8 +18,12 @@ MinSalSidPlaAdminBundle_nuevoRol:
 MinSalSidPlaAdminBundle_crearRol:
     pattern:  /admin/crearRol
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:addRol }
-    
-    
+
+        
+MinSalSidPlaAdminBundle_consultarRoles:
+    pattern:  /admin/consultarRoles
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:consultarRoles }
+   
 
     
     

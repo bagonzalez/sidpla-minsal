@@ -38,11 +38,15 @@ use MinSal\SidPla\AdminBundle\Entity\OpcionSistema;
 
 class OpcionSistemaDao 
 {
-	var $em;
-	
-	function __construct($emController){ 
-		$this->em=$emController;      	
-   	} 
+	var $doctrine;
+        var $repositorio;
+        var $em;    
+
+        function __construct($doctrine){ 
+            $this->doctrine=$doctrine;      	
+            $this->em=$this->doctrine->getEntityManager();
+            $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaAdminBundle:OpcionSistema');
+        } 
    	
    	/*
    	 *  Agrega una nueva OpcionSistema a la base de datos, recibe como parametros

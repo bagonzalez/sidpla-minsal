@@ -58,7 +58,7 @@ class AccionAdminOpcionesController extends Controller
                 $form->bindRequest($peticion);
 
                 if ($form->isValid()) {
-                    $opcDao = new OpcionSistemaDao($this->getDoctrine()->getEntityManager());                
+                    $opcDao = new OpcionSistemaDao($this->getDoctrine());                
                     $mensajesSistema = $opcDao->addOpcion($opc);	                     
                     return new Response($mensajesSistema[0].' '.$mensajesSistema[1] );                    
                 }

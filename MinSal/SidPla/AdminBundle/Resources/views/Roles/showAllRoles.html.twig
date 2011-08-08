@@ -1,0 +1,14 @@
+{# Muestra todos los roles #}
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+
+<table border='1'>
+    {% for rol in roles %}
+    <tr>
+        <td>{{ rol.nombreRol }} </td>
+        <td>{{ rol.funcionesRol }}</td>
+    </tr>        
+    {% endfor %}
+</table>
+
+{% endblock %}

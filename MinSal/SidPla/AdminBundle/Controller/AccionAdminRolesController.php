@@ -56,7 +56,7 @@ class AccionAdminRolesController  extends Controller
                 $form->bindRequest($peticion);
 
                 if ($form->isValid()) {
-                    $rolDao = new RolDao($this->getDoctrine()->getEntityManager());                
+                    $rolDao = new RolDao($this->getDoctrine());                
                     $mensajesSistema = $rolDao->addRol($rol);	                     
                     return new Response($mensajesSistema[0].' '.$mensajesSistema[1] );                    
                 }
@@ -80,14 +80,18 @@ class AccionAdminRolesController  extends Controller
             
 	}
         
+        /*
+         * Permite recuperar roles del sistema.
+         * 
+         */
+        
         
          public function consultarRolesAction()
 	{
-            $rol=new RolSistema();            
-            
-            $form = $this->createForm(new RolSistemaType() , $rol);
-            return $this->render('MinSalSidPlaAdminBundle:Default:rolFormTemplate.html.twig', 
-                    array('form' => $form->createView(),  ));
+            $rolDao=new RolDao($this->getDoctrine());
+            $roles=$rolDao->getRoles();
+            return $this->render('MinSalSidPlaAdminBundle:Roles:showAllRoles.html.twig', 
+                    array('roles' => $roles));
             
 	}
 }

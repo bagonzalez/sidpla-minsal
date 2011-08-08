@@ -34,12 +34,19 @@ use MinSal\SidPla\AdminBundle\Entity\RolSistema;
 
 class RolDao {
     
-    var $em;
+    var $doctrine;
+    var $repositorio;
+    var $em;    
 	
-    function __construct($emController){ 
-        $this->em=$emController;      	
+    function __construct($doctrine){ 
+        $this->doctrine=$doctrine;      	
+        $this->em=$this->doctrine->getEntityManager();
+        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaAdminBundle:RolSistema');
     } 
     
+    /*
+     *  Almacena un rol ingresado en el sistema
+     */
     
     public function addRol(RolSistema $rolSistema) {
 	    
@@ -48,6 +55,15 @@ class RolDao {
         $matrizMensajes = array('El proceso de almacenar rol termino con exito', 'Rol '.$rolSistema->getIdRol());
 
         return $matrizMensajes;
+    }
+    
+    /*
+     *  Obtiene todos los roles del sistema.
+     */    
+    
+    public function getRoles() {	    
+        $roles=$this->repositorio->findAll();
+        return $roles;
     }
  
 }
