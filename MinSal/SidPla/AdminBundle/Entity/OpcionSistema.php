@@ -25,14 +25,14 @@ class OpcionSistema
     /**
      * @var string $nombreOpcion
      *
-     * @ORM\Column(name="opcionsistema_nombre", type="string", length=15)
+     * @ORM\Column(name="opcionsistema_nombre", type="string", length=60)
      */
     private $nombreOpcion;
 
     /**
      * @var string $descripcionOpcion
      *
-     * @ORM\Column(name="opcionsistema_descripcion", type="string", length=15)
+     * @ORM\Column(name="opcionsistema_descripcion", type="string", length=60)
      */
     private $descripcionOpcion;
 
@@ -128,7 +128,7 @@ class OpcionSistema
      *
      * @param integer $idOpcionSistema2
      */
-    public function setIdOpcionSistema2(\integer $idOpcionSistema2)
+    public function setIdOpcionSistema2($idOpcionSistema2)
     {
         $this->idOpcionSistema2 = $idOpcionSistema2;
     }

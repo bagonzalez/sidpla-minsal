@@ -1,0 +1,15 @@
+{# Muestra todos las opciones #}
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+
+<table border='1'>
+    {% for opc in opciones %}
+    <tr>
+        <td>{{ opc.nombreOpcion }} </td>
+        <td>{{ opc.descripcionOpcion }}</td>
+        <td>{{ opc.enlace }}</td>
+    </tr>        
+    {% endfor %}
+</table>
+
+{% endblock %}

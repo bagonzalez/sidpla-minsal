@@ -10,7 +10,10 @@ class DefaultController extends Controller
 {
     
     public function indexAction()
-    {    	
-        return $this->render('MinSalSidPlaAdminBundle:Default:index.html.twig');
+    {
+        $peticion = $this->getRequest();
+        $sesion = $peticion->getSession();        
+        $opciones=$sesion->get('opciones');
+        return $this->render('MinSalSidPlaAdminBundle:Default:index.html.twig', array('opciones' => $opciones));
     }
 }

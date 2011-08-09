@@ -7,16 +7,18 @@
     {% block javascripts %}
             <script src="{{ asset('/js/jquery-1.6.2.js') }}" type="text/javascript"></script>
     {% endblock %} 
+    
     <div id="contenedor"  >    
       <div id="cabecera">
             Cabecera
-      </div>     
+      </div>       
       <div id="menu">
             {% block menu %}
-            <ul>
-                <li><a href="{{ path('MinSalSidPlaBundle_homepage') }}">Inicio</a></li>
-                <li><a href="{{ path('MinSalSidPlaAdminBundle_homepage') }}">Administraci&oacute;n</a></li>
-            </ul>
+                {% for opc in opciones %}
+                    <ul>
+                        <li><a href="{{ path(opc.enlace) }}">{{ opc.nombreOpcion }}</a></li>                    
+                    </ul>                         
+                {% endfor %}  
             {% endblock %}
       </div>     
       <div id="contenido" >        

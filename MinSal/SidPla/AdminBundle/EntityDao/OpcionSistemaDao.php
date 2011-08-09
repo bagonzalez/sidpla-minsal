@@ -63,5 +63,14 @@ class OpcionSistemaDao
  
             return $matrizMensajes;
 	}
+        
+         /*
+         *  Obtiene todos los roles del sistema.
+         */    
+
+        public function getOpciones() {	    
+            $opciones=$this->repositorio->findAll();
+            return $opciones;
+        }
 
 }
