@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use MinSal\SidPla\AdminBundle\EntityDao\OpcionSistemaDao;
 use Symfony\Component\HttpFoundation\Request;
 
-use Symfony\Component\HttpFoundation\Request;
+
 
 class DefaultController extends Controller
 {
