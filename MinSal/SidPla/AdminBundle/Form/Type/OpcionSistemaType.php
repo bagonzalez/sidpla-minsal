@@ -38,7 +38,7 @@ class OpcionSistemaType extends AbstractType {
         $builder->add('nombreOpcion',  'text');
         $builder->add('descripcionOpcion', 'text');
         $builder->add('enlace', 'text');
-        
+        $builder->add('idOpcionSistema2', 'integer');
     }
 
     public function getName()
