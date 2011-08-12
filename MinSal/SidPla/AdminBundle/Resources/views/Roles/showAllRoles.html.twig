@@ -1,14 +1,38 @@
 {# Muestra todos los roles #}
-{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
-{% block body %}
 
-<table border='1'>
-    {% for rol in roles %}
-    <tr>
-        <td>{{ rol.nombreRol }} </td>
-        <td>{{ rol.funcionesRol }}</td>
-    </tr>        
-    {% endfor %}
-</table>
+{% block body %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+
+        var myGrid = $('#theGrid');        
+        myGrid.jqGrid({
+          datatype:'clientSide',
+          altRows:true,
+          colNames:['Nombre', 'Descripcion'],
+          colModel:[
+            { name:'nombre', index: 'nombre', width:150 },
+            { name:'funciones', index: 'funciones', width:300 } ],            
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: true,
+          pager: jQuery('#pager'),
+          viewrecords: true,
+          imgpath: 'css/start/images',
+            caption: 'Roles del sistema',
+            height: "100%"
+        });
+
+        {% for rol in roles %}            
+            myGrid.addRowData("{{ rol.idRol  }}", {nombre:"{{ rol.nombreRol  }}", funciones:"{{  rol.funcionesRol }}"});     
+        {% endfor %}        
+       
+      });
+    </script>
+    
+    
+        <table id="theGrid" class="scroll"></table> 
+        <div id="pager" class="scroll" style="text-align:center;"></div> 
+     
+
 
 {% endblock %}

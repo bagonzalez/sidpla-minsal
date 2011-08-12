@@ -23,7 +23,22 @@ MinSalSidPlaAdminBundle_crearRol:
 MinSalSidPlaAdminBundle_consultarRoles:
     pattern:  /admin/consultarRoles
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:consultarRoles }
-   
+    
+MinSalSidPlaAdminBundle_consultarOpciones:
+    pattern:  /admin/consultarOpc
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminOpciones:consultarOpc }
+
+MinSalSidPlaAdminBundle_manttRoles:
+    pattern:  /admin/manttRoles
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:mattRoles }
+    
+MinSalSidPlaAdminBundle_mattOpciones:
+    pattern:  /admin/mattOpciones
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminOpciones:mattOpciones }
+    
+     
+    
+    
 
     
     

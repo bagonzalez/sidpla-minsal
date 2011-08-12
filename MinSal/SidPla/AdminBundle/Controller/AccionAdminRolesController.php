@@ -63,20 +63,20 @@ class AccionAdminRolesController  extends Controller
             }
             return $this->redirect($this->generateUrl('MinSalSidPlaAdminBundle_homepage'));	    
 	}
-    
-    
+        
      /*
      * Crea un nuevo formulario, para ser utilizado, para crear un nuevo rol del sistema.
      */
         
-        
         public function nuevoRolAction()
 	{
+            $opciones=$this->getRequest()->getSession()->get('opciones'); 
+            
             $rol=new RolSistema();            
             
             $form = $this->createForm(new RolSistemaType() , $rol);
             return $this->render('MinSalSidPlaAdminBundle:Default:rolFormTemplate.html.twig', 
-                    array('form' => $form->createView(),  ));
+                    array('form' => $form->createView(), 'opciones' => $opciones  ));
             
 	}
         
@@ -85,15 +85,33 @@ class AccionAdminRolesController  extends Controller
          * 
          */
         
-        
          public function consultarRolesAction()
 	{
+            $opciones=$this->getRequest()->getSession()->get('opciones'); 
+            
             $rolDao=new RolDao($this->getDoctrine());
             $roles=$rolDao->getRoles();
             return $this->render('MinSalSidPlaAdminBundle:Roles:showAllRoles.html.twig', 
-                    array('roles' => $roles));
+                    array('roles' => $roles, 'opciones' => $opciones,));
             
 	}
+        
+        /*
+         * Mantenimineto de roles.
+         * 
+         */
+        
+         public function mattRolesAction()
+	{
+            $opciones=$this->getRequest()->getSession()->get('opciones'); 
+            
+            $rolDao=new RolDao($this->getDoctrine());
+            $roles=$rolDao->getRoles();
+            return $this->render('MinSalSidPlaAdminBundle:Roles:manttRolesSystemForm.html.twig', 
+                    array('roles' => $roles, 'opciones' => $opciones,));
+            
+	}
+        
 }
 
 ?>

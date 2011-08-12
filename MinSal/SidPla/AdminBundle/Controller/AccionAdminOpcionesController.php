@@ -73,14 +73,45 @@ class AccionAdminOpcionesController extends Controller
         
         public function nuevaOpcAction()
 	{
+            $opciones=$this->getRequest()->getSession()->get('opciones');
+            
             $opc=new OpcionSistema();            
             
             $form = $this->createForm(new OpcionSistemaType() , $opc);
             return $this->render('MinSalSidPlaAdminBundle:Default:opcionFormTemplate.html.twig', 
-                    array('form' => $form->createView(),  ));
+                    array('form' => $form->createView(), 'opciones' => $opciones ));            
+	}
+        
+        /*
+         * Permite recuperar roles del sistema.
+         * 
+         */
+        
+        
+        public function consultarOpcAction()
+	{
+            $opcDao=new OpcionSistemaDao($this->getDoctrine());
+            $opciones=$opcDao->getOpciones();
+            return $this->render('MinSalSidPlaAdminBundle:Opciones:showAllOpciones.html.twig', 
+                    array('opciones' => $opciones));
             
 	}
         
+        
+        /*
+         * Mantenimineto de opciones.
+         * 
+         */
+        
+         public function mattOpcionesAction()
+	{
+            $opciones=$this->getRequest()->getSession()->get('opciones'); 
+            
+            $opcDao=new OpcionSistemaDao($this->getDoctrine());
+            $opciones=$opcDao->getOpciones();
+            return $this->render('MinSalSidPlaAdminBundle:Opciones:manttOpcionesSystemForm.html.twig', 
+                    array('opciones' => $opciones));            
+	}
         
         
 }

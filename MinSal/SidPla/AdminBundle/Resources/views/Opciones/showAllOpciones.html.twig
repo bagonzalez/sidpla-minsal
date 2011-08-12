@@ -1,0 +1,46 @@
+{# Muestra todos las opciones #}
+{% block body %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+
+        var myGrid = $('#theGrid');        
+        myGrid.jqGrid({
+          datatype:'clientSide',
+          altRows:true,
+          colNames:['Nombre', 'Descripcion', 'Enlace'],
+          colModel:[
+            { name:'nombre', index: 'nombre', width:150 },
+            { name:'descripcion', index: 'descripcion', width:300 },
+            { name:'enlace', index: 'enlace', width:300 } ],
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: true,
+          pager: jQuery('#pager'),
+          viewrecords: true,
+          imgpath: 'css/start/images',
+            caption: 'Opciones del sistema',
+            height: "100%"
+        });
+
+        {% for opc in opciones %}
+            myGrid.addRowData("{{ opc.idOpcionSistema }}", {nombre:"{{ opc.nombreOpcion }}", descripcion:"{{ opc.descripcionOpcion }}", enlace:"{{ opc.enlace }}"});     
+        {% endfor %}
+      });
+    </script>
+      <div id="grid_wrapper" class="ui-corner-all floatLeft">
+        <table id="theGrid" class="scroll" ></table> 
+        <div id="pager"  class="scroll" style="text-align:center;"></div> 
+      </div>
+    
+      <!--<div id="info_wrapper">
+        <div class="ui-widget">
+          <div class="ui-state-highlight ui-corner-all" style="padding: 0 0.7em; margin: 20px 0 0 20px;">
+            <p>
+              <span class="ui-icon ui-icon-info" style="float: left; margin-right: 0.3em;"></span>
+              <strong>resize</strong> your browser window &amp; the grid will resize accordingly.
+            </p>
+          </div>
+        </div>
+      </div>-->
+    
+{% endblock %}
