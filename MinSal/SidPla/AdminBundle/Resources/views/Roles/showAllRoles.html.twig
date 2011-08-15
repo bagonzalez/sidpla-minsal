@@ -6,12 +6,13 @@
 
         var myGrid = $('#theGrid');        
         myGrid.jqGrid({
+          url:'/admin/nuevoRol',
           datatype:'clientSide',
           altRows:true,
           colNames:['Nombre', 'Descripcion'],
           colModel:[
-            { name:'nombre', index: 'nombre', width:150 },
-            { name:'funciones', index: 'funciones', width:300 } ],            
+            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:10}  },
+            { name:'funciones', index: 'funciones',width:300,editable:true,editoptions:{size:10}  } ],            
           rowNum:10,
           rowList:[10,20,30],
           multiselect: true,
@@ -19,20 +20,29 @@
           viewrecords: true,
           imgpath: 'css/start/images',
             caption: 'Roles del sistema',
-            height: "100%"
+            height: "100%",
+            editurl:"/admin/nuevoRol"
         });
+        myGrid.jqGrid('navGrid','#pager',
+        {edit:true,add:true,del:true},
+        {},
+        {},
+        {},
+        {multipleSearch:true, multipleGroup:true}
+        );
+            
+        
 
         {% for rol in roles %}            
             myGrid.addRowData("{{ rol.idRol  }}", {nombre:"{{ rol.nombreRol  }}", funciones:"{{  rol.funcionesRol }}"});     
         {% endfor %}        
+
        
       });
     </script>
-    
-    
+        
         <table id="theGrid" class="scroll"></table> 
         <div id="pager" class="scroll" style="text-align:center;"></div> 
-     
-
+        
 
 {% endblock %}

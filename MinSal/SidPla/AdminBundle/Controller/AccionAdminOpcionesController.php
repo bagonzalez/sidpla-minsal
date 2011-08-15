@@ -92,8 +92,28 @@ class AccionAdminOpcionesController extends Controller
 	{
             $opcDao=new OpcionSistemaDao($this->getDoctrine());
             $opciones=$opcDao->getOpciones();
-            return $this->render('MinSalSidPlaAdminBundle:Opciones:showAllOpciones.html.twig', 
-                    array('opciones' => $opciones));
+            
+            
+            
+            $response=new Response('{
+               "page":"1",
+               "total":"1",
+               "records":"4", 
+               "rows":[ 
+                  {"id" :"1", "cell" : ["Desktop Computers","josh@josh.com", "note"]}, 
+                  {"id" :"2", "cell" : ["Desktop Computers","osh@josh.com", "ecnote"]}, 
+                  {"id" :"3", "cell" : ["Desktop Computers","josh@josh.com", "note"]}, 
+                  {"id" :"4", "cell" : ["Desktop Computers","josh@josh.com", "note"]}
+                ] 
+            }');           
+            
+            
+            
+            
+            
+            return $response;
+            /*return $this->render('MinSalSidPlaAdminBundle:Opciones:showAllOpciones.html.twig', 
+                    array('opciones' => $opciones));*/
             
 	}
         

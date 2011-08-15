@@ -26,7 +26,8 @@ MinSalSidPlaAdminBundle_consultarRoles:
     
 MinSalSidPlaAdminBundle_consultarOpciones:
     pattern:  /admin/consultarOpc
-    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminOpciones:consultarOpc }
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminOpciones:consultarOpc, _format: json }
+    requirements: { _format: (xml|json), _method: GET }  
 
 MinSalSidPlaAdminBundle_manttRoles:
     pattern:  /admin/manttRoles
