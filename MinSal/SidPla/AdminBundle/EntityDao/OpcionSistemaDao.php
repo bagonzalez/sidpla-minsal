@@ -55,9 +55,16 @@ class OpcionSistemaDao
    	 *  Retorna mensajes del sistema que indican si es exito o fracaso.
    	 */	
 
-	public function addOpcion(OpcionSistema $opcSistema) {
+	public function addOpcion($nombreOpc, $descripcion, $enlace, $opcpadre) {
+            
+            $opcSistema=new OpcionSistema();            
+
+            $opcSistema->setDescripcionOpcion($descripcion);
+            $opcSistema->setEnlace($enlace);
+            $opcSistema->setNombreOpcion($nombreOpc);
+            $opcSistema->setIdOpcionSistema2($opcpadre);  	    
 	    
-	    $this->em->persist($opcSistema);
+            $this->em->persist($opcSistema);
 	    $this->em->flush();	    
 	    $matrizMensajes = array('El proceso de almacenar termino con exito', 'Opcion '.$opcSistema->getIdOpcionSistema());
  
@@ -72,5 +79,53 @@ class OpcionSistemaDao
             $opciones=$this->repositorio->findAll();
             return $opciones;
         }
-
+        
+        /*
+         * Actualizar opcion
+         */
+        
+        
+        public function editOpcion($nombreOpc, $descripcion, $enlace, $id, $opcpadre){
+            
+            $opcion=new OpcionSistema();            
+            $opcion=$this->repositorio->find($id);
+            
+            if(!$opcion){
+                throw $this->createNotFoundException('No se encontro opcion con ese id '.$id);
+            }
+            
+            $opcion->setDescripcionOpcion($descripcion);
+            $opcion->setEnlace($enlace);
+            $opcion->setNombreOpcion($nombreOpc);
+            $opcion->setIdOpcionSistema2($opcpadre);                
+            
+            $this->em->flush();
+            
+            $matrizMensajes = array('El proceso de almacenar termino con exito', 'Opcion '.$opcion->getIdOpcionSistema());
+ 
+            return $matrizMensajes;
+        }
+        
+        
+        /*
+         * eliminar opcion
+         */
+        
+        
+        public function delOpcion($id){            
+            
+            $opcion=$this->repositorio->find($id);
+            
+            if(!$opcion){
+                throw $this->createNotFoundException('No se encontro opcion con ese id '.$id);
+            }
+            
+            $this->em->remove($opcion);
+            $this->em->flush();
+            
+            $matrizMensajes = array('El proceso de eliminar termino con exito', 'Opcion '.$opcion->getIdOpcionSistema());
+ 
+            return $matrizMensajes;
+        }
+       
 }

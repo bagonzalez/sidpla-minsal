@@ -47,7 +47,12 @@ class RolDao {
      *  Almacena un rol ingresado en el sistema
      */
     
-    public function addRol(RolSistema $rolSistema) {
+    public function addRol($nombreRol, $funciones) {
+        
+        $rolSistema=new RolSistema();
+        
+        $rolSistema->setNombreRol($nombreRol);
+        $rolSistema->setFuncionesRol($funciones);
 	    
         $this->em->persist($rolSistema);
         $this->em->flush();	    
@@ -64,6 +69,51 @@ class RolDao {
         $roles=$this->repositorio->findAll();
         return $roles;
     }
+    
+    
+        /*
+         * Actualizar rol
+         */
+        
+        
+        public function editRol($nombre, $funciones, $id){
+            
+            $rol=new RolSistema();            
+            $rol=$this->repositorio->find($id);
+            
+            if(!$rol){
+                throw $this->createNotFoundException('No se encontro rol con ese id '.$id);
+            }
+            
+            $rol->setFuncionesRol($funciones);
+            $rol->setNombreRol($nombre);
+            
+            $this->em->flush();            
+            $matrizMensajes = array('El proceso de almacenar termino con exito', 'Rol '.$rol->getIdRol());
+ 
+            return $matrizMensajes;
+        }
+        
+         /*
+         * eliminar rol
+         */
+        
+        
+        public function delRol($id){            
+            
+            $rol=$this->repositorio->find($id);
+            
+            if(!$rol){
+                throw $this->createNotFoundException('No se encontro rol con ese id '.$id);
+            }
+            
+            $this->em->remove($rol);
+            $this->em->flush();
+            
+            $matrizMensajes = array('El proceso de eliminar termino con exito', 'Rol '.$rol->getIdRol());
+ 
+            return $matrizMensajes;
+        }
  
 }
 

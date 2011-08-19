@@ -109,8 +109,6 @@ class AccionAdminOpcionesController extends Controller
             
             
             
-            
-            
             return $response;
             /*return $this->render('MinSalSidPlaAdminBundle:Opciones:showAllOpciones.html.twig', 
                     array('opciones' => $opciones));*/
@@ -123,7 +121,7 @@ class AccionAdminOpcionesController extends Controller
          * 
          */
         
-         public function mattOpcionesAction()
+        public function mattOpcionesAction()
 	{
             $opciones=$this->getRequest()->getSession()->get('opciones'); 
             
@@ -131,6 +129,35 @@ class AccionAdminOpcionesController extends Controller
             $opciones=$opcDao->getOpciones();
             return $this->render('MinSalSidPlaAdminBundle:Opciones:manttOpcionesSystemForm.html.twig', 
                     array('opciones' => $opciones));            
+	}
+        
+        
+        public function manttOpcEdicionAction()
+	{
+            $request=$this->getRequest();
+            
+            $nombreOpc=$request->get('nombre');
+            $descripcion=$request->get('descripcion');
+            $enlace=$request->get('enlace');            
+            $id=$request->get('id');
+            $opcpadre=$request->get('opcpadre');
+            $operacion=$request->get('oper'); 
+            
+            $opcDao=new OpcionSistemaDao($this->getDoctrine());
+            
+            if($operacion=='edit'){
+                $opcDao->editOpcion($nombreOpc, $descripcion, $enlace, $id, $opcpadre);                
+            }
+            
+            if($operacion=='del'){
+                $opcDao->delOpcion($id);        
+            }
+            
+            if($operacion=='add'){
+                $opcDao->addOpcion($nombreOpc, $descripcion, $enlace, $opcpadre);                
+            }
+            
+            return new Response("{sc:true,msg:''}");           
 	}
         
         

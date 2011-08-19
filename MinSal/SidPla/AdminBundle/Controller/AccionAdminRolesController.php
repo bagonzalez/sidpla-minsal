@@ -112,6 +112,34 @@ class AccionAdminRolesController  extends Controller
             
 	}
         
+        public function manttRolEdicionAction(){
+            
+            $request=$this->getRequest();
+            
+            $nombreRol=$request->get('nombre');
+            $funciones=$request->get('funciones');            
+            $id=$request->get('id');
+            
+            $operacion=$request->get('oper'); 
+            
+            $rolDao=new RolDao($this->getDoctrine());
+            
+            if($operacion=='edit'){                
+                $rolDao->editRol($nombreRol, $funciones, $id);
+            }
+            
+            if($operacion=='del'){
+                $rolDao->delRol($id);        
+            }
+            
+            if($operacion=='add'){
+                $rolDao->addRol($nombreRol, $funciones);
+            }
+             
+            return new Response("{sc:true,msg:''}"); 
+            
+        }
+        
 }
 
 ?>

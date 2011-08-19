@@ -5,23 +5,21 @@
       $(document).ready(function(){
 
         var myGrid = $('#theGrid');        
-        myGrid.jqGrid({
-          url:'/admin/nuevoRol',
+        myGrid.jqGrid({          
           datatype:'clientSide',
           altRows:true,
           colNames:['Nombre', 'Descripcion'],
           colModel:[
-            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:10}  },
-            { name:'funciones', index: 'funciones',width:300,editable:true,editoptions:{size:10}  } ],            
+            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:15}  },
+            { name:'funciones', index: 'funciones',width:300,editable:true,editoptions:{size:70}  } ],            
           rowNum:10,
           rowList:[10,20,30],
           multiselect: true,
           pager: jQuery('#pager'),
-          viewrecords: true,
-          imgpath: 'css/start/images',
+          viewrecords: true,          
             caption: 'Roles del sistema',
             height: "100%",
-            editurl:"/admin/nuevoRol"
+            editurl: 'manttRolEdicion'
         });
         myGrid.jqGrid('navGrid','#pager',
         {edit:true,add:true,del:true},

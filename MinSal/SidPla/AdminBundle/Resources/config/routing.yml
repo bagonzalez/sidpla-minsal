@@ -37,6 +37,18 @@ MinSalSidPlaAdminBundle_mattOpciones:
     pattern:  /admin/mattOpciones
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminOpciones:mattOpciones }
     
+MinSalSidPlaAdminBundle_manttOpcEdicion:
+    pattern:  /admin/manttOpcEdicion
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminOpciones:manttOpcEdicion }
+    
+MinSalSidPlaAdminBundle_manttRolEdicion:
+    pattern:  /admin/manttRolEdicion
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:manttRolEdicion }
+    
+    
+    
+    
+    
      
     
     
