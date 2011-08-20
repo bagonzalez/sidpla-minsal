@@ -5,8 +5,8 @@
 
         var myGrid = $('#theGrid');        
         myGrid.jqGrid({    
-          
-          datatype:'clientSide',
+          url: 'consultarOpc',
+          datatype:'json',
           altRows:true,          
           colNames:['Id','Nombre', 'Descripcion', 'Enlace', 'Padre'],
           colModel:[            
@@ -34,11 +34,6 @@
         {},
         {multipleSearch:true, multipleGroup:true}
         );
-
-        {% for opc in opciones %}
-            myGrid.addRowData("{{ opc.idOpcionSistema }}",  { id:"{{ opc.idOpcionSistema }}", nombre:"{{ opc.nombreOpcion }}", descripcion:"{{ opc.descripcionOpcion }}", enlace:"{{ opc.enlace }}", opcpadre:"{{ opc.idOpcionSistema2 }}"});     
-        {% endfor %}
-            
        
       });
       

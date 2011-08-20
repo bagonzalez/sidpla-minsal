@@ -47,7 +47,8 @@ class AccionAdminOpcionesController extends Controller
      *  un formulario, luego instancia una clase OpcionSistemaDao para
      *  manejar la persistencia de la entidad OpcionSistemaDao, y retornara los
      *  mensajes de exito/fracaso del sistema.
-     */
+     */   
+    
 	
 	public function addOcpAction(Request $peticion)
 	{
@@ -93,25 +94,33 @@ class AccionAdminOpcionesController extends Controller
             $opcDao=new OpcionSistemaDao($this->getDoctrine());
             $opciones=$opcDao->getOpciones();
             
+            $numfilas=count($opciones);  
+            
+            $opc=new OpcionSistema();
+            $i=0;
+            
+            foreach ($opciones as $opc) {
+                $rows[$i]['id']= $opc->getIdOpcionSistema();
+                $rows[$i]['cell']= array($opc->getIdOpcionSistema(),
+                                         $opc->getNombreOpcion(),
+                                         $opc->getDescripcionOpcion(),
+                                         $opc->getEnlace(),
+                                         $opc->getIdOpcionSistema2());    
+                $i++;
+            }
+            
+            $datos=json_encode($rows);            
             
             
-            $response=new Response('{
+            $jsonresponse='{
                "page":"1",
-               "total":"1",
-               "records":"4", 
-               "rows":[ 
-                  {"id" :"1", "cell" : ["Desktop Computers","josh@josh.com", "note"]}, 
-                  {"id" :"2", "cell" : ["Desktop Computers","osh@josh.com", "ecnote"]}, 
-                  {"id" :"3", "cell" : ["Desktop Computers","josh@josh.com", "note"]}, 
-                  {"id" :"4", "cell" : ["Desktop Computers","josh@josh.com", "note"]}
-                ] 
-            }');           
+               "total":"2",
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
             
             
-            
-            return $response;
-            /*return $this->render('MinSalSidPlaAdminBundle:Opciones:showAllOpciones.html.twig', 
-                    array('opciones' => $opciones));*/
+            $response=new Response($jsonresponse);              
+            return $response;            
             
 	}
         
