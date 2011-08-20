@@ -62,7 +62,11 @@ class OpcionSistemaDao
             $opcSistema->setDescripcionOpcion($descripcion);
             $opcSistema->setEnlace($enlace);
             $opcSistema->setNombreOpcion($nombreOpc);
-            $opcSistema->setIdOpcionSistema2($opcpadre);  	    
+            
+            if(intval($opcpadre)==0)
+                $opcpadre=null;
+            
+            $opcSistema->setIdOpcionSistema2($opcpadre); 	    
 	    
             $this->em->persist($opcSistema);
 	    $this->em->flush();	    
@@ -97,6 +101,10 @@ class OpcionSistemaDao
             $opcion->setDescripcionOpcion($descripcion);
             $opcion->setEnlace($enlace);
             $opcion->setNombreOpcion($nombreOpc);
+            
+            if(intval($opcpadre)==0)
+                $opcpadre=null;
+            
             $opcion->setIdOpcionSistema2($opcpadre);                
             
             $this->em->flush();
