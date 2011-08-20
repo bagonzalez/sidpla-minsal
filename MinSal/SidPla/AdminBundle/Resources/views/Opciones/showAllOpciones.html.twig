@@ -8,8 +8,9 @@
           
           datatype:'clientSide',
           altRows:true,          
-          colNames:['Nombre', 'Descripcion', 'Enlace', 'Opcion Padre'],
+          colNames:['Id','Nombre', 'Descripcion', 'Enlace', 'Padre'],
           colModel:[            
+            { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10}  },
             { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:40}  },
             { name:'descripcion', index: 'descripcion', width:300,editable:true,editoptions:{size:70}  },
             { name:'enlace', index: 'enlace', width:300,editable:true,editoptions:{size:70}  } ,
@@ -35,7 +36,7 @@
         );
 
         {% for opc in opciones %}
-            myGrid.addRowData("{{ opc.idOpcionSistema }}", {nombre:"{{ opc.nombreOpcion }}", descripcion:"{{ opc.descripcionOpcion }}", enlace:"{{ opc.enlace }}", opcpadre:"{{ opc.idOpcionSistema2 }}"});     
+            myGrid.addRowData("{{ opc.idOpcionSistema }}",  { id:"{{ opc.idOpcionSistema }}", nombre:"{{ opc.nombreOpcion }}", descripcion:"{{ opc.descripcionOpcion }}", enlace:"{{ opc.enlace }}", opcpadre:"{{ opc.idOpcionSistema2 }}"});     
         {% endfor %}
             
        
