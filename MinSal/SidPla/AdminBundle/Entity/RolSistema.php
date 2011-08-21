@@ -56,6 +56,12 @@ class RolSistema
     {
         $this->nombreRol = $nombreRol;
     }
+    
+    
+     public function setIdRol($idRol)
+    {
+        $this->idRol=$idRol;
+    }
 
     /**
      * Get nombreRol

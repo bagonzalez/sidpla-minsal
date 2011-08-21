@@ -6,43 +6,96 @@
         
       $(document).ready(function(){
           $('#agregar').click(pasar);
-          $('#quitar').click(eliminar);                    
+          $('#quitar').click(eliminar); 
+          $('#selecrol').change(cargarSeleccionado);
+          
+          
+           var myGridDisponibles = $('#gridDisponibles');        
+            myGridDisponibles.jqGrid({    
+              url: 'consultarOpc',
+              datatype:'json',
+              altRows:true,          
+              colNames:['Id','Nombre'],
+              colModel:[            
+                { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10}  },
+                { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:40}  }
+                ],          
+              multiselect: false,              
+              viewrecords: true,          
+              caption: 'Opciones del sistema disponible',
+              height: "100%"
+            });
+            
+            
+            var myGridSeleccionadas = $('#gridSelecc');        
+            myGridSeleccionadas.jqGrid({    
+              url: 'opcionesAsignadas',
+              datatype:'json',
+              altRows:true,          
+              colNames:['Id','Nombre'],
+              colModel:[            
+                { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10}  },
+                { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:40}  }
+                ],          
+              multiselect: false,              
+              viewrecords: true,          
+              caption: 'Opciones seleccionadas',
+              height: "100%"
+            });            
+            
+            
+            
+           $.getJSON('consultarRoles', function(data) {
+                  var i=0;
+                  $.each(data, function(key, val) {
+                      if(key=='rows'){
+                        $.each(val, function(id, registro){
+                            $('#selecrol').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+                        });                    
+                      }
+                  });
+          });
       });
       
-      $.getJSON('consultarRoles', function(data) {
-              var i=0;
-              $.each(data, function(key, val) {
-                  if(key=='rows'){
-                    $.each(val, function(id, registro){
-                        $('#selecrol').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
-                    });                    
-                  }
-              });
-      });
       
-      $.getJSON('consultarOpc', function(data) {
-              var i=0;
-              $.each(data, function(key, val) {
-                  if(key=='rows'){
-                    $.each(val, function(id, registro){
-                        $('#opcdisponibles').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
-                    });                    
-                  }
-              });
-      });
+      function cargarSeleccionado(){
+            $('#gridSelecc').setGridParam({url:'opcionesAsignadas?reg='+$('#selecrol').val()}); 
+            $('#gridSelecc').trigger("reloadGrid"); 
+            
+            $('#gridDisponibles').setGridParam({url:'opcionesSinAsignar?reg='+$('#selecrol').val()}); 
+            $('#gridDisponibles').trigger("reloadGrid");
+      }
       
-      function pasar(){            
-            $('#opcdisponibles option:selected').each(
-            function(){
-                    $('#opcdisponibles option:selected').appendTo("#opcselecc")
-            })
+      function pasar(){ 
+          
+            var id = jQuery("#gridDisponibles").jqGrid('getGridParam','selrow'); 
+            if (id) { 
+                var ret = jQuery("#gridDisponibles").jqGrid('getRowData',id);                     
+
+                $('#gridSelecc').setGridParam({url:'insertOpcSeleccRol?opc='+ret.id+'&reg='+$('#selecrol').val()}); 
+                $('#gridSelecc').trigger("reloadGrid");
+
+                $('#gridDisponibles').setGridParam({url:'opcionesSinAsignar?reg='+$('#selecrol').val()}); 
+                $('#gridDisponibles').trigger("reloadGrid");
+            } 
+            else {
+                alert("Por favor seleccione una opcion");
+            } 
+           
        }
        
-       function eliminar(){            
-            $('#opcselecc option:selected').each(
-            function(){
-                    $('#opcselecc option:selected').appendTo("#opcdisponibles")
-            })
+       function eliminar(){    
+           var id = jQuery("#gridSelecc").jqGrid('getGridParam','selrow'); 
+            if (id) { 
+                var ret = jQuery("#gridSelecc").jqGrid('getRowData',id);                     
+
+                $('#gridSelecc').setGridParam({url:'deleteOpcSeleccRol?opc='+ret.id+'&reg='+$('#selecrol').val()}); 
+                $('#gridSelecc').trigger("reloadGrid"); 
+                $('#gridDisponibles').trigger("reloadGrid");
+            } 
+            else {
+                alert("Por favor seleccione una opcion");
+            }            
        }
     </script>
 <br></br>
@@ -54,7 +107,7 @@
     </tr>
     <tr>
         <td align='right'>Seleccione un rol: </td>
-        <td colspan=2 ><select id='selecrol'></select></td>        
+        <td colspan=2 ><select id='selecrol'><option value='0'>Seleccione un rol</option></select></td>        
     </tr>
     <tr>
         <td align="center">Disponibles</td>
@@ -62,18 +115,21 @@
         <td align="center">Asignadas</td>
     </tr>
     <tr>
-        <td align="center">
-            <select  width:100px  id='opcdisponibles' name="opcdispo" multiple>              
-            </select>
+        <td align="center" valign="top">
+             <div id="grid_disponibles" >
+                <table id="gridDisponibles" class="scroll" ></table>                
+             </div>            
         </td>
         
         <td align="center">
-            <input  id='agregar' type="button"  value=">>"></input> 
-            <input id='quitar' type="button"  value="<<"></input>
+            <input  id='agregar' type="button" class="ui-button-text"  value=">>"></input> 
+            <input id='quitar' type="button"  class="ui-button-text"  value="<<"></input>
         </td>
-        <td align="center">
-            <select id='opcselecc'  width:100px  name="selecc" multiple  >			  
-	    </select> 
+        <td align="center" valign="top">
+            <div id="grid_selecc" >
+                <table id="gridSelecc" class="scroll" ></table>                
+             </div> 
+            
         </td>
     </tr>
 </table>

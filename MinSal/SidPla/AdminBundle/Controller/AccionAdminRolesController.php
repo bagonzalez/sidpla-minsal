@@ -32,7 +32,7 @@ namespace MinSal\SidPla\AdminBundle\Controller;
 use MinSal\SidPla\AdminBundle\EntityDao\RolDao;
 use MinSal\SidPla\AdminBundle\Form\Type\RolSistemaType;
 use MinSal\SidPla\AdminBundle\Entity\RolSistema;
-
+use MinSal\SidPla\AdminBundle\Entity\OpcionSistema;
 
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
@@ -140,6 +140,12 @@ class AccionAdminRolesController  extends Controller
             
 	}
         
+        /*
+         * Opciones de mantenimiento de roles
+         * Eliminar, agregar, editar
+         * 
+         */
+        
         public function manttRolEdicionAction(){
             
             $request=$this->getRequest();
@@ -166,8 +172,8 @@ class AccionAdminRolesController  extends Controller
              
             return new Response("{sc:true,msg:''}"); 
             
-        }
-        
+        }        
+                
         
         public function asignarOpcRolesAction(){
             
@@ -176,6 +182,112 @@ class AccionAdminRolesController  extends Controller
             return $this->render('MinSalSidPlaAdminBundle:Roles:asignarOpcionesARoles.html.twig',
                     array('opciones' => $opciones, ));
         }
+        
+        /*
+         *  Obtiene las opciones seleccionadas de un rol
+         */
+        
+        public function opcionesAsignadasAction()
+	{
+            $idRol=$this->getRequest()->get('reg'); 
+            
+            $rolDao=new RolDao($this->getDoctrine());
+            $opciones=$rolDao->consultarOpcSeleccRol($idRol);           
+            
+            $numfilas=count($opciones);  
+            $datos='[]';
+            $opc=new OpcionSistema();
+            $i=0;
+            
+            foreach ($opciones as $opc) {
+                $rows[$i]['id']= $opc->getIdOpcionSistema();
+                $rows[$i]['cell']= array($opc->getIdOpcionSistema(),
+                                         $opc->getNombreOpcion()
+                                         );    
+                $i++;
+            }
+            
+            if($numfilas>0)           
+                $datos=json_encode($rows);            
+                        
+            $jsonresponse='{
+               "page":"1",
+               "total":"1",
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
+            
+            
+            $response=new Response($jsonresponse);              
+            return $response; 
+	}
+        
+        /*
+         * Obtiene las opciones del sistema no asignadas a un rol
+         */
+        
+        public function opcionesSinAsignarAction()
+	{
+            $idRol=$this->getRequest()->get('reg'); 
+            
+            $rolDao=new RolDao($this->getDoctrine());
+            $opciones=$rolDao->consultarOpcNoSeleccRol($idRol);           
+            
+            $numfilas=count($opciones);  
+            $datos='[]';
+            $opc=new OpcionSistema();
+            $i=0;
+            
+            foreach ($opciones as $opc) {
+                $rows[$i]['id']= $opc->getIdOpcionSistema();
+                $rows[$i]['cell']= array($opc->getIdOpcionSistema(),
+                                         $opc->getNombreOpcion()
+                                         );    
+                $i++;
+            }
+            
+            if($numfilas>0)           
+                $datos=json_encode($rows);            
+                        
+            $jsonresponse='{
+               "page":"1",
+               "total":"1",
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
+            
+            
+            $response=new Response($jsonresponse);              
+            return $response; 
+             
+        }
+        
+        /*
+         *  Asigna una opcion a un rol seleccionado
+         */
+        
+        public function insertOpcSeleccRolAction(){
+            $idRol=$this->getRequest()->get('reg'); 
+            $idOpc=$this->getRequest()->get('opc'); 
+            
+            $rolDao=new RolDao($this->getDoctrine());
+            $rolDao->insertOpcSeleccRol($idRol, $idOpc); 
+            return $this->opcionesAsignadasAction();
+        }
+        
+        /*
+         *  Elimina un rol asignado a un rol
+         */
+        
+        
+        public function deleteOpcSeleccRolAction(){
+            $idRol=$this->getRequest()->get('reg'); 
+            $idOpc=$this->getRequest()->get('opc'); 
+            
+            $rolDao=new RolDao($this->getDoctrine());
+            $rolDao->deleteOpcSeleccRol($idRol, $idOpc); 
+            return $this->opcionesAsignadasAction();
+        }
+        
+        
         
 }
 

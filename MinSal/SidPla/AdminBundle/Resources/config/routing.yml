@@ -48,10 +48,22 @@ MinSalSidPlaAdminBundle_manttRolEdicion:
 MinSalSidPlaAdminBundle_asignarOpcRoles:
     pattern:  /admin/asignarOpcRoles
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:asignarOpcRoles }
-
-     
     
+MinSalSidPlaAdminBundle_opcionesAsignadas:
+    pattern:  /admin/opcionesAsignadas
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:opcionesAsignadas }
     
+MinSalSidPlaAdminBundle_insertOpcSeleccRol:
+    pattern:  /admin/insertOpcSeleccRol    
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:insertOpcSeleccRol }
 
+MinSalSidPlaAdminBundle_deleteOpcSeleccRol:
+    pattern:  /admin/deleteOpcSeleccRol    
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:deleteOpcSeleccRol }
+    
+MinSalSidPlaAdminBundle_opcionesSinAsignar:
+    pattern:  /admin/opcionesSinAsignar    
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:opcionesSinAsignar }
+    
     
     
