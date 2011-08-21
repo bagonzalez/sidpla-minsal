@@ -45,10 +45,10 @@ MinSalSidPlaAdminBundle_manttRolEdicion:
     pattern:  /admin/manttRolEdicion
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:manttRolEdicion }
     
-    
-    
-    
-    
+MinSalSidPlaAdminBundle_asignarOpcRoles:
+    pattern:  /admin/asignarOpcRoles
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:asignarOpcRoles }
+
      
     
     

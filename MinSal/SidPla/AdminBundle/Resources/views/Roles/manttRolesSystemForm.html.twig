@@ -1,5 +1,14 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+          
+          $('#asignar').click(function() {
+              document.location.href='{{ path('MinSalSidPlaAdminBundle_asignarOpcRoles') }}'
+          });
+      });
+    </script>
+    
     <br></br>
     <br></br>         
     <br></br>    
@@ -11,9 +20,7 @@
             </tr>
             <tr>
                 <td align="center">
-                    <!--<input type="button" value="Nuevo" ></input>
-                    <input type="button" value="Modificar"></input>
-                    <input type="button" value="Eliminar"></input>-->
+                    <input type="button" value="Asignar/Desasignar Opciones" id="asignar" ></input>                    
                 </td>
             </tr>
             <tr>

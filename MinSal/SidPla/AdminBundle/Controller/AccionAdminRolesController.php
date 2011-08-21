@@ -90,9 +90,37 @@ class AccionAdminRolesController  extends Controller
             $opciones=$this->getRequest()->getSession()->get('opciones'); 
             
             $rolDao=new RolDao($this->getDoctrine());
-            $roles=$rolDao->getRoles();
-            return $this->render('MinSalSidPlaAdminBundle:Roles:showAllRoles.html.twig', 
-                    array('roles' => $roles, 'opciones' => $opciones,));
+            $roles=$rolDao->getRoles();           
+            
+            $numfilas=count($roles);  
+            
+            $rol=new RolSistema();
+            $i=0;
+            
+            foreach ($roles as $rol) {
+                $rows[$i]['id']= $rol->getIdRol();
+                $rows[$i]['cell']= array($rol->getIdRol(),
+                                         $rol->getNombreRol(),
+                                         $rol->getFuncionesRol());    
+                $i++;
+            }
+            
+            $datos=json_encode($rows);            
+            
+            
+            $jsonresponse='{
+               "page":"1",
+               "total":"1",
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
+            
+            
+            $response=new Response($jsonresponse);              
+            return $response;   
+            
+            
+            /*return $this->render('MinSalSidPlaAdminBundle:Roles:showAllRoles.html.twig', 
+                    array('roles' => $roles, 'opciones' => $opciones,));*/
             
 	}
         
@@ -138,6 +166,15 @@ class AccionAdminRolesController  extends Controller
              
             return new Response("{sc:true,msg:''}"); 
             
+        }
+        
+        
+        public function asignarOpcRolesAction(){
+            
+            $opciones=$this->getRequest()->getSession()->get('opciones'); 
+                        
+            return $this->render('MinSalSidPlaAdminBundle:Roles:asignarOpcionesARoles.html.twig',
+                    array('opciones' => $opciones, ));
         }
         
 }

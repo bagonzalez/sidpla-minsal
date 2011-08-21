@@ -114,7 +114,7 @@ class AccionAdminOpcionesController extends Controller
             
             $jsonresponse='{
                "page":"1",
-               "total":"2",
+               "total":"1",
                "records":"'.$numfilas.'", 
                "rows":'.$datos.'}';
             
