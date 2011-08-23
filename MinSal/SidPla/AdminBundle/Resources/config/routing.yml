@@ -77,3 +77,9 @@ MinSalSidPlaAdminBundle_ingresarUnidadOrg:
     pattern:  /admin/ingresarUnidadOrg    
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:ingresarUnidadOrg }    
     
+MinSalSidPlaAdminBundle_consultarUnidadesOrgJSON:
+    pattern:  /admin/consultarUnidadesOrgJSON    
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:consultarUnidadesOrgJSON }    
+
+
+    

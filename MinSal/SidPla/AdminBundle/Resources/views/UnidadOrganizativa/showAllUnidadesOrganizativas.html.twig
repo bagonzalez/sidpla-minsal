@@ -1,0 +1,57 @@
+{# empty Twig template #}
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %}Asignaci&oacute;n de Opciones a Roles del Sistema{% endblock %}
+
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+        
+        var myGrid = $('#theGrid');        
+        myGrid.jqGrid({ 
+          url: 'consultarUnidadesOrgJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Id','Nombre', 'Descripcion'],
+          colModel:[
+            { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}  },
+            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}  },
+            { name:'descripcion', index: 'descripcion',width:300,editable:true,editoptions:{size:50}  } ],            
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: true,
+          pager: jQuery('#pager'),
+          viewrecords: true,          
+            caption: 'Unidades Organizativas',
+            height: "100%",
+            editurl: 'manttRolEdicion'
+        });
+         myGrid.jqGrid('navGrid','#pager',
+        {edit:true,add:true,del:true},
+        {width:550,height:160},
+        {width:550,height:160},
+        {width:550,height:160},
+        {multipleSearch:true, multipleGroup:true}
+        );
+          
+          
+      });
+</script>
+<br></br>
+<br></br>
+<br></br>
+
+
+
+<table border=1>
+{% for unidad in unidadesorg %} 
+    <tr>
+        <td>{{  unidad.nombreUnidad  }}</td>
+    </tr>    
+    
+{% endfor %}
+</table>
+
+<table id="theGrid" class="scroll"></table> 
+<div id="pager" class="scroll" style="text-align:center;"></div>
+
+{% endblock %}
