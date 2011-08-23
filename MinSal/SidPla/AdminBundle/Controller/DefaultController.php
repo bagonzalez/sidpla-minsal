@@ -2,7 +2,6 @@
 
 namespace MinSal\SidPla\AdminBundle\Controller;
 
-
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 

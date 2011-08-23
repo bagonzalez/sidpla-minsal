@@ -1,0 +1,71 @@
+{# ingresar nueva  #}
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script type="text/javascript">        
+      $(document).ready(function(){
+          $('#tabs').tabs();
+      });
+</script>
+      
+<br></br>
+<br></br>
+<br></br>
+<h2 class="demoHeaders">Ingreso de Unidades Organizativas</h2>
+<div id="tabs">
+        <ul>
+                <li><a href="#tabs-1">General</a></li>
+                <li><a href="#tabs-2">Dependencias</a></li>
+                <li><a href="#tabs-3">Unidades de Salud</a></li>
+        </ul>
+        <div id="tabs-1" >
+            <form action="{{ path('MinSalSidPlaAdminBundle_ingresarUnidadOrg')}}" method="post" >
+                <table align="center" id="datosgeneralesTabla"  >
+                    <tr>
+                        <td colspan="4" align="center" >Datos Generales Nueva Unidad<br><br></td>
+                    </tr>
+                    <tr>
+                        <td >Nombre unidad:</td>
+                        <td colspan="3" ><input size="60%" name="nombreUnidad" id="nombreUnidad" ></input></td>
+                    </tr>
+                    <tr>
+                        <td >Direcci&oacute;n:</td>
+                        <td colspan="3" ><input name="direccion" size="60%" id="direccion" ></input></td>
+                    </tr>
+                    <tr>
+                        <td >Responsable:</td>
+                        <td colspan="3" ><input size="60%" name="responsable" id="responsable"  ></input></td>
+                    </tr>  
+                    <tr>
+                        <td >Tel&eacute;fono:</td>
+                        <td ><input id="telefono" name="telefono" ></input></td>
+                        <td>Fax:</td> 
+                        <td><input id="fax" name="fax" ></input></td>
+                    </tr>
+                    <tr>
+                        <td  >Tipo Unidad:</td>
+                        <td colspan="3"><input size="60%" id="tipoUnidad" name="tipoUnidad" ></input></td>
+                    </tr> 
+                    <tr>
+                        <td  >Unidad Padre:</td>
+                        <td colspan="3"  ><input size="60%" id="unidadPadre" name="unidadPadre"  ></input><input type="button" value="..."></input></td>
+                    </tr> 
+                    <tr>
+                        <td>Departamento:</td>
+                        <td><input id="departamento" name="departamento"  ></input></td>
+                        <td>Municipio:</td>
+                        <td><input id="municipio" name="municipio"></input></td>
+                    </tr> 
+                    <tr>
+                        <td colspan="4" align="center" ><button type="submmit" id="guardar"  >Guardar</button>
+                            <button type="reset"  >Limpiar</button>
+                        </td>                        
+                    </tr>                    
+                </table>
+            </form>            
+        </div>
+        <div id="tabs-2"></div>
+        <div id="tabs-3"></div>
+</div>
+
+
+{% endblock %}

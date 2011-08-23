@@ -64,6 +64,16 @@ MinSalSidPlaAdminBundle_deleteOpcSeleccRol:
 MinSalSidPlaAdminBundle_opcionesSinAsignar:
     pattern:  /admin/opcionesSinAsignar    
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminRoles:opcionesSinAsignar }
+
+MinSalSidPlaAdminBundle_consultarUnidadesOrg:
+    pattern:  /admin/consultarUnidadesOrg    
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:consultarUnidadesOrg }
+
+MinSalSidPlaAdminBundle_ingresoNuevaUnidadesOrg:
+    pattern:  /admin/ingresoNuevaUnidadesOrg    
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:ingresoNuevaUnidadesOrg }
     
-    
+MinSalSidPlaAdminBundle_ingresarUnidadOrg:
+    pattern:  /admin/ingresarUnidadOrg    
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:ingresarUnidadOrg }    
     
