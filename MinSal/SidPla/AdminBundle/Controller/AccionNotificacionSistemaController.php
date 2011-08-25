@@ -55,30 +55,6 @@ class AccionNotificacionSistemaController extends Controller {
         return $response;
     }
 
-    public function ingresoNuevaUnidadesOrgAction() {
-        $opciones = $this->getRequest()->getSession()->get('opciones');
-
-        return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:ingresoUnidadOrganizativa.html.twig', array('opciones' => $opciones,));
-    }
-
-    public function ingresarUnidadOrgAction() {
-
-        $opciones = $this->getRequest()->getSession()->get('opciones');
-        $request = $this->getRequest();
-        $nombreUnidad = $request->get('nombreUnidad');
-        $direccion = $request->get('direccion');
-        $responsable = $request->get('responsable');
-        $telefono = $request->get('telefono');
-        $fax = $request->get('fax');
-        $tipoUnidad = $request->get('tipoUnidad');
-        $unidadPadre = $request->get('unidadPadre');
-
-
-
-
-
-        return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:ingresoUnidadOrganizativa.html.twig', array('opciones' => $opciones,));
-    }
 
 }
 
