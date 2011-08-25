@@ -79,7 +79,12 @@ MinSalSidPlaAdminBundle_ingresarUnidadOrg:
     
 MinSalSidPlaAdminBundle_consultarUnidadesOrgJSON:
     pattern:  /admin/consultarUnidadesOrgJSON    
-    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:consultarUnidadesOrgJSON }    
-
-
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:consultarUnidadesOrgJSON } 
     
+MinSalSidPlaAdminBundle_consultarNotificacion:
+    pattern:  /admin/consultarNotificacion   
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionNotificacionSistema:consultarNotificacion }
+    
+MinSalSidPlaAdminBundle_consultarNotificacionJSON:
+    pattern:  /admin/consultarNotificacionJSON   
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionNotificacionSistema:consultarNotificacionJSON }  
