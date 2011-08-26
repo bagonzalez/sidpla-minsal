@@ -1,0 +1,88 @@
+{% set vars = opciones%}
+<!DOCTYPE html>
+<HTML>
+    <head>
+        <meta http-equiv="content-type" content="text/html;charset=utf-8" />
+        <title>{% block titulo %}Sistema para la Planificaci&oacute;n Anual Operativa{% endblock %}</title>
+        
+        {% block stylesheets %}
+            <link href="{{ asset('/css/smoothness/jquery-ui-1.8.15.custom.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('/css/ui.jqgrid.css') }}" type="text/css" rel="stylesheet" />
+            <link href="{{ asset('/css/estiloPrincipalMenu.css') }}" type="text/css" rel="stylesheet" />
+        {% endblock %}
+            
+               
+    </head>
+    <body>   
+    {% block javascripts %}            
+            <script type="text/javascript" src="{{ asset('/js/jquery-1.5.2.min.js') }}" ></script>
+            <script type="text/javascript" src="{{ asset('/js/jquery-ui-1.8.15.custom.min.js') }}"></script>
+            <script src="{{ asset('/js/i18n/grid.locale-es.js') }}" type="text/javascript"></script>
+            <script src="{{ asset('/js/jquery.jqGrid.min.js') }}" type="text/javascript"></script>
+    {% endblock %} 
+            
+    <script type="text/javascript"> 
+    $(document).ready(function(){
+
+            $("ul.subnav").parent().append("<span></span>"); //Only shows drop down trigger when js is enabled - Adds empty span tag after ul.subnav
+
+            $("ul.topnav li span").click(function() { //When trigger is clicked...
+
+                    //Following events are applied to the subnav itself (moving subnav up and down)
+                    $(this).parent().find("ul.subnav").slideDown('fast').show(); //Drop down the subnav on click
+
+                    $(this).parent().hover(function() {
+                    }, function(){	
+                            $(this).parent().find("ul.subnav").slideUp('slow'); //When the mouse hovers out of the subnav, move it back up
+                    });
+
+                    //Following events are applied to the trigger (Hover events for the trigger)
+                    }).hover(function() { 
+                            $(this).addClass("subhover"); //On hover over, add class "subhover"
+                    }, function(){	//On Hover Out
+                            $(this).removeClass("subhover"); //On hover out, remove class "subhover"
+            });
+
+    });
+    </script>
+    <div class="container">
+    
+            <div id="header">
+                <div class="disclaimer">Ministerio de Saludbbb</div>
+                
+                
+                <ul class="topnav">
+                    
+                    {% for opc in vars %}                     
+                        {% if opc.idOpcionSistema2 is empty %}
+                            <li><a href="{{ path(opc.enlace) }}">{{ opc.nombreOpcion }}</a>                                                                              
+                            <ul style="display: none;" class="subnav">                            
+                                {% for subopc in opciones %}  
+                                    {% if subopc.idOpcionSistema2 == opc.idOpcionSistema  %}
+                                        <li><a href="{{ path(subopc.enlace) }}">{{ subopc.nombreOpcion }}</a></li>                                                                              
+                                    {% endif %}                                
+                                {% endfor %}
+                            </ul>
+                            </li>
+                        {% endif %}                                
+                    {% endfor %}
+                    
+                    
+                    
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Advertise</a></li>
+                    <li><a href="#">Submit</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>            
+            <div id="contenido">
+                {% block body %}
+                    
+
+                {% endblock %} 
+            </div>
+            <div id="pie">Copyright (C) 2011 Ministerio de Salud</div>
+            
+    </div>
+    </body>
+</HTML>
