@@ -79,6 +79,7 @@ MinSalSidPlaAdminBundle_ingresarUnidadOrg:
     
 MinSalSidPlaAdminBundle_consultarUnidadesOrgJSON:
     pattern:  /admin/consultarUnidadesOrgJSON    
+<<<<<<< HEAD
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:consultarUnidadesOrgJSON }    
 
 MinSalSidPlaAdminBundle_consultarMenCorrtemp:
@@ -92,3 +93,14 @@ MinSalSidPlaAdminBundle_consultarMenCorrtempJSON:
 MinSalSidPlaAdminBundle_manttMenCorrtempEdicion:
     pattern:  /admin/manttMenCorrtempEdicion
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminMenCorreTemp:manttMenCorrtempEdicion }
+=======
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:consultarUnidadesOrgJSON } 
+    
+MinSalSidPlaAdminBundle_consultarNotificacion:
+    pattern:  /admin/consultarNotificacion   
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionNotificacionSistema:consultarNotificacion }
+    
+MinSalSidPlaAdminBundle_consultarNotificacionJSON:
+    pattern:  /admin/consultarNotificacionJSON   
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionNotificacionSistema:consultarNotificacionJSON }  
+>>>>>>> 3537701e0eb08ae96aaa5aa23eb2a59d25653ffd
