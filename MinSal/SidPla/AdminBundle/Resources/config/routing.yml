@@ -100,5 +100,5 @@ MinSalSidPlaAdminBundle_consultarNotificacion:
     
 MinSalSidPlaAdminBundle_consultarNotificacionJSON:
     pattern:  /admin/consultarNotificacionJSON   
-    defaults: { _controller: MinSalSidPlaAdminBundle:AccionNotificacionSistema:consultarNotificacionJSON }  
-
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionNotificacionSistema:consultarNotificacionJSON } 
+    

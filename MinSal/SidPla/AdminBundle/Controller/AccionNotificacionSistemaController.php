@@ -37,7 +37,7 @@ class AccionNotificacionSistemaController extends Controller {
                 $aux->getNombreNoti(),
                 $aux->getMensajeNoti(),
                 $aux->getTipoMensajeNoti()
-                );
+            );
             $i++;
         }
 
@@ -54,7 +54,33 @@ class AccionNotificacionSistemaController extends Controller {
         $response = new Response($jsonresponse);
         return $response;
     }
+/*
+    public function manttNotificacionEdicionAction() {
+        $request = $this->getRequest();
 
+        $nombrenoti=$request->get('nombre');
+        $mensajenoti=$request->get('mensaje');
+        $tipomensajenoti = $request->get('tipomensaje');
+        $codigonoti = $request->get('codigo');
+
+        $operacion = $request->get('oper');
+
+        $NotificacionSistemaDao = new NotificacionSistemaDao($this->getDoctrine());
+
+        switch ($operacion){
+            case 'edit':
+                $rolDao->editRol($nombreRol, $funciones, $id);
+                break;
+            case 'del':
+                $rolDao->delRol($id);
+                break;
+            case 'add':
+                $NotificacionSistemaDao->addNotiSistema($nombrenoti, $tipomensajenoti,$mensajenoti);
+                break;
+        }
+
+        return new Response("{sc:true,msg:''}");
+    }*/
 
 }
 
