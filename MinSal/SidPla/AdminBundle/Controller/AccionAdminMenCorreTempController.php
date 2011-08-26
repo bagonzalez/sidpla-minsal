@@ -85,7 +85,7 @@ class AccionAdminMenCorreTempController extends Controller {
             $request=$this->getRequest();
             
             $nombreRol=$request->get('texto');
-            $funciones=$request->get('nombre');            
+            $funciones=$request->get('Nombre');            
             $id=$request->get('id');
             
             $operacion=$request->get('oper'); 
