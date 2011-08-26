@@ -14,12 +14,28 @@ class NotificacionSistemaDao {
     } 
     
     /*
-     *  Obtiene todos las unidades organizativadel sistema.
+       Obtiene todos las notificaciones del sistema
         
     */
     public function getNotiSistema() {	    
         $notificaciones=$this->repositorio->findAll();
         return $notificaciones;
+    }
+    
+    public function addNotiSistema($nombrenoti, $tipoMensajeNoti,$mensajenoti) {
+        
+        $notificacionsistema=new NotificacionSistema();
+        
+        $notificacionsistema->setNombreNoti($nombreNoti);
+        $notificacionsistema->setTipoMensajeNoti($tipoMensajeNoti);
+        $notificacionsistema->setMensajeNoti($mensajeNoti);
+	    
+        $this->em->persist($notificacionsistema);
+        $this->em->flush();	    
+        $matrizMensajes = array('El proceso de almacenar notificacion del sistema termino con exito', 
+            'Notificacion Sistema'.$notificacionsistema->getCodNoti());
+
+        return $matrizMensajes;
     }
 }
 
