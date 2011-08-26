@@ -13,7 +13,7 @@
 
 namespace MinSal\SidPla\AdminBundle\EntityDao;
 
-
+use MinSal\SidPla\AdminBundle\Entity\MensajeCorreTemp;
 
 
 class MensajeCorreTempDao {
