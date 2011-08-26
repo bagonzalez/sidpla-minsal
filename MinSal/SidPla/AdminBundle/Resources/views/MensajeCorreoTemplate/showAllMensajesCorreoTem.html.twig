@@ -1,0 +1,44 @@
+{# empty Twig template #}
+
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+        
+        var myGrid = $('#theGrid');        
+        myGrid.jqGrid({ 
+          url: 'consultarMenCorrtempJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Id','Texto', 'Nombre'],
+          colModel:[
+            { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}  },
+            { name:'texto', index: 'texto', width:800,editable:true,editoptions:{size:25}  },
+            { name:'Nombre', index: 'Nombre',width:300,editable:true,editoptions:{size:50}  } ],            
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: true,
+          pager: jQuery('#pager'),
+          viewrecords: true,          
+            caption: 'Mensaje Correo templates',
+            height: "100%",
+            editCaption: "Editar Registro",
+            addCaption: "Nuevo Registro",
+            editurl: 'manttMenCorrtempEdicion'
+        });
+         myGrid.jqGrid('navGrid','#pager',
+        {edit:true,add:true,del:true},
+        {width:550,height:160},
+        {width:550,height:160},
+        {width:550,height:160},
+        {multipleSearch:true, multipleGroup:true}
+        );
+          
+          
+      });
+</script>
+
+
+<table id="theGrid" class="scroll"></table> 
+<div id="pager" class="scroll" style="text-align:center;"></div>
+
+{% endblock %}
