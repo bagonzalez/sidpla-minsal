@@ -1,0 +1,48 @@
+{# empty Twig template #}
+
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script type="text/javascript">        
+      $(document).ready(function(){
+          $('#tabs').tabs();
+      //jAlert('This is a custom alert box', 'Alert Dialog');
+         });
+      
+</script>
+      
+<br></br>
+<br></br>
+<br></br>
+<h2 class="demoHeaders">Ingreso de Mensaje Correo Template</h2>
+<div id="tabs">
+        <ul>
+                <li><a href="#tabs-1">Mensajes Correo</a></li>
+                
+        </ul>
+        <div id="tabs-1" >
+            <form action="{{ path('MinSalSidPlaAdminBundle_ingresarMenCorrtemp')}}" method="post" >
+                <table align="center" id="datosMenCorrtempTabla"  >
+                    <tr>
+                        <td colspan="4" align="center" >Datos Del Mensaje Correo Template <br><br></td>
+                    </tr>
+                    <tr>
+                        <td >Nombre del Mensaje:</td>
+                        <td colspan="3" ><input size="60%" name="nombreMensaje" id="nombreMensaje" ></input></td>
+                    </tr>
+                    <tr>
+                        <td >Texto:</td>
+                        <td colspan="3" ><textarea rows="20" cols="100" name="textoMensaje" size="60%" id="textoMensaje" ></textarea></td>
+                    </tr>
+                    
+                        <td colspan="4" align="center" ><button type="submmit" id="guardar"  >Guardar</button>
+                            <button type="reset"  >Limpiar</button>
+                        </td>                        
+                    </tr>                    
+                </table>
+            </form>            
+        </div>
+      
+</div>
+
+
+{% endblock %}
