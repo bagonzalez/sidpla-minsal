@@ -3,7 +3,24 @@
 {% block body %}
 <script type="text/javascript">        
       $(document).ready(function(){
-          $('#tabs').tabs();
+          $('#tabs').tabs();          
+         
+          
+          $('#departamento').change(function(){   
+              $('#municipio').children().remove();
+             
+
+              $.getJSON('consultarMunicipiosJSON?departamento='+$('#departamento').val(), function(data) {
+                  var i=0;
+                  $.each(data, function(key, val) {
+                      if(key=='rows'){
+                        $.each(val, function(id, registro){
+                            $('#municipio').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+                        });                    
+                      }
+                  });
+              });              
+          });
       });
       
 </script>
@@ -34,7 +51,7 @@
                     </tr>
                     <tr>
                         <td >Responsable:</td>
-                        <td colspan="3" ><input size="60%" name="responsable" id="responsable"  ></input></td>
+                        <td colspan="3" ><input size="60%" name="responsable" id="responsable"  ></input><input type="button" value="..."></input></td>
                     </tr>  
                     <tr>
                         <td >Tel&eacute;fono:</td>
@@ -48,13 +65,20 @@
                     </tr> 
                     <tr>
                         <td  >Unidad Padre:</td>
-                        <td colspan="3"  ><input size="60%" id="unidadPadre" name="unidadPadre"  ></input><input type="button" value="..."></input></td>
+                        <td colspan="3"  ><input size="60%" id="unidadPadre" name="unidadPadre"  ></input></td>
                     </tr> 
                     <tr>
                         <td>Departamento:</td>
-                        <td><input id="departamento" name="departamento"  ></input></td>
+                        <td><select id="departamento" name="departamento">
+                                <option value="0" >--Seleccione un Departamento--</option>    
+                                {% for dpto in deptos %} 
+                                        <option value="{{ dpto.idDepto}}" >{{ dpto.nombreDepto }}</option>                                        
+                                {% endfor %}
+                            </select></td>
                         <td>Municipio:</td>
-                        <td><input id="municipio" name="municipio"></input></td>
+                        <td><select id="municipio" name="municipio">
+                                 <option value="0" >--Seleccione un Municipio--</option>    
+                            </select></td>
                     </tr> 
                     <tr>
                         <td colspan="4" align="center" ><button type="submmit" id="guardar"  >Guardar</button>

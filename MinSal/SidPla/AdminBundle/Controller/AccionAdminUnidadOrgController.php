@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 use MinSal\SidPla\AdminBundle\EntityDao\DepartametoPaisDao;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
-
+use MinSal\SidPla\AdminBundle\Entity\Municipio;
 /**
  * Description of AccionAdminUnidadOrgController
  *
@@ -68,7 +68,7 @@ class AccionAdminUnidadOrgController extends Controller {
         $departamentos=$departamDao->getDepartametos();
         
         return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:ingresoUnidadOrganizativa.html.twig', 
-                    array('opciones' => $opciones,  ));       
+                    array('opciones' => $opciones, 'deptos' => $departamentos ));       
     }
     
      public function ingresarUnidadOrgAction(){
@@ -88,6 +88,41 @@ class AccionAdminUnidadOrgController extends Controller {
         return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:ingresoUnidadOrganizativa.html.twig', 
                     array('opciones' => $opciones,  ));       
      }
+     
+     public function consultarMunicipiosJSONAction()
+	{
+            $request=$this->getRequest();
+            $idDpto=$request->get('departamento');
+            $departamDao=new DepartametoPaisDao($this->getDoctrine());
+            $municipios=$departamDao->consultarMunicipioDpto($idDpto);         
+            
+            $numfilas=count($municipios);  
+            
+            $muni=new Municipio();
+            $i=0;
+            
+            foreach ($municipios as $muni) {
+                $rows[$i]['id']= $muni->getIdMunicipio();
+                $rows[$i]['cell']= array($muni->getIdMunicipio(),
+                                         $muni->getNombreMunicipio(),
+                                         $muni->getIdDepto());    
+                $i++;
+            }
+            
+            $datos=json_encode($rows);            
+            
+            
+            $jsonresponse='{
+               "page":"1",
+               "total":"1",
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
+            
+            
+            $response=new Response($jsonresponse);              
+            return $response;   
+           
+	}
     
     
 }
