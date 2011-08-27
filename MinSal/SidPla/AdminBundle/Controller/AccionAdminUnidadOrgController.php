@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
+use MinSal\SidPla\AdminBundle\EntityDao\DepartametoPaisDao;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 
 /**
@@ -63,6 +64,9 @@ class AccionAdminUnidadOrgController extends Controller {
     public function ingresoNuevaUnidadesOrgAction(){
         $opciones=$this->getRequest()->getSession()->get('opciones'); 
         
+        $departamDao=new DepartametoPaisDao($this->getDoctrine());
+        $departamentos=$departamDao->getDepartametos();
+        
         return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:ingresoUnidadOrganizativa.html.twig', 
                     array('opciones' => $opciones,  ));       
     }
@@ -78,8 +82,6 @@ class AccionAdminUnidadOrgController extends Controller {
         $fax=$request->get('fax');
         $tipoUnidad=$request->get('tipoUnidad');
         $unidadPadre=$request->get('unidadPadre');
-        
-        
         
         
         
