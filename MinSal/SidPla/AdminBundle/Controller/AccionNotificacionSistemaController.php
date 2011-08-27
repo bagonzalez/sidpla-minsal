@@ -54,7 +54,7 @@ class AccionNotificacionSistemaController extends Controller {
         $response = new Response($jsonresponse);
         return $response;
     }
-/*
+
     public function manttNotificacionEdicionAction() {
         $request = $this->getRequest();
 
@@ -69,10 +69,10 @@ class AccionNotificacionSistemaController extends Controller {
 
         switch ($operacion){
             case 'edit':
-                $rolDao->editRol($nombreRol, $funciones, $id);
+               // $rolDao->editRol($nombreRol, $funciones, $id);
                 break;
             case 'del':
-                $rolDao->delRol($id);
+              //  $rolDao->delRol($id);
                 break;
             case 'add':
                 $NotificacionSistemaDao->addNotiSistema($nombrenoti, $tipomensajenoti,$mensajenoti);
@@ -80,7 +80,7 @@ class AccionNotificacionSistemaController extends Controller {
         }
 
         return new Response("{sc:true,msg:''}");
-    }*/
+    }
 
 }
 
