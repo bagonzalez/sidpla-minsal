@@ -49,6 +49,19 @@ class DepartametoPaisDao {
         $departamento=$this->repositorio->findAll();
         return $departamento;
     }
+    
+    
+    /*
+     * Obtiene los municipios 
+     */
+    
+     public function consultarMunicipioDpto($idDto){              
+             
+             $departamento = $this->repositorio->find($idDto);
+             $municipios = $departamento->getMunicipios();        
+             
+             return $municipios;
+     }
         
 }
 

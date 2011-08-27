@@ -3,6 +3,8 @@
 namespace MinSal\SidPla\AdminBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 /**
  * MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa
  *
@@ -43,20 +45,62 @@ class UnidadOrganizativa {
      */
      private $tipoUnidad;
      
-     
-     /**
-     * @var integer $idUnidadOrgPadre
-     *
-     * @ORM\Column(name="uniorg_codigo1", type="integer")
-     */
-     private $idUnidadOrgPadre;
-     
+             
      /**
      * @var integer $idMunicipio
      *
      * @ORM\Column(name="muni_codigo", type="integer")
      */
-     private $idMunicipio;     
+     private $idMunicipio;  
+     
+     
+    /**
+     * @OneToMany(targetEntity="UnidadOrganizativa", mappedBy="parent")
+     */
+    protected $subUnidades;
+    
+    /**
+     * @ManyToOne(targetEntity="UnidadOrganizativa", inversedBy="subUnidades")
+     * @JoinColumn(name="uniorg_codigo1", referencedColumnName="uniorg_codigo")
+     */
+    protected $parent;
+    
+    
+    public function __construct()
+    {
+        $this->subUnidades = new ArrayCollection();
+    }
+    
+    /**
+     * Add subUnidades
+     *
+     * @param \MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $subUnidades
+     */
+    public function addSubUnidades(\MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $subUnidades)
+    {
+        $this->subUnidades[] = $subUnidades;
+    }
+
+    /**
+     * Get subUnidades
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getSubUnidades()
+    {
+        return $this->subUnidades;
+    }
+    
+     public function getParent()
+    {
+        return $this->parent;
+    }
+    
+    public function setParent($parent)
+    {
+        $this->parent = $parent;
+    }
+    
      
      
      /**
@@ -99,15 +143,7 @@ class UnidadOrganizativa {
         $this->tipoUnidad = $tipoUnidad;
     }
     
-    public function getIdUnidadOrgPadre()
-    {
-        return $this->idUnidadOrgPadre;
-    }
-    
-    public function setIdUnidadOrgPadre($idUnidadOrgPadre)
-    {
-        $this->idUnidadOrgPadre = $idUnidadOrgPadre;
-    }
+   
     
     public function getIdMunicipio()
     {
@@ -120,5 +156,3 @@ class UnidadOrganizativa {
     }
    
 }
-
-?>
