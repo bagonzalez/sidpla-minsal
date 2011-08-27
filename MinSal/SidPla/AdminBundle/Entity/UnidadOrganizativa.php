@@ -55,15 +55,15 @@ class UnidadOrganizativa {
      
      
     /**
-     * @OneToMany(targetEntity="UnidadOrganizativa", mappedBy="parent")
+     * @ORM\OneToMany(targetEntity="UnidadOrganizativa", mappedBy="parent")
      */
     protected $subUnidades;
     
     /**
-     * @ManyToOne(targetEntity="UnidadOrganizativa", inversedBy="subUnidades")
-     * @JoinColumn(name="uniorg_codigo1", referencedColumnName="uniorg_codigo")
+     * @ORM\ManyToOne(targetEntity="UnidadOrganizativa", inversedBy="subUnidades")
+     * @ORM\JoinColumn(name="uniorg_codigo1", referencedColumnName="uniorg_codigo")
      */
-    protected $parent;
+    private $parent;
     
     
     public function __construct()
