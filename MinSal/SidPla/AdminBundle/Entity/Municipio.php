@@ -1,5 +1,10 @@
 <?php
 
+/*
+ * Entidad que persiste los municipios
+ * 
+ */
+
 namespace MinSal\SidPla\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
@@ -96,4 +101,7 @@ class Municipio
     {
         return $this->idDepto;
     }
+    
+    
+    
 }
