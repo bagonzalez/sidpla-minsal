@@ -72,13 +72,11 @@ class AccionAdminMenCorreTempController extends Controller {
     }
     
    /*
-         * Opciones de mantenimiento de roles
+         * Opciones de mantenimiento de mensajes correo template
          * Eliminar, agregar, editar
          * 
          */
-        
-        
-   
+          
     
     public function manttMenCorrtempEdicionAction(){
             
@@ -108,6 +106,45 @@ class AccionAdminMenCorreTempController extends Controller {
             
         }      
     
+        public function ingresoMenCorrtempAction(){
+        $opciones=$this->getRequest()->getSession()->get('opciones'); 
+        
+        //$departamDao=new DepartametoPaisDao($this->getDoctrine());
+       // $departamentos=$departamDao->getDepartametos();
+         $MensajeCoDao=new MensajeCorreTempDao($this->getDoctrine());        
+        $MensajeCorreT=$MensajeCoDao->getMensaTem(); 
+       
+       // return $this->render('MinSalSidPlaAdminBundle:MensajeCorreoTemplate:ingresoMensajesCorreoTem.html.twig', 
+    //                array('opciones' => $opciones,  ));       
+    
+        return $this->render('MinSalSidPlaAdminBundle:MensajeCorreoTemplate:ingresoMensajesCorreoTem.html.twig'
+                , array('opciones' => $opciones, 'MensajeCorreT' => $MensajeCorreT)); 
+        
+        
+    }
+    
+     public function ingresarMenCorrtempAction(){
+        
+        $opciones=$this->getRequest()->getSession()->get('opciones'); 
+        $request=$this->getRequest();
+        $textoMenTem=$request->get('nombreMensaje');
+        $nombreMentem=$request->get('textoMensaje');
+        $menCorrTempDao=new MensajeCorreTempDao($this->getDoctrine());
+        
+         $menCorrTempDao->addMensaTem($textoMenTem, $nombreMentem);
+        //return new Response("{sc:true,msg:''}");
+        
+        
+       //echo "<script>  jAlert('This is a custom alert box', 'Alert Dialog'); </script>"; 
+         
+         return $this->render('MinSalSidPlaAdminBundle:MensajeCorreoTemplate:ingresoMensajesCorreoTem.html.twig', 
+                    array('opciones' => $opciones,  ));       
+     }
+    
+        
+        
+        
+        
 }
 
 ?>
