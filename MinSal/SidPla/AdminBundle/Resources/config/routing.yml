@@ -117,3 +117,7 @@ MinSalSidPlaAdminBundle_ingresarMenCorrtemp:
 MinSalSidPlaAdminBundle_manttNotificacionEdicion:
     pattern:  /admin/manttNotificacionEdicion
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionNotificacionSistema:manttNotificacionEdicion }    
+    
+MinSalSidPlaAdminBundle_mattUnidadesOrg:
+    pattern:  /admin/mattUnidadesOrg
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:mattUnidadesOrg } 

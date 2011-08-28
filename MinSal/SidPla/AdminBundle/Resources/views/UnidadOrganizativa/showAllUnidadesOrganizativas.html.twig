@@ -1,6 +1,3 @@
-{# empty Twig template #}
-{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
-{% block titulo %}Asignaci&oacute;n de Opciones a Roles del Sistema{% endblock %}
 
 {% block body %}
 <script type="text/javascript">
@@ -11,11 +8,14 @@
           url: 'consultarUnidadesOrgJSON',
           datatype:'json',
           altRows:true,
-          colNames:['Id','Nombre', 'Descripcion'],
+          colNames:['Id','Unidad', 'Descripcion', 'Responsable', 'Direccion', 'Telefono' ],
           colModel:[
             { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}  },
             { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}  },
-            { name:'descripcion', index: 'descripcion',width:300,editable:true,editoptions:{size:50}  } ],            
+            { name:'descripcion', index: 'descripcion',width:300,editable:true,editoptions:{size:50}},
+            { name:'responable', index: 'responable',width:150,editable:true,editoptions:{size:50}},
+            { name:'direccion', index: 'direccion',width:60,editable:true,editoptions:{size:50}},
+            { name:'telefono', index: 'telefono',width:60,editable:true,editoptions:{size:50}} ],            
           rowNum:10,
           rowList:[10,20,30],
           multiselect: true,
@@ -23,33 +23,19 @@
           viewrecords: true,          
             caption: 'Unidades Organizativas',
             height: "100%",
-            editurl: 'manttRolEdicion'
+            editurl: 'manttUnidadEdicion'
         });
          myGrid.jqGrid('navGrid','#pager',
-        {edit:true,add:true,del:true},
-        {width:550,height:160},
-        {width:550,height:160},
-        {width:550,height:160},
+        {edit:false,add:false,del:false},
+        {width:550,height:200},
+        {width:550,height:200},
+        {width:550,height:100},
         {multipleSearch:true, multipleGroup:true}
         );
           
           
       });
 </script>
-<br></br>
-<br></br>
-<br></br>
-
-
-
-<table border=1>
-{% for unidad in unidadesorg %} 
-    <tr>
-        <td>{{  unidad.nombreUnidad  }}</td>
-    </tr>    
-    
-{% endfor %}
-</table>
 
 <table id="theGrid" class="scroll"></table> 
 <div id="pager" class="scroll" style="text-align:center;"></div>

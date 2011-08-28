@@ -10,6 +10,8 @@ use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 use MinSal\SidPla\AdminBundle\EntityDao\DepartametoPaisDao;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 use MinSal\SidPla\AdminBundle\Entity\Municipio;
+use MinSal\SidPla\AdminBundle\Entity\InformacionGeneral;
+
 /**
  * Description of AccionAdminUnidadOrgController
  *
@@ -38,11 +40,20 @@ class AccionAdminUnidadOrgController extends Controller {
             $uni=new UnidadOrganizativa();
             $i=0;
             
-            foreach ($unidadesOrg as $uni) {
+            foreach ($unidadesOrg as $uni) {              
+                
+                $infogeneral=$uni->getInformacionGeneral();                
+                if($infogeneral==null)
+                    $infogeneral=new InformacionGeneral();
+                
+                        
                 $rows[$i]['id']= $uni->getIdUnidadOrg();
                 $rows[$i]['cell']= array($uni->getIdUnidadOrg(),
                                          $uni->getNombreUnidad(),
-                                         $uni->getDescripcionUnidad());    
+                                         $uni->getDescripcionUnidad(),
+                                         '',
+                                         $infogeneral->getDireccion(),
+                                         $infogeneral->getTelefono());    
                 $i++;
             }
             
@@ -75,6 +86,7 @@ class AccionAdminUnidadOrgController extends Controller {
         
         $opciones=$this->getRequest()->getSession()->get('opciones'); 
         $request=$this->getRequest();
+        
         $nombreUnidad=$request->get('nombreUnidad');
         $direccion=$request->get('direccion');
         $responsable=$request->get('responsable');
@@ -82,11 +94,21 @@ class AccionAdminUnidadOrgController extends Controller {
         $fax=$request->get('fax');
         $tipoUnidad=$request->get('tipoUnidad');
         $unidadPadre=$request->get('unidadPadre');
+        $departameto=$request->get('departamento');
+        $municipio=$request->get('municipio');
+        $descripcion=$request->get('descripcion');
         
+        $unidadOrgDao=new UnidadOrganizativaDao($this->getDoctrine()); 
+        $unidadOrgDao->ingresarUnidadOrg($nombreUnidad, $direccion, $responsable, 
+                                         $telefono, $fax, $tipoUnidad, $unidadPadre, 
+                                         $departameto, $municipio, $descripcion);
         
+        $departamDao=new DepartametoPaisDao($this->getDoctrine());
+        $departamentos=$departamDao->getDepartametos();
         
-        return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:ingresoUnidadOrganizativa.html.twig', 
-                    array('opciones' => $opciones,  ));       
+            
+        return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:manttUnidadesOrganizativas.html.twig', 
+                    array('opciones' => $opciones,));       
      }
      
      public function consultarMunicipiosJSONAction()
@@ -123,6 +145,17 @@ class AccionAdminUnidadOrgController extends Controller {
             return $response;   
            
 	}
+        
+         public function mattUnidadesOrgAction()
+	{
+            $opciones=$this->getRequest()->getSession()->get('opciones');             
+            
+            return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:manttUnidadesOrganizativas.html.twig', 
+                    array('opciones' => $opciones,));
+            
+	}
+        
+        
     
     
 }

@@ -3,7 +3,18 @@
 {% block body %}
 <script type="text/javascript">        
       $(document).ready(function(){
-          $('#tabs').tabs();          
+          $('#tabs').tabs(); 
+          
+          $.getJSON('consultarUnidadesOrgJSON', function(data) {
+                  var i=0;
+                  $.each(data, function(key, val) {
+                      if(key=='rows'){
+                        $.each(val, function(id, registro){
+                            $('#unidadPadre').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+                        });                    
+                      }
+                  });
+          });
          
           
           $('#departamento').change(function(){   
@@ -28,7 +39,7 @@
 <br></br>
 <br></br>
 <br></br>
-<h2 class="demoHeaders">Ingreso de Unidades Organizativasss</h2>
+<h2 class="demoHeaders">Ingreso de Unidades Organizativas</h2>
 <div id="tabs">
         <ul>
                 <li><a href="#tabs-1">General</a></li>
@@ -46,6 +57,10 @@
                         <td colspan="3" ><input size="60%" name="nombreUnidad" id="nombreUnidad" ></input></td>
                     </tr>
                     <tr>
+                        <td >Descripcion:</td>
+                        <td colspan="3" ><textarea rows="4" cols="58" name="descripcion" size="60%" id="textoMensaje" ></textarea></td>
+                    </tr>
+                    <tr>
                         <td >Direcci&oacute;n:</td>
                         <td colspan="3" ><input name="direccion" size="60%" id="direccion" ></input></td>
                     </tr>
@@ -61,11 +76,20 @@
                     </tr>
                     <tr>
                         <td  >Tipo Unidad:</td>
-                        <td colspan="3"><input size="60%" id="tipoUnidad" name="tipoUnidad" ></input></td>
+                        <td colspan="3">
+                            <select id="tipoUnidad" name="tipoUnidad">
+                                 <option value="1" >Dependencia</option>    
+                                 <option value="2" >Unidad Organizativa</option>    
+                                 <option value="3" >Entidad de Control</option>    
+                            </select>
+                        </td>
                     </tr> 
                     <tr>
                         <td  >Unidad Padre:</td>
-                        <td colspan="3"  ><input size="60%" id="unidadPadre" name="unidadPadre"  ></input></td>
+                        <td colspan="3"  >
+                            <select id="unidadPadre" name="unidadPadre">
+                                 <option value="" >--Seleccione Unidad Padre--</option>    
+                            </select></td>                            
                     </tr> 
                     <tr>
                         <td>Departamento:</td>

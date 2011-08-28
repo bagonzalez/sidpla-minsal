@@ -66,6 +66,12 @@ class UnidadOrganizativa {
     private $parent;
     
     
+     /**
+     * @ORM\OneToOne(targetEntity="InformacionGeneral", mappedBy="unidadOrganizativa")
+     */
+    private $informacionGeneral;
+    
+    
     public function __construct()
     {
         $this->subUnidades = new ArrayCollection();
@@ -155,4 +161,24 @@ class UnidadOrganizativa {
         $this->idMunicipio = $idMunicipio;
     }
    
+
+    /**
+     * Set informacionGeneral
+     *
+     * @param MinSal\SidPla\AdminBundle\Entity\InformacionGeneral $informacionGeneral
+     */
+    public function setInformacionGeneral(\MinSal\SidPla\AdminBundle\Entity\InformacionGeneral $informacionGeneral)
+    {
+        $this->informacionGeneral = $informacionGeneral;
+    }
+
+    /**
+     * Get informacionGeneral
+     *
+     * @return MinSal\SidPla\AdminBundle\Entity\InformacionGeneral 
+     */
+    public function getInformacionGeneral()
+    {
+        return $this->informacionGeneral;
+    }
 }
