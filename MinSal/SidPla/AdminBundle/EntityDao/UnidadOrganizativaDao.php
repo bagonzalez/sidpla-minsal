@@ -48,8 +48,8 @@ class UnidadOrganizativaDao {
                                       $descripcion) {	    
         
         
+         
         
-        $unidadParent=$this->repositorio->find($unidadPadre);  
         $municipioDao=new MunicipioDao($this->doctrine);
         $muncipioObj=$municipioDao->getMunicipio($municipio);
         
@@ -63,7 +63,12 @@ class UnidadOrganizativaDao {
         $unidadOrg=new UnidadOrganizativa();
         $unidadOrg->setNombreUnidad($nombreUnidad);
         $unidadOrg->setTipoUnidad($tipoUnidad);
-        $unidadOrg->setParent($unidadParent);
+        
+        if($unidadPadre!=0){
+            $unidadParent=$this->repositorio->find($unidadPadre); 
+            $unidadOrg->setParent($unidadParent);
+        }        
+        
         $unidadOrg->setIdMunicipio($municipio);        
         $unidadOrg->setInformacionGeneral($informacionGeneral);
         $unidadOrg->setDescripcionUnidad($descripcion);
