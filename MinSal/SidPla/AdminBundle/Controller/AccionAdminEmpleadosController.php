@@ -36,6 +36,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use MinSal\SidPla\AdminBundle\EntityDao\EmpleadoDao;
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
+use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 
 class AccionAdminEmpleadosController extends Controller {
     
@@ -68,13 +69,20 @@ class AccionAdminEmpleadosController extends Controller {
             $i=0;
             
             foreach ($empleados as $emple) {
+                
+                $unidad=$emple->getUnidadOrganizativa();
+                 if($unidad==null)
+                     $unidad=new UnidadOrganizativa();
+                
+                
                 $rows[$i]['id']= $emple->getIdEmpleado();
                 $rows[$i]['cell']= array($emple->getIdEmpleado(),
                                          $emple->getPrimerNombre(),
                                          $emple->getSegundoNombre(),
                                          $emple->getPrimerApellido(),
                                          $emple->getSegundoApellido(),
-                                         $emple->getDui());    
+                                         $emple->getDui(),
+                                         $unidad->getNombreUnidad());    
                 $i++;
             }
             
@@ -111,6 +119,7 @@ class AccionAdminEmpleadosController extends Controller {
             $nombreSegundo=$request->get('nombreSegundo');
             $primerApellido=$request->get('primerApellido');
             $segundoApellido=$request->get('segundoApellido');
+            $unidadAsignada=$request->get('unidad');
             
             $id=$request->get('id');            
             $operacion=$request->get('oper'); 
@@ -118,7 +127,7 @@ class AccionAdminEmpleadosController extends Controller {
             $empleadoDao=new EmpleadoDao($this->getDoctrine());
             
             if($operacion=='edit'){                
-                $empleadoDao->editEmpleado($dui, $nombrePrimero, $nombreSegundo, $primerApellido, $segundoApellido, $id);
+                $empleadoDao->editEmpleado($dui, $nombrePrimero, $nombreSegundo, $primerApellido, $segundoApellido, $id, $unidadAsignada);
             }
             
             if($operacion=='del'){
@@ -126,7 +135,7 @@ class AccionAdminEmpleadosController extends Controller {
             }
             
             if($operacion=='add'){
-                $empleadoDao->addEmpleado($dui, $nombrePrimero, $nombreSegundo, $primerApellido, $segundoApellido);
+                $empleadoDao->addEmpleado($dui, $nombrePrimero, $nombreSegundo, $primerApellido, $segundoApellido, $unidadAsignada);
             }
              
             return new Response("{sc:true,msg:''}"); 

@@ -134,5 +134,11 @@ MinSalSidPlaAdminBundle_consultarEmpleadosJSON:
 MinSalSidPlaAdminBundle_manttEmpleadoEdicion:
     pattern:  /admin/manttEmpleadoEdicion
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminEmpleados:manttEmpleadoEdicion } 
+
+MinSalSidPlaAdminBundle_consultarUnidadesOrgJSONSelect:
+    pattern:  /admin/consultarUnidadesOrgJSONSelect
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:consultarUnidadesOrgJSONSelect } 
+    
+    
     
     

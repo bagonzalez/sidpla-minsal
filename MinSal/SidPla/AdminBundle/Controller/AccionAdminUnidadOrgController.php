@@ -72,6 +72,34 @@ class AccionAdminUnidadOrgController extends Controller {
         
     }
     
+     public function consultarUnidadesOrgJSONSelectAction(){
+        
+        $unidadOrgDao=new UnidadOrganizativaDao($this->getDoctrine());        
+        $unidadesOrg=$unidadOrgDao->getUnidadesOrg(); 
+        
+        $numfilas=count($unidadesOrg);  
+        
+        $select="<select>";
+            
+            $uni=new UnidadOrganizativa();
+            $i=0;
+            
+            foreach ($unidadesOrg as $uni) {              
+                
+                $infogeneral=$uni->getInformacionGeneral();                
+                if($infogeneral==null)
+                    $infogeneral=new InformacionGeneral();
+                
+                $select=$select."<option value=".$uni->getIdUnidadOrg().">".$uni->getNombreUnidad()."</option>";
+            }
+             
+            $select= $select."</select>";
+            
+            $response=new Response($select);              
+            return $response ;            
+        
+    }
+    
     public function ingresoNuevaUnidadesOrgAction(){
         $opciones=$this->getRequest()->getSession()->get('opciones'); 
         

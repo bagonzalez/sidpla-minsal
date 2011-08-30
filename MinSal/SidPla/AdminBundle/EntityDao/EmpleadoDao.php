@@ -32,6 +32,7 @@
 namespace MinSal\SidPla\AdminBundle\EntityDao;
 
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 
 class EmpleadoDao {
     
@@ -60,7 +61,8 @@ class EmpleadoDao {
                                 $primerNombre,
                                 $segundoNombre,
                                 $primerApellido,
-                                $segundoApellido) {
+                                $segundoApellido,
+                                $unidadAsignada) {
         
         $empleado=new Empleado();
         
@@ -70,6 +72,10 @@ class EmpleadoDao {
         $empleado->setPrimerApellido($primerApellido);
         $empleado->setSegundoApellido($segundoApellido);
         
+        $unidadDao=new UnidadOrganizativaDao($this->doctrine);        
+        $unidad=$unidadDao->getUnidadOrg($unidadAsignada);
+        
+        $empleado->setUnidadOrganizativa($unidad);
 	    
         $this->em->persist($empleado);
         $this->em->flush();	    
@@ -99,7 +105,8 @@ class EmpleadoDao {
                                 $segundoNombre,
                                 $primerApellido,
                                 $segundoApellido,
-                                $id){
+                                $id, 
+                                $unidadAsignada){
             
             $empleado=new Empleado();            
             $empleado=$this->repositorio->find($id);
@@ -113,6 +120,11 @@ class EmpleadoDao {
             $empleado->setSegundoNombre($segundoNombre);
             $empleado->setPrimerApellido($primerApellido);
             $empleado->setSegundoApellido($segundoApellido);
+            
+            $unidadDao=new UnidadOrganizativaDao($this->doctrine);        
+            $unidad=$unidadDao->getUnidadOrg($unidadAsignada);
+
+            $empleado->setUnidadOrganizativa($unidad);
             
             $this->em->flush();            
             $matrizMensajes = array('El proceso de almacenar termino con exito', 'Rol '.$rol->getIdRol());
