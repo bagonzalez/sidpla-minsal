@@ -10,15 +10,15 @@ use MinSal\SidPla\AdminBundle\Entity\NotificacionSistema;
 
 class AccionNotificacionSistemaController extends Controller {
 
-    public function consultarNotificacionAction() {
+    public function mantenimientoNotificacionAction() {
 
         $opciones = $this->getRequest()->getSession()->get('opciones');
-
+        
         $notificacionDao = new NotificacionSistemaDao($this->getDoctrine());
-        $notificacion = $notificacionDao->getNotiSistema();
+        
 
         return $this->render('MinSalSidPlaAdminBundle:NotificacionSistema:showNotificacionSistema.html.twig'
-                        , array('opciones' => $opciones, 'notificaciones' => $notificacion));
+                        , array('opciones' => $opciones));
     }
 
     public function consultarNotificacionJSONAction() {
@@ -58,28 +58,28 @@ class AccionNotificacionSistemaController extends Controller {
     public function manttNotificacionEdicionAction() {
         $request = $this->getRequest();
 
-        $nombrenoti=$request->get('nombre');
-        $mensajenoti=$request->get('mensaje');
-        $tipomensajenoti = $request->get('tipomensaje');
-        $codigonoti = $request->get('codigo');
+        $nombreNoti=$request->get('nombre');
+        $mensajeNoti=$request->get('mensaje');
+        $tipoMensajeNoti = $request->get('tipomensaje');
+        $codigo = $request->get('id');
 
         $operacion = $request->get('oper');
 
-        $NotificacionSistemaDao = new NotificacionSistemaDao($this->getDoctrine());
+        $notificacionSistemaDao = new NotificacionSistemaDao($this->getDoctrine());
 
         switch ($operacion){
             case 'edit':
-               // $rolDao->editRol($nombreRol, $funciones, $id);
+                $hola=$notificacionSistemaDao->editNotiSistema($codigo,$nombreNoti,$mensajeNoti,$tipoMensajeNoti);
                 break;
             case 'del':
-              //  $rolDao->delRol($id);
+               $notificacionSistemaDao->delNotiSistema($codigo);
                 break;
             case 'add':
-                $NotificacionSistemaDao->addNotiSistema($nombrenoti, $tipomensajenoti,$mensajenoti);
+                $notificacionSistemaDao->addNotiSistema($nombreNoti, $tipoMensajeNoti,$mensajeNoti);
                 break;
         }
 
-        return new Response("{sc:true,msg:''}");
+        return new Response("{sc:true,msg:'".$hola."'}");
     }
 
 }

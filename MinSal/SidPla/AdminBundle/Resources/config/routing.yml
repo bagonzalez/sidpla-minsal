@@ -97,13 +97,17 @@ MinSalSidPlaAdminBundle_manttMenCorrtempEdicion:
     pattern:  /admin/manttMenCorrtempEdicion
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminMenCorreTemp:manttMenCorrtempEdicion }  
          
-MinSalSidPlaAdminBundle_consultarNotificacion:
-    pattern:  /admin/consultarNotificacion   
-    defaults: { _controller: MinSalSidPlaAdminBundle:AccionNotificacionSistema:consultarNotificacion }
+MinSalSidPlaAdminBundle_mantenimientoNotificacion:
+    pattern:  /admin/mantenimientoNotificacion   
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionNotificacionSistema:mantenimientoNotificacion }
     
 MinSalSidPlaAdminBundle_consultarNotificacionJSON:
     pattern:  /admin/consultarNotificacionJSON   
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionNotificacionSistema:consultarNotificacionJSON }
+    
+MinSalSidPlaAdminBundle_manttNotificacionEdicion:
+    pattern:  /admin/manttNotificacionEdicion
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionNotificacionSistema:manttNotificacionEdicion }   
     
 MinSalSidPlaAdminBundle_ingresoMenCorrtemp:
     pattern:  /admin/ingresoMenCorrtemp   
@@ -112,11 +116,6 @@ MinSalSidPlaAdminBundle_ingresoMenCorrtemp:
 MinSalSidPlaAdminBundle_ingresarMenCorrtemp:
     pattern:  /admin/ingresarMenCorrtemp    
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminMenCorreTemp:ingresarMenCorrtemp } 
-    
-
-MinSalSidPlaAdminBundle_manttNotificacionEdicion:
-    pattern:  /admin/manttNotificacionEdicion
-    defaults: { _controller: MinSalSidPlaAdminBundle:AccionNotificacionSistema:manttNotificacionEdicion }    
     
 MinSalSidPlaAdminBundle_mattUnidadesOrg:
     pattern:  /admin/mattUnidadesOrg

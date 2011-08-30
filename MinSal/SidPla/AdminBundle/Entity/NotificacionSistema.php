@@ -32,7 +32,7 @@ class NotificacionSistema
     /**
      * @var string $TipoMensajeNoti
      *
-     * @ORM\Column(name="notifmensa_tipoMensaje", type="string", length=10)
+     * @ORM\Column(name="notifmensa_tipoMensaje", type="string", length=25)
      */
     private $TipoMensajeNoti;
 

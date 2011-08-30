@@ -15,20 +15,22 @@
             { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}  },
             { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}  },
             { name:'mensaje', index: 'mensaje',width:300,editable:true,editoptions:{size:50}  },
-            { name:'tipomensaje', index: 'tipomensaje',editable:true,width:150,editoptions:{size:50}}],            
+            { name:'tipomensaje', index: 'tipomensaje',editable:true,edittype:"select",
+                editoptions:{value:"error:error;informativo:informativo;advertencia:advertencia;error fatal:error fatal;error controlado:error controlado;notificacion correo:notificacion correo"}}],            
           rowNum:10,
           rowList:[10,20,30],
           multiselect: true,
           pager: jQuery('#pager'),
           viewrecords: true,          
-            caption: 'Notificaciones del Sistemana',
-            height: "100%",
-            editurl:'manttNotificacionEdicion'
+          caption: 'Notificaciones del Sistema',
+          height: "100%",
+          editurl:'manttNotificacionEdicion'
+           
         });
          myGrid.jqGrid('navGrid','#pager',
         {edit:true,add:true,del:true},
-        {width:550,height:160},
-        {width:550,height:160},
+        {width:550,height:160,closeAfterEdit : true},
+        {width:550,height:160,closeAfterAdd : true},
         {width:550,height:160},
         {multipleSearch:true, multipleGroup:true}
         );         
@@ -39,5 +41,4 @@
 <br></br>
 <table id="tabnotificacion" class="scroll"></table> 
 <div id="pager" class="scroll" style="text-align:center;"></div>
-
 {% endblock %}
