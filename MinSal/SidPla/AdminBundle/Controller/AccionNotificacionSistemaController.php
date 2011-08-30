@@ -69,7 +69,7 @@ class AccionNotificacionSistemaController extends Controller {
 
         switch ($operacion){
             case 'edit':
-                $hola=$notificacionSistemaDao->editNotiSistema($codigo,$nombreNoti,$mensajeNoti,$tipoMensajeNoti);
+                $notificacionSistemaDao->editNotiSistema($codigo,$nombreNoti,$mensajeNoti,$tipoMensajeNoti);
                 break;
             case 'del':
                $notificacionSistemaDao->delNotiSistema($codigo);
@@ -79,7 +79,7 @@ class AccionNotificacionSistemaController extends Controller {
                 break;
         }
 
-        return new Response("{sc:true,msg:'".$hola."'}");
+        return new Response("{sc:true,msg:''}");
     }
 
 }
