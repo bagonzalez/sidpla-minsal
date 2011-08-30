@@ -1,0 +1,59 @@
+{# Muestra todos los empleados #}
+
+{% block body %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+          
+         
+
+        var myGrid = $('#theGrid');        
+        myGrid.jqGrid({ 
+          url: 'consultarEmpleadosJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Id','Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido', 'DUI', 'Unidad Organizativa'],
+          colModel:[
+            { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}  },
+            { name:'nombrePrimero', index: 'nombrePrimero', width:150,editable:true,editoptions:{size:25}  },
+            { name:'nombreSegundo', index: 'nombreSegundo',width:150,editable:true,editoptions:{size:25} },
+            { name:'primerApellido', index: 'primerApellido', width:150,editable:true,editoptions:{size:25}  },
+            { name:'segundoApellido', index: 'segundoApellido',width:150,editable:true,editoptions:{size:25}  },
+            { name:'dui', index: 'dui',width:150,editable:true,editoptions:{size:25}  },
+            { name:'unidad', index: 'unidad',width:150,editable:true,edittype:"select",
+                editoptions:{ size: 1,
+                   dataUrl: 'consultarUnidadesOrgJSONSelect',
+                   dataEvents: [
+                      {  type: 'change',
+                         fn: function(e) {
+                            $('select#unidad').val(this.value);
+                         }
+                      }
+                   ]
+        }    }],            
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: true,
+          pager: jQuery('#pager'),
+          viewrecords: true,          
+            caption: 'Empleados',
+            height: "100%",
+            editurl: 'manttEmpleadoEdicion'
+        });
+        myGrid.jqGrid('navGrid','#pager',
+        {edit:true,add:true,del:true},
+        {width:400,height:250},
+        {width:400,height:250},
+        {},
+        {multipleSearch:true, multipleGroup:true}
+        );        
+         
+        
+       
+      });
+    </script>
+        
+        <table id="theGrid" class="scroll"></table> 
+        <div id="pager" class="scroll" style="text-align:center;"></div> 
+        
+
+{% endblock %}

@@ -83,6 +83,11 @@ class UnidadOrganizativaDao {
         return $matrizMensajes;
 
     }
+    
+    public function getUnidadOrg($id) {	    
+        $unidadOrg=$this->repositorio->find($id);
+        return $unidadOrg;
+    }
 }
 
 ?>
