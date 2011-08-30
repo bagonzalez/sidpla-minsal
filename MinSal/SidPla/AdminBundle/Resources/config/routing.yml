@@ -120,4 +120,19 @@ MinSalSidPlaAdminBundle_manttNotificacionEdicion:
     
 MinSalSidPlaAdminBundle_mattUnidadesOrg:
     pattern:  /admin/mattUnidadesOrg
-    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:mattUnidadesOrg } 
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:mattUnidadesOrg }
+    
+
+MinSalSidPlaAdminBundle_mattEmpleados:
+    pattern:  /admin/mattEmpleados
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminEmpleados:mattEmpleados } 
+    
+MinSalSidPlaAdminBundle_consultarEmpleadosJSON:
+    pattern:  /admin/consultarEmpleadosJSON
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminEmpleados:consultarEmpleadosJSON } 
+
+MinSalSidPlaAdminBundle_manttEmpleadoEdicion:
+    pattern:  /admin/manttEmpleadoEdicion
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminEmpleados:manttEmpleadoEdicion } 
+    
+    
