@@ -10,7 +10,7 @@ class NotificacionSistemaDao {
     var $doctrine;
     var $repositorio;
     var $em;
-
+//Este es el constructor
     function __construct($doctrine) {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
