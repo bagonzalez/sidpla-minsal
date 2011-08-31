@@ -9,28 +9,31 @@
           url: 'consultarMenCorrtempJSON',
           datatype:'json',
           altRows:true,
-          colNames:['Id','Texto', 'Nombre'],
+          colNames:['Id','Nombre', 'Texto'],
           colModel:[
-            { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}  },
-            { name:'texto', index: 'texto', width:800,editable:true,editoptions:{size:25}  },
-            { name:'Nombre', index: 'Nombre',width:300,editable:true,editoptions:{size:50}  } ],            
+            { name:'id', index: 'id',sorttype:'int', width:20,editable:false,editoptions:{size:15}, searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":13}  },
+            { name:'Nombre', index: 'Nombre', width:300,editable:true,editoptions:{size:100},formoptions:{ rowpos:1, label: "Nombre", elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'texto', index: 'texto',width:800, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"20",cols:"175"},editrules:{required:true},formoptions:{ rowpos:2, label: "texto", elmprefix:"(*)"} } ],            
           rowNum:10,
           rowList:[10,20,30],
           multiselect: true,
           pager: jQuery('#pager'),
           viewrecords: true,          
+            sortname: 'id',
+            sortorder: "asc",
             caption: 'Mensaje Correo templates',
             height: "100%",
-            editCaption: "Editar Registro",
-            addCaption: "Nuevo Registro",
+            editCaption: "Editar Mensaje Correo",
+            addCaption: "Nuevo Mensaje Correo",
             editurl: 'manttMenCorrtempEdicion'
         });
          myGrid.jqGrid('navGrid','#pager',
-        {edit:true,add:true,del:true},
-        {width:550,height:160},
-        {width:550,height:160},
-        {width:550,height:160},
-        {multipleSearch:true, multipleGroup:true}
+        {edit:false,add:false,del:false,view:true},
+        {width:550,height:760,bottominfo:"Campos marcados con (*) son obligatorios"},//edit
+        {width:550,height:660,jqModal:true,checkOnUpdate:true,savekey: [true,13], navkeys: [true,38,40], checkOnSubmit : true, reloadAfterSubmit:false, closeOnEscape:true,bottominfo:"Campos marcados con (*) son obligatorios"},//add
+        {width:550,height:600},//del
+        {multipleSearch:true, multipleGroup:true} //search
+        {width:550,height:600},//view
         );
           
           

@@ -1,10 +1,21 @@
+
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
-
+ <script type="text/javascript">
+      $(document).ready(function(){
+          
+          
+    $("#bedat").click(function(){ jQuery("#theGrid").jqGrid('editGridRow',"new",{height:400,reloadAfterSubmit:true,top : 250 ,left: 25,width: 1300,processData: "Cargando...",bottominfo:"Campos marcados con (*) son obligatorios"}); });
+    $("#bedata").click(function(){ var gr = jQuery("#theGrid").jqGrid('getGridParam','selrow'); if( gr != null ) jQuery("#theGrid").jqGrid('editGridRow',gr,{height:400,reloadAfterSubmit:false,top : 250 ,left: 25,width: 1300,processData: "Cargando...",bottominfo:"Campos marcados con (*) son obligatorios"}); else alert("Por favor seleccione una fila para editar!"); });
+    $("#beda").click(function(){ var grs = jQuery("#theGrid").jqGrid('getGridParam','selrow'); if( grs != null ) jQuery("#theGrid").jqGrid('delGridRow',grs,{height:100,reloadAfterSubmit:false,top : 300 ,left: 600,width: 300,processData: "Cargando...",}); else alert("Por favor seleccione una fila para borrar!"); }); 
+     
+     });
+    </script>
 <br></br>
     <br></br>         
     <br></br>    
-    <form>
+    <form >
+       
         <table align="center">
             <tr><td align="center">
                     <h1>Mantenimiento de Mensaje Correo Template</h1>
@@ -12,15 +23,17 @@
             </tr>
             <tr>
                 <td align="center">
-                    <!--<input type="button" value="Nuevo" ></input>
-                    <input type="button" value="Modificar"></input>
-                    <input type="button" value="Eliminar"></input> -->
+                                       
                 </td>
             </tr>
             <tr>
                 <td align="center">
                 <br></br>                
                 {% include 'MinSalSidPlaAdminBundle:MensajeCorreoTemplate:showAllMensajesCorreoTem.html.twig'%}
+                <br></br>
+                <input type="BUTTON" id="bedat" value="Agregar Mensaje" />
+                <input type="BUTTON" id="bedata" value="Editar Mensaje" />
+                <input type="BUTTON" id="beda" value="Eliminar Mensaje" />
                 </td>
             </tr>        
         </table>        
@@ -30,3 +43,4 @@
     
     
 {% endblock %}
+
