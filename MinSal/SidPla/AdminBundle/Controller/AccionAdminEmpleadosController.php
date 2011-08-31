@@ -49,7 +49,7 @@ class AccionAdminEmpleadosController extends Controller {
 	{
             $opciones=$this->getRequest()->getSession()->get('opciones'); 
             
-            $user = $this->get('security.context')->getToken()->getUser();
+            //$user = $this->get('security.context')->getToken()->getUser();
             
             return $this->render('MinSalSidPlaAdminBundle:Empleado:manttEmpleados.html.twig', 
                     array('opciones' => $opciones,));
