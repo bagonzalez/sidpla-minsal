@@ -51,8 +51,8 @@ class AccionAdminMenCorreTempController extends Controller {
             foreach ($MensajeCorreT as $uni) {
                 $rows[$i]['id']= $uni->getMencortemCodigo();
                 $rows[$i]['cell']= array($uni->getMencortemCodigo(),
-                                         $uni->getMencortemTexto(),
-                                         $uni->getMencortemNombre());    
+                                         $uni->getMencortemNombre(),
+                                         $uni->getMencortemTexto());    
                 $i++;
             }
             
@@ -81,7 +81,6 @@ class AccionAdminMenCorreTempController extends Controller {
     public function manttMenCorrtempEdicionAction(){
             
             $request=$this->getRequest();
-            
             $nombreRol=$request->get('texto');
             $funciones=$request->get('Nombre');            
             $id=$request->get('id');
@@ -104,47 +103,5 @@ class AccionAdminMenCorreTempController extends Controller {
              
             return new Response("{sc:true,msg:''}"); 
             
-        }      
-    
-        public function ingresoMenCorrtempAction(){
-        $opciones=$this->getRequest()->getSession()->get('opciones'); 
-        
-        //$departamDao=new DepartametoPaisDao($this->getDoctrine());
-       // $departamentos=$departamDao->getDepartametos();
-         $MensajeCoDao=new MensajeCorreTempDao($this->getDoctrine());        
-        $MensajeCorreT=$MensajeCoDao->getMensaTem(); 
-       
-       // return $this->render('MinSalSidPlaAdminBundle:MensajeCorreoTemplate:ingresoMensajesCorreoTem.html.twig', 
-    //                array('opciones' => $opciones,  ));       
-    
-        return $this->render('MinSalSidPlaAdminBundle:MensajeCorreoTemplate:ingresoMensajesCorreoTem.html.twig'
-                , array('opciones' => $opciones, 'MensajeCorreT' => $MensajeCorreT)); 
-        
-        
-    }
-    
-     public function ingresarMenCorrtempAction(){
-        
-        $opciones=$this->getRequest()->getSession()->get('opciones'); 
-        $request=$this->getRequest();
-        $textoMenTem=$request->get('nombreMensaje');
-        $nombreMentem=$request->get('textoMensaje');
-        $menCorrTempDao=new MensajeCorreTempDao($this->getDoctrine());
-        
-         $menCorrTempDao->addMensaTem($textoMenTem, $nombreMentem);
-        //return new Response("{sc:true,msg:''}");
-        
-        
-       //echo "<script>  jAlert('This is a custom alert box', 'Alert Dialog'); </script>"; 
-         
-         return $this->render('MinSalSidPlaAdminBundle:MensajeCorreoTemplate:ingresoMensajesCorreoTem.html.twig', 
-                    array('opciones' => $opciones,  ));       
-     }
-    
-        
-        
-        
-        
-}
-
-?>
+        } }
+     ?>
