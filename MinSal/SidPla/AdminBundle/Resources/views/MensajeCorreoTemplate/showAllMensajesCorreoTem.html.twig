@@ -7,19 +7,26 @@
         var myGrid = $('#theGrid');        
         myGrid.jqGrid({ 
           url: 'consultarMenCorrtempJSON',
+     scrolling: true,
           datatype:'json',
           altRows:true,
           colNames:['Id','Nombre', 'Texto'],
           colModel:[
-            { name:'id', index: 'id',sorttype:'int', width:20,editable:false,editoptions:{size:15}, searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":13}  },
+            { name:'id', index: 'id',sorttype:'int', width:20,editable:false,editoptions:{size:15}, searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}  },
             { name:'Nombre', index: 'Nombre', width:300,editable:true,editoptions:{size:100},formoptions:{ rowpos:1, label: "Nombre", elmprefix:"(*)"},editrules:{required:true}  },
-            { name:'texto', index: 'texto',width:800, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"20",cols:"175"},editrules:{required:true},formoptions:{ rowpos:2, label: "texto", elmprefix:"(*)"} } ],            
+            { name:'texto', index: 'texto',width:300, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"15",cols:"100"},formoptions:{ rowpos:2, label: "texto", elmprefix:"(*)"},editrules:{required:true} } ],            
           rowNum:10,
-          rowList:[10,20,30],
-          multiselect: true,
+          rownumbers: true,
+         rowTotal: 10,
+         // rowList:[10,20,30],
+         // height: 55,
+          rownumWidth: 40,
+          multiselect: false,
           pager: jQuery('#pager'),
           viewrecords: true,          
-            sortname: 'id',
+         //scroll:true,
+          loadonce:true, 
+           sortname: 'id',
             sortorder: "asc",
             caption: 'Mensaje Correo templates',
             height: "100%",
@@ -32,12 +39,15 @@
         {width:550,height:760,bottominfo:"Campos marcados con (*) son obligatorios"},//edit
         {width:550,height:660,jqModal:true,checkOnUpdate:true,savekey: [true,13], navkeys: [true,38,40], checkOnSubmit : true, reloadAfterSubmit:false, closeOnEscape:true,bottominfo:"Campos marcados con (*) son obligatorios"},//add
         {width:550,height:600},//del
-        {multipleSearch:true, multipleGroup:true}, //search
-        {width:550,height:600}//view
+        {multipleSearch:false, multipleGroup:false}, //search
+        {width:550,height:100}//view
         );
+        
+ 
           
-          
-      });
+      }
+ 
+);
 </script>
 
 
