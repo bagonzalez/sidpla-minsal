@@ -8,16 +8,36 @@
 <br></br>
     
 <form  action="{{ path("fos_user_security_check") }}" method="post">
-    <label for="username">{{ 'Usuario:'|trans({}, 'FOSUserBundle') }}</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
-    <br> 
-    <label for="password">{{ 'Password:'|trans({}, 'FOSUserBundle') }}</label>
-    <input type="password" id="password" name="_password" />
-    <br>
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">{{ 'Recordar'|trans({}, 'FOSUserBundle') }}</label>
-    <br><br>
-    <input type="submit" id="_submit" name="_submit" value="{{ 'Ingresar'|trans({}, 'FOSUserBundle') }}" />
+    <table align='center'>
+        <tr>
+            <td>
+                <label for="username">{{ 'Usuario:'|trans({}, 'FOSUserBundle') }}</label>
+            </td>
+            <td>
+                <input type="text" id="username" name="_username" value="{{ last_username }}" />
+            </td>
+        </tr>
+        
+         <tr>
+            <td>
+                 <label for="password">{{ 'Password:'|trans({}, 'FOSUserBundle') }}</label>
+            </td>
+            <td>
+                <input type="password" id="password" name="_password" />                
+            </td>            
+        </tr>   
+        <tr><td colspan="2" align="center" >
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                <label for="remember_me">{{ 'Recordar'|trans({}, 'FOSUserBundle') }}</label>
+            </td>            
+        </tr>
+        <tr>
+            <td colspan="2" align='center' >
+                <input type="submit" id="_submit" name="_submit" value="{{ 'Ingresar'|trans({}, 'FOSUserBundle') }}" />
+            </td>
+        </tr>
+    </table>
+    
 </form>
 
 {% endblock fos_user_content %}

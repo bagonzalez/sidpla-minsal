@@ -1,11 +1,40 @@
 {% form_theme form theme %}
 
 <form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
-    {{ form_widget(form) }}
+    {{ form_errors(form) }}
+        <table align='center' >
+            <tr>
+                <td align='center' colspan="2"><h3>Registro de Nuevos Usuarios</h3></td>
+            </tr>
+            <tr>
+                <td><label id="username" >Nombre de Usuario:</label></td>
+                <td>{{ form_widget(form.username) }}</td>
+            </tr>
+            <tr>
+                <td><label id="email" >Email:</label></td>
+                <td>{{ form_widget(form.email) }}</td>
+            </tr>            
+            <tr>
+                <td><label id="plainPasswordfirst" >Password:</label></td>
+                <td>{{ form_widget(form.plainPassword.first) }}</td>
+            </tr>   
+            <tr>
+                <td><label id="plainPasswordsecond" >Re-Password:</label></td>
+                <td>{{ form_widget(form.plainPassword.second) }}</td>                
+            </tr>  
+            
+             <tr>
+                <td><label id="empleado" >Empleado:</label></td>
+                <td>{{ form_widget(form.empleado) }}</td>                
+            </tr> 
+            
+            <tr><br>
+                <br>
+                <td align='center' colspan=2 >
+                    <input type="submit" value="{{ 'Registrar'|trans({}, 'FOSUserBundle') }}" />
+                </td>
+            </tr>
+        </table>    
     
-    {{ form_label(form.username, 'Descripción de tarea') }}
-        
-    <div>
-        <input type="submit" value="{{ 'registration.submit'|trans({}, 'FOSUserBundle') }}" />
-    </div>
+    {{ form_rest(form) }}
 </form>
