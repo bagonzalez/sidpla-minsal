@@ -61,6 +61,12 @@ class Empleado
      * @ORM\JoinColumn(name="uniorg_codigo", referencedColumnName="uniorg_codigo")
      */
     protected $unidadOrganizativa;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="MinSal\SidPla\UsersBundle\Entity\User", inversedBy="empleado")
+     * @ORM\JoinColumn(name="usuario_codigo", referencedColumnName="usuario_codigo")
+     */
+    private $usuario;
 
     
     /**
@@ -201,5 +207,25 @@ class Empleado
     public function getUnidadOrganizativa()
     {
         return $this->unidadOrganizativa;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param MinSal\SidPla\AdminBundle\Entity\User $usuario
+     */
+    public function setUsuario(\MinSal\SidPla\UsersBundle\Entity\User $usuario)
+    {
+        $this->usuario = $usuario;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return MinSal\SidPla\AdminBundle\Entity\User 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }
