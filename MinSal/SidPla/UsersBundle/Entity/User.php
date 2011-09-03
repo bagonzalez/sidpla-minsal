@@ -21,6 +21,7 @@ class User extends BaseUser
     
     /**
      * @ORM\OneToOne(targetEntity="MinSal\SidPla\AdminBundle\Entity\Empleado", mappedBy="usuario")
+     * @ORM\JoinColumn(name="empleado_codigo", referencedColumnName="empleado_codigo")
      */
     private $empleado;
     
