@@ -2,6 +2,8 @@ parameters:
 #    min_sal_sid_pla_users.example.class: MinSal\SidPla\UsersBundle\Example
 
 services:
-#    min_sal_sid_pla_users.example:
-#        class: %min_sal_sid_pla_users.example.class%
-#        arguments: [@service_id, "plain_value", %parameter%]
+    sidpla_user.registration.form.type:
+        class: MinSal\SidPla\UsersBundle\Form\Type\RegistrationFormType
+        arguments: [%fos_user.model.user.class%]
+        tags:
+            - { name: form.type, alias: sidpla_user_registration }

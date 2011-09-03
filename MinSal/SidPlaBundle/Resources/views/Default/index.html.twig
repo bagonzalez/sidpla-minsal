@@ -1,4 +1,3 @@
-{% set vars = opciones%}
 <!DOCTYPE html>
 <HTML>
     <head>
@@ -52,27 +51,45 @@
 
 
                             <ul class="topnav">
-
-                    {% for opc in vars %}                     
-                        {% if opc.idOpcionSistema2 is empty %}
-                                <li><a href="{{ path(opc.enlace) }}">{{ opc.nombreOpcion }}</a>                                                                              
-                                    <ul style="display: none;" class="subnav">                            
-                                {% for subopc in opciones %}  
-                                    {% if subopc.idOpcionSistema2 == opc.idOpcionSistema  %}
-                                            <li><a href="{{ path(subopc.enlace) }}">{{ subopc.nombreOpcion }}</a></li>                                                                              
+                                
+                                
+                         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}  
+                            {% if opciones is defined %}
+                                {% for opc in opciones %}                     
+                                    {% if opc.idOpcionSistema2 is empty %}
+                                            <li><a href="{{ path(opc.enlace) }}">{{ opc.nombreOpcion }}</a>
+                                                <ul style="display: none;" class="subnav">                            
+                                            {% for subopc in opciones %}  
+                                                {% if subopc.idOpcionSistema2 == opc.idOpcionSistema  %}
+                                                        <li><a href="{{ path(subopc.enlace) }}">{{ subopc.nombreOpcion }}</a></li>                                                                              
+                                                {% endif %}                                
+                                            {% endfor %}
+                                                    </ul>
+                                                </li>
                                     {% endif %}                                
                                 {% endfor %}
-                                        </ul>
-                                    </li>
-                        {% endif %}                                
-                    {% endfor %}
+                             {% endif %}   
+                             <li>
+                                <a href="{{ path('fos_user_security_logout') }}">{{ 'Salir'|trans({}, 'FOSUserBundle') }}
+                                </a>
+                            </li>                            
+                            <li>
+                                <a href="{{ path('fos_user_profile_show') }}">{{ 'Perfil'|trans({}, 'FOSUserBundle') }}
+                                </a>
+                            </li>
+                            
+                        {% else %}
+                            <li><a href="{{ path('fos_user_security_login') }}">{{ 'Iniciar'|trans({}, 'FOSUserBundle') }}</a>
+                            </li>
+                            
+                            <li><a href="{{ path('fos_user_registration_register') }}">{{ 'Registrarse'|trans({}, 'FOSUserBundle') }}</a>
+                            </li>
+                            
+                        {% endif %}
 
-
-
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Advertise</a></li>
-                                    <li><a href="#">Submit</a></li>
-                                    <li><a href="#">Contact Us</a></li>
+                    
+                                    <li><a href="#">MinSal</a></li>
+                                    <li><a href="#">Acerca de</a></li>
                                 </ul>
                             </div>            
                             <div id="contenido">

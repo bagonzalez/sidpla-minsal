@@ -72,9 +72,16 @@ class UnidadOrganizativa {
     private $informacionGeneral;
     
     
+     /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\PaoBundle\Entity\Pao", mappedBy="unidadOrganizativa")
+     */
+    protected $paos;
+    
+    
     public function __construct()
     {
         $this->subUnidades = new ArrayCollection();
+        $this->paos=new ArrayCollection();
     }
     
     /**
@@ -180,5 +187,25 @@ class UnidadOrganizativa {
     public function getInformacionGeneral()
     {
         return $this->informacionGeneral;
+    }
+
+    /**
+     * Add paos
+     *
+     * @param MinSal\SidPla\PaoBundle\Entity\Pao $paos
+     */
+    public function addPaos(\MinSal\SidPla\PaoBundle\Entity\Pao $paos)
+    {
+        $this->paos[] = $paos;
+    }
+
+    /**
+     * Get paos
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getPaos()
+    {
+        return $this->paos;
     }
 }

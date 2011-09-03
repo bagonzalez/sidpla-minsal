@@ -1,0 +1,3 @@
+MinSalSidPlaPaoBundle_homepage:
+    pattern:  /{name}
+    defaults: { _controller: MinSalSidPlaPaoBundle:Default:index }
