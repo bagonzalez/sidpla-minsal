@@ -1,3 +1,7 @@
 MinSalSidPlaPaoBundle_homepage:
     pattern:  /{name}
     defaults: { _controller: MinSalSidPlaPaoBundle:Default:index }
+    
+MinSalSidPlaPaoBundle_mantenimientoPeriodoOficial:
+    pattern:  /Pao/mantenimientoPeriodoOficial
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoPeriodoOficial:mantenimientoPeriodoOficial }
