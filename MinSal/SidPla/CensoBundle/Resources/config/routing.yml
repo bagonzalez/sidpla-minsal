@@ -17,5 +17,20 @@ MinSalSidPlaCensoBundle_ingresarCategoriaForm:
 MinSalSidPlaCensoBundle_addCategoria:
     pattern:  /addCategoria
     defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCategoriaCenso:addCategoria }
+    
+MinSalSidPlaCensoBundle_consultarBloqueCenso:
+    pattern:  /consultarBloqueCenso    
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminBloque:consultarBloqueCenso }
+
+MinSalSidPlaCensoBundle_consultarBloqueCensoJSON:
+    pattern:  /consultarBloqueCensoJSON    
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminBloque:consultarBloqueCensoJSON }   
+    
+MinSalSidPlaCensoBundle_manttBloqueCensoEdicion:
+    pattern:  /manttBloqueCensoEdicion
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminBloque:manttBloqueCensoEdicion }
+
+
+
 
     
