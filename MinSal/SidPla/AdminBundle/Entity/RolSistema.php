@@ -42,6 +42,16 @@ class RolSistema
      */
     protected $usuarios;
     
+    /**
+     * @ORM\ManyToMany(targetEntity="OpcionSistema")
+     * @ORM\JoinTable(name="sidpla_rol_opcion",
+     *      joinColumns={@ORM\JoinColumn(name="rol_codigo", referencedColumnName="rol_codigo")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="opcionsistema_codigo", referencedColumnName="opcionsistema_codigo")}
+     *      )
+     */
+    private $opcionesSistema;
+    
+    
      public function __construct()
     {
         $this->usuarios = new ArrayCollection();
@@ -131,4 +141,24 @@ class RolSistema
        return $this->getNombreRol();
     }
     
+
+    /**
+     * Add opcionesSistema
+     *
+     * @param MinSal\SidPla\AdminBundle\Entity\OpcionSistema $opcionesSistema
+     */
+    public function addOpcionesSistema(\MinSal\SidPla\AdminBundle\Entity\OpcionSistema $opcionesSistema)
+    {
+        $this->opcionesSistema[] = $opcionesSistema;
+    }
+
+    /**
+     * Get opcionesSistema
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getOpcionesSistema()
+    {
+        return $this->opcionesSistema;
+    }
 }

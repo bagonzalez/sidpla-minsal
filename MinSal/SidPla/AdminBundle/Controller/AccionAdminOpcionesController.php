@@ -135,9 +135,9 @@ class AccionAdminOpcionesController extends Controller
             $opciones=$this->getRequest()->getSession()->get('opciones'); 
             
             $opcDao=new OpcionSistemaDao($this->getDoctrine());
-            $opciones=$opcDao->getOpciones();
+            $opcionesSistema=$opcDao->getOpciones();
             return $this->render('MinSalSidPlaAdminBundle:Opciones:manttOpcionesSystemForm.html.twig', 
-                    array('opciones' => $opciones));            
+                    array('opciones' => $opciones, 'opcsistem' => $opcionesSistema));            
 	}
         
         
