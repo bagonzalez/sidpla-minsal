@@ -29,6 +29,7 @@ use Symfony\Component\HttpFoundation\Request;
 
 use MinSal\SidPla\CensoBundle\EntityDao\CategoriaCensoDao;
 use MinSal\SidPla\CensoBundle\Entity\CategoriaCenso;
+use MinSal\SidPla\CensoBundle\Form\Type\CategoriaCesoType;
 
 
 /**
@@ -44,6 +45,17 @@ class AccionAdminCategoriaCensoController extends Controller {
         return $this->render('MinSalSidPlaCensoBundle:CategoriaCenso:manttCategoriaCenso.html.twig', array('opciones' => $opciones));
     }
     
+    
+    public function ingresarCategoriaFormAction(){
+        $opciones=$this->getRequest()->getSession()->get('opciones');
+        $categoria=new CategoriaCenso();
+        
+        $form = $this->createForm(new CategoriaCesoType(), $categoria);
+        return $this->render('MinSalSidPlaAdminBundle:Default:opcionFormTemplate.html.twig', 
+                array('form' => $form->createView(), 'opciones' => $opciones ));
+    }
+
+
     public function consultarCategoriaCensoJSONAction(){
         
             $request=$this->getRequest();
@@ -81,6 +93,23 @@ class AccionAdminCategoriaCensoController extends Controller {
             $response=new Response($jsonresponse);              
             return $response;   
     }
+    
+    public function addCategoriaAction(Request $peticion)
+	{
+            $categoria=new CategoriaCenso();
+            $form = $this->createForm(new CategoriaCesoType(), $categoria);
+            
+            if ($peticion->getMethod() == 'POST') {
+                $form->bindRequest($peticion);
+
+                if ($form->isValid()) {
+                    $catCensoDao = new CategoriaCensoDao($this->getDoctrine());                
+                    $mensajesSistema = $catCensoDao->addCategoria($categoria);	                     
+                    return new Response($mensajesSistema[0].' '.$mensajesSistema[1] );                    
+                }
+            }
+            return $this->redirect($this->generateUrl('MinSalSidPlaAdminBundle_homepage'));	    
+	}
     
 }
 

@@ -48,6 +48,15 @@ class CategoriaCensoDao {
         return $categorias;
     }
     
+    public function addCategoria($categoriaCenso) {
+        
+        $this->em->persist($categoriaCenso);
+        $this->em->flush();	    
+        $matrizMensajes = array('El proceso de almacenar categoria termino con exito', 'Categoria ');
+
+        return $matrizMensajes;
+    }
+    
 }
 
 ?>

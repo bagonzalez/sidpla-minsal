@@ -10,5 +10,12 @@ MinSalSidPlaCensoBundle_consultarCategoriaCensoJSON:
     pattern:  /consultarCategoriaCensoJSON
     defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCategoriaCenso:consultarCategoriaCensoJSON }
 
+MinSalSidPlaCensoBundle_ingresarCategoriaForm:
+    pattern:  /ingresarCategoriaForm
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCategoriaCenso:ingresarCategoriaForm }
+
+MinSalSidPlaCensoBundle_addCategoria:
+    pattern:  /addCategoria
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCategoriaCenso:addCategoria }
 
     

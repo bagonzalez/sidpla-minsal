@@ -116,4 +116,10 @@ class BloqueCenso
     {
         return $this->categoriasCenso;
     }
+    
+     public function __toString()
+    {
+       return $this->getNombreBloque();
+    }
+    
 }

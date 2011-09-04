@@ -1,0 +1,12 @@
+{% extends "MinSalSidPlaUsersBundle::layout.html.twig" %}
+
+{% block body %}
+
+<br></br>
+
+<form action="{{ path('MinSalSidPlaCensoBundle_addCategoria') }}" method="post" {{ form_enctype(form) }}>
+    {{ form_widget(form) }}
+    <input type="submit" />
+</form>
+
+{% endblock body %}
