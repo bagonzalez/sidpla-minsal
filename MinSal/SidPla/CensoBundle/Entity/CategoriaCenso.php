@@ -7,45 +7,38 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MinSal\SidPla\CensoBundle\Entity\CategoriaCenso
  *
- * @ORM\Table()
+ * @ORM\Table(name="sidpla_categoriacenso")
  * @ORM\Entity
  */
 class CategoriaCenso
 {
     /**
-     * @var integer $id
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
-    private $id;
-
-    /**
      * @var integer $idCategoriaCenso
      *
-     * @ORM\Column(name="idCategoriaCenso", type="integer")
-     */
+     * @ORM\Column(name="catcen_codigo", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */  
     private $idCategoriaCenso;
 
     /**
      * @var string $descripcionCategoria
      *
-     * @ORM\Column(name="descripcionCategoria", type="string", length=200)
+     * @ORM\Column(name="catcen_descripcion", type="string", length=200)
      */
     private $descripcionCategoria;
 
     /**
      * @var boolean $activo
      *
-     * @ORM\Column(name="activo", type="boolean")
+     * @ORM\Column(name="catcen_activo", type="boolean")
      */
     private $activo;
 
     /**
      * @var string $divTabla
      *
-     * @ORM\Column(name="divTabla", type="string", length=100)
+     * @ORM\Column(name="catcen_divtabla", type="string", length=100)
      */
     private $divTabla;
     
@@ -56,16 +49,6 @@ class CategoriaCenso
      */
     protected $bloque;
 
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
     /**
      * Set idCategoriaCenso

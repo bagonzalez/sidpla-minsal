@@ -20,6 +20,7 @@
   
  
  */
+namespace MinSal\SidPla\CensoBundle\EntityDao;
 
 /**
  * Description of CategoriaCensoDao
@@ -27,7 +28,26 @@
  * @author Bruno González
  */
 class CategoriaCensoDao {
-    //put your code here
+    
+    var $doctrine;
+    var $repositorio;
+    var $em;    
+	
+    function __construct($doctrine){ 
+        $this->doctrine=$doctrine;      	
+        $this->em=$this->doctrine->getEntityManager();
+        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaCensoBundle:CategoriaCenso');
+    } 
+    
+      /*
+     *  Obtiene todos las categorias del censo poblacion.
+     */    
+
+    public function getCategorias() {	    
+        $categorias=$this->repositorio->findAll();
+        return $categorias;
+    }
+    
 }
 
 ?>

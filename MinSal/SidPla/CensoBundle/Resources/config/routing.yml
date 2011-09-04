@@ -1,3 +1,14 @@
 MinSalSidPlaCensoBundle_homepage:
     pattern:  /
     defaults: { _controller: MinSalSidPlaCensoBundle:Default:index }
+    
+MinSalSidPlaCensoBundle_manttCatCenso:
+    pattern:  /manttCensoPoblacion
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCategoriaCenso:manttCatCenso }
+    
+MinSalSidPlaCensoBundle_consultarCategoriaCensoJSON:
+    pattern:  /consultarCategoriaCensoJSON
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCategoriaCenso:consultarCategoriaCensoJSON }
+
+
+    
