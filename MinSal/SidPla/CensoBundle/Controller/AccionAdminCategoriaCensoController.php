@@ -51,7 +51,7 @@ class AccionAdminCategoriaCensoController extends Controller {
         $categoria=new CategoriaCenso();
         
         $form = $this->createForm(new CategoriaCesoType(), $categoria);
-        return $this->render('MinSalSidPlaAdminBundle:Default:opcionFormTemplate.html.twig', 
+        return $this->render('MinSalSidPlaCensoBundle:CategoriaCenso:ingresoCategoriaCenso.html.twig', 
                 array('form' => $form->createView(), 'opciones' => $opciones ));
     }
 
@@ -96,6 +96,7 @@ class AccionAdminCategoriaCensoController extends Controller {
     
     public function addCategoriaAction(Request $peticion)
 	{
+            $opciones=$this->getRequest()->getSession()->get('opciones');
             $categoria=new CategoriaCenso();
             $form = $this->createForm(new CategoriaCesoType(), $categoria);
             
@@ -105,10 +106,10 @@ class AccionAdminCategoriaCensoController extends Controller {
                 if ($form->isValid()) {
                     $catCensoDao = new CategoriaCensoDao($this->getDoctrine());                
                     $mensajesSistema = $catCensoDao->addCategoria($categoria);	                     
-                    return new Response($mensajesSistema[0].' '.$mensajesSistema[1] );                    
+                    return $this->render('MinSalSidPlaCensoBundle:CategoriaCenso:manttCategoriaCenso.html.twig', array('mensaje' => $mensajesSistema[0], 'opciones' => $opciones));                                     
                 }
             }
-            return $this->redirect($this->generateUrl('MinSalSidPlaAdminBundle_homepage'));	    
+            return $this->redirect($this->generateUrl('MinSalSidPlaCensoBundle_manttCatCenso'));	    
 	}
     
 }
