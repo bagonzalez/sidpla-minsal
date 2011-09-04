@@ -3,6 +3,7 @@
 namespace MinSal\SidPla\CensoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * MinSal\SidPla\CensoBundle\Entity\BloqueCenso
@@ -34,6 +35,16 @@ class BloqueCenso
      * @ORM\Column(name="bloquecenso_orden", type="integer")
      */
     private $ordenBloque;
+    
+     /**
+     * @ORM\OneToMany(targetEntity="CategoriaCenso", mappedBy="bloque")
+     */
+    protected $categoriasCenso;
+    
+    public function __construct()
+    {
+        $this->categoriasCenso = new ArrayCollection();
+    }
 
 
     /**
@@ -84,5 +95,25 @@ class BloqueCenso
     public function getOrdenBloque()
     {
         return $this->ordenBloque;
+    }
+
+    /**
+     * Add categoriasCenso
+     *
+     * @param MinSal\SidPla\CensoBundle\Entity\CategoriaCenso $categoriasCenso
+     */
+    public function addCategoriasCenso(\MinSal\SidPla\CensoBundle\Entity\CategoriaCenso $categoriasCenso)
+    {
+        $this->categoriasCenso[] = $categoriasCenso;
+    }
+
+    /**
+     * Get categoriasCenso
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getCategoriasCenso()
+    {
+        return $this->categoriasCenso;
     }
 }
