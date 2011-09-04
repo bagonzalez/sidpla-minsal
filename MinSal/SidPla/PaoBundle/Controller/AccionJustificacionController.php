@@ -1,14 +1,14 @@
 <?php
-namespace MinSal\SidPla\AdminBundle\Controller;
+namespace MinSal\SidPla\PaoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
 
-use MinSal\SidPla\AdminBundle\EntityDao\JustificacionDao;
+/*use MinSal\SidPla\AdminBundle\EntityDao\JustificacionDao;
 use MinSal\SidPla\AdminBundle\Entity\Justificacion;
-use MinSal\SidPla\AdminBundle\Entity\Pao;
+use MinSal\SidPla\AdminBundle\Entity\Pao;*/
 
 class AccionJustificacionController extends Controller {
     
@@ -17,12 +17,11 @@ class AccionJustificacionController extends Controller {
          * 
          */
         
-        public function mattJustificacion()
+        public function manttJustificacionAction()
 	{
             $opciones=$this->getRequest()->getSession()->get('opciones');             
             
-            
-            return $this->render('MinSalSidPlaPaoBundle:Justificacion:manttJustificacion.html.twig', 
+            return $this->render('MinSalSidPlaPaoBundle:Justificacion:ManttJustificacion.html.twig', 
                     array('opciones' => $opciones,));
             
 	}
@@ -31,11 +30,12 @@ class AccionJustificacionController extends Controller {
     public function consultarJustificacionJSONAction() {
 
         $JustificacionDao = new JustificacionSistemaDao($this->getDoctrine());
-        $JustificacionDao = $JustificacionDao->getjustificacionSistema();
+        $justificacion = $JustificacionDao->getjustificacionSistema();
 
         $numfilas = count($justificacion);
 
-        $aux = new JustificacionSistema();
+        $aux = new Justificacion();
+        $aux->
         $i = 0;
 
         foreach ($justificacion as $aux) {

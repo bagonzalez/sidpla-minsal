@@ -15,10 +15,8 @@
             { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}  },
             { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:1, label: "Nombre",elmprefix:"(*)"},editrules:{required:true} },
             { name:'mensaje', index: 'mensaje',width:300,editable:true,editoptions:{size:50}, formoptions:{ rowpos:2, label: "Mensaje",elmprefix:"(*)"},editrules:{required:true} },
-            { name:'tipomensaje', index: 'tipomensaje',editable:true,edittype:"select",
-                editoptions:{value:"error:error;informativo:informativo;advertencia:advertencia;error
- fatal:error fatal;error controlado:error controlado;notificacion correo:notificacion correo"},
-formoptions:{ rowpos:3, label: "Tipo de mensaje",elmprefix:"(*)"},editrules:{required:true}}],            
+            { name:'tipomensaje', index: 'tipomensaje',editable:true,edittype:"select",editoptions:{value:"error:error;informativo:informativo;advertencia:advertencia;errorfatal:error fatal;error controlado:error controlado;notificacion correo:notificacion correo"},
+                formoptions:{ rowpos:3, label: "Tipo de mensaje",elmprefix:"(*)"},editrules:{required:true}}],            
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,

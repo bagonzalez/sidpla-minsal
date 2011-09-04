@@ -28,10 +28,9 @@ class Justificacion
      */
     private $justificacion_descripcion;
 
-    /**
-     * @var Integer $pao_codigo
-     *
-     * @ORM\Column(name="pao_codigo", type="Integer")
+ /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\Pao", inversedBy="justificaciones")
+     * @ORM\JoinColumn(name="pao_codigo", referencedColumnName="pao_codigo")
      */
     protected $pao_codigo;
 
