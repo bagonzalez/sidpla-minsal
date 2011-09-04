@@ -81,7 +81,7 @@ class Justificacion
      *
      * @param MinSal\SidPla\PaoBundle\Entity\Pao $pao_codigo
      */
-    public function setpao_codigo(\MinSal\SidPla\AdminBundle\Entity\Pao $pao_codigo)
+    public function setPao_codigo(\MinSal\SidPla\AdminBundle\Entity\Pao $pao_codigo)
     {
         $this->pao_codigo = $pao_codigo;
     }
@@ -91,7 +91,7 @@ class Justificacion
      *
      * @return MinSal\SidPla\AdminBundle\Entity\Pao 
      */
-    public function getpao_codigo()
+    public function getPao_codigo()
     {
         return $this->pao_codigo;
     }

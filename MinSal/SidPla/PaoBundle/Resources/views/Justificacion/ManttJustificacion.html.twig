@@ -1,0 +1,49 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %}Justificacion PAO {% endblock %}
+
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+        
+        var myGrid = $('#tabjustificacion');        
+        myGrid.jqGrid({ 
+          url: 'consultarJustificacionJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Descripcion'],
+          colModel:[
+               { name:'mensaje', index: 'mensaje',width:300,editable:true,editoptions:{size:50}}],
+                //,formoptions:{ rowpos:2, label: "Mensaje",elmprefix:"(*)"},editrules:{required:true}}],
+               
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          pager: jQuery('#pager'),
+          viewrecords: true,          
+          caption: 'Justificacion_Pao',
+          height: "100%",
+          editurl:'ManttJustificacion'
+           
+        });
+         myGrid.jqGrid('navGrid','#pager',
+        {edit:true,add:true,del:true},
+        {width:550,height:160,closeAfterEdit : true,bottominfo:"Campos marcados con (*) son obligatorios",onclickSubmit: function(rp_ge, postdata) {
+        alert("datos editados con exito!");}},
+        {width:550,height:160,closeAfterAdd : true,bottominfo:"Campos marcados con (*) son obligatorios",onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");}},
+        {width:550,height:160},
+        {multipleSearch:true, multipleGroup:true}
+        );         
+      });
+    </script>
+    <h1 style='text-align: center;'>Justificacion PAO</h1>
+   <table align="center">
+        <tr>
+            <td align="center">
+                <br></br>  
+                <table id="tabjustificacion" class="scroll" alignalign="center"></table> 
+                <div id="pager" class="scroll" style="text-align:center;"></div>
+            </td>
+        </tr>        
+    </table>    
+{% endblock %}
