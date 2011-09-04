@@ -3,6 +3,7 @@
 namespace MinSal\SidPla\AdminBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * MinSal\SidPla\AdminBundle\Entity\RolSistema
