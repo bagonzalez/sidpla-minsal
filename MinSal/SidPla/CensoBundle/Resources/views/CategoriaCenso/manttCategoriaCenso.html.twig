@@ -20,6 +20,13 @@
                     <h1>Mantenimiento de Categorias Censo Población</h1>
                 </td>
             </tr>
+            <tr><td colspan="2" align="center" >
+                    {% if  mensaje is defined  %}
+                           {{ mensaje}}
+                    {% endif %}  
+                            <br></br>
+                </td>
+            </tr>
             <tr>
                 <td align="center">                     
                     <input type="button" value="Ingresar Nuevas Categorias" id="ingresar" ></input>                                    
