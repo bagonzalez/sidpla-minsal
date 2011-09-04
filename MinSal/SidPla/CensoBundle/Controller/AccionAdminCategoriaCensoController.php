@@ -75,7 +75,8 @@ class AccionAdminCategoriaCensoController extends Controller {
                 $rows[$i]['cell']= array($categoria->getIdCategoriaCenso(),
                                          $categoria->getDescripcionCategoria(),
                                          $categoria->getActivo(),
-                                         $categoria->getDivTabla()    
+                                         $categoria->getDivTabla() ,
+                                         $categoria->getBloque()->getNombreBloque()
                                          );    
                 $i++;
             }
