@@ -1,0 +1,40 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+
+<br></br>
+<br></br>
+<br></br>
+<form action="{{ path('MinSalSidPlaCensoBundle_addCategoria') }}" method="post" {{ form_enctype(form) }}>
+    
+     <table align='center' >
+            <tr>
+                <td align='center' colspan="2"><h3>Registro de Nuevas Categorias</h3></td>
+            </tr>
+            <tr>
+                <td><label id="nombreCategoria" >Nombre de Categoria:</label></td>
+                <td>{{ form_widget(form.descripcionCategoria) }}</td>
+            </tr>
+             <tr>
+                <td><label id="tabla" >Tabla:</label></td>
+                <td>{{ form_widget(form.divTabla) }}</td>
+            </tr>
+            
+            <tr>
+                <td><label id="activo" >Activo:</label></td>
+                <td>{{ form_widget(form.activo) }}</td>
+            </tr>
+             <tr>
+                <td><label id="bloque" >Bloque:</label></td>
+                <td>{{ form_widget(form.bloque) }}</td>
+            </tr>
+            <tr>
+                
+                <td align='center' colspan="2" ><br></br><input value="Ingresar" type="submit" /></td>
+            </tr>
+     </table>
+    
+    {{ form_rest(form) }}
+    
+</form>
+
+{% endblock body %}

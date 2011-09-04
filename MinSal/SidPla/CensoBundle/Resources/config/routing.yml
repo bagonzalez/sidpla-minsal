@@ -1,3 +1,36 @@
 MinSalSidPlaCensoBundle_homepage:
     pattern:  /
     defaults: { _controller: MinSalSidPlaCensoBundle:Default:index }
+    
+MinSalSidPlaCensoBundle_manttCatCenso:
+    pattern:  /manttCensoPoblacion
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCategoriaCenso:manttCatCenso }
+    
+MinSalSidPlaCensoBundle_consultarCategoriaCensoJSON:
+    pattern:  /consultarCategoriaCensoJSON
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCategoriaCenso:consultarCategoriaCensoJSON }
+
+MinSalSidPlaCensoBundle_ingresarCategoriaForm:
+    pattern:  /ingresarCategoriaForm
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCategoriaCenso:ingresarCategoriaForm }
+
+MinSalSidPlaCensoBundle_addCategoria:
+    pattern:  /addCategoria
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCategoriaCenso:addCategoria }
+    
+MinSalSidPlaCensoBundle_consultarBloqueCenso:
+    pattern:  /consultarBloqueCenso    
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminBloque:consultarBloqueCenso }
+
+MinSalSidPlaCensoBundle_consultarBloqueCensoJSON:
+    pattern:  /consultarBloqueCensoJSON    
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminBloque:consultarBloqueCensoJSON }   
+    
+MinSalSidPlaCensoBundle_manttBloqueCensoEdicion:
+    pattern:  /manttBloqueCensoEdicion
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminBloque:manttBloqueCensoEdicion }
+
+
+
+
+    

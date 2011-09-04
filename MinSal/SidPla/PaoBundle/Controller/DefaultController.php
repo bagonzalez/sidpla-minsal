@@ -9,8 +9,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends Controller
 {
     
-    public function indexAction($name)
+    public function indexAction()
     {
-        return $this->render('MinSalSidPlaPaoBundle:Default:index.html.twig', array('name' => $name));
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+        return $this->render('MinSalSidPlaPaoBundle:Default:index.html.twig', array('opciones' => $opciones));
     }
 }
