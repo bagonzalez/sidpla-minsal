@@ -10,14 +10,16 @@
           altRows:true,          
           colNames:['Id','Nombre', 'Descripcion', 'Enlace', 'Padre'],
           colModel:[            
-            { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10}  },
-            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:40}  },
-            { name:'descripcion', index: 'descripcion', width:300,editable:true,editoptions:{size:70}  },
-            { name:'enlace', index: 'enlace', width:300,editable:true,editoptions:{size:70}  } ,
-            { name:'opcpadre', index: 'opcpadre', width:50,editable:true,editoptions:{size:40}  } ],
+            { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
+            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:40},formoptions:{ rowpos:1, label: "Nombre", elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'descripcion', index: 'descripcion', width:300,editable:true,editoptions:{size:70},formoptions:{ rowpos:2, label: "Descripcion",elmprefix:"   "},editrules:{required:false}  },
+            { name:'enlace', index: 'enlace', width:300,editable:true,editoptions:{size:70},formoptions:{ rowpos:3, label: "Enlace", elmprefix:"(*)"},editrules:{required:true}  } ,
+            { name:'opcpadre', index: 'opcpadre', width:50,editable:true,editoptions:{size:40} ,formoptions:{ rowpos:4, label: "Padre", elmprefix:"(*)"},editrules:{required:true} } ],
           rowNum:10,
-          rowList:[10,20,30],
-          multiselect: true,
+          //rowList:[10,20,30],
+          multiselect: false,
+          sortname: 'id',
+          sortorder: "asc",
           pager: jQuery('#pager'),
           viewrecords: true,          
           caption: 'Opciones del sistema',
@@ -29,10 +31,15 @@
         });
         myGrid.jqGrid('navGrid','#pager',
         {edit:true,add:true,del:true},
-        {width:550,height:160, afterSubmit: fn_editSubmit, closeOnEscape: true },
-        {width:550,height:160 },
-        {},
-        {multipleSearch:true, multipleGroup:true}
+        {width:650,height:200, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos editados con exito!");},closeAfterEdit:true },//edit
+        {width:650,height:200,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");},closeAfterAdd:true },//add
+        {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
+        alert("Mensaje eliminado con exito!");
+          } },//del
+        {},//search
+        {} //view
         );
        
       });

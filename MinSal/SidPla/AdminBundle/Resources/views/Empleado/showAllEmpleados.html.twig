@@ -14,11 +14,11 @@
           colNames:['Id','Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido', 'DUI', 'Unidad Organizativa'],
           colModel:[
             { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}  },
-            { name:'nombrePrimero', index: 'nombrePrimero', width:150,editable:true,editoptions:{size:25}  },
-            { name:'nombreSegundo', index: 'nombreSegundo',width:150,editable:true,editoptions:{size:25} },
-            { name:'primerApellido', index: 'primerApellido', width:150,editable:true,editoptions:{size:25}  },
-            { name:'segundoApellido', index: 'segundoApellido',width:150,editable:true,editoptions:{size:25}  },
-            { name:'dui', index: 'dui',width:150,editable:true,editoptions:{size:25}  },
+            { name:'nombrePrimero', index: 'nombrePrimero', width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:1, label: "Primer Nombre",elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'nombreSegundo', index: 'nombreSegundo',width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:2, label: "Segundo Nombre",elmprefix:"(*)"},editrules:{required:true} },
+            { name:'primerApellido', index: 'primerApellido', width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:3, label: "Primer Apellido",elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'segundoApellido', index: 'segundoApellido',width:150,editable:true,editoptions:{size:25} , formoptions:{ rowpos:4, label: "Segundo Apellido",elmprefix:"(*)"},editrules:{required:true} },
+            { name:'dui', index: 'dui',width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:5, label: "DUI",elmprefix:"(*)"},editrules:{required:true}  },
             { name:'unidad', index: 'unidad',width:150,editable:true,edittype:"select",
                 editoptions:{ size: 1,
                    dataUrl: 'consultarUnidadesOrgJSONSelect',
@@ -32,7 +32,7 @@
         }    }],            
           rowNum:10,
           rowList:[10,20,30],
-          multiselect: true,
+          multiselect: false,
           pager: jQuery('#pager'),
           viewrecords: true,          
             caption: 'Empleados',
@@ -41,8 +41,10 @@
         });
         myGrid.jqGrid('navGrid','#pager',
         {edit:true,add:true,del:true},
-        {width:400,height:250},
-        {width:400,height:250},
+        {width:400,height:250,closeAfterEdit : true,bottominfo:"Campos marcados con (*) son obligatorios",onclickSubmit: function(rp_ge, postdata) {
+        alert("datos editados con exito!");}},
+        {width:400,height:250,closeAfterAdd : true,bottominfo:"Campos marcados con (*) son obligatorios",onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");}},
         {},
         { }
         );        

@@ -13,13 +13,13 @@
           colNames:['Codigo','Nombre', 'Mensaje','Tipo Mensaje'],
           colModel:[
             { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}  },
-            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}  },
-            { name:'mensaje', index: 'mensaje',width:300,editable:true,editoptions:{size:50}  },
+            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:1, label: "Nombre",elmprefix:"(*)"},editrules:{required:true} },
+            { name:'mensaje', index: 'mensaje',width:300,editable:true,editoptions:{size:50}, formoptions:{ rowpos:2, label: "Mensaje",elmprefix:"(*)"},editrules:{required:true} },
             { name:'tipomensaje', index: 'tipomensaje',editable:true,edittype:"select",
-                editoptions:{value:"error:error;informativo:informativo;advertencia:advertencia;error fatal:error fatal;error controlado:error controlado;notificacion correo:notificacion correo"}}],            
+                editoptions:{value:"error:error;informativo:informativo;advertencia:advertencia;error fatal:error fatal;error controlado:error controlado;notificacion correo:notificacion correo"},formoptions:{ rowpos:3, label: "Tipo de mensaje",elmprefix:"(*)"},editrules:{required:true}}],            
           rowNum:10,
           rowList:[10,20,30],
-          multiselect: true,
+          multiselect: false,
           pager: jQuery('#pager'),
           viewrecords: true,          
           caption: 'Notificaciones del Sistema',
@@ -29,8 +29,10 @@
         });
          myGrid.jqGrid('navGrid','#pager',
         {edit:true,add:true,del:true},
-        {width:550,height:160,closeAfterEdit : true},
-        {width:550,height:160,closeAfterAdd : true},
+        {width:550,height:160,closeAfterEdit : true,bottominfo:"Campos marcados con (*) son obligatorios",onclickSubmit: function(rp_ge, postdata) {
+        alert("datos editados con exito!");}},
+        {width:550,height:160,closeAfterAdd : true,bottominfo:"Campos marcados con (*) son obligatorios",onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");}},
         {width:550,height:160},
         {multipleSearch:true, multipleGroup:true}
         );         

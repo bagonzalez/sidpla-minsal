@@ -12,11 +12,11 @@
           colNames:['Id','Nombre', 'Descripcion'],
           colModel:[
             { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}  },
-            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}  },
-            { name:'funciones', index: 'funciones',width:300,editable:true,editoptions:{size:50}  } ],            
+            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}, editrules:{required:true},formoptions:{ rowpos:1, label: "Nombre", elmprefix:"(*)"} },
+            { name:'funciones', index: 'funciones',width:300,editable:true,editoptions:{size:50},editrules:{required:true},formoptions:{ rowpos:2, label: "Funciones", elmprefix:"(*)"}  } ],            
           rowNum:10,
-          rowList:[10,20,30],
-          multiselect: true,
+          //rowList:[10,20,30],
+          multiselect: false,
           pager: jQuery('#pager'),
           viewrecords: true,          
             caption: 'Roles del sistema',
@@ -25,10 +25,14 @@
         });
         myGrid.jqGrid('navGrid','#pager',
         {edit:true,add:true,del:true},
-        {width:550,height:160},
-        {width:550,height:160},
-        {},
-        {multipleSearch:true, multipleGroup:true}
+        {width:550,height:160,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos editados con exito!");},closeAfterEdit:true},//edit
+        {width:550,height:160,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");},closeAfterAdd:true},//add
+        {},//del
+        {},//buscar
+        {}//view
+       
         );
         
        
