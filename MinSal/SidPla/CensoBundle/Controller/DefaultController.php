@@ -13,4 +13,7 @@ class DefaultController extends Controller
         $opciones=$this->getRequest()->getSession()->get('opciones');        
         return $this->render('MinSalSidPlaCensoBundle:Default:index.html.twig', array('opciones' => $opciones));
     }
+    
+    
+    
 }
