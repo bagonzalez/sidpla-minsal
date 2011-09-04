@@ -37,7 +37,7 @@ class Justificacion
 
 
     /**
-     * Get justificacion_codigo
+     * Get idJustificacion
      *
      * @return integer 
      */
@@ -47,9 +47,9 @@ class Justificacion
     }
 
     /**
-     * Set justificacion_codigo
+     * Set idJustificacion
      *
-     * @param Integer $justificacion_codigo
+     * @param Integer idJustificacion
      */
     public function setIdJustificacion(\Integer $idJustificacion)
     {
@@ -89,7 +89,7 @@ class Justificacion
     /**
      * Get $pao_codigo
      *
-     * @return MinSal\SidPla\AdminBundle\Entity\$pao_codigo 
+     * @return MinSal\SidPla\AdminBundle\Entity\Pao 
      */
     public function getpao_codigo()
     {
