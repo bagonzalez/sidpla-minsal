@@ -1,9 +1,6 @@
 {% extends "MinSalSidPlaUsersBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-{% if error %}
-    <div>{{ error }}</div>
-{% endif %}
 
 <br></br>
     
@@ -33,6 +30,13 @@
                 <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
                 <label for="remember_me">{{ 'Recordar'|trans({}, 'FOSUserBundle') }}</label>
             </td>            
+        </tr>
+        <tr>
+            <td colspan="2">
+                {% if error %}
+                    <div>{{ error }}</div>
+                {% endif %}
+            </td>
         </tr>
         <tr>
             <td colspan="2" align='center' >

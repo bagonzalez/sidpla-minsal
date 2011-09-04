@@ -48,6 +48,14 @@ class RegistrationFormType  extends BaseType
                                     ->orderBy('u.primerNombre', 'ASC');
                 },
         ));
+                
+        $builder->add('rol', 'entity',
+                array( 'class' => 'MinSal\\SidPla\\AdminBundle\\Entity\\RolSistema',
+               'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                                    ->orderBy('u.nombreRol', 'ASC');
+                },
+        ));
     }
 
     public function getName()
