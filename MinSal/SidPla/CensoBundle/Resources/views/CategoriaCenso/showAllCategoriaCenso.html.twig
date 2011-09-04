@@ -11,13 +11,13 @@
           url: 'consultarCategoriaCensoJSON',
           datatype:'json',
           altRows:true,
-          colNames:['Id','Descripcion', 'Activo', 'Tabla'],
+          colNames:['Id','Descripcion', 'Activo', 'Tabla', 'Bloque'],
           colModel:[
             { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}  },
             { name:'descripcion', index: 'descripcion', width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:1, label: "Descripcion",elmprefix:"(*)"},editrules:{required:true}  },
             { name:'activo', index: 'activo',width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:2, label: "Activo",elmprefix:"(*)"},editrules:{required:true} },
-            { name:'divtabla', index: 'divtabla', width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:3, label: "Tabla",elmprefix:"(*)"},editrules:{required:true}  },
-            ],            
+            { name:'divtabla', index: 'divtabla', width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:3, label: "Tabla",elmprefix:"(*)"},editrules:{required:true}},  
+            { name:'bloque', index: 'bloque', width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:4, label: "Bloque",elmprefix:"(*)"},editrules:{required:true} }],            
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
@@ -28,13 +28,11 @@
             editurl: 'manttEmpleadoEdicion'
         });
         myGrid.jqGrid('navGrid','#pager',
-        {edit:true,add:true,del:true},
-        {width:400,height:250,closeAfterEdit : true,bottominfo:"Campos marcados con (*) son obligatorios",onclickSubmit: function(rp_ge, postdata) {
-        alert("datos editados con exito!");}},
-        {width:400,height:250,closeAfterAdd : true,bottominfo:"Campos marcados con (*) son obligatorios",onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");}},
+        {edit:false,add:false,del:true},
         {},
-        { }
+        {},
+        {},
+        {}
         );        
          
         
