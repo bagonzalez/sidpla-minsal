@@ -228,4 +228,9 @@ class Empleado
     {
         return $this->usuario;
     }
+    
+    public function __toString()
+    {
+       return 'ID '.$this->getIdEmpleado().' '.$this->getPrimerNombre().' '.$this->getPrimerApellido();
+    }
 }

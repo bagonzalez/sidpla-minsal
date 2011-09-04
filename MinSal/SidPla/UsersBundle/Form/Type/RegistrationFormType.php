@@ -25,6 +25,7 @@ namespace  MinSal\SidPla\UsersBundle\Form\Type;
 
 use Symfony\Component\Form\FormBuilder;
 use FOS\UserBundle\Form\Type\RegistrationFormType as BaseType;
+use Doctrine\ORM\EntityRepository;
 
 
 /**
@@ -40,7 +41,21 @@ class RegistrationFormType  extends BaseType
         parent::buildForm($builder, $options);
 
         // add your custom field
-        //$builder->add('empleado', 'integer');
+        $builder->add('empleado', 'entity',
+                array( 'class' => 'MinSal\\SidPla\\AdminBundle\\Entity\\Empleado',
+               'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                                    ->orderBy('u.primerNombre', 'ASC');
+                },
+        ));
+                
+        $builder->add('rol', 'entity',
+                array( 'class' => 'MinSal\\SidPla\\AdminBundle\\Entity\\RolSistema',
+               'query_builder' => function(EntityRepository $er) {
+                        return $er->createQueryBuilder('u')
+                                    ->orderBy('u.nombreRol', 'ASC');
+                },
+        ));
     }
 
     public function getName()

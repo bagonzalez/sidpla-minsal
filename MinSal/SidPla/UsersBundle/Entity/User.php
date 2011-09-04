@@ -21,8 +21,15 @@ class User extends BaseUser
     
     /**
      * @ORM\OneToOne(targetEntity="MinSal\SidPla\AdminBundle\Entity\Empleado", mappedBy="usuario")
+     * @ORM\JoinColumn(name="empleado_codigo", referencedColumnName="empleado_codigo")
      */
     private $empleado;
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\AdminBundle\Entity\RolSistema", inversedBy="usuarios")
+     * @ORM\JoinColumn(name="rol_codigo", referencedColumnName="rol_codigo")
+     */
+    protected $rol;
     
 
     public function __construct()
@@ -59,5 +66,25 @@ class User extends BaseUser
     public function getEmpleado()
     {
         return $this->empleado;
+    }
+
+    /**
+     * Set rol
+     *
+     * @param MinSal\SidPla\AdminBundle\Entity\RolSistema $rol
+     */
+    public function setRol(\MinSal\SidPla\AdminBundle\Entity\RolSistema $rol)
+    {
+        $this->rol = $rol;
+    }
+
+    /**
+     * Get rol
+     *
+     * @return MinSal\SidPla\AdminBundle\Entity\RolSistema 
+     */
+    public function getRol()
+    {
+        return $this->rol;
     }
 }

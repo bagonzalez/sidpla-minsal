@@ -33,7 +33,18 @@ class RolSistema
      *
      * @ORM\Column(name="rol_funciones", type="string", length=300)
      */
-    private $funcionesRol;   
+    private $funcionesRol; 
+    
+    
+     /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\UsersBundle\Entity\User", mappedBy="rol")
+     */
+    protected $usuarios;
+    
+     public function __construct()
+    {
+        $this->usuarios = new ArrayCollection();
+    }
 
     
 
@@ -92,4 +103,31 @@ class RolSistema
     {
         return $this->funcionesRol;
     }
+
+    /**
+     * Add usuarios
+     *
+     * @param MinSAl\SidPla\UsersBundle\Entity\User $usuarios
+     */
+    public function addUsuarios(\MinSAl\SidPla\UsersBundle\Entity\User $usuarios)
+    {
+        $this->usuarios[] = $usuarios;
+    }
+
+    /**
+     * Get usuarios
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getUsuarios()
+    {
+        return $this->usuarios;
+    }
+    
+    
+     public function __toString()
+    {
+       return $this->getNombreRol();
+    }
+    
 }
