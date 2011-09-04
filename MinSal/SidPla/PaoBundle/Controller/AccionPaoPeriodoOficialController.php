@@ -1,24 +1,23 @@
 <?php
 
-namespace MinSal\SidPla\AdminBundle\Controller;
+namespace MinSal\SidPla\PaoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use MinSal\SidPla\AdminBundle\EntityDao\NotificacionSistemaDao;
-use MinSal\SidPla\AdminBundle\Entity\NotificacionSistema;
 
-class AccionNotificacionSistemaController extends Controller {
+class AccionPaoPeriodoOficialController extends Controller {
 
-    public function mantenimientoNotificacionAction() {
+    public function mantenimientoPeriodoOficialAction() {
 
-        $opciones = $this->getRequest()->getSession()->get('opciones');
+       /* $opciones = $this->getRequest()->getSession()->get('opciones');
         
         $notificacionDao = new NotificacionSistemaDao($this->getDoctrine());
         
 
         return $this->render('MinSalSidPlaAdminBundle:NotificacionSistema:showNotificacionSistema.html.twig'
-                        , array('opciones' => $opciones));
+                        , array('opciones' => $opciones));*/
+        return new Response('Prueba');
     }
 
     public function consultarNotificacionJSONAction() {
