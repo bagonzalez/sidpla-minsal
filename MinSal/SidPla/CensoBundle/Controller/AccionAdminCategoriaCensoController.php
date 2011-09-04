@@ -51,7 +51,7 @@ class AccionAdminCategoriaCensoController extends Controller {
         $categoria=new CategoriaCenso();
         
         $form = $this->createForm(new CategoriaCesoType(), $categoria);
-        return $this->render('MinSalSidPlaAdminBundle:Default:opcionFormTemplate.html.twig', 
+        return $this->render('MinSalSidPlaCensoBundle:CategoriaCenso:ingresoCategoriaCenso.html.twig', 
                 array('form' => $form->createView(), 'opciones' => $opciones ));
     }
 
@@ -108,7 +108,7 @@ class AccionAdminCategoriaCensoController extends Controller {
                     return new Response($mensajesSistema[0].' '.$mensajesSistema[1] );                    
                 }
             }
-            return $this->redirect($this->generateUrl('MinSalSidPlaAdminBundle_homepage'));	    
+            return $this->redirect($this->generateUrl('MinSalSidPlaCensoBundle_homepage'));	    
 	}
     
 }
