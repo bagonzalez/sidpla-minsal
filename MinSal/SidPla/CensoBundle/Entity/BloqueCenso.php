@@ -13,76 +13,76 @@ use Doctrine\ORM\Mapping as ORM;
 class BloqueCenso
 {
     /**
-     * @var integer $bloquecenso_codigo
+     * @var integer $idBloque
      *
      * @ORM\Column(name="bloquecenso_codigo", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $bloquecenso_codigo;
+    private $idBloque;
 
     /**
-     * @var string $bloquecenso_nombrebloque
+     * @var string $nombreBloque
      *
      * @ORM\Column(name="bloquecenso_nombrebloque", type="string", length=150)
      */
-    private $bloquecenso_nombrebloque;
+    private $nombreBloque;
 
     /**
-     * @var integer $bloquecenso_orden
+     * @var integer $ordenBloque
      *
      * @ORM\Column(name="bloquecenso_orden", type="integer")
      */
-    private $bloquecenso_orden;
+    private $ordenBloque;
 
 
     /**
-     * Get bloquecenso_codigo
+     * Get idBloque
      *
      * @return integer 
      */
-    public function getBloqueCenso_Codigo()
+    public function getIdBloque()
     {
-        return $this->bloquecenso_codigo;
+        return $this->idBloque;
     }
 
      /**
-     * Set bloquecenso_nombrebloque
+     * Set nombreBloque
      *
-     * @param string $BloqueCenso_NombreBloque
+     * @param string $NombreBloque
      */
-    public function setBloqueCenso_NombreBloque($BloqueCenso_NombreBloque)
+    public function setNombreBloque($NombreBloque)
     {
-        $this->bloquecenso_nombrebloque = $BloqueCenso_NombreBloque;
+        $this->nombreBloque = $NombreBloque;
     }
 
     /**
-     * Get bloquecenso_nombrebloque
+     * Get nombreBloque
      *
      * @return string 
      */
-    public function getBloqueCenso_NombreBloque()
+    public function getNombreBloque()
     {
-        return $this->bloquecenso_nombrebloque;
+        return $this->nombreBloque;
     }
 
     /**
-     * Set bloquecenso_orden
+     * Set ordenBloque
      *
-     * @param integer $BloqueCenso_Orden
+     * @param integer $OrdenBloque
      */
-    public function setBloqueCenso_Orden($BloqueCenso_Orden)
+    public function setOrdenBloque($OrdenBloque)
     {
-        $this->bloquecenso_orden = $BloqueCenso_Orden;
+        $this->ordenBloque = $OrdenBloque;
     }
 
     /**
-     * bloquecenso_orden
+     *Get ordenBloque
      *
      * @return integer 
      */
-    public function getBloqueCenso_Orden()
+    public function getOrdenBloque()
     {
-        return $this->bloquecenso_orden;
+        return $this->ordenBloque;
     }
 }
