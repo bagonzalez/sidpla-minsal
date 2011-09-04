@@ -1,5 +1,5 @@
 MinSalSidPlaPaoBundle_homepage:
-    pattern:  /{name}
+    pattern:  /Pao/
     defaults: { _controller: MinSalSidPlaPaoBundle:Default:index }
     
 MinSalSidPlaPaoBundle_mantenimientoPeriodoOficial:

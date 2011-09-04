@@ -10,17 +10,17 @@ class AccionPaoPeriodoOficialController extends Controller {
 
     public function mantenimientoPeriodoOficialAction() {
 
-       /* $opciones = $this->getRequest()->getSession()->get('opciones');
+        $opciones = $this->getRequest()->getSession()->get('opciones');
         
-        $notificacionDao = new NotificacionSistemaDao($this->getDoctrine());
+        //$notificacionDao = new NotificacionSistemaDao($this->getDoctrine());
         
 
-        return $this->render('MinSalSidPlaAdminBundle:NotificacionSistema:showNotificacionSistema.html.twig'
-                        , array('opciones' => $opciones));*/
-        return new Response('Prueba');
+        return $this->render('MinSalSidPlaPaoBundle:PeriodoPaoOficial:manttPerPaoOfi.html.twig'
+                        , array('opciones' => $opciones));
+        
     }
 
-    public function consultarNotificacionJSONAction() {
+    public function consultarPeriodoPaoOficialJSONAction() {
 
         $notificacionDao = new NotificacionSistemaDao($this->getDoctrine());
         $notificacion = $notificacionDao->getNotiSistema();
