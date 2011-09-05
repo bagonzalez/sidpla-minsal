@@ -55,6 +55,7 @@ class RolSistema
      public function __construct()
     {
         $this->usuarios = new ArrayCollection();
+        $this->opcionesSistema = new ArrayCollection();
     }
 
     
