@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MinSal\SidPla\PaoBundle\Entity\PeriodoOficial
  *
- * @ORM\Table(name="sidpla_periodooficial)
+ * @ORM\Table(name="sidpla_periodooficial")
  * @ORM\Entity
  */
 class PeriodoOficial
@@ -185,5 +185,15 @@ class PeriodoOficial
     public function getPao()
     {
         return $this->pao;
+    }
+
+    /**
+     * Set activoPerOfi
+     *
+     * @param boolean $activoPerOfi
+     */
+    public function setActivoPerOfi($activoPerOfi)
+    {
+        $this->activoPerOfi = $activoPerOfi;
     }
 }

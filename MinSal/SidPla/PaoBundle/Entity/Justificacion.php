@@ -94,4 +94,44 @@ class Justificacion
     {
         return $this->pao_codigo;
     }
+
+    /**
+     * Set justificacion_descripcion
+     *
+     * @param Text $justificacionDescripcion
+     */
+    public function setJustificacionDescripcion(\Text $justificacionDescripcion)
+    {
+        $this->justificacion_descripcion = $justificacionDescripcion;
+    }
+
+    /**
+     * Get justificacion_descripcion
+     *
+     * @return Text 
+     */
+    public function getJustificacionDescripcion()
+    {
+        return $this->justificacion_descripcion;
+    }
+
+    /**
+     * Set pao_codigo
+     *
+     * @param MinSal\SidPla\PaoBundle\Entity\Pao $paoCodigo
+     */
+    public function setPaoCodigo(\MinSal\SidPla\PaoBundle\Entity\Pao $paoCodigo)
+    {
+        $this->pao_codigo = $paoCodigo;
+    }
+
+    /**
+     * Get pao_codigo
+     *
+     * @return MinSal\SidPla\PaoBundle\Entity\Pao 
+     */
+    public function getPaoCodigo()
+    {
+        return $this->pao_codigo;
+    }
 }

@@ -15,7 +15,7 @@ class Pao
     /**
      * @var integer $idPao
      *
-     * @ORM\Column(name="idPao", type="integer")
+     * @ORM\Column(name="pao_codigo", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -25,7 +25,7 @@ class Pao
     /**
      * @var integer $anio
      *
-     * @ORM\Column(name="anio", type="integer")
+     * @ORM\Column(name="pao_anio", type="integer")
      */
     private $anio;
     
@@ -35,6 +35,13 @@ class Pao
      * @ORM\JoinColumn(name="uniorg_codigo", referencedColumnName="uniorg_codigo")
      */
     protected $unidadOrganizativa;
+    
+        
+    /**
+     * @ORM\OneToOne(targetEntity="MinSal\SidPla\CensoBundle\Entity\CensoPoblacion", mappedBy="pao")
+     * @ORM\JoinColumn(name="censopoblacion_codigo", referencedColumnName="censopoblacion_codigo")
+     */
+    private $cesopoblacion;
 
 
 
@@ -96,5 +103,25 @@ class Pao
     public function getUnidadOrganizativa()
     {
         return $this->unidadOrganizativa;
+    }
+
+    /**
+     * Set cesopoblacion
+     *
+     * @param MinSal\SidPla\CensoBundle\Entity\CensoPoblacion $cesopoblacion
+     */
+    public function setCesopoblacion(\MinSal\SidPla\CensoBundle\Entity\CensoPoblacion $cesopoblacion)
+    {
+        $this->cesopoblacion = $cesopoblacion;
+    }
+
+    /**
+     * Get cesopoblacion
+     *
+     * @return MinSal\SidPla\CensoBundle\Entity\CensoPoblacion 
+     */
+    public function getCesopoblacion()
+    {
+        return $this->cesopoblacion;
     }
 }
