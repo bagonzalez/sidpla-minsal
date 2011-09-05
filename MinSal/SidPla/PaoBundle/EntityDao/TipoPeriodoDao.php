@@ -28,23 +28,25 @@ class TipoPeriodoDao {
     }
 
     /*
-     * Agregar Notificacion del Sistema
+     * Agregar Tipo Perido 
+     */
      
-    public function addNotiSistema($nombreNoti, $tipoMensajeNoti, $mensajeNoti) {
+    public function addNotiSistema($nomTipPer, $descTipPer, $activoTipPer) {
 
-        $notificacionsistema = new NotificacionSistema();
+        $tipoPeriodo= new TipoPeriodo();
+        
+        $tipoPeriodo->setActivoTipPer($activoTipPer);
+        $tipoPeriodo->setDescTipPer($descTipPer);
+        $tipoPeriodo->setNomTipPer($nomTipPer);
+        $tipoPeriodo->setUsuarioTipPer(true);
 
-        $notificacionsistema->setNombreNoti($nombreNoti);
-        $notificacionsistema->setTipoMensajeNoti($tipoMensajeNoti);
-        $notificacionsistema->setMensajeNoti($mensajeNoti);
-
-        $this->em->persist($notificacionsistema);
+      
+        $this->em->persist($tipoPeriodo);
         $this->em->flush();
-        $matrizMensajes = array('El proceso de almacenar notificacion del sistema termino con exito',
-            'Notificacion Sistema' . $notificacionsistema->getCodNoti());
+        $matrizMensajes = array('El proceso de almacenar el tipo de periodo termino con exito');
 
         return $matrizMensajes;
-    }*/
+    }
 
 
     /*

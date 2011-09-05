@@ -1,0 +1,32 @@
+{% block body %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+        
+        var myGrid = $('#tabtipoperiodo');        
+        myGrid.jqGrid({ 
+          url: 'consultarTipoPeriodoJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Codigo','Nombre','Activo'],
+          colModel:[
+            { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}},
+            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}},//, formoptions:{ rowpos:1, label: "Nombre",elmprefix:"(*)"},editrules:{required:true} },
+            { name:'activo', index: 'activo',editable:true,edittype:"checkbox",editoptions: {value:"Yes:No"}}],//,formoptions:{ rowpos:3, label: "Tipo de mensaje",elmprefix:"(*)"},editrules:{required:true}}],            
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          pager: jQuery('#pager'),
+          viewrecords: true,          
+          caption: 'Tipos de Periodo Pao',
+          height: "100%",
+          
+           
+        });
+         myGrid.jqGrid('navGrid','#pager',
+        {edit:false,add:false,del:false}
+        );         
+      });
+    </script>
+   <table id="tabtipoperiodo" class="scroll" alignalign="center"></table> 
+    <div id="pager" class="scroll" style="text-align:center;"></div>  
+{% endblock %}

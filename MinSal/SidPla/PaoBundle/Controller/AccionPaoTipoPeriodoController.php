@@ -14,9 +14,6 @@ class AccionPaoTipoPeriodoController extends Controller {
 
         $opciones = $this->getRequest()->getSession()->get('opciones');
         
-        //$notificacionDao = new NotificacionSistemaDao($this->getDoctrine());
-        
-
         return $this->render('MinSalSidPlaPaoBundle:TipoPeriodoPao:manttTipoPeriodo.html.twig'
                         , array('opciones' => $opciones));
         
@@ -37,7 +34,6 @@ class AccionPaoTipoPeriodoController extends Controller {
             $rows[$i]['id'] = $aux->getIdTipPer();
             $rows[$i]['cell'] = array($aux->getIdTipPer(),
                 $aux->getNomTipPer(),
-                $aux->getUsuarioTipPer(),
                 $aux->getActivoTipPer()
             );
             $i++;
@@ -57,33 +53,43 @@ class AccionPaoTipoPeriodoController extends Controller {
         return $response;
     }
 
-    public function manttTipoPeriodoAction() {
-        $request = $this->getRequest();
+    
+    //Para agregar el Tipo Periodo en otra Pagina
+     public function ingresarTipoPeriodoAction(){
+        $opciones=$this->getRequest()->getSession()->get('opciones'); 
         
-        $codigoTipoPeriodo = $request->get('id');
-        $nombreTipoPeriodo=$request->get('nombre');
-        $nombreTipoPeriodo=$request->get('usuario');
-        $nombreTipoPeriodo=$request->get('activo');
-        
-
-        $operacion = $request->get('oper');
-
-        //$notificacionSistemaDao = new NotificacionSistemaDao($this->getDoctrine());
-
-        switch ($operacion){
-            case 'edit':
-               // $notificacionSistemaDao->editNotiSistema($codigo,$nombreNoti,$mensajeNoti,$tipoMensajeNoti);
-                break;
-            case 'del':
-               //$notificacionSistemaDao->delNotiSistema($codigo);
-                break;
-            case 'add':
-                //$notificacionSistemaDao->addNotiSistema($nombreNoti, $tipoMensajeNoti,$mensajeNoti);
-                break;
-        }
-
-        return new Response("{sc:true,msg:''}");
+        return $this->render('MinSalSidPlaPaoBundle:TipoPeriodoPao:ingresarTipoPeriodo.html.twig', 
+                    array('opciones' => $opciones));       
     }
+    
+public function addTipoPeriodoAction(){
+        
+        $opciones=$this->getRequest()->getSession()->get('opciones'); 
+        $request=$this->getRequest();
+        
+        $nombreUnidad=$request->get('nombreUnidad');
+        $direccion=$request->get('direccion');
+        $responsable=$request->get('responsable');
+        $telefono=$request->get('telefono');
+        $fax=$request->get('fax');
+        $tipoUnidad=$request->get('tipoUnidad');
+        $unidadPadre=$request->get('unidadPadre');
+        $departameto=$request->get('departamento');
+        $municipio=$request->get('municipio');
+        $descripcion=$request->get('descripcion');
+        
+        $unidadOrgDao=new UnidadOrganizativaDao($this->getDoctrine()); 
+        $unidadOrgDao->ingresarUnidadOrg($nombreUnidad, $direccion, $responsable, 
+                                         $telefono, $fax, $tipoUnidad, $unidadPadre, 
+                                         $departameto, $municipio, $descripcion);
+        
+        $departamDao=new DepartametoPaisDao($this->getDoctrine());
+        $departamentos=$departamDao->getDepartametos();
+        
+            
+        return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:manttUnidadesOrganizativas.html.twig', 
+                    array('opciones' => $opciones,));       
+     }
 
 }
 
