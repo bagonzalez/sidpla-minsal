@@ -27,3 +27,8 @@ MinSalSidPlaPaoBundle_addTipoPeriodo:
 MinSalSidPlaPaoBundle_manttJustificacion:
     pattern:  /manttJustificacion
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:manttJustificacion }
+
+#Le agregue esta linea porque sino me tronaba la aplicacion
+MinSalSidPlaPaoBundle_consultarJustificacion:
+    pattern:  /consultarJustificacion
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:consultarJustificacion }
