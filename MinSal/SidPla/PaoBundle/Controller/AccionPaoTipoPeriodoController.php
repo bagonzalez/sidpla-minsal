@@ -67,28 +67,15 @@ public function addTipoPeriodoAction(){
         $opciones=$this->getRequest()->getSession()->get('opciones'); 
         $request=$this->getRequest();
         
-        $nombreUnidad=$request->get('nombreUnidad');
-        $direccion=$request->get('direccion');
-        $responsable=$request->get('responsable');
-        $telefono=$request->get('telefono');
-        $fax=$request->get('fax');
-        $tipoUnidad=$request->get('tipoUnidad');
-        $unidadPadre=$request->get('unidadPadre');
-        $departameto=$request->get('departamento');
-        $municipio=$request->get('municipio');
-        $descripcion=$request->get('descripcion');
-        
-        $unidadOrgDao=new UnidadOrganizativaDao($this->getDoctrine()); 
-        $unidadOrgDao->ingresarUnidadOrg($nombreUnidad, $direccion, $responsable, 
-                                         $telefono, $fax, $tipoUnidad, $unidadPadre, 
-                                         $departameto, $municipio, $descripcion);
-        
-        $departamDao=new DepartametoPaisDao($this->getDoctrine());
-        $departamentos=$departamDao->getDepartametos();
-        
-            
-        return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:manttUnidadesOrganizativas.html.twig', 
-                    array('opciones' => $opciones,));       
+        $nombreTipoPeriodo=$request->get('nombreTipoPeriodo');
+        $descTipoPeriodo=$request->get('descTipoPeriodo');
+       
+        $tipoPeriodoDao=new TipoPeriodoDao($this->getDoctrine());
+        $tipoPeriodoDao->addTipoPeriodo($nombreTipoPeriodo, $descTipoPeriodo);
+                    
+        return $this->render('MinSalSidPlaPaoBundle:TipoPeriodoPao:manttTipoPeriodo.html.twig'
+                        , array('opciones' => $opciones));
+              
      }
 
 }
