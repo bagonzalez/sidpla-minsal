@@ -1,0 +1,7 @@
+MinSalSidPlaUnidadOrgBundle_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: MinSalSidPlaUnidadOrgBundle:Default:index }
+
+MinSalSidPlaUnidadOrgBundle_ingresarInfoCaract:
+    pattern:  /ingresarInfoCaract
+    defaults: { _controller: MinSalSidPlaUnidadOrgBundle:AccionInfoCaractOrganizacion:ingresarInfoCaract }

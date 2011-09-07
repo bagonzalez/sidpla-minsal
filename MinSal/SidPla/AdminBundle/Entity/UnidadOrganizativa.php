@@ -77,6 +77,11 @@ class UnidadOrganizativa {
      */
     protected $paos;
     
+     /**
+     * @ORM\OneToOne(targetEntity="MinSal\SidPla\UnidadOrgBundle\Entity\CaractOrg", mappedBy="unidadOrganizativa")
+     */
+    private $caractOrg;
+    
     
     public function __construct()
     {
@@ -207,5 +212,32 @@ class UnidadOrganizativa {
     public function getPaos()
     {
         return $this->paos;
+    }
+    
+    
+    /**
+     * Set caractOrg
+     *
+     * @param MinSal\SidPla\UnidadOrgBundle\Entity\CaractOrg $caractOrg
+     */
+    public function setCaractOrg(\MinSal\SidPla\UnidadOrgBundle\Entity\CaractOrg $caractOrg)
+    {
+        $this->caractOrg = $caractOrg;
+    }
+
+    /**
+     * Get caractOrg
+     *
+     * @return MinSal\SidPla\UnidadOrgBundle\Entity\CaractOrg 
+     */
+    public function getCaractOrg()
+    {
+        return $this->caractOrg;
+    }
+    
+    
+    public function __toString()
+    {
+       return $this->getNombreUnidad();
     }
 }
