@@ -8,6 +8,7 @@
 namespace MinSal\SidPla\UnidadOrgBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use MinSal\SidPla\UnidadOrgBundle\Form\Type\InfoCaractOrgType;
+use MinSal\SidPla\UnidadOrgBundle\Form\Type\CaractOrgType;
 use MinSal\SidPla\UnidadOrgBundle\Entity\CaractOrg;
 use MinSal\SidPla\AdminBundle\Entity\InformacionGeneral;
 
@@ -48,20 +49,19 @@ class AccionInfoCaractOrganizacionController extends Controller
         $nombreUnidadPadre=$unidad->getParent()->getNombreUnidad();
         
         $infoGeneral=$unidad->getInformacionGeneral();
-        
-        $direccion=$infoGeneral->getDireccion();
-        $telefono=$infoGeneral->getTelefono();
-        $fax=$infoGeneral->getFax();
+        $caractOrg=$unidad->getCaractOrg();
         
         
         $form = $this->createForm(new InfoCaractOrgType(), $infoGeneral);
+        $formCaract = $this->createForm(new CaractOrgType(), $caractOrg);
+        
         return $this->render('MinSalSidPlaUnidadOrgBundle:InforCaractOrg:ingresoInfoCaractOrg.html.twig', 
-                array('form' => $form->createView(), 'opciones' => $opciones,
-                                                     'unidadOrg' => $nombreUnidad,
-                                                      'unidadPadre' => $nombreUnidadPadre,
-                                                      'direccion'=> $direccion, 
-                                                       'telefono' => $telefono,
-                                                       'fax' => $fax ));        
+                array( 'form' => $form->createView(), 
+                       'formOrg' => $formCaract->createView(), 
+                       'opciones' => $opciones,
+                       'unidadOrg' => $nombreUnidad,
+                       'unidadPadre' => $nombreUnidadPadre,                                                       
+                ));        
         
     } 
 }

@@ -1,10 +1,30 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
-<script type="text/javascript">        
+<script type="text/javascript">  
+     
+        
       $(document).ready(function(){
-           $('#tabs').tabs(); 
-
+           var scntDiv = $('#p_scents');
+           var i = $('#p_scents p').size() + 1;
       
+           $('#tabs').tabs(); 
+           $('#guardarInfoGen').button();
+           $('#guardarCarac').button();
+           
+           $('#addScnt').live('click', function() {
+                $('<p><label for="p_scnts"><input type="text" id="p_scnt" size="100" name="p_scnt_' + i +'" value="" placeholder="Ingrese un Objetivo Especifico" /></label> <a href="#" id="remScnt">Eliminar</a></p>').appendTo(scntDiv);
+                i++;
+                return false;
+            });
+
+            $('#remScnt').live('click', function() {
+                if( i > 2 ) {
+                        $(this).parents('p').remove();
+                        i--;
+                }
+                return false;
+            });
+           
       });
       
 </script>
@@ -16,34 +36,98 @@
                 <li><a href="#tabs-1">Informacion General</a></li>
                 <li><a href="#tabs-2">Caracteristicas Organizaci&oacute;n</a></li>                
         </ul>
-        <div id="tabs-1" >
-            <form action="{{ path('MinSalSidPlaCensoBundle_addCategoria') }}" method="post" {{ form_enctype(form) }}>
-              {{ form_rest(form) }} 
-
-                    <table>
+        <div id="tabs-1" align="center">
+            <form action="{{ path('MinSalSidPlaCensoBundle_addCategoria') }}" method="post" {{ form_enctype(form) }}>              
+                    <table size="100%" >
                         <tr>
-                            <td colspan="2" >Nombre Unidad</td>
-                            <td colspan="2">{{ unidadOrg }}</td>
+                            <td size="30%" colspan="2" >Nombre Unidad:</td>
+                            <td size="70%" colspan="2">{{ unidadOrg }}</td>
                         </tr>
                         <tr>
-                            <td colspan="2">Instancia de quien depende</td>
+                            <td colspan="2">Instancia de quien depende:</td>
                             <td colspan="2">{{ unidadPadre }}</td>
                         </tr>
                         <tr>
-                            <td colspan="2">Direcci&oacute;n</td>
-                            <td colspan="2">{{direccion}}</td>
+                            <td colspan="2">Direcci&oacute;n:</td>
+                            <td colspan="2">{{ form_widget(form.direccion) }}</td>
                         </tr>
                         <tr>
-                            <td>Telefono</td>
-                            <td>{{telefono}}</td>
-                            <td>Fax</td>
-                            <td>{{fax}}</td>
-                        </tr>    
+                            <td colspan="2">Telefono: {{ form_widget(form.telefono) }}</td>
+                            <td colspan="2">Fax {{ form_widget(form.fax) }}</td>
+                        </tr> 
+                        <tr>
+                            <td colspan="2">Email:</td>
+                            <td colspan="2">{{ form_widget(form.email) }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Responsable:</td>
+                            <td colspan="2">{{ form_widget(form.email) }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">Actualizado:</td>
+                            <td colspan="2">{{ form_widget(form.fechaActualizacion) }}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="4">Departamentos, Unidades, Secciones, ó Disciplinas que componen la dependencia y número de empleados. </td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="center">
+                                <button type="submmit" id="guardarInfoGen"  >Guardar</button>                                
+                            </td>                            
+                        </tr>
                     </table>     
 
-
+{{ form_rest(form) }} 
             </form>
         </div>
-        <div id="tabs-2"></div>
+        <div id="tabs-2" align="center"   >
+            <form action="{{ path('MinSalSidPlaCensoBundle_addCategoria') }}" method="post" {{ form_enctype(formOrg) }}>
+                <table size="100%" border="0" >
+                    <tr>
+                        <td size="30%" >Misión: </td>
+                        <td size="70%" style="width: 591px; height: 61px;">{{ form_widget(formOrg.mision) }}        </td>
+                    </tr>
+                    <tr>
+                        <td>Visión: </td>
+                        <td style="width: 591px; height: 61px;">{{ form_widget(formOrg.vision) }}        </td>
+                    </tr>
+                    <tr>
+                        <td>Objetivo General: </td>
+                        <td style="width: 591px; height: 61px;">{{ form_widget(formOrg.objetivoGeneral) }}        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td  colspan="4">Objetivos Especificos: </td>                    
+                    </tr>                    
+                    <tr>                        
+                        <td colspan="4" align="center"  id="funcionesEspec" >
+                            <a href="#" id="addScnt">Agregar Objetivo Espec&iacute;fico</a>
+                            <div id="p_scents">
+                                <p>
+                                    <label for="p_scnts"><input type="text" id="p_scnt" size="109" name="p_scnt" value="" placeholder="Ingrese un Objetivo Especifico" /></label>
+                                </p>
+                            </div>                        
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Función Principal: </td>
+                        <td>{{ form_widget(formOrg.funcionPrincipal) }}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" >Funciones Especificas:</td>
+                    </tr>
+                    <tr>                        
+                        <td colspan="4"></td>
+                    </tr>
+                    <tr>
+                       <td colspan="4" align="center">
+                                <button type="submmit" id="guardarCarac"  >Guardar</button>                                
+                            </td>                            
+                    </tr>
+                </table>   
+                    
+                {{ form_rest(formOrg) }} 
+            </form>               
+        </div>
 
 {% endblock body %}
