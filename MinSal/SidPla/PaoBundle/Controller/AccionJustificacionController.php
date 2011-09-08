@@ -1,97 +1,132 @@
 <?php
-namespace MinSal\SidPla\PaoBundle\Controller;
+
+namespace MinSal\SidPla\PaoBundle\Controller; // siempre va solo cambiar el bundle al que pertenece la entidad
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Request; // estas tres lineas siempre van
 
 
-/*use MinSal\SidPla\AdminBundle\EntityDao\JustificacionDao;
-use MinSal\SidPla\AdminBundle\Entity\Justificacion;
-use MinSal\SidPla\AdminBundle\Entity\Pao;*/
+use MinSal\SidPla\PaoBundle\EntityDao\JustificacionDao;
+use MinSal\SidPla\PaoBundle\Entity\Justificacion;
 
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of AccionAdminMenCorreTempController
+ *
+ * @author Jenny
+ */
 class AccionJustificacionController extends Controller {
-    
-         /*
-         * Gestionar justificacion de PAO
-         * 
-         */
+    //put your code here
+
+         
+    public function consultarJustificacionAction(){
         
-        public function manttJustificacionAction()
-	{
-            $opciones=$this->getRequest()->getSession()->get('opciones');             
-            
-            return $this->render('MinSalSidPlaPaoBundle:Justificacion:ManttJustificacion.html.twig', 
-                    array('opciones' => $opciones,));
-            
-	}
+        $opciones=$this->getRequest()->getSession()->get('opciones'); //siempre va
        
+        $JustificacioDao=new JustificacionDao($this->getDoctrine());  // haciendo una instancia dao      
+       // $JustiDao=$JustificacioDao->getHistorialJustificacion();// aqui va el metodo que define en archivo para dao que obtiene todo    
         
-    public function consultarJustificacionJSONAction() {
-
-        $JustificacionDao = new JustificacionSistemaDao($this->getDoctrine());
-        $justificacion = $JustificacionDao->getjustificacionSistema();
-
-        $numfilas = count($justificacion);
-
-        $aux = new Justificacion();
-        $aux->
-        $i = 0;
-
-        foreach ($justificacion as $aux) {
-            $rows[$i]['id'] = $aux->getCodNoti();
-            $rows[$i]['cell'] = array($aux->getCodNoti(),
-                $aux->getJustificacion_descripcion(),
-                $aux->getPao_codigo(),
-                $aux->getIdJudtificacion()
-            );
-            $i++;
-        }
-
-        $datos = json_encode($rows);
-
-
-        $jsonresponse = '{
+        //trabajando con una justificacion en especifico
+         //Este valor $id= 1 es una prueba, aqui debe capturarse ese id dependediendo del valor asignado
+        // en la tabla pao,   que se le ha asignado a la unidad organizativa que esta haciendo la justificacion 
+         $id=1;
+        $JustiDao=$JustificacioDao->buscarJustificacion($id); 
+        
+        return $this->render('MinSalSidPlaPaoBundle:Justificacion:ManttJustificacion.html.twig' //aqui se define la carpeta en que se
+                , array('opciones' => $opciones, 'MensajeJustifi' => $JustiDao));// almacenara el archivo .twig y el nombre del archivo             
+    } 
+    
+     public function consultarJustificacionJSONAction(){
+        
+       
+        $JustificacioDao=new JustificacionDao($this->getDoctrine());     // ENTIDAD DAO   
+        $JustiDao=$JustificacioDao->getHistorialJustificacion(); // aqui va la entidad dao, get que obtiene el historial
+         
+        
+        $numfilas=count($JustiDao);  
+            
+            $uni=new Justificacion();// entidad
+            $i=0;
+            
+            foreach ($JustiDao as $uni) {
+                $rows[$i]['id']= $uni->getIdJustificacion(); // metodo get del id de la entidad
+                $rows[$i]['cell']= array($uni->getIdJustificacion(), // metodo de id de la entidad
+                                         $uni->getPao_codigo(),
+                                         $uni->getJustificacion_descripcion());  // metodo get de atributo descripcion
+                                     
+                $i++;
+            }
+            
+            $datos=json_encode($rows);            
+            
+            
+            $jsonresponse='{
                "page":"1",
                "total":"1",
-               "records":"' . $numfilas . '", 
-               "rows":' . $datos . '}';
-
-
-        $response = new Response($jsonresponse);
-        return $response;
-    }       
-    
- /* Mantenimimento de justificacion de PAO
-  * Eliminar, agregar, editar
-  */
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
+            
+            
+            $response=new Response($jsonresponse);              
+            return $response;            
         
-        public function manttJustificacionEdicionAction(){
+    }
+    
+   /*
+         * Opciones de mantenimiento de justificacion template
+         * Eliminar, agregar, editar
+         * 
+         */
+          
+    
+    public function manttJustificacionEdicionAction(){
             
-            $request=$this->getRequest();           
+            $request=$this->getRequest();
+            $descripcionJusti=$request->get('Descripcion');
+            $JustiPao=$request->get('codigoPao');            
+            $id=$request->get('id'); // no se toca
             
-            
-            $justificacion_descripcion=$request->get('justificacion_descripcion');
-            $pao_codigo=$request->get('pao_codigo');
-           
-            $id=$request->get('id');            
             $operacion=$request->get('oper'); 
             
-            $JusticacionDao=new JustificacionDao($this->getDoctrine());
+            $JustiDao=new JustificacionDao($this->getDoctrine()); // entidad DAO
             
             if($operacion=='edit'){                
-                $JusticacionDao->editJustificacion($justificacion_descripcion, $pao_codigo);
+                 $JustiDao-> editJustificacion($descripcionJusti, $JustiPao, $id); // Metodo definido en DAO
             }
             
             if($operacion=='del'){
-                $JusticacionDao->delJustificacion($id);        
+                $JustiDao->delJustificacion($id);      // Metodo definido en el archivo DAO  
             }
             
             if($operacion=='add'){
-                $JusticacionDao->addJustificacion($justificacion_descripcion, $pao_codigo);
+                $JustiDao->addJustificacion($descripcionJusti, $JustiPao); // Metodo definido en entida dao
             }
              
             return new Response("{sc:true,msg:''}"); 
-        }        
-}
-?>
+            
+        }   
+        
+        
+        public function actualizarJustificacionAction(){
+           $opciones=$this->getRequest()->getSession()->get('opciones');
+            $request=$this->getRequest();
+            $JustiPao=$request->get('justificacion');            
+            $id=$request->get('id');
+            $JustiDao=new JustificacionDao($this->getDoctrine());
+            $JustiDao-> actualizacionJustificacion($JustiPao, $id);
+     
+                       
+            return $this->render('MinSalSidPlaAdminBundle:Default:index.html.twig', array('opciones' => $opciones));
+            //return $this->render('MinSalSidPlaPaoBundle:Justificacion:ManttJustificacion.html.twig' //aqui se define la carpeta en que se
+             //   , array('opciones' => $opciones,));    
+            
+        }
+      
+        
+        }
+     ?>

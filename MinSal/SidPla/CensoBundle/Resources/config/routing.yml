@@ -29,8 +29,17 @@ MinSalSidPlaCensoBundle_consultarBloqueCensoJSON:
 MinSalSidPlaCensoBundle_manttBloqueCensoEdicion:
     pattern:  /manttBloqueCensoEdicion
     defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminBloque:manttBloqueCensoEdicion }
-
-
-
-
     
+MinSalSidPlaCensoBundle_consultarInformacionComplementaria:
+    pattern:  /consultarInformacionComplementaria    
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:consultarInformacionComplementaria }
+
+MinSalSidPlaCensoBundle_consultarBloqueCensoJSON:
+    pattern:  /consultarInformacionComplementariaJSON   
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:consultarBloqueCensoJSON }   
+    
+MinSalSidPlaCensoBundle_manttInformacionComplementariaEdicion:
+    pattern:  /manttInformacionComplementariaEdicion
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:manttInformacionComplementariaEdicion }
+
+

@@ -27,7 +27,7 @@
           pager: jQuery('#pager'),
           viewrecords: true,          
          //scroll:true,
-          loadonce:true, 
+          //loadonce:true, 
            sortname: 'id',
             sortorder: "asc",
             caption: 'Bloques del Censo Geo-Poblacional',
@@ -38,9 +38,9 @@
         });
          myGrid.jqGrid('navGrid','#pager',
         {edit:false,add:false,del:false,view:true},
-        {width:550,height:760,bottominfo:"Campos marcados con (*) son obligatorios"},//edit
-        {width:550,height:660,jqModal:true,checkOnUpdate:true,savekey: [true,13], navkeys: [true,38,40], checkOnSubmit : true, reloadAfterSubmit:false, closeOnEscape:true,bottominfo:"Campos marcados con (*) son obligatorios"},//add
-        {width:550,height:600},//del
+        {width:550,height:120,bottominfo:"Campos marcados con (*) son obligatorios"},//edit
+        {width:550,height:120,jqModal:true,checkOnUpdate:true,savekey: [true,13], navkeys: [true,38,40], checkOnSubmit : true, reloadAfterSubmit:false, closeOnEscape:true,bottominfo:"Campos marcados con (*) son obligatorios"},//add
+        {width:550,height:120},//del
         {multipleSearch:false, multipleGroup:false}, //search
         {width:550,height:100}//view
         );

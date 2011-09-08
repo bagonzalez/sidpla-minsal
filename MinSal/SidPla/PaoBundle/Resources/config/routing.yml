@@ -22,8 +22,19 @@ MinSalSidPlaPaoBundle_ingresarTipoPeriodo:
 MinSalSidPlaPaoBundle_addTipoPeriodo:
     pattern:  /addTipoPeriodo
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoTipoPeriodo:addTipoPeriodo}  
+    
+MinSalSidPlaPaoBundle_consultarJustificacion:
+    pattern:  /consultarJustificacion
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:consultarJustificacion }
+    
+MinSalSidPlaPaoBundle_consultarJustificacionJSON:
+    pattern:  /consultarJustificacionJSON
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:consultarJustificacionJSON }   
+    
+MinSalSidPlaPaoBundle_manttJustificacionEdicion:
+    pattern:  /manttJustificacionEdicion    
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:manttJustificacionEdicion }
 
-#PARA JUSTIFICACION
-MinSalSidPlaPaoBundle_manttJustificacion:
-    pattern:  /manttJustificacion
-    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:manttJustificacion }
+MinSalSidPlaPaoBundle_actualizarJustificacion:
+    pattern:  /actualizarJustificacion    
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:actualizarJustificacion }

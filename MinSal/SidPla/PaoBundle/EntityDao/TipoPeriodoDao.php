@@ -14,7 +14,7 @@ class TipoPeriodoDao {
     function __construct($doctrine) {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
-        $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaPaoBundle:PaoTipoPeriodo');
+        $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaPaoBundle:TipoPeriodo');
     }
 
     /*
@@ -31,11 +31,11 @@ class TipoPeriodoDao {
      * Agregar Tipo Perido 
      */
      
-    public function addNotiSistema($nomTipPer, $descTipPer, $activoTipPer) {
+    public function addTipoPeriodo($nomTipPer, $descTipPer) {
 
         $tipoPeriodo= new TipoPeriodo();
         
-        $tipoPeriodo->setActivoTipPer($activoTipPer);
+        $tipoPeriodo->setActivoTipPer(true);
         $tipoPeriodo->setDescTipPer($descTipPer);
         $tipoPeriodo->setNomTipPer($nomTipPer);
         $tipoPeriodo->setUsuarioTipPer(true);

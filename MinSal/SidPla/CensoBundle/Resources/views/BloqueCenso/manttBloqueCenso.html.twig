@@ -6,19 +6,19 @@
      //  $("#theGrid").closest(".ui-jqgrid-bdiv").css({ 'overflow-y' : 'scroll' });
       //jQuery("#theGrid").jqGrid('hideCol',"id").trigger("reloadGrid");   
           //cuando le da click en el boton Nuevo
-    $("#nuevoMensajeButton").click(function(){
-        jQuery("#theGrid").jqGrid('editGridRow',"new",{closeAfterAdd:true,addCaption: "Nuevo Bloque de Censo",height:325,reloadAfterSubmit:true,
+    $("#nuevoBloqueButton").click(function(){
+        jQuery("#theGrid").jqGrid('editGridRow',"new",{closeAfterAdd:true,addCaption: "Nuevo Bloque de Censo",height:400,
         top : 250 ,left: 250,width: 800,processData: "Cargando...",
-        bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");
+        bottominfo:"Campos marcados con (*) son obligatorios",reloadAfterSubmit:true,onclickSubmit: function(rp_ge, postdata) {
+        alert("bloque agregado con exito!");
           }});
      });
     
          //cuando le da click en el boton editar
-    $("#editarMensajeButton").click(function(){
+    $("#editarBloqueButton").click(function(){
           var gr = jQuery("#theGrid").jqGrid('getGridParam','selrow');
           if( gr != null )
-             jQuery("#theGrid").jqGrid('editGridRow',gr,{closeAfterEdit:true,editCaption: "Editando Bloque Censo",height:325,reloadAfterSubmit:true,
+             jQuery("#theGrid").jqGrid('editGridRow',gr,{closeAfterEdit:true,editCaption: "Editando Bloque Censo",height:130,reloadAfterSubmit:true,
                  top : 250 ,left: 250,width: 800,processData: "Cargando...", onclickSubmit: function(rp_ge, postdata) {
         alert("bloque editado con exito!");
           }, bottominfo:"Campos marcados con (*) son obligatorios"});
@@ -26,9 +26,9 @@
           });
     
         //cuando le da click en el boton borrar
-    $("#eliminarMensajeButton").click(function(){
+    $("#eliminarBloqueButton").click(function(){
          var grs = jQuery("#theGrid").jqGrid('getGridParam','selrow');
-         if( grs != null ) jQuery("#theGrid").jqGrid('delGridRow',grs,{msg: "Desea eliminar este Bloque Censo?",caption:"Eliminando Bloque Censo",height:100,reloadAfterSubmit:true,
+         if( grs != null ) jQuery("#theGrid").jqGrid('delGridRow',grs,{msg: "Desea eliminar este Bloque Censo?",caption:"Eliminando Bloque Censo",height:130,reloadAfterSubmit:true,
              top : 300 ,left: 600,width: 300,processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
         alert("Bloque eliminado con exito!");
           }}); 
@@ -56,9 +56,9 @@
                 <br></br>                
                 {% include 'MinSalSidPlaCensoBundle:BloqueCenso:showAllBloqueCenso.html.twig'%}
                 <br></br>
-                <input type="BUTTON" id="nuevoMensajeButton" value="Agregar Mensaje" />
-                <input type="BUTTON" id="editarMensajeButton" value="Editar Mensaje" />
-                <input type="BUTTON" id="eliminarMensajeButton" value="Eliminar Mensaje" />
+                <input type="BUTTON" id="nuevoBloqueButton" value="Agregar bloque censo" />
+                <input type="BUTTON" id="editarBloqueButton" value="Editar bloque censo" />
+                <input type="BUTTON" id="eliminarBloqueButton" value="Eliminar bloque censo" />
                 </td>
             </tr>        
         </table>        

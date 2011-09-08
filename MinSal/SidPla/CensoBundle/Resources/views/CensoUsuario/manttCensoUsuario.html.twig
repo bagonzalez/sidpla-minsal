@@ -1,0 +1,61 @@
+{# empty Twig template #}
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+ <script type="text/javascript">
+      $(document).ready(function(){
+          $('#tabs').tabs(); 
+      });
+      
+      $('#salir').click(function() {
+              document.location.href='{{ path('MinSalSidPlaPaoBundle_homepage') }}'
+      });
+     
+ </script>
+    
+         
+<br></br>
+<br></br>
+<br></br>
+<h1 align="center" class="demoHeaders">CENSO GENERAL DEL AREA GEO-POBLACIONAL</h1>
+ <table align="center" id="datosviviendaypoblacion"  >
+                    <tr>
+                        <td colspan="4" align="center" >CLASIFICACION DEL AREA GEO-POBLACIONAL<br></td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3"  >
+                            <select id="categoriaCenso" name="categoriaCenso">
+                                 <option value="0" >--Seleccione una categoria del censo--</option>    
+                            </select></td>                            
+                    </tr>
+ </table>
+
+<div id="tabs">
+        <ul>
+                <li><a href="#tabs-1">Datos de vivienda y poblacion </a></li>
+                <li><a href="#tabs-2">Otra informacion relevante</a></li>
+        </ul>
+        <div id="tabs-1" >
+            <form action="" method="post" >
+                <table align="center" id="datosviviendaypoblacion"  >
+                    <tr>
+                        <td colspan="4" align="center" >Total de viviendas</td>
+                    </tr>
+                    <td align="center">
+                   {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllInformacionComplementaria.html.twig'%}
+                   <br></br>
+                    </td>                 
+               </table>
+            </form>            
+        </div>
+        <div id="tabs-2"></div>
+        
+</div>
+    <table align="center" id="botonesaccion"  >
+                    <tr>
+                        <td colspan="4" align="center" ><button type="submmit" id="salir"  >Salir</button>
+                        </td>                        
+                    </tr>                    
+    </table>
+{% endblock %}
+

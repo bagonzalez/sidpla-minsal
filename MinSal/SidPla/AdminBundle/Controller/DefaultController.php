@@ -11,5 +11,6 @@ class DefaultController extends Controller
     {
         $opciones=$this->getRequest()->getSession()->get('opciones');        
         return $this->render('MinSalSidPlaAdminBundle:Default:index.html.twig', array('opciones' => $opciones));
+        //return $this->render('MinSalSidPlaAdminBundle:Default:index.html.twig', array('opciones' => $opciones));
     }
 }
