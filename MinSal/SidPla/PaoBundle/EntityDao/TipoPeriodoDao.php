@@ -14,7 +14,7 @@ class TipoPeriodoDao {
     function __construct($doctrine) {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
-        $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaPaoBundle:PaoTipoPeriodo');
+        $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaPaoBundle:TipoPeriodo');
     }
 
     /*
@@ -28,23 +28,25 @@ class TipoPeriodoDao {
     }
 
     /*
-     * Agregar Notificacion del Sistema
+     * Agregar Tipo Perido 
+     */
      
-    public function addNotiSistema($nombreNoti, $tipoMensajeNoti, $mensajeNoti) {
+    public function addTipoPeriodo($nomTipPer, $descTipPer) {
 
-        $notificacionsistema = new NotificacionSistema();
+        $tipoPeriodo= new TipoPeriodo();
+        
+        $tipoPeriodo->setActivoTipPer(true);
+        $tipoPeriodo->setDescTipPer($descTipPer);
+        $tipoPeriodo->setNomTipPer($nomTipPer);
+        $tipoPeriodo->setUsuarioTipPer(true);
 
-        $notificacionsistema->setNombreNoti($nombreNoti);
-        $notificacionsistema->setTipoMensajeNoti($tipoMensajeNoti);
-        $notificacionsistema->setMensajeNoti($mensajeNoti);
-
-        $this->em->persist($notificacionsistema);
+      
+        $this->em->persist($tipoPeriodo);
         $this->em->flush();
-        $matrizMensajes = array('El proceso de almacenar notificacion del sistema termino con exito',
-            'Notificacion Sistema' . $notificacionsistema->getCodNoti());
+        $matrizMensajes = array('El proceso de almacenar el tipo de periodo termino con exito');
 
         return $matrizMensajes;
-    }*/
+    }
 
 
     /*

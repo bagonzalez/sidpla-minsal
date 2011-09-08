@@ -14,7 +14,15 @@ MinSalSidPlaPaoBundle_mantenimientoTipoPeriodo:
 MinSalSidPlaPaoBundle_consultarTipoPeriodoJSON:
     pattern:  /consultarTipoPeriodoJSON
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoTipoPeriodo:consultarTipoPeriodoJSON}
-
+    
+MinSalSidPlaPaoBundle_ingresarTipoPeriodo:
+    pattern:  /ingresarTipoPeriodo
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoTipoPeriodo:ingresarTipoPeriodo}  
+    
+MinSalSidPlaPaoBundle_addTipoPeriodo:
+    pattern:  /addTipoPeriodo
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoTipoPeriodo:addTipoPeriodo}  
+    
 MinSalSidPlaPaoBundle_consultarJustificacion:
     pattern:  /consultarJustificacion
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:consultarJustificacion }
