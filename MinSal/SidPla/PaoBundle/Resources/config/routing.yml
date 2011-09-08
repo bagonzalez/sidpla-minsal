@@ -15,7 +15,18 @@ MinSalSidPlaPaoBundle_consultarTipoPeriodoJSON:
     pattern:  /consultarTipoPeriodoJSON
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoTipoPeriodo:consultarTipoPeriodoJSON}
 
-#PARA JUSTIFICACION
-MinSalSidPlaPaoBundle_manttJustificacion:
-    pattern:  /manttJustificacion
-    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:manttJustificacion }
+MinSalSidPlaPaoBundle_consultarJustificacion:
+    pattern:  /consultarJustificacion
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:consultarJustificacion }
+    
+MinSalSidPlaPaoBundle_consultarJustificacionJSON:
+    pattern:  /consultarJustificacionJSON
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:consultarJustificacionJSON }   
+    
+MinSalSidPlaPaoBundle_manttJustificacionEdicion:
+    pattern:  /manttJustificacionEdicion    
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:manttJustificacionEdicion }
+
+MinSalSidPlaPaoBundle_actualizarJustificacion:
+    pattern:  /actualizarJustificacion    
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:actualizarJustificacion }

@@ -1,49 +1,54 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
-{% block titulo %}Justificacion PAO {% endblock %}
-
 {% block body %}
 <script type="text/javascript">
       $(document).ready(function(){
-        
-        var myGrid = $('#tabjustificacion');        
-        myGrid.jqGrid({ 
-          url: 'consultarJustificacionJSON',
-          datatype:'json',
-          altRows:true,
-          colNames:['Codigo','Descripcion'],
-          colModel:[
-               { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}},
-               { name:'descripcion', index: 'descripcion',width:300,editable:true,editoptions:{size:50}}],
-                //,formoptions:{ rowpos:2, label: "Mensaje",elmprefix:"(*)"},editrules:{required:true}}],
-          rowNum:10,
-          rowList:[10,20,30],
-          multiselect: false,
-          pager: jQuery('#pager'),
-          viewrecords: true,          
-          caption: 'Justificacion_Pao',
-          height: "100%",
-          editurl:'ManttJustificacion'
-           
-        });
-         myGrid.jqGrid('navGrid','#pager',
-        {edit:true,add:true,del:true},
-        {width:550,height:160,closeAfterEdit : true,bottominfo:"Campos marcados con (*) son obligatorios",onclickSubmit: function(rp_ge, postdata) {
-        alert("datos editados con exito!");}},
-        {width:550,height:160,closeAfterAdd : true,bottominfo:"Campos marcados con (*) son obligatorios",onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");}},
-        {width:550,height:160},
-        {multipleSearch:true, multipleGroup:true}
-        );         
-      });
+     //  $("#theGrid").closest(".ui-jqgrid-bdiv").css({ 'overflow-y' : 'scroll' });
+      //jQuery("#theGrid").jqGrid('hideCol',"id").trigger("reloadGrid");   
+          //cuando le da click en el boton Nuevo
+    $("#guardar").click(function(){
+        alert("datos de justificacion guardados con exito!");
+     });
+     
+      $('#cancelar').click(function() {
+              document.location.href='{{ path('MinSalSidPlaPaoBundle_homepage') }}'
+          });
+         
+     });
     </script>
-    <h1 style='text-align: center;'>Justificacion PAO</h1>
-   <table align="center">
-        <tr>
-            <td align="center">
-                <br></br>  
-                <table id="tabjustificacion" class="scroll" alignalign="center"></table> 
-                <div id="pager" class="scroll" style="text-align:center;"></div>
-            </td>
-        </tr>        
-    </table>    
+
+<br></br>
+    <br></br>         
+    <br></br>    
+   <form action="{{ path('MinSalSidPlaPaoBundle_actualizarJustificacion')}}" method="post" >
+                <table align="center" id="datosgeneralesTabla"  >
+                    <tr>
+                        <td colspan="4" align="center" ><h1>Justificacion </h1></td>
+                    </tr>
+                    <tr>
+                        <td ></td>
+                        <td <p><h3>JUSTIFICACIÓN (Incluya un resumen del diagnóstico situacional actual del establecimiento de salud y 
+                                su área geo-poblacional <br>en término de indicadores de salud, etc.
+                                Debe incluir información relevante del entorno externo y del entorno interno.)</h3></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td ></td>
+                       
+                        <td colspan="3" ><textarea rows="20" cols="100" name="justificacion"  size="60%" id="justificacion"> {{MensajeJustifi.getJustificacion_descripcion()}} </textarea></td>
+                    </tr>
+                   
+                                         
+                    <tr>
+                        <td colspan="4" align="center" ><button type="submmit" id="guardar"  >Guardar</button>
+                            <button type="submmit" id="cancelar"  >Cancelar</button>
+                        </td>                        
+                    </tr> 
+                     <tr>
+                        <td ></td>
+                        <td colspan="3" ><input type="hidden" size="60%" name="id" id="id" value= "{{MensajeJustifi.getIdJustificacion()}}" ></input></td>
+                    </tr>
+                </table>
+            </form>
+    <br></br>
+    <br></br>
 {% endblock %}
