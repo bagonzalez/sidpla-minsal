@@ -5,3 +5,8 @@ MinSalSidPlaUnidadOrgBundle_homepage:
 MinSalSidPlaUnidadOrgBundle_ingresarInfoCaract:
     pattern:  /ingresarInfoCaract
     defaults: { _controller: MinSalSidPlaUnidadOrgBundle:AccionInfoCaractOrganizacion:ingresarInfoCaract }
+
+MinSalSidPlaUnidadOrgBundle_guardarCaracteristicas:
+    pattern:  /guardarCaracteristicas
+    defaults: { _controller: MinSalSidPlaUnidadOrgBundle:AccionInfoCaractOrganizacion:guardarCaracteristicas }
+    

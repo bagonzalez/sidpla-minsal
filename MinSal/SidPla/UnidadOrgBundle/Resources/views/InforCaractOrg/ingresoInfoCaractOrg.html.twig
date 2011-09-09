@@ -4,18 +4,31 @@
      
         
       $(document).ready(function(){
-           var scntDiv = $('#p_scents');
-           var i = $('#p_scents p').size() + 1;
+           var scntDiv = $('#divObj');
+           var divFunciones = $('#divfunciones');
+           
+           var i = $('#divObj p').size() + 1;
+           var j = $('#divfunciones p').size() + 1;
       
            $('#tabs').tabs(); 
            $('#guardarInfoGen').button();
            $('#guardarCarac').button();
            
            $('#addScnt').live('click', function() {
-                $('<p><label for="p_scnts"><input type="text" id="p_scnt" size="100" name="p_scnt_' + i +'" value="" placeholder="Ingrese un Objetivo Especifico" /></label> <a href="#" id="remScnt">Eliminar</a></p>').appendTo(scntDiv);
+                $('<p><label for="divObj"><input type="text" id="objetivos" size="100" name="objetivos_' + i +'" value="" placeholder="Ingrese un Objetivo Especifico" /></label> <a href="#" id="remScnt">Eliminar</a></p>').appendTo(scntDiv);
+                $('#totalObjetivos').val(i);
                 i++;
                 return false;
             });
+            
+            
+            $('#addFunc').live('click', function() {
+                $('<p><label for="divfunciones"><input type="text" id="funciones" size="100" name="funciones_' + j +'" value="" placeholder="Ingrese una Funcion Especifica" /></label> <a href="#" id="remFunc">Eliminar</a></p>').appendTo(divFunciones);
+                $('#totalFunciones').val(j);
+                j++;
+                return false;
+            });
+            
 
             $('#remScnt').live('click', function() {
                 if( i > 2 ) {
@@ -24,6 +37,17 @@
                 }
                 return false;
             });
+            
+            
+            $('#remFunc').live('click', function() {
+                if( j > 2 ) {
+                        $(this).parents('p').remove();
+                        j--;
+                }
+                return false;
+            });
+            
+            
            
       });
       
@@ -81,43 +105,53 @@
             </form>
         </div>
         <div id="tabs-2" align="center"   >
-            <form action="{{ path('MinSalSidPlaCensoBundle_addCategoria') }}" method="post" {{ form_enctype(formOrg) }}>
+            <form action="{{ path('MinSalSidPlaUnidadOrgBundle_guardarCaracteristicas') }}" method="post" {{ form_enctype(formOrg) }}>
+                <input type="hidden" id="totalFunciones" name="totalFunciones" value="" />
+                <input type="hidden" id="totalObjetivos" name="totalObjetivos" value="" />
                 <table size="100%" border="0" >
                     <tr>
                         <td size="30%" >Misión: </td>
-                        <td size="70%" style="width: 591px; height: 61px;">{{ form_widget(formOrg.mision) }}        </td>
+                        <td size="70%" >{{ form_widget(formOrg.mision, { 'attr': {'class': 'textAreaGrande'} } ) }}        </td>
                     </tr>
                     <tr>
                         <td>Visión: </td>
-                        <td style="width: 591px; height: 61px;">{{ form_widget(formOrg.vision) }}        </td>
+                        <td style="width: 591px; height: 61px;">{{ form_widget(formOrg.vision,  { 'attr': {'class': 'textAreaGrande'} }) }}        </td>
                     </tr>
                     <tr>
                         <td>Objetivo General: </td>
-                        <td style="width: 591px; height: 61px;">{{ form_widget(formOrg.objetivoGeneral) }}        </td>
+                        <td style="width: 591px; height: 61px;">{{ form_widget(formOrg.objetivoGeneral,  { 'attr': {'class': 'textAreaGrande'} }) }}        </td>
                     </tr>
                     
                     <tr>
                         <td  colspan="4">Objetivos Especificos: </td>                    
                     </tr>                    
                     <tr>                        
-                        <td colspan="4" align="center"  id="funcionesEspec" >
+                        <td colspan="4" align="center"  id="objEspec" >
                             <a href="#" id="addScnt">Agregar Objetivo Espec&iacute;fico</a>
-                            <div id="p_scents">
+                            <div id="divObj">
                                 <p>
-                                    <label for="p_scnts"><input type="text" id="p_scnt" size="109" name="p_scnt" value="" placeholder="Ingrese un Objetivo Especifico" /></label>
+                                    <label for="divObj"><input type="text" id="objetivos" size="109" name="objetivos_1" value="" placeholder="Ingrese un Objetivo Especifico" /></label>
                                 </p>
                             </div>                        
                         </td>
                     </tr>
                     <tr>
                         <td>Función Principal: </td>
-                        <td>{{ form_widget(formOrg.funcionPrincipal) }}</td>
+                        <td>{{ form_widget(formOrg.funcionPrincipal, { 'attr': {'class': 'textAreaGrande'} }) }}</td>
                     </tr>
                     <tr>
                         <td colspan="4" >Funciones Especificas:</td>
                     </tr>
+                    
                     <tr>                        
-                        <td colspan="4"></td>
+                         <td colspan="4" align="center"  id="funcionesEspec" >
+                            <a href="#" id="addFunc">Agregar Funciones Espec&iacute;ficas</a>
+                            <div id="divfunciones">
+                                <p>
+                                    <label for="p_funciones"><input type="text" id="funciones" size="109" name="funciones_1" value="" placeholder="Ingrese una funcion especifica" /></label>
+                                </p>
+                            </div>                        
+                        </td>
                     </tr>
                     <tr>
                        <td colspan="4" align="center">
