@@ -1,8 +1,28 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
-{% block titulo %}Periodo Pao {% endblock %}
+{% block titulo %}Periodo Oficial {% endblock %}
 
 {% block body %}
-
-    <h1 style='text-align: center;'>Periodo Pao Oficial</h1>
-    
+<script type="text/javascript">
+    </script>
+    <h1 style='text-align: center;'>Periodo Oficial</h1>
+    <form>
+        <table align="center">
+            <tr>
+                <td><strong>Seleccione el Año a Gestionar </strong></td>
+                <td>
+                    <select id='selanio'>
+                        <option value='{{ "now" | date("Y") }}'>{{ "now" | date("Y") }}</option>
+                        <option value='{{ "now" | date("Y")-1 }}'>{{ "now" | date("Y")-1 }}</option>
+                    </select>
+                </td>  
+            </tr>
+            
+            <tr>
+                <td align="center">
+                    <br></br>  
+                {% include 'MinSalSidPlaPaoBundle:PeriodoPaoOficial:showPeriodoOficial.html.twig'%}
+                </td>
+            </tr>        
+        </table>    
+    </form>
 {% endblock %}

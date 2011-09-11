@@ -51,31 +51,10 @@ class PeriodoOficial
 
     
      /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\Pao", inversedBy="periodooficiales")
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\TipoPeriodo", inversedBy="periodooficiales")
      * @ORM\JoinColumn(name="tipoperiodo_codigo", referencedColumnName="tipoperiodo_codigo")
      */
-    protected $pao;
-
-
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    /**
-     * Set idPerOfi
-     *
-     * @param integer $idPerOfi
-     */
-    public function setIdPerOfi($idPerOfi)
-    {
-        $this->idPerOfi = $idPerOfi;
-    }
+    private $tipPerioPerOfi;
 
     /**
      * Get idPerOfi
@@ -168,26 +147,6 @@ class PeriodoOficial
     }
     
     /**
-     * Set pao
-     *
-     * @param MinSal\SidPla\PaoBundle\Entity\Pao $pao
-     */
-    public function setPao(MinSal\SidPla\PaoBundle\Entity\Pao $pao)
-    {
-        $this->pao = $pao;
-    }
-
-    /**
-     * Get pao
-     *
-     * @return MinSal\SidPla\PaoBundle\Entity\Pao
-     */
-    public function getPao()
-    {
-        return $this->pao;
-    }
-
-    /**
      * Set activoPerOfi
      *
      * @param boolean $activoPerOfi
@@ -195,5 +154,25 @@ class PeriodoOficial
     public function setActivoPerOfi($activoPerOfi)
     {
         $this->activoPerOfi = $activoPerOfi;
+    }
+    
+    /**
+     * Set tipPerioPerOfi
+     *
+     * @param MinSal\SidPla\PaoBundle\Entity\TipoPeriodo $tipPerioPerOfi
+     */
+    public function settipPerioPerOfi(MinSal\SidPla\PaoBundle\Entity\TipoPeriodo $tipPerioPerOfi)
+    {
+        $this->tipPerioPerOfi = $tipPerioPerOfi;
+    }
+
+    /**
+     * Get tipPerioPerOfi
+     *
+     * @return MinSal\SidPla\PaoBundle\Entity\TipoPeriodo
+     */
+    public function gettipPerioPerOfi()
+    {
+        return $this->tipPerioPerOfi;
     }
 }

@@ -5,6 +5,8 @@ namespace MinSal\SidPla\PaoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+Use MinSal\SidPla\PaoBundle\EntityDao\PeriodoOficialDao;
+Use MinSal\SidPla\PaoBundle\Entity\PeriodoOficial;
 
 class AccionPaoPeriodoOficialController extends Controller {
 
@@ -12,30 +14,27 @@ class AccionPaoPeriodoOficialController extends Controller {
 
         $opciones = $this->getRequest()->getSession()->get('opciones');
         
-        //$notificacionDao = new NotificacionSistemaDao($this->getDoctrine());
-        
-
-        return $this->render('MinSalSidPlaPaoBundle:PeriodoPaoOficial:manttPerPaoOfi.html.twig'
+          return $this->render('MinSalSidPlaPaoBundle:PeriodoPaoOficial:manttPerPaoOfi.html.twig'
                         , array('opciones' => $opciones));
-        
     }
 
-    public function consultarPeriodoPaoOficialJSONAction() {
+   public function consultarPeriodoOficialJSONAction() {
 
-        $notificacionDao = new NotificacionSistemaDao($this->getDoctrine());
-        $notificacion = $notificacionDao->getNotiSistema();
+       $periodoOficialDao=new PeriodoOficialDao($this->getDoctrine());
+       $periodoOficial=$periodoOficialDao->getPeriodoOficial();
+       
+        $numfilas = count($periodoOficial);
 
-        $numfilas = count($notificacion);
-
-        $aux = new NotificacionSistema();
+        $aux = new PeriodoOficial();
         $i = 0;
 
-        foreach ($notificacion as $aux) {
-            $rows[$i]['id'] = $aux->getCodNoti();
-            $rows[$i]['cell'] = array($aux->getCodNoti(),
-                $aux->getNombreNoti(),
-                $aux->getMensajeNoti(),
-                $aux->getTipoMensajeNoti()
+        foreach ($periodoOficial as $aux) {
+            $rows[$i]['id'] = $aux->getIdPerOfi();
+            $rows[$i]['cell'] = array($aux->getIdPerOfi(),
+                $aux->gettipPerioPerOfi()->getIdTipPer(),
+                $aux->getFechIniPerOfi(),
+                $aux->getFechFinPerOfi(),
+                $aux->getActivoPerOfi()
             );
             $i++;
         }
@@ -52,33 +51,6 @@ class AccionPaoPeriodoOficialController extends Controller {
 
         $response = new Response($jsonresponse);
         return $response;
-    }
-
-    public function manttNotificacionEdicionAction() {
-        $request = $this->getRequest();
-
-        $nombreNoti=$request->get('nombre');
-        $mensajeNoti=$request->get('mensaje');
-        $tipoMensajeNoti = $request->get('tipomensaje');
-        $codigo = $request->get('id');
-
-        $operacion = $request->get('oper');
-
-        $notificacionSistemaDao = new NotificacionSistemaDao($this->getDoctrine());
-
-        switch ($operacion){
-            case 'edit':
-                $notificacionSistemaDao->editNotiSistema($codigo,$nombreNoti,$mensajeNoti,$tipoMensajeNoti);
-                break;
-            case 'del':
-               $notificacionSistemaDao->delNotiSistema($codigo);
-                break;
-            case 'add':
-                $notificacionSistemaDao->addNotiSistema($nombreNoti, $tipoMensajeNoti,$mensajeNoti);
-                break;
-        }
-
-        return new Response("{sc:true,msg:''}");
     }
 
 }
