@@ -109,9 +109,7 @@ class AccionAdminEmpleadosController extends Controller {
         
         public function manttEmpleadoEdicionAction(){
             
-            $request=$this->getRequest();           
-            
-            
+            $request=$this->getRequest();     
             
             $dui=$request->get('dui');
             $nombrePrimero=$request->get('nombrePrimero');
