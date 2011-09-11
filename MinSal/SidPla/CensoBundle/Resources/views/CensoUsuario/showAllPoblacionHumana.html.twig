@@ -1,0 +1,61 @@
+{# empty Twig template #}
+
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+        
+        var myGrid = $('#theGrid');        
+        myGrid.jqGrid({ 
+          url: 'consultarPoblacionHumanaJSON',
+     scrolling: true,
+          datatype:'json',
+          altRows:true,
+          colNames:['Id','Codigo Categoria', 'Codigo Censo','Clasificacion','Area','Cantidad','Sexo'],
+          colModel:[
+            { name:'id', index: 'id',sorttype:'int', width:100,editable:false,editoptions:{size:15}, searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}  },
+            { name:'codCensoPob', index: 'codCensoPob', width:100,editable:true,editoptions:{size:100},formoptions:{ rowpos:1, label: "Area", elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'codCatCen', index: 'codCatCen',width:100, sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:2, label: "Codigo Censo", elmprefix:"(*)"},editrules:{required:true} } ,            
+            { name:'pobHumClasi', index: 'pobHumClasi',width:100, sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:3, label: "Codigo categoria", elmprefix:"(*)"},editrules:{required:true} } ,            
+            { name:'pobHumArea', index: 'pobHumArea',width:100, sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:4, label: "Cantidad", elmprefix:"(*)"},editrules:{required:true} } ],            
+            { name:'pobHumCant', index: 'pobHumCant',width:100, sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:5, label: "Cantidad", elmprefix:"(*)"},editrules:{required:true} } ],            
+            { name:'pobhumSexo', index: 'pobhumSexo',width:100, sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:6, label: "Cantidad", elmprefix:"(*)"},editrules:{required:true} } ],            
+            
+          rowNum:10,
+          rownumbers: true,
+         rowTotal: 10,
+          rowList:[10,20,30],
+         // height: 55,
+          rownumWidth: 40,
+          multiselect: false,
+          pager: jQuery('#pager'),
+          viewrecords: true,          
+         //scroll:true,
+          //loadonce:true, 
+           sortname: 'id',
+            sortorder: "asc",
+            caption: 'Censo Usuario',
+            height: "100%",
+            editCaption: "Editar poblacion humana",
+            addCaption: "Nuevo poblacion humana",
+            editurl: 'manttPoblacionHumanaEdicion'
+        });
+         myGrid.jqGrid('navGrid','#pager',
+        {edit:false,add:false,del:false,view:true},
+        {width:550,height:120,bottominfo:"Campos marcados con (*) son obligatorios"},//edit
+        {width:100,height:400,jqModal:true,checkOnUpdate:true,savekey: [true,13], navkeys: [true,38,40], checkOnSubmit : true, reloadAfterSubmit:false, closeOnEscape:true,bottominfo:"Campos marcados con (*) son obligatorios"},//add
+        {width:550,height:120},//del
+        {multipleSearch:false, multipleGroup:false}, //search
+        {width:550,height:100}//view
+        );
+        
+       
+      }
+ 
+);
+</script>
+
+
+<table id="theGrid" class="scroll"></table> 
+<div id="pager" class="scroll" style="text-align:center;"></div>
+
+{% endblock %}

@@ -102,7 +102,78 @@ class AccionAdminCensoUsuarioController extends Controller{
             
         }
     
+    public function consultarPoblacionHumanaJSONAction(){
+        
+       
+         $InfoPobHumaDao=new PoblacionHumanaDao($this->getDoctrine());        
+        $InfoPobHumDaoT=$InfoPobHumaDao->getInfoPobHum();  
+         
+        
+        $numfilas=count($InfoPobHumDaoT);  
+            
+            $uni=new InformacionComplementaria();
+            $i=0;
+            
+            foreach ($InfoPobHumDaoT as $uni) {
+                $rows[$i]['id']= $uni->getIdPobHum();
+                $rows[$i]['cell']= array($uni->getIdPobHum(),
+                                         $uni->getCodCatCen(),
+                                         $uni->getCodCenPob(),
+                                         $uni->getPobHumClasi(),
+                                         $uni->getPobHumArea(),
+                                         $uni->getPobHumCant(),
+                                         $uni->getPobhumSexo());    
+                $i++;
+            }
+            
+            $datos=json_encode($rows);            
+            
+            
+            $jsonresponse='{
+               "page":"1",
+               "total":"1",
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
+            
+            
+            $response=new Response($jsonresponse);              
+            return $response;            
+        
+    }
     
+    
+   public function manttPoblacionHumanaEdicionAction(){
+            
+            $request=$this->getRequest();
+            $codCenPob=$request->get('codCensoPob');
+            $codCatCen=$request->get('codCatCen');            
+            $pobHumClasi=$request->get('pobHumClasi');  
+            $pobHumArea=$request->get('pobHumArea');  
+            $pobHumCant=$request->get('pobHumCant');
+            $pobhumSexo=$request->get('pobhumSexo');            
+              
+            
+            $id=$request->get('id');
+            
+            $operacion=$request->get('oper'); 
+            
+            $InfPobHumaDao=new PoblacionHumanaDao($this->getDoctrine());
+            
+            if($operacion=='edit'){                
+                $InfPobHumaDao->editPobHuma($codCenPob, $codCatCen,$pobHumClasi,$pobHumArea,$pobHumCant,$pobhumSexo, $id);
+            }
+            
+            if($operacion=='del'){
+                $InfPobHumaDao->delPobHuma($id);        
+            }
+            
+            if($operacion=='add'){
+                $InfPobHumaDao->addInfoPobHuma($codCenPob, $codCatCen,$pobHumClasi,$pobHumArea,$pobHumCant,$pobhumSexo);
+            }
+             
+            return new Response("{sc:true,msg:''}"); 
+            
+        }
     
     
     
