@@ -3,10 +3,6 @@ MinSalSidPlaPaoBundle_homepage:
     defaults: { _controller: MinSalSidPlaPaoBundle:Default:index }
 
 #PARA PERIODO PAO
-MinSalSidPlaPaoBundle_mantenimientoPeriodoOficial:
-    pattern:  / mantenimientoPeriodoOficial
-    defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoPeriodoOficial:mantenimientoPeriodoOficial }
-
 MinSalSidPlaPaoBundle_mantenimientoTipoPeriodo:
     pattern:  /mantenimientoTipoPeriodo
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoTipoPeriodo:mantenimientoTipoPeriodo }
@@ -14,15 +10,12 @@ MinSalSidPlaPaoBundle_mantenimientoTipoPeriodo:
 MinSalSidPlaPaoBundle_consultarTipoPeriodoJSON:
     pattern:  /consultarTipoPeriodoJSON
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoTipoPeriodo:consultarTipoPeriodoJSON}
+
+MinSalSidPlaPaoBundle_manttTipoPeriodo:
+    pattern:  /manttTipoPeriodo
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoTipoPeriodo:manttTipoPeriodo }
     
-MinSalSidPlaPaoBundle_ingresarTipoPeriodo:
-    pattern:  /ingresarTipoPeriodo
-    defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoTipoPeriodo:ingresarTipoPeriodo}  
-    
-MinSalSidPlaPaoBundle_addTipoPeriodo:
-    pattern:  /addTipoPeriodo
-    defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoTipoPeriodo:addTipoPeriodo}  
-    
+#PARA JUSTIFICACION    
 MinSalSidPlaPaoBundle_consultarJustificacion:
     pattern:  /consultarJustificacion
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:consultarJustificacion }

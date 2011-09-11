@@ -23,7 +23,14 @@ class TipoPeriodoDao {
      */
 
     public function getTipoPeriodo() {
-        $tiposPeriodos = $this->repositorio->findAll();
+        $tiposPeriodos = $this->em->createQuery("select t
+                                                 from MinSalSidPlaPaoBundle:TipoPeriodo t 
+                                                 order by t.idTipPer ASC");
+        return $tiposPeriodos->getResult(); s;
+    }
+    
+      public function getTipoPeriodoEspecifico($codigo) {
+        $tiposPeriodos = $this->repositorio->find($codigo);
         return  $tiposPeriodos;
     }
 
@@ -31,11 +38,11 @@ class TipoPeriodoDao {
      * Agregar Tipo Perido 
      */
      
-    public function addTipoPeriodo($nomTipPer, $descTipPer) {
+    public function addTipoPeriodo($nomTipPer, $descTipPer,$actTipPer) {
 
         $tipoPeriodo= new TipoPeriodo();
-        
-        $tipoPeriodo->setActivoTipPer(true);
+         
+        $tipoPeriodo->setActivoTipPer($actTipPer);
         $tipoPeriodo->setDescTipPer($descTipPer);
         $tipoPeriodo->setNomTipPer($nomTipPer);
         $tipoPeriodo->setUsuarioTipPer(true);
@@ -48,18 +55,23 @@ class TipoPeriodoDao {
         return $matrizMensajes;
     }
 
+    public function editTipoPeriodo($codTipPer, $nomTipPer, $descTipPer,$actTipPer) {
+        
+        $tipoPeriodo= $this->getTipoPeriodoEspecifico($codTipPer);
+        $tipoPeriodo->setDescTipPer($descTipPer);
+        $tipoPeriodo->setNomTipPer($nomTipPer);
+        $tipoPeriodo->setActivoTipPer($actTipPer);
+        
+        $this->em->persist($tipoPeriodo);
+        $this->em->flush();
+        $matrizMensajes = array('El proceso de almacenar el tipo de periodo termino con exito');
 
-    /*
-     * Elimina Notificacion del sistema
-     
-
-    public function delNotiSistema($codigo) {
+        return $matrizMensajes;
+    }
+    
+    public function delTipoPeriodo($codigo) {
 
         $notificacionSistema = $this->repositorio->find($codigo);
-
-        if (!$notificacionSistema) {
-            throw $this->createNotFoundException('No se encontro rol con ese id ' . $codigo);
-        }
 
         $this->em->remove($notificacionSistema);
         $this->em->flush();
@@ -67,29 +79,8 @@ class TipoPeriodoDao {
         $matrizMensajes = array('El proceso de eliminar termino con exito');
 
         return $matrizMensajes;
-    }*/
+    }
 
-    /*
-     * Actualiza Notificacion Sistema
-    
-
-    public function editNotiSistema($codigo, $nombreNoti, $mensajeNoti, $tipoMensajeNoti) {
-
-        $notificacionSistema = $this->repositorio->find($codigo);
-
-        if (!$notificacionSistema) {
-            throw $this->createNotFoundException('No se encontro rol con ese id ' . $codigo);
-        }
-        
-        $notificacionSistema->setMensajeNoti($mensajeNoti);
-        $notificacionSistema->setNombreNoti($nombreNoti);
-        $notificacionSistema->setTipoMensajeNoti($tipoMensajeNoti);
-
-        $this->em->flush();
-        $matrizMensajes = $codigo;
-    
-            return $matrizMensajes;
-        } */
 
 }
 

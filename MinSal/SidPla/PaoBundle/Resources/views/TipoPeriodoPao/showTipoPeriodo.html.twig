@@ -7,11 +7,14 @@
           url: 'consultarTipoPeriodoJSON',
           datatype:'json',
           altRows:true,
-          colNames:['Codigo','Nombre','Activo'],
+          colNames:['Codigo','Nombre','Activo','Descripcion'],
           colModel:[
             { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}},
-            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}},//, formoptions:{ rowpos:1, label: "Nombre",elmprefix:"(*)"},editrules:{required:true} },
-            { name:'activo', index: 'activo',editable:true,edittype:"checkbox",editoptions: {value:"True:False"}}],//,formoptions:{ rowpos:3, label: "Tipo de mensaje",elmprefix:"(*)"},editrules:{required:true}}],            
+            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:30}, formoptions:{label: "Nombre",elmprefix:"(*)"},editrules:{required:true}},
+            { name:'activo', index: 'activo',width:40,editable:true,edittype:"checkbox",editoptions: {value:"SI:NO"},formoptions:{label: "Activo"}},
+            { name:'descripcion', index: 'descripcion', width:500,editable:true,edittype:"textarea", editoptions:{rows:"8",cols:"60"},formoptions:{label: "Descripcion"}}
+          ],
+        scroll:true,
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
@@ -19,10 +22,24 @@
           viewrecords: true,          
           caption: 'Tipos de Periodo Pao',
           height: "100%",
+          editurl:'manttTipoPeriodo'
                      
         });
-         myGrid.jqGrid('navGrid','#pager',
-        {edit:false,add:false,del:false}
+        myGrid.jqGrid('navGrid','#pager',
+            {edit:true,add:true,del:true},
+            //El de Editar
+            {width:550,height:250,closeAfterEdit : true,
+             bottominfo:"(*) Campos obligatorios",
+             onclickSubmit: function(rp_ge, postdata) {
+                    alert("Datos Editados con exito!");}
+            },//Fin de las propiedades para editar
+            //El de agregar
+            {width:550,height:250,closeAfterAdd : true,
+             bottominfo:"(*) Campos obligatorios",
+             onclickSubmit: function(rp_ge, postdata) {
+                    alert("Datos Agregados con exito!");}
+            },
+            {width:550,height:160}
         );         
       });
     </script>

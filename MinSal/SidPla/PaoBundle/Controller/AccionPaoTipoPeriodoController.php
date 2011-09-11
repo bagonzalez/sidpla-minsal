@@ -6,7 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use MinSal\SidPla\PaoBundle\EntityDao\TipoPeriodoDao;
-//use MinSal\SidPla\PaoBundle\Entity\TipoPeriodo;
+use MinSal\SidPla\PaoBundle\Entity\TipoPeriodo;
 
 class AccionPaoTipoPeriodoController extends Controller {
 
@@ -34,8 +34,13 @@ class AccionPaoTipoPeriodoController extends Controller {
             $rows[$i]['id'] = $aux->getIdTipPer();
             $rows[$i]['cell'] = array($aux->getIdTipPer(),
                 $aux->getNomTipPer(),
-                $aux->getActivoTipPer()
+                $aux->getActivoTipPer(),
+                $aux->getDescTipPer()
             );
+            if($aux->getActivoTipPer())
+                $rows[$i]['cell'][2]='SI';
+            else
+                $rows[$i]['cell'][2]='NO';
             $i++;
         }
 
@@ -52,31 +57,35 @@ class AccionPaoTipoPeriodoController extends Controller {
         $response = new Response($jsonresponse);
         return $response;
     }
+    public function manttTipoPeriodoAction() {
+        $request = $this->getRequest();
+        
+        $codTipoPer=$request->get('id');
+        $nomTipoPer=$request->get('nombre');
+        $descTipoPer=$request->get('descripcion');
+        if($request->get('activo')=='SI')
+                $actTipoPer=true;
+            else
+                $actTipoPer=false;
+            
+        $operacion = $request->get('oper');
 
-    
-    //Para agregar el Tipo Periodo en otra Pagina
-     public function ingresarTipoPeriodoAction(){
-        $opciones=$this->getRequest()->getSession()->get('opciones'); 
-        
-        return $this->render('MinSalSidPlaPaoBundle:TipoPeriodoPao:ingresarTipoPeriodo.html.twig', 
-                    array('opciones' => $opciones));       
-    }
-    
-public function addTipoPeriodoAction(){
-        
-        $opciones=$this->getRequest()->getSession()->get('opciones'); 
-        $request=$this->getRequest();
-        
-        $nombreTipoPeriodo=$request->get('nombreTipoPeriodo');
-        $descTipoPeriodo=$request->get('descTipoPeriodo');
-       
         $tipoPeriodoDao=new TipoPeriodoDao($this->getDoctrine());
-        $tipoPeriodoDao->addTipoPeriodo($nombreTipoPeriodo, $descTipoPeriodo);
-                    
-        return $this->render('MinSalSidPlaPaoBundle:TipoPeriodoPao:manttTipoPeriodo.html.twig'
-                        , array('opciones' => $opciones));
-              
-     }
+
+        switch ($operacion){
+            case 'edit':
+                $tipoPeriodoDao->editTipoPeriodo($codTipoPer, $nomTipoPer, $descTipoPer, $actTipoPer);
+                break;
+            case 'del':
+               $tipoPeriodoDao->delTipoPeriodo($codTipoPer);
+                break;
+            case 'add':
+                $tipoPeriodoDao->addTipoPeriodo($nomTipoPer, $descTipoPer, $actTipoPer);
+                break;
+        }
+
+        return new Response("{sc:true,msg:''}");
+    }
 
 }
 
