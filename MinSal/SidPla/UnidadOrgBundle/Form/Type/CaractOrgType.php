@@ -25,6 +25,7 @@ class CaractOrgType extends AbstractType {
         $builder->add('vision', 'textarea');
         $builder->add('funcionPrincipal', 'textarea');
         $builder->add('objetivoGeneral', 'textarea');  
+        $builder->add('idCaractOrg', 'hidden');  
     }
 
     public function getName()

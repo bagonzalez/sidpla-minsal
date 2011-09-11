@@ -10,3 +10,20 @@ MinSalSidPlaUnidadOrgBundle_guardarCaracteristicas:
     pattern:  /guardarCaracteristicas
     defaults: { _controller: MinSalSidPlaUnidadOrgBundle:AccionInfoCaractOrganizacion:guardarCaracteristicas }
     
+MinSalSidPlaUnidadOrgBundle_consultarFuncionesOrg:
+    pattern:  /consultarFuncionesOrg
+    defaults: { _controller: MinSalSidPlaUnidadOrgBundle:AccionInfoCaractOrganizacion:consultarFuncionesOrg }
+
+MinSalSidPlaUnidadOrgBundle_consultarObjetivosOrgEspec:
+    pattern:  /consultarObjetivosOrgEspec
+    defaults: { _controller: MinSalSidPlaUnidadOrgBundle:AccionInfoCaractOrganizacion:consultarObjetivosOrgEspec }
+
+MinSalSidPlaUnidadOrgBundle_manttObjEspec:
+    pattern:  /manttObjEspec
+    defaults: { _controller: MinSalSidPlaUnidadOrgBundle:AccionInfoCaractOrganizacion:manttObjEspec }
+    
+MinSalSidPlaUnidadOrgBundle_manttFuncEspec:
+    pattern:  /manttFuncEspec
+    defaults: { _controller: MinSalSidPlaUnidadOrgBundle:AccionInfoCaractOrganizacion:manttFuncEspec }
+    
+    

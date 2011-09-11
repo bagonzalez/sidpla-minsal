@@ -100,4 +100,14 @@ class DepartamentoPais
     {
         return $this->municipios;
     }
+
+    /**
+     * Add municipios
+     *
+     * @param MinSal\SidPla\AdminBundle\Entity\Municipio $municipios
+     */
+    public function addMunicipio(\MinSal\SidPla\AdminBundle\Entity\Municipio $municipios)
+    {
+        $this->municipios[] = $municipios;
+    }
 }

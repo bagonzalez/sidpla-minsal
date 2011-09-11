@@ -29,6 +29,9 @@
 
 namespace MinSal\SidPla\UnidadOrgBundle\EntityDao;
 
+use MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico;
+use MinSal\SidPla\UnidadOrgBundle\Entity\CaractOrg;
+use MinSal\SidPla\UnidadOrgBundle\Entity\FuncionEspecifica;
 
 class CaractOrgDao {
     
@@ -48,11 +51,55 @@ class CaractOrgDao {
         return $caractOrg;
     }
     
-      public function updateCaractOrg($caractOrg) {
+    public function updateCaractOrg($caractOrg) {
         
         $this->em->persist($caractOrg);
         $this->em->flush();	    
         $matrizMensajes = array('El proceso de almacenar la carcteristica termino con exito', 'Caract Org ');
+
+        return $matrizMensajes;
+    }
+    
+    public function agregarObjEspec($objetivo, $idCaractOrg) {
+         
+         $caractOrgAux=new CaractOrg();
+         $caractOrgAux=$this->getCaractOrg($idCaractOrg); 
+            
+         $objEspec=new ObjetivoEspecifico();
+         $objEspec->setDescripcion($objetivo);                         
+         $objEspec->setCaractOrg($caractOrgAux);
+
+         $caractOrgAux->addObjetivoEspecifico($objEspec);
+
+         $this->em->persist($objEspec);
+         $this->em->persist($caractOrgAux);
+         $this->em->flush();
+        
+        
+        $matrizMensajes = array('El proceso de ingresar objetivo especifico termino con exito ');
+
+        return $matrizMensajes;
+    }
+    
+      public function agregarFuncEspec($funcion, $idCaractOrg) {
+         
+         $caractOrgAux=new CaractOrg();
+         $caractOrgAux=$this->getCaractOrg($idCaractOrg);          
+         
+         $funcionEspec=new FuncionEspecifica();
+         $funcionEspec->setFuncDescripcion($funcion);
+         $funcionEspec->setCaractOrg($caractOrgAux);
+
+         $unidad=$caractOrgAux->getUnidadOrganizativa();
+
+         $caractOrgAux->addFuncionesEspec($funcionEspec);
+
+         $this->em->persist($funcionEspec);
+         $this->em->persist($caractOrgAux);
+         $this->em->flush();
+        
+        
+        $matrizMensajes = array('El proceso de ingresar funcion especifica termino con exito ');
 
         return $matrizMensajes;
     }

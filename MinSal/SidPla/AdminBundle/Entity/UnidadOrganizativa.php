@@ -79,6 +79,7 @@ class UnidadOrganizativa {
     
      /**
      * @ORM\OneToOne(targetEntity="MinSal\SidPla\UnidadOrgBundle\Entity\CaractOrg", mappedBy="unidadOrganizativa")
+     * @ORM\JoinColumn(name="carorg_codigo", referencedColumnName="carorg_codigo")
      */
     private $caractOrg;
     
@@ -239,5 +240,25 @@ class UnidadOrganizativa {
     public function __toString()
     {
        return $this->getNombreUnidad();
+    }
+
+    /**
+     * Add subUnidades
+     *
+     * @param MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $subUnidades
+     */
+    public function addUnidadOrganizativa(\MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $subUnidades)
+    {
+        $this->subUnidades[] = $subUnidades;
+    }
+
+    /**
+     * Add paos
+     *
+     * @param MinSal\SidPla\PaoBundle\Entity\Pao $paos
+     */
+    public function addPao(\MinSal\SidPla\PaoBundle\Entity\Pao $paos)
+    {
+        $this->paos[] = $paos;
     }
 }

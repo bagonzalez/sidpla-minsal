@@ -3,51 +3,13 @@
 <script type="text/javascript">  
      
         
-      $(document).ready(function(){
-           var scntDiv = $('#divObj');
-           var divFunciones = $('#divfunciones');
+      $(document).ready(function(){           
            
-           var i = $('#divObj p').size() + 1;
-           var j = $('#divfunciones p').size() + 1;
       
            $('#tabs').tabs(); 
            $('#guardarInfoGen').button();
            $('#guardarCarac').button();
            
-           $('#addScnt').live('click', function() {
-                $('<p><label for="divObj"><input type="text" id="objetivos" size="100" name="objetivos_' + i +'" value="" placeholder="Ingrese un Objetivo Especifico" /></label> <a href="#" id="remScnt">Eliminar</a></p>').appendTo(scntDiv);
-                $('#totalObjetivos').val(i);
-                i++;
-                return false;
-            });
-            
-            
-            $('#addFunc').live('click', function() {
-                $('<p><label for="divfunciones"><input type="text" id="funciones" size="100" name="funciones_' + j +'" value="" placeholder="Ingrese una Funcion Especifica" /></label> <a href="#" id="remFunc">Eliminar</a></p>').appendTo(divFunciones);
-                $('#totalFunciones').val(j);
-                j++;
-                return false;
-            });
-            
-
-            $('#remScnt').live('click', function() {
-                if( i > 2 ) {
-                        $(this).parents('p').remove();
-                        i--;
-                }
-                return false;
-            });
-            
-            
-            $('#remFunc').live('click', function() {
-                if( j > 2 ) {
-                        $(this).parents('p').remove();
-                        j--;
-                }
-                return false;
-            });
-            
-            
            
       });
       
@@ -124,35 +86,22 @@
                     
                     <tr>
                         <td  colspan="4">Objetivos Especificos: </td>                    
-                    </tr>                    
-                    <tr>                        
-                        <td colspan="4" align="center"  id="objEspec" >
-                            <a href="#" id="addScnt">Agregar Objetivo Espec&iacute;fico</a>
-                            <div id="divObj">
-                                <p>
-                                    <label for="divObj"><input type="text" id="objetivos" size="109" name="objetivos_1" value="" placeholder="Ingrese un Objetivo Especifico" /></label>
-                                </p>
-                            </div>                        
-                        </td>
-                    </tr>
+                    </tr> 
+                    <tr>
+                         <td colspan="4" >{% include 'MinSalSidPlaUnidadOrgBundle:InforCaractOrg:showObjetivosEspecificosAll.html.twig'  with {'idCaractOrg': idCaractOrg} %} </td>                        
+                    </tr>                     
                     <tr>
                         <td>Función Principal: </td>
                         <td>{{ form_widget(formOrg.funcionPrincipal, { 'attr': {'class': 'textAreaGrande'} }) }}</td>
                     </tr>
+                    
                     <tr>
                         <td colspan="4" >Funciones Especificas:</td>
                     </tr>
-                    
-                    <tr>                        
-                         <td colspan="4" align="center"  id="funcionesEspec" >
-                            <a href="#" id="addFunc">Agregar Funciones Espec&iacute;ficas</a>
-                            <div id="divfunciones">
-                                <p>
-                                    <label for="p_funciones"><input type="text" id="funciones" size="109" name="funciones_1" value="" placeholder="Ingrese una funcion especifica" /></label>
-                                </p>
-                            </div>                        
-                        </td>
-                    </tr>
+                     <tr>
+                         <td colspan="4" >{% include 'MinSalSidPlaUnidadOrgBundle:InforCaractOrg:showFuncionesOrganizativasAll.html.twig'  with {'idCaractOrg': idCaractOrg} %} </td>                        
+                    </tr>                      
+                   
                     <tr>
                        <td colspan="4" align="center">
                                 <button type="submmit" id="guardarCarac"  >Guardar</button>                                
