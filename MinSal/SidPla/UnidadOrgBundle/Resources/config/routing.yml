@@ -1,5 +1,5 @@
 MinSalSidPlaUnidadOrgBundle_homepage:
-    pattern:  /hello/{name}
+    pattern:  /mainUnidadOrg
     defaults: { _controller: MinSalSidPlaUnidadOrgBundle:Default:index }
 
 MinSalSidPlaUnidadOrgBundle_ingresarInfoCaract:
