@@ -12,28 +12,25 @@ use Symfony\Component\Form\FormBuilder;
 use Doctrine\ORM\EntityRepository;
 
 /**
- * Description of InfoCaractOrgType
+ * Description of CaractOrgType
  *
  * @author bgonzalez
  */
-class InfoCaractOrgType extends AbstractType {
+class CaractOrgType extends AbstractType {
     
     public function buildForm(FormBuilder $builder, array $opciones)
     {
         //$builder->add('unidadOrganizativa',  'entity',  array( 'class' => 'MinSal\\SidPla\\AdminBundle\\Entity\\UnidadOrganizativa')); 
-        $builder->add('telefono', 'text');
-        $builder->add('fax', 'text');
-        $builder->add('direccion', 'text');
-        $builder->add('email', 'email');  
-        $builder->add('fechaActualizacion', 'date', array(            
-            'widget' => 'single_text',
-        ));  
-        
+        $builder->add('mision', 'textarea');
+        $builder->add('vision', 'textarea');
+        $builder->add('funcionPrincipal', 'textarea');
+        $builder->add('objetivoGeneral', 'textarea');  
+        $builder->add('idCaractOrg', 'hidden');  
     }
 
     public function getName()
     {
-        return 'infoCaractOrg';
+        return 'caractOrg';
     }
 }
 

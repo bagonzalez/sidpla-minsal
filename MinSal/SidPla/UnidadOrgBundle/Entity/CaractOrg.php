@@ -57,11 +57,16 @@ class CaractOrg
     protected $funcionesEspec;
     
     /**
+     * @ORM\OneToMany(targetEntity="ObjetivoEspecifico", mappedBy="caractOrg")
+     */
+    protected $objetivosEspec;
+    
+    /**
      * @ORM\OneToOne(targetEntity="MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa", inversedBy="caractOrg")
      * @ORM\JoinColumn(name="uniorg_codigo", referencedColumnName="uniorg_codigo")
      */
     private $unidadOrganizativa;
-
+    
     
     /**
      * Set idCaractOrg
@@ -166,6 +171,7 @@ class CaractOrg
     public function __construct()
     {
         $this->funcionesEspec = new ArrayCollection();
+        $this->objetivosEspec= new ArrayCollection();
     }
     
     /**
@@ -193,7 +199,7 @@ class CaractOrg
      *
      * @param MinSal\SidPla\UnidadOrgBundle\Entity\UnidadOrganizativa $unidadOrganizativa
      */
-    public function setUnidadOrganizativa(\MinSal\SidPla\UnidadOrgBundle\Entity\UnidadOrganizativa $unidadOrganizativa)
+    public function setUnidadOrganizativa(\MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $unidadOrganizativa)
     {
         $this->unidadOrganizativa = $unidadOrganizativa;
     }
@@ -206,5 +212,35 @@ class CaractOrg
     public function getUnidadOrganizativa()
     {
         return $this->unidadOrganizativa;
+    }
+
+    /**
+     * Add funcionesEspec
+     *
+     * @param MinSal\SidPla\UnidadOrgBundle\Entity\FuncionEspecifica $funcionesEspec
+     */
+    public function addFuncionEspecifica(\MinSal\SidPla\UnidadOrgBundle\Entity\FuncionEspecifica $funcionesEspec)
+    {
+        $this->funcionesEspec[] = $funcionesEspec;
+    }
+
+    /**
+     * Add objetivosEspec
+     *
+     * @param MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico $objetivosEspec
+     */
+    public function addObjetivoEspecifico(\MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico $objetivosEspec)
+    {
+        $this->objetivosEspec[] = $objetivosEspec;
+    }
+
+    /**
+     * Get objetivosEspec
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getObjetivosEspec()
+    {
+        return $this->objetivosEspec;
     }
 }

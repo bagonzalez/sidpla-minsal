@@ -162,4 +162,24 @@ class RolSistema
     {
         return $this->opcionesSistema;
     }
+
+    /**
+     * Add usuarios
+     *
+     * @param MinSal\SidPla\UsersBundle\Entity\User $usuarios
+     */
+    public function addUser(\MinSal\SidPla\UsersBundle\Entity\User $usuarios)
+    {
+        $this->usuarios[] = $usuarios;
+    }
+
+    /**
+     * Add opcionesSistema
+     *
+     * @param MinSal\SidPla\AdminBundle\Entity\OpcionSistema $opcionesSistema
+     */
+    public function addOpcionSistema(\MinSal\SidPla\AdminBundle\Entity\OpcionSistema $opcionesSistema)
+    {
+        $this->opcionesSistema[] = $opcionesSistema;
+    }
 }

@@ -48,6 +48,12 @@ class ObjetivoEspecifico
      * @ORM\Column(name="objesp_activo", type="boolean")
      */
     private $activo;
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="CaractOrg", inversedBy="objEspec")
+     * @ORM\JoinColumn(name="carorg_codigo", referencedColumnName="carorg_codigo")
+     */
+    protected $caractOrg;
 
 
     
@@ -149,5 +155,25 @@ class ObjetivoEspecifico
     public function getActivo()
     {
         return $this->activo;
+    }
+
+    /**
+     * Set caractOrg
+     *
+     * @param MinSal\SidPla\UnidadOrgBundle\Entity\CaractOrg $caractOrg
+     */
+    public function setCaractOrg(\MinSal\SidPla\UnidadOrgBundle\Entity\CaractOrg $caractOrg)
+    {
+        $this->caractOrg = $caractOrg;
+    }
+
+    /**
+     * Get caractOrg
+     *
+     * @return MinSal\SidPla\UnidadOrgBundle\Entity\CaractOrg 
+     */
+    public function getCaractOrg()
+    {
+        return $this->caractOrg;
     }
 }

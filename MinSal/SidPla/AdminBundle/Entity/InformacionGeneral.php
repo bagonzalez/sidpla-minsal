@@ -45,9 +45,16 @@ class InformacionGeneral
     /**
      * @var string $direccion
      *
-     * @ORM\Column(name="infgen_direccion", type="string", length=10)
+     * @ORM\Column(name="infgen_direccion", type="text")
      */
     private $direccion;
+    
+     /**
+     * @var string $email
+     *
+     * @ORM\Column(name="infgen_email", type="text" )
+     */
+    private $email;
     
     
     /**
@@ -157,6 +164,28 @@ class InformacionGeneral
     {
         return $this->direccion;
     }
+    
+    /**
+     * Set email
+     *
+     * @param text $email
+     */
+    public function setEmail($email)
+    {
+        $this->email = $email;
+    }
+
+    /**
+     * Get email
+     *
+     * @return text 
+     */
+    public function getEmail()
+    {
+        return $this->email;
+    }
+    
+    
 
     /**
      * Set unidadOrganizativa

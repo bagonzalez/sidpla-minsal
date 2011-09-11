@@ -1,0 +1,56 @@
+{# Muestra todos las opciones #}
+{% block body %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+
+        var myGrid = $('#theGrid');        
+        myGrid.jqGrid({    
+          url: 'consultarFuncionesOrg?idCaractOrg={{idCaractOrg}}',
+          datatype:'json',
+          altRows:true,          
+          colNames:['Id','Función Especifica'],
+          colModel:[            
+            { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
+            { name:'funcion', index: 'funcion', width:700,editable:true,editoptions:{size:40},formoptions:{ rowpos:1, label: "Funcion Especifica:", elmprefix:"(*)"},editrules:{required:true}  }
+            ],
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          sortname: 'id',
+          sortorder: "asc",
+          pager: jQuery('#pager'),
+          viewrecords: true,          
+          caption: 'Funciones Especificas',
+          height: "100%",
+          editCaption: "Editar Registro",
+          addCaption: "Nuevo Registro",
+          editurl:'manttFuncEspec?idCaractOrg={{idCaractOrg}}'         
+            
+        });
+        myGrid.jqGrid('navGrid','#pager',
+        {edit:true,add:true,del:true},
+        {width:450,height:200, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos editados con exito!");},closeAfterEdit:true },//edit
+        {width:450,height:200,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");},closeAfterAdd:true },//add
+        {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
+        alert("Mensaje eliminado con exito!");
+          } },//del
+        {},//search
+        {} //view
+        );
+       
+      });
+      
+    
+    
+   
+    
+    </script>
+      <div id="grid_wrapper" class="ui-corner-all floatLeft">
+        <table id="theGrid" class="scroll" ></table> 
+        <div id="pager"  class="scroll" style="text-align:center;"></div> 
+      </div>
+       
+    
+{% endblock %}

@@ -1,0 +1,62 @@
+{# Muestra todos las opciones #}
+{% block body %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+
+        var myGrid = $('#theGridObj');        
+        myGrid.jqGrid({    
+          url: 'consultarObjetivosOrgEspec?idCaractOrg={{idCaractOrg}}',
+          datatype:'json',
+          altRows:true,          
+          colNames:['Id','Objetivo'],
+          colModel:[            
+            { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
+            { name:'objetivo', index: 'objetivo', width:700,editable:true,editoptions:{size:40},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  }
+            ],
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          sortname: 'id',
+          sortorder: "asc",
+          pager: jQuery('#pagerObj'),
+          viewrecords: true,          
+          caption: 'Objetivos Especificos',
+          height: "100%",
+          editCaption: "Editar Registro",
+          addCaption: "Nuevo Registro",
+          editurl:'manttObjEspec?idCaractOrg={{idCaractOrg}}'         
+            
+        });
+        myGrid.jqGrid('navGrid','#pagerObj',
+        {edit:true,add:true,del:true},
+        {width:450,height:200, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos editados con exito!");},closeAfterEdit:true },//edit
+        {width:450,height:200,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");},closeAfterAdd:true },//add
+        {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
+        alert("Mensaje eliminado con exito!");
+          } },//del
+        {},//search
+        {} //view
+        );
+       
+      });
+      
+       //define handler for 'editSubmit' event
+    var fn_editSubmit=function(response,postdata){
+     var json=response.responseText; //in my case response text form server is "{sc:true,msg:''}"
+     var result=eval("("+json+")"); //create js object from server reponse
+     return [result.sc,result.msg,null]; 
+    }  
+
+    
+   
+    
+    </script>
+      <div id="grid_wrapper" class="ui-corner-all floatLeft">
+        <table id="theGridObj" class="scroll" ></table> 
+        <div id="pagerObj"  class="scroll" style="text-align:center;"></div> 
+      </div>
+       
+    
+{% endblock %}
