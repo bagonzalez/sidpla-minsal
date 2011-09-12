@@ -4,11 +4,14 @@
  <script type="text/javascript">
       $(document).ready(function(){
           $('#tabs').tabs(); 
-      });
-      
-      $('#salir').click(function() {
+       $('#tabs').css("height",331); 
+$('#salir').click(function() {
               document.location.href='{{ path('MinSalSidPlaPaoBundle_homepage') }}'
-      });
+      });  
+
+});
+      
+      
      
  </script>
     
@@ -38,14 +41,13 @@
         <div id="tabs-1" >
             <form action="" method="post" >
                 <table align="center" id="datosviviendaypoblacion"  >
-                    <tr>
+                     <tr>
                         <td colspan="4" align="center" >Total de viviendas</td>
                     </tr>
                     <td align="center">
                    {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllInformacionComplementaria.html.twig'%}
                    <br></br>
                     </td>  
-                    
                     <tr>
                         <td colspan="4" align="center" >Poblacion Humana</td>
                     </tr>

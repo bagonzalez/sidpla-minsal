@@ -6,7 +6,7 @@
 <script type="text/javascript">
       $(document).ready(function(){
         
-        var myGrid = $('#theGrid');        
+        var myGrid = $('#theGrid1');        
         myGrid.jqGrid({ 
           url: 'consultarInformacionComplementariaJSON',
      scrolling: true,
@@ -27,13 +27,13 @@
          // height: 55,
           rownumWidth: 40,
           multiselect: false,
-          pager: jQuery('#pager'),
+          pager: jQuery('#pager1'),
           viewrecords: true,          
          //scroll:true,
           //loadonce:true, 
            sortname: 'id',
             sortorder: "asc",
-            caption: 'Censo Usuario',
+            caption: 'Total de viviendas',
             height: "100%",
             editCaption: "Editar Censo",
             addCaption: "Nuevo Censo",
@@ -55,7 +55,7 @@
 </script>
 
 
-<table id="theGrid" class="scroll"></table> 
-<div id="pager" class="scroll" style="text-align:center;"></div>
+<table id="theGrid1" class="scroll"></table> 
+<div id="pager1" class="scroll" style="text-align:center;"></div>
 
 {% endblock %}
