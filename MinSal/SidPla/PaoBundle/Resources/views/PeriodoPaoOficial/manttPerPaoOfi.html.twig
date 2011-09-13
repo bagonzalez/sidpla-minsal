@@ -8,17 +8,15 @@
     <form>
         <table align="center">
             <tr>
-                <td><strong>Seleccione el Año a Gestionar </strong></td>
-                <td>
-                    <select id='selanio'>
+                <td align="center"><strong>Seleccione el Año a Gestionar </strong>
+                <select id='selanio'>
                         <option value='{{ "now" | date("Y") }}'>{{ "now" | date("Y") }}</option>
                         <option value='{{ "now" | date("Y")-1 }}'>{{ "now" | date("Y")-1 }}</option>
-                    </select>
-                </td>  
+                </select>
+                </td>
             </tr>
-            
             <tr>
-                <td align="center">
+                <td colspan="2" align="center">
                     <br></br>  
                 {% include 'MinSalSidPlaPaoBundle:PeriodoPaoOficial:showPeriodoOficial.html.twig'%}
                 </td>

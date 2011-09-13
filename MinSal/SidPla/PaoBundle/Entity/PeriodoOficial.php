@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="sidpla_periodooficial")
  * @ORM\Entity
  */
+
 class PeriodoOficial
 {
     /**
@@ -22,40 +23,39 @@ class PeriodoOficial
     private $idPerOfi;
 
     /**
-     * @var interger $anioPerOfi
+     * @var bigint $anioPerOfi
      *
-     * @ORM\Column(name="periodoficial_anio", type="interger")
+     * @ORM\Column(name="periodoficial_anio", type="bigint")
      */
     private $anioPerOfi;
 
     /**
-     * @var date $fechIniPerOfi
+     * @var datetime $fechIniPerOfi
      *
-     * @ORM\Column(name="periodoficial_fechainicio", type="date")
+     * @ORM\Column(name="periodoficial_fechainicio", type="datetime")
      */
     private $fechIniPerOfi;
 
     /**
-     * @var date $fechFinPerOfi
+     * @var datetime $fechFinPerOfi
      *
-     * @ORM\Column(name="periodoficial_fechafin", type="date")
+     * @ORM\Column(name="periodoficial_fechafin", type="datetime")
      */
     private $fechFinPerOfi;
-    
-     /**
-     * @var date $activoPerOfi
+
+    /**
+     * @var boolean $activoPerOfi
      *
      * @ORM\Column(name="periodoficial_activo", type="boolean")
      */
     private $activoPerOfi;
 
-    
      /**
      * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\TipoPeriodo", inversedBy="periodooficiales")
      * @ORM\JoinColumn(name="tipoperiodo_codigo", referencedColumnName="tipoperiodo_codigo")
      */
     private $tipPerioPerOfi;
-
+   
     /**
      * Get idPerOfi
      *
@@ -69,9 +69,9 @@ class PeriodoOficial
     /**
      * Set anioPerOfi
      *
-     * @param interger $anioPerOfi
+     * @param bigint $anioPerOfi
      */
-    public function setAnioPerOfi(\interger $anioPerOfi)
+    public function setAnioPerOfi($anioPerOfi)
     {
         $this->anioPerOfi = $anioPerOfi;
     }
@@ -89,9 +89,9 @@ class PeriodoOficial
     /**
      * Set fechIniPerOfi
      *
-     * @param date $fechIniPerOfi
+     * @param datetime $fechIniPerOfi
      */
-    public function setFechIniPerOfi($fechIniPerOfi)
+    public function setFechIniPerOfi(DateTime $fechIniPerOfi)
     {
         $this->fechIniPerOfi = $fechIniPerOfi;
     }
@@ -99,7 +99,7 @@ class PeriodoOficial
     /**
      * Get fechIniPerOfi
      *
-     * @return date 
+     * @return datetime 
      */
     public function getFechIniPerOfi()
     {
@@ -109,9 +109,9 @@ class PeriodoOficial
     /**
      * Set fechFinPerOfi
      *
-     * @param date $fechFinPerOfi
+     * @param datetime $fechFinPerOfi
      */
-    public function setFechFinPerOfi($fechFinPerOfi)
+    public function setFechFinPerOfi(DateTime $fechFinPerOfi)
     {
         $this->fechFinPerOfi = $fechFinPerOfi;
     }
@@ -119,21 +119,21 @@ class PeriodoOficial
     /**
      * Get fechFinPerOfi
      *
-     * @return date 
+     * @return datetime 
      */
     public function getFechFinPerOfi()
     {
         return $this->fechFinPerOfi;
     }
-    
-     /**
+
+    /**
      * Set activoPerOfi
      *
-     * @param boolean $activoTipPer
+     * @param boolean $activoPerOfi
      */
-    public function setActivoTipPer($activoPerOfi)
+    public function setActivoPerOfi($activoPerOfi)
     {
-        $this->activoPerOfi = $activoTipPer;
+        $this->activoPerOfi = $activoPerOfi;
     }
 
     /**
@@ -145,18 +145,7 @@ class PeriodoOficial
     {
         return $this->activoPerOfi;
     }
-    
-    /**
-     * Set activoPerOfi
-     *
-     * @param boolean $activoPerOfi
-     */
-    public function setActivoPerOfi($activoPerOfi)
-    {
-        $this->activoPerOfi = $activoPerOfi;
-    }
-    
-    /**
+     /**
      * Set tipPerioPerOfi
      *
      * @param MinSal\SidPla\PaoBundle\Entity\TipoPeriodo $tipPerioPerOfi

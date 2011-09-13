@@ -1,7 +1,7 @@
 {% block body %}
     <script type="text/javascript">
       $(document).ready(function(){
-        
+    
         var myGrid = $('#tabperiodooficial');        
         myGrid.jqGrid({ 
           url: 'consultarPeriodoOficialJSON',
@@ -10,13 +10,27 @@
           colNames:['Codigo','Nombre','Fecha Inicio','Fecha Fin','Activo'],
           colModel:[
             { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}},
-            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:30} },//formoptions:{label: "Nombre",elmprefix:"(*)"},editrules:{required:true}},
-            { name:'fechini', index: 'fechini', width:150,editable:true,editoptions:{size:30} },
-            { name:'fechfin', index: 'fechfin', width:150,editable:true,editoptions:{size:30}},
+            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:30},edittype:"select",
+                            editoptions: {value:"0:Seleccione un Tipo de Periodo;{{ combotipoperiodos }}"}
+            },//Fin del nombre
+            { name:'fechini', index: 'fechini', width:150,editable:true,
+                    formoptions:{label: "Fecha de Inicio",elmprefix:"(*)"},editrules:{required:true},
+                    editoptions: {size: 10, maxlengh: 10,
+                                dataInit: function(element) {
+                                    $(element).datepicker({dateFormat: 'dd/mm/yy'})
+                                }
+                              }
+            },//Fin del fechini
+            { name:'fechfin', index: 'fechfin', width:150,editable:true,
+                    formoptions:{label: "Fecha de Finalizacion",elmprefix:"(*)"},editrules:{required:true},
+                    editoptions: {size: 10, maxlengh: 10,
+                                dataInit: function(element) {
+                                    $(element).datepicker({dateFormat: 'dd/mm/yy'})
+                                }
+                    }
+            },//Fin del fechfin
             { name:'activo', index: 'activo',width:40,editable:true,edittype:"checkbox",editoptions: {value:"SI:NO"}}
-            //{ name:'activo', index: 'activo',width:40,editable:true,edittype:"checkbox",editoptions: {value:"SI:NO"},formoptions:{label: "Activo"}},
-            //{ name:'descripcion', index: 'descripcion', width:500,editable:true,edittype:"textarea", editoptions:{rows:"8",cols:"60"},formoptions:{label: "Descripcion"}}
-          ],
+          ],//Fin del colModel
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
@@ -24,19 +38,19 @@
           viewrecords: true,          
           caption: 'Periodo Oficial',
           height: "100%"//,
-         // editurl:'manttTipoPeriodo'
+         // editurl:'manttPeriodoOficial'
                      
         });
         myGrid.jqGrid('navGrid','#pager',
             {edit:true,add:true,del:true},
             //El de Editar
-            {width:550,height:250,closeAfterEdit : true,
+            {width:550,height:150,closeAfterEdit : true,
              bottominfo:"(*) Campos obligatorios",
              onclickSubmit: function(rp_ge, postdata) {
                     alert("Datos Editados con exito!");}
             },//Fin de las propiedades para editar
             //El de agregar
-            {width:550,height:250,closeAfterAdd : true,
+            {width:550,height:200,closeAfterAdd : true,
              bottominfo:"(*) Campos obligatorios",
              onclickSubmit: function(rp_ge, postdata) {
                     alert("Datos Agregados con exito!");}
@@ -46,5 +60,6 @@
       });
     </script>
    <table id="tabperiodooficial" class="scroll" alignalign="center"></table> 
-    <div id="pager" class="scroll" style="text-align:center;"></div>  
+    <div id="pager" class="scroll" style="text-align:center;"></div>
+
 {% endblock %}
