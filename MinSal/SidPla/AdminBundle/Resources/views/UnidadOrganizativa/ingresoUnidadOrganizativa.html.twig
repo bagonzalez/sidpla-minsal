@@ -4,7 +4,7 @@
 <script type="text/javascript">        
       $(document).ready(function(){
           
-   
+          $('#dialog').jqm();
           
           $('#tabs').tabs(); 
           
@@ -68,8 +68,8 @@
                         <td colspan="3" ><input name="direccion" size="60%" id="direccion" ></input></td>
                     </tr>
                     <tr>
-                        <td >Responsable:</td>
-                        <td colspan="3" ><input size="60%" name="responsable" id="responsable"  ></input><input type="button" value="..."></input></td>
+                        <td >Responsable: </td>
+                        <td colspan="3" ><input size="60%" name="responsable" id="responsable"  ></input><input type="button" class="jqModal" value="..."></input></td>
                     </tr>  
                     <tr>
                         <td >Tel&eacute;fono:</td>
@@ -118,6 +118,11 @@
         </div>
         <div id="tabs-2"></div>
         <div id="tabs-3"></div>
+        <div class="jqmWindow" id="dialog">
+            <a href="#" class="jqmClose">Cerrar</a>
+            <hr>
+            {% include 'MinSalSidPlaAdminBundle:Empleado:showAllEmpleados.html.twig'%}
+        </div>
 </div>
 
 

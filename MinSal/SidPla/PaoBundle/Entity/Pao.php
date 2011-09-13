@@ -42,6 +42,12 @@ class Pao
      * @ORM\JoinColumn(name="censopoblacion_codigo", referencedColumnName="censopoblacion_codigo")
      */
     private $cesopoblacion;
+    
+     /**
+     * @ORM\OneToOne(targetEntity="Justificacion", mappedBy="pao")
+     * @ORM\JoinColumn(name="justificacion_codigo", referencedColumnName="justificacion_codigo")
+     */
+    private $justificacion;
 
 
 
@@ -123,5 +129,25 @@ class Pao
     public function getCesopoblacion()
     {
         return $this->cesopoblacion;
+    }
+
+    /**
+     * Set justificacion
+     *
+     * @param MinSal\SidPla\PaoBundle\Entity\Justificacion $justificacion
+     */
+    public function setJustificacion(\MinSal\SidPla\PaoBundle\Entity\Justificacion $justificacion)
+    {
+        $this->justificacion = $justificacion;
+    }
+
+    /**
+     * Get justificacion
+     *
+     * @return MinSal\SidPla\PaoBundle\Entity\Justificacion 
+     */
+    public function getJustificacion()
+    {
+        return $this->justificacion;
     }
 }

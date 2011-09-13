@@ -8,6 +8,12 @@ use Symfony\Component\HttpFoundation\Request;
 
 use MinSal\SidPla\CensoBundle\EntityDao\InformacionComplementariaDao;
 use MinSal\SidPla\CensoBundle\Entity\InformacionComplementaria;
+use MinSal\SidPla\CensoBundle\EntityDao\CategoriaCensoDao;
+use MinSal\SidPla\CensoBundle\Entity\CategoriaCenso;
+use MinSal\SidPla\CensoBundle\EntityDao\PoblacionHumanaDao;
+use MinSal\SidPla\CensoBundle\Entity\PoblacionHumana;
+use MinSal\SidPla\CensoBundle\EntityDao\InformacionRelevanteDao;
+use MinSal\SidPla\CensoBundle\Entity\InformacionRelevante;
 
 /*
  * To change this template, choose Tools | Templates
@@ -39,7 +45,7 @@ class AccionAdminCensoUsuarioController extends Controller{
         
        
          $InfoCompleDao=new InformacionComplementariaDao($this->getDoctrine());        
-        $InfoCompleDaoT=$InfoCompleDao->getBloqueCen();  
+        $InfoCompleDaoT=$InfoCompleDao->getInfoComple();  
          
         
         $numfilas=count($InfoCompleDaoT);  
@@ -177,10 +183,82 @@ class AccionAdminCensoUsuarioController extends Controller{
     
     
     
-
+    
+     public function consultarCategoriaCensoUsuarioJSONAction(){
+        
+            $request=$this->getRequest();
+            $categoriaDao=new CategoriaCensoDao($this->getDoctrine());
+            $categorias=$categoriaDao->getCategorias();
+            
+            $numfilas=count($categorias);  
+            
+            
+            $i=0;
+            
+            $categoria=new CategoriaCenso();
+            
+            foreach ($categorias as $categoria) {
+                
+                $rows[$i]['id']= $categoria->getIdCategoriaCenso();
+                $rows[$i]['cell']= array($categoria->getIdCategoriaCenso(),
+                                         $categoria->getDescripcionCategoria(),
+                                         $categoria->getActivo(),
+                                         $categoria->getDivTabla() ,
+                                         $categoria->getBloque()->getNombreBloque()
+                                         );    
+                $i++;
+            }
+            
+            $datos=json_encode($rows);            
+            
+            
+            $jsonresponse='{
+               "page":"1",
+               "total":"1",
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
+            
+            
+            $response=new Response($jsonresponse);              
+            return $response;   
+    }
     
     
-    
+    public function consultarInformacionRelevanteJSONAction(){
+        
+       
+         $InfoRelDao=new InformacionRelevanteDao($this->getDoctrine());        
+        $InfoRelDaoT=$InfoRelDao->getInfoRel();  
+         
+        
+        $numfilas=count($InfoRelDaoT);  
+            
+            $uni=new InformacionRelevante();
+            $i=0;
+            
+            foreach ($InfoRelDaoT as $uni) {
+                $rows[$i]['id']= $uni->getIdInfRel();
+                $rows[$i]['cell']= array($uni->getIdInfRel(),
+                                         $uni->getCodCenPob(),
+                                         $uni->getCodCatCen(),
+                                         $uni->getInfRelCant());    
+                $i++;
+            }
+            
+            $datos=json_encode($rows);            
+            
+            
+            $jsonresponse='{
+               "page":"1",
+               "total":"1",
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
+            
+            
+            $response=new Response($jsonresponse);              
+            return $response;            
+        
+    }
     
     
     

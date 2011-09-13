@@ -4,11 +4,21 @@
  <script type="text/javascript">
       $(document).ready(function(){
           $('#tabs').tabs(); 
-      });
+       $('#tabs').css("height",500); 
+      $.getJSON('consultarCategoriaCensoUsuarioJSON', function(data) {
+                  var i=0;
+                  $.each(data, function(key, val) {
+                      if(key=='rows'){
+                        $.each(val, function(id, registro){
+                            $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+                        });                    
+                      }
+                  });
+          });
+
+});
       
-      $('#salir').click(function() {
-              document.location.href='{{ path('MinSalSidPlaPaoBundle_homepage') }}'
-      });
+      
      
  </script>
     
@@ -38,14 +48,13 @@
         <div id="tabs-1" >
             <form action="" method="post" >
                 <table align="center" id="datosviviendaypoblacion"  >
-                    <tr>
+                     <tr>
                         <td colspan="4" align="center" >Total de viviendas</td>
                     </tr>
                     <td align="center">
-                   {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllInformacionComplementaria.html.twig'%}
+                   {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllViviendas.html.twig'%}
                    <br></br>
                     </td>  
-                    
                     <tr>
                         <td colspan="4" align="center" >Poblacion Humana</td>
                     </tr>
@@ -58,7 +67,30 @@
                </table>
             </form>            
         </div>
-        <div id="tabs-2"></div>
+        <div id="tabs-2">
+      <form action="" method="post" >
+                <table align="center" id="informacioncomplementaria"  >
+                     
+                        <td colspan="4" align="center" >Informacion complementaria</td>
+                    </tr>
+                    <td align="center">
+                   {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllInformacionComplementaria.html.twig'%}
+                   <br></br>
+                    </td> 
+                    <tr>
+                        <td colspan="4" align="center" >Informacion Relevante</td>
+                    </tr>
+                    <td align="center">
+                   {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllInformacionRelevante.html.twig'%}
+                   <br></br>
+                    </td>  
+                    <tr>
+                    
+               </table>
+            </form> 
+        
+        
+        
         
 </div>
     <table align="center" id="botonesaccion"  >

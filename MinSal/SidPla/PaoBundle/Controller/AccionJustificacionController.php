@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\Request; // estas tres lineas siempre van
 use MinSal\SidPla\PaoBundle\EntityDao\JustificacionDao;
 use MinSal\SidPla\PaoBundle\Entity\Justificacion;
 
+use MinSal\SidPla\UsersBundle\Entity\User;
+use MinSal\SidPla\AdminBundle\Entity\Empleado;
+use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -27,6 +31,17 @@ class AccionJustificacionController extends Controller {
     public function consultarJustificacionAction(){
         
         $opciones=$this->getRequest()->getSession()->get('opciones'); //siempre va
+        
+        $user=new User();
+        $empleado=new Empleado();        
+        $user = $this->get('security.context')->getToken()->getUser();        
+        $empleado=$user->getEmpleado();        
+        $idUnidad=$empleado->getUnidadOrganizativa()->getIdUnidadOrg();        
+        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad=new UnidadOrganizativa();              
+        $unidad=$unidaDao->getUnidadOrg($idUnidad);
+        
+        
        
         $JustificacioDao=new JustificacionDao($this->getDoctrine());  // haciendo una instancia dao      
        // $JustiDao=$JustificacioDao->getHistorialJustificacion();// aqui va el metodo que define en archivo para dao que obtiene todo    

@@ -35,6 +35,13 @@ private $justificacion_descripcion;
 private $pao_codigo;
 
 /**
+ * @ORM\OneToOne(targetEntity="Pao", inversedBy="justificacion")
+ * @ORM\JoinColumn(name="pao_codigo", referencedColumnName="pao_codigo")
+ */
+private $pao;
+
+
+/**
  * Get idJustificacion
  *
  * @return integer 
@@ -82,5 +89,65 @@ public function getJustificacion_descripcion()
  public function getPao_codigo()
     {
         return $this->pao_codigo;
+    }
+
+    /**
+     * Set justificacion_descripcion
+     *
+     * @param text $justificacionDescripcion
+     */
+    public function setJustificacionDescripcion($justificacionDescripcion)
+    {
+        $this->justificacion_descripcion = $justificacionDescripcion;
+    }
+
+    /**
+     * Get justificacion_descripcion
+     *
+     * @return text 
+     */
+    public function getJustificacionDescripcion()
+    {
+        return $this->justificacion_descripcion;
+    }
+
+    /**
+     * Set pao_codigo
+     *
+     * @param integer $paoCodigo
+     */
+    public function setPaoCodigo($paoCodigo)
+    {
+        $this->pao_codigo = $paoCodigo;
+    }
+
+    /**
+     * Get pao_codigo
+     *
+     * @return integer 
+     */
+    public function getPaoCodigo()
+    {
+        return $this->pao_codigo;
+    }
+
+    /**
+     * Set pao
+     *
+     * @param MinSal\SidPla\PaoBundle\Entity\Pao $pao
+     */
+    public function setPao(\MinSal\SidPla\PaoBundle\Entity\Pao $pao)
+    {
+        $this->pao = $pao;
+    }
+
+    /**
+     * Get pao
+     *
+     * @return MinSal\SidPla\PaoBundle\Entity\Pao 
+     */
+    public function getPao()
+    {
+        return $this->pao;
     }
 }
