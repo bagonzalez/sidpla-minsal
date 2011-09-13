@@ -1,0 +1,59 @@
+{# empty Twig template #}
+
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+        
+        var myGrid = $('#theGrid4');        
+        myGrid.jqGrid({ 
+          url: 'consultarInformacionRelevanteJSON',
+     scrolling: true,
+          datatype:'json',
+          altRows:true,
+          colNames:['Id','Codigo Censo Poblacion', 'Codigo Censo Categoria','Cantidad'],
+          colModel:[
+            { name:'id', index: 'id',sorttype:'int', width:100,editable:false,editoptions:{size:15}, searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}  },
+            { name:'codCenso', index: 'codCenso', width:100,editable:true,editoptions:{size:100},formoptions:{ rowpos:1, label: "Area", elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'codCategoria', index: 'codCategoria',width:100, sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:2, label: "Codigo Censo", elmprefix:"(*)"},editrules:{required:true} } ,            
+            { name:'cantidad', index: 'cantidad',width:100, sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:3, label: "Codigo categoria", elmprefix:"(*)"},editrules:{required:true} }] ,            
+                        
+            
+          rowNum:10,
+          rownumbers: true,
+         rowTotal: 10,
+          rowList:[10,20,30],
+         // height: 55,
+          rownumWidth: 40,
+          multiselect: false,
+          pager: jQuery('#pager4'),
+          viewrecords: true,          
+         //scroll:true,
+          //loadonce:true, 
+           sortname: 'id',
+            sortorder: "asc",
+            caption: 'Informacion Relevante',
+            height: "100%",
+            editCaption: "Editar ",
+            addCaption: "Nuevo ",
+            editurl: 'manttInformacionComplementariaEdicion'
+        });
+         myGrid.jqGrid('navGrid','#pager',
+        {edit:false,add:false,del:false,view:true},
+        {},//edit
+        {},//add
+        {},//del
+        {}, //search
+        {}//view
+        );
+        
+       
+      }
+ 
+);
+</script>
+
+
+<table id="theGrid4" class="scroll"></table> 
+<div id="pager4" class="scroll" style="text-align:center;"></div>
+
+{% endblock %}

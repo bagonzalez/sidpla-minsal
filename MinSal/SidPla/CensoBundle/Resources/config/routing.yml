@@ -51,3 +51,10 @@ MinSalSidPlaCensoBundle_manttPoblacionHumanaEdicion:
     pattern:  /manttPoblacionHumanaEdicion
     defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:manttPoblacionHumanaEdicion }
 
+MinSalSidPlaCensoBundle_consultarCategoriaCensoUsuarioJSON:
+    pattern:  /consultarCategoriaCensoUsuarioJSON
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:consultarCategoriaCensoUsuarioJSON }
+   
+MinSalSidPlaCensoBundle_consultarInformacionRelevanteJSON:
+    pattern:  /consultarInformacionRelevanteJSON
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:consultarInformacionRelevanteJSON }

@@ -1,12 +1,10 @@
 {# empty Twig template #}
 
-{# empty Twig template #}
-
 {% block body %}
 <script type="text/javascript">
       $(document).ready(function(){
         
-        var myGrid = $('#theGrid3');        
+        var myGrid = $('#theGrid1');        
         myGrid.jqGrid({ 
           url: 'consultarInformacionComplementariaJSON',
      scrolling: true,
@@ -27,13 +25,13 @@
          // height: 55,
           rownumWidth: 40,
           multiselect: false,
-          pager: jQuery('#pager3'),
+          pager: jQuery('#pager1'),
           viewrecords: true,          
          //scroll:true,
           //loadonce:true, 
            sortname: 'id',
             sortorder: "asc",
-            caption: 'Informacion Complementaria',
+            caption: 'Total de Viviendas',
             height: "100%",
             editCaption: "Editar Censo",
             addCaption: "Nuevo Censo",
@@ -55,7 +53,7 @@
 </script>
 
 
-<table id="theGrid3" class="scroll"></table> 
-<div id="pager3" class="scroll" style="text-align:center;"></div>
+<table id="theGrid1" class="scroll"></table> 
+<div id="pager1" class="scroll" style="text-align:center;"></div>
 
 {% endblock %}
