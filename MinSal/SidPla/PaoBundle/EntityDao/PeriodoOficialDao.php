@@ -48,7 +48,7 @@ class PeriodoOficialDao {
         return $cadena;
     }
     
-    public function addPeriodoOficial($nomTipPer, $descTipPer, $actTipPer) {
+    public function addPeriodoOficial($tipPerioPerOfi,$fechIniPerOfi,$fechFinPerOfi,$anioPerOfi,$activoPerOfi) {
 
         $periodoOficial= new PeriodoOficial();
         
@@ -64,7 +64,7 @@ class PeriodoOficialDao {
         
 
 
-        $this->em->persist($tipoPeriodo);
+        $this->em->persist($periodoOficial);
         $this->em->flush();
         $matrizMensajes = array('El proceso de almacenar el tipo de periodo termino con exito');
 
