@@ -1,3 +1,8 @@
-MinSalSidPlaEstInfraBundle_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: MinSalSidPlaEstInfraBundle:Default:index }
+MinSalSidPlaEstInfraBundle_mantenimientoUnidadMedida:
+    pattern:  /mantenimientoUnidadMedida
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraUnidadMedida:mantenimientoUnidadMedida }
+
+
+MinSalSidPlaEstInfraBundle_mantenimientoEvaluacionElementoInfra:
+    pattern:  /mantenimientoEvaluacionElementoInfra
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraEvaluacionElementoInfra:mantenimientoEvaluacionElementoInfra }
