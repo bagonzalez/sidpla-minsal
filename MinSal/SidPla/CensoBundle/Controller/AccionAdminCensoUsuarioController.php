@@ -15,6 +15,10 @@ use MinSal\SidPla\CensoBundle\Entity\PoblacionHumana;
 use MinSal\SidPla\CensoBundle\EntityDao\InformacionRelevanteDao;
 use MinSal\SidPla\CensoBundle\Entity\InformacionRelevante;
 
+
+use MinSal\SidPla\CensoBundle\Form\Type\PoblacionHumanaType;
+use MinSal\SidPla\CensoBundle\EntityDao\CensoPoblacionDao;
+use MinSal\SidPla\CensoBundle\Entity\CensoPoblacion;
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -32,12 +36,9 @@ class AccionAdminCensoUsuarioController extends Controller{
     public function consultarInformacionComplementariaAction(){
         
         $opciones=$this->getRequest()->getSession()->get('opciones');
-       
-        $InfoCompleDao=new InformacionComplementariaDao($this->getDoctrine());        
-        $InformacionComplementariaT=$InfoCompleDao->getInfoComple();        
         
         return $this->render('MinSalSidPlaCensoBundle:CensoUsuario:manttCensoUsuario.html.twig'
-                , array('opciones' => $opciones, 'InformacionComplementariaT' => $InformacionComplementariaT));              
+                , array('opciones' => $opciones,));              
     } 
     
     
@@ -77,6 +78,59 @@ class AccionAdminCensoUsuarioController extends Controller{
             return $response;            
         
     }
+    
+    
+   public function consultarDatosCategoriaJSONAction(){
+       
+       $request=$this->getRequest();
+       $idCategoria=$request->get('idCategoria');
+       
+       $categoriaDao=new CategoriaCensoDao($this->getDoctrine());
+       $categoriaCenso=new CategoriaCenso();
+       $categoriaCenso=$categoriaDao->getCategoriaCenso($idCategoria);
+       
+       $descripCategoria=$categoriaCenso->getDescripcionCategoria();
+       $tablaCenso=$categoriaCenso->getDivTabla();
+       
+       $rows='';
+       
+       $censoPoblacionDao=new CensoPoblacionDao($this->getDoctrine());
+       $censoPoblacion=new CensoPoblacion();
+       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('33');
+       
+       
+       if($tablaCenso=='sidpla_poblacionhumana'){
+           
+            $poblacionHumana=$censoPoblacion->getPoblacionHumana();
+            $regPobHumana=new PoblacionHumana();
+            
+            
+            $i=0;
+       
+            foreach ($poblacionHumana as $regPobHumana) {
+                    
+                    if($regPobHumana->getCategoriaCenso()==$categoriaCenso){
+                        $rows[$i]['id']= $regPobHumana->getIdPobHum();
+                        $rows[$i]['cell']= array($regPobHumana->getIdPobHum(),
+                                                 $regPobHumana->getPobHumArea(),                                                 
+                                                 $regPobHumana->getPobhumsexo(),
+                                                 $regPobHumana->getPobHumCant());    
+                        $i++;
+                    }
+            }
+       }
+        $datos=json_encode($rows); 
+       
+        $jsonresponse='{
+               "tabla":"'.$tablaCenso.'",
+               "idCategoria":"'.$idCategoria.'",
+               "registros":'.$datos.',                   
+               "categoriaDescripcion":"'.$descripCategoria.'"}';
+       
+       
+       $response=new Response($jsonresponse);              
+       return $response;           
+   }
     
     
    public function manttInformacionComplementariaEdicionAction(){
@@ -260,6 +314,71 @@ class AccionAdminCensoUsuarioController extends Controller{
         
     }
     
+    public function ingresarPoblacionHumanaAction(){
+        $request=$this->getRequest();
+        
+        $idRuralHombres=$request->get('idAreaRuralH');
+        $idRuralMujeres=$request->get('idAreaRuralM');
+        
+        $idUrbanaHombres=$request->get('idAreaUrbanaH');
+        $idUrbanaMujeres=$request->get('idAreaUrbanaM');        
+        
+        $idPromotorHombres=$request->get('idAreaPromotorH');
+        $idPromotorMujeres=$request->get('idAreaPromotorM');
+        
+        
+        
+            
+            $cantUrbanaHombres=$request->get('urbanaHombres');
+            $cantUrbanaMujeres=$request->get('urbanaMujeres');
+            
+            $cantRuralHombres=$request->get('ruralHombres');
+            $cantRuralMujeres=$request->get('ruralMujeres');
+            
+            $cantPromotorHombres=$request->get('promotorMaculino');
+            $cantPromotorMujeres=$request->get('promotorFemenino');
+            
+            $poblacionUrbanaDao=new PoblacionHumanaDao($this->getDoctrine());            
+            $poblacionUrbanaHombres=new PoblacionHumana();
+            $poblacionUrbanaMujeres=new PoblacionHumana();
+            
+            $poblacionUrbanaHombres= $poblacionUrbanaDao->getPoblacionHumana($idUrbanaHombres);
+            $poblacionUrbanaMujeres= $poblacionUrbanaDao->getPoblacionHumana($idUrbanaMujeres);
+            
+            $poblacionRuralHombres= $poblacionUrbanaDao->getPoblacionHumana($idRuralHombres);
+            $poblacionRuralMujeres= $poblacionUrbanaDao->getPoblacionHumana($idRuralMujeres);
+            
+            $poblacionPromotorHombres= $poblacionUrbanaDao->getPoblacionHumana($idPromotorHombres);
+            $poblacionPromotorMujeres= $poblacionUrbanaDao->getPoblacionHumana($idPromotorMujeres);
+            
+            $poblacionUrbanaHombres->setPobHumCant($cantUrbanaHombres);
+            $poblacionUrbanaMujeres->setPobHumCant($cantUrbanaMujeres);
+            
+            $poblacionRuralHombres->setPobHumCant($cantRuralHombres);
+            $poblacionRuralMujeres->setPobHumCant($cantRuralMujeres);
+            
+            //$poblacionPromotorHombres->setPobHumCant($cantPromotorHombres);
+            //$poblacionPromotorMujeres->setPobHumCant($cantPromotorMujeres);
+            
+            $this->getDoctrine()->getEntityManager()->persist($poblacionUrbanaHombres);
+            $this->getDoctrine()->getEntityManager()->persist($poblacionUrbanaMujeres);
+            
+            $this->getDoctrine()->getEntityManager()->persist($poblacionRuralHombres);
+            $this->getDoctrine()->getEntityManager()->persist($poblacionRuralMujeres);
+            
+            $this->getDoctrine()->getEntityManager()->persist($poblacionPromotorHombres);
+            $this->getDoctrine()->getEntityManager()->persist($poblacionPromotorMujeres);
+            
+            $this->getDoctrine()->getEntityManager()->flush();
+            
+            
+            /*urbanaHombres            
+            urbanaMujeres*/
+        
+     return $this->consultarInformacionComplementariaAction();  
+        
+        
+    }  
     
     
 }

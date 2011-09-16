@@ -15,7 +15,7 @@ class CensoPoblacion
     /**
      * @var integer $idCensoPoblacion
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="censopoblacion_codigo", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
@@ -37,6 +37,12 @@ class CensoPoblacion
      *      )
      */
     private $categoriasCenso;
+    
+    
+      /**
+     * @ORM\OneToMany(targetEntity="PoblacionHumana", mappedBy="censoPoblacion")
+     */
+    protected $poblacionHumana;
 
 
     /**
@@ -82,6 +88,7 @@ class CensoPoblacion
     public function __construct()
     {
         $this->categoriasCenso = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->poblacionHumana = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
     /**
@@ -102,5 +109,35 @@ class CensoPoblacion
     public function getCategoriasCenso()
     {
         return $this->categoriasCenso;
+    }
+
+    /**
+     * Add categoriasCenso
+     *
+     * @param MinSal\SidPla\CensoBundle\Entity\CategoriaCenso $categoriasCenso
+     */
+    public function addCategoriaCenso(\MinSal\SidPla\CensoBundle\Entity\CategoriaCenso $categoriasCenso)
+    {
+        $this->categoriasCenso[] = $categoriasCenso;
+    }
+
+    /**
+     * Add poblacionHumana
+     *
+     * @param MinSal\SidPla\CensoBundle\Entity\PoblacionHumana $poblacionHumana
+     */
+    public function addPoblacionHumana(\MinSal\SidPla\CensoBundle\Entity\PoblacionHumana $poblacionHumana)
+    {
+        $this->poblacionHumana[] = $poblacionHumana;
+    }
+
+    /**
+     * Get poblacionHumana
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getPoblacionHumana()
+    {
+        return $this->poblacionHumana;
     }
 }
