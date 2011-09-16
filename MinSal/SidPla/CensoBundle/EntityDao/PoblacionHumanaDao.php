@@ -31,6 +31,11 @@ class PoblacionHumanaDao {
         return $mensajes;
     }
     
+    public function getPoblacionHumana($id) {	    
+        $poblacionHumana=$this->repositorio->find($id);
+        return $poblacionHumana;
+    }
+    
     
     /*
      *  Almacena los datos de informacion complementaria  ingresado en el sistema

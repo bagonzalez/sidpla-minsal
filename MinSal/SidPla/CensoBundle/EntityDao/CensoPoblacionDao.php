@@ -17,17 +17,18 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  
- 
+ * 
+ * 
  */
+
 namespace MinSal\SidPla\CensoBundle\EntityDao;
 
 /**
- * Description of CategoriaCensoDao
+ * Description of CensoPoblacionDao
  *
  * @author Bruno González
  */
-class CategoriaCensoDao {
+class CensoPoblacionDao {
     
     var $doctrine;
     var $repositorio;
@@ -36,31 +37,16 @@ class CategoriaCensoDao {
     function __construct($doctrine){ 
         $this->doctrine=$doctrine;      	
         $this->em=$this->doctrine->getEntityManager();
-        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaCensoBundle:CategoriaCenso');
-    } 
-    
-      /*
-     *  Obtiene todos las categorias del censo poblacion.
-     */    
-
-    public function getCategorias() {	    
-        $categorias=$this->repositorio->findAll();
-        return $categorias;
+        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaCensoBundle:CensoPoblacion');
     }
     
-    public function addCategoria($categoriaCenso) {
-        
-        $this->em->persist($categoriaCenso);
-        $this->em->flush();	    
-        $matrizMensajes = array('El proceso de almacenar categoria termino con exito', 'Categoria ');
-
-        return $matrizMensajes;
+    
+     public function getCensoPoblacion($id) {	    
+        $censoPoblacion=$this->repositorio->find($id);
+        return $censoPoblacion;
     }
     
-    public function getCategoriaCenso($id) {	    
-        $categoriaCenso=$this->repositorio->find($id);
-        return $categoriaCenso;
-    }
+    
     
 }
 

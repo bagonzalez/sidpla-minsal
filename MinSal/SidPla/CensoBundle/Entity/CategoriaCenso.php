@@ -3,6 +3,7 @@
 namespace MinSal\SidPla\CensoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * MinSal\SidPla\CensoBundle\Entity\CategoriaCenso
@@ -48,8 +49,8 @@ class CategoriaCenso
      * @ORM\JoinColumn(name="bloquecenso_codigo", referencedColumnName="bloquecenso_codigo")
      */
     protected $bloque;
-
-
+    
+    
     /**
      * Set idCategoriaCenso
      *

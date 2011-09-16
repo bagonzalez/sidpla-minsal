@@ -4,17 +4,82 @@
  <script type="text/javascript">
       $(document).ready(function(){
           $('#tabs').tabs(); 
-       $('#tabs').css("height",500); 
-      $.getJSON('consultarCategoriaCensoUsuarioJSON', function(data) {
-                  var i=0;
-                  $.each(data, function(key, val) {
-                      if(key=='rows'){
-                        $.each(val, function(id, registro){
-                            $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
-                        });                    
-                      }
-                  });
+          $('#tabs').css("height",500); 
+          $.getJSON('consultarCategoriaCensoUsuarioJSON', function(data) {
+                      var i=0;
+                      $.each(data, function(key, val) {
+                          if(key=='rows'){
+                            $.each(val, function(id, registro){
+                                $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+                            });                    
+                          }
+                      });
           });
+          
+          $('#btnVerValorCategoria').click(function() {
+                $('#aingPob').click();
+                var idCategoria=$('#categoriaCenso').val();
+                
+                $.getJSON('consultarDatosCategoriaJSON?idCategoria='+idCategoria, function(data) {
+                      var i=0;
+                      
+                      $('#limpiar').click();
+                      $('#categoriaDescripcion').val(data.categoriaDescripcion);
+                      
+                      if(data.tabla=='sidpla_poblacionhumana'){                          
+                          $.each(data.registros, function(id, registro) {
+                              
+                               if(registro['cell'][1]=='URBANA'){
+                                   if(registro['cell'][2]=='H'){
+                                         $('#idAreaUrbanaHombres').val(registro['cell'][0]);
+                                         $('input[name=urbanaHombres]').val(registro['cell'][3]);                                         
+                                   }else{
+                                         $('#idAreaUrbanaMujeres').val(registro['cell'][0]);
+                                         $('input[name=urbanaMujeres]').val(registro['cell'][3]);                                         
+                                   } 
+                               }
+                               
+                               
+                               if(registro['cell'][1]=='RURAL'){
+                                   
+                                   if(registro['cell'][2]=='H'){
+                                         $('#idAreaRuralHombres').val(registro['cell'][0]);                                       
+                                         $('input[name=ruralHombres]').val(registro['cell'][3]);
+                                   }else{
+                                         $('#idAreaRuralMujeres').val(registro['cell'][0]);                                       
+                                         $('input[name=ruralMujeres]').val(registro['cell'][3]);
+                                   } 
+                               }
+                               
+                                if(registro['cell'][1]=='PROMOTOR'){                                   
+                                   
+                                   
+                                   if(registro['cell'][2]=='H'){
+                                         $('#idAreaPromotorHombres').val(registro['cell'][0]);
+                                         $('input[name=promotorMaculino]').val(registro['cell'][3]);                                         
+                                   }else{
+                                         $('#idAreaPromotorMujeres').val(registro['cell'][0]);
+                                         $('input[name=promotorFemenino]').val(registro['cell'][3]);                                         
+                                   } 
+                               }
+                              
+                          });                              
+                      }
+                      
+                     $("input[name^='urbana']").sum("keyup", "#totalUrbana");
+                     $("input[name^='rural']").sum("keyup", "#totalRural");
+                     $("input[name^='promotor']").sum("keyup", "#totalGlobal");                   
+                     
+
+                     $("input[name$='Hombres']").sum("keyup", "#sumaHombres");
+                     $("input[name$='Mujeres']").sum("keyup", "#sumaMujeres");
+                     
+                     $("input[id^='suma']").sum("keyup","#totalGeneral");
+                     
+                      
+                });
+          });
+          
 
 });
       
@@ -36,7 +101,9 @@
                         <td colspan="3"  >
                             <select id="categoriaCenso" name="categoriaCenso">
                                  <option value="0" >--Seleccione una categoria del censo--</option>    
-                            </select></td>                            
+                            </select>
+                        </td> 
+                        <td><button id="btnVerValorCategoria" >...</button></td>
                     </tr>
  </table>
 
@@ -44,6 +111,7 @@
         <ul>
                 <li><a href="#tabs-1">Datos de vivienda y poblacion </a></li>
                 <li><a href="#tabs-2">Otra informacion relevante</a></li>
+                <li><a id="aingPob" href="#tabs-3">Ingresar Poblacion Humana</a></li>
         </ul>
         <div id="tabs-1" >
             <form action="" method="post" >
@@ -62,12 +130,10 @@
                    {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllPoblacionHumana.html.twig'%}
                    <br></br>
                     </td> 
-                    
-                    
                </table>
             </form>            
         </div>
-        <div id="tabs-2">
+      <div id="tabs-2">
       <form action="" method="post" >
                 <table align="center" id="informacioncomplementaria"  >
                      
@@ -84,20 +150,14 @@
                    {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllInformacionRelevante.html.twig'%}
                    <br></br>
                     </td>  
-                    <tr>
-                    
+                    <tr>                    
                </table>
             </form> 
-        
-        
-        
-        
+    </div>
+    <div id="tabs-3">
+         {% include 'MinSalSidPlaCensoBundle:PoblacionHumana:ingresarPoblacionHumana.html.twig'%}
+    </div>
+    
 </div>
-    <table align="center" id="botonesaccion"  >
-                    <tr>
-                        <td colspan="4" align="center" ><button type="submmit" id="salir"  >Salir</button>
-                        </td>                        
-                    </tr>                    
-    </table>
 {% endblock %}
 
