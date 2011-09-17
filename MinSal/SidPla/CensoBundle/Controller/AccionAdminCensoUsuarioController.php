@@ -96,7 +96,7 @@ class AccionAdminCensoUsuarioController extends Controller{
        
        $censoPoblacionDao=new CensoPoblacionDao($this->getDoctrine());
        $censoPoblacion=new CensoPoblacion();
-       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('33');
+       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('38');
        
        
        if($tablaCenso=='sidpla_poblacionhumana'){
@@ -339,16 +339,13 @@ class AccionAdminCensoUsuarioController extends Controller{
             $cantPromotorMujeres=$request->get('promotorFemenino');
             
             $poblacionUrbanaDao=new PoblacionHumanaDao($this->getDoctrine());            
-            $poblacionUrbanaHombres=new PoblacionHumana();
-            $poblacionUrbanaMujeres=new PoblacionHumana();
+            
             
             $poblacionUrbanaHombres= $poblacionUrbanaDao->getPoblacionHumana($idUrbanaHombres);
             $poblacionUrbanaMujeres= $poblacionUrbanaDao->getPoblacionHumana($idUrbanaMujeres);
-            
             $poblacionRuralHombres= $poblacionUrbanaDao->getPoblacionHumana($idRuralHombres);
             $poblacionRuralMujeres= $poblacionUrbanaDao->getPoblacionHumana($idRuralMujeres);
-            
-            $poblacionPromotorHombres= $poblacionUrbanaDao->getPoblacionHumana($idPromotorHombres);
+            $poblacionPromotorHombres= $poblacionUrbanaDao->getPoblacionHumana($idPromotorHombres);            
             $poblacionPromotorMujeres= $poblacionUrbanaDao->getPoblacionHumana($idPromotorMujeres);
             
             $poblacionUrbanaHombres->setPobHumCant($cantUrbanaHombres);
@@ -357,8 +354,8 @@ class AccionAdminCensoUsuarioController extends Controller{
             $poblacionRuralHombres->setPobHumCant($cantRuralHombres);
             $poblacionRuralMujeres->setPobHumCant($cantRuralMujeres);
             
-            //$poblacionPromotorHombres->setPobHumCant($cantPromotorHombres);
-            //$poblacionPromotorMujeres->setPobHumCant($cantPromotorMujeres);
+            $poblacionPromotorHombres->setPobHumCant($cantPromotorHombres);
+            $poblacionPromotorMujeres->setPobHumCant($cantPromotorMujeres);
             
             $this->getDoctrine()->getEntityManager()->persist($poblacionUrbanaHombres);
             $this->getDoctrine()->getEntityManager()->persist($poblacionUrbanaMujeres);
@@ -372,8 +369,7 @@ class AccionAdminCensoUsuarioController extends Controller{
             $this->getDoctrine()->getEntityManager()->flush();
             
             
-            /*urbanaHombres            
-            urbanaMujeres*/
+            
         
      return $this->consultarInformacionComplementariaAction();  
         

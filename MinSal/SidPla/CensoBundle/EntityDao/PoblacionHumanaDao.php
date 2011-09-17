@@ -33,6 +33,9 @@ class PoblacionHumanaDao {
     
     public function getPoblacionHumana($id) {	    
         $poblacionHumana=$this->repositorio->find($id);
+        if(!$poblacionHumana){
+            $poblacionHumana = new PoblacionHumana();
+        }
         return $poblacionHumana;
     }
     

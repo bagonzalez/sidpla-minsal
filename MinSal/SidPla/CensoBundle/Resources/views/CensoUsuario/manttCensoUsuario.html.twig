@@ -17,7 +17,7 @@
           });
           
           $('#btnVerValorCategoria').click(function() {
-                $('#aingPob').click();
+                
                 var idCategoria=$('#categoriaCenso').val();
                 
                 $.getJSON('consultarDatosCategoriaJSON?idCategoria='+idCategoria, function(data) {
@@ -26,7 +26,8 @@
                       $('#limpiar').click();
                       $('#categoriaDescripcion').val(data.categoriaDescripcion);
                       
-                      if(data.tabla=='sidpla_poblacionhumana'){                          
+                      if(data.tabla=='sidpla_poblacionhumana'){   
+                          $('#aingPob').click();
                           $.each(data.registros, function(id, registro) {
                               
                                if(registro['cell'][1]=='URBANA'){
