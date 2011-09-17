@@ -1,0 +1,54 @@
+{% block body %}
+ <script type="text/javascript">
+     
+     $(document).ready(function(){
+         $('#guardarPobHumana').click(function(){
+                document.location.href='{{ path('MinSalSidPlaCensoBundle_ingresarPoblacionHumana') }}'
+         });
+         
+     });
+ </script>
+<br></br>
+
+<form action="{{ path('MinSalSidPlaCensoBundle_ingresarPoblacionHumana') }}" method="post" >    
+    
+    <input name="idAreaUrbana" id="idAreaUrbanaInfCom" value=0 type="hidden"/>    
+    <input name="idAreaRural" id="idAreaRuralInfCom" value=0 type="hidden"/>    
+    <input name="idAreaPromotor" id="idAreaPromotorInfCom" value=0 type="hidden"/>
+    
+    
+    <table align="center" size="50%"  >
+        <tr>            
+            <td colspan="12" align="center" ><h2>Datos de Poblaci&oacute;n Sujeta a Intervenci&oacute;n</h2></td>
+        </tr>
+        <tr>
+            <td>Clasificaci&oacute;n:</td>
+            <td colspan="11" align="center" > <input size="100%" readonly="readonly"  id="categoriaDescripcionComple" ></input></td>
+        </tr>
+        <tr>            
+            <td align="center"  colspan="3" >AREA URBANA</td>
+            <td align="center"  colspan="3" >AREA RURAL</td>
+            <td align="center"  colspan="3" >PROMOTORES DE SALUD</td>
+            <td align="center"  colspan="3" >TOTAL GENERAL</td>            
+        </tr>
+       
+        
+         <tr>
+
+            <td  colspan="3"  align="center" ><input  type="text"   name="urbanaComple" value="0" size="15%" ></input></td>      
+            <td  colspan="3"  align="center" ><input name="ruralComple" value="0" size="15%" ></input></td>
+            <td  colspan="3"  align="center" ><input name="promotorComple" value="0" size="15%" ></input></td>
+            <td  colspan="3"  align="center" ><input id="totalComple" value="0" size="15%" ></input></td>
+            
+        </tr>  
+         <tr>
+            <td colspan="12" align="center" >
+                <button type="summit"  id="guardarInfComp">Guardar</button>
+                <button type="reset"  id="limpiar"  >Limpiar</button>
+            </td>                        
+         </tr>
+    </table>
+        
+</form>
+
+{% endblock body %}

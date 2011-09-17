@@ -24,10 +24,11 @@
                       var i=0;
                       
                       $('#limpiar').click();
-                      $('#categoriaDescripcion').val(data.categoriaDescripcion);
+                      
                       
                       if(data.tabla=='sidpla_poblacionhumana'){   
                           $('#aingPob').click();
+                          $('#categoriaDescripcion').val(data.categoriaDescripcion);
                           $.each(data.registros, function(id, registro) {
                               
                                if(registro['cell'][1]=='URBANA'){
@@ -67,6 +68,39 @@
                           });                              
                       }
                       
+                     if(data.tabla=='sidpla_infcomplementaria'){
+                         $('#aingInfConm').click();
+                         $('#categoriaDescripcionComple').val(data.categoriaDescripcion);  
+                         $.each(data.registros, function(id, registro) {
+                              
+                               if(registro['cell'][1]=='URBANA'){                                  
+                                     $('#idAreaUrbanaInfCom').val(registro['cell'][0]);
+                                     $('input[name=urbanaComple]').val(registro['cell'][2]);
+                               }                               
+                               
+                               if(registro['cell'][1]=='RURAL'){
+                                     $('#idAreaRuralInfCom').val(registro['cell'][0]);                                       
+                                     $('input[name=ruralComple]').val(registro['cell'][2]);
+                               }
+                               
+                                if(registro['cell'][1]=='PROMOTOR'){                                   
+                                     $('#idAreaPromotorInfCom').val(registro['cell'][0]);
+                                     $('input[name=promotorComple]').val(registro['cell'][2]);   
+                               }
+                              
+                          });     
+                     }
+                     
+                     if(data.tabla=='sidpla_informacionrelevante'){
+                         $('#aingInfRel').click();
+                         $('#categoriaDescripcionRelevante').val(data.categoriaDescripcion);                         
+                         $.each(data.registros, function(id, registro) {                              
+                                 $('#idInfRelevante').val(registro['cell'][0]);
+                                 $('input[name=cantRelevante]').val(registro['cell'][1]);             
+                          });         
+                     }
+                     
+                      
                      $("input[name^='urbana']").sum("keyup", "#totalUrbana");
                      $("input[name^='rural']").sum("keyup", "#totalRural");
                      $("input[name^='promotor']").sum("keyup", "#totalGlobal");                   
@@ -77,6 +111,7 @@
                      
                      $("input[id^='suma']").sum("keyup","#totalGeneral");
                      
+                     $("input[name$='Comple']").sum("keyup","#totalComple");
                       
                 });
           });
@@ -113,6 +148,8 @@
                 <li><a href="#tabs-1">Datos de vivienda y poblacion </a></li>
                 <li><a href="#tabs-2">Otra informacion relevante</a></li>
                 <li><a id="aingPob" href="#tabs-3">Ingresar Poblacion Humana</a></li>
+                <li><a id="aingInfConm" href="#tabs-4">Ingresar Informacion Complemnentaria</a></li>
+                <li><a id="aingInfRel" href="#tabs-5">Ingresar Informacion Relevante</a></li>
         </ul>
         <div id="tabs-1" >
             <form action="" method="post" >
@@ -157,6 +194,12 @@
     </div>
     <div id="tabs-3">
          {% include 'MinSalSidPlaCensoBundle:PoblacionHumana:ingresarPoblacionHumana.html.twig'%}
+    </div>
+     <div id="tabs-4">
+         {% include 'MinSalSidPlaCensoBundle:InformacionComplementaria:ingresarInformacionComplementaria.html.twig'%}
+    </div>
+    <div id="tabs-5">
+         {% include 'MinSalSidPlaCensoBundle:OtraInfoRelevante:ingresarInfoRelevante.html.twig'%}
     </div>
     
 </div>

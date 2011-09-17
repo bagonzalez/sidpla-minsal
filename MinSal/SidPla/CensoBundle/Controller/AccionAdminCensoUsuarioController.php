@@ -96,7 +96,7 @@ class AccionAdminCensoUsuarioController extends Controller{
        
        $censoPoblacionDao=new CensoPoblacionDao($this->getDoctrine());
        $censoPoblacion=new CensoPoblacion();
-       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('38');
+       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('63');
        
        
        if($tablaCenso=='sidpla_poblacionhumana'){
@@ -119,6 +119,42 @@ class AccionAdminCensoUsuarioController extends Controller{
                     }
             }
        }
+       
+       
+       if($tablaCenso=='sidpla_informacionrelevante'){
+           
+            $infRelevante=$censoPoblacion->getInformacionRelevante();
+            $regInfRelevante=new InformacionRelevante();            
+            $i=0;       
+            foreach ($infRelevante as $regInfRelevante) {
+                    
+                    if($regInfRelevante->getCategoriaCenso()==$categoriaCenso){
+                        $rows[$i]['id']= $regInfRelevante->getIdInfRel();
+                        $rows[$i]['cell']= array($regInfRelevante->getIdInfRel(),
+                                                 $regInfRelevante->getInfRelCant());    
+                        $i++;
+                    }
+            }
+       }
+       
+       
+       if($tablaCenso=='sidpla_infcomplementaria'){
+           
+            $infComplem=$censoPoblacion->getInformacionComplementaria();
+            $regInfComple=new InformacionComplementaria();            
+            $i=0;       
+            foreach ($infComplem as $regInfComple) {
+                    
+                    if($regInfComple->getCategoriaCenso()==$categoriaCenso){
+                        $rows[$i]['id']= $regInfComple->getIdInfoComp();
+                        $rows[$i]['cell']= array($regInfComple->getIdInfoComp(),
+                                                 $regInfComple->getAreaInfoComp(),
+                                                 $regInfComple->getCantidadInfoComp());    
+                        $i++;
+                    }
+            }
+       }
+       
         $datos=json_encode($rows); 
        
         $jsonresponse='{

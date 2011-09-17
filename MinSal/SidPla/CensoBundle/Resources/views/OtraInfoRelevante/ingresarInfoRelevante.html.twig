@@ -1,0 +1,43 @@
+{% block body %}
+ <script type="text/javascript">
+     
+     $(document).ready(function(){
+         $('#guardarPobHumana').click(function(){
+                document.location.href='{{ path('MinSalSidPlaCensoBundle_ingresarPoblacionHumana') }}'
+         });
+         
+     });
+ </script>
+<br></br>
+
+<form action="{{ path('MinSalSidPlaCensoBundle_ingresarPoblacionHumana') }}" method="post" >    
+    
+    <input name="idAreaUrbana" id="idInfRelevante" value=0 type="hidden"/>    
+    
+    
+    
+    <table align="center" size="50%"  >
+        <tr>            
+            <td colspan="12" align="center" ><h2>Datos de Poblaci&oacute;n Sujeta a Intervenci&oacute;n - Informacion Relevante</h2></td>
+        </tr>
+        <tr>
+            <td>Clasificaci&oacute;n:</td>
+            <td colspan="11" align="center" > <input size="100%" readonly="readonly"  id="categoriaDescripcionRelevante" ></input></td>
+        </tr>
+        <tr>            
+            <td align="center"  colspan="12" >Cantidad</td>            
+        </tr>
+         <tr>
+            <td  colspan="12"  align="center" ><input  type="text"   name="cantRelevante" value="0" size="15%" ></input></td>      
+        </tr>  
+         <tr>
+            <td colspan="12" align="center" >
+                <button type="summit"  id="guardarInfComp">Guardar</button>
+                <button type="reset"  id="limpiar"  >Limpiar</button>
+            </td>                        
+         </tr>
+    </table>
+        
+</form>
+
+{% endblock body %}
