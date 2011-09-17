@@ -63,6 +63,19 @@ class PoblacionHumana
      * @ORM\Column(name="pobhum_sexo", type="string", length=1)
      */
     private $pobhumsexo;
+    
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="CategoriaCenso", inversedBy="poblacionHumana")
+     * @ORM\JoinColumn(name="catcen_codigo", referencedColumnName="catcen_codigo")
+     */
+    protected $categoriaCenso;
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="CensoPoblacion", inversedBy="poblacionHumana")
+     * @ORM\JoinColumn(name="censopoblacion_codigo", referencedColumnName="censopoblacion_codigo")
+     */
+    protected $censoPoblacion;
 
 
     /**
@@ -173,16 +186,16 @@ class PoblacionHumana
     public function getPobHumCant()
     {
         return $this->pobHumCant;
-    }
+    }    
 
     /**
      * Set pobhumsexo
      *
-     * @param string $pobhumSexo
+     * @param string $pobhumsexo
      */
-    public function setPobhumSexo($pobhumSexo)
+    public function setPobhumsexo($pobhumsexo)
     {
-        $this->pobhumsexo = $pobhumSexo;
+        $this->pobhumsexo = $pobhumsexo;
     }
 
     /**
@@ -190,8 +203,48 @@ class PoblacionHumana
      *
      * @return string 
      */
-    public function getPobhumSexo()
+    public function getPobhumsexo()
     {
         return $this->pobhumsexo;
+    }
+
+    /**
+     * Set categoriaCenso
+     *
+     * @param MinSal\SidPla\CensoBundle\Entity\CategoriaCenso $categoriaCenso
+     */
+    public function setCategoriaCenso(\MinSal\SidPla\CensoBundle\Entity\CategoriaCenso $categoriaCenso)
+    {
+        $this->categoriaCenso = $categoriaCenso;
+    }
+
+    /**
+     * Get categoriaCenso
+     *
+     * @return MinSal\SidPla\CensoBundle\Entity\CategoriaCenso 
+     */
+    public function getCategoriaCenso()
+    {
+        return $this->categoriaCenso;
+    }
+
+    /**
+     * Set censoPoblacion
+     *
+     * @param MinSal\SidPla\CensoBundle\Entity\CensoPoblacion $censoPoblacion
+     */
+    public function setCensoPoblacion(\MinSal\SidPla\CensoBundle\Entity\CensoPoblacion $censoPoblacion)
+    {
+        $this->censoPoblacion = $censoPoblacion;
+    }
+
+    /**
+     * Get censoPoblacion
+     *
+     * @return MinSal\SidPla\CensoBundle\Entity\CensoPoblacion 
+     */
+    public function getCensoPoblacion()
+    {
+        return $this->censoPoblacion;
     }
 }

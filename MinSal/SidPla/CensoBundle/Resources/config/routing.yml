@@ -58,3 +58,13 @@ MinSalSidPlaCensoBundle_consultarCategoriaCensoUsuarioJSON:
 MinSalSidPlaCensoBundle_consultarInformacionRelevanteJSON:
     pattern:  /consultarInformacionRelevanteJSON
     defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:consultarInformacionRelevanteJSON }
+
+MinSalSidPlaCensoBundle_consultarDatosCategoriaJSON:
+    pattern:  /consultarDatosCategoriaJSON
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:consultarDatosCategoriaJSON }
+    
+MinSalSidPlaCensoBundle_ingresarPoblacionHumana:
+    pattern:  /ingresarPoblacionHumana
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:ingresarPoblacionHumana }
+    
+    

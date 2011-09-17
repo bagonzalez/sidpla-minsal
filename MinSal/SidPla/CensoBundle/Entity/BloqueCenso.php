@@ -122,4 +122,14 @@ class BloqueCenso
        return $this->getNombreBloque();
     }
     
+
+    /**
+     * Add categoriasCenso
+     *
+     * @param MinSal\SidPla\CensoBundle\Entity\CategoriaCenso $categoriasCenso
+     */
+    public function addCategoriaCenso(\MinSal\SidPla\CensoBundle\Entity\CategoriaCenso $categoriasCenso)
+    {
+        $this->categoriasCenso[] = $categoriasCenso;
+    }
 }

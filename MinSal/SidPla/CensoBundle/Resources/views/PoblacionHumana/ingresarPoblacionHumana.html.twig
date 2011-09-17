@@ -1,0 +1,85 @@
+{% block body %}
+ <script type="text/javascript">
+     
+     $(document).ready(function(){
+         $('#guardarPobHumana').click(function(){
+                document.location.href='{{ path('MinSalSidPlaCensoBundle_ingresarPoblacionHumana') }}'
+         });
+         
+     });
+ </script>
+<br></br>
+
+<form action="{{ path('MinSalSidPlaCensoBundle_ingresarPoblacionHumana') }}" method="post" >    
+    
+    <input name="idAreaUrbanaH" id="idAreaUrbanaHombres" value=0 type="hidden"/>
+    <input name="idAreaUrbanaM" id="idAreaUrbanaMujeres" value=0 type="hidden"/>
+    <input name="idAreaRuralH" id="idAreaRuralHombres" value=0 type="hidden"/>
+    <input name="idAreaRuralM" id="idAreaRuralMujeres" value=0 type="hidden"/>
+    <input name="idAreaPromotorH" id="idAreaPromotorHombres" value=0 type="hidden"/>
+    <input name="idAreaPromotorM" id="idAreaPromotorMujeres" value=0 type="hidden"/>
+    
+    <table align="center" size="50%" >
+        <tr>            
+            <td colspan="12" align="center" ><h2>Datos de Poblaci&oacute;n Sujeta a Intervenci&oacute;n</h2></td>
+        </tr>
+        <tr>
+            <td>Clasificaci&oacute;n:</td>
+            <td colspan="11" align="center" > <input size="100%" readonly="readonly"  id="categoriaDescripcion" ></input></td>
+        </tr>
+        <tr>            
+            <td align="center"  colspan="3" >AREA URBANA</td>
+            <td align="center"  colspan="3" >AREA RURAL</td>
+            <td align="center"  colspan="3" >TOTAL GENERAL</td>
+            <td align="center"  colspan="3" >POBLACION PROMOTORES DE SALUD</td>
+        </tr>
+        
+        
+        <tr>           
+
+            <td>Hombres</td>
+            <td>Mujeres</td>
+            <td>Total</td>
+            
+            <td>Hombres</td>
+            <td>Mujeres</td>
+            <td>Total</td>
+            
+            <td>Hombres</td>
+            <td>Mujeres</td>
+            <td>Total</td>
+            
+            <td>Hombres</td>
+            <td>Mujeres</td>
+            <td>Total</td>
+        </tr>  
+        
+         <tr>
+
+            <td><input type="text"   name="urbanaHombres" value="0" size="5%" ></input></td>
+            <td><input type="text"   name="urbanaMujeres" value="0" size="5%" ></input></td>
+            <td><input type="text"   id="totalUrbana" value="0" readonly="readonly"  size="5%" ></input></td>
+            
+            <td><input name="ruralHombres" value="0" size="5%" ></input></td>
+            <td><input name="ruralMujeres" value="0" size="5%" ></input></td>
+            <td><input id="totalRural" value="0" readonly="readonly"  size="5%" ></input></td>
+            
+            <td><input  id="sumaHombres"  readonly="readonly" value="0" size="5%" ></input></td>
+            <td><input  id="sumaMujeres"  readonly="readonly" value="0" size="5%" ></input></td>
+            <td><input  id="totalGeneral" value="0" readonly="readonly"  size="5%" ></input></td>
+            
+            <td><input name="promotorMaculino" value="0" size="5%" ></input></td>
+            <td><input name="promotorFemenino" value="0" size="5%" ></input></td>
+            <td><input id="totalGlobal" value="0" readonly="readonly"  size="5%" ></input></td>
+        </tr>  
+         <tr>
+            <td colspan="12" align="center" >
+                <button type="summit"  id="guardarPobHumana">Guardar</button>
+                <button type="reset"  id="limpiar"  >Limpiar</button>
+            </td>                        
+         </tr>
+    </table>
+        
+</form>
+
+{% endblock body %}
