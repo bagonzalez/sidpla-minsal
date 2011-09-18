@@ -13,13 +13,13 @@ use Doctrine\ORM\Mapping as ORM;
 class ElementoInfraestructura
 {
     /**
-     * @var integer $id
+     * @var integer $IdElemInfra
      *
      * @ORM\Column(name="eleminf_codigo", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    private $IdElemInfra;
 
     /**
      * @var string $nomElemInfra
@@ -47,9 +47,9 @@ class ElementoInfraestructura
      *
      * @return integer 
      */
-    public function getId()
+    public function getIdElemInfra()
     {
-        return $this->id;
+        return $this->IdElemInfra;
     }
 
     /**

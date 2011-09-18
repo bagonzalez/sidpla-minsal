@@ -1,51 +1,45 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 namespace MinSal\SidPla\EstInfraBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use MinSal\SidPla\EstInfraBundle\EntityDao\EstadoInfraestructuraDao;
-use MinSal\SidPla\EstInfraBundle\Entity\EstadoInfraestructura;
+use MinSal\SidPla\EstInfraBundle\EntityDao\ElementoInfraestructuraDao;
+use MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura;
 
-class AccionEstadoInfraestructuraController extends Controller {
+class AccionEstInfraElementoInfraestructuraController extends Controller {
 
-    public function mantenimientoEstadoInfraAction() {
+    public function mantenimientoElementoInfraestructuraAction() {
 
         $opciones = $this->getRequest()->getSession()->get('opciones');
         
-        return $this->render('MinSalSidPlaPaoBundle:TipoPeriodoPao:manttTipoPeriodo.html.twig'
+        return $this->render('MinSalSidPlaEstInfraBundle:ElementoInfraestructura:manttElementoInfraestructura.html.twig'
                         , array('opciones' => $opciones));
-        
+  
+       // return new Response("hola kren hohohohohohohoho ");
     }
 
-    public function consultarTipoPeriodoJSONAction() {
+    public function consultarElementoInfraestructuraJSONAction() {
 
-        $tipoPeriodoDao=new TipoPeriodoDao($this->getDoctrine());
-        $tipoPeriodo =$tipoPeriodoDao->getTipoPeriodo();
+        $ElementoInfraestructuraDao=new ElementoInfraestructuraDao($this->getDoctrine());
+        $ElementoInfraestructura=$ElementoInfraestructuraDao->getElementoInfraestructura();
         
 
-        $numfilas = count($tipoPeriodo);
+        $numfilas = count($ElementoInfraestructura);
 
-        $aux = new TipoPeriodo();
+        $aux = new ElementoInfraestructura();
         $i = 0;
 
-        foreach ($tipoPeriodo as $aux) {
-            $rows[$i]['id'] = $aux->getIdTipPer();
-            $rows[$i]['cell'] = array($aux->getIdTipPer(),
-                $aux->getNomTipPer(),
-                $aux->getActivoTipPer(),
-                $aux->getDescTipPer()
+        foreach ($ElementoInfraestructura as $aux) {
+            $rows[$i]['id'] = $aux->getIdElemInfra();
+            $rows[$i]['cell'] = array($aux->getIdElemInfra(),
+                $aux->getNomElemInfra(),
+                $aux->getElemInfraDescrip(),
+                $aux->getCodUnidadMed()->getNomUnidMed()
+                             
             );
-            if($aux->getActivoTipPer())
-                $rows[$i]['cell'][2]='SI';
-            else
-                $rows[$i]['cell'][2]='NO';
+          
             $i++;
         }
 
@@ -62,6 +56,7 @@ class AccionEstadoInfraestructuraController extends Controller {
         $response = new Response($jsonresponse);
         return $response;
     }
+/*
     public function manttTipoPeriodoAction() {
         $request = $this->getRequest();
         
@@ -91,7 +86,7 @@ class AccionEstadoInfraestructuraController extends Controller {
 
         return new Response("{sc:true,msg:''}");
     }
-
+*/
 }
 
 ?>

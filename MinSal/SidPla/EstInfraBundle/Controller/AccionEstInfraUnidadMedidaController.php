@@ -6,42 +6,40 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use MinSal\SidPla\EstInfraBundle\EntityDao\UnidadMedidaDao;
-
+use MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida;
 
 class AccionEstInfraUnidadMedidaController extends Controller {
 
     public function mantenimientoUnidadMedidaAction() {
 
-/*        $opciones = $this->getRequest()->getSession()->get('opciones');
+        $opciones = $this->getRequest()->getSession()->get('opciones');
         
-        return $this->render('MinSalSidPlaEstInfraBundle:UnidadMedidaPao:manttTipoPeriodo.html.twig'
+        return $this->render('MinSalSidPlaEstInfraBundle:UnidadMedida:manttUnidadMedida.html.twig'
                         , array('opciones' => $opciones));
-  */
-        return new Response("hola kren ");
+  
+        //return new Response("hola kren ");
     }
-/*
-    public function consultarTipoPeriodoJSONAction() {
 
-        $tipoPeriodoDao=new TipoPeriodoDao($this->getDoctrine());
-        $tipoPeriodo =$tipoPeriodoDao->getTipoPeriodo();
+    public function consultarUnidadMedidaJSONAction() {
+
+        $unidadMedidaDao=new UnidadMedidaDao($this->getDoctrine());
+        $unidadMedida=$unidadMedidaDao->getUnidadMedida();
         
 
-        $numfilas = count($tipoPeriodo);
+        $numfilas = count($unidadMedida);
 
-        $aux = new TipoPeriodo();
+        $aux = new UnidadMedida();
         $i = 0;
 
-        foreach ($tipoPeriodo as $aux) {
-            $rows[$i]['id'] = $aux->getIdTipPer();
-            $rows[$i]['cell'] = array($aux->getIdTipPer(),
-                $aux->getNomTipPer(),
-                $aux->getActivoTipPer(),
-                $aux->getDescTipPer()
+        foreach ($unidadMedida as $aux) {
+            $rows[$i]['id'] = $aux->getIdUnidMed();
+            $rows[$i]['cell'] = array($aux->getIdUnidMed(),
+                $aux->getNomUnidMed(),
+                $aux->getTipoUnidMed(),
+                $aux->getDescripUnidMed()
+                
             );
-            if($aux->getActivoTipPer())
-                $rows[$i]['cell'][2]='SI';
-            else
-                $rows[$i]['cell'][2]='NO';
+          
             $i++;
         }
 
@@ -58,20 +56,18 @@ class AccionEstInfraUnidadMedidaController extends Controller {
         $response = new Response($jsonresponse);
         return $response;
     }
-    public function manttTipoPeriodoAction() {
+
+    public function manttUnidadMedidaAction() {
         $request = $this->getRequest();
         
-        $codTipoPer=$request->get('id');
-        $nomTipoPer=$request->get('nombre');
-        $descTipoPer=$request->get('descripcion');
-        if($request->get('activo')=='SI')
-                $actTipoPer=true;
-            else
-                $actTipoPer=false;
-            
+        $codUnidMed=$request->get('id');
+        $nomUnidMed=$request->get('unidmed');
+        $tipoUnidMed=$request->get('tipo');
+        $descUnidMed=$request->get('descripcion');
+                    
         $operacion = $request->get('oper');
 
-        $tipoPeriodoDao=new TipoPeriodoDao($this->getDoctrine());
+        $unidadmedidaDao=new UnidadMedidaDao($this->getDoctrine());
 
         switch ($operacion){
             case 'edit':
@@ -81,13 +77,13 @@ class AccionEstInfraUnidadMedidaController extends Controller {
                $tipoPeriodoDao->delTipoPeriodo($codTipoPer);
                 break;
             case 'add':
-                $tipoPeriodoDao->addTipoPeriodo($nomTipoPer, $descTipoPer, $actTipoPer);
+                $unidadmedidaDao->agregarUnidadMedida($nomUnidMed, $tipoUnidMed, $descUnidMed);
                 break;
         }
 
         return new Response("{sc:true,msg:''}");
     }
-*/
+
 }
 
 ?>
