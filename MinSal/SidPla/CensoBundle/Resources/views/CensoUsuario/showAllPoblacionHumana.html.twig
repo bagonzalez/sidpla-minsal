@@ -18,13 +18,13 @@
             { name:'cantidad', index: 'cantidad',width:100,summaryType:'sum', sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:3, label: "Clasificacion", elmprefix:"(*)"},editrules:{required:true}}            
            ],            
             
-          rowNum:10,
-          rownumbers: true,          
-          rowList:[10,20,30],                   
+          rowNum:20,
+          rownumbers: true,                                      
           multiselect: false,
           pager: jQuery('#pager5'),
           viewrecords: true,
           sortname: 'categoria', grouping:true, 
+          loadonce:true,
           groupingView : { 
               groupField : ['categoria'], 
               groupColumnShow : [false],
