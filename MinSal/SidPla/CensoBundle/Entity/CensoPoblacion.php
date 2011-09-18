@@ -43,6 +43,17 @@ class CensoPoblacion
      * @ORM\OneToMany(targetEntity="PoblacionHumana", mappedBy="censoPoblacion")
      */
     protected $poblacionHumana;
+    
+    
+     /**
+     * @ORM\OneToMany(targetEntity="InformacionRelevante", mappedBy="censoPoblacion")
+     */
+    protected $informacionRelevante;
+    
+     /**
+     * @ORM\OneToMany(targetEntity="InformacionComplementaria", mappedBy="censoPoblacion")
+     */
+    protected $informacionComplementaria;
 
 
     /**
@@ -139,5 +150,45 @@ class CensoPoblacion
     public function getPoblacionHumana()
     {
         return $this->poblacionHumana;
+    }
+
+    /**
+     * Add informacionRelevante
+     *
+     * @param MinSal\SidPla\CensoBundle\Entity\InformacionRelevante $informacionRelevante
+     */
+    public function addInformacionRelevante(\MinSal\SidPla\CensoBundle\Entity\InformacionRelevante $informacionRelevante)
+    {
+        $this->informacionRelevante[] = $informacionRelevante;
+    }
+
+    /**
+     * Get informacionRelevante
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getInformacionRelevante()
+    {
+        return $this->informacionRelevante;
+    }
+
+    /**
+     * Add informacionComplementaria
+     *
+     * @param MinSal\SidPla\CensoBundle\Entity\InformacionComplementaria $informacionComplementaria
+     */
+    public function addInformacionComplementaria(\MinSal\SidPla\CensoBundle\Entity\InformacionComplementaria $informacionComplementaria)
+    {
+        $this->informacionComplementaria[] = $informacionComplementaria;
+    }
+
+    /**
+     * Get informacionComplementaria
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getInformacionComplementaria()
+    {
+        return $this->informacionComplementaria;
     }
 }

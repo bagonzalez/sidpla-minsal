@@ -96,7 +96,7 @@ class AccionAdminCensoUsuarioController extends Controller{
        
        $censoPoblacionDao=new CensoPoblacionDao($this->getDoctrine());
        $censoPoblacion=new CensoPoblacion();
-       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('33');
+       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('63');
        
        
        if($tablaCenso=='sidpla_poblacionhumana'){
@@ -119,6 +119,42 @@ class AccionAdminCensoUsuarioController extends Controller{
                     }
             }
        }
+       
+       
+       if($tablaCenso=='sidpla_informacionrelevante'){
+           
+            $infRelevante=$censoPoblacion->getInformacionRelevante();
+            $regInfRelevante=new InformacionRelevante();            
+            $i=0;       
+            foreach ($infRelevante as $regInfRelevante) {
+                    
+                    if($regInfRelevante->getCategoriaCenso()==$categoriaCenso){
+                        $rows[$i]['id']= $regInfRelevante->getIdInfRel();
+                        $rows[$i]['cell']= array($regInfRelevante->getIdInfRel(),
+                                                 $regInfRelevante->getInfRelCant());    
+                        $i++;
+                    }
+            }
+       }
+       
+       
+       if($tablaCenso=='sidpla_infcomplementaria'){
+           
+            $infComplem=$censoPoblacion->getInformacionComplementaria();
+            $regInfComple=new InformacionComplementaria();            
+            $i=0;       
+            foreach ($infComplem as $regInfComple) {
+                    
+                    if($regInfComple->getCategoriaCenso()==$categoriaCenso){
+                        $rows[$i]['id']= $regInfComple->getIdInfoComp();
+                        $rows[$i]['cell']= array($regInfComple->getIdInfoComp(),
+                                                 $regInfComple->getAreaInfoComp(),
+                                                 $regInfComple->getCantidadInfoComp());    
+                        $i++;
+                    }
+            }
+       }
+       
         $datos=json_encode($rows); 
        
         $jsonresponse='{
@@ -339,16 +375,13 @@ class AccionAdminCensoUsuarioController extends Controller{
             $cantPromotorMujeres=$request->get('promotorFemenino');
             
             $poblacionUrbanaDao=new PoblacionHumanaDao($this->getDoctrine());            
-            $poblacionUrbanaHombres=new PoblacionHumana();
-            $poblacionUrbanaMujeres=new PoblacionHumana();
+            
             
             $poblacionUrbanaHombres= $poblacionUrbanaDao->getPoblacionHumana($idUrbanaHombres);
             $poblacionUrbanaMujeres= $poblacionUrbanaDao->getPoblacionHumana($idUrbanaMujeres);
-            
             $poblacionRuralHombres= $poblacionUrbanaDao->getPoblacionHumana($idRuralHombres);
             $poblacionRuralMujeres= $poblacionUrbanaDao->getPoblacionHumana($idRuralMujeres);
-            
-            $poblacionPromotorHombres= $poblacionUrbanaDao->getPoblacionHumana($idPromotorHombres);
+            $poblacionPromotorHombres= $poblacionUrbanaDao->getPoblacionHumana($idPromotorHombres);            
             $poblacionPromotorMujeres= $poblacionUrbanaDao->getPoblacionHumana($idPromotorMujeres);
             
             $poblacionUrbanaHombres->setPobHumCant($cantUrbanaHombres);
@@ -357,8 +390,8 @@ class AccionAdminCensoUsuarioController extends Controller{
             $poblacionRuralHombres->setPobHumCant($cantRuralHombres);
             $poblacionRuralMujeres->setPobHumCant($cantRuralMujeres);
             
-            //$poblacionPromotorHombres->setPobHumCant($cantPromotorHombres);
-            //$poblacionPromotorMujeres->setPobHumCant($cantPromotorMujeres);
+            $poblacionPromotorHombres->setPobHumCant($cantPromotorHombres);
+            $poblacionPromotorMujeres->setPobHumCant($cantPromotorMujeres);
             
             $this->getDoctrine()->getEntityManager()->persist($poblacionUrbanaHombres);
             $this->getDoctrine()->getEntityManager()->persist($poblacionUrbanaMujeres);
@@ -372,8 +405,35 @@ class AccionAdminCensoUsuarioController extends Controller{
             $this->getDoctrine()->getEntityManager()->flush();
             
             
-            /*urbanaHombres            
-            urbanaMujeres*/
+            
+        
+     return $this->consultarInformacionComplementariaAction();  
+        
+        
+    }  
+    
+    
+    public function ingresarInfRelevaAction(){
+        
+        $request=$this->getRequest();
+        
+        $idInfRelevante=$request->get('idInfRelevante');
+        
+            
+            $cantInfRelv=$request->get('cantRelevante');
+            
+            $infRelevanteDao=new InformacionRelevanteDao($this->getDoctrine());            
+            
+            
+            $infRelevanteReg= $infRelevanteDao->getInfRelevante($idInfRelevante);
+            $infRelevanteReg->setInfRelCant($cantInfRelv);
+            
+            $this->getDoctrine()->getEntityManager()->persist($infRelevanteReg);
+           
+            $this->getDoctrine()->getEntityManager()->flush();
+            
+            
+            
         
      return $this->consultarInformacionComplementariaAction();  
         
