@@ -1,21 +1,42 @@
 {# empty Twig template #}
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
+<style>
+	.ui-button { margin-left: -1px; }
+	.ui-button-icon-only .ui-button-text { padding: 0.35em; } 
+	.ui-autocomplete-input { margin: 0; padding: 0.48em 0 0.47em 0.45em; width: 350px }
+</style>
+        
  <script type="text/javascript">
       $(document).ready(function(){
           $('#tabs').tabs(); 
           $('#tabs').css("height",500); 
+          
+          
           $.getJSON('consultarCategoriaCensoUsuarioJSON', function(data) {
                       var i=0;
+                      var availableTags=new Array(); 
+                      
                       $.each(data, function(key, val) {
                           if(key=='rows'){
                             $.each(val, function(id, registro){
                                 $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+                                availableTags.push(registro['cell'][1]);
                             });                    
                           }
                       });
+                      
+                    
           });
           
+          $(function() {
+		$( "#categoriaCenso" ).combobox();
+	 });
+         
+         $('#categoriaCenso').css("width", '150px');
+          
+       
+                             
           $('#btnVerValorCategoria').click(function() {
                 
                 var idCategoria=$('#categoriaCenso').val();
@@ -130,16 +151,16 @@
 <h1 align="center" class="demoHeaders">CENSO GENERAL DEL AREA GEO-POBLACIONAL</h1>
  <table align="center" id="datosviviendaypoblacion"  >
                     <tr>
-                        <td colspan="4" align="center" >CLASIFICACION DEL AREA GEO-POBLACIONAL<br></td>
+                        <td width="100%" colspan="10" align="center" >CLASIFICACION DEL AREA GEO-POBLACIONAL<br></td>
                     </tr>
 
                     <tr>
-                        <td colspan="3"  >
-                            <select id="categoriaCenso" name="categoriaCenso">
-                                 <option value="0" >--Seleccione una categoria del censo--</option>    
+                        <td width="90%" colspan="9"   >                           
+                            <select  id="categoriaCenso" name="categoriaCenso">
+                                 
                             </select>
                         </td> 
-                        <td><button id="btnVerValorCategoria" >...</button></td>
+                        <td><button size="10%" id="btnVerValorCategoria" >...</button></td>
                     </tr>
  </table>
 
