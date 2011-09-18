@@ -3,16 +3,16 @@
      
      $(document).ready(function(){
          $('#guardarPobHumana').click(function(){
-                document.location.href='{{ path('MinSalSidPlaCensoBundle_ingresarPoblacionHumana') }}'
+                document.location.href='{{ path('MinSalSidPlaCensoBundle_ingresarInfReleva') }}'
          });
          
      });
  </script>
 <br></br>
 
-<form action="{{ path('MinSalSidPlaCensoBundle_ingresarPoblacionHumana') }}" method="post" >    
+<form action="{{ path('MinSalSidPlaCensoBundle_ingresarInfReleva') }}" method="post" >    
     
-    <input name="idAreaUrbana" id="idInfRelevante" value=0 type="hidden"/>    
+    <input name="idInfRelevante" id="idInfRelevante" value=0 type="hidden"/>    
     
     
     

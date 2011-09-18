@@ -87,6 +87,14 @@ class InformacionRelevanteDao {
  
             return $matrizMensajes;
         }
+        
+   public function getInfRelevante($id) {	    
+        $infRelevante=$this->repositorio->find($id);
+        if(!$infRelevante){
+            $infRelevante = new InformacionRelevante();
+        }
+        return $infRelevante;
+    }
     
     
 }

@@ -413,6 +413,34 @@ class AccionAdminCensoUsuarioController extends Controller{
     }  
     
     
+    public function ingresarInfRelevaAction(){
+        
+        $request=$this->getRequest();
+        
+        $idInfRelevante=$request->get('idInfRelevante');
+        
+            
+            $cantInfRelv=$request->get('cantRelevante');
+            
+            $infRelevanteDao=new InformacionRelevanteDao($this->getDoctrine());            
+            
+            
+            $infRelevanteReg= $infRelevanteDao->getInfRelevante($idInfRelevante);
+            $infRelevanteReg->setInfRelCant($cantInfRelv);
+            
+            $this->getDoctrine()->getEntityManager()->persist($infRelevanteReg);
+           
+            $this->getDoctrine()->getEntityManager()->flush();
+            
+            
+            
+        
+     return $this->consultarInformacionComplementariaAction();  
+        
+        
+    }  
+    
+    
 }
 
 ?>
