@@ -44,28 +44,34 @@ class AccionAdminCensoUsuarioController extends Controller{
     
      public function consultarInformacionComplementariaJSONAction(){
         
-       
-         $InfoCompleDao=new InformacionComplementariaDao($this->getDoctrine());        
-        $InfoCompleDaoT=$InfoCompleDao->getInfoComple();  
          
+       $request=$this->getRequest();
+       
+       
+       $rows='';
+       
+       $censoPoblacionDao=new CensoPoblacionDao($this->getDoctrine());
+       $censoPoblacion=new CensoPoblacion();
+       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('69');
+       
+       
+           
+        $infComplem=$censoPoblacion->getInformacionComplementaria();
         
-        $numfilas=count($InfoCompleDaoT);  
-            
-            $uni=new InformacionComplementaria();
-            $i=0;
-            
-            foreach ($InfoCompleDaoT as $uni) {
-                $rows[$i]['id']= $uni->getIdInfoComp();
-                $rows[$i]['cell']= array($uni->getIdInfoComp(),
-                                         $uni->getAreaInfoComp(),
-                                         $uni->getCodigoCensoPoblacion(),
-                                         $uni->getCodigoCatCen(),
-                                         $uni->getCantidadInfoComp());    
-                $i++;
-            }
-            
-            $datos=json_encode($rows);            
-            
+        $numfilas=count($infComplem);  
+        $regInfComple=new InformacionComplementaria();            
+        $i=0;       
+        foreach ($infComplem as $regInfComple) {
+            $rows[$i]['id']= $regInfComple->getIdInfoComp();
+            $rows[$i]['cell']= array($regInfComple->getCategoriaCenso()->getDescripcionCategoria(),                
+                                     $regInfComple->getAreaInfoComp(),
+                                     $regInfComple->getCantidadInfoComp()
+                                     );    
+            $i++;                    
+        }
+       
+        $datos=json_encode($rows); 
+       
             
             $jsonresponse='{
                "page":"1",
@@ -96,7 +102,7 @@ class AccionAdminCensoUsuarioController extends Controller{
        
        $censoPoblacionDao=new CensoPoblacionDao($this->getDoctrine());
        $censoPoblacion=new CensoPoblacion();
-       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('63');
+       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('69');
        
        
        if($tablaCenso=='sidpla_poblacionhumana'){
@@ -200,34 +206,53 @@ class AccionAdminCensoUsuarioController extends Controller{
     
     public function consultarPoblacionHumanaJSONAction(){
         
+       $request=$this->getRequest();
        
-         $InfoPobHumaDao=new PoblacionHumanaDao($this->getDoctrine());        
-        $InfoPobHumDaoT=$InfoPobHumaDao->getInfoPobHum();  
-         
+       $page = $request->get('page'); // get the requested page 
+       $limit = $request->get('rows'); // get how many rows we want to have into the grid 
+       $sidx = $request->get('sidx'); // get index row - i.e. user click to sort 
+       $sord = $request->get('sord'); // get the direction
+       if(!$sidx) $sidx =1;
+       
+       $rows='';
+       
+       $censoPoblacionDao=new CensoPoblacionDao($this->getDoctrine());
+       $censoPoblacion=new CensoPoblacion();
+       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('69');
+       
         
-        $numfilas=count($InfoPobHumDaoT);  
-            
-            $uni=new InformacionComplementaria();
-            $i=0;
-            
-            foreach ($InfoPobHumDaoT as $uni) {
-                $rows[$i]['id']= $uni->getIdPobHum();
-                $rows[$i]['cell']= array($uni->getIdPobHum(),
-                                         $uni->getCodCatCen(),
-                                         $uni->getCodCenPob(),
-                                         $uni->getPobHumClasi(),
-                                         $uni->getPobHumArea(),
-                                         $uni->getPobHumCant(),
-                                         $uni->getPobhumSexo());    
+           
+        $poblacionHumana=$censoPoblacion->getPoblacionHumana();
+        $regPobHumana=new PoblacionHumana();
+
+
+        $i=0;
+        $numfilas=count($poblacionHumana); 
+        
+        if( $numfilas >0 ) { 
+            $total_pages = ceil($numfilas/$limit);             
+        } else { 
+            $total_pages = 0;             
+        }
+        if ($page > $total_pages) $page=$total_pages;
+       
+            foreach ($poblacionHumana as $regPobHumana) {                    
+                    
+                $rows[$i]['id']= $regPobHumana->getIdPobHum();
+                $rows[$i]['cell']= array($regPobHumana->getCategoriaCenso()->getDescripcionCategoria(),
+                                         $regPobHumana->getPobHumArea(),                                                 
+                                         $regPobHumana->getPobhumsexo(),
+                                         $regPobHumana->getPobHumCant());    
                 $i++;
-            }
-            
+                    
+            }       
+        
             $datos=json_encode($rows);            
             
             
-            $jsonresponse='{
-               "page":"1",
-               "total":"1",
+           $jsonresponse='{
+               "page":"'.$page.'",
+               "total":"'.$total_pages.'",
                "records":"'.$numfilas.'", 
                "rows":'.$datos.'}';
             
@@ -316,31 +341,46 @@ class AccionAdminCensoUsuarioController extends Controller{
     
     public function consultarInformacionRelevanteJSONAction(){
         
+       $request=$this->getRequest();       
+       $rows='';
        
-         $InfoRelDao=new InformacionRelevanteDao($this->getDoctrine());        
-        $InfoRelDaoT=$InfoRelDao->getInfoRel();  
-         
+       $page = $request->get('page'); // get the requested page 
+       $limit = $request->get('rows'); // get how many rows we want to have into the grid 
+       $sidx = $request->get('sidx'); // get index row - i.e. user click to sort 
+       $sord = $request->get('sord'); // get the direction
+       if(!$sidx) $sidx =1;
+       
+       $censoPoblacionDao=new CensoPoblacionDao($this->getDoctrine());
+       $censoPoblacion=new CensoPoblacion();
+       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('69');
+          
+       
+           
+        $infRelevante=$censoPoblacion->getInformacionRelevante();
+        $regInfRelevante=new InformacionRelevante();            
+        $i=0;   
+        $numfilas=count($infRelevante);
         
-        $numfilas=count($InfoRelDaoT);  
-            
-            $uni=new InformacionRelevante();
-            $i=0;
-            
-            foreach ($InfoRelDaoT as $uni) {
-                $rows[$i]['id']= $uni->getIdInfRel();
-                $rows[$i]['cell']= array($uni->getIdInfRel(),
-                                         $uni->getCodCenPob(),
-                                         $uni->getCodCatCen(),
-                                         $uni->getInfRelCant());    
-                $i++;
-            }
-            
-            $datos=json_encode($rows);            
+        if( $numfilas >0 ) { 
+            $total_pages = ceil($numfilas/$limit);             
+        } else { 
+            $total_pages = 0;             
+        }
+        if ($page > $total_pages) $page=$total_pages;
+        
+        foreach ($infRelevante as $regInfRelevante) {
+                    $rows[$i]['id']= $regInfRelevante->getIdInfRel();
+                    $rows[$i]['cell']= array($regInfRelevante->getCategoriaCenso()->getDescripcionCategoria(),
+                                             $regInfRelevante->getInfRelCant());    
+                    $i++;                    
+        }
+        
+        $datos=json_encode($rows);            
             
             
             $jsonresponse='{
-               "page":"1",
-               "total":"1",
+               "page":"'.$page.'",
+               "total":"'.$total_pages.'",
                "records":"'.$numfilas.'", 
                "rows":'.$datos.'}';
             
