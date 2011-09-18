@@ -91,7 +91,7 @@ class PeriodoOficial
      *
      * @param datetime $fechIniPerOfi
      */
-    public function setFechIniPerOfi(DateTime $fechIniPerOfi)
+    public function setFechIniPerOfi($fechIniPerOfi)
     {
         $this->fechIniPerOfi = $fechIniPerOfi;
     }
@@ -111,7 +111,7 @@ class PeriodoOficial
      *
      * @param datetime $fechFinPerOfi
      */
-    public function setFechFinPerOfi(DateTime $fechFinPerOfi)
+    public function setFechFinPerOfi($fechFinPerOfi)
     {
         $this->fechFinPerOfi = $fechFinPerOfi;
     }

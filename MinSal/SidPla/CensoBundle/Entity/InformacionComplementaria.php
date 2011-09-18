@@ -51,6 +51,19 @@ class InformacionComplementaria
      * @ORM\Column(name="infcom_cantidad", type="integer")
      */
     private $cantidadInfoComp;
+    
+    
+        /**
+     * @ORM\ManyToOne(targetEntity="CensoPoblacion", inversedBy="informacionComplementaria")
+     * @ORM\JoinColumn(name="censopoblacion_codigo", referencedColumnName="censopoblacion_codigo")
+     */
+    protected $censoPoblacion;
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="CategoriaCenso", inversedBy="infComplementaria")
+     * @ORM\JoinColumn(name="catcen_codigo", referencedColumnName="catcen_codigo")
+     */
+    protected $categoriaCenso;
 
     
     /**
@@ -143,4 +156,44 @@ class InformacionComplementaria
         return $this->cantidadInfoComp;
     }
     
+
+    /**
+     * Set censoPoblacion
+     *
+     * @param MinSal\SidPla\CensoBundle\Entity\CensoPoblacion $censoPoblacion
+     */
+    public function setCensoPoblacion(\MinSal\SidPla\CensoBundle\Entity\CensoPoblacion $censoPoblacion)
+    {
+        $this->censoPoblacion = $censoPoblacion;
+    }
+
+    /**
+     * Get censoPoblacion
+     *
+     * @return MinSal\SidPla\CensoBundle\Entity\CensoPoblacion 
+     */
+    public function getCensoPoblacion()
+    {
+        return $this->censoPoblacion;
+    }
+
+    /**
+     * Set categoriaCenso
+     *
+     * @param MinSal\SidPla\CensoBundle\Entity\CategoriaCenso $categoriaCenso
+     */
+    public function setCategoriaCenso(\MinSal\SidPla\CensoBundle\Entity\CategoriaCenso $categoriaCenso)
+    {
+        $this->categoriaCenso = $categoriaCenso;
+    }
+
+    /**
+     * Get categoriaCenso
+     *
+     * @return MinSal\SidPla\CensoBundle\Entity\CategoriaCenso 
+     */
+    public function getCategoriaCenso()
+    {
+        return $this->categoriaCenso;
+    }
 }

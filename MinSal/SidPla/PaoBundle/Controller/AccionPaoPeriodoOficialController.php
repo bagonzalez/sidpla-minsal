@@ -67,8 +67,16 @@ class AccionPaoPeriodoOficialController extends Controller {
 
         $codPerOfi = $request->get('id');
         $tipoPeriodoCodigo = $request->get('nombre');
-        $fechIniPerOfi = DATE_FORMAT($request->get('fechini'), 'Y/m/d');
-        $fechFinPerOfi = DATE_FORMAT($request->get('fechfin'), 'Y/m/d');
+        
+       // $hola=$request->get('fechini');
+      
+        $date1 = new DateTime('2000-01-01');
+      //  $fechIniPerOfi=$date->format('Y-m-d');
+        echo $date1->format('Y-m-d h:i:s');
+       
+        $date2 = new DateTime($request->get('fechfin'));     
+        $fechFinPerOfi=$date2->format('Y-m-d');
+        
         if ($request->get('activo') == 'SI')
             $actPerOfi = true;
         else
