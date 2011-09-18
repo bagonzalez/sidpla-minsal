@@ -1,0 +1,7 @@
+parameters:
+#    min_sal_sid_pla_ges_obj_esp.example.class: MinSal\SidPla\GesObjEspBundle\Example
+
+services:
+#    min_sal_sid_pla_ges_obj_esp.example:
+#        class: %min_sal_sid_pla_ges_obj_esp.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

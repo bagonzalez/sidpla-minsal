@@ -1,0 +1,37 @@
+{# empty Twig template #}
+
+
+{% block body %}
+<script type="text/javascript">        
+      $(document).ready(function(){
+          $('#tabs').tabs();
+      //jAlert('This is a custom alert box', 'Alert Dialog');
+         });
+      
+</script>
+      
+<br></br>
+<br></br>
+<br></br>
+        
+            
+                <table align="center" id="datosMenCorrtempTabla"  >
+                    <tr>
+                        <td colspan="4" align="center" >prueba de mandar el id del objetivo <br><br></td>
+                    </tr>
+                    
+                    <tr>
+                        <td >Id:</td>
+                        <td colspan="3" ><input size="60%" name="id" id="id" value= "{{idfila}}" ></input></td>
+                    </tr>
+                                       
+                        <td colspan="4" align="center" ><button type="submmit" id="guardar"  >Guardar</button>
+                            <button type="reset"  >Limpiar</button>
+                        </td>                        
+                    </tr>                    
+                </table>
+                     
+       
+      
+
+{% endblock %}
