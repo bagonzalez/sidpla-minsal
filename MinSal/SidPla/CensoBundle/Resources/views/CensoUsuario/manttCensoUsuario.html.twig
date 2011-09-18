@@ -15,13 +15,11 @@
           
           $.getJSON('consultarCategoriaCensoUsuarioJSON', function(data) {
                       var i=0;
-                      var availableTags=new Array(); 
                       
                       $.each(data, function(key, val) {
                           if(key=='rows'){
                             $.each(val, function(id, registro){
-                                $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
-                                availableTags.push(registro['cell'][1]);
+                                $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');                                
                             });                    
                           }
                       });
