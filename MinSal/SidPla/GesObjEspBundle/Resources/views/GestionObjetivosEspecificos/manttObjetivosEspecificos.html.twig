@@ -1,0 +1,25 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+
+<br></br>
+    <br></br>         
+    <br></br>    
+    <form action="{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}" method="post">
+        <table align="center">
+            <tr><td align="center"><h1>Mantenimiento de Objetivos Especivicos</h1>
+                </td>
+            </tr>
+           
+            <tr>
+                <td align="center">
+                <br></br>                
+                {% include 'MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:showAllObjetivosEspecificos.html.twig'  with {'idCaractOrg': idCaractOrg} %} 
+                </td>
+            </tr>        
+        </table>        
+    </form>
+    <br></br>
+    <br></br>
+    
+    
+{% endblock %}

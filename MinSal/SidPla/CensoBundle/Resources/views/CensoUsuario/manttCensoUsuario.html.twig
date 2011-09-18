@@ -1,21 +1,40 @@
 {# empty Twig template #}
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
+<style>
+	.ui-button { margin-left: -1px; }
+	.ui-button-icon-only .ui-button-text { padding: 0.35em; } 
+	.ui-autocomplete-input { margin: 0; padding: 0.48em 0 0.47em 0.45em; width: 350px }
+</style>
+        
  <script type="text/javascript">
       $(document).ready(function(){
           $('#tabs').tabs(); 
           $('#tabs').css("height",500); 
+          
+          
           $.getJSON('consultarCategoriaCensoUsuarioJSON', function(data) {
                       var i=0;
+                      
                       $.each(data, function(key, val) {
                           if(key=='rows'){
                             $.each(val, function(id, registro){
-                                $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+                                $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');                                
                             });                    
                           }
                       });
+                      
+                    
           });
           
+          $(function() {
+		$( "#categoriaCenso" ).combobox();
+	 });
+         
+         $('#categoriaCenso').css("width", '150px');
+          
+       
+                             
           $('#btnVerValorCategoria').click(function() {
                 
                 var idCategoria=$('#categoriaCenso').val();
@@ -24,10 +43,11 @@
                       var i=0;
                       
                       $('#limpiar').click();
-                      $('#categoriaDescripcion').val(data.categoriaDescripcion);
+                      
                       
                       if(data.tabla=='sidpla_poblacionhumana'){   
                           $('#aingPob').click();
+                          $('#categoriaDescripcion').val(data.categoriaDescripcion);
                           $.each(data.registros, function(id, registro) {
                               
                                if(registro['cell'][1]=='URBANA'){
@@ -67,6 +87,39 @@
                           });                              
                       }
                       
+                     if(data.tabla=='sidpla_infcomplementaria'){
+                         $('#aingInfConm').click();
+                         $('#categoriaDescripcionComple').val(data.categoriaDescripcion);  
+                         $.each(data.registros, function(id, registro) {
+                              
+                               if(registro['cell'][1]=='URBANA'){                                  
+                                     $('#idAreaUrbanaInfCom').val(registro['cell'][0]);
+                                     $('input[name=urbanaComple]').val(registro['cell'][2]);
+                               }                               
+                               
+                               if(registro['cell'][1]=='RURAL'){
+                                     $('#idAreaRuralInfCom').val(registro['cell'][0]);                                       
+                                     $('input[name=ruralComple]').val(registro['cell'][2]);
+                               }
+                               
+                                if(registro['cell'][1]=='PROMOTOR'){                                   
+                                     $('#idAreaPromotorInfCom').val(registro['cell'][0]);
+                                     $('input[name=promotorComple]').val(registro['cell'][2]);   
+                               }
+                              
+                          });     
+                     }
+                     
+                     if(data.tabla=='sidpla_informacionrelevante'){
+                         $('#aingInfRel').click();
+                         $('#categoriaDescripcionRelevante').val(data.categoriaDescripcion);                         
+                         $.each(data.registros, function(id, registro) {                              
+                                 $('#idInfRelevante').val(registro['cell'][0]);
+                                 $('input[name=cantRelevante]').val(registro['cell'][1]);             
+                          });         
+                     }
+                     
+                      
                      $("input[name^='urbana']").sum("keyup", "#totalUrbana");
                      $("input[name^='rural']").sum("keyup", "#totalRural");
                      $("input[name^='promotor']").sum("keyup", "#totalGlobal");                   
@@ -77,6 +130,7 @@
                      
                      $("input[id^='suma']").sum("keyup","#totalGeneral");
                      
+                     $("input[name$='Comple']").sum("keyup","#totalComple");
                       
                 });
           });
@@ -95,16 +149,16 @@
 <h1 align="center" class="demoHeaders">CENSO GENERAL DEL AREA GEO-POBLACIONAL</h1>
  <table align="center" id="datosviviendaypoblacion"  >
                     <tr>
-                        <td colspan="4" align="center" >CLASIFICACION DEL AREA GEO-POBLACIONAL<br></td>
+                        <td width="100%" colspan="10" align="center" >CLASIFICACION DEL AREA GEO-POBLACIONAL<br></td>
                     </tr>
 
                     <tr>
-                        <td colspan="3"  >
-                            <select id="categoriaCenso" name="categoriaCenso">
-                                 <option value="0" >--Seleccione una categoria del censo--</option>    
+                        <td width="90%" colspan="9"   >                           
+                            <select  id="categoriaCenso" name="categoriaCenso">
+                                 
                             </select>
                         </td> 
-                        <td><button id="btnVerValorCategoria" >...</button></td>
+                        <td><button size="10%" id="btnVerValorCategoria" >...</button></td>
                     </tr>
  </table>
 
@@ -113,6 +167,8 @@
                 <li><a href="#tabs-1">Datos de vivienda y poblacion </a></li>
                 <li><a href="#tabs-2">Otra informacion relevante</a></li>
                 <li><a id="aingPob" href="#tabs-3">Ingresar Poblacion Humana</a></li>
+                <li><a id="aingInfConm" href="#tabs-4">Ingresar Informacion Complemnentaria</a></li>
+                <li><a id="aingInfRel" href="#tabs-5">Ingresar Informacion Relevante</a></li>
         </ul>
         <div id="tabs-1" >
             <form action="" method="post" >
@@ -157,6 +213,12 @@
     </div>
     <div id="tabs-3">
          {% include 'MinSalSidPlaCensoBundle:PoblacionHumana:ingresarPoblacionHumana.html.twig'%}
+    </div>
+     <div id="tabs-4">
+         {% include 'MinSalSidPlaCensoBundle:InformacionComplementaria:ingresarInformacionComplementaria.html.twig'%}
+    </div>
+    <div id="tabs-5">
+         {% include 'MinSalSidPlaCensoBundle:OtraInfoRelevante:ingresarInfoRelevante.html.twig'%}
     </div>
     
 </div>
