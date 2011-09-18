@@ -1,0 +1,30 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %}Periodos de la PAO {% endblock %}
+
+{% block body %}
+<script type="text/javascript">
+    </script>
+    <h1 style='text-align: center;'>Periodos para la PAO</h1>
+    <form>
+        <table align="center">
+            <tr>
+                <td>
+                    <h4 style='font-size: 12px; font-weight: normal'>Debe de tomar en cuenta los siguientes periodos para la elaboracion de la PAO</h4>
+                    <h4 style='font-size: 12px; font-weight: normal'>El periodo en que se encuentra la PAO es el que se muestra con un SI en la columna Activo</h4>
+                </td>
+            </tr>
+            <td align="center" style='font-size: 11px'>Seleccione el Año a Gestionar
+                <select id='selanio'>
+                        <option value='{{ "now" | date("Y") }}'>{{ "now" | date("Y") }}</option>
+                        <option value='{{ "now" | date("Y")+1 }}'>{{ "now" | date("Y")-1 }}</option>
+                </select>
+                </td>
+            <tr>
+                <td colspan="2" align="center">
+                    <br></br>  
+                {# include 'MinSalSidPlaPaoBundle:PeriodoPaoOficial:showPeriodoOficial.html.twig'#}
+                </td>
+            </tr>        
+        </table>    
+    </form>
+{% endblock %}

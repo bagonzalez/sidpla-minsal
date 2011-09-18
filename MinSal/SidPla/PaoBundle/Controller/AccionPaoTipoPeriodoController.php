@@ -74,13 +74,13 @@ class AccionPaoTipoPeriodoController extends Controller {
 
         switch ($operacion){
             case 'edit':
-                $tipoPeriodoDao->editTipoPeriodo($codTipoPer, $nomTipoPer, $descTipoPer, $actTipoPer);
+                $tipoPeriodoDao->editarTipoPeriodo($codTipoPer, $nomTipoPer, $descTipoPer, $actTipoPer);
                 break;
             case 'del':
-               $tipoPeriodoDao->delTipoPeriodo($codTipoPer);
+               $tipoPeriodoDao->eliminarTipoPeriodo($codTipoPer);
                 break;
             case 'add':
-                $tipoPeriodoDao->addTipoPeriodo($nomTipoPer, $descTipoPer, $actTipoPer);
+                $tipoPeriodoDao->agregarTipoPeriodo($nomTipoPer, $descTipoPer, $actTipoPer);
                 break;
         }
 

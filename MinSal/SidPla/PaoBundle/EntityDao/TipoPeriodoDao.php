@@ -60,7 +60,7 @@ class TipoPeriodoDao {
      * Agregar Tipo Perido 
      */
 
-    public function addTipoPeriodo($nomTipPer, $descTipPer, $actTipPer) {
+    public function agregarTipoPeriodo($nomTipPer, $descTipPer, $actTipPer) {
 
         $tipoPeriodo = new TipoPeriodo();
 
@@ -81,7 +81,7 @@ class TipoPeriodoDao {
      * Editar un tipo de periodo
      */
 
-    public function editTipoPeriodo($codTipPer, $nomTipPer, $descTipPer, $actTipPer) {
+    public function editarTipoPeriodo($codTipPer, $nomTipPer, $descTipPer, $actTipPer) {
 
         $tipoPeriodo = $this->getTipoPeriodoEspecifico($codTipPer);
         $tipoPeriodo->setDescTipPer($descTipPer);
@@ -99,7 +99,7 @@ class TipoPeriodoDao {
      * Eliminar un tipo de periodo
      */
 
-    public function delTipoPeriodo($codigo) {
+    public function eliminarTipoPeriodo($codigo) {
 
         $notificacionSistema = $this->repositorio->find($codigo);
 

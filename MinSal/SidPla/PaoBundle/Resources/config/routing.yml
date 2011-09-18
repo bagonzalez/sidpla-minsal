@@ -28,6 +28,11 @@ MinSalSidPlaPaoBundle_manttPeriodoOficial:
     pattern:  /manttPeriodoOficial
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoPeriodoOficial:manttPeriodoOficial }
     
+#PARA PERIODO PAO
+MinSalSidPlaPaoBundle_mantenimientoPeriodoPao:
+    pattern:  /mantenimientoPeriodoPao
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoPeriodoPao:mantenimientoPeriodoPao  }
+
 #PARA JUSTIFICACION    
 MinSalSidPlaPaoBundle_consultarJustificacion:
     pattern:  /consultarJustificacion
