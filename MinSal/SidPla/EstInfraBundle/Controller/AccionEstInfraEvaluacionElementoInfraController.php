@@ -1,24 +1,25 @@
 <?php
 
-namespace MinSal\SidPla\PaoBundle\Controller;
+namespace MinSal\SidPla\EstInfraBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use MinSal\SidPla\PaoBundle\EntityDao\TipoPeriodoDao;
-use MinSal\SidPla\PaoBundle\Entity\TipoPeriodo;
+use MinSal\SidPla\EstInfraBundle\EntityDao\EvaluacionElementoInfraDao;
 
-class AccionPaoTipoPeriodoController extends Controller {
 
-    public function mantenimientoTipoPeriodoAction() {
+class AccionEstInfraEvaluacionElementoInfraController extends Controller {
 
-        $opciones = $this->getRequest()->getSession()->get('opciones');
+    public function mantenimientoEvaluacionElementoInfraAction() {
+
+/*        $opciones = $this->getRequest()->getSession()->get('opciones');
         
-        return $this->render('MinSalSidPlaPaoBundle:TipoPeriodoPao:manttTipoPeriodo.html.twig'
+        return $this->render('MinSalSidPlaEstInfraBundle:UnidadMedidaPao:manttTipoPeriodo.html.twig'
                         , array('opciones' => $opciones));
-        
+  */
+        return new Response("hola kren XD");
     }
-
+/*
     public function consultarTipoPeriodoJSONAction() {
 
         $tipoPeriodoDao=new TipoPeriodoDao($this->getDoctrine());
@@ -74,19 +75,19 @@ class AccionPaoTipoPeriodoController extends Controller {
 
         switch ($operacion){
             case 'edit':
-                $tipoPeriodoDao->editarTipoPeriodo($codTipoPer, $nomTipoPer, $descTipoPer, $actTipoPer);
+                $tipoPeriodoDao->editTipoPeriodo($codTipoPer, $nomTipoPer, $descTipoPer, $actTipoPer);
                 break;
             case 'del':
-               $tipoPeriodoDao->eliminarTipoPeriodo($codTipoPer);
+               $tipoPeriodoDao->delTipoPeriodo($codTipoPer);
                 break;
             case 'add':
-                $tipoPeriodoDao->agregarTipoPeriodo($nomTipoPer, $descTipoPer, $actTipoPer);
+                $tipoPeriodoDao->addTipoPeriodo($nomTipoPer, $descTipoPer, $actTipoPer);
                 break;
         }
 
         return new Response("{sc:true,msg:''}");
     }
-
+*/
 }
 
 ?>

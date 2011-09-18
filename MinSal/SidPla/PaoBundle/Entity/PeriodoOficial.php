@@ -51,7 +51,7 @@ class PeriodoOficial
     private $activoPerOfi;
 
      /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\TipoPeriodo", inversedBy="periodooficiales")
+         * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\TipoPeriodo", inversedBy="periodooficiales")
      * @ORM\JoinColumn(name="tipoperiodo_codigo", referencedColumnName="tipoperiodo_codigo")
      */
     private $tipPerioPerOfi;
@@ -93,7 +93,9 @@ class PeriodoOficial
      */
     public function setFechIniPerOfi($fechIniPerOfi)
     {
-        $this->fechIniPerOfi = $fechIniPerOfi;
+        $date = new \DateTime($fechIniPerOfi);
+        $this->fechIniPerOfi =$date;    
+
     }
 
     /**
@@ -113,7 +115,9 @@ class PeriodoOficial
      */
     public function setFechFinPerOfi($fechFinPerOfi)
     {
-        $this->fechFinPerOfi = $fechFinPerOfi;
+        $date = new \DateTime($fechFinPerOfi);
+        $this->fechFinPerOfi =$date;
+     
     }
 
     /**
@@ -150,7 +154,7 @@ class PeriodoOficial
      *
      * @param MinSal\SidPla\PaoBundle\Entity\TipoPeriodo $tipPerioPerOfi
      */
-    public function settipPerioPerOfi(MinSal\SidPla\PaoBundle\Entity\TipoPeriodo $tipPerioPerOfi)
+    public function settipPerioPerOfi($tipPerioPerOfi)
     {
         $this->tipPerioPerOfi = $tipPerioPerOfi;
     }

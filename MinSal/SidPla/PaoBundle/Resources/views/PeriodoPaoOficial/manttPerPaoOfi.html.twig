@@ -11,7 +11,7 @@
                 <td align="center"><strong>Seleccione el Año a Gestionar </strong>
                 <select id='selanio'>
                         <option value='{{ "now" | date("Y") }}'>{{ "now" | date("Y") }}</option>
-                        <option value='{{ "now" | date("Y")-1 }}'>{{ "now" | date("Y")-1 }}</option>
+                        <option value='{{ "now" | date("Y")+1 }}'>{{ "now" | date("Y")-1 }}</option>
                 </select>
                 </td>
             </tr>

@@ -1,3 +1,34 @@
-MinSalSidPlaEstInfraBundle_homepage:
-    pattern:  /hello/{name}
-    defaults: { _controller: MinSalSidPlaEstInfraBundle:Default:index }
+MinSalSidPlaEstInfraBundle_principal:
+    pattern:  /
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:Default:principal }
+
+
+#Unidad de Medida
+MinSalSidPlaEstInfraBundle_consultarUnidadMedidaJSON:
+    pattern:  /consultarUnidadMedidaJSON
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraUnidadMedida:consultarUnidadMedidaJSON}
+
+MinSalSidPlaEstInfraBundle_manttUnidadMedida:
+    pattern:  /manttUnidadMedida
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraUnidadMedida:manttUnidadMedida}
+
+
+
+#elemento infraestructura
+MinSalSidPlaEstInfraBundle_mantenimientoElementoInfraestructura:
+    pattern:  /mantenimientoElementoInfraestructura
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraElementoInfraestructura:mantenimientoElementoInfraestructura}
+
+MinSalSidPlaEstInfraBundle_consultarElementoInfraestructuraJSON:
+    pattern:  /consultarElementoInfraestructuraJSON
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraElementoInfraestructura:consultarElementoInfraestructuraJSON}
+
+
+
+
+
+
+
+#MinSalSidPlaEstInfraBundle_mantenimientoEvaluacionElementoInfra:
+#    pattern:  /mantenimientoEvaluacionElementoInfra
+#    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraEvaluacionElementoInfra:mantenimientoEvaluacionElementoInfra }

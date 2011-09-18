@@ -1,11 +1,11 @@
 <?php
 
-namespace MinSal\SidPla\PaoBundle\EntityDao;
+namespace MinSal\SidPla\EstInfraBundle\EntityDao;
 
-use MinSal\SidPla\PaoBundle\Entity\TipoPeriodo;
+use MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura;
 use Doctrine\ORM\Query\ResultSetMapping;
 
-class TipoPeriodoDao {
+class ElementoInfraestructuraDao {
 
     var $doctrine;
     var $repositorio;
@@ -15,23 +15,23 @@ class TipoPeriodoDao {
     function __construct($doctrine) {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
-        $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaPaoBundle:TipoPeriodo');
+        $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaEstInfraBundle:ElementoInfraestructura');
     }
 
     /*
      * Obtiene todos los tipos de periodos
      */
 
-    public function getTipoPeriodo() {
-        $tiposPeriodos = $this->em->createQuery("select t
-                                                 from MinSalSidPlaPaoBundle:TipoPeriodo t 
-                                                 order by t.idTipPer ASC");
-        return $tiposPeriodos->getResult();
+    public function getElementoInfraestructura() {
+        $elementoinfraestructura = $this->em->createQuery("select einfra
+                                                 from MinSalSidPlaEstInfraBundle:ElementoInfraestructura einfra
+                                                 order by einfra.idElemInfra ASC");
+        return $elementoinfraestructura->getResult();
     }
 
     /*
      * Obtener Tipos de Periodos Activos
-     */
+  */
 
     public function getTipoPeriodoActivo() {
         $tiposPeriodos = $this->em->createQuery("select t
@@ -60,7 +60,7 @@ class TipoPeriodoDao {
      * Agregar Tipo Perido 
      */
 
-    public function agregarTipoPeriodo($nomTipPer, $descTipPer, $actTipPer) {
+    public function addTipoPeriodo($nomTipPer, $descTipPer, $actTipPer) {
 
         $tipoPeriodo = new TipoPeriodo();
 
@@ -81,7 +81,7 @@ class TipoPeriodoDao {
      * Editar un tipo de periodo
      */
 
-    public function editarTipoPeriodo($codTipPer, $nomTipPer, $descTipPer, $actTipPer) {
+    public function editTipoPeriodo($codTipPer, $nomTipPer, $descTipPer, $actTipPer) {
 
         $tipoPeriodo = $this->getTipoPeriodoEspecifico($codTipPer);
         $tipoPeriodo->setDescTipPer($descTipPer);
@@ -99,7 +99,7 @@ class TipoPeriodoDao {
      * Eliminar un tipo de periodo
      */
 
-    public function eliminarTipoPeriodo($codigo) {
+    public function delTipoPeriodo($codigo) {
 
         $notificacionSistema = $this->repositorio->find($codigo);
 
