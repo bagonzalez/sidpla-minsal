@@ -13,6 +13,8 @@ use MinSal\SidPla\PaoBundle\Entity\Justificacion;
 use MinSal\SidPla\UsersBundle\Entity\User;
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
+use MinSal\SidPla\PaoBundle\Entity\Pao;
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 
 /*
  * To change this template, choose Tools | Templates
@@ -41,16 +43,15 @@ class AccionJustificacionController extends Controller {
         $unidad=new UnidadOrganizativa();              
         $unidad=$unidaDao->getUnidadOrg($idUnidad);
         
+        $paoElaboracion=new Pao();        
+        $paoElaboracion=$unidaDao->getPaoElaboracion($idUnidad);
+        
         
        
-        $JustificacioDao=new JustificacionDao($this->getDoctrine());  // haciendo una instancia dao      
-       // $JustiDao=$JustificacioDao->getHistorialJustificacion();// aqui va el metodo que define en archivo para dao que obtiene todo    
+        $JustificacioDao=new JustificacionDao($this->getDoctrine()); 
         
-        //trabajando con una justificacion en especifico
-         //Este valor $id= 1 es una prueba, aqui debe capturarse ese id dependediendo del valor asignado
-        // en la tabla pao,   que se le ha asignado a la unidad organizativa que esta haciendo la justificacion 
-         $id=1;
-        $JustiDao=$JustificacioDao->buscarJustificacion($id); 
+        //$id=1;
+        $JustiDao=$paoElaboracion->getJustificacion(); //$JustificacioDao->buscarJustificacion($id); 
         
         return $this->render('MinSalSidPlaPaoBundle:Justificacion:ManttJustificacion.html.twig' //aqui se define la carpeta en que se
                 , array('opciones' => $opciones, 'MensajeJustifi' => $JustiDao));// almacenara el archivo .twig y el nombre del archivo             

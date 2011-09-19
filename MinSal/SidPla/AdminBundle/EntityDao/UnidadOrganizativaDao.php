@@ -26,6 +26,7 @@ namespace MinSal\SidPla\AdminBundle\EntityDao;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 use MinSal\SidPla\AdminBundle\Entity\InformacionGeneral;
 use MinSal\SidPla\AdminBundle\EntityDao\MunicipioDao;
+use MinSal\SidPla\PaoBundle\Entity\Pao;
 
 /**
  * Description of UnidadOrganizativaDao
@@ -108,6 +109,25 @@ class UnidadOrganizativaDao {
     public function getUnidadOrg($id) {	    
         $unidadOrg=$this->repositorio->find($id);
         return $unidadOrg;
+    }
+    
+    public function getPaoElaboracion($id) {	
+        $unidadOrg=new UnidadOrganizativa();
+        $unidadOrg=$this->repositorio->find($id);
+        $paos=$unidadOrg->getPaos();        
+        
+        $anio = date('Y'); 
+        $anioProximo=$anio+1;
+        
+        $pao=new Pao();
+        
+         foreach ($paos as $pao) {
+             if($pao->getAnio()==$anioProximo){
+                 return $pao;
+             }             
+         }
+         
+        return $pao;
     }
 }
 

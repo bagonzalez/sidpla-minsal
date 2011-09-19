@@ -19,6 +19,13 @@ use MinSal\SidPla\CensoBundle\Entity\InformacionRelevante;
 use MinSal\SidPla\CensoBundle\Form\Type\PoblacionHumanaType;
 use MinSal\SidPla\CensoBundle\EntityDao\CensoPoblacionDao;
 use MinSal\SidPla\CensoBundle\Entity\CensoPoblacion;
+
+use MinSal\SidPla\PaoBundle\Entity\Pao;
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
+use MinSal\SidPla\UsersBundle\Entity\User;
+use MinSal\SidPla\AdminBundle\Entity\Empleado;
+use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -32,6 +39,23 @@ use MinSal\SidPla\CensoBundle\Entity\CensoPoblacion;
 class AccionAdminCensoUsuarioController extends Controller{
     //put your code here
 
+    public function obtenerPaoElaboracionAction(){
+        
+        $user=new User();
+        $empleado=new Empleado();        
+        $user = $this->get('security.context')->getToken()->getUser();        
+        $empleado=$user->getEmpleado();        
+        $idUnidad=$empleado->getUnidadOrganizativa()->getIdUnidadOrg();        
+        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad=new UnidadOrganizativa();              
+        $unidad=$unidaDao->getUnidadOrg($idUnidad);
+        
+        $paoElaboracion=new Pao();        
+        $paoElaboracion=$unidaDao->getPaoElaboracion($idUnidad);
+        
+        return $paoElaboracion;
+        
+    }
     
     public function consultarInformacionComplementariaAction(){
         
@@ -48,15 +72,14 @@ class AccionAdminCensoUsuarioController extends Controller{
        $request=$this->getRequest();
        
        
-       $rows='';
+       $rows='';       
        
-       $censoPoblacionDao=new CensoPoblacionDao($this->getDoctrine());
        $censoPoblacion=new CensoPoblacion();
-       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('69');
        
+       $paoElaboracion=$this->obtenerPaoElaboracionAction();       
+       $censoPoblacion=$paoElaboracion->getCesopoblacion();
        
-           
-        $infComplem=$censoPoblacion->getInformacionComplementaria();
+       $infComplem=$censoPoblacion->getInformacionComplementaria();
         
         $numfilas=count($infComplem);  
         $regInfComple=new InformacionComplementaria();            
@@ -100,9 +123,8 @@ class AccionAdminCensoUsuarioController extends Controller{
        
        $rows='';
        
-       $censoPoblacionDao=new CensoPoblacionDao($this->getDoctrine());
-       $censoPoblacion=new CensoPoblacion();
-       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('69');
+       $paoElaboracion=$this->obtenerPaoElaboracionAction();       
+       $censoPoblacion=$paoElaboracion->getCesopoblacion();
        
        
        if($tablaCenso=='sidpla_poblacionhumana'){
@@ -216,9 +238,8 @@ class AccionAdminCensoUsuarioController extends Controller{
        
        $rows='';
        
-       $censoPoblacionDao=new CensoPoblacionDao($this->getDoctrine());
-       $censoPoblacion=new CensoPoblacion();
-       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('69');
+       $paoElaboracion=$this->obtenerPaoElaboracionAction();       
+       $censoPoblacion=$paoElaboracion->getCesopoblacion();
        
         
            
@@ -350,9 +371,8 @@ class AccionAdminCensoUsuarioController extends Controller{
        $sord = $request->get('sord'); // get the direction
        if(!$sidx) $sidx =1;
        
-       $censoPoblacionDao=new CensoPoblacionDao($this->getDoctrine());
-       $censoPoblacion=new CensoPoblacion();
-       $censoPoblacion=$censoPoblacionDao->getCensoPoblacion('69');
+       $paoElaboracion=$this->obtenerPaoElaboracionAction();       
+       $censoPoblacion=$paoElaboracion->getCesopoblacion();
           
        
            
