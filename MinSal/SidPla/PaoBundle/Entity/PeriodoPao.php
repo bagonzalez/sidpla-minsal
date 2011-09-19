@@ -49,7 +49,7 @@ class PeriodoPao {
     private $estPerPao;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\Pao", inversedBy="PaoCodigo")
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\Pao", inversedBy="periodoCalendarizacion")
      * @ORM\JoinColumn(name="pao_codigo", referencedColumnName="pao_codigo")
      */
     private $paoPerPao;

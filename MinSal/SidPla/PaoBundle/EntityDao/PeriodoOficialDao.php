@@ -28,25 +28,6 @@ class PeriodoOficialDao {
         return $PeriodosOficiales->getResult();
     }
 
-    public function obtenerTiposPeriodos() {
-
-        $tipoPeriodoDao = new TipoPeriodoDao($this->doctrine);
-        $tipoPeriodo = $tipoPeriodoDao->getTipoPeriodoActivo();
-
-        $aux = new TipoPeriodo();
-        $n = $tipoPeriodoDao->cuentosTiposPeriodosActivos();
-        $i = 1;
-        $cadena = '';
-        foreach ($tipoPeriodo as $aux) {
-            if ($i < $n)
-                $cadena .=$aux->getIdTipPer().":".$aux->getNomTipPer().';';
-            else
-                $cadena .=$aux->getIdTipPer().":".$aux->getNomTipPer();
-            $i++;
-        }
-
-        return $cadena;
-    }
     
     public function getPeriodoOficialEspecifico($codigo) {
         $periodoOficial = $this->repositorio->find($codigo);

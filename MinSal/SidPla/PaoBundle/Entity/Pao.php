@@ -23,9 +23,9 @@ class Pao
 
     
     /**
-     * @var integer $anio
+     * @var bigint $anio
      *
-     * @ORM\Column(name="pao_anio", type="integer")
+     * @ORM\Column(name="pao_anio", type="bigint")
      */
     private $anio;
     
@@ -49,6 +49,10 @@ class Pao
      */
     private $justificacion;
 
+     /**
+     * @ORM\OneToMany(targetEntity="PeriodoPao", mappedBy="paoPerPao")
+     */
+    private $periodoCalendarizacion;
 
 
     /**
@@ -74,7 +78,7 @@ class Pao
     /**
      * Set anio
      *
-     * @param integer $anio
+     * @param bigint $anio
      */
     public function setAnio($anio)
     {
@@ -84,7 +88,7 @@ class Pao
     /**
      * Get anio
      *
-     * @return integer 
+     * @return bigint 
      */
     public function getAnio()
     {

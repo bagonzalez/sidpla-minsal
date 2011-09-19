@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use MinSal\SidPla\PaoBundle\EntityDao\PeriodoOficialDao;
 use MinSal\SidPla\PaoBundle\Entity\PeriodoOficial;
+use MinSal\SidPla\PaoBundle\EntityDao\TipoPeriodoDao;
 
 class AccionPaoPeriodoOficialController extends Controller {
 
@@ -14,8 +15,8 @@ class AccionPaoPeriodoOficialController extends Controller {
 
         $opciones = $this->getRequest()->getSession()->get('opciones');
 
-        $periodoOficialDao = new PeriodoOficialDao($this->getDoctrine());
-        $combobox = $periodoOficialDao->obtenerTiposPeriodos();
+        $tipoPeriodoDao = new TipoPeriodoDao($this->getDoctrine());
+        $combobox = $tipoPeriodoDao->obtenerTiposPeriodos();
 
         return $this->render('MinSalSidPlaPaoBundle:PeriodoPaoOficial:manttPerPaoOfi.html.twig'
                         , array('opciones' => $opciones, 'combotipoperiodos' => $combobox));

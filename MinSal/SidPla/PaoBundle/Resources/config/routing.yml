@@ -32,6 +32,10 @@ MinSalSidPlaPaoBundle_manttPeriodoOficial:
 MinSalSidPlaPaoBundle_mantenimientoPeriodoPao:
     pattern:  /mantenimientoPeriodoPao
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoPeriodoPao:mantenimientoPeriodoPao  }
+    
+MinSalSidPlaPaoBundle_consultarPeriodoPaoJSON:
+    pattern:  /consultarPeriodoPaoJSON
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoPeriodoPao:consultarPeriodoPaoJSON  }
 
 #PARA JUSTIFICACION    
 MinSalSidPlaPaoBundle_consultarJustificacion:
