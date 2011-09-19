@@ -26,16 +26,11 @@ class PeriodoPaoDao {
         $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaPaoBundle:PeriodoPao');
     }
 
-    public function getPeriodoPao($anio) {
+    public function getPeriodoPao() {
         
         $paoDao=new PaoDao($this->doctrine);
-        $paos=$paoDao->obtenerPaoAnio($anio);
-        
-        
-        
         $periodoPao = $this->em->createQuery("select pp
                                               from MinSalSidPlaPaoBundle:PeriodoPao pp
-                                              where pp.paoPerPao IN (".$paos.") 
                                               order by pp.codPerPao ASC");
         return $periodoPao->getResult();
     }

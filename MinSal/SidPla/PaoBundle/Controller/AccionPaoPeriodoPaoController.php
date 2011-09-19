@@ -11,9 +11,9 @@ use MinSal\SidPla\PaoBundle\Entity\PeriodoPao;
 //Para saber que unidad organizativa a la que pertenece y mostrar los periodos asociados
 use MinSal\SidPla\UsersBundle\Entity\User;
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
-
-//use MinSal\SidPla\PaoBundle\EntityDao\PeriodoOficialDao;
-//use MinSal\SidPla\PaoBundle\Entity\PeriodoOficial;
+use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
+use MinSal\SidPla\PaoBundle\Entity\Pao;
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 
 
 class AccionPaoPeriodoPaoController extends Controller {
@@ -34,17 +34,34 @@ class AccionPaoPeriodoPaoController extends Controller {
         $combobox = $tipoPeriodoDao->obtenerTiposPeriodos();
 
         return $this->render('MinSalSidPlaPaoBundle:PeriodoPao:manttPeriodoPao.html.twig'
-                        , array('opciones' => $opciones, 'combotipoperiodos' => $combobox,'idUnidad'=>$idUnidad));
+                        , array('opciones' => $opciones, 'combotipoperiodos' => $combobox, 'idUnidad' => $idUnidad));
+    }
+
+    public function obtenerPao($anio) {
+
+        $user = new User();
+        $empleado = new Empleado();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $empleado = $user->getEmpleado();
+        $idUnidad = $empleado->getUnidadOrganizativa()->getIdUnidadOrg();
+        $unidaDao = new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad = new UnidadOrganizativa();
+        $unidad = $unidaDao->getUnidadOrg($idUnidad);
+
+        $paoElaboracion = new Pao();
+        $paoElaboracion = $unidaDao->getPaoAnio($idUnidad, $anio);
+
+        return $paoElaboracion;
     }
 
     public function consultarPeriodoPaoJSONAction() {
 
         $periodoPaoDao = new PeriodoPaoDao($this->getDoctrine());
-        $idUnidad= $this->getRequest()->get('idUnidad');
         $anio=$this->getRequest()->get('anio');
         
-        $periodoPao = $periodoPaoDao->getPeriodoPao($anio);
-
+        $pao=$this->obtenerPao($anio);
+        $periodoPao=$pao->getPeriodoCalendarizacion();
+        
         $aux = new PeriodoPao();
         $i = 0;
 
@@ -54,8 +71,7 @@ class AccionPaoPeriodoPaoController extends Controller {
                 $aux->gettipPeriodoPerPao()->getNomTipPer(),
                 DATE_FORMAT($aux->getFechIniPerPao(), 'd/m/Y'),
                 DATE_FORMAT($aux->getFechFinPerPao(), 'd/m/Y'),
-                $aux->getActivoPerPao(),
-                $idUnidad
+                $aux->getActivoPerPao()
             );
             if ($aux->getActivoPerPao())
                 $rows[$i]['cell'][4] = 'SI';

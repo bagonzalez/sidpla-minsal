@@ -21,17 +21,6 @@ class PaoDao {
     }
     
     
-    public function obtenerPaoAnio($anio) {
-        
-        //$uniOrgDao=new UnidadOrganizativaDao($this->doctrine);
-        //$uniOrg=$uniOrgDao->getUnidadOrg($idUnidad);
-        
-        $paos = $this->em->createQuery("select p
-                                       from MinSalSidPlaPaoBundle:Pao p
-                                       Where p.anio=".$anio);
-        
-        return $paos->getResult();
-    }
 }
 
 ?>
