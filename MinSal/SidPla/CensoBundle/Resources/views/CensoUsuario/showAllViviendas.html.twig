@@ -12,7 +12,7 @@
           altRows:true,
           colNames:['Categoria','Area', 'Cantidad'],
           colModel:[
-            { name:'categoria', index: 'categoria',sorttype:'int', width:400,editable:false,editoptions:{size:15}, searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}  },            
+            { name:'categoria', index: 'categoria', width:400,editable:false,editoptions:{size:15}, searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}  },            
             { name:'area', index: 'area',width:300, sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:2, label: "Codigo Censo", elmprefix:"(*)"},editrules:{required:true} } ,                        
             { name:'Cantidad', index: 'Cantidad',width:300, summaryType:'sum', sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:4, label: "Cantidad", elmprefix:"(*)"},editrules:{required:true} } ],            
             
