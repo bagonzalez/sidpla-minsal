@@ -32,7 +32,7 @@ class AccionPaoPeriodoOficialController extends Controller {
 
         $aux = new PeriodoOficial();
         $i = 0;
-
+        
         foreach ($periodoOficial as $aux) {
             $rows[$i]['id'] = $aux->getIdPerOfi();
             $rows[$i]['cell'] = array($aux->getIdPerOfi(),
@@ -48,7 +48,10 @@ class AccionPaoPeriodoOficialController extends Controller {
             $i++;
         }
 
-        $datos = json_encode($rows);
+        if($numfilas!=0)
+            $datos = json_encode($rows);
+        else
+            $datos='';
 
 
         $jsonresponse = '{
@@ -67,16 +70,14 @@ class AccionPaoPeriodoOficialController extends Controller {
 
         $codPerOfi = $request->get('id');
         $tipoPeriodoCodigo = $request->get('nombre');
-        
-       // $hola=$request->get('fechini');
-      
-        $date1 = new DateTime('2000-01-01');
-      //  $fechIniPerOfi=$date->format('Y-m-d');
-        echo $date1->format('Y-m-d h:i:s');
-       
-        $date2 = new DateTime($request->get('fechfin'));     
-        $fechFinPerOfi=$date2->format('Y-m-d');
-        
+        $dia=substr($request->get('fechini'),0,2);
+        $mes=substr($request->get('fechini'),3,2);
+        $anio=substr($request->get('fechini'),6,4);
+        $fechIniPerOfi=$anio.'-'.$mes.'-'.$dia;
+        $dia=substr($request->get('fechfin'),0,2);
+        $mes=substr($request->get('fechfin'),3,2);
+        $anio=substr($request->get('fechfin'),6,4);
+        $fechFinPerOfi=$anio.'-'.$mes.'-'.$dia;
         if ($request->get('activo') == 'SI')
             $actPerOfi = true;
         else
@@ -89,14 +90,14 @@ class AccionPaoPeriodoOficialController extends Controller {
 
         switch ($operacion) {
             case 'add':
-                $periodoOficialDao->addPeriodoOficial($tipoPeriodoCodigo, $fechIniPerOfi, $fechFinPerOfi, $anioPerOfi, $actPerOfi);
+                $periodoOficialDao->agregarPeriodoOficial($tipoPeriodoCodigo, $fechIniPerOfi, $fechFinPerOfi, $anioPerOfi, $actPerOfi);
                 break;
             case 'edit':
-                //$tipoPeriodoDao->editTipoPeriodo($codTipoPer, $nomTipoPer, $descTipoPer, $actTipoPer);
+                $periodoOficialDao->editarPeriodoOficial($codPerOfi,$tipoPeriodoCodigo, $fechIniPerOfi, $fechFinPerOfi, $anioPerOfi, $actPerOfi);
                 break;
             case 'del':
-                // $tipoPeriodoDao->delTipoPeriodo($codTipoPer);
-                break;
+                $periodoOficialDao->eliminarPeriodoOficial($codPerOfi);
+               break;
         }
 
         return new Response("{sc:true,msg:''}");

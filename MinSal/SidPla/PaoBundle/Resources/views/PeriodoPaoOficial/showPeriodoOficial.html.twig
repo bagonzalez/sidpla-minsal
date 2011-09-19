@@ -17,7 +17,12 @@
                 formoptions:{label: "Fecha de Inicio",elmprefix:"(*)"},editrules:{required:true},
                 editoptions: {size: 10, maxlengh: 10,
                             dataInit: function(element) {
-                                $(element).datepicker({dateFormat: 'dd/mm/yy'})
+                                $(element).datepicker({
+                                    dateFormat: 'dd/mm/yy',
+                                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo','Junio', 'Julio', 'Agosto', 'Septiembre','Octubre', 'Noviembre', 'Diciembre'],
+                                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr','May', 'Jun', 'Jul', 'Ago','Sep', 'Oct', 'Nov', 'Dic']  
+                                })
                             }
                           }
         },//Fin del fechini
@@ -25,7 +30,12 @@
                 formoptions:{label: "Fecha de Finalizacion",elmprefix:"(*)"},editrules:{required:true},
                 editoptions: {size: 10, maxlengh: 10,
                             dataInit: function(element) {
-                                $(element).datepicker({dateFormat: 'dd/mm/yy'})
+                                $(element).datepicker({
+                                    dateFormat: 'dd/mm/yy',
+                                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo','Junio', 'Julio', 'Agosto', 'Septiembre','Octubre', 'Noviembre', 'Diciembre'],
+                                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr','May', 'Jun', 'Jul', 'Ago','Sep', 'Oct', 'Nov', 'Dic']  
+                                 })
                             }
                 }
         },//Fin del fechfin
@@ -44,7 +54,7 @@
     myGrid.jqGrid('navGrid','#pager',
         {edit:true,add:true,del:true},
         //El de Editar
-        {width:550,height:150,closeAfterEdit : true,
+        {width:550,height:200,closeAfterEdit : true,
          bottominfo:"(*) Campos obligatorios",
          onclickSubmit: function(rp_ge, postdata) {
                 alert("Datos Editados con exito!");}
@@ -55,7 +65,10 @@
          onclickSubmit: function(rp_ge, postdata) {
                 alert("Datos Agregados con exito!");}
         },
-        {width:550,height:160}
+        //El de eliminar
+        {width:550,height:160,
+        reloadAfterSubmit:true
+        }
     );         
   });
     </script>

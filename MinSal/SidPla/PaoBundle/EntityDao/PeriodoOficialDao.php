@@ -48,7 +48,12 @@ class PeriodoOficialDao {
         return $cadena;
     }
     
-    public function addPeriodoOficial($tipPerioPerOfi,$fechIniPerOfi,$fechFinPerOfi,$anioPerOfi,$activoPerOfi) {
+    public function getPeriodoOficialEspecifico($codigo) {
+        $periodoOficial = $this->repositorio->find($codigo);
+        return $periodoOficial;
+    }
+    
+    public function agregarPeriodoOficial($tipPerioPerOfi,$fechIniPerOfi,$fechFinPerOfi,$anioPerOfi,$activoPerOfi) {
 
         $periodoOficial= new PeriodoOficial();
         
@@ -56,13 +61,12 @@ class PeriodoOficialDao {
         $periodoOficial->setAnioPerOfi($anioPerOfi);
         $periodoOficial->setFechFinPerOfi($fechFinPerOfi);
         $periodoOficial->setFechIniPerOfi($fechIniPerOfi);
+        $idTipoPeriodo=(int) $tipPerioPerOfi;
         
         $tipoPeriodoDao = new TipoPeriodoDao($this->doctrine);
-        $tipPerioPerOfi = $tipoPeriodoDao->getTipoPeriodoEspecifico($codTipoPeriodo);
-        $periodoOficial->settipPerioPerOfi($tipPerioPerOfi);
-
-        
-
+               
+        $tipoPeriodo = $tipoPeriodoDao->getTipoPeriodoEspecifico($idTipoPeriodo);
+        $periodoOficial->settipPerioPerOfi($tipoPeriodo);
 
         $this->em->persist($periodoOficial);
         $this->em->flush();
@@ -70,6 +74,41 @@ class PeriodoOficialDao {
 
         return $matrizMensajes;
     }
+    
+        public function editarPeriodoOficial($codPerOfi,$tipPerioPerOfi,$fechIniPerOfi,$fechFinPerOfi,$anioPerOfi,$activoPerOfi) {
+
+        $periodoOficial= $this->getPeriodoOficialEspecifico($codPerOfi);
+        
+        $periodoOficial->setActivoPerOfi($activoPerOfi);
+        $periodoOficial->setAnioPerOfi($anioPerOfi);
+        $periodoOficial->setFechFinPerOfi($fechFinPerOfi);
+        $periodoOficial->setFechIniPerOfi($fechIniPerOfi);
+        $idTipoPeriodo=(int) $tipPerioPerOfi;
+        
+        $tipoPeriodoDao = new TipoPeriodoDao($this->doctrine);
+               
+        $tipoPeriodo = $tipoPeriodoDao->getTipoPeriodoEspecifico($idTipoPeriodo);
+        $periodoOficial->settipPerioPerOfi($tipoPeriodo);
+
+        $this->em->persist($periodoOficial);
+        $this->em->flush();
+        $matrizMensajes = array('El proceso de almacenar el tipo de periodo termino con exito');
+
+        return $matrizMensajes;
+    }
+    
+        public function eliminarPeriodoOficial($codPerOfi) {
+
+        $periodoOficial= $this->getPeriodoOficialEspecifico($codPerOfi);
+
+        $this->em->remove($periodoOficial);
+        $this->em->flush();
+
+        $matrizMensajes = array('El proceso de eliminar termino con exito');
+
+        return $matrizMensajes;
+    }
+    
 
 }
 
