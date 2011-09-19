@@ -28,11 +28,8 @@ use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
  */
 class AccionJustificacionController extends Controller {
     //put your code here
-
-         
-    public function consultarJustificacionAction(){
-        
-        $opciones=$this->getRequest()->getSession()->get('opciones'); //siempre va
+    
+    public function obtenerPaoElaboracionAction(){
         
         $user=new User();
         $empleado=new Empleado();        
@@ -46,11 +43,16 @@ class AccionJustificacionController extends Controller {
         $paoElaboracion=new Pao();        
         $paoElaboracion=$unidaDao->getPaoElaboracion($idUnidad);
         
+        return $paoElaboracion;
         
-       
-        $JustificacioDao=new JustificacionDao($this->getDoctrine()); 
+    }
+
+         
+    public function consultarJustificacionAction(){
         
-        //$id=1;
+        $opciones=$this->getRequest()->getSession()->get('opciones'); //siempre va
+        
+        $paoElaboracion=$this->obtenerPaoElaboracionAction();       
         $JustiDao=$paoElaboracion->getJustificacion(); //$JustificacioDao->buscarJustificacion($id); 
         
         return $this->render('MinSalSidPlaPaoBundle:Justificacion:ManttJustificacion.html.twig' //aqui se define la carpeta en que se
