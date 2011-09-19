@@ -10,16 +10,6 @@ use MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida;
 
 class AccionEstInfraUnidadMedidaController extends Controller {
 
-    public function mantenimientoUnidadMedidaAction() {
-
-        $opciones = $this->getRequest()->getSession()->get('opciones');
-        
-        return $this->render('MinSalSidPlaEstInfraBundle:UnidadMedida:manttUnidadMedida.html.twig'
-                        , array('opciones' => $opciones));
-  
-        //return new Response("hola kren ");
-    }
-
     public function consultarUnidadMedidaJSONAction() {
 
         $unidadMedidaDao=new UnidadMedidaDao($this->getDoctrine());
@@ -35,6 +25,7 @@ class AccionEstInfraUnidadMedidaController extends Controller {
             $rows[$i]['id'] = $aux->getIdUnidMed();
             $rows[$i]['cell'] = array($aux->getIdUnidMed(),
                 $aux->getNomUnidMed(),
+                $aux->getAbreUnidMed(),
                 $aux->getTipoUnidMed(),
                 $aux->getDescripUnidMed()
                 
@@ -62,6 +53,7 @@ class AccionEstInfraUnidadMedidaController extends Controller {
         
         $codUnidMed=$request->get('id');
         $nomUnidMed=$request->get('unidmed');
+        $abreUnidMed=$request->get('abreviatura');
         $tipoUnidMed=$request->get('tipo');
         $descUnidMed=$request->get('descripcion');
                     
@@ -71,13 +63,13 @@ class AccionEstInfraUnidadMedidaController extends Controller {
 
         switch ($operacion){
             case 'edit':
-                $tipoPeriodoDao->editTipoPeriodo($codTipoPer, $nomTipoPer, $descTipoPer, $actTipoPer);
-                break;
+                $unidadmedidaDao->editarUnidadMedida($codUnidMed, $nomUnidMed,$abreUnidMed ,$tipoUnidMed, $descUnidMed);
+               break;
             case 'del':
-               $tipoPeriodoDao->delTipoPeriodo($codTipoPer);
+               $unidadmedidaDao->eliminarUnidadMedida($codUnidMed);
                 break;
             case 'add':
-                $unidadmedidaDao->agregarUnidadMedida($nomUnidMed, $tipoUnidMed, $descUnidMed);
+                $unidadmedidaDao->agregarUnidadMedida($nomUnidMed, $abreUnidMed , $tipoUnidMed, $descUnidMed);
                 break;
         }
 

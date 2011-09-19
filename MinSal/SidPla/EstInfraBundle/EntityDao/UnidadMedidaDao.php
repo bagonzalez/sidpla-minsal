@@ -30,44 +30,26 @@ class UnidadMedidaDao {
     }
 
     /*
-     * Obtener Tipos de Periodos Activos
-  */
-
-    public function getTipoPeriodoActivo() {
-        $tiposPeriodos = $this->em->createQuery("select t
-                                                 from MinSalSidPlaPaoBundle:TipoPeriodo t
-                                                 where t.activoTipPer=true
-                                                 order by t.idTipPer ASC");
-        return $tiposPeriodos->getResult();
-    }
-
-    /*
-     * Obtiene un tipo de periodo especifico
+     * Obtiene una unidad de medida especifica
      */
-    public function getTipoPeriodoEspecifico($codigo) {
-        $tiposPeriodos = $this->repositorio->find($codigo);
-        return $tiposPeriodos;
+    public function getUnidadMedidaEspecifica($codigo) {
+        $unidadMedida = $this->repositorio->find($codigo);
+        return $unidadMedida;
     }
     
-    public function cuentosTiposPeriodosActivos(){
-        $cuantos = $this->em->createQuery("select count(t) c
-                                                 from MinSalSidPlaPaoBundle:TipoPeriodo t
-                                                 where t.activoTipPer=true");
-        return $cuantos->getSingleScalarResult();
-    }
-
-    /*
-     * Agregar Tipo Perido 
+       /*
+     * Agregar Unidad de Medida 
      */
 
-    public function agregarUnidadMedida($nomUnidmed, $tipoUnidmed, $descUnidmed) {
+    public function agregarUnidadMedida($nomUnidmed,$abreUnidMed ,$tipoUnidmed, $descUnidmed) {
 
         $unidadmedida= new UnidadMedida();
 
         $unidadmedida->setNomUnidMed($nomUnidmed);
+        $unidadmedida->setAbreUnidMed($abreUnidMed);
         $unidadmedida->setTipoUnidMed($tipoUnidmed);
         $unidadmedida->setDescripUnidMed($descUnidmed);
-    
+            
 
 
         $this->em->persist($unidadmedida);
@@ -81,14 +63,14 @@ class UnidadMedidaDao {
      * Editar un tipo de periodo
      */
 
-    public function editTipoPeriodo($codTipPer, $nomTipPer, $descTipPer, $actTipPer) {
+    public function editarUnidadMedida($codUnidmed, $nomUnidmed,$abreUnidMed ,$tipoUnidmed, $descUnidmed) {
 
-        $tipoPeriodo = $this->getTipoPeriodoEspecifico($codTipPer);
-        $tipoPeriodo->setDescTipPer($descTipPer);
-        $tipoPeriodo->setNomTipPer($nomTipPer);
-        $tipoPeriodo->setActivoTipPer($actTipPer);
-
-        $this->em->persist($tipoPeriodo);
+        $unidadMedida = $this->getUnidadMedidaEspecifica($codUnidmed);
+        $unidadMedida->setNomUnidMed($nomUnidmed);
+        $unidadMedida->setAbreUnidMed($abreUnidMed);
+        $unidadMedida->setTipoUnidMed($tipoUnidmed);
+        $unidadMedida->setDescripUnidMed($descUnidmed);
+        $this->em->persist($unidadMedida);
         $this->em->flush();
         $matrizMensajes = array('El proceso de almacenar el tipo de periodo termino con exito');
 
@@ -99,11 +81,11 @@ class UnidadMedidaDao {
      * Eliminar un tipo de periodo
      */
 
-    public function delTipoPeriodo($codigo) {
+    public function eliminarUnidadMedida($codigo) {
 
-        $notificacionSistema = $this->repositorio->find($codigo);
+      $unidadMedida = $this->getUnidadMedidaEspecifica($codigo);
 
-        $this->em->remove($notificacionSistema);
+        $this->em->remove($unidadMedida);
         $this->em->flush();
 
         $matrizMensajes = array('El proceso de eliminar termino con exito');

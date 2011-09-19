@@ -28,7 +28,17 @@ class UnidadMedida
      * @ORM\Column(name="unimed_nombre", type="string", length=50)
      */
     private $nomUnidMed;
-
+ 
+    /**
+     * @var string $abreUnidMed
+     *
+     * @ORM\Column(name="unimed_alias", type="string", length=15)
+     */
+    private $abreUnidMed;
+    
+    
+    
+    
     /**
      * @var string $descripUnidMed
      *
@@ -74,6 +84,29 @@ class UnidadMedida
         return $this->nomUnidMed;
     }
 
+      /**
+     * Set abreUnidMed
+     *
+     * @param string $abreUnidMed
+     */
+    public function setAbreUnidMed($abreUnidMed)
+    {
+        $this->abreUnidMed = $abreUnidMed;
+    }
+    
+    
+     /**
+     * Get abreUnidMed
+     *
+     * @return string 
+     */
+    public function getAbreUnidMed()
+    {
+        return $this->abreUnidMed;
+    }
+    
+    
+    
     /**
      * Set descripUnidMed
      *

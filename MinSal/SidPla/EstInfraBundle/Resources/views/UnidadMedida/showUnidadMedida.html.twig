@@ -7,10 +7,11 @@
           url: 'consultarUnidadMedidaJSON',
           datatype:'json',
           altRows:true,
-          colNames:['Codigo','Unidad de medida','Tipo','Descripcion'],
+          colNames:['Codigo','Unidad de medida','Abreviatura','Tipo','Descripcion'],
           colModel:[
             { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}},
             { name:'unidmed', index: 'unimed', width:150,editable:true,editoptions:{size:30}, formoptions:{label: "Unidad de medida",elmprefix:"(*)"},editrules:{required:true}},
+            { name:'abreviatura', index: 'abreviatura', width:150,editable:true,editoptions:{size:30}, formoptions:{label: "Abreviatura",elmprefix:"(*)"},editrules:{required:true}},
             { name:'tipo', index: 'tipo', width:150,editable:true,editoptions:{size:30},edittype:"select",editoptions:{value:"entero:Entero;decimal:Decimal;porcentaje:Porcentaje"},
                 formoptions:{label: "Tipo"}},
             { name:'descripcion', index: 'descripcion', width:500,editable:true, editoptions:{size:50},formoptions:{label: "Descripcion"}}
