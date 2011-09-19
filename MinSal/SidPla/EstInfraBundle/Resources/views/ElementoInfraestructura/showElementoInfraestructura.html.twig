@@ -1,3 +1,51 @@
 {% block body %}
-
+<script type="text/javascript">
+           $(document).ready(function(){
+        
+       
+        var myGrid = $('#tabElemInfra');        
+        myGrid.jqGrid({ 
+          url: 'consultarUnidadMedidaJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Codigo','Nombre del elemento','Unidad de medida','Descripcion'],
+          colModel:[
+            { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}},
+            { name:'nomelem', index: 'nomelem', width:150,editable:true,editoptions:{size:30}, formoptions:{label: "Unidad de medida",elmprefix:"(*)"},editrules:{required:true}},
+            { name:'abreunidmed', index: 'abreunidmed', width:70,editable:true,editoptions:{size:30}, formoptions:{label: "Abreviatura",elmprefix:"(*)"},editrules:{required:true}},
+            { name:'descripcion', index: 'descripcion', width:500,editable:true, editoptions:{size:50},formoptions:{label: "Descripcion"}}
+          ],
+        scroll:true,
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          pager: jQuery('#pager'),
+          viewrecords: true,          
+          caption: 'Gestion Unidades de Medida',
+          height: "100%",
+          editurl:'manttUnidadMedida'
+                     
+        });
+        myGrid.jqGrid('navGrid','#pager',
+            {edit:true,add:true,del:true},
+            //El de Editar
+            {width:550,height:250,closeAfterEdit : true,
+             bottominfo:"(*) Campos obligatorios",
+             onclickSubmit: function(rp_ge, postdata) {
+                    alert("Datos Editados con exito!");}
+            },//Fin de las propiedades para editar
+            //El de agregar
+            {width:550,height:250,closeAfterAdd : true,
+             bottominfo:"(*) Campos obligatorios",
+             onclickSubmit: function(rp_ge, postdata) {
+                    alert("Datos Agregados con exito!");}
+            },
+            {width:550,height:160}
+        );         
+      });
+    </script>
+   <table id="tabElemInfra" class="scroll" alignalign="center">
+    
+   </table> 
+    <div id="pager" class="scroll" style="text-align:center;"></div>  
 {% endblock %}
