@@ -154,4 +154,28 @@ class Pao
     {
         return $this->justificacion;
     }
+    public function __construct()
+    {
+        $this->periodoCalendarizacion = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add periodoCalendarizacion
+     *
+     * @param MinSal\SidPla\PaoBundle\Entity\PeriodoPao $periodoCalendarizacion
+     */
+    public function addPeriodoPao(\MinSal\SidPla\PaoBundle\Entity\PeriodoPao $periodoCalendarizacion)
+    {
+        $this->periodoCalendarizacion[] = $periodoCalendarizacion;
+    }
+
+    /**
+     * Get periodoCalendarizacion
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getPeriodoCalendarizacion()
+    {
+        return $this->periodoCalendarizacion;
+    }
 }

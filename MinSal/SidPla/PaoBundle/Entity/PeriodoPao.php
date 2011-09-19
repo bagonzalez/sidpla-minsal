@@ -179,4 +179,64 @@ class PeriodoPao {
         return $this->tipPeriodoPerPao;
     }
 
+
+    /**
+     * Set estPerPao
+     *
+     * @param MinSal\SidPla\PaoBundle\Entity\Estado $estPerPao
+     */
+    public function setEstPerPao(\MinSal\SidPla\PaoBundle\Entity\Estado $estPerPao)
+    {
+        $this->estPerPao = $estPerPao;
+    }
+
+    /**
+     * Get estPerPao
+     *
+     * @return MinSal\SidPla\PaoBundle\Entity\Estado 
+     */
+    public function getEstPerPao()
+    {
+        return $this->estPerPao;
+    }
+
+    /**
+     * Set paoPerPao
+     *
+     * @param MinSal\SidPla\PaoBundle\Entity\Pao $paoPerPao
+     */
+    public function setPaoPerPao(\MinSal\SidPla\PaoBundle\Entity\Pao $paoPerPao)
+    {
+        $this->paoPerPao = $paoPerPao;
+    }
+
+    /**
+     * Get paoPerPao
+     *
+     * @return MinSal\SidPla\PaoBundle\Entity\Pao 
+     */
+    public function getPaoPerPao()
+    {
+        return $this->paoPerPao;
+    }
+
+    /**
+     * Set tipPeriodoPerPao
+     *
+     * @param MinSal\SidPla\PaoBundle\Entity\TipoPeriodo $tipPeriodoPerPao
+     */
+    public function setTipPeriodoPerPao(\MinSal\SidPla\PaoBundle\Entity\TipoPeriodo $tipPeriodoPerPao)
+    {
+        $this->tipPeriodoPerPao = $tipPeriodoPerPao;
+    }
+
+    /**
+     * Get tipPeriodoPerPao
+     *
+     * @return MinSal\SidPla\PaoBundle\Entity\TipoPeriodo 
+     */
+    public function getTipPeriodoPerPao()
+    {
+        return $this->tipPeriodoPerPao;
+    }
 }
