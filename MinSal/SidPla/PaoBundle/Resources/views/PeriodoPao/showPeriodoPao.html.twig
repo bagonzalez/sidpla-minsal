@@ -1,0 +1,78 @@
+{% block body %}
+<script type="text/javascript">
+  $(document).ready(function(){
+    
+    var myGrid = $('#tabperiodopao');        
+    myGrid.jqGrid({ 
+      url: 'consultarPeriodoPaoJSON?anio={{"now" | date("Y")}}',
+      datatype:'json',
+      altRows:true,
+      colNames:['Codigo','Nombre','Fecha Inicio','Fecha Fin','Activo'],
+      colModel:[
+        { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}},
+        { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:30},edittype:"select",
+                        editoptions: {value:"0:Seleccione un Tipo de Periodo;{{ combotipoperiodos }}"}
+        },//Fin del nombre
+        { name:'fechini', index: 'fechini', width:150,editable:true,
+                formoptions:{label: "Fecha de Inicio",elmprefix:"(*)"},editrules:{required:true},
+                editoptions: {size: 10, maxlengh: 10,
+                            dataInit: function(element) {
+                                $(element).datepicker({
+                                    dateFormat: 'dd/mm/yy',
+                                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo','Junio', 'Julio', 'Agosto', 'Septiembre','Octubre', 'Noviembre', 'Diciembre'],
+                                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr','May', 'Jun', 'Jul', 'Ago','Sep', 'Oct', 'Nov', 'Dic']  
+                                })
+                            }
+                          }
+        },//Fin del fechini
+        { name:'fechfin', index: 'fechfin', width:150,editable:true,
+                formoptions:{label: "Fecha de Finalizacion",elmprefix:"(*)"},editrules:{required:true},
+                editoptions: {size: 10, maxlengh: 10,
+                            dataInit: function(element) {
+                                $(element).datepicker({
+                                    dateFormat: 'dd/mm/yy',
+                                    dayNamesMin: ['Do', 'Lu', 'Ma', 'Mi', 'Ju', 'Vi', 'Sa'],
+                                    monthNames: ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo','Junio', 'Julio', 'Agosto', 'Septiembre','Octubre', 'Noviembre', 'Diciembre'],
+                                    monthNamesShort: ['Ene', 'Feb', 'Mar', 'Abr','May', 'Jun', 'Jul', 'Ago','Sep', 'Oct', 'Nov', 'Dic']  
+                                 })
+                            }
+                }
+        },//Fin del fechfin
+        { name:'activo', index: 'activo',width:40,editable:true,edittype:"checkbox",editoptions: {value:"SI:NO"}}
+      ],//Fin del colModel
+      rowNum:10,
+      rowList:[10,20,30],
+      multiselect: false,
+      pager: jQuery('#pager'),
+      viewrecords: true,          
+      caption: 'Periodo Oficial',
+      height: "100%",
+    //  editurl:'manttPeriodoOficial'
+                     
+    });
+    myGrid.jqGrid('navGrid','#pager',
+        {edit:true,add:true,del:true}/*,
+        //El de Editar
+       {width:550,height:200,closeAfterEdit : true,
+         bottominfo:"(*) Campos obligatorios",
+         onclickSubmit: function(rp_ge, postdata) {
+                alert("Datos Editados con exito!");}
+        },//Fin de las propiedades para editar
+        //El de agregar
+        {width:550,height:200,closeAfterAdd : true,
+         bottominfo:"(*) Campos obligatorios",
+         onclickSubmit: function(rp_ge, postdata) {
+                alert("Datos Agregados con exito!");}
+        },
+        //El de eliminar
+        {width:550,height:160,
+        reloadAfterSubmit:true
+        }*/
+    );         
+  });
+    </script>
+    <table id="tabperiodopao" class="scroll" alignalign="center"></table> 
+    <div id="pager" class="scroll" style="text-align:center;"></div>
+
+{% endblock %}

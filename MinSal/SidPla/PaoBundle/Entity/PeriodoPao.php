@@ -49,7 +49,7 @@ class PeriodoPao {
     private $estPerPao;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\Pao", inversedBy="PaoCodigo")
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\Pao", inversedBy="periodoCalendarizacion")
      * @ORM\JoinColumn(name="pao_codigo", referencedColumnName="pao_codigo")
      */
     private $paoPerPao;
@@ -130,16 +130,18 @@ class PeriodoPao {
      *
      * @param MinSal\SidPla\PaoBundle\Entity\Estado $estPerPao
      */
-    public function setestPerPao($estPerPao) {
+    public function setEstPerPao(\MinSal\SidPla\PaoBundle\Entity\Estado $estPerPao)
+    {
         $this->estPerPao = $estPerPao;
     }
 
     /**
      * Get estPerPao
      *
-     * @return MinSal\SidPla\PaoBundle\Entity\Estado
+     * @return MinSal\SidPla\PaoBundle\Entity\Estado 
      */
-    public function getestPerPao() {
+    public function getEstPerPao()
+    {
         return $this->estPerPao;
     }
 
@@ -148,16 +150,18 @@ class PeriodoPao {
      *
      * @param MinSal\SidPla\PaoBundle\Entity\Pao $paoPerPao
      */
-    public function setpaoPerPao($paoPerPao) {
+    public function setPaoPerPao(\MinSal\SidPla\PaoBundle\Entity\Pao $paoPerPao)
+    {
         $this->paoPerPao = $paoPerPao;
     }
 
     /**
      * Get paoPerPao
      *
-     * @return MinSal\SidPla\PaoBundle\Entity\Pao
+     * @return MinSal\SidPla\PaoBundle\Entity\Pao 
      */
-    public function getpaoPerPao() {
+    public function getPaoPerPao()
+    {
         return $this->paoPerPao;
     }
 
@@ -166,17 +170,18 @@ class PeriodoPao {
      *
      * @param MinSal\SidPla\PaoBundle\Entity\TipoPeriodo $tipPeriodoPerPao
      */
-    public function settipPeriodoPerPao($tipPeriodoPerPao) {
+    public function setTipPeriodoPerPao(\MinSal\SidPla\PaoBundle\Entity\TipoPeriodo $tipPeriodoPerPao)
+    {
         $this->tipPeriodoPerPao = $tipPeriodoPerPao;
     }
 
     /**
      * Get tipPeriodoPerPao
      *
-     * @return MinSal\SidPla\PaoBundle\Entity\TipoPeriodo
+     * @return MinSal\SidPla\PaoBundle\Entity\TipoPeriodo 
      */
-    public function gettipPeriodoPerPao() {
+    public function getTipPeriodoPerPao()
+    {
         return $this->tipPeriodoPerPao;
     }
-
 }

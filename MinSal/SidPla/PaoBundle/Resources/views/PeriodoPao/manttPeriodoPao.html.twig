@@ -4,7 +4,7 @@
 {% block body %}
 <script type="text/javascript">
     </script>
-    <h1 style='text-align: center;'>Periodos para la PAO</h1>
+    <h1 style='text-align: center;'>Cronograma para la PAO</h1>
     <form>
         <table align="center">
             <tr>
@@ -16,13 +16,13 @@
             <td align="center" style='font-size: 11px'>Seleccione el Año a Gestionar
                 <select id='selanio'>
                         <option value='{{ "now" | date("Y") }}'>{{ "now" | date("Y") }}</option>
-                        <option value='{{ "now" | date("Y")+1 }}'>{{ "now" | date("Y")-1 }}</option>
+                        <option value='{{ "now" | date("Y")+1 }}'>{{ "now" | date("Y")+1 }}</option>
                 </select>
                 </td>
             <tr>
                 <td colspan="2" align="center">
                     <br></br>  
-                {# include 'MinSalSidPlaPaoBundle:PeriodoPaoOficial:showPeriodoOficial.html.twig'#}
+                {% include 'MinSalSidPlaPaoBundle:PeriodoPao:showPeriodoPao.html.twig' %}
                 </td>
             </tr>        
         </table>    

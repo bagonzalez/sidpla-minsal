@@ -44,16 +44,36 @@ class TipoPeriodoDao {
     /*
      * Obtiene un tipo de periodo especifico
      */
+
     public function getTipoPeriodoEspecifico($codigo) {
         $tiposPeriodos = $this->repositorio->find($codigo);
         return $tiposPeriodos;
     }
-    
-    public function cuentosTiposPeriodosActivos(){
+
+    public function cuantosTiposPeriodosActivos() {
         $cuantos = $this->em->createQuery("select count(t) c
                                                  from MinSalSidPlaPaoBundle:TipoPeriodo t
                                                  where t.activoTipPer=true");
         return $cuantos->getSingleScalarResult();
+    }
+
+    public function obtenerTiposPeriodos() {
+
+        $tipoPeriodo = $this->getTipoPeriodoActivo();
+
+        $aux = new TipoPeriodo();
+        $n = $this->cuantosTiposPeriodosActivos();
+        $i = 1;
+        $cadena = '';
+        foreach ($tipoPeriodo as $aux) {
+            if ($i < $n)
+                $cadena .=$aux->getIdTipPer() . ":" . $aux->getNomTipPer() . ';';
+            else
+                $cadena .=$aux->getIdTipPer() . ":" . $aux->getNomTipPer();
+            $i++;
+        }
+
+        return $cadena;
     }
 
     /*
@@ -76,7 +96,7 @@ class TipoPeriodoDao {
 
         return $matrizMensajes;
     }
-    
+
     /*
      * Editar un tipo de periodo
      */
@@ -94,7 +114,7 @@ class TipoPeriodoDao {
 
         return $matrizMensajes;
     }
-    
+
     /*
      * Eliminar un tipo de periodo
      */
