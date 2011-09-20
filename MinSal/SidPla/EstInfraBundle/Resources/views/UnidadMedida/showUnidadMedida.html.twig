@@ -10,7 +10,7 @@
           altRows:true,
           colNames:['Codigo','Unidad de medida','Abreviatura','Tipo','Descripcion'],
           colModel:[
-            { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}},
+            { name:'codigo', index: 'codigo', width:40,align:'center',editable:false,editoptions:{size:15}},
             { name:'unidmed', index: 'unimed', width:150,editable:true,editoptions:{size:30}, formoptions:{label: "Unidad de medida",elmprefix:"(*)"},editrules:{required:true}},
             { name:'abreviatura', index: 'abreviatura', width:70,editable:true,editoptions:{size:30}, formoptions:{label: "Abreviatura",elmprefix:"(*)"},editrules:{required:true}},
             { name:'tipo', index: 'tipo', width:100,editable:true,editoptions:{size:30},edittype:"select",editoptions:{value:"entero:Entero;decimal:Decimal;porcentaje:Porcentaje"},
@@ -24,12 +24,14 @@
           pager: jQuery('#pager'),
           viewrecords: true,          
           caption: 'Gestion Unidades de Medida',
+          addCaption: "Agregar Unidad de Medida",
+          editCaption: "Editar Unidad de Medida",
           height: "100%",
           editurl:'manttUnidadMedida'
                      
         });
         myGrid.jqGrid('navGrid','#pager',
-            {edit:true,add:true,del:true},
+            {edit:false,add:false,del:false,view:true},
             //El de Editar
             {width:550,height:250,closeAfterEdit : true,
              bottominfo:"(*) Campos obligatorios",
@@ -43,11 +45,45 @@
                     alert("Datos Agregados con exito!");}
             },
             {width:550,height:160}
-        );         
+        ); 
+        
+  //agregar
+  $("#agregarUnidadButton").click(function(){
+        jQuery('#tabUnidMed').jqGrid('editGridRow',"new",{closeAfterAdd:true,addCaption: "Agregar Unidad de Medida",height:200,align:'center',reloadAfterSubmit:true,
+        top : 250 ,left: 250,width: 600,processData: "Cargando...",
+        bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");
+          }});
+        });
+    
+         //editar
+    $("#editarUnidadButton").click(function(){
+          var gr = jQuery('#tabUnidMed').jqGrid('getGridParam','selrow');
+          if( gr != null )
+             jQuery("#tabUnidMed").jqGrid('editGridRow',gr,{closeAfterEdit:true,editCaption: "Editando Unidad de Medida",height:200,align:'center',reloadAfterSubmit:true,
+                 top : 250 ,left: 250,width: 600,processData: "Cargando...", onclickSubmit: function(rp_ge, postdata) {
+        alert("Unidad de Medida editado con exito!");
+          }, bottominfo:"Campos marcados con (*) son obligatorios"});
+             else alert("Por favor seleccione una fila para editar!"); 
+          });
+    
+        //eliminar
+    $("#eliminarUnidadButton").click(function(){
+         var grs = jQuery('#tabUnidMed').jqGrid('getGridParam','selrow');
+         if( grs != null ) jQuery('#tabUnidMed').jqGrid('delGridRow',grs,{msg: "Desea Eliminar esta Unidad de Medida?",caption:"Eliminando Unidad de Medida",height:100,align:'center',reloadAfterSubmit:true,
+             top : 300 ,left: 600,width: 300,processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
+        alert("Unidad de Medida eliminado con exito!");
+          }}); 
+         else alert("Por favor seleccione una fila para borrar!"); }); 
+ 
       });
     </script>
    <table id="tabUnidMed" class="scroll" alignalign="center">
     
    </table> 
+        <br></br>
+       <input type="button" id="agregarUnidadButton" value="  Agregar  " />
+       <input type="button" id="editarUnidadButton" value="   Editar   " />
+       <input type="button" id="eliminarUnidadButton" value="  Eliminar  " />
     <div id="pager" class="scroll" style="text-align:center;"></div>  
 {% endblock %}
