@@ -5,28 +5,30 @@
        
         var myGrid = $('#tabElemInfra');        
         myGrid.jqGrid({ 
-          url: 'consultarUnidadMedidaJSON',
+          url: 'consultarElementoInfraestructuraJSON',
           datatype:'json',
           altRows:true,
           colNames:['Codigo','Nombre del elemento','Unidad de medida','Descripcion'],
           colModel:[
             { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}},
-            { name:'nomelem', index: 'nomelem', width:150,editable:true,editoptions:{size:30}, formoptions:{label: "Unidad de medida",elmprefix:"(*)"},editrules:{required:true}},
-            { name:'abreunidmed', index: 'abreunidmed', width:70,editable:true,editoptions:{size:30}, formoptions:{label: "Abreviatura",elmprefix:"(*)"},editrules:{required:true}},
+            { name:'nomelem', index: 'nomelem', width:150,editable:true,editoptions:{size:30}, formoptions:{label: "Nombre del elemento",elmprefix:"(*)"},editrules:{required:true}},
+            { name:'abreunidmed', index: 'abreunidmed', width:150,editable:true,editoptions:{size:30},edittype:"select",
+                        editoptions: {value:"0:Seleccione Unidad de medida;{{comboUniMed}}"}
+            },//Fin del nombre
             { name:'descripcion', index: 'descripcion', width:500,editable:true, editoptions:{size:50},formoptions:{label: "Descripcion"}}
           ],
         scroll:true,
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
-          pager: jQuery('#pager'),
+          pager: jQuery('#pager1'),
           viewrecords: true,          
-          caption: 'Gestion Unidades de Medida',
+          caption: 'Gestion Elementos de Infraestructura',
           height: "100%",
-          editurl:'manttUnidadMedida'
+          editurl:'manttElementoInfraestrutura'
                      
         });
-        myGrid.jqGrid('navGrid','#pager',
+        myGrid.jqGrid('navGrid','#pager1',
             {edit:true,add:true,del:true},
             //El de Editar
             {width:550,height:250,closeAfterEdit : true,
@@ -47,5 +49,5 @@
    <table id="tabElemInfra" class="scroll" alignalign="center">
     
    </table> 
-    <div id="pager" class="scroll" style="text-align:center;"></div>  
+    <div id="pager1" class="scroll" style="text-align:center;"></div>  
 {% endblock %}

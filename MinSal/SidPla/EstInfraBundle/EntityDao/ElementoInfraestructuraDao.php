@@ -3,6 +3,9 @@
 namespace MinSal\SidPla\EstInfraBundle\EntityDao;
 
 use MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura;
+use MinSal\SidPla\EstInfraBundle\EntityDao\UnidadMedidaDao;
+use MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida;
+
 use Doctrine\ORM\Query\ResultSetMapping;
 
 class ElementoInfraestructuraDao {
@@ -19,91 +22,79 @@ class ElementoInfraestructuraDao {
     }
 
     /*
-     * Obtiene todos los tipos de periodos
+     * Obtiene todos los elementos de infraestructura
      */
 
     public function getElementoInfraestructura() {
         $elementoinfraestructura = $this->em->createQuery("select einfra
                                                  from MinSalSidPlaEstInfraBundle:ElementoInfraestructura einfra
-                                                 order by einfra.idElemInfra ASC");
+                                                 order by einfra.IdElemInfra ASC");
         return $elementoinfraestructura->getResult();
     }
 
-    /*
-     * Obtener Tipos de Periodos Activos
-  */
-
-    public function getTipoPeriodoActivo() {
-        $tiposPeriodos = $this->em->createQuery("select t
-                                                 from MinSalSidPlaPaoBundle:TipoPeriodo t
-                                                 where t.activoTipPer=true
-                                                 order by t.idTipPer ASC");
-        return $tiposPeriodos->getResult();
-    }
-
-    /*
-     * Obtiene un tipo de periodo especifico
-     */
-    public function getTipoPeriodoEspecifico($codigo) {
-        $tiposPeriodos = $this->repositorio->find($codigo);
-        return $tiposPeriodos;
-    }
     
-    public function cuentosTiposPeriodosActivos(){
-        $cuantos = $this->em->createQuery("select count(t) c
-                                                 from MinSalSidPlaPaoBundle:TipoPeriodo t
-                                                 where t.activoTipPer=true");
-        return $cuantos->getSingleScalarResult();
+    /*
+     * Obtiene un elemento infraestructura especifico
+     */
+    public function getElementoInfraestructuraEspecifico($codigo) {
+        $elementoinfraestructura = $this->repositorio->find($codigo);
+        return $elementoinfraestructura;
     }
 
     /*
-     * Agregar Tipo Perido 
+     * Agregar elemento de infraestructura
      */
 
-    public function addTipoPeriodo($nomTipPer, $descTipPer, $actTipPer) {
+    public function agregarElementoInfra($nomElemInfra, $abreElemInfra, $descElemInfra) {
 
-        $tipoPeriodo = new TipoPeriodo();
-
-        $tipoPeriodo->setActivoTipPer($actTipPer);
-        $tipoPeriodo->setDescTipPer($descTipPer);
-        $tipoPeriodo->setNomTipPer($nomTipPer);
-        $tipoPeriodo->setUsuarioTipPer(true);
-
-
-        $this->em->persist($tipoPeriodo);
+        $elemInfra = new ElementoInfraestructura();
+        $elemInfra->setNomElemInfra($nomElemInfra);
+        $elemInfra->setElemInfraDescrip($descElemInfra);
+        
+        $unidadMedidaDao=new UnidadMedidaDao($this->doctrine);
+        $unidadMedida=$unidadMedidaDao->getUnidadMedidaEspecifica($abreElemInfra);
+        $elemInfra->setCodUnidadMed($unidadMedida);
+        
+        $this->em->persist($elemInfra);
         $this->em->flush();
-        $matrizMensajes = array('El proceso de almacenar el tipo de periodo termino con exito');
+        $matrizMensajes = array('El proceso de almacenar elementos de infraestructura termino con exito');
 
         return $matrizMensajes;
     }
     
     /*
-     * Editar un tipo de periodo
+     * Editar elemento de infraestructura
      */
 
-    public function editTipoPeriodo($codTipPer, $nomTipPer, $descTipPer, $actTipPer) {
+    public function editarElementoInfra($codElemInfra, $nomElemInfra, $abreElemInfra, $descElemInfra) {
 
-        $tipoPeriodo = $this->getTipoPeriodoEspecifico($codTipPer);
-        $tipoPeriodo->setDescTipPer($descTipPer);
-        $tipoPeriodo->setNomTipPer($nomTipPer);
-        $tipoPeriodo->setActivoTipPer($actTipPer);
+        $elemInfra= $this->getElementoInfraestructuraEspecifico($codElemInfra);
+        $elemInfra->setNomElemInfra($nomElemInfra);
+     
+        $unidadMedidaDao=new UnidadMedidaDao($this->doctrine);
+        $unidadMedida=$unidadMedidaDao->getUnidadMedidaEspecifica($abreElemInfra);
+        $elemInfra->setCodUnidadMed($unidadMedida);
+        
+        
+        $elemInfra->setElemInfraDescrip($descElemInfra);
+        
 
-        $this->em->persist($tipoPeriodo);
+        $this->em->persist($elemInfra);
         $this->em->flush();
-        $matrizMensajes = array('El proceso de almacenar el tipo de periodo termino con exito');
+        $matrizMensajes = array('El proceso de almacenar el elemento de infraestructura termino con exito');
 
         return $matrizMensajes;
     }
     
     /*
-     * Eliminar un tipo de periodo
+     * Eliminar elemento de infraestrutura
      */
 
-    public function delTipoPeriodo($codigo) {
+    public function eliminarElementoInfra($codigo) {
 
-        $notificacionSistema = $this->repositorio->find($codigo);
+        $elementoinfra = $this->repositorio->find($codigo);
 
-        $this->em->remove($notificacionSistema);
+        $this->em->remove($elementoinfra);
         $this->em->flush();
 
         $matrizMensajes = array('El proceso de eliminar termino con exito');

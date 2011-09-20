@@ -15,20 +15,14 @@ MinSalSidPlaEstInfraBundle_manttUnidadMedida:
 
 
 #elemento infraestructura
-MinSalSidPlaEstInfraBundle_mantenimientoElementoInfraestructura:
-    pattern:  /mantenimientoElementoInfraestructura
-    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraElementoInfraestructura:mantenimientoElementoInfraestructura}
-
 MinSalSidPlaEstInfraBundle_consultarElementoInfraestructuraJSON:
     pattern:  /consultarElementoInfraestructuraJSON
-    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraElementoInfraestructura:consultarElementoInfraestructuraJSON}
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraElementoInfraestructura:consultarElementoInfraestructuraJSON }
+
+
+MinSalSidPlaEstInfraBundle_manttElementoInfraestrutura:
+    pattern:  /manttElementoInfraestrutura
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraElementoInfraestructura:manttElementoInfraestrutura}
 
 
 
-
-
-
-
-#MinSalSidPlaEstInfraBundle_mantenimientoEvaluacionElementoInfra:
-#    pattern:  /mantenimientoEvaluacionElementoInfra
-#    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraEvaluacionElementoInfra:mantenimientoEvaluacionElementoInfra }

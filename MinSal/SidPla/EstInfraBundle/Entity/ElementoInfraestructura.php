@@ -7,13 +7,14 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura
  * 
- * @ORM\Table("sidpla_elementoinfraestructura")
+ * @ORM\Table(name="sidpla_elementoinfraestructura")
  * @ORM\Entity
  */
 class ElementoInfraestructura
 {
+    
     /**
-     * @var integer $IdElemInfra
+     * @var integer $IdElemInfra;
      *
      * @ORM\Column(name="eleminf_codigo", type="integer")
      * @ORM\Id
@@ -43,7 +44,7 @@ class ElementoInfraestructura
 
 
     /**
-     * Get id
+     * Get IdElemInfra
      *
      * @return integer 
      */
@@ -97,7 +98,7 @@ class ElementoInfraestructura
      *
      * @param MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida $codUnidadMed
      */
-    public function setCodUnidadMed(MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida $codUnidadMed)
+    public function setCodUnidadMed($codUnidadMed)
     {
         $this->codUnidadMed = $codUnidadMed;
     }

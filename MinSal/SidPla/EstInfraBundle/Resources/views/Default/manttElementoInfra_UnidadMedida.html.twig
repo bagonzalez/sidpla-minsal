@@ -4,10 +4,10 @@
 {% block body %}
 
 <script type="text/javascript">  
-     
+           
         
       $(document).ready(function(){           
-           
+          
       
            $('#tabs').tabs(); 
          //  $('#guardarInfoGen').button();
@@ -30,8 +30,7 @@
             <tr>
                 <td align="center">
                     <br></br>  
-                   {% include 'MinSalSidPlaEstInfraBundle:UnidadMedida:showUnidadMedida.html.twig' %}
-                      {#include 'MinSalSidPlaEstInfraBundle:ElementoInfraestructura:showElementoInfraestructura.html.twig' #}
+                    {%include 'MinSalSidPlaEstInfraBundle:ElementoInfraestructura:showElementoInfraestructura.html.twig' %}
                 </td>
                 
             </tr>  
@@ -42,15 +41,15 @@
 
 <div id="tabs-2" align="center"   >
                    
- <table align="center">
+       <table align="center">
             <tr>
                 <td align="center">
-                    <br></br>  
-                       {# include 'MinSalSidPlaEstInfraBundle:UnidadMedida:showUnidadMedida.html.twig' %#}
+                    <br></br> 
+                  {% include 'MinSalSidPlaEstInfraBundle:UnidadMedida:showUnidadMedida.html.twig' %}
                 </td>
             </tr>        
-        </table>   
+       </table>   
    
-        </div>
+</div>
 
 {% endblock %}
