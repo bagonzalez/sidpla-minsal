@@ -59,7 +59,11 @@ class AccionPaoPeriodoPaoController extends Controller {
         $periodoPaoDao = new PeriodoPaoDao($this->getDoctrine());
         $anio=$this->getRequest()->get('anio');
         
+        if($anio==0)
+            $anio=date("Y");
+        
         $pao=$this->obtenerPao($anio);
+        
         $periodoPao=$pao->getPeriodoCalendarizacion();
         
         $aux = new PeriodoPao();
@@ -81,11 +85,15 @@ class AccionPaoPeriodoPaoController extends Controller {
         }
 
         $numfilas = count($periodoPao);
-        if ($numfilas != 0)
+        if ($numfilas != 0){
+            array_multisort($rows,SORT_ASC);
             $datos = json_encode($rows);
-        else
-            $datos = '';
-
+        }
+        else{
+            $rows[0]['id']=0;
+            $rows[0]['cell']=array(' ',' ',' ',' ');
+            $datos = json_encode($rows);
+        }
 
         $jsonresponse = '{
                "page":"1",
@@ -96,6 +104,32 @@ class AccionPaoPeriodoPaoController extends Controller {
 
         $response = new Response($jsonresponse);
         return $response;
+    }
+    
+     public function manttPeriodoPaoAction() {
+        $request = $this->getRequest();
+        
+        $codPerPao = $request->get('id');
+        $tipoPeriodoCodigo = $request->get('nombre');
+        $dia=substr($request->get('fechini'),0,2);
+        $mes=substr($request->get('fechini'),3,2);
+        $anio=substr($request->get('fechini'),6,4);
+        $fechIniPerPao=$anio.'-'.$mes.'-'.$dia;
+        $dia=substr($request->get('fechfin'),0,2);
+        $mes=substr($request->get('fechfin'),3,2);
+        $anio=substr($request->get('fechfin'),6,4);
+        $fechFinPerPao=$anio.'-'.$mes.'-'.$dia;
+        
+            
+        $operacion = $request->get('oper');
+
+        $periodoPaoDao = new PeriodoPaoDao($this->getDoctrine());
+        
+       $periodoPaoDao->editarPeriodoOficial($codPerPao, $tipoPeriodoCodigo, $fechIniPerPao, $fechFinPerPao);
+        
+              
+
+        return new Response("{sc:true,msg:''}");
     }
 
 }

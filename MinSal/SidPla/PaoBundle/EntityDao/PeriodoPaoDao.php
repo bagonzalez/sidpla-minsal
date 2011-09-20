@@ -26,19 +26,31 @@ class PeriodoPaoDao {
         $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaPaoBundle:PeriodoPao');
     }
 
-    public function getPeriodoPao() {
-        
-        $paoDao=new PaoDao($this->doctrine);
-        $periodoPao = $this->em->createQuery("select pp
-                                              from MinSalSidPlaPaoBundle:PeriodoPao pp
-                                              order by pp.codPerPao ASC");
-        return $periodoPao->getResult();
-    }
-
-    
+   
     public function getPeriodoPaoEspecifico($codigo) {
         $periodoPao = $this->repositorio->find($codigo);
         return $periodoPao;
+    }
+    
+    public function editarPeriodoOficial($codPerPao,$tipPerioPerPao,$fechIniPerPao,$fechFinPerPao) {
+
+        $periodoPao= $this->getPeriodoPaoEspecifico($codPerPao);
+        
+        $periodoPao->setFechIniPerPao($fechIniPerPao);
+        $periodoPao->setFechFinPerPao($fechFinPerPao);
+        $idTipoPeriodo=(int) $tipPerioPerPao;
+        
+        $tipoPeriodoDao = new TipoPeriodoDao($this->doctrine);
+               
+        $tipoPeriodo = $tipoPeriodoDao->getTipoPeriodoEspecifico($idTipoPeriodo);
+        $periodoPao->setTipPeriodoPerPao($tipoPeriodo);
+        
+
+        $this->em->persist($periodoPao);
+        $this->em->flush();
+        $matrizMensajes = array('El proceso de almacenar el tipo de periodo termino con exito');
+
+        return $matrizMensajes;
     }
 }
 
