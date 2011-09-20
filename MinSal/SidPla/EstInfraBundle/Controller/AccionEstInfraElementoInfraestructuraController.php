@@ -7,23 +7,16 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use MinSal\SidPla\EstInfraBundle\EntityDao\ElementoInfraestructuraDao;
 use MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura;
+use MinSal\SidPla\EstInfraBundle\EntityDao\UnidadMedidaDao;
+use MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida;
 
 class AccionEstInfraElementoInfraestructuraController extends Controller {
 
-    public function mantenimientoElementoInfraestructuraAction() {
-
-        $opciones = $this->getRequest()->getSession()->get('opciones');
-        
-        return $this->render('MinSalSidPlaEstInfraBundle:ElementoInfraestructura:manttElementoInfraestructura.html.twig'
-                        , array('opciones' => $opciones));
   
-       // return new Response("hola kren hohohohohohohoho ");
-    }
-
     public function consultarElementoInfraestructuraJSONAction() {
 
         $ElementoInfraestructuraDao=new ElementoInfraestructuraDao($this->getDoctrine());
-        $ElementoInfraestructura=$ElementoInfraestructuraDao->getElementoInfraestructura();
+        $ElementoInfraestructura= $ElementoInfraestructuraDao->getElementoInfraestructura();
         
 
         $numfilas = count($ElementoInfraestructura);
@@ -35,9 +28,9 @@ class AccionEstInfraElementoInfraestructuraController extends Controller {
             $rows[$i]['id'] = $aux->getIdElemInfra();
             $rows[$i]['cell'] = array($aux->getIdElemInfra(),
                 $aux->getNomElemInfra(),
-                $aux->getElemInfraDescrip(),
-                $aux->getCodUnidadMed()->getNomUnidMed()
-                             
+                $aux->getCodUnidadMed()->getAbreUnidMed(),
+                $aux->getElemInfraDescrip()
+                              
             );
           
             $i++;
@@ -56,37 +49,34 @@ class AccionEstInfraElementoInfraestructuraController extends Controller {
         $response = new Response($jsonresponse);
         return $response;
     }
-/*
-    public function manttTipoPeriodoAction() {
+   
+
+    public function manttElementoInfraestruturaAction() {
         $request = $this->getRequest();
         
-        $codTipoPer=$request->get('id');
-        $nomTipoPer=$request->get('nombre');
-        $descTipoPer=$request->get('descripcion');
-        if($request->get('activo')=='SI')
-                $actTipoPer=true;
-            else
-                $actTipoPer=false;
-            
+        $codElemInfra=$request->get('id');
+        $nomElemInfra=$request->get('nomelem');
+        $abreElemInfra=(int) $request->get('abreunidmed');
+        $descElemInfra=$request->get('descripcion'); 
         $operacion = $request->get('oper');
 
-        $tipoPeriodoDao=new TipoPeriodoDao($this->getDoctrine());
+        $eleminfraDao=new ElementoInfraestructuraDao($this->getDoctrine());
 
         switch ($operacion){
             case 'edit':
-                $tipoPeriodoDao->editTipoPeriodo($codTipoPer, $nomTipoPer, $descTipoPer, $actTipoPer);
+                 $eleminfraDao->editarElementoInfra($codElemInfra, $nomElemInfra, $abreElemInfra, $descElemInfra);
                 break;
             case 'del':
-               $tipoPeriodoDao->delTipoPeriodo($codTipoPer);
+                $eleminfraDao->eliminarElementoInfra($codElemInfra);
                 break;
             case 'add':
-                $tipoPeriodoDao->addTipoPeriodo($nomTipoPer, $descTipoPer, $actTipoPer);
+                 $eleminfraDao->agregarElementoInfra($nomElemInfra, $abreElemInfra, $descElemInfra);
                 break;
         }
 
         return new Response("{sc:true,msg:''}");
     }
-*/
+
 }
 
 ?>

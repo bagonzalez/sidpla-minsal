@@ -18,6 +18,32 @@ class UnidadMedidaDao {
         $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaEstInfraBundle:UnidadMedida');
     }
 
+    
+    public function obtenerUnidadMedida() {
+
+        $unidadMedida = $this->getUnidadMedida();
+
+        $aux = new UnidadMedida();
+        $n = $this->cuantasUnidadesMedida();
+        $i = 1;
+        $cadena = '';
+        foreach ($unidadMedida as $aux) {
+            if ($i < $n)
+                $cadena.=$aux->getIdUnidMed().":".$aux->getAbreUnidMed().';';
+            else
+                $cadena .=$aux->getIdUnidMed().":".$aux->getAbreUnidMed();
+            $i++;
+        }
+
+        return $cadena;
+    }
+    
+    public function cuantasUnidadesMedida() {
+        $unidadmedida = $this->em->createQuery("select count(um)
+                                                 from MinSalSidPlaEstInfraBundle:UnidadMedida um");
+        return $unidadmedida->getSingleScalarResult();
+    }
+    
     /*
      * Obtiene todos los tipos de periodos
      */
