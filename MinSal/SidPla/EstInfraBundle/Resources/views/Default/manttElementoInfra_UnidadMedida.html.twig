@@ -4,17 +4,12 @@
 {% block body %}
 
 <script type="text/javascript">  
+ $(document).ready(function(){           
+    $('#tabs').tabs(); 
+    $('#pestaniaUniMed').click(function(){$('#tabUnidMed').trigger("reloadGrid");});
+    
            
-        
-      $(document).ready(function(){           
-          
-      
-           $('#tabs').tabs(); 
-         //  $('#guardarInfoGen').button();
-          // $('#guardarCarac').button();
-           
-           
-      });
+ });
       
 </script>
 <br></br>
@@ -23,7 +18,7 @@
 <div id="tabs">
         <ul>
                 <li><a href="#tabs-1">Gestionar elementos de infraestructura</a></li>
-                <li><a href="#tabs-2">Gestionar unidades de medidas</a></li>                
+                <li><a href="#tabs-2" id='pestaniaUniMed'>Gestionar unidades de medidas</a></li>                
         </ul>
         <div id="tabs-1" align="center">
           <table align="center">

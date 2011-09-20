@@ -1,10 +1,12 @@
 {% block body %}
 <script type="text/javascript">
-           $(document).ready(function(){
-        
-       
-        var myGrid = $('#tabUnidMed');        
-        myGrid.jqGrid({ 
+$(document).ready(function(){
+    $('#agregarUnidadButton').button();
+    $('#editarUnidadButton').button();
+    $('#eliminarUnidadButton').button();
+    var myGrid = $('#tabUnidMed');        
+    
+    myGrid.jqGrid({ 
           url: 'consultarUnidadMedidaJSON',
           datatype:'json',
           altRows:true,
@@ -30,7 +32,7 @@
           editurl:'manttUnidadMedida'
                      
         });
-        myGrid.jqGrid('navGrid','#pager',
+   myGrid.jqGrid('navGrid','#pager',
             {edit:false,add:false,del:false,view:true},
             //El de Editar
             {width:550,height:250,closeAfterEdit : true,
@@ -76,14 +78,14 @@
           }}); 
          else alert("Por favor seleccione una fila para borrar!"); }); 
  
-      });
+});
     </script>
-   <table id="tabUnidMed" class="scroll" alignalign="center">
-    
-   </table> 
-        <br></br>
-       <input type="button" id="agregarUnidadButton" value="  Agregar  " />
-       <input type="button" id="editarUnidadButton" value="   Editar   " />
-       <input type="button" id="eliminarUnidadButton" value="  Eliminar  " />
+    <table id="tabUnidMed" class="scroll" alignalign="center">
+
+    </table> 
+    <br></br>
+    <input type="button" id="agregarUnidadButton" value="  Agregar  " />
+    <input type="button" id="editarUnidadButton" value="   Editar   " />
+    <input type="button" id="eliminarUnidadButton" value="  Eliminar  " />
     <div id="pager" class="scroll" style="text-align:center;"></div>  
 {% endblock %}

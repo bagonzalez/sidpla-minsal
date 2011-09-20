@@ -1,7 +1,7 @@
 {% block body %}
 <script type="text/javascript">
   $(document).ready(function(){
-   
+    $('#editarPeriodoPao').button();
     $('#selanio').change(cargarAnio);
     var myGrid = $('#tabperiodopao');        
     myGrid.jqGrid({
@@ -55,19 +55,24 @@
     });
 
     myGrid.jqGrid('navGrid','#pager',
-        {edit:true,add:false,del:false},
-        //El de Editar
-       {width:550,height:200,closeAfterEdit : true,
-         bottominfo:"(*) Campos obligatorios",
-         onclickSubmit: function(rp_ge, postdata) {
-                alert("Datos Editados con exito!");}
-        },//Fin de las propiedades para editar
-        //El de agregar
-        {},
-        //El de eliminar
-        {}
+        {edit:false,add:false,del:false}
     );//Fin del pager del grid
+   
+   $("#editarPeriodoPao").click(function(){
+     var gr = jQuery('#tabperiodopao').jqGrid('getGridParam','selrow');
+     if( gr != null )
+       jQuery("#tabperiodopao").jqGrid('editGridRow',gr,{closeAfterEdit:true,editCaption: "Editando Cronograma PAO",
+                 width:550,height:200,closeAfterEdit : true,align:'center',reloadAfterSubmit:true,
+                 top : 250 ,left: 250,width: 600,processData: "Cargando...", 
+                 onclickSubmit: function(rp_ge, postdata) {
+                        alert("Periodo Pao Editado con exito!");
+                }, 
+                bottominfo:"Campos marcados con (*) son obligatorios"});
+      else 
+        alert("Por favor seleccione una fila para editar!"); 
+     });
     
+   //Funcion para cargar el Grid con diferente anio
    function cargarAnio(){
       $('#tabperiodopao').setGridParam({url:'consultarPeriodoPaoJSON?anio='+$('#selanio').val()}); 
       $('#tabperiodopao').trigger("reloadGrid"); 
@@ -76,5 +81,6 @@
     </script>
     <table id="tabperiodopao" class="scroll" alignalign="center"></table> 
     <div id="pager" class="scroll" style="text-align:center;"></div>
-
+    <br></br>
+    <input type="button" id="editarPeriodoPao" value="  Editar  " />
 {% endblock %}

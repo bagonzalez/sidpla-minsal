@@ -1,7 +1,9 @@
 {% block body %}
 <script type="text/javascript">
            $(document).ready(function(){
-        
+                $('#agregarElementoButton').button();
+        $('#editarElementoButton').button();
+        $('#eliminarElementoButton').button();
        
         var myGrid = $('#tabElemInfra');        
         myGrid.jqGrid({ 
@@ -79,7 +81,9 @@
          else alert("Por favor seleccione una fila para borrar!"); }); 
  
   //fin
-      });
+
+  
+   });
       
     </script>
    <table id="tabElemInfra" class="scroll" alignalign="center">

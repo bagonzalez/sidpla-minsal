@@ -1,0 +1,24 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %} Evaluacion de Elementos de la infraestructura {% endblock %}
+
+{% block body %}
+
+<script type="text/javascript">  
+          
+ </script>
+<br></br>
+<h1 style='text-align: center;'>Avaluacion Infraestructura</h1>
+<br></br>
+<br></br>
+        <table align="center">
+            <tr>
+                <td align="center">
+                    <br></br>  
+                    {%include 'MinSalSidPlaEstInfraBundle:EvaluacionElementoInfraestructura:showEvaluacionElementoInfraestructura.html.twig' %}
+                </td>
+                
+            </tr>  
+        
+        </table>   
+       
+{% endblock %}
