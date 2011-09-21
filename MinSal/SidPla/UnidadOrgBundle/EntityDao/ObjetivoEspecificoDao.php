@@ -24,7 +24,9 @@
 namespace MinSal\SidPla\UnidadOrgBundle\EntityDao;
 
 use MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico;
-
+use MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado;
+use MinSal\SidPla\GesObjEspBundle\EntityDao\TipoMetaDao;
+use MinSal\SidPla\GesObjEspBundle\Entity\TipoMeta;
 /**
  * Description of ObjetivoEspecificoDao
  *
@@ -35,12 +37,17 @@ class ObjetivoEspecificoDao {
     var $doctrine;
     var $repositorio;
     var $em;    
-	
-    function __construct($doctrine){ 
+    
+       function __construct($doctrine){ 
         $this->doctrine=$doctrine;      	
         $this->em=$this->doctrine->getEntityManager();
         $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaUnidadOrgBundle:ObjetivoEspecifico');
     } 
+    
+     public function getObjetEspecif($id) {	    
+        $objeEspec=$this->repositorio->find($id);
+        return $objeEspec;
+    }
     
     public function delObjEspec($id){            
 
@@ -60,15 +67,62 @@ class ObjetivoEspecificoDao {
     
     public function editObjEspec($objetivo, $id){  
             
-         $objEspec=new ObjetivoEspecifico();
+        $objEspec=new ObjetivoEspecifico();
          $objEspec=$this->repositorio->find($id);
-         $objEspec->setDescripcion($objetivo);                                  
+         $objEspec->setDescripcion($objetivo);                                   
             
          $this->em->flush();            
          $matrizMensajes = array('El proceso de editar termino con exito');
  
          return $matrizMensajes;
    }
+   
+   
+   public function agregarResulEsperado($idResTempl,
+                                        $tipometa,
+                                        $resEspeDesc,
+                                        $resEspNomencl,
+                                        $resEspCondi,
+                                        $resEspMetAnual,
+                                        $resEspDescMetAnual,
+                                        $resEspResponsable,
+                                        $resEspEntidadControl,
+                                        $resEspIndicador,
+                                        $idObjetivo) {
+         
+      
+           $objetivoespecificoAux=new ObjetivoEspecifico();
+           $objetivoespecificoAux=$this->getObjetEspecif($idObjetivo); 
+        $tipometa=1;
+        
+      //  $resEspCondi="gfdsfsdf";
+       // $resEspMetAnual=100;
+       // $resEspDescMetAnual="ttttt";
+       // $resEspResponsable="neto";
+         $objResulesperado=new ResultadoEsperado();
+         $objResulesperado->setIdResTempl($idResTempl);                         
+         $objResulesperado->setIdTipoMeta($tipometa);                         
+         $objResulesperado->setResEspeDesc($resEspeDesc);                         
+         $objResulesperado->setResEspNomencl($resEspNomencl);                         
+         $objResulesperado->setResEspCondi($resEspCondi);                         
+         $objResulesperado->setResEspMetAnual($resEspMetAnual);                         
+         $objResulesperado->setResEspDescMetAnual($resEspDescMetAnual);                         
+         $objResulesperado->setResEspResponsable($resEspResponsable);                         
+         $objResulesperado->setResEspEntidadControl($resEspEntidadControl);
+         $objResulesperado->setResEspIndicador($resEspIndicador);
+         $objResulesperado->setIdObjEsp($objetivoespecificoAux);
+
+         $objetivoespecificoAux->addResultadoEsperado($objResulesperado);
+
+         $this->em->persist($objResulesperado);
+         $this->em->persist($objetivoespecificoAux);
+         $this->em->flush();
+        
+        
+        $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ','Resultado'.$objResulesperado->getIdResEsp());
+
+        return $matrizMensajes;
+    }
  
 }
 

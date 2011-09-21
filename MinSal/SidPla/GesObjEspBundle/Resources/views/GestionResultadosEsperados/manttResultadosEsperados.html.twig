@@ -1,12 +1,23 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
-
+<script type="text/javascript">
+      $(document).ready(function(){
+          
+          
+         
+          $('#agregar').click(function() {
+            
+             document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}'
+          });
+      
+      });
+      </script>
 <br></br>
     <br></br>         
     <br></br>    
-    <form >
+    <form action="{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}" method="post">
         <table align="center">
-            <tr><td align="center"><h1>Mantenimiento de Resultados Esperados</h1>
+            <tr><td align="center"><h1>Gestion de Resultados Esperados</h1>
                 </td>
             </tr>
            
@@ -16,6 +27,12 @@
                 {% include 'MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:showAllResultadosEsperados.html.twig'  with {'idfila': idfila} %} 
                 </td>
             </tr>        
+            <tr>
+                <td align="center">
+                    <input type="submit" value="Agregar Resultado Esperado" id="agregar"</input>                    
+                </td>
+            </tr>
+        
         </table>        
     </form>
     <br></br>

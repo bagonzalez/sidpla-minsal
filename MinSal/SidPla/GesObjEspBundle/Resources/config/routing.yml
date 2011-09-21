@@ -18,3 +18,24 @@ MinSalSidPlaGesObjEspBundle_manttObjetivosEspecificos:
 MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados:
     pattern:  /consultarResultadosEsperados
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminResultadosEsperados:consultarResultadosEsperados}
+
+MinSalSidPlaGesObjEspBundle_consultarResultadosEsperadosJSON:
+    pattern:  /consultarResultadosEsperadosJSON
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminResultadosEsperados:consultarResultadosEsperadosJSON}
+
+MinSalSidPlaGesObjEspBundle_manttResultadosEsperados:
+    pattern:  /manttResultadosEsperados
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminResultadosEsperados:manttResultadosEsperados}
+
+MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados:
+    pattern:  /ingresoResultadosEsperados
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminResultadosEsperados:ingresoResultadosEsperados}
+
+MinSalSidPlaGesObjEspBundle_guardarResultadosEsperados:
+    pattern:  /guardarResultadosEsperados
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminResultadosEsperados:guardarResultadosEsperados}
+
+
+MinSalSidPlaGesObjEspBundle_consultarTipoMeta:
+    pattern:  /consultarTipoMeta
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminResultadosEsperados:consultarTipoMeta}

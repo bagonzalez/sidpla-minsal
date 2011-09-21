@@ -3,7 +3,7 @@
 namespace MinSal\SidPla\UnidadOrgBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico
  *
@@ -55,7 +55,10 @@ class ObjetivoEspecifico
      */
     protected $caractOrg;
 
-
+     /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado", mappedBy="idObjEsp")
+     */
+    protected $resultadosEsperados;
     
     /**
      * Set idObjEspec
@@ -176,4 +179,32 @@ class ObjetivoEspecifico
     {
         return $this->caractOrg;
     }
+    
+    
+    public function __construct()
+    {
+        $this->resultadosEsperados= new ArrayCollection();
+    }
+    
+    /**
+     * Add resultadosEsperados
+     *
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado $resultadosEsperados
+     */
+    public function addResultadoEsperado(\MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado $resultadosEsperados)
+    {
+        $this->resultadosEsperados[] = $resultadosEsperados;
+    }
+
+    /**
+     * Get resultadosEsperados
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getResultadoEsperado()
+    {
+        return $this->resultadosEsperados;
+    }
+    
+    
 }

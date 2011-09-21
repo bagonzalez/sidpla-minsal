@@ -1,37 +1,88 @@
-{# empty Twig template #}
-
-
+{# Muestra todos las opciones #}
 {% block body %}
-<script type="text/javascript">        
+    <script type="text/javascript">
       $(document).ready(function(){
-          $('#tabs').tabs();
-      //jAlert('This is a custom alert box', 'Alert Dialog');
-         });
-      
-</script>
-      
-<br></br>
-<br></br>
-<br></br>
-        
+        var myGrid = $('#theGridObj');        
+        myGrid.jqGrid({    
+          url: 'consultarResultadosEsperadosJSON?idfila={{idfila}}',
+          datatype:'json',
+          altRows:true,          
+          colNames:['Id','idObjetivo','idtemplate','Idtipometa','Resultado Esperado','nomenclatura','Condicionantes','Meta anual','Descrp Meta anual','Responsable','entidad de Control','indicador','Actions'],
+          colModel:[ 
+            { name:'id', index: 'id', width:15,editable:false,formatter: 'integer',hidden: true,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
+            { name:'idobjetivo', index: 'idobjetivo', width:15,formatter: 'integer',hidden: true,editable:true,editoptions:{size:10}},
+            { name:'idResTempl', index: 'idResTempl', width:15,formatter: 'integer',hidden: false,editable:true,editoptions:{size:10}},
+            { name:'idTipoMeta', index: 'idTipoMeta', width:15,formatter: 'integer',hidden: false,editable:true,editoptions:{size:10}},
+            { name:'resEspeDesc', index: 'resEspeDesc', width:600,editable:true,editoptions:{size:10}},
+            { name:'resEspNomencl', index: 'resEspNomencl', width:15,hidden: false,editable:true,editoptions:{size:10}},
+            { name:'resEspCondi', index: 'resEspCondi', width:15,editable:true,hidden: false,editoptions:{size:10}},
+            { name:'resEspMetAnual', index: 'resEspMetAnual', width:15,editable:true,hidden: false,editoptions:{size:10} },
+            { name:'resEspDescMetAnual', index: 'resEspDescMetAnual', width:15,editable:true,hidden: false,editoptions:{size:10}},
+            { name:'resEspResponsable', index: 'resEspResponsable', width:15,editable:true,hidden: false,editoptions:{size:10}},
+            { name:'resEspEntidadControl', index: 'resEspEntidadControl', width:15,editable:true,edittype:"checkbox",hidden: false,editoptions:{size:10}},
+            { name:'resEspIndicador', index: 'resEspIndicador', width:15,editable:true,hidden: false,editoptions:{size:10}},
+            {name:'act',index:'act', width:400,sortable:false}],
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          sortname: 'id',
+          sortorder: "asc",
+          gridComplete: function(){
+              var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
+              for(var i=0;i < ids.length;i++){ var cl = ids[i];
+                  be = "<input style='height:22px;width:100px;' type='button' value='Editar' onclick=\"jQuery('#theGridObj').editRow('"+cl+"');\" />";
+                  se = "<input style='height:22px;width:100px;' type='button' value='Guardar' onclick=\"jQuery('#theGridObj').saveRow('"+cl+"');\" />"; 
+                  ce = "<input style='height:22px;width:200px;' type='submit' value='Gestionar Actividades' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
+                  jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+se+ce}); } },
+          pager: jQuery('#pagerObj'),
+          viewrecords: true,  
+          rownumbers: true,
+          caption: 'Resultados Esperados',
+          height: "100%",
+          editCaption: "Editar Registro",
+          addCaption: "Nuevo Registro",
+          editurl:'manttResultadosEsperados?idfila={{idfila}}'         
             
-                <table align="center" id="datosMenCorrtempTabla"  >
-                    <tr>
-                        <td colspan="4" align="center" >prueba de mandar el id del objetivo <br><br></td>
-                    </tr>
-                    
-                    <tr>
-                        <td >Id:</td>
-                        <td colspan="3" ><input size="60%" name="id" id="id" value= "{{idfila}}" ></input></td>
-                    </tr>
-                                       
-                        <td colspan="4" align="center" ><button type="submmit" id="guardar"  >Guardar</button>
-                            <button type="reset"  >Limpiar</button>
-                        </td>                        
-                    </tr>                    
-                </table>
-                     
+        });
+        myGrid.jqGrid('navGrid','#pagerObj',
+        {edit:true,add:true,del:true},
+        {width:450,height:200, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos editados con exito!");},closeAfterEdit:true },//edit
+        {width:450,height:1000,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");},closeAfterAdd:true },//add
+        {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
+        alert("Mensaje eliminado con exito!");
+          } },//del
+        {},//search
+        {} //view
+        );
        
+      });
       
+       //define handler for 'editSubmit' event
+    var fn_editSubmit=function(response,postdata){
+     var json=response.responseText; //in my case response text form server is "{sc:true,msg:''}"
+     var result=eval("("+json+")"); //create js object from server reponse
+     return [result.sc,result.msg,null]; 
+    }  
 
+    
+   
+    
+    </script>
+    <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' />  
+    <div id="grid_wrapper" class="ui-corner-all floatLeft">
+        <table id="theGridObj" class="scroll" ></table> 
+        <div id="pagerObj"  class="scroll" style="text-align:center;"></div> 
+      </div>
+       
+    
 {% endblock %}
+
+
+
+
+
+
+
+
