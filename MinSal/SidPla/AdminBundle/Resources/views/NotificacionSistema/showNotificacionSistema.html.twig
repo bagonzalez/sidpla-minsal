@@ -5,6 +5,10 @@
 <script type="text/javascript">
       $(document).ready(function(){
         
+        $('#agregarNotiSisteButton').button();
+        $('#editarNotiSisteButton').button();
+        $('#eliminarNotiSisteButton').button();
+                
         var myGrid = $('#tabnotificacion');        
         myGrid.jqGrid({ 
           url: 'consultarNotificacionJSON',
@@ -28,15 +32,44 @@
           editurl:'manttNotificacionEdicion'
            
         });
-         myGrid.jqGrid('navGrid','#pager',
-        {edit:true,add:true,del:true},
-        {width:550,height:160,closeAfterEdit : true,bottominfo:"Campos marcados con (*) son obligatorios",onclickSubmit: function(rp_ge, postdata) {
-        alert("datos editados con exito!");}},
-        {width:550,height:160,closeAfterAdd : true,bottominfo:"Campos marcados con (*) son obligatorios",onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");}},
-        {width:550,height:160},
-        {multipleSearch:true, multipleGroup:true}
-        );         
+        
+         myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false},{multipleSearch:true, multipleGroup:true});    
+            
+  
+  //agregar
+  $("#agregarNotiSisteButton").click(function(){
+        jQuery('#tabnotificacion').jqGrid('editGridRow',"new",{closeAfterAdd:true,addCaption: "Agregar Notificacion al Sistema",height:200,align:'center',reloadAfterSubmit:true,
+        top : 250 ,width:550,height:160,processData: "Cargando...",
+        bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");
+          }});
+        });
+    
+         //editar
+    $("#editarNotiSisteButton").click(function(){
+          var gr = jQuery('#tabnotificacion').jqGrid('getGridParam','selrow');
+          if( gr != null )
+             jQuery("#tabnotificacion").jqGrid('editGridRow',gr,{closeAfterEdit:true,editCaption: "Editando Notificacion del Sistema",height:200,align:'center',reloadAfterSubmit:true,
+                 top : 250 ,width:550,height:160,processData: "Cargando...", onclickSubmit: function(rp_ge, postdata) {
+        alert("Notificacion al Sistema editado con exito!");
+          }, bottominfo:"Campos marcados con (*) son obligatorios"});
+             else alert("Por favor seleccione una fila para editar!"); 
+          });
+    
+        //eliminar
+    $("#eliminarNotiSisteButton").click(function(){
+         var grs = jQuery('#tabnotificacion').jqGrid('getGridParam','selrow');
+         if( grs != null ) jQuery('#tabnotificacion').jqGrid('delGridRow',grs,{msg: "Desea Eliminar esta Notificacion del Sistema?",caption:"Eliminando Notificacion del Sistema",height:100,align:'center',reloadAfterSubmit:true,
+             top : 300 ,width:550,height:160,processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
+        alert("Notificacion al Sistema eliminado con exito!");
+          }}); 
+         else alert("Por favor seleccione una fila para borrar!"); }); 
+ 
+  //fin          
+            
+            
+            
+            
       });
     </script>
     <h1 style='text-align: center;'>Notificaciones del Sistema</h1>
@@ -45,6 +78,10 @@
             <td align="center">
                 <br></br>  
                 <table id="tabnotificacion" class="scroll" alignalign="center"></table> 
+                 <br></br>
+                  <input type="button" id="agregarNotiSisteButton" value="  Agregar  " />
+                  <input type="button" id="editarNotiSisteButton" value="   Editar   " />
+                  <input type="button" id="eliminarNotiSisteButton" value="  Eliminar  " />
                 <div id="pager" class="scroll" style="text-align:center;"></div>
             </td>
         </tr>        

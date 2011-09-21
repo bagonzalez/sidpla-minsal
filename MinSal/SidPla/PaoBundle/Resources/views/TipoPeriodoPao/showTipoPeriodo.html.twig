@@ -2,6 +2,10 @@
     <script type="text/javascript">
       $(document).ready(function(){
         
+        $('#agregarTipoPeriodoButton').button();
+        $('#editarTipoPeriodoButton').button();
+        $('#eliminarTipoPeriodoButton').button();
+        
         var myGrid = $('#tabtipoperiodo');        
         myGrid.jqGrid({ 
           url: 'consultarTipoPeriodoJSON',
@@ -25,24 +29,58 @@
           editurl:'manttTipoPeriodo'
                      
         });
+        
         myGrid.jqGrid('navGrid','#pager',
-            {edit:true,add:true,del:true},
-            //El de Editar
-            {width:550,height:250,closeAfterEdit : true,
-             bottominfo:"(*) Campos obligatorios",
-             onclickSubmit: function(rp_ge, postdata) {
-                    alert("Datos Editados con exito!");}
-            },//Fin de las propiedades para editar
-            //El de agregar
-            {width:550,height:250,closeAfterAdd : true,
-             bottominfo:"(*) Campos obligatorios",
-             onclickSubmit: function(rp_ge, postdata) {
-                    alert("Datos Agregados con exito!");}
-            },
-            {width:550,height:160}
-        );         
+            {edit:false,add:false,del:false,view:true}
+             );  
+        
+               
+  //agregar
+  $("#agregarTipoPeriodoButton").click(function(){
+        jQuery('#tabtipoperiodo').jqGrid('editGridRow',"new",{closeAfterAdd:true,addCaption: "Agregar Tipo Periodo PAO",align:'center',reloadAfterSubmit:true,
+        top : 250 ,left: 250,width:550,height:250,processData: "Cargando...",
+        bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");
+          }});
+        });
+    
+         //editar
+    $("#editarTipoPeriodoButton").click(function(){
+          var gr = jQuery('#tabtipoperiodo').jqGrid('getGridParam','selrow');
+          if( gr != null )
+             jQuery("#tabtipoperiodo").jqGrid('editGridRow',gr,{closeAfterEdit:true,editCaption: "Editando Tipo Periodo PAO",height:200,align:'center',reloadAfterSubmit:true,
+                 top : 250 ,width:550,height:250,processData: "Cargando...", onclickSubmit: function(rp_ge, postdata) {
+        alert("Tipo Periodo PAO editado con exito!");
+          }, bottominfo:"Campos marcados con (*) son obligatorios"});
+             else alert("Por favor seleccione una fila para editar!"); 
+          });
+    
+        //eliminar
+    $("#eliminarTipoPeriodoButton").click(function(){
+         var grs = jQuery('#tabtipoperiodo').jqGrid('getGridParam','selrow');
+         if( grs != null ) jQuery('#tabtipoperiodo').jqGrid('delGridRow',grs,{msg: "Desea Eliminar este Tipo Periodo PAO?",caption:"Eliminando Tipo Periodo PAO",height:100,align:'center',reloadAfterSubmit:true,
+             top : 300 ,width:550,height:160,processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
+        alert("Tipo Periodo PAO eliminado con exito!");
+          }}); 
+         else alert("Por favor seleccione una fila para borrar!"); }); 
+ 
+  //fin
+        
+        
+        
+        
+        
+        
+        
+        
       });
     </script>
    <table id="tabtipoperiodo" class="scroll" alignalign="center"></table> 
+   <br></br>
+       <input type="button" id="agregarTipoPeriodoButton" value="  Agregar  " />
+       <input type="button" id="editarTipoPeriodoButton" value="   Editar   " />
+       <input type="button" id="eliminarTipoPeriodoButton" value="  Eliminar  " />
+   
+   
     <div id="pager" class="scroll" style="text-align:center;"></div>  
 {% endblock %}

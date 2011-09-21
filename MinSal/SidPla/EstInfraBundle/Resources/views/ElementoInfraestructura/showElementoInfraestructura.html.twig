@@ -1,7 +1,7 @@
 {% block body %}
 <script type="text/javascript">
            $(document).ready(function(){
-                $('#agregarElementoButton').button();
+        $('#agregarElementoButton').button();
         $('#editarElementoButton').button();
         $('#eliminarElementoButton').button();
        
@@ -33,22 +33,9 @@
                      
         });
         myGrid.jqGrid('navGrid','#pager1',
-            {edit:false,add:false,del:false,view:true},
+            {edit:false,add:false,del:false,view:true},{multipleSearch:true, multipleGroup:true}
             //El de Editar
-            {width:550,height:250,closeAfterEdit : true,
-             bottominfo:"(*) Campos obligatorios",
-             onclickSubmit: function(rp_ge, postdata) {
-                    alert("Datos Editados con exito!");}
-            },//Fin de las propiedades para editar
-            //El de agregar
-            {width:550,height:250,closeAfterAdd : true,
-             bottominfo:"(*) Campos obligatorios",
-             onclickSubmit: function(rp_ge, postdata) {
-                    alert("Datos Agregados con exito!");}
-            },
-            {width:550,height:160}
-            
-        );    
+          );    
    //inicio
   
   //agregar
@@ -86,7 +73,7 @@
    });
       
     </script>
-   <table id="tabElemInfra" class="scroll" alignalign="center">
+   <table id="tabElemInfra" class="scroll" align="center">
     
    </table> 
     <br></br>

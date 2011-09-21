@@ -58,6 +58,8 @@
         {edit:false,add:false,del:false}
     );//Fin del pager del grid
    
+     
+   
    $("#editarPeriodoPao").click(function(){
      var gr = jQuery('#tabperiodopao').jqGrid('getGridParam','selrow');
      if( gr != null )
@@ -68,9 +70,9 @@
                         alert("Periodo Pao Editado con exito!");
                 }, 
                 bottominfo:"Campos marcados con (*) son obligatorios"});
-      else 
+     else 
         alert("Por favor seleccione una fila para editar!"); 
-     });
+        });
     
    //Funcion para cargar el Grid con diferente anio
    function cargarAnio(){
