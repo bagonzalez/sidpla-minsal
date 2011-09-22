@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="sidpla_pao")
  * @ORM\Entity
  */
-class Pao
-{
+class Pao {
+
     /**
      * @var integer $idPao
      *
@@ -21,47 +21,48 @@ class Pao
      */
     private $idPao;
 
-    
     /**
      * @var bigint $anio
      *
      * @ORM\Column(name="pao_anio", type="bigint")
      */
     private $anio;
-    
-    
-     /**
+
+    /**
      * @ORM\ManyToOne(targetEntity="MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa", inversedBy="paos")
      * @ORM\JoinColumn(name="uniorg_codigo", referencedColumnName="uniorg_codigo")
      */
     protected $unidadOrganizativa;
-    
-        
+
     /**
      * @ORM\OneToOne(targetEntity="MinSal\SidPla\CensoBundle\Entity\CensoPoblacion", mappedBy="pao")
      * @ORM\JoinColumn(name="censopoblacion_codigo", referencedColumnName="censopoblacion_codigo")
      */
     private $cesopoblacion;
-    
-     /**
+
+    /**
      * @ORM\OneToOne(targetEntity="Justificacion", mappedBy="pao")
      * @ORM\JoinColumn(name="justificacion_codigo", referencedColumnName="justificacion_codigo")
      */
     private $justificacion;
 
-     /**
+    /**
      * @ORM\OneToMany(targetEntity="PeriodoPao", mappedBy="paoPerPao")
      */
     private $periodoCalendarizacion;
 
+    /**
+     * @ORM\OneToOne(targetEntity="MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada", inversedBy="paoInfraEva")
+     * @ORM\JoinColumn(name="infeva_codigo", referencedColumnName="infeva_codigo")
+     */
+    private $infraEvaluadaPao;
 
     /**
      * Set idPao
      *
      * @param integer $idPao
      */
-    public function setIdPao($idPao)
-    {
+    public function setIdPao($idPao) {
         $this->idPao = $idPao;
     }
 
@@ -70,8 +71,7 @@ class Pao
      *
      * @return integer 
      */
-    public function getIdPao()
-    {
+    public function getIdPao() {
         return $this->idPao;
     }
 
@@ -80,8 +80,7 @@ class Pao
      *
      * @param bigint $anio
      */
-    public function setAnio($anio)
-    {
+    public function setAnio($anio) {
         $this->anio = $anio;
     }
 
@@ -90,8 +89,7 @@ class Pao
      *
      * @return bigint 
      */
-    public function getAnio()
-    {
+    public function getAnio() {
         return $this->anio;
     }
 
@@ -100,8 +98,7 @@ class Pao
      *
      * @param MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $unidadOrganizativa
      */
-    public function setUnidadOrganizativa(\MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $unidadOrganizativa)
-    {
+    public function setUnidadOrganizativa(\MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $unidadOrganizativa) {
         $this->unidadOrganizativa = $unidadOrganizativa;
     }
 
@@ -110,8 +107,7 @@ class Pao
      *
      * @return MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa 
      */
-    public function getUnidadOrganizativa()
-    {
+    public function getUnidadOrganizativa() {
         return $this->unidadOrganizativa;
     }
 
@@ -120,8 +116,7 @@ class Pao
      *
      * @param MinSal\SidPla\CensoBundle\Entity\CensoPoblacion $cesopoblacion
      */
-    public function setCesopoblacion(\MinSal\SidPla\CensoBundle\Entity\CensoPoblacion $cesopoblacion)
-    {
+    public function setCesopoblacion(\MinSal\SidPla\CensoBundle\Entity\CensoPoblacion $cesopoblacion) {
         $this->cesopoblacion = $cesopoblacion;
     }
 
@@ -130,8 +125,7 @@ class Pao
      *
      * @return MinSal\SidPla\CensoBundle\Entity\CensoPoblacion 
      */
-    public function getCesopoblacion()
-    {
+    public function getCesopoblacion() {
         return $this->cesopoblacion;
     }
 
@@ -140,8 +134,7 @@ class Pao
      *
      * @param MinSal\SidPla\PaoBundle\Entity\Justificacion $justificacion
      */
-    public function setJustificacion(\MinSal\SidPla\PaoBundle\Entity\Justificacion $justificacion)
-    {
+    public function setJustificacion(\MinSal\SidPla\PaoBundle\Entity\Justificacion $justificacion) {
         $this->justificacion = $justificacion;
     }
 
@@ -150,24 +143,20 @@ class Pao
      *
      * @return MinSal\SidPla\PaoBundle\Entity\Justificacion 
      */
-    public function getJustificacion()
-    {
+    public function getJustificacion() {
         return $this->justificacion;
     }
-    
-    
-    public function __construct()
-    {
+
+    public function __construct() {
         $this->periodoCalendarizacion = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Add periodoCalendarizacion
      *
      * @param MinSal\SidPla\PaoBundle\Entity\PeriodoPao $periodoCalendarizacion
      */
-    public function addPeriodoPao(\MinSal\SidPla\PaoBundle\Entity\PeriodoPao $periodoCalendarizacion)
-    {
+    public function addPeriodoPao(\MinSal\SidPla\PaoBundle\Entity\PeriodoPao $periodoCalendarizacion) {
         $this->periodoCalendarizacion[] = $periodoCalendarizacion;
     }
 
@@ -176,8 +165,26 @@ class Pao
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getPeriodoCalendarizacion()
-    {
+    public function getPeriodoCalendarizacion() {
         return $this->periodoCalendarizacion;
     }
+
+    /**
+     * Set infraEvaluadaPao
+     *
+     * @param MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada $infraEvaluadaPao
+     */
+    public function setinfraEvaluadaPao($infraEvaluadaPao) {
+        $this->infraEvaluadaPao = $infraEvaluadaPao;
+    }
+
+    /**
+     * Get infraEvaluadaPao
+     *
+     * @return MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada 
+     */
+    public function getinfraEvaluadaPao() {
+        return $this->infraEvaluadaPao;
+    }
+
 }

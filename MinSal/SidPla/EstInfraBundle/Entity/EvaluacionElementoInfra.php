@@ -7,11 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra
  *
- * @ORM\Table(name="sidpla_evaluacionelementoinfra)
+ * @ORM\Table(name="sidpla_evaluacionelementoinfra")
  * @ORM\Entity
  */
-class EvaluacionElementoInfra
-{
+class EvaluacionElementoInfra {
+
     /**
      * @var integer $idEvaEleInfra
      *
@@ -19,33 +19,30 @@ class EvaluacionElementoInfra
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
- 
     private $idEvaEleInfra;
 
     // llaves foranes de evaluacionelementoinfra
-   
+
     /**
      * @ORM\ManyToOne(targetEntity="MinSal\SidPla\EstInfraBundle\Entity\EstadoInfraestructura", inversedBy="evaluacionelementoinfo")
      * @ORM\JoinColumn(name="estinf_codigo", referencedColumnName="estinf_codigo")
      */
-    private $EstInf_Codigo;
-    
+    private $EstInfCodigo;
+
     /**
      * @ORM\ManyToOne(targetEntity="MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura", inversedBy="evaluacionelementoinfo2")
      * @ORM\JoinColumn(name="eleminf_codigo", referencedColumnName="eleminf_codigo")
      */
-    private $ElemInf_Codigo; 
-    
-     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada", inversedBy="evaluacionelementoinfo3")
+    private $ElemInfCodigo;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada", inversedBy="evaEleInfra")
      * @ORM\JoinColumn(name="infeva_codigo", referencedColumnName="infeva_codigo")
      */
-    private $InfEva_Codigo;
-    
-  //fin de llaves foraneas  
-    
-    
-    
+    private $infraEvaluada;
+
+    //fin de llaves foraneas  
+
     /**
      * @var datetime $fechaEvaluacion
      *
@@ -60,15 +57,12 @@ class EvaluacionElementoInfra
      */
     private $cantElemt;
 
-
-
     /**
      * Get idEvaEleInfra
      *
      * @return integer 
      */
-    public function getIdEvaEleInfra()
-    {
+    public function getIdEvaEleInfra() {
         return $this->idEvaEleInfra;
     }
 
@@ -77,8 +71,7 @@ class EvaluacionElementoInfra
      *
      * @param datetime $fechaEvaluacion
      */
-    public function setFechaEvaluacion($fechaEvaluacion)
-    {
+    public function setFechaEvaluacion($fechaEvaluacion) {
         $this->fechaEvaluacion = $fechaEvaluacion;
     }
 
@@ -87,8 +80,7 @@ class EvaluacionElementoInfra
      *
      * @return datetime 
      */
-    public function getFechaEvaluacion()
-    {
+    public function getFechaEvaluacion() {
         return $this->fechaEvaluacion;
     }
 
@@ -97,8 +89,7 @@ class EvaluacionElementoInfra
      *
      * @param float $cantElemt
      */
-    public function setCantElemt($cantElemt)
-    {
+    public function setCantElemt($cantElemt) {
         $this->cantElemt = $cantElemt;
     }
 
@@ -107,81 +98,63 @@ class EvaluacionElementoInfra
      *
      * @return float 
      */
-    public function getCantElemt()
-    {
+    public function getCantElemt() {
         return $this->cantElemt;
     }
-    
 
-    
-    
-    
     /**
-     * Set EstInf_Codigo
+     * Set EstInfCodigo
      *
      * @param MinSal\SidPla\EstInfraBundle\Entity\EstadoInfraestructura $EstInf_Codigo
      */
-    public function setEstInf_Codigo(MinSal\SidPla\EstInfraBundle\Entity\EstadoInfraestructura $EstInf_Codigo)
-    {
-        $this->EstInf_Codigo = $EstInf_Codigo;
+    public function setEstInfCodigo($EstInfCodigo) {
+        $this->EstInfCodigo = $EstInfCodigo;
     }
-    
-     /**
-     * Get EstInf_Codigo
+
+    /**
+     * Get EstInfCodigo
      *
      * @return MinSal\SidPla\EstInfraBundle\Entity\EstadoInfraestructura
      */
-    public function getEstInf_Codigo()
-    {
-        return $this->EstInf_Codigo;
+    public function getEstInfCodigo() {
+        return $this->EstInfCodigo;
     }
-    
-          
-     /**
-     * Set ElemInf_Codigo
-     *
-     * @param MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura $ElemInf_Codigo
-     */
-    public function setElemInf_Codigo(MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura $ElemInf_Codigo)
-    {
-        $this->ElemInf_Codigo = $ElemInf_Codigo;
-    }
-    
+
     /**
-     * Get ElemInf_Codigo
+     * Set ElemInfCodigo
+     *
+     * @param MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura $ElemInfCodigo
+     */
+    public function setElemInfCodigo($ElemInfCodigo) {
+        $this->ElemInfCodigo = $ElemInfCodigo;
+    }
+
+    /**
+     * Get ElemInfCodigo
      *
      * @return MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura
      */
-    public function getElemInf_Codigo()
-    {
-        return $this->ElemInf_Codigo;
+    public function getElemInfCodigo() {
+        return $this->ElemInfCodigo;
     }
-    
-    
-    
-     /**
-     * Set InfEva_Codigo
-     *
-     * @param MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada $InfEva_Codigo
-     */
-    public function setInfEva_Codigo(MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada $InfEva_Codigo)
-    {
-        $this->InfEva_Codigo = $InfEva_Codigo;
-    }
-    
-    
+
     /**
-     * Get InfEva_Codigo
+     * Set infraEvaluada
      *
-     * @return MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada
+     * @param MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada $infraEvaluada
      */
-    public function getInfEva_Codigo()
+    public function setInfraEvaluada(\MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada $infraEvaluada)
     {
-        return $this->InfEva_Codigo;
+        $this->infraEvaluada = $infraEvaluada;
     }
-    
-    
- 
-    
-    
+
+    /**
+     * Get infraEvaluada
+     *
+     * @return MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada 
+     */
+    public function getInfraEvaluada()
+    {
+        return $this->infraEvaluada;
+    }
 }

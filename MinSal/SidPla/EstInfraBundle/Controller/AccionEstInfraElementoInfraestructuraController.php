@@ -5,10 +5,12 @@ namespace MinSal\SidPla\EstInfraBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+
 use MinSal\SidPla\EstInfraBundle\EntityDao\ElementoInfraestructuraDao;
 use MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura;
-use MinSal\SidPla\EstInfraBundle\EntityDao\UnidadMedidaDao;
+
 use MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida;
+use MinSal\SidPla\EstInfraBundle\EntityDao\UnidadMedidaDao;
 
 class AccionEstInfraElementoInfraestructuraController extends Controller {
 
@@ -29,8 +31,7 @@ class AccionEstInfraElementoInfraestructuraController extends Controller {
             $rows[$i]['cell'] = array($aux->getIdElemInfra(),
                 $aux->getNomElemInfra(),
                 $aux->getCodUnidadMed()->getAbreUnidMed(),
-                $aux->getElemInfraDescrip()
-                              
+                $aux->getElemInfraDescrip()                
             );
           
             $i++;

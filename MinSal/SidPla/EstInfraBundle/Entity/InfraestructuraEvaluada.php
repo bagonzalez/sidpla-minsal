@@ -10,52 +10,80 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table("sidpla_infraestructuraevaluada")
  * @ORM\Entity
  */
-class InfraestructuraEvaluada
-{
+class InfraestructuraEvaluada {
+
     /**
-     * @var integer $id
+     * @var integer $idInfraEva
      *
      * @ORM\Column(name="infeva_codigo", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\Pao", inversedBy="infraEvaluada")
-     * @ORM\JoinColumn(name="pao_codigo", referencedColumnName="pao_codigo")
-     */
-    
-    private $pao_codigo;
-
+    private $idInfraEva;
 
     /**
-     * Get id
+     * @ORM\OneToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\Pao", mappedBy="infraEvaluadaPao")
+     * @ORM\JoinColumn(name="pao_codigo", referencedColumnName="pao_codigo")
+     */
+    private $paoInfraEva;
+    
+    //Llave de Uno a muchos con Evaluacion Elemento Infraestructura
+    /**
+     * @ORM\OneToMany(targetEntity="EvaluacionElementoInfra", mappedBy="infraEvaluada")
+     */
+    private $evaEleInfra;
+
+    /**
+     * Get idInfraEva
      *
      * @return integer 
      */
-    public function getId()
-    {
-        return $this->id;
+    public function getidInfraEva() {
+        return $this->idInfraEva;
     }
 
     /**
-     * Set pao_codigo
+     * Set paoInfraEva
      *
-     * @param MinSal\SidPla\PaoBundle\Entity\Pao $paoCodigo
+     * @param MinSal\SidPla\PaoBundle\Entity\Pao $paoInfraEva
      */
-    public function setPaoCodigo(MinSal\SidPla\PaoBundle\Entity\Pao $paoCodigo)
-    {
-        $this->pao_codigo = $paocodigo;
+    public function setpaoInfraEva($paoInfraEva) {
+        $this->paoInfraEva= $paoInfraEva;
     }
 
     /**
-     * Get pao_codigo
+     * Get paoInfraEva
      *
      * @return MinSal\SidPla\PaoBundle\Entity\Pao
      */
-    public function getPaoCodigo()
-    {
-        return $this->pao_codigo;
+    public function getpaoInfraEva() {
+        return $this->paoInfraEva;
     }
+    
+    public function __construct()
+    {
+        $this->evaEleInfra  = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Add evaEleInfra
+     *
+     * @param MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra $evaEleInfra
+     */
+    public function addevaEleInfra ($evaEleInfra)
+    {
+        $this->evaEleInfra[] = $evaEleInfra;
+    }
+
+    /**
+     * Get evaEleInfra
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getevaEleInfra()
+    {
+        return $this->evaEleInfra;
+    }
+    
+
 }
