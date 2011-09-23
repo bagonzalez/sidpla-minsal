@@ -5,7 +5,6 @@ namespace MinSal\SidPla\EstInfraBundle\EntityDao;
 use MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura;
 use MinSal\SidPla\EstInfraBundle\EntityDao\UnidadMedidaDao;
 use MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida;
-
 use Doctrine\ORM\Query\ResultSetMapping;
 
 class ElementoInfraestructuraDao {
@@ -32,13 +31,38 @@ class ElementoInfraestructuraDao {
         return $elementoinfraestructura->getResult();
     }
 
-    
     /*
      * Obtiene un elemento infraestructura especifico
      */
+
     public function getElementoInfraestructuraEspecifico($codigo) {
         $elementoinfraestructura = $this->repositorio->find($codigo);
         return $elementoinfraestructura;
+    }
+
+    public function obtenerElementoInfraestructura() {
+
+        $elementoInfraestructuraDao = $this->getElementoInfraestructura();
+
+        $aux = new ElementoInfraestructura();
+        $n = $this->cuantosElementosInfraestructura();
+        $i = 1;
+        $cadena = '';
+        foreach ($elementoInfraestructuraDao as $aux) {
+            if ($i < $n)
+                $cadena.=$aux->getIdElemInfra() . ":" . $aux->getNomElemInfra(). ';';
+            else
+                $cadena .=$aux->getIdElemInfra() . ":" . $aux->getNomElemInfra();
+            $i++;
+        }
+
+        return $cadena;
+    }
+
+    public function cuantosElementosInfraestructura() {
+        $unidadmedida = $this->em->createQuery("select count(EI)
+                                                 from MinSalSidPlaEstInfraBundle:ElementoInfraestructura EI");
+        return $unidadmedida->getSingleScalarResult();
     }
 
     /*
@@ -50,34 +74,34 @@ class ElementoInfraestructuraDao {
         $elemInfra = new ElementoInfraestructura();
         $elemInfra->setNomElemInfra($nomElemInfra);
         $elemInfra->setElemInfraDescrip($descElemInfra);
-        
-        $unidadMedidaDao=new UnidadMedidaDao($this->doctrine);
-        $unidadMedida=$unidadMedidaDao->getUnidadMedidaEspecifica($abreElemInfra);
+
+        $unidadMedidaDao = new UnidadMedidaDao($this->doctrine);
+        $unidadMedida = $unidadMedidaDao->getUnidadMedidaEspecifica($abreElemInfra);
         $elemInfra->setCodUnidadMed($unidadMedida);
-        
+
         $this->em->persist($elemInfra);
         $this->em->flush();
         $matrizMensajes = array('El proceso de almacenar elementos de infraestructura termino con exito');
 
         return $matrizMensajes;
     }
-    
+
     /*
      * Editar elemento de infraestructura
      */
 
     public function editarElementoInfra($codElemInfra, $nomElemInfra, $abreElemInfra, $descElemInfra) {
 
-        $elemInfra= $this->getElementoInfraestructuraEspecifico($codElemInfra);
+        $elemInfra = $this->getElementoInfraestructuraEspecifico($codElemInfra);
         $elemInfra->setNomElemInfra($nomElemInfra);
-     
-        $unidadMedidaDao=new UnidadMedidaDao($this->doctrine);
-        $unidadMedida=$unidadMedidaDao->getUnidadMedidaEspecifica($abreElemInfra);
+
+        $unidadMedidaDao = new UnidadMedidaDao($this->doctrine);
+        $unidadMedida = $unidadMedidaDao->getUnidadMedidaEspecifica($abreElemInfra);
         $elemInfra->setCodUnidadMed($unidadMedida);
-        
-        
+
+
         $elemInfra->setElemInfraDescrip($descElemInfra);
-        
+
 
         $this->em->persist($elemInfra);
         $this->em->flush();
@@ -85,7 +109,7 @@ class ElementoInfraestructuraDao {
 
         return $matrizMensajes;
     }
-    
+
     /*
      * Eliminar elemento de infraestrutura
      */

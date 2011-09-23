@@ -25,4 +25,17 @@ MinSalSidPlaEstInfraBundle_manttElementoInfraestrutura:
     defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraElementoInfraestructura:manttElementoInfraestrutura}
 
 
+#Evaluacion Elemento Infraestructura
+MinSalSidPlaEstInfraBundle_mantenimientoEvaluacionElementoInfra:
+    pattern:  /mantenimientoEvaluacionElementoInfra
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraEvaluacionElementoInfra:mantenimientoEvaluacionElementoInfra}
+
+MinSalSidPlaEstInfraBundle_consultarEvaluacionElementoJSON:
+    pattern:  /consultarEvaluacionElementoJSON
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraEvaluacionElementoInfra:consultarEvaluacionElementoJSON}
+
+MinSalSidPlaEstInfraBundle_manttEvaluacionElemento:
+    pattern:  /manttEvaluacionElemento
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraEvaluacionElementoInfra:manttEvaluacionElemento}
+
 

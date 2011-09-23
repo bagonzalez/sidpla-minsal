@@ -10,9 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="sidpla_elementoinfraestructura")
  * @ORM\Entity
  */
-class ElementoInfraestructura
-{
-    
+class ElementoInfraestructura {
+
     /**
      * @var integer $IdElemInfra;
      *
@@ -36,20 +35,18 @@ class ElementoInfraestructura
      */
     private $elemInfraDescrip;
 
-     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida", inversedBy="unidadmedida")
+   /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida", inversedBy="unidadMedida")
      * @ORM\JoinColumn(name="unimed_codigo", referencedColumnName="unimed_codigo")
      */
     private $codUnidadMed;
-
 
     /**
      * Get IdElemInfra
      *
      * @return integer 
      */
-    public function getIdElemInfra()
-    {
+    public function getIdElemInfra() {
         return $this->IdElemInfra;
     }
 
@@ -58,8 +55,7 @@ class ElementoInfraestructura
      *
      * @param string $nomElemInfra
      */
-    public function setNomElemInfra($nomElemInfra)
-    {
+    public function setNomElemInfra($nomElemInfra) {
         $this->nomElemInfra = $nomElemInfra;
     }
 
@@ -68,8 +64,7 @@ class ElementoInfraestructura
      *
      * @return string 
      */
-    public function getNomElemInfra()
-    {
+    public function getNomElemInfra() {
         return $this->nomElemInfra;
     }
 
@@ -78,8 +73,7 @@ class ElementoInfraestructura
      *
      * @param string $elemInfraDescrip
      */
-    public function setElemInfraDescrip($elemInfraDescrip)
-    {
+    public function setElemInfraDescrip($elemInfraDescrip) {
         $this->elemInfraDescrip = $elemInfraDescrip;
     }
 
@@ -88,8 +82,7 @@ class ElementoInfraestructura
      *
      * @return string 
      */
-    public function getElemInfraDescrip()
-    {
+    public function getElemInfraDescrip() {
         return $this->elemInfraDescrip;
     }
 
@@ -98,8 +91,7 @@ class ElementoInfraestructura
      *
      * @param MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida $codUnidadMed
      */
-    public function setCodUnidadMed($codUnidadMed)
-    {
+    public function setCodUnidadMed($codUnidadMed) {
         $this->codUnidadMed = $codUnidadMed;
     }
 
@@ -108,8 +100,8 @@ class ElementoInfraestructura
      *
      * @return MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida
      */
-    public function getCodUnidadMed()
-    {
+    public function getCodUnidadMed() {
         return $this->codUnidadMed;
     }
+
 }

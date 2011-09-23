@@ -1,49 +1,54 @@
 {% block body %}
 <script type="text/javascript">
-           $(document).ready(function(){
-    
-        var myGrid=('#tabEvaInfra'); 
-        myGrid.jqGrid({
-        datatype: "local", height: 250, 
-        colNames:['Codigo','Elemento', 'Estado', 'Cantidad','Unidad','Fecha'], 
-        colModel:[ 
-                  {name:'id',index:'id', width:90, sorttype:"int", editable: true},
-                  {name:'elemento',index:'elemento', width:150,editable: true,editoptions:{size:"20",maxlength:"30"}},
-                  {name:'estado',index:'estado', width:90, editable: true,edittype:"select",editoptions:{value:"FE:FedEx;IN:InTime;TN:TNT;AR:ARAMEX"}},
-                  {name:'cantidad',index:'cantidad', width:60, editable: true,edittype:"checkbox",editoptions: {value:"Yes:No"}},
-                  {name:'unidad',index:'unidad', width:200, sortable:false,editable: true,edittype:"textarea", editoptions:{rows:"2",cols:"10"}} 
-                  {name:'fecha',index:'fecha', width:150,editable: true,editoptions:{size:"20",maxlength:"30"}},    
-             ],
-        
-        onSelectRow: function(id){ 
-            if(id && id!==lastsel2){
-                jQuery('#tabEvaInfra').jqGrid('restoreRow',lastsel2);
-                jQuery('#tabEvaInfra').jqGrid('editRow',id,true);
-                lastsel2=id; 
-                } 
+    $(document).ready(function(){
+        var seleccionado       
+        var myGrid = $('#tabEvaInfra');        
+        myGrid.jqGrid({ 
+          url: 'consultarEvaluacionElementoJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Codigo','Elemento', 'Estado', 'Cantidad','Unidad','Accion'], 
+          colModel:[ 
+                  {name:'codigo',index:'codigo', width:50, editable: false,align:'center'},
+                  {name:'elemento',index:'elemento', width:200,editable: false,edittype:"select",editoptions: {value:"{{ elementoInfra }}" }},
+                  {name:'estado',index:'estado', width:60, editable: true,edittype:"select",editoptions: {value:"{{ estadosInfra }}" },align:'center'},
+                  {name:'cantidad',index:'cantidad', width:90, editable: true,align:'center'},
+                  {name:'unidad',index:'unidad', width:50, editable: false,edittype:"select",editoptions:{value:"{{ unidadMedida }}" },align:'center'},
+                  {name:'act',index:'act', width:100,sortable:false,align:'center'}           
+          ],
+          scroll:true,
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          pager: jQuery('#pager1'),
+          viewrecords: true,          
+          caption: 'Evaluacion Elementos de Infraestructura',
+          height: "100%",
+          onSelectRow: function(id){
+                if(id && id!==seleccionado){
+                jQuery('#tabEvaInfra').restoreRow(seleccionado);
+                jQuery('#tabEvaInfra').editRow(id,true);
+                seleccionado=id;}
           },
-         
-     editurl: "server.php", caption: "Input Types" });
-     
-     var mydata2 = [ {id:"12345",name:"Desktop Computer",note:"note",stock:"Yes",ship:"FedEx"},
-         {id:"23456",name:"Laptop",note:"Long text ",stock:"Yes",ship:"InTime"},
-         {id:"34567",name:"LCD Monitor",note:"note3",stock:"Yes",ship:"TNT"},
-         {id:"45678",name:"Speakers",note:"note",stock:"No",ship:"ARAMEX"},
-         {id:"56789",name:"Laser Printer",note:"note2",stock:"Yes",ship:"FedEx"},
-         {id:"67890",name:"Play Station",note:"note3",stock:"No", ship:"FedEx"},
-         {id:"76543",name:"Mobile Telephone",note:"note",stock:"Yes",ship:"ARAMEX"},
-         {id:"87654",name:"Server",note:"note2",stock:"Yes",ship:"TNT"}, 
-         {id:"98765",name:"Matrix Printer",note:"note3",stock:"No", ship:"FedEx"} 
-                   ]; 
-                   
-     for(var i=0;i < mydata2.length;i++)
-         jQuery("#tabEvaInfra").jqGrid('addRowData',mydata2[i].id,mydata2[i]);    
-       
-
+        gridComplete: 
+            function(){ 
+                var ids = jQuery("#tabEvaInfra").jqGrid('getDataIDs');
+                for(var i=0;i < ids.length;i++){
+                    var cl = ids[i]; 
+                    guardar = "<input style='height:18px;width:50px;' type='button' value='Guardar' onclick=\"jQuery('#tabEvaInfra').saveRow('"+cl+"');\" />";
+                    jQuery("#tabEvaInfra").jqGrid('setRowData',ids[i],{act:guardar}); } },
+        editurl:'manttEvaluacionElemento'
+                     
+        });
+        myGrid.jqGrid('navGrid','#pager1',
+            {edit:false,add:false,del:false,view:true}
+            
+        );    
+ 
+   });
+ 
     </script>
    <table id="tabEvaInfra" class="scroll" alignalign="center">
-    
    </table> 
- 
-    <div id="pager1" class="scroll" style="text-align:center;"></div>  
+   <div id="pager1" class="scroll" style="text-align:center;"></div>  
 {% endblock %}
