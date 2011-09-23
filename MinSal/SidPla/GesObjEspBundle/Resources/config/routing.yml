@@ -39,3 +39,10 @@ MinSalSidPlaGesObjEspBundle_guardarResultadosEsperados:
 MinSalSidPlaGesObjEspBundle_consultarTipoMeta:
     pattern:  /consultarTipoMeta
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminResultadosEsperados:consultarTipoMeta}
+
+MinSalSidPlaGesObjEspBundle_editarResultadosEsperados:
+    pattern:  /editarResultadosEsperados
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminResultadosEsperados:editarResultadosEsperados}
+MinSalSidPlaGesObjEspBundle_editandoResultadosEsperados:
+    pattern:  /editandoResultadosEsperados
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminResultadosEsperados:editandoResultadosEsperados}

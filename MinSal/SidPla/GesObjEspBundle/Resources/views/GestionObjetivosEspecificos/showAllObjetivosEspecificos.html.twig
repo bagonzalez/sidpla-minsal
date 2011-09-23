@@ -11,8 +11,8 @@
           colNames:['Id','Objetivo','Actions'],
           colModel:[ 
             { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
-            { name:'objetivo', index: 'objetivo', width:700,editable:true,editoptions:{size:40},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  },
-            {name:'act',index:'act', width:400,sortable:false}],
+            { name:'objetivo', index: 'objetivo', width:500,editable:true,editoptions:{size:40},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  },
+            {name:'act',index:'act', width:320,sortable:false}],
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
@@ -23,7 +23,7 @@
               for(var i=0;i < ids.length;i++){ var cl = ids[i];
                   be = "<input style='height:22px;width:100px;' type='button' value='Editar' onclick=\"jQuery('#theGridObj').editRow('"+cl+"');\" />";
                   se = "<input style='height:22px;width:100px;' type='button' value='Guardar' onclick=\"jQuery('#theGridObj').saveRow('"+cl+"');\" />"; 
-                  ce = "<input style='height:22px;width:200px;' type='submit' value='Gestionar Resultados Esperados' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
+                  ce = "<input style='height:22px;width:120px;' type='submit' value='Resultados Esperados' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
                   jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+se+ce}); } },
           pager: jQuery('#pagerObj'),
           viewrecords: true,          
