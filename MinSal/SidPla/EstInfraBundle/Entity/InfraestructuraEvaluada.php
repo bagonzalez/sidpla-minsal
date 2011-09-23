@@ -29,18 +29,9 @@ class InfraestructuraEvaluada {
     
     //Llave de Uno a muchos con Evaluacion Elemento Infraestructura
     /**
-     * @ORM\OneToMany(targetEntity="EvaluacionElementoInfra", mappedBy="infraEvaluada")
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra", mappedBy="infraEvaluada")
      */
     private $evaEleInfra;
-
-    /**
-     * Get idInfraEva
-     *
-     * @return integer 
-     */
-    public function getidInfraEva() {
-        return $this->idInfraEva;
-    }
 
     /**
      * Set paoInfraEva
@@ -62,15 +53,25 @@ class InfraestructuraEvaluada {
     
     public function __construct()
     {
-        $this->evaEleInfra  = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->evaEleInfra = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
+    /**
+     * Get idInfraEva
+     *
+     * @return integer 
+     */
+    public function getIdInfraEva()
+    {
+        return $this->idInfraEva;
+    }
+
     /**
      * Add evaEleInfra
      *
      * @param MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra $evaEleInfra
      */
-    public function addevaEleInfra ($evaEleInfra)
+    public function addEvaEleInfra(\MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra $evaEleInfra)
     {
         $this->evaEleInfra[] = $evaEleInfra;
     }
@@ -80,10 +81,8 @@ class InfraestructuraEvaluada {
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getevaEleInfra()
+    public function getEvaEleInfra()
     {
         return $this->evaEleInfra;
     }
-    
-
 }

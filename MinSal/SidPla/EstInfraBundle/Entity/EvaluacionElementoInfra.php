@@ -129,12 +129,15 @@ class EvaluacionElementoInfra {
         $this->ElemInfCodigo = $ElemInfCodigo;
     }
 
+
+
     /**
      * Get ElemInfCodigo
      *
-     * @return MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura
+     * @return MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura 
      */
-    public function getElemInfCodigo() {
+    public function getElemInfCodigo()
+    {
         return $this->ElemInfCodigo;
     }
 

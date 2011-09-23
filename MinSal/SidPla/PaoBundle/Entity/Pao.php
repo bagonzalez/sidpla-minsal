@@ -51,8 +51,8 @@ class Pao {
      */
     private $periodoCalendarizacion;
 
-    /**
-     * @ORM\OneToOne(targetEntity="MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada", inversedBy="paoInfraEva")
+     /**
+     * @ORM\OneToOne(targetEntity="InfraestructuraEvaluada", mappedBy="paoInfraEva")
      * @ORM\JoinColumn(name="infeva_codigo", referencedColumnName="infeva_codigo")
      */
     private $infraEvaluadaPao;
