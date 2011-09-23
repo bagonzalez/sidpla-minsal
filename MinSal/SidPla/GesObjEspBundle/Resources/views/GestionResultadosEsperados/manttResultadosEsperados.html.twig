@@ -7,7 +7,13 @@
          
           $('#agregar').click(function() {
             
-             document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}'
+             document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}';
+            $('#formulario').css("action","{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}");
+           });
+          
+          $('#editar').click(function() {
+            $('#formulario').css("action","{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados') }}");
+             document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados') }}';
           });
       
       });
@@ -15,7 +21,7 @@
 <br></br>
     <br></br>         
     <br></br>    
-    <form action="{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}" method="post">
+    <form id = "formulario"  action="{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados')}}" method="post">
         <table align="center">
             <tr><td align="center"><h1>Gestion de Resultados Esperados</h1>
                 </td>

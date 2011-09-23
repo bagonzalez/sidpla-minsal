@@ -269,4 +269,98 @@ class AccionAdminResultadosEsperadosController extends Controller {
     
 }
 
+
+public function editarResultadosEsperadosAction()
+    {
+        $opciones=$this->getRequest()->getSession()->get('opciones');
+        
+          $request=$this->getRequest();        
+          $idfila=$request->get('idfila');  
+          $id=$request->get('idfilaResultado');
+          
+         
+          //obteniendo el objetivo especifico
+        $objetivoAux=new ObjetivoEspecifico();
+        $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
+        $objetivoAux=$objetivoDao->getObjetEspecif($idfila);         
+        
+        $objetivosEspec=$objetivoAux->getDescripcion();
+          
+        //obteniendo los datos del resultado esperado
+        
+          $resultadoAux=new ResultadoEsperado();
+          $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
+          $resultadoAux=$resultadoDao->getResulEspera($id);         
+        
+           $resultadoEsperadoDescrp=$resultadoAux->getResEspeDesc();
+           $resultadoEsperadoIndicador=$resultadoAux->getResEspIndicador();
+           $resultadoEsperadoMedioVerificacion=$resultadoAux->getmedioVerificacion();
+           $resultadoEsperadoResponsable=$resultadoAux->getResEspResponsable();
+           $resultadoEsperadoSupuestos=$resultadoAux->getResEspCondi();
+           $resultadoEsperadoMetaAnual=$resultadoAux->getResEspMetAnual();
+           $resultadoEsperadoTipoMeta=$resultadoAux->getIdTipoMeta();
+           $resultadoEsperadoDescripcionMetaAnual=$resultadoAux->getResEspDescMetAnual();
+           
+       
+               
+        return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:EditarResultadoEsperado.html.twig', 
+                array( 'opciones' => $opciones,'idfila' => $idfila,'descripcion' => $objetivosEspec,'idResultado' => $id,
+                    'resultadoEsperadoDescrp' => $resultadoEsperadoDescrp
+                    ,'resultadoEsperadoIndicador' => $resultadoEsperadoIndicador
+                    ,'resultadoEsperadoMedioVerificacion' => $resultadoEsperadoMedioVerificacion
+                    ,'resultadoEsperadoResponsable' => $resultadoEsperadoResponsable
+                    ,'resultadoEsperadoSupuestos' => $resultadoEsperadoSupuestos
+                    ,'resultadoEsperadoMetaAnual' => $resultadoEsperadoMetaAnual
+                    ,'resultadoEsperadoTipoMeta' => $resultadoEsperadoTipoMeta
+                    ,'resultadoEsperadoDescripcionMetaAnual' => $resultadoEsperadoDescripcionMetaAnual
+                    ));
+        
+    }
+    
+    public function editandoResultadosEsperadosAction()
+    {
+        $opciones=$this->getRequest()->getSession()->get('opciones');
+        
+          $request=$this->getRequest();        
+          $idfila=$request->get('idfila');  
+          
+          $idobjetivo=$request->get('idfila');//representa en este caso el codigo de objetivo
+          $id=$request->get('idfilaResultado');
+          $resEspeDesc=$request->get('resultadoEsperado');
+          $resEspIndicador=$request->get('Indicador');
+          $medioverificacion=$request->get('medioverificacion');
+          $resEspResponsable=$request->get('responsable');
+          $resEspCondi=$request->get('supuestosfactores');
+          $resEspMetAnual=$request->get('metaAnual');
+          $tipometa=$request->get('selectipometa');
+          $resEspDescMetAnual=$request->get('descripMetaAnual');
+          
+          
+          
+           $resEspNomencl="pruebanomenc";
+               $restmpcodigo=1;
+              $resEspEntidadControl=true;
+              
+              
+          $objDao = new ResultadoEsperadoDao($this->getDoctrine());
+          $objDao->editResulEsp($restmpcodigo,
+                                        $tipometa,
+                                        $resEspeDesc,
+                                        $resEspNomencl,
+                                        $resEspCondi,
+                                        $resEspMetAnual,
+                                        $resEspDescMetAnual,
+                                        $resEspResponsable,
+                                        $resEspEntidadControl,
+                                        $resEspIndicador,
+                                        $idobjetivo,
+                                        $id);            
+         
+          
+               
+        return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
+                array( 'opciones' => $opciones,'idfila' => $idfila));
+        
+    }
+
 }?>
