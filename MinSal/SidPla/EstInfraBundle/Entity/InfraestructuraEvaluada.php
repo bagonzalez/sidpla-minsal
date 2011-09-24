@@ -32,30 +32,7 @@ class InfraestructuraEvaluada {
      */
     private $evaEleInfra;
 
-    /**
-     * Set paoInfraEva
-     *
-     * @param MinSal\SidPla\PaoBundle\Entity\Pao $paoInfraEva
-     */
-    public function setpaoInfraEva($paoInfraEva) {
-        $this->paoInfraEva= $paoInfraEva;
-    }
-
-    /**
-     * Get paoInfraEva
-     *
-     * @return MinSal\SidPla\PaoBundle\Entity\Pao
-     */
-    public function getpaoInfraEva() {
-        return $this->paoInfraEva;
-    }
-    
-    public function __construct()
-    {
-        $this->evaEleInfra = new \Doctrine\Common\Collections\ArrayCollection();
-    }
-    
-    /**
+     /**
      * Get idInfraEva
      *
      * @return integer 
@@ -63,25 +40,5 @@ class InfraestructuraEvaluada {
     public function getIdInfraEva()
     {
         return $this->idInfraEva;
-    }
-
-    /**
-     * Add evaEleInfra
-     *
-     * @param MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra $evaEleInfra
-     */
-    public function addEvaEleInfra($evaEleInfra)
-    {
-        $this->evaEleInfra[] = $evaEleInfra;
-    }
-
-    /**
-     * Get evaEleInfra
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getEvaEleInfra()
-    {
-        return $this->evaEleInfra;
     }
 }

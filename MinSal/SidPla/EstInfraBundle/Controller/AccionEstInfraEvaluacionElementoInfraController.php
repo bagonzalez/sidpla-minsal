@@ -65,7 +65,7 @@ class AccionEstInfraEvaluacionElementoInfraController extends Controller {
         
         $pao=$this->obtenerPao(2011);//Obtenego la PAO de la Unidad y el Anio que quiero
         
-        $infraEvaluada=new InfraestructuraEvaluada();
+      //  $infraEvaluada=new InfraestructuraEvaluada();
         $infraEvaluada=$pao->getinfraEvaluadaPao();//obtenego la infraestructura evaluada
         
         $evaluacionElemento= new EvaluacionElementoInfra();
