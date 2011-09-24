@@ -103,4 +103,64 @@ class EvaluacionElementoInfra {
     }
 
    
+
+    /**
+     * Set EstInfCodigo
+     *
+     * @param MinSal\SidPla\EstInfraBundle\Entity\EstadoInfraestructura $estInfCodigo
+     */
+    public function setEstInfCodigo(\MinSal\SidPla\EstInfraBundle\Entity\EstadoInfraestructura $estInfCodigo)
+    {
+        $this->EstInfCodigo = $estInfCodigo;
+    }
+
+    /**
+     * Get EstInfCodigo
+     *
+     * @return MinSal\SidPla\EstInfraBundle\Entity\EstadoInfraestructura 
+     */
+    public function getEstInfCodigo()
+    {
+        return $this->EstInfCodigo;
+    }
+
+    /**
+     * Set ElemInfCodigo
+     *
+     * @param MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura $elemInfCodigo
+     */
+    public function setElemInfCodigo(\MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura $elemInfCodigo)
+    {
+        $this->ElemInfCodigo = $elemInfCodigo;
+    }
+
+    /**
+     * Get ElemInfCodigo
+     *
+     * @return MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura 
+     */
+    public function getElemInfCodigo()
+    {
+        return $this->ElemInfCodigo;
+    }
+
+    /**
+     * Set infraEvaluada
+     *
+     * @param MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada $infraEvaluada
+     */
+    public function setInfraEvaluada(\MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada $infraEvaluada)
+    {
+        $this->infraEvaluada = $infraEvaluada;
+    }
+
+    /**
+     * Get infraEvaluada
+     *
+     * @return MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada 
+     */
+    public function getInfraEvaluada()
+    {
+        return $this->infraEvaluada;
+    }
 }

@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada
  *
- * @ORM\Table("sidpla_infraestructuraevaluada")
+ * @ORM\Table(name="sidpla_infraestructuraevaluada")
  * @ORM\Entity
  */
 class InfraestructuraEvaluada {
@@ -40,5 +40,49 @@ class InfraestructuraEvaluada {
     public function getIdInfraEva()
     {
         return $this->idInfraEva;
+    }
+    public function __construct()
+    {
+        $this->evaEleInfra = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
+    /**
+     * Set paoInfraEva
+     *
+     * @param MinSal\SidPla\PaoBundle\Entity\Pao $paoInfraEva
+     */
+    public function setPaoInfraEva(\MinSal\SidPla\PaoBundle\Entity\Pao $paoInfraEva)
+    {
+        $this->paoInfraEva = $paoInfraEva;
+    }
+
+    /**
+     * Get paoInfraEva
+     *
+     * @return MinSal\SidPla\PaoBundle\Entity\Pao 
+     */
+    public function getPaoInfraEva()
+    {
+        return $this->paoInfraEva;
+    }
+
+    /**
+     * Add evaEleInfra
+     *
+     * @param MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra $evaEleInfra
+     */
+    public function addEvaEleInfra(\MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra $evaEleInfra)
+    {
+        $this->evaEleInfra[] = $evaEleInfra;
+    }
+
+    /**
+     * Get evaEleInfra
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getEvaEleInfra()
+    {
+        return $this->evaEleInfra;
     }
 }
