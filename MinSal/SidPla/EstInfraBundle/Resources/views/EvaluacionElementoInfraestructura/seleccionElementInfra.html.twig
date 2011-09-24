@@ -1,0 +1,31 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %} Evaluacion de Elementos de la infraestructura {% endblock %}
+
+{% block body %}
+    <br></br>
+    <h1 style='text-align: center;'>Seleccione los elementos a Evaluar  {{idInfra}}</h1>
+    <table align="center">
+        <tr>
+            <td>
+                <p style='font-size: 12px'>Debe de tomar en cuenta</p>
+                <ul>
+                    <li style='font-size: 12px'>Los elementos de la tabla izquierda son los que usted tiene disponibles para seleccionar</li>
+                    <li style='font-size: 12px'>Los elementos de la tabla derecha son los que usted ha seleccionado para ser evaluados</li>
+                    <li style='font-size: 12px'>Si desea seleccionar un elemento seleccionelo en la tabla izquierda y presione el boton >> para trasladarlo a la ventana izquierda</li>
+                    <li style='font-size: 12px'>Si desea que un elemento ya no este en su listado de evaluacion seleccionelo en la tabla derecha y presione el boton << </li>
+                </ul>
+                
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <br></br>  
+                    
+            </td>
+
+        </tr>
+        
+
+    </table>   
+
+{% endblock %}

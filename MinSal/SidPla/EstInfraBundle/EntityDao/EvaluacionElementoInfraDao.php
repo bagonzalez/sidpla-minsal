@@ -10,7 +10,12 @@ use MinSal\SidPla\EstInfraBundle\EntityDao\EstadoInfraestructuraDao;
 
 
 class EvaluacionElementoInfraDao {
-    //Este es el constructor
+var $doctrine;
+    var $repositorio;
+    var $em;
+    
+
+//Este es el constructor
     function __construct($doctrine) {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
@@ -31,6 +36,7 @@ class EvaluacionElementoInfraDao {
     
     public function editarEvaluacionElemento($codEvaEleInfra, $codEstInfra,$cantEvaEleInfra) {
 
+        $evaluacionElemento=new EvaluacionElementoInfra();
         $evaluacionElemento = $this->getEvaluacionElementoEspecifica($codEvaEleInfra);
         $evaluacionElemento->setCantElemt($cantEvaEleInfra);
         

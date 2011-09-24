@@ -37,5 +37,7 @@ MinSalSidPlaEstInfraBundle_consultarEvaluacionElementoJSON:
 MinSalSidPlaEstInfraBundle_manttEvaluacionElemento:
     pattern:  /manttEvaluacionElemento
     defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraEvaluacionElementoInfra:manttEvaluacionElemento}
-
-
+    
+MinSalSidPlaEstInfraBundle_seleccionaElementos:
+    pattern:  /seleccionaElementos
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraEvaluacionElementoInfra:seleccionaElementos }

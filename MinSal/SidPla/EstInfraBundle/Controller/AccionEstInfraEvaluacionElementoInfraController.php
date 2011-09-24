@@ -44,8 +44,15 @@ class AccionEstInfraEvaluacionElementoInfraController extends Controller {
         $estadoInfraestructuraDao= new EstadoInfraestructuraDao($this->getDoctrine());
         $comboEstadoInfraestructura= $estadoInfraestructuraDao->obtenerEstadoInfraestructura();
         
+        /*$pao=$this->obtenerPao(2011);//Obtenego la PAO de la Unidad y el Anio que quiero
+        
+        $infraEvaluada=new InfraestructuraEvaluada();
+        $infraEvaluada=$pao->getinfraEvaluadaPao()->getIdInfraEva();*/
+        $infraEvaluada=1;
+        
         return $this->render('MinSalSidPlaEstInfraBundle:EvaluacionElementoInfraestructura:manttEvaluacionElementoInfraestrutura.html.twig'
-                        , array('opciones' => $opciones,'unidadMedida'=>$comboUniMed,'elementoInfra'=>$comboElementoInfra,'estadosInfra'=>$comboEstadoInfraestructura));
+                        , array('opciones' => $opciones,'unidadMedida'=>$comboUniMed,'elementoInfra'=>$comboElementoInfra,
+                            'estadosInfra'=>$comboEstadoInfraestructura,'idInfra'=>$infraEvaluada));
     }
 
     public function consultarEvaluacionElementoJSONAction() {
@@ -133,6 +140,18 @@ class AccionEstInfraEvaluacionElementoInfraController extends Controller {
 
         return $paoSeleccionada;
 
+    }
+    
+     public function seleccionaElementosAction(){
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+        
+        $request = $this->getRequest();
+        $idInfra=$request->get('idInfra');
+        
+        return $this->render('MinSalSidPlaEstInfraBundle:EvaluacionElementoInfraestructura:seleccionElementInfra.html.twig'
+                        , array('opciones' => $opciones,'idInfra'=>$idInfra));
+        
+        
     }
 
 }

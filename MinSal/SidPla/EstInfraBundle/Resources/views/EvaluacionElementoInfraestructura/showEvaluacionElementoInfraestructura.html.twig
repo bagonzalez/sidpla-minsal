@@ -1,7 +1,7 @@
 {% block body %}
 <script type="text/javascript">
     $(document).ready(function(){
-        var seleccionado       
+        var seleccionado;       
         var myGrid = $('#tabEvaInfra');        
         myGrid.jqGrid({ 
           url: 'consultarEvaluacionElementoJSON',
@@ -37,7 +37,7 @@
                     var cl = ids[i]; 
                     guardar = "<input style='height:18px;width:50px;' type='button' value='Guardar' onclick=\"jQuery('#tabEvaInfra').saveRow('"+cl+"');\" />";
                     jQuery("#tabEvaInfra").jqGrid('setRowData',ids[i],{act:guardar}); } },
-        editurl:'manttEvaluacionElemento'
+        //editurl:'manttEvaluacionElemento'
                      
         });
         myGrid.jqGrid('navGrid','#pager1',

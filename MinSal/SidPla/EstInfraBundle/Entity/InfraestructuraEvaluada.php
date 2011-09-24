@@ -27,9 +27,8 @@ class InfraestructuraEvaluada {
      */
     private $paoInfraEva;
     
-    //Llave de Uno a muchos con Evaluacion Elemento Infraestructura
-    /**
-     * @ORM\OneToMany(targetEntity="MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra", mappedBy="infraEvaluada")
+     /**
+     * @ORM\OneToMany(targetEntity="EvaluacionElementoInfra", mappedBy="infraEvaluada")
      */
     private $evaEleInfra;
 
@@ -71,7 +70,7 @@ class InfraestructuraEvaluada {
      *
      * @param MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra $evaEleInfra
      */
-    public function addEvaEleInfra(\MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra $evaEleInfra)
+    public function addEvaEleInfra($evaEleInfra)
     {
         $this->evaEleInfra[] = $evaEleInfra;
     }

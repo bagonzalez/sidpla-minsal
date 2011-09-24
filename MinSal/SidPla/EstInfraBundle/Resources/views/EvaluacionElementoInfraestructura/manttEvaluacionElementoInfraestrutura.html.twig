@@ -4,21 +4,36 @@
 {% block body %}
 
 <script type="text/javascript">  
-          
- </script>
-<br></br>
-<h1 style='text-align: center;'>Evaluacion Infraestructura</h1>
-<br></br>
-<br></br>
-        <table align="center">
-            <tr>
-                <td align="center">
-                    <br></br>  
-                    {%include 'MinSalSidPlaEstInfraBundle:EvaluacionElementoInfraestructura:showEvaluacionElementoInfraestructura.html.twig' %}
-                </td>
+$(document).ready(function(){
+   $('#btnagregar').button();
+   $("#btnagregar").click(function(){
+       window.location='seleccionaElementos?idInfra={{ idInfra }}';
+   });
+  
+ });          
+</script>
+    <br></br>
+    <h1 style='text-align: center;'>Evaluacion Infraestructura</h1>
+    <table align="center">
+        <tr>
+            <td>
+                <p style=' font-size: 12px'>Solo de clic sobre el elemento, realice el cambio y de presione en guardar justo al lado del elementos que esta evaluando.</p>
                 
-            </tr>  
-        
-        </table>   
-       
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <br></br>  
+                    {%include 'MinSalSidPlaEstInfraBundle:EvaluacionElementoInfraestructura:showEvaluacionElementoInfraestructura.html.twig' %}
+            </td>
+
+        </tr>
+        <tr align="right">
+            <td>
+                <input type="button" id="btnagregar" value="Agregar Elementos" />
+            </td>
+        </tr>
+
+    </table>   
+
 {% endblock %}
