@@ -2,11 +2,83 @@
 {% block titulo %} Evaluacion de Elementos de la infraestructura {% endblock %}
 
 {% block body %}
+<script type="text/javascript">
+$(document).ready(function(){
+   $('#agregar').button();
+   $('#quitar').button();
+   $('#regresar').button();
+   
+    $("#regresar").click(function(){
+       window.location='mantenimientoEvaluacionElementoInfra';
+   });
+   /* Cargar los Elementos Infraestructura Disponibles*/
+           
+   $('#tabElemDispo').jqGrid({    
+      url: 'consultarDisponiblesJSON?idInfra= {{idInfra}}',
+      datatype:'json',
+      altRows:true,          
+      colNames:['Id','Elemento'],
+      colModel:[            
+           { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10}  },
+           { name:'elemento', index: 'elemento', width:150,editable:true,editoptions:{size:40}}
+      ],          
+      viewrecords: true,          
+      caption: 'Elementos Infraestructura Disponibles',
+      height: "100%"
+   });//Fin de Grid Disponibles
+   
+   
+   /* Cargar los Elementos Infraestructura Asignados*/
+         
+   $('#tabAsig').jqGrid({    
+      url: 'consultarAsignadosJSON?idInfra= {{idInfra}}',
+      datatype:'json',
+      altRows:true,          
+      colNames:['Id','Elemento'],
+      colModel:[            
+           { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10}  },
+           { name:'elemento', index: 'elemento', width:150,editable:true,editoptions:{size:40}}
+      ],          
+      viewrecords: true,          
+      caption: 'Elementos Infraestructura Asignados',
+      height: "100%"
+   });//Fin de Grid Asignados
+   
+   /*Boton de Asignar*/
+  $('#agregar').click(function(){ 
+       var id = jQuery("#tabElemDispo").jqGrid('getGridParam','selrow'); 
+       if (id) { 
+         var eleInfra = jQuery("#tabElemDispo").jqGrid('getRowData',id);                     
+         $('#tabAsig').setGridParam({url:'manttElemSelec?id='+eleInfra.id+'&oper=agregar&idInfra={{idInfra}}'}).trigger("reloadGrid");
+         $('#tabElemDispo').trigger("reloadGrid");
+       } 
+       else 
+         alert("Por favor seleccione un elemento de la tabla de la izquierda para agregar");        
+  });//Fin de Boton asignar
+  
+     /*Boton de Asignar*/
+  $('#quitar').click(function(){ 
+       var id = jQuery("#tabAsig").jqGrid('getGridParam','selrow'); 
+       if (id) { 
+         var eleInfra = jQuery("#tabAsig").jqGrid('getRowData',id);                     
+         
+         $('#tabElemDispo').setGridParam({url:'manttElemSelec?id='+eleInfra.id+'&oper=eliminar&idInfra={{idInfra}}'}).trigger("reloadGrid");
+         $('#tabAsig').trigger("reloadGrid");
+       } 
+       else 
+         alert("Por favor seleccione un elemento de la tabla de la derecha para quitar");        
+  });//Fin de Boton asignar
+  
+  
+
+   
+});//Fin del JQuery
+</script>
     <br></br>
-    <h1 style='text-align: center;'>Seleccione los elementos a Evaluar  {{idInfra}}</h1>
+    <h1 style='text-align: center;'>Seleccione los elementos a Evaluar </h1>
     <table align="center">
         <tr>
-            <td>
+            <td colspan='3'>
                 <p style='font-size: 12px'>Debe de tomar en cuenta</p>
                 <ul>
                     <li style='font-size: 12px'>Los elementos de la tabla izquierda son los que usted tiene disponibles para seleccionar</li>
@@ -18,11 +90,22 @@
             </td>
         </tr>
         <tr>
+            <td colspan='3' align='right'>
+            <input  id='regresar' type="button" value="Regresar"/> 
+            </td>
+        </tr>
+        <tr>
+            <td align="center" valign="top"> <h2>Disponibles</h2>
+              <table id="tabElemDispo" class="scroll" ></table>                
+            </td>
             <td align="center">
-                <br></br>  
+                <p> <input  id='agregar' type="button" value=">>"/> </p>
+                <p> <input id='quitar' type="button" value="<<"/></p>
                     
             </td>
-
+            <td align="center" valign="top"> <h2>Asignados</h2>
+              <table id="tabAsig" class="scroll" ></table>                
+            </td>
         </tr>
         
 

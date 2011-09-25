@@ -10,6 +10,9 @@ use MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra;
 use MinSal\SidPla\EstInfraBundle\EntityDao\EvaluacionElementoInfraDao;
 
 use MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada;
+use MinSal\SidPla\EstInfraBundle\EntityDao\InfraestructuraEvaluadaDao;
+
+use \MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura;
 
 use MinSal\SidPla\EstInfraBundle\EntityDao\UnidadMedidaDao;
 use MinSal\SidPla\EstInfraBundle\EntityDao\ElementoInfraestructuraDao;
@@ -44,31 +47,21 @@ class AccionEstInfraEvaluacionElementoInfraController extends Controller {
         $estadoInfraestructuraDao= new EstadoInfraestructuraDao($this->getDoctrine());
         $comboEstadoInfraestructura= $estadoInfraestructuraDao->obtenerEstadoInfraestructura();
         
-        /*$pao=$this->obtenerPao(2011);//Obtenego la PAO de la Unidad y el Anio que quiero
+        $pao=$this->obtenerPao(date("Y"));//Obtenego la PAO de la Unidad y el Anio que quiero
         
-        $infraEvaluada=new InfraestructuraEvaluada();
-        $infraEvaluada=$pao->getinfraEvaluadaPao()->getIdInfraEva();*/
-        $infraEvaluada=1;
-        
+        $infraEvaluada=$pao->getinfraEvaluadaPao()->getIdInfraEva();
+              
         return $this->render('MinSalSidPlaEstInfraBundle:EvaluacionElementoInfraestructura:manttEvaluacionElementoInfraestrutura.html.twig'
                         , array('opciones' => $opciones,'unidadMedida'=>$comboUniMed,'elementoInfra'=>$comboElementoInfra,
                             'estadosInfra'=>$comboEstadoInfraestructura,'idInfra'=>$infraEvaluada));
     }
 
     public function consultarEvaluacionElementoJSONAction() {
-
-       
-       // $anio=$this->getRequest()->get('anio');
+        $idInfra=$this->getRequest()->get('idInfra');
         
-        //if($anio==0)
-           // $anio=date("Y");
+        $infraEvaluadaDao= new InfraestructuraEvaluadaDao($this->getDoctrine());
+        $infraEvaluada=$infraEvaluadaDao->getInfraEvaEspecifica($idInfra);//obtenego la infraestructura evaluada
         
-        $pao=$this->obtenerPao(2011);//Obtenego la PAO de la Unidad y el Anio que quiero
-        
-      //  $infraEvaluada=new InfraestructuraEvaluada();
-        $infraEvaluada=$pao->getinfraEvaluadaPao();//obtenego la infraestructura evaluada
-        
-        $evaluacionElemento= new EvaluacionElementoInfra();
         $evaluacionElemento= $infraEvaluada->getevaEleInfra();//obtengo todos los valores de la Evaluacion Infraestructura Asociada a la PAO
         
         $aux = new EvaluacionElementoInfra();
@@ -112,7 +105,7 @@ class AccionEstInfraEvaluacionElementoInfraController extends Controller {
         
         $codEvaElemento=$request->get('id');
         
-        $estInfCodigo=1;//ya lo voy a sacar
+        $estInfCodigo=$request->get('estado');
         $cantEvaElemento=(float) $request->get('cantidad');
 
         $evaElementoDao= new EvaluacionElementoInfraDao($this->getDoctrine());
@@ -141,8 +134,8 @@ class AccionEstInfraEvaluacionElementoInfraController extends Controller {
         return $paoSeleccionada;
 
     }
-    
-     public function seleccionaElementosAction(){
+    /*Agregar Elementos*/
+    public function seleccionaElementosAction(){
         $opciones = $this->getRequest()->getSession()->get('opciones');
         
         $request = $this->getRequest();
@@ -153,7 +146,107 @@ class AccionEstInfraEvaluacionElementoInfraController extends Controller {
         
         
     }
+    
+    public function consultarAsignadosJSONAction(){
+        $idInfra=$this->getRequest()->get('idInfra');    
+        
+        $infraEvaluadaDao= new InfraestructuraEvaluadaDao($this->getDoctrine());
+        $infraEvaluada=$infraEvaluadaDao->getInfraEvaEspecifica($idInfra);//obtenego la infraestructura evaluada
+        
+        $evaluacionElemento= $infraEvaluada->getevaEleInfra();//obtengo todos los valores de la Evaluacion Infraestructura Asociada a la PAO
+        
+        $aux = new EvaluacionElementoInfra();
+        $i = 0;
 
+        foreach ($evaluacionElemento as $aux) {
+            $rows[$i]['id'] = $aux->getElemInfCodigo()->getIdElemInfra();
+            $rows[$i]['cell'] = array($aux->getElemInfCodigo()->getIdElemInfra(),
+                $aux->getElemInfCodigo()->getNomElemInfra()
+            );
+            $i++;
+        }
+
+        $numfilas = count($evaluacionElemento);
+        if ($numfilas != 0){
+            array_multisort($rows,SORT_ASC);
+            $datos = json_encode($rows);
+        }
+        else{
+            $rows[0]['id']=0;
+            $rows[0]['cell']=array(' ',' ');
+            $datos = json_encode($rows);
+        }
+
+        $jsonresponse = '{
+               "page":"1",
+               "total":"1",
+               "records":"' . $numfilas . '", 
+               "rows":' . $datos . '}';
+
+
+        $response = new Response($jsonresponse);
+        return $response;
+    }
+    
+    public function consultarDisponiblesJSONAction(){
+        $idInfra=$this->getRequest()->get('idInfra');    
+        
+        $elementoInfraDao= new EvaluacionElementoInfraDao($this->getDoctrine());
+        $elementosDisponibles= $elementoInfraDao->consultarElementosDisponibles($idInfra);
+        $aux = new ElementoInfraestructura();
+        $i = 0;
+
+        foreach ($elementosDisponibles as $aux) {
+            $rows[$i]['id'] = $aux->getIdElemInfra();
+            $rows[$i]['cell'] = array($aux->getIdElemInfra(),
+                $aux->getNomElemInfra()
+            );
+            $i++;
+        }
+
+        $numfilas = count($elementosDisponibles);
+        if ($numfilas != 0){
+            array_multisort($rows,SORT_ASC);
+            $datos = json_encode($rows);
+        }
+        else{
+            $rows[0]['id']=0;
+            $rows[0]['cell']=array(' ',' ');
+            $datos = json_encode($rows);
+        }
+
+        $jsonresponse = '{
+               "page":"1",
+               "total":"1",
+               "records":"' . $numfilas . '", 
+               "rows":' . $datos . '}';
+
+
+        $response = new Response($jsonresponse);
+        return $response;
+    }
+    
+    public function manttElemSelecAction() {
+        $request = $this->getRequest();
+        
+        $idElementoInfra=$request->get('id');
+        $idInfra=$request->get('idInfra');
+        $operacion=$request->get('oper');
+        $evaElementoDao= new EvaluacionElementoInfraDao($this->getDoctrine());
+        
+        switch ($operacion){
+           case 'agregar':
+               $evaElementoDao->agregarElementoAEvaluacion($idElementoInfra, $idInfra);
+           break;
+           case 'eliminar':
+               $evaElementoDao->quitarElementoDeEvaluacion($idElementoInfra, $idInfra);
+               break;
+       }
+
+        return new Response("{sc:true,msg:}");
+    }
+    
+    
 }
 
 ?>

@@ -5,7 +5,7 @@
         $('#editarElementoButton').button();
         $('#eliminarElementoButton').button();
         function validaUnidad(value, colname) {
-        if (value == 0 ) 
+        if (value == -1 ) 
             return [false,"Seleccione una Unidad de Medida"];
         else 
             return [true,""];
@@ -22,7 +22,7 @@
             { name:'codigo', index: 'codigo', width:40,align:'center',editable:false,editoptions:{size:15}},
             { name:'nomelem', index: 'nomelem', width:150,editable:true,editoptions:{size:30}, formoptions:{label: "Nombre del elemento",elmprefix:"(*)"},editrules:{required:true}},
             { name:'abreunidmed', index: 'abreunidmed', width:150,editable:true,editoptions:{size:30},edittype:"select",
-                        editoptions: {value:"0:Seleccione Unidad de medida;{{comboUniMed}}"},editrules:{custom:true, custom_func:validaUnidad}
+                        editoptions: {value:"{{comboUniMed}}"},editrules:{custom:true, custom_func:validaUnidad}
             },//Fin del nombre
             { name:'descripcion', index: 'descripcion', width:500,editable:true, editoptions:{size:50},formoptions:{label: "Descripcion"}}
           ],
