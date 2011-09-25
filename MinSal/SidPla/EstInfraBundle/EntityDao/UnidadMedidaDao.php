@@ -20,13 +20,14 @@ class UnidadMedidaDao {
 
     
     public function obtenerUnidadMedida() {
-
+        $encabezado=  $this->getUnidadMedidaEspecifica(-1);
+        $cadena = $encabezado->getIdUnidMed().":".$encabezado->getAbreUnidMed().';';
+        
         $unidadMedida = $this->getUnidadMedida();
-
         $aux = new UnidadMedida();
         $n = $this->cuantasUnidadesMedida();
         $i = 1;
-        $cadena = '';
+        
         foreach ($unidadMedida as $aux) {
             if ($i < $n)
                 $cadena.=$aux->getIdUnidMed().":".$aux->getAbreUnidMed().';';
@@ -39,8 +40,9 @@ class UnidadMedidaDao {
     }
     
     public function cuantasUnidadesMedida() {
-        $unidadmedida = $this->em->createQuery("select count(um)
-                                                 from MinSalSidPlaEstInfraBundle:UnidadMedida um");
+        $unidadmedida = $this->em->createQuery("SELECT count(um)
+                                                FROM MinSalSidPlaEstInfraBundle:UnidadMedida um
+                                                WHERE um.idUnidMed != -1");
         return $unidadmedida->getSingleScalarResult();
     }
     
@@ -49,9 +51,10 @@ class UnidadMedidaDao {
      */
 
     public function getUnidadMedida() {
-        $unidadmedida = $this->em->createQuery("select um
-                                                 from MinSalSidPlaEstInfraBundle:UnidadMedida um
-                                                 order by um.idUnidMed ASC");
+        $unidadmedida = $this->em->createQuery("SELECT um
+                                                FROM MinSalSidPlaEstInfraBundle:UnidadMedida um
+                                                WHERE um.idUnidMed != -1
+                                                ORDER BY um.idUnidMed ASC");
         return $unidadmedida->getResult();
     }
 

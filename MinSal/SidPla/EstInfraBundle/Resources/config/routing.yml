@@ -41,3 +41,15 @@ MinSalSidPlaEstInfraBundle_manttEvaluacionElemento:
 MinSalSidPlaEstInfraBundle_seleccionaElementos:
     pattern:  /seleccionaElementos
     defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraEvaluacionElementoInfra:seleccionaElementos }
+    
+MinSalSidPlaEstInfraBundle_consultarAsignadosJSON:
+    pattern:  /consultarAsignadosJSON
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraEvaluacionElementoInfra:consultarAsignadosJSON }
+
+MinSalSidPlaEstInfraBundle_consultarDisponiblesJSON:
+    pattern:  /consultarDisponiblesJSON
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraEvaluacionElementoInfra:consultarDisponiblesJSON }
+    
+MinSalSidPlaEstInfraBundle_manttElemSelec:
+    pattern:  /manttElemSelec
+    defaults: { _controller: MinSalSidPlaEstInfraBundle:AccionEstInfraEvaluacionElementoInfra:manttElemSelec }

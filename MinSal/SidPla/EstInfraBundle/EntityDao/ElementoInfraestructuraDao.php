@@ -25,9 +25,10 @@ class ElementoInfraestructuraDao {
      */
 
     public function getElementoInfraestructura() {
-        $elementoinfraestructura = $this->em->createQuery("select einfra
-                                                 from MinSalSidPlaEstInfraBundle:ElementoInfraestructura einfra
-                                                 order by einfra.IdElemInfra ASC");
+        $elementoinfraestructura = $this->em->createQuery("SELECT einfra
+                                                           FROM MinSalSidPlaEstInfraBundle:ElementoInfraestructura einfra
+                                                           WHERE einfra.IdElemInfra != -1
+                                                           ORDER BY einfra.IdElemInfra ASC");
         return $elementoinfraestructura->getResult();
     }
 
@@ -42,6 +43,9 @@ class ElementoInfraestructuraDao {
 
     public function obtenerElementoInfraestructura() {
 
+        $encabezado=  $this->getElementoInfraestructuraEspecifico(-1);
+        $cadena = $encabezado->getIdElemInfra() .":".$encabezado->getNomElemInfra().';';
+        
         $elementoInfraestructuraDao = $this->getElementoInfraestructura();
 
         $aux = new ElementoInfraestructura();
@@ -60,8 +64,9 @@ class ElementoInfraestructuraDao {
     }
 
     public function cuantosElementosInfraestructura() {
-        $unidadmedida = $this->em->createQuery("select count(EI)
-                                                 from MinSalSidPlaEstInfraBundle:ElementoInfraestructura EI");
+        $unidadmedida = $this->em->createQuery("SELECT count(EI)
+                                                FROM MinSalSidPlaEstInfraBundle:ElementoInfraestructura EI
+                                                WHERE EI.IdElemInfra != -1");
         return $unidadmedida->getSingleScalarResult();
     }
 

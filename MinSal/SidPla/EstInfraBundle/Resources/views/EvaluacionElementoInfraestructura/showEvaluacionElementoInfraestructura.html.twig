@@ -4,14 +4,16 @@
         var seleccionado;       
         var myGrid = $('#tabEvaInfra');        
         myGrid.jqGrid({ 
-          url: 'consultarEvaluacionElementoJSON',
+          url: 'consultarEvaluacionElementoJSON?idInfra={{idInfra}}',
           datatype:'json',
           altRows:true,
           colNames:['Codigo','Elemento', 'Estado', 'Cantidad','Unidad','Accion'], 
           colModel:[ 
                   {name:'codigo',index:'codigo', width:50, editable: false,align:'center'},
-                  {name:'elemento',index:'elemento', width:200,editable: false,edittype:"select",editoptions: {value:"{{ elementoInfra }}" }},
-                  {name:'estado',index:'estado', width:60, editable: true,edittype:"select",editoptions: {value:"{{ estadosInfra }}" },align:'center'},
+                  {name:'elemento',index:'elemento', width:180,editable: false,edittype:"select",editoptions: {value:"{{ elementoInfra }}" }},
+                  {name:'estado',index:'estado', width:100, editable: true,edittype:"select",editoptions: {value:"{{ estadosInfra }}" },align:'center',
+                        editrules:{custom:true, custom_func:validaEstado}
+                  },
                   {name:'cantidad',index:'cantidad', width:90, editable: true,align:'center'},
                   {name:'unidad',index:'unidad', width:50, editable: false,edittype:"select",editoptions:{value:"{{ unidadMedida }}" },align:'center'},
                   {name:'act',index:'act', width:100,sortable:false,align:'center'}           
@@ -37,13 +39,16 @@
                     var cl = ids[i]; 
                     guardar = "<input style='height:18px;width:50px;' type='button' value='Guardar' onclick=\"jQuery('#tabEvaInfra').saveRow('"+cl+"');\" />";
                     jQuery("#tabEvaInfra").jqGrid('setRowData',ids[i],{act:guardar}); } },
-        //editurl:'manttEvaluacionElemento'
+        editurl:'manttEvaluacionElemento'
                      
         });
-        myGrid.jqGrid('navGrid','#pager1',
-            {edit:false,add:false,del:false,view:true}
-            
-        );    
+        myGrid.jqGrid('navGrid','#pager1',{edit:false,add:false,del:false,view:true});
+        function validaEstado(value, colname) {
+        if (value == -1 ) 
+            return [false,"Seleccione una estado de Infraestructura"];
+        else 
+            return [true,""];
+       }
  
    });
  
