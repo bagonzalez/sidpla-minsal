@@ -16,8 +16,8 @@
   GNU General Public License for more details.
 
   You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.  
-  
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
  */
 
 /**
@@ -31,143 +31,131 @@ namespace MinSal\SidPla\AdminBundle\Controller;
 use MinSal\SidPla\AdminBundle\EntityDao\OpcionSistemaDao;
 use MinSal\SidPla\AdminBundle\Form\Type\OpcionSistemaType;
 use MinSal\SidPla\AdminBundle\Entity\OpcionSistema;
-
-
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
+class AccionAdminOpcionesController extends Controller {
 
-
-class AccionAdminOpcionesController extends Controller
-{    
-   
     /**
      *  Esta es la opcion del Action que permitira obtener los valores de 
      *  un formulario, luego instancia una clase OpcionSistemaDao para
      *  manejar la persistencia de la entidad OpcionSistemaDao, y retornara los
      *  mensajes de exito/fracaso del sistema.
-     */   
-    
-	
-	public function addOcpAction(Request $peticion)
-	{
-            $opc=new OpcionSistema(); 
-            $form = $this->createForm(new OpcionSistemaType() , $opc);
-            
-            if ($peticion->getMethod() == 'POST') {
-                $form->bindRequest($peticion);
+     */
+    public function addOcpAction(Request $peticion) {
+        $opc = new OpcionSistema();
+        $form = $this->createForm(new OpcionSistemaType(), $opc);
 
-                if ($form->isValid()) {
-                    $opcDao = new OpcionSistemaDao($this->getDoctrine());                
-                    $mensajesSistema = $opcDao->addOpcion($opc);	                     
-                    return new Response($mensajesSistema[0].' '.$mensajesSistema[1] );                    
-                }
+        if ($peticion->getMethod() == 'POST') {
+            $form->bindRequest($peticion);
+
+            if ($form->isValid()) {
+                $opcDao = new OpcionSistemaDao($this->getDoctrine());
+                $mensajesSistema = $opcDao->addOpcion($opc);
+                return new Response($mensajesSistema[0] . ' ' . $mensajesSistema[1]);
             }
-            return $this->redirect($this->generateUrl('MinSalSidPlaAdminBundle_homepage'));	    
-	}
-        
-        /*
-         * Crea un nuevo formulario, para ser utilizado, para crear una Nueva Opcion del sistema.
-         */
-        
-        
-        public function nuevaOpcAction()
-	{
-            $opciones=$this->getRequest()->getSession()->get('opciones');
-            
-            $opc=new OpcionSistema();            
-            
-            $form = $this->createForm(new OpcionSistemaType() , $opc);
-            return $this->render('MinSalSidPlaAdminBundle:Default:opcionFormTemplate.html.twig', 
-                    array('form' => $form->createView(), 'opciones' => $opciones ));            
-	}
-        
-        /*
-         * Permite recuperar roles del sistema.
-         * 
-         */
-        
-        
-        public function consultarOpcAction()
-	{
-            $opcDao=new OpcionSistemaDao($this->getDoctrine());
-            $opciones=$opcDao->getOpciones();
-            
-            $numfilas=count($opciones);  
-            
-            $opc=new OpcionSistema();
-            $i=0;
-            
-            foreach ($opciones as $opc) {
-                $rows[$i]['id']= $opc->getIdOpcionSistema();
-                $rows[$i]['cell']= array($opc->getIdOpcionSistema(),
-                                         $opc->getNombreOpcion(),
-                                         $opc->getDescripcionOpcion(),
-                                         $opc->getEnlace(),
-                                         $opc->getIdOpcionSistema2());    
-                $i++;
-            }
-            
-            $datos=json_encode($rows);            
-            
-            
-            $jsonresponse='{
+        }
+        return $this->redirect($this->generateUrl('MinSalSidPlaAdminBundle_homepage'));
+    }
+
+    /*
+     * Crea un nuevo formulario, para ser utilizado, para crear una Nueva Opcion del sistema.
+     */
+
+    public function nuevaOpcAction() {
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+
+        $opc = new OpcionSistema();
+
+        $form = $this->createForm(new OpcionSistemaType(), $opc);
+        return $this->render('MinSalSidPlaAdminBundle:Default:opcionFormTemplate.html.twig', array('form' => $form->createView(), 'opciones' => $opciones));
+    }
+
+    /*
+     * Permite recuperar roles del sistema.
+     * 
+     */
+
+    public function consultarOpcAction() {
+        $opcDao = new OpcionSistemaDao($this->getDoctrine());
+        $opciones = $opcDao->getOpciones();
+
+        $numfilas = count($opciones);
+
+        $opc = new OpcionSistema();
+        $i = 0;
+
+        foreach ($opciones as $opc) {
+            $rows[$i]['id'] = $opc->getIdOpcionSistema();
+            $rows[$i]['cell'] = array($opc->getIdOpcionSistema(),
+                $opc->getNombreOpcion(),
+                $opc->getDescripcionOpcion(),
+                $opc->getEnlace(),
+                $opc->getIdOpcionSistema2());
+            $i++;
+        }
+
+        if ($numfilas != 0) {
+            array_multisort($rows, SORT_ASC);
+        } else {
+            $rows[0]['id'] = 0;
+            $rows[0]['cell'] = array(' ', ' ', ' ', ' ',' ');
+        }
+
+
+        $datos = json_encode($rows);
+
+
+        $jsonresponse = '{
                "page":"1",
-               "total":"1",
-               "records":"'.$numfilas.'", 
-               "rows":'.$datos.'}';
-            
-            
-            $response=new Response($jsonresponse);              
-            return $response;            
-            
-	}
-        
-        
-        /*
-         * Mantenimineto de opciones.
-         * 
-         */
-        
-        public function mattOpcionesAction()
-	{
-            $opciones=$this->getRequest()->getSession()->get('opciones'); 
-            
-            $opcDao=new OpcionSistemaDao($this->getDoctrine());
-            $opcionesSistema=$opcDao->getOpciones();
-            return $this->render('MinSalSidPlaAdminBundle:Opciones:manttOpcionesSystemForm.html.twig', 
-                    array('opciones' => $opciones, 'opcsistem' => $opcionesSistema));            
-	}
-        
-        
-        public function manttOpcEdicionAction()
-	{
-            $request=$this->getRequest();
-            
-            $nombreOpc=$request->get('nombre');
-            $descripcion=$request->get('descripcion');
-            $enlace=$request->get('enlace');            
-            $id=$request->get('id');
-            $opcpadre=$request->get('opcpadre');
-            $operacion=$request->get('oper'); 
-            
-            $opcDao=new OpcionSistemaDao($this->getDoctrine());
-            
-            if($operacion=='edit'){
-                $opcDao->editOpcion($nombreOpc, $descripcion, $enlace, $id, $opcpadre);                
-            }
-            
-            if($operacion=='del'){
-                $opcDao->delOpcion($id);        
-            }
-            
-            if($operacion=='add'){
-                $opcDao->addOpcion($nombreOpc, $descripcion, $enlace, $opcpadre);                
-            }
-            
-            return new Response("{sc:true,msg:''}");           
-	}
-        
-        
+               "total":"'. $numfilas . '", 
+               "records":"'. $numfilas . '", 
+               "rows":'. $datos . '}';
+
+
+        $response = new Response($jsonresponse);
+        return $response;
+    }
+
+    /*
+     * Mantenimineto de opciones.
+     * 
+     */
+
+    public function mattOpcionesAction() {
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+
+        $opcDao = new OpcionSistemaDao($this->getDoctrine());
+        $opcionesSistema = $opcDao->getOpciones();
+        return $this->render('MinSalSidPlaAdminBundle:Opciones:manttOpcionesSystemForm.html.twig', array('opciones' => $opciones, 'opcsistem' => $opcionesSistema));
+    }
+
+    public function manttOpcEdicionAction() {
+        $request = $this->getRequest();
+
+        $nombreOpc = $request->get('nombre');
+        $descripcion = $request->get('descripcion');
+        $enlace = $request->get('enlace');
+        $id = $request->get('id');
+        $opcpadre = $request->get('opcpadre');
+        $operacion = $request->get('oper');
+
+        $opcDao = new OpcionSistemaDao($this->getDoctrine());
+
+        if ($operacion == 'edit') {
+            $opcDao->editOpcion($nombreOpc, $descripcion, $enlace, $id, $opcpadre);
+        }
+
+        if ($operacion == 'del') {
+            $opcDao->delOpcion($id);
+        }
+
+        if ($operacion == 'add') {
+            $opcDao->addOpcion($nombreOpc, $descripcion, $enlace, $opcpadre);
+        }
+
+        return new Response("{sc:true,msg:''}");
+    }
+
 }

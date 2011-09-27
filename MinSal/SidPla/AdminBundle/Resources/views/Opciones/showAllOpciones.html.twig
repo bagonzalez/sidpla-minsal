@@ -2,7 +2,9 @@
 {% block body %}
     <script type="text/javascript">
       $(document).ready(function(){
-
+       $('#agregarOpcionesButton').button();
+        $('#editarOpcionesButton').button();
+        $('#eliminarOpcionesButton').button();
         var myGrid = $('#theGrid');        
         myGrid.jqGrid({    
           url: 'consultarOpc',
@@ -27,22 +29,85 @@
           height: "100%",
           editCaption: "Editar Registro",
           addCaption: "Nuevo Registro",
-          editurl:'manttOpcEdicion'         
-            
+          editurl:'manttOpcEdicion'            
         });
+        
         myGrid.jqGrid('navGrid','#pager',
-        {edit:true,add:true,del:true},
-        {width:650,height:200, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos editados con exito!");},closeAfterEdit:true },//edit
-        {width:650,height:200,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");},closeAfterAdd:true },//add
-        {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
-        alert("Mensaje eliminado con exito!");
-          } },//del
+        {add:false,edit:false,del:false,beforeRefresh: function() {$("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}},
         {},//search
         {} //view
+        
         );
-       
+        
+     function despuesAgregarEditar() {
+ $("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid')
+  return[true,'']; //no error
+}   
+        
+        
+      //agregar
+  $("#agregarOpcionesButton").click(function(){
+        jQuery('#theGrid').jqGrid('editGridRow',"new",
+             {
+              width: 650,height:200,
+              bottominfo:"Campos marcados con (*) son obligatorios", 
+              afterSubmit:despuesAgregarEditar,
+              closeAfterSubmit:true,
+              //reloadAfterSubmit:true,
+              align:'center',
+              onclickSubmit: function(rp_ge, postdata){
+                                  alert("datos guardados con exito!");                                  
+                                 }
+              }
+              );
+        });
+    
+    
+         //editar
+    $("#editarOpcionesButton").click(function(){
+          var gr = jQuery('#theGrid').jqGrid('getGridParam','selrow');
+          if( gr != null )
+             jQuery('#theGrid').jqGrid('editGridRow',gr,
+               { width: 600,height:200,
+                  afterSubmit:despuesAgregarEditar,
+                  reloadAfterSubmit:true,
+                  closeOnEscape: true,
+                  bottominfo:"Campos marcados con (*) son obligatorios",
+                  align:'center',
+                  onclickSubmit: function(rp_ge, postdata) {
+                              alert("Opciones del Sistema editadas con exito!");
+             
+                   $('#theGrid').setGridParam({loadonce:false}); 
+            
+                              },
+                       closeAfterEdit:true   
+                       });
+             else alert("Por favor seleccione una fila para editar!"); 
+          });
+    
+    
+    
+    
+        //eliminar
+    $("#eliminarOpcionesButton").click(function(){
+         var grs = jQuery('#theGrid').jqGrid('getGridParam','selrow');
+         if( grs != null ) 
+             jQuery('#theGrid').jqGrid('delGridRow',grs,
+                 {
+                msg: "Desea Eliminar las Opciones del Sistema?",
+                caption:"Eliminando Opciones del Sistema",
+                width:550,height:160,
+                reloadAfterSubmit:true,
+                align:'center',
+                onclickSubmit: function(rp_ge, postdata) {
+                           alert("Opciones del Sistema eliminadas con exito!");
+                        }
+               
+             }); 
+             else alert("Por favor seleccione una fila para borrar!"); 
+           }); 
+  //fin
+      
       });
       
        //define handler for 'editSubmit' event
@@ -58,18 +123,12 @@
     </script>
       <div id="grid_wrapper" class="ui-corner-all floatLeft">
         <table id="theGrid" class="scroll" ></table> 
-        <div id="pager"  class="scroll" style="text-align:center;"></div> 
+        <div id="pager"  class="scroll" style="text-align:center;"></div>
+        <br></br>
+       <input type="button" id="agregarOpcionesButton" value="  Agregar  " />
+       <input type="button" id="editarOpcionesButton" value="   Editar   " />
+       <input type="button" id="eliminarOpcionesButton" value="  Eliminar  " />
       </div>
-    
-      <!--<div id="info_wrapper">
-        <div class="ui-widget">
-          <div class="ui-state-highlight ui-corner-all" style="padding: 0 0.7em; margin: 20px 0 0 20px;">
-            <p>
-              <span class="ui-icon ui-icon-info" style="float: left; margin-right: 0.3em;"></span>
-              <strong>resize</strong> your browser window &amp; the grid will resize accordingly.
-            </p>
-          </div>
-        </div>
-      </div>-->
+
     
 {% endblock %}
