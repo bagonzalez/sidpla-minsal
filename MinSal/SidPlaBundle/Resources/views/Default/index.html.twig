@@ -26,11 +26,6 @@
                 <script src="{{ asset('/js/jquery.combobox.js') }}" type="text/javascript"></script>
                 <script src="{{ asset('/menuSidPla/stuHover.js') }}" type="text/javascript"></script>   
     {% endblock %}                 
-                 <span class="preload1"></span>
-                    <span class="preload2"></span>
-                <img align="left" src="{{ asset('/images/sidpla1.png') }}" alt="descripción" height="100px" />
-                <img align="right" src="{{ asset('/images/minsalud.jpg') }}" alt="descripción" height="100px" />
-                <center><h1>SISTEMA DE PLANIFICACION PARA LA DIRECCION DE PLANIFICACION</h1></center>                
                 <script type="text/javascript">
                       $(document).ready(function(){
                          {% set nivel = 1 %} 
@@ -40,8 +35,12 @@
                                      {% if nivel < 3  %}                                    
                                         {% for opc in opciones %}
                                             {% if opc.idOpcionSistema2 is empty %}
-                                                $('#nav').append('<li id="li{{ opc.idOpcionSistema }}" class="top"><a  class="top_link" href="{{ path(opc.enlace) }}"><span class="down">{{ opc.nombreOpcion }}</span></a></li>');                                        
-                                                $('#li{{ opc.idOpcionSistema }}').append('<ul id="opc{{ opc.idOpcionSistema }}" class="sub"></ul>');  
+                                                {%if(opc.nombreOpcion == 'Inicio') %}                                                    
+                                                    $('#nav').append('<li id="li{{ opc.idOpcionSistema }}" class="top"><a  class="top_link" href="{{ path(opc.enlace) }}"><span >{{ opc.nombreOpcion }}</span></a></li>');                                        
+                                                {% else %}
+                                                    $('#nav').append('<li id="li{{ opc.idOpcionSistema }}" class="top"><a  class="top_link" href="{{ path(opc.enlace) }}"><span class="down">{{ opc.nombreOpcion }}</span></a></li>');                                        
+                                                    $('#li{{ opc.idOpcionSistema }}').append('<ul id="opc{{ opc.idOpcionSistema }}" class="sub"></ul>');  
+                                                {% endif %}                                                                                                     
                                                 {% for subopc in opciones %}  
                                                     {% if subopc.idOpcionSistema2 == opc.idOpcionSistema  %}
                                                         $('#opc{{opc.idOpcionSistema}}').append('<li> <a href="{{ path(subopc.enlace) }}">{{ subopc.nombreOpcion }}</a></li>');
@@ -61,7 +60,7 @@
                                  $('#nav').append('<li  class="top"><a  class="top_link" href="{{ path('fos_user_security_login') }}"><span>{{ 'Iniciar'|trans({}, 'FOSUserBundle') }}</span></a></li>');
                                  $('#nav').append('<li class="top"><a  class="top_link" href="{{ path('fos_user_registration_register') }}"><span >{{ 'Registrarse'|trans({}, 'FOSUserBundle') }}</span></a></li>');                                 
                              {% endif %} 
-                             <!--$('#nav').append('<li class="top"><a  class="top_link" href="#"><span >MinSal</span></a></li>');-->
+                             $('#nav').append('<li class="top"><a  class="top_link" href="#"><span >MinSal</span></a></li>');
                              <!--$('#nav').append('<li class="top"><a  class="top_link" href="#"><span >Acerca de</span></a></li>');-->
                           });
                       });
@@ -72,6 +71,12 @@
                     <div class="container">
 
                         <div id="header">
+                             <span class="preload1"></span>
+                                <span class="preload2"></span>
+                                <img align="left" src="{{ asset('/images/sidpla1.png') }}" alt="descripción" height="100px" />
+                                <img align="right" src="{{ asset('/images/minsalud.jpg') }}" alt="descripción" height="100px" />
+                                <center><h1>SISTEMA DE PLANIFICACION <br> ANUAL OPERATIVA <br> PARA LA DIRECCION DE PLANIFICACION<br>MINISTERIO DE SALUD</h1></center>                
+                
                             <div class="disclaimer">Ministerio de Salud</div>
                             <ul id="nav"></ul>
                             </div>            
