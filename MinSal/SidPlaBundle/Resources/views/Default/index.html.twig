@@ -5,7 +5,7 @@
         <title>{% block titulo %}Sistema para la Planificaci&oacute;n Anual Operativa{% endblock %}</title>
 
         {% block stylesheets %}
-        <link href="{{ asset('/css/smoothness/jquery-ui-1.8.15.custom.css') }}" type="text/css" rel="stylesheet" />
+        <link href="{{ asset('/css/custom-theme/jquery-ui-1.8.16.custom.css') }}" type="text/css" rel="stylesheet" />
         <link href="{{ asset('/css/ui.jqgrid.css') }}" type="text/css" rel="stylesheet" />
         <link href="{{ asset('/css/estiloPrincipalMenu.css') }}" type="text/css" rel="stylesheet" />           
         <link href="{{ asset('/css/elementosSidPla.css') }}" type="text/css" rel="stylesheet" />           
@@ -18,18 +18,19 @@
         <body>   
     {% block javascripts %}            
                 <script type="text/javascript" src="{{ asset('/js/jquery-1.6.2.min.js') }}" ></script>
-                <script type="text/javascript" src="{{ asset('/js/jquery-ui-1.8.15.custom.min.js') }}"></script>
+                <script type="text/javascript" src="{{ asset('/js/jquery-ui-1.8.16.custom.min.js') }}"></script>
                 <script src="{{ asset('/js/i18n/grid.locale-es.js') }}" type="text/javascript"></script>
                 <script src="{{ asset('/js/jquery.jqGrid.min.js') }}" type="text/javascript"></script>
                 <script src="{{ asset('/js/jqModal.js') }}" type="text/javascript"></script>
                 <script src="{{ asset('/js/jquery.calculation.min.js') }}" type="text/javascript"></script>                
                 <script src="{{ asset('/js/jquery.combobox.js') }}" type="text/javascript"></script>
                 <script src="{{ asset('/menuSidPla/stuHover.js') }}" type="text/javascript"></script>   
-    {% endblock %} 
-                
+    {% endblock %}                 
                  <span class="preload1"></span>
                     <span class="preload2"></span>
-                
+                <img align="left" src="{{ asset('/images/sidpla1.png') }}" alt="descripción" height="100px" />
+                <img align="right" src="{{ asset('/images/minsalud.jpg') }}" alt="descripción" height="100px" />
+                <center><h1>SISTEMA DE PLANIFICACION PARA LA DIRECCION DE PLANIFICACION</h1></center>                
                 <script type="text/javascript">
                       $(document).ready(function(){
                          {% set nivel = 1 %} 
@@ -60,8 +61,8 @@
                                  $('#nav').append('<li  class="top"><a  class="top_link" href="{{ path('fos_user_security_login') }}"><span>{{ 'Iniciar'|trans({}, 'FOSUserBundle') }}</span></a></li>');
                                  $('#nav').append('<li class="top"><a  class="top_link" href="{{ path('fos_user_registration_register') }}"><span >{{ 'Registrarse'|trans({}, 'FOSUserBundle') }}</span></a></li>');                                 
                              {% endif %} 
-                             $('#nav').append('<li class="top"><a  class="top_link" href="#"><span >MinSal</span></a></li>');
-                             $('#nav').append('<li class="top"><a  class="top_link" href="#"><span >Acerca de</span></a></li>');
+                             <!--$('#nav').append('<li class="top"><a  class="top_link" href="#"><span >MinSal</span></a></li>');-->
+                             <!--$('#nav').append('<li class="top"><a  class="top_link" href="#"><span >Acerca de</span></a></li>');-->
                           });
                       });
                 </script>
