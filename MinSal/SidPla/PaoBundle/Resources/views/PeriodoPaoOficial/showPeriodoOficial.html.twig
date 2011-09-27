@@ -5,6 +5,19 @@
         $('#agregarPerOfiButton').button();
         $('#editarPerOfiButton').button();
         $('#eliminarPerOfiButton').button();
+        $('#selanio').change(cargarAnio);
+        
+        function cargarAnio(){
+            $('#tabperiodooficial').setGridParam({url:'consultarPeriodoOficialJSON?anio='+$('#selanio').val(),editurl:'manttPeriodoOficial?anio='+$('#selanio').val()}); 
+            $('#tabperiodooficial').trigger("reloadGrid"); 
+        }
+        
+        function validaTipoPeriodo(value, colname) {
+        if (value == 0 ) 
+            return [false,"Seleccione un Tipo Periodo"];
+        else 
+            return [true,""];
+       }
     
     var myGrid = $('#tabperiodooficial');        
     myGrid.jqGrid({ 
@@ -15,7 +28,7 @@
       colModel:[
         { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}},
         { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:30},edittype:"select",
-                        editoptions: {value:"0:Seleccione un Tipo de Periodo;{{ combotipoperiodos }}"}
+                        editoptions: {value:"0:Seleccione un Tipo de Periodo;{{ combotipoperiodos }}"},editrules:{custom:true, custom_func:validaUnidad}
         },//Fin del nombre
         { name:'fechini', index: 'fechini', width:150,editable:true,
                 formoptions:{label: "Fecha de Inicio",elmprefix:"(*)"},editrules:{required:true},
@@ -56,26 +69,10 @@
                      
     });
     myGrid.jqGrid('navGrid','#pager',
-        {edit:true,add:true,del:true},
-        //El de Editar
-        {width:550,height:200,closeAfterEdit : true,
-         bottominfo:"(*) Campos obligatorios",
-         onclickSubmit: function(rp_ge, postdata) {
-                alert("Datos Editados con exito!");}
-        },//Fin de las propiedades para editar
-        //El de agregar
-        {width:550,height:200,closeAfterAdd : true,
-         bottominfo:"(*) Campos obligatorios",
-         onclickSubmit: function(rp_ge, postdata) {
-                alert("Datos Agregados con exito!");}
-        },
-        //El de eliminar
-        {width:550,height:160,
-        reloadAfterSubmit:true
-        }
+        {edit:false,add:false,del:false}
     );    
     
-    
+ 
     
      //agregar
   $("#agregarPerOfiButton").click(function(){

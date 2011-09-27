@@ -20,11 +20,15 @@
                 { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10}  },
                 { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:40}  }
                 ],          
-              multiselect: false,              
+              multiselect: false,
+              rowNum:40,
+              rowList:[30,40],
+              pager: jQuery('#pager'),
               viewrecords: true,          
               caption: 'Opciones del sistema disponible',
               height: "100%"
             });
+           
             
             
             var myGridSeleccionadas = $('#gridSelecc');        
@@ -117,7 +121,8 @@
     <tr>
         <td align="center" valign="top">
              <div id="grid_disponibles" >
-                <table id="gridDisponibles" class="scroll" ></table>                
+                <table id="gridDisponibles" class="scroll" ></table> 
+                <div id="pager" class="scroll"></div> 
              </div>            
         </td>
         

@@ -21,10 +21,11 @@ class PeriodoOficialDao {
         $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaPaoBundle:PeriodoOficial');
     }
 
-    public function getPeriodoOficial() {
-        $PeriodosOficiales = $this->em->createQuery("select po
-                                                 from MinSalSidPlaPaoBundle:PeriodoOficial po 
-                                                 order by po.idPerOfi ASC");
+    public function getPeriodoOficial($anio) {
+        $PeriodosOficiales = $this->em->createQuery("SELECT po
+                                                 FROM MinSalSidPlaPaoBundle:PeriodoOficial po
+                                                 WHERE po.anioPerOfi=".$anio." 
+                                                 ORDER BY po.idPerOfi ASC");
         return $PeriodosOficiales->getResult();
     }
 

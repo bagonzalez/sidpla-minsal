@@ -86,15 +86,13 @@ class AccionPaoPeriodoPaoController extends Controller {
 
         $numfilas = count($periodoPao);
         if ($numfilas != 0){
-            array_multisort($rows,SORT_ASC);
-            $datos = json_encode($rows);
+            array_multisort($rows,SORT_ASC);   
         }
         else{
             $rows[0]['id']=0;
             $rows[0]['cell']=array(' ',' ',' ',' ');
-            $datos = json_encode($rows);
         }
-
+        $datos = json_encode($rows);
         $jsonresponse = '{
                "page":"1",
                "total":"1",

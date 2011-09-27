@@ -1,3 +1,4 @@
+#ROUTING DEL ESTINFRABUNDLE
 MinSalSidPlaEstInfraBundle_principal:
     pattern:  /
     defaults: { _controller: MinSalSidPlaEstInfraBundle:Default:principal }

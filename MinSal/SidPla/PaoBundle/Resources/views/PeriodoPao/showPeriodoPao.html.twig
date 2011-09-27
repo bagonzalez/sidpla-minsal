@@ -49,16 +49,12 @@
       viewrecords: true,          
       caption: 'Periodo Oficial',
       height: "100%",
-      editurl:'manttPeriodoPao'
-  
-                     
+      editurl:'manttPeriodoPao'                  
     });
 
     myGrid.jqGrid('navGrid','#pager',
         {edit:false,add:false,del:false}
     );//Fin del pager del grid
-   
-     
    
    $("#editarPeriodoPao").click(function(){
      var gr = jQuery('#tabperiodopao').jqGrid('getGridParam','selrow');

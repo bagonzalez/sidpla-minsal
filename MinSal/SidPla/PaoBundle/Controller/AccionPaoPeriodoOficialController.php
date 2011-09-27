@@ -26,8 +26,11 @@ class AccionPaoPeriodoOficialController extends Controller {
 
         $periodoOficialDao = new PeriodoOficialDao($this->getDoctrine());
         $periodoOficial = new PeriodoOficial();
-
-        $periodoOficial = $periodoOficialDao->getPeriodoOficial();
+        $anio=$this->getRequest()->get('anio');
+        
+        if($anio==0)
+            $anio=date("Y");
+        $periodoOficial = $periodoOficialDao->getPeriodoOficial($anio);
 
         $numfilas = count($periodoOficial);
 
@@ -49,12 +52,15 @@ class AccionPaoPeriodoOficialController extends Controller {
             $i++;
         }
 
-        if($numfilas!=0)
-            $datos = json_encode($rows);
-        else
-            $datos='';
+       if ($numfilas != 0){
+            array_multisort($rows,SORT_ASC);
+        }
+        else{
+            $rows[0]['id']=0;
+            $rows[0]['cell']=array(' ',' ',' ',' ');
+        }
 
-
+        $datos = json_encode($rows);
         $jsonresponse = '{
                "page":"1",
                "total":"1",
@@ -84,7 +90,10 @@ class AccionPaoPeriodoOficialController extends Controller {
         else
             $actPerOfi = false;
 
-        $anioPerOfi = 2011;
+       $anioPerOfi=$this->getRequest()->get('anio');
+        
+        if($anioPerOfi==0)
+            $anioPerOfi=date("Y");
         
         $periodoOficialDao = new PeriodoOficialDao($this->getDoctrine());
         $operacion = $request->get('oper');
