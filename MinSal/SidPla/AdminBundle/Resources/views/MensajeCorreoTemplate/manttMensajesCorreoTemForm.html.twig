@@ -3,12 +3,20 @@
 {% block body %}
  <script type="text/javascript">
       $(document).ready(function(){
-     //  $("#theGrid").closest(".ui-jqgrid-bdiv").css({ 'overflow-y' : 'scroll' });
-      //jQuery("#theGrid").jqGrid('hideCol',"id").trigger("reloadGrid");   
+     $('#nuevoMensajeButton').button();
+     $('#editarMensajeButton').button();
+     $('#eliminarMensajeButton').button();
+     
+     function despuesAgregarEditar() {
+        $("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+        return[true,'']; //no error
+     }
+     
+     
           //cuando le da click en el boton Nuevo
-    $("#nuevoMensajeButton").click(function(){
+     $("#nuevoMensajeButton").click(function(){
         jQuery("#theGrid").jqGrid('editGridRow',"new",{closeAfterAdd:true,addCaption: "Nuevo Mensaje Correo",height:325,reloadAfterSubmit:true,
-        top : 250 ,left: 250,width: 800,processData: "Cargando...",
+        top : 250 ,left: 250,width: 800,processData: "Cargando...",afterSubmit:despuesAgregarEditar,
         bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
         alert("datos guardados con exito!");
           }});
@@ -19,7 +27,7 @@
           var gr = jQuery("#theGrid").jqGrid('getGridParam','selrow');
           if( gr != null )
              jQuery("#theGrid").jqGrid('editGridRow',gr,{closeAfterEdit:true,editCaption: "Editando Mensaje Corrreo",height:325,reloadAfterSubmit:true,
-                 top : 250 ,left: 250,width: 800,processData: "Cargando...", onclickSubmit: function(rp_ge, postdata) {
+                 top : 250 ,left: 250,width: 800,processData: "Cargando...",afterSubmit:despuesAgregarEditar, onclickSubmit: function(rp_ge, postdata) {
         alert("Mensaje editado con exito!");
           }, bottominfo:"Campos marcados con (*) son obligatorios"});
              else alert("Por favor seleccione una fila para editar!"); 

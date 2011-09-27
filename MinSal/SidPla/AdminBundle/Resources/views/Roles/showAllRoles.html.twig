@@ -15,27 +15,65 @@
             { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}, editrules:{required:true},formoptions:{ rowpos:1, label: "Nombre", elmprefix:"(*)"} },
             { name:'funciones', index: 'funciones',width:300,editable:true,editoptions:{size:50},editrules:{required:true},formoptions:{ rowpos:2, label: "Descripcion", elmprefix:"(*)"}  } ],            
           rowNum:10,
-          //rowList:[10,20,30],
+          rowList:[10,20,30],
+          loadonce:true,
           multiselect: false,
           pager: jQuery('#pager'),
           viewrecords: true,          
-            caption: 'Roles del sistema',
-            height: "100%",
-            editurl: 'manttRolEdicion'
+          caption: 'Roles del sistema',
+          height: "100%",
+          editurl: 'manttRolEdicion'
         });
-        myGrid.jqGrid('navGrid','#pager',
-        {edit:true,add:true,del:true},
-        {width:550,height:160,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos editados con exito!");},closeAfterEdit:true},//edit
-        {width:550,height:160,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");},closeAfterAdd:true},//add
-        {},//del
-        {},//buscar
-        {}//view
-       
-        );
+        myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,beforeRefresh: function() {$("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}});
         
-       
+        function despuesAgregarEditar() {
+        $("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+            return[true,'']; //no error
+        }
+        $("#agregarRoles").click(function(){
+        jQuery('#theGrid').jqGrid('editGridRow',"new",
+             {
+              width:550,height:160,bottominfo:"Campos marcados con (*) son obligatorios",
+              afterSubmit:despuesAgregarEditar,closeAfterAdd:true,closeOnEscape: true,align:'center',
+              onclickSubmit: function(rp_ge, postdata){
+                                  alert("datos guardados con exito!");                                  
+                                 }
+              });
+        });
+        
+    
+         //editar
+        $("#editarRoles").click(function(){
+          var gr = jQuery('#theGrid').jqGrid('getGridParam','selrow');
+          if( gr != null )
+             jQuery('#theGrid').jqGrid('editGridRow',gr,
+               { width:550,height:160,bottominfo:"Campos marcados con (*) son obligatorios",closeAfterEdit:true,
+                 afterSubmit:despuesAgregarEditar,reloadAfterSubmit:true,closeOnEscape: true,align:'center',
+                 onclickSubmit: function(rp_ge, postdata) {
+                              alert("Roles Guardados con exito!");
+                   }   
+                       });
+          else alert("Por favor seleccione una fila para editar!"); 
+          });
+     
+        //eliminar
+        $("#eliminarRoles").click(function(){
+         var grs = jQuery('#theGrid').jqGrid('getGridParam','selrow');
+         if( grs != null ) 
+             jQuery('#theGrid').jqGrid('delGridRow',grs,
+                 {
+                msg: "Desea Eliminar Este Rol del sistema?",caption:"Eliminando rol del Sistema",
+                width:550,height:160,reloadAfterSubmit:true,align:'center',
+                onclickSubmit: function(rp_ge, postdata) {
+                           alert("rol del sistema eliminadas con exito!");
+                        }
+               
+             }); 
+             else alert("Por favor seleccione una fila para borrar!"); 
+           }); 
+  //fin
+  
+        
       });
     </script>
         

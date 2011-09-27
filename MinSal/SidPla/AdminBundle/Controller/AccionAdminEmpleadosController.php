@@ -85,12 +85,19 @@ class AccionAdminEmpleadosController extends Controller {
                 $i++;
             }
             
+             if ($numfilas != 0) {
+            array_multisort($rows, SORT_ASC);
+        } else {
+            $rows[0]['id'] = 0;
+            $rows[0]['cell'] = array(' ', ' ', ' ', ' ',' ',' ',' ');
+        }
+            
             $datos=json_encode($rows);            
             
             
             $jsonresponse='{
                "page":"1",
-               "total":"1",
+               "total":"'.$numfilas.'", 
                "records":"'.$numfilas.'", 
                "rows":'.$datos.'}';
             

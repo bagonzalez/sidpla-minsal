@@ -40,9 +40,9 @@
         );
         
      function despuesAgregarEditar() {
- $("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid')
-  return[true,'']; //no error
-}   
+        $("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+        return[true,'']; //no error
+     }   
         
         
       //agregar
@@ -52,8 +52,8 @@
               width: 650,height:200,
               bottominfo:"Campos marcados con (*) son obligatorios", 
               afterSubmit:despuesAgregarEditar,
-              closeAfterSubmit:true,
-              //reloadAfterSubmit:true,
+              closeAfterAdd:true,
+              closeOnEscape: true,
               align:'center',
               onclickSubmit: function(rp_ge, postdata){
                                   alert("datos guardados con exito!");                                  
@@ -76,10 +76,7 @@
                   align:'center',
                   onclickSubmit: function(rp_ge, postdata) {
                               alert("Opciones del Sistema editadas con exito!");
-             
-                   $('#theGrid').setGridParam({loadonce:false}); 
-            
-                              },
+                   },
                        closeAfterEdit:true   
                        });
              else alert("Por favor seleccione una fila para editar!"); 

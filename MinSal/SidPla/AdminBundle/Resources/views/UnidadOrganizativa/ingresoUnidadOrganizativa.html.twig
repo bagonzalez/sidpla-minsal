@@ -4,9 +4,12 @@
 <script type="text/javascript">        
       $(document).ready(function(){
           
+          $('#limpiar').button();
+          $('#guardar').button();
+          $('#buscar').button();
           $('#dialog').jqm();
-          
           $('#tabs').tabs(); 
+         
           
           $.getJSON('consultarUnidadesOrgJSON', function(data) {
                   var i=0;
@@ -39,9 +42,6 @@
       
 </script>
       
-<br></br>
-<br></br>
-<br></br>
 <h2 class="demoHeaders">Ingreso de Unidades Organizativas</h2>
 <div id="tabs">
         <ul>
@@ -69,7 +69,7 @@
                     </tr>
                     <tr>
                         <td >Responsable: </td>
-                        <td colspan="3" ><input size="60%" name="responsable" id="responsable"  ></input><input type="button" class="jqModal" value="..."></input></td>
+                        <td colspan="3" ><input size="60%" name="responsable" id="responsable"  ></input><input type="button" class="jqModal" value="..." id="buscar"></input></td>
                     </tr>  
                     <tr>
                         <td >Tel&eacute;fono:</td>
@@ -111,7 +111,7 @@
                     </tr> 
                     <tr>
                         <td colspan="4" align="center" ><button type="submmit" id="guardar"  >Guardar</button>
-                            <button type="reset"  >Limpiar</button>
+                            <button type="reset" id='limpiar'  >Limpiar</button>
                         </td>                        
                     </tr>                    
                 </table>

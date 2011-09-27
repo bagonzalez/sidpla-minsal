@@ -33,36 +33,48 @@
            
         });
         
-         myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false},{multipleSearch:true, multipleGroup:true});    
+         myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,
+             beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}});
             
-  
+  function despuesAgregarEditar() {
+        myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+        return[true,'']; //no error
+    }   
   //agregar
   $("#agregarNotiSisteButton").click(function(){
-        jQuery('#tabnotificacion').jqGrid('editGridRow',"new",{closeAfterAdd:true,addCaption: "Agregar Notificacion al Sistema",height:200,align:'center',reloadAfterSubmit:true,
-        top : 250 ,width:550,height:160,processData: "Cargando...",
-        bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");
-          }});
+        jQuery('#tabnotificacion').jqGrid('editGridRow',"new",
+        {closeAfterAdd:true,addCaption: "Agregar Notificacion al Sistema",
+         height:200,align:'center',reloadAfterSubmit:true,width:550,
+         processData: "Cargando...",afterSubmit:despuesAgregarEditar,
+         bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+                alert("datos guardados con exito!");}
         });
-    
-         //editar
+        });
+
+   //editar
     $("#editarNotiSisteButton").click(function(){
           var gr = jQuery('#tabnotificacion').jqGrid('getGridParam','selrow');
           if( gr != null )
-             jQuery("#tabnotificacion").jqGrid('editGridRow',gr,{closeAfterEdit:true,editCaption: "Editando Notificacion del Sistema",height:200,align:'center',reloadAfterSubmit:true,
-                 top : 250 ,width:550,height:160,processData: "Cargando...", onclickSubmit: function(rp_ge, postdata) {
-        alert("Notificacion al Sistema editado con exito!");
-          }, bottominfo:"Campos marcados con (*) son obligatorios"});
-             else alert("Por favor seleccione una fila para editar!"); 
+             jQuery("#tabnotificacion").jqGrid('editGridRow',gr,
+            {closeAfterEdit:true,editCaption: "Editando Notificacion del Sistema",
+             height:200,align:'center',reloadAfterSubmit:true,width:550,
+             processData: "Cargando...",afterSubmit:despuesAgregarEditar,
+             bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+                    alert("Notificacion al Sistema editado con exito!");
+                ;}
+        });
+          else alert("Por favor seleccione una fila para editar!"); 
           });
     
         //eliminar
     $("#eliminarNotiSisteButton").click(function(){
          var grs = jQuery('#tabnotificacion').jqGrid('getGridParam','selrow');
-         if( grs != null ) jQuery('#tabnotificacion').jqGrid('delGridRow',grs,{msg: "Desea Eliminar esta Notificacion del Sistema?",caption:"Eliminando Notificacion del Sistema",height:100,align:'center',reloadAfterSubmit:true,
-             top : 300 ,width:550,height:160,processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
-        alert("Notificacion al Sistema eliminado con exito!");
-          }}); 
+         if( grs != null ) jQuery('#tabnotificacion').jqGrid('delGridRow',grs,
+            {msg: "Desea Eliminar esta Notificacion del Sistema?",caption:"Eliminando Notificacion del Sistema",
+             height:100,align:'center',reloadAfterSubmit:true,width:550,
+             processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
+                alert("Notificacion al Sistema eliminado con exito!");
+            }}); 
          else alert("Por favor seleccione una fila para borrar!"); }); 
  
   //fin          

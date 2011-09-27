@@ -2,10 +2,10 @@
 {% block body %}
     <script type="text/javascript">
       $(document).ready(function(){
-          
-          $('#asignar').click(function() {
-              document.location.href='{{ path('MinSalSidPlaAdminBundle_asignarOpcRoles') }}'
-          });
+          $('#agregarEmpleado').button();
+          $('#eliminarEmpleado').button();
+          $('#editarEmpleado').button();
+        
       });
     </script>
       
@@ -25,7 +25,14 @@
                 <br></br>                
                 {% include 'MinSalSidPlaAdminBundle:Empleado:showAllEmpleados.html.twig'%}
                 </td>
-            </tr>        
+            </tr>
+            <tr>
+                <td align="center">
+                    <input type="button" value="Agregar" id="agregarEmpleado" />
+                    <input type="button" value="Editar" id="editarEmpleado" />
+                    <input type="button" value="Eliminar" id="eliminarEmpleado"/>
+                </td>
+            </tr>
         </table>        
     </form>
     <br></br>

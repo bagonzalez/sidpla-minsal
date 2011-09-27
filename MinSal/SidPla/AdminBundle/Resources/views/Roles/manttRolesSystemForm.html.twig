@@ -2,17 +2,16 @@
 {% block body %}
     <script type="text/javascript">
       $(document).ready(function(){
-          
+          $('#asignar').button();
+          $('#agregarRoles').button();
+          $('#eliminarRoles').button();
+          $('#editarRoles').button();
           $('#asignar').click(function() {
               document.location.href='{{ path('MinSalSidPlaAdminBundle_asignarOpcRoles') }}'
           });
       });
     </script>
-    
-    <br></br>
-    <br></br>         
-    <br></br>    
-    <form>
+   <form>
         <table align="center">
             <tr><td align="center">
                     <h1>Mantenimiento de Roles del Sistema</h1>
@@ -28,7 +27,14 @@
                 <br></br>                
                 {% include 'MinSalSidPlaAdminBundle:Roles:showAllRoles.html.twig'%}
                 </td>
-            </tr>        
+            </tr>
+            <tr>
+                <td align="center">
+                    <input type="button" value="Agregar" id="agregarRoles" />
+                    <input type="button" value="Editar" id="editarRoles" />
+                    <input type="button" value="Eliminar" id="eliminarRoles"/>
+                </td>
+            </tr>
         </table>        
     </form>
     <br></br>

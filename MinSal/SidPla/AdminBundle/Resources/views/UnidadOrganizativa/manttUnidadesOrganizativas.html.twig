@@ -2,16 +2,13 @@
 {% block body %}
     <script type="text/javascript">
       $(document).ready(function(){
-          
+          $('#ingresar').button();
           $('#ingresar').click(function() {
               document.location.href='{{ path('MinSalSidPlaAdminBundle_ingresoNuevaUnidadesOrg') }}'
           });
       });
     </script>
-
-<br></br>
-    <br></br>         
-    <br></br>    
+    
     <form>
         <table align="center">
             <tr><td align="center">
