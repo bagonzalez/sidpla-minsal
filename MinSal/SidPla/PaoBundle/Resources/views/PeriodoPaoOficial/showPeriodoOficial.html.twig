@@ -28,7 +28,7 @@
       colModel:[
         { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}},
         { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:30},edittype:"select",
-                        editoptions: {value:"0:Seleccione un Tipo de Periodo;{{ combotipoperiodos }}"},editrules:{custom:true, custom_func:validaUnidad}
+                        editoptions: {value:"0:Seleccione un Tipo de Periodo;{{ combotipoperiodos }}"},editrules:{custom:true, custom_func:validaTipoPeriodo}
         },//Fin del nombre
         { name:'fechini', index: 'fechini', width:150,editable:true,
                 formoptions:{label: "Fecha de Inicio",elmprefix:"(*)"},editrules:{required:true},
