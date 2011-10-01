@@ -6,33 +6,30 @@
           
          
           $('#agregar').click(function() {
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_ingresoActividades') }}';
             
-             document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_ingresoActividades') }}';
-            $('#formulario').css("action","{{ path('MinSalSidPlaGesObjEspBundle_ingresoActividades') }}");
+            
            });
           
-          $('#editar').click(function() {
-            $('#formulario').css("action","{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados') }}");
-             document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados') }}';
-          });
+         
       
       });
       </script>
 <br></br>
     <br></br>         
     <br></br>    
-    <form id = "formulario"  action="{{ path('MinSalSidPlaGesObjEspBundle_ingresoActividades')}}" method="post">
+    <form id = "formulario"  action="" method="post">
         <table align="center">
             <tr><td align="center"><h1>Gestion de Actividades</h1>
                 </td>
             </tr>
            <tr>
                         
-                        <td >Objetivo:<br><textarea rows="1" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
+                        <td >Objetivo:<br><textarea readonly="readonly" rows="1" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
                     </tr>
                      <tr>
                         
-                        <td >Resultado Esperado:<br><textarea rows="1" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcionResultado}}</textarea></td>
+                        <td >Resultado Esperado:<br><textarea readonly="readonly" rows="1" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcionResultado}}</textarea></td>
                     </tr>
             <tr>
                 <td align="center">
@@ -42,7 +39,7 @@
             </tr>        
             <tr>
                 <td align="center">
-                    <input type="submit" value="Agregar Actividades" id="agregar"</input>                    
+                    <input type="submit" value="Agregar Actividades" name= "agregar" id="agregar"</input>                    
                 </td>
             </tr>
         

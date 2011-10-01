@@ -120,14 +120,46 @@ class AccionAdminActividadesController extends Controller{
         $resultadoAux=$resultadoDao->getResulEspera($idfilaResultado);         
         $resultadoesperado=$resultadoAux->getResEspeDesc();
           
+        
+        
+        
                
-        return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:IngresoResultadoEsperado.html.twig', 
+        return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:IngresoActividades.html.twig', 
                 array( 'opciones' => $opciones,'idfilaResultado'=>$idfilaResultado,'idfila' => $idfila,'descripcion' => $objetivosEspec,'descripcionResultado'=>$resultadoesperado));
         
     }
     
     
-    
+    public function editarActividadAction()
+    {
+          $opciones=$this->getRequest()->getSession()->get('opciones');
+        
+          $request=$this->getRequest();        
+          $idfila=$request->get('idfila');  
+          $idfilaResultado=$request->get('idfilaResultado'); 
+        
+          
+        //obteniendo el objetivo para mandarlo a la plantilla  
+        $objetivoAux=new ObjetivoEspecifico();
+        $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
+        $objetivoAux=$objetivoDao->getObjetEspecif($idfila);         
+        $objetivosEspec=$objetivoAux->getDescripcion();
+        
+        //obteniendo el resultado para mandarlo a la plantilla
+        $resultadoAux=new ResultadoEsperado();
+        $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
+        $resultadoAux=$resultadoDao->getResulEspera($idfilaResultado);         
+        $resultadoesperado=$resultadoAux->getResEspeDesc();
+          
+        
+        
+        
+        
+               
+        return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:EditarActividades.html.twig', 
+                array( 'opciones' => $opciones,'idfilaResultado'=>$idfilaResultado,'idfila' => $idfila,'descripcion' => $objetivosEspec,'descripcionResultado'=>$resultadoesperado));
+        
+    }
     
     
     

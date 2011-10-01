@@ -5,9 +5,15 @@
 <script type="text/javascript">        
       $(document).ready(function(){
           
+           
+           $('#regresar').click(function() {
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}';
+           
+          });
+           
            $('#agregar').click(function() {
-            
-             document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_editandoResultadosEsperados') }}'
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editandoResultadosEsperados') }}';
+             
           });
           $('#tabs').tabs();
       //jAlert('This is a custom alert box', 'Alert Dialog');
@@ -98,9 +104,13 @@
                        <tr>  
                            <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
                            <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='' /> 
-                    <td colspan="4" align="center" ><button type="submmit" id="agregar"  >Guardar</button>
-                            <button type="reset"  >Limpiar</button>
-                        </td>                        
+                    <td colspan="3" align="center" ><br><br><button type="submmit" id="agregar"  >Guardar</button>
+                           
+                        </td> 
+                         </td> 
+                        <td colspan="1" align="center" ><br><br><button type="submmit" id="regresar"  >Regresar</button>
+                            
+                        </td>
                     </tr>                    
                 </table>
             </form>            

@@ -5,10 +5,17 @@
 <script type="text/javascript">        
       $(document).ready(function(){
           
-           $('#agregar').click(function() {
-            
+          $('#regresar').click(function() {
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
            
           });
+           
+           $('#agregar').click(function() {
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editandoResultadosEsperados') }}';
+             
+          });
+          
+          
           $('#tabs').tabs();
       //jAlert('This is a custom alert box', 'Alert Dialog');
          $.getJSON('consultarTipoMeta', function(data) {
@@ -45,11 +52,11 @@
                     
                     <tr>
                         <td >Objetivo:</td>
-                        <td colspan="3" ><textarea rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
+                        <td colspan="3" ><textarea readonly="readonly" rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
                     </tr>
                     <tr>
                         <td >Resultado Esperado:</td>
-                        <td colspan="3" ><textarea rows="4" cols="100" name= 'resultadoEsperado'  size="60%" id="resultadoEsperado" >{{descripcionResultado}}</textarea></td>
+                        <td colspan="3" ><textarea readonly="readonly" rows="4" cols="100" name= 'resultadoEsperado'  size="60%" id="resultadoEsperado" >{{descripcionResultado}}</textarea></td>
                     </tr>
                     <tr>
                         <td >Actividad:</td>
@@ -111,10 +118,14 @@
                        
                        <tr>  
                            <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
-                           <input type='hidden' name='idfila' id="idfilaResultado" value='{{idfilaResultado}}' /> 
-                    <td colspan="4" align="center" ><button type="submmit" id="agregar"  >Guardar</button>
+                           <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
+                    <td colspan="3" align="center" ><br><br><button type="submmit" id="agregar"  >Guardar</button>
                             <button type="reset"  >Limpiar</button>
-                        </td>                        
+                        </td> 
+                         </td> 
+                        <td colspan="1" align="center" ><br><br><button type="submmit" name ="regresar" id="regresar"  >Regresar</button>
+                            
+                        </td>
                     </tr>                    
                 </table>
             </form>            

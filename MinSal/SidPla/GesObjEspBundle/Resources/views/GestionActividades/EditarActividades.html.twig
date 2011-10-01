@@ -1,1 +1,138 @@
 {# empty Twig template #}
+
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script type="text/javascript">        
+      $(document).ready(function(){
+          
+          
+          
+           $('#regresar').click(function() {
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
+           
+          });
+           $('#guardar').click(function() {
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_guardarResultadosEsperados') }}';
+            });
+           
+          
+          $('#tabs').tabs();
+      //jAlert('This is a custom alert box', 'Alert Dialog');
+         $.getJSON('consultarTipoMeta', function(data) {
+                  var i=0;
+                  $.each(data, function(key, val) {
+                      if(key=='rows'){
+                        $.each(val, function(id, registro){
+                            $('#selectipometa').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+                        });                    
+                      }
+                  });
+          });
+    
+
+});
+      
+</script>
+      
+<br></br>
+<br></br>
+<br></br>
+<h2 class="demoHeaders">Edicion de Actividades</h2>
+<div id="tabs">
+        <ul>
+                <li><a href="#tabs-1">Actividad</a></li>
+                
+        </ul>
+        <div id="tabs-1" >
+            <form action="" method="post" >
+                <table align="center" id="datos"  >
+                    <tr>
+                        <td colspan="4" align="center" >Datos de la Actividad <br><br></td>
+                    </tr>
+                    
+                    <tr>
+                        <td >Objetivo:</td>
+                        <td colspan="3" ><textarea readonly="readonly" rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
+                    </tr>
+                    <tr>
+                        <td >Resultado Esperado:</td>
+                        <td colspan="3" ><textarea readonly="readonly" rows="4" cols="100" name= 'resultadoEsperado'  size="60%" id="resultadoEsperado" >{{descripcionResultado}}</textarea></td>
+                    </tr>
+                    <tr>
+                        <td >Actividad:</td>
+                        <td colspan="3" ><input size="100%" name="actividad" id="actividad" ></input></td>
+                    </tr>
+                    <tr>
+                        <td >Indicador:</td>
+                        <td colspan="3" ><input size="100%" name="Indicador" id="Indicador" ></input></td>
+                    </tr>
+                    
+                    <tr>
+                        <td >Responsables:</td>
+                        <td colspan="3" ><input size="100%" name="responsable" id="responsable" ></input></td>
+                    </tr>
+                    
+                    <tr>
+                        <td >Supuestos Factores:</td>
+                        <td colspan="3" ><input size="100%" name="supuestosfactores" id="supuestosfactores" ></input></td>
+                    </tr>
+                     <tr>
+                        <td >Meta anual:</td>
+                        <td colspan="3" ><input size="20%" name="metaAnual" id="metaAnual" ></input><select name="selectipometa"  id='selectipometa'><option value='0'>Seleccione el tipo de meta</option></select></td>
+                    </tr>
+                    <tr>
+                        <td >Descripcion Meta anual:</td>
+                        <td colspan="3" ><input size="100%" name="descripMetaAnual" id="descripMetaAnual" ></input></td>
+                    </tr>
+                   
+                    
+                    <tr>
+                        <td >fecha inicio:</td>
+                        <td colspan="3" ><input size="100%" name="fechainicio" id="fechainicio" ></input></td>
+                    </tr>
+                      <tr>
+                        <td >fecha fin:</td>
+                        <td colspan="3" ><input size="100%" name="fechafin" id="fechafin" ></input></td>
+                    </tr>
+                    
+                    
+                   
+                        <tr>
+                        <td>Programado:</td>
+                        </tr>
+                       
+                        
+                        <tr>
+                         <TD WIDTH="25%"align="center">1er Trimestre</TD>
+                        <TD WIDTH="25%" align="center">2do trimestre</TD>
+                        <TD WIDTH="25%" align="center">3er Trimestre</TD>
+                        <TD WIDTH="25%" align="center">4to Trimestre</TD>
+                         </tr>
+                        <tr>
+                        <TD WIDTH="25%"align="center"> <input size="25%" name="trimUno" id="trimUno" ></input></TD>
+                        <TD WIDTH="25%"align="center"><input size="25%" name="trimDos" id="trimDos" ></input></TD>
+                        <TD WIDTH="25%"align="center"><input size="25%" name="trimTres" id="trimTres" ></input></TD>
+                        <TD WIDTH="25%"align="center"><input size="25%" name="trimCuatro" id="trimCuatro" ></input></TD>
+                        </tr>   
+                      
+                       
+                           <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
+                           <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
+                        <td colspan="3" align="center" ><br><br><button type="submmit" id="guardar"  >Guardar</button>
+                            
+                        </td> 
+                        <td colspan="1" align="center" ><br><br><button type="submmit" name="regresar" id="regresar"  >Regresar</button>
+                            
+                        </td> 
+                    </tr>                    
+                </table>
+            </form>            
+        </div>
+      
+</div>
+
+
+{% endblock %}{# empty Twig template #}
+
+
+

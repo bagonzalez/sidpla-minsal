@@ -59,3 +59,7 @@ MinSalSidPlaGesObjEspBundle_consultarActividadesJSON:
 MinSalSidPlaGesObjEspBundle_ingresoActividades:
     pattern:  /ingresoActividades
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminActividades:ingresoActividades}
+
+MinSalSidPlaGesObjEspBundle_editarActividad:
+    pattern:  /editarActividad
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminActividades:editarActividad}
