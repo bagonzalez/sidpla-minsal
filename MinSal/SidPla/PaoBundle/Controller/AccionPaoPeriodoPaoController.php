@@ -15,7 +15,6 @@ use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 use MinSal\SidPla\PaoBundle\Entity\Pao;
 use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 
-
 class AccionPaoPeriodoPaoController extends Controller {
 
     public function mantenimientoPeriodoPaoAction() {
@@ -57,15 +56,15 @@ class AccionPaoPeriodoPaoController extends Controller {
     public function consultarPeriodoPaoJSONAction() {
 
         $periodoPaoDao = new PeriodoPaoDao($this->getDoctrine());
-        $anio=$this->getRequest()->get('anio');
-        
-        if($anio==0)
-            $anio=date("Y");
-        
-        $pao=$this->obtenerPao($anio);
-        
-        $periodoPao=$pao->getPeriodoCalendarizacion();
-        
+        $anio = $this->getRequest()->get('anio');
+
+        if ($anio == 0)
+            $anio = date("Y");
+
+        $pao = $this->obtenerPao($anio);
+
+        $periodoPao = $pao->getPeriodoCalendarizacion();
+
         $aux = new PeriodoPao();
         $i = 0;
 
@@ -85,17 +84,19 @@ class AccionPaoPeriodoPaoController extends Controller {
         }
 
         $numfilas = count($periodoPao);
-        if ($numfilas != 0){
-            array_multisort($rows,SORT_ASC);   
+        if ($numfilas != 0) {
+            array_multisort($rows, SORT_ASC);
+        } else {
+            $rows[0]['id'] = 0;
+            $rows[0]['cell'] = array(' ', ' ', ' ', ' ',' ');
         }
-        else{
-            $rows[0]['id']=0;
-            $rows[0]['cell']=array(' ',' ',' ',' ');
-        }
+
         $datos = json_encode($rows);
+        $pages = floor($numfilas / 10) + 1;
+
         $jsonresponse = '{
                "page":"1",
-               "total":"1",
+               "total":"' . $pages . '",
                "records":"' . $numfilas . '", 
                "rows":' . $datos . '}';
 
@@ -103,29 +104,29 @@ class AccionPaoPeriodoPaoController extends Controller {
         $response = new Response($jsonresponse);
         return $response;
     }
-    
-     public function manttPeriodoPaoAction() {
+
+    public function manttPeriodoPaoAction() {
         $request = $this->getRequest();
-        
+
         $codPerPao = $request->get('id');
         $tipoPeriodoCodigo = $request->get('nombre');
-        $dia=substr($request->get('fechini'),0,2);
-        $mes=substr($request->get('fechini'),3,2);
-        $anio=substr($request->get('fechini'),6,4);
-        $fechIniPerPao=$anio.'-'.$mes.'-'.$dia;
-        $dia=substr($request->get('fechfin'),0,2);
-        $mes=substr($request->get('fechfin'),3,2);
-        $anio=substr($request->get('fechfin'),6,4);
-        $fechFinPerPao=$anio.'-'.$mes.'-'.$dia;
-        
-            
+        $dia = substr($request->get('fechini'), 0, 2);
+        $mes = substr($request->get('fechini'), 3, 2);
+        $anio = substr($request->get('fechini'), 6, 4);
+        $fechIniPerPao = $anio . '-' . $mes . '-' . $dia;
+        $dia = substr($request->get('fechfin'), 0, 2);
+        $mes = substr($request->get('fechfin'), 3, 2);
+        $anio = substr($request->get('fechfin'), 6, 4);
+        $fechFinPerPao = $anio . '-' . $mes . '-' . $dia;
+
+
         $operacion = $request->get('oper');
 
         $periodoPaoDao = new PeriodoPaoDao($this->getDoctrine());
-        
-       $periodoPaoDao->editarPeriodoOficial($codPerPao, $tipoPeriodoCodigo, $fechIniPerPao, $fechFinPerPao);
-        
-              
+
+        $periodoPaoDao->editarPeriodoOficial($codPerPao, $tipoPeriodoCodigo, $fechIniPerPao, $fechFinPerPao);
+
+
 
         return new Response("{sc:true,msg:''}");
     }

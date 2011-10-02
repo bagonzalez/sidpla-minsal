@@ -1,18 +1,26 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
-{% block titulo %}Tipo Periodo Pao {% endblock %}
+{% block titulo %}Cronograma Pao {% endblock %}
 
 {% block body %}
 <script type="text/javascript">
-    </script>
-    <h1 style='text-align: center;'>Tipo Periodo Pao</h1>
-    <form>
-        <table align="center">
-            <tr>
-                <td align="center">
-                    <br></br>  
-               {% include 'MinSalSidPlaPaoBundle:TipoPeriodoPao:showTipoPeriodo.html.twig'%}
-                </td>
-            </tr>        
-        </table>    
-    </form>
+$(document).ready(function(){           
+    $('#tabs').tabs();
+    $('#pestaniaTipoPeriodo').click(function(){$('#tabtipoperiodo').trigger("reloadGrid");});
+    $('#pestaniaPeriodoOficial').click(function(){$('#tabperiodooficial').trigger("reloadGrid");});
+    
+ });
+</script>
+    <h1 style='text-align: center;'>Definici&oacute;n del Cronograma</h1>
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1" id='pestaniaPeriodoOficial'>Determine el Cronograma</a></li>
+            <li><a href="#tabs-2" id='pestaniaTipoPeriodo'>Gestionar Tipos de Periodos</a></li>                
+        </ul>
+        <div id="tabs-1" align="center">
+                  {% include 'MinSalSidPlaPaoBundle:PeriodoPaoOficial:manttPerPaoOfi.html.twig'%}
+        </div>
+        <div id="tabs-2" align="center">
+                    {% include 'MinSalSidPlaPaoBundle:TipoPeriodoPao:showTipoPeriodo.html.twig'%}
+        </div>
+    </div>
 {% endblock %}

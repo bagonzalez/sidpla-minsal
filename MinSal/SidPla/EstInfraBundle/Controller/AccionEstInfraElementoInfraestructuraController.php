@@ -5,21 +5,18 @@ namespace MinSal\SidPla\EstInfraBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
 use MinSal\SidPla\EstInfraBundle\EntityDao\ElementoInfraestructuraDao;
 use MinSal\SidPla\EstInfraBundle\Entity\ElementoInfraestructura;
-
 use MinSal\SidPla\EstInfraBundle\Entity\UnidadMedida;
 use MinSal\SidPla\EstInfraBundle\EntityDao\UnidadMedidaDao;
 
 class AccionEstInfraElementoInfraestructuraController extends Controller {
 
-  
     public function consultarElementoInfraestructuraJSONAction() {
 
-        $ElementoInfraestructuraDao=new ElementoInfraestructuraDao($this->getDoctrine());
-        $ElementoInfraestructura= $ElementoInfraestructuraDao->getElementoInfraestructura();
-        
+        $ElementoInfraestructuraDao = new ElementoInfraestructuraDao($this->getDoctrine());
+        $ElementoInfraestructura = $ElementoInfraestructuraDao->getElementoInfraestructura();
+
 
         $numfilas = count($ElementoInfraestructura);
 
@@ -31,47 +28,52 @@ class AccionEstInfraElementoInfraestructuraController extends Controller {
             $rows[$i]['cell'] = array($aux->getIdElemInfra(),
                 $aux->getNomElemInfra(),
                 $aux->getCodUnidadMed()->getAbreUnidMed(),
-                $aux->getElemInfraDescrip()                
+                $aux->getElemInfraDescrip()
             );
-          
+
             $i++;
         }
 
-        $datos = json_encode($rows);
+        if ($numfilas != 0) {
+            array_multisort($rows, SORT_ASC);
+        } else {
+            $rows[0]['id'] = 0;
+            $rows[0]['cell'] = array(' ', ' ', ' ', ' ');
+        }
 
+        $datos = json_encode($rows);
+        $pages = floor($numfilas / 10) + 1;
 
         $jsonresponse = '{
                "page":"1",
-               "total":"1",
+               "total":"' . $pages . '",
                "records":"' . $numfilas . '", 
                "rows":' . $datos . '}';
-
 
         $response = new Response($jsonresponse);
         return $response;
     }
-   
 
     public function manttElementoInfraestruturaAction() {
         $request = $this->getRequest();
-        
-        $codElemInfra=$request->get('id');
-        $nomElemInfra=$request->get('nomelem');
-        $abreElemInfra=(int) $request->get('abreunidmed');
-        $descElemInfra=$request->get('descripcion'); 
+
+        $codElemInfra = $request->get('id');
+        $nomElemInfra = $request->get('nomelem');
+        $abreElemInfra = (int) $request->get('abreunidmed');
+        $descElemInfra = $request->get('descripcion');
         $operacion = $request->get('oper');
 
-        $eleminfraDao=new ElementoInfraestructuraDao($this->getDoctrine());
+        $eleminfraDao = new ElementoInfraestructuraDao($this->getDoctrine());
 
-        switch ($operacion){
+        switch ($operacion) {
             case 'edit':
-                 $eleminfraDao->editarElementoInfra($codElemInfra, $nomElemInfra, $abreElemInfra, $descElemInfra);
+                $eleminfraDao->editarElementoInfra($codElemInfra, $nomElemInfra, $abreElemInfra, $descElemInfra);
                 break;
             case 'del':
                 $eleminfraDao->eliminarElementoInfra($codElemInfra);
                 break;
             case 'add':
-                 $eleminfraDao->agregarElementoInfra($nomElemInfra, $abreElemInfra, $descElemInfra);
+                $eleminfraDao->agregarElementoInfra($nomElemInfra, $abreElemInfra, $descElemInfra);
                 break;
         }
 
@@ -79,6 +81,5 @@ class AccionEstInfraElementoInfraestructuraController extends Controller {
     }
 
 }
-
 ?>
 

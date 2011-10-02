@@ -3,6 +3,7 @@
   $(document).ready(function(){
     $('#editarPeriodoPao').button();
     $('#selanio').change(cargarAnio);
+    
     var myGrid = $('#tabperiodopao');        
     myGrid.jqGrid({
       url: 'consultarPeriodoPaoJSON',
@@ -11,12 +12,11 @@
       colNames:['Codigo','Nombre','Fecha Inicio','Fecha Fin','Activo'],
       colModel:[
         { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15},align:'center'},
-        { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:30},edittype:"select",
-                        editoptions: {value:"0:Seleccione un Tipo de Periodo;{{ combotipoperiodos }}"}
+        { name:'nombre', index: 'nombre', width:200,editable:true,edittype:"text",editoptions: {readonly:"readonly"}
         },//Fin del nombre
         { name:'fechini', index: 'fechini', width:150,editable:true,align:'center',
                 formoptions:{label: "Fecha de Inicio",elmprefix:"(*)"},editrules:{required:true},
-                editoptions: {size: 10, maxlengh: 10,
+                editoptions: {size: 10, maxlengh: 10,date:true,
                             dataInit: function(element) {
                                 $(element).datepicker({
                                     dateFormat: 'dd/mm/yy',
@@ -29,7 +29,7 @@
         },//Fin del fechini
         { name:'fechfin', index: 'fechfin', width:150,editable:true,align:'center',
                 formoptions:{label: "Fecha de Finalizacion",elmprefix:"(*)"},editrules:{required:true},
-                editoptions: {size: 10, maxlengh: 10,
+                editoptions: {size: 10, maxlengh: 10,date:true,
                             dataInit: function(element) {
                                 $(element).datepicker({
                                     dateFormat: 'dd/mm/yy',
@@ -45,6 +45,7 @@
       rowNum:10,
       rowList:[10,20,30],
       multiselect: false,
+      loadonce:true,
       pager: jQuery('#pager'),
       viewrecords: true,          
       caption: 'Periodo Oficial',
@@ -53,15 +54,16 @@
     });
 
     myGrid.jqGrid('navGrid','#pager',
-        {edit:false,add:false,del:false}
-    );//Fin del pager del grid
-   
+        {edit:false,add:false,del:false,
+        beforeRefresh: function() {$('#tabperiodopao').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}
+    ).hideCol('codigo');//Fin del pager del grid
+    
    $("#editarPeriodoPao").click(function(){
      var gr = jQuery('#tabperiodopao').jqGrid('getGridParam','selrow');
      if( gr != null )
        jQuery("#tabperiodopao").jqGrid('editGridRow',gr,{closeAfterEdit:true,editCaption: "Editando Cronograma PAO",
                  width:550,height:200,closeAfterEdit : true,align:'center',reloadAfterSubmit:true,
-                 top : 250 ,left: 250,width: 600,processData: "Cargando...", 
+                 top : 250 ,left: 250,width: 600,processData: "Cargando...",
                  onclickSubmit: function(rp_ge, postdata) {
                         alert("Periodo Pao Editado con exito!");
                 }, 
@@ -73,8 +75,13 @@
    //Funcion para cargar el Grid con diferente anio
    function cargarAnio(){
       $('#tabperiodopao').setGridParam({url:'consultarPeriodoPaoJSON?anio='+$('#selanio').val()}); 
-      $('#tabperiodopao').trigger("reloadGrid"); 
+      $('#tabperiodopao').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
    }
+   
+   function despuesEditar() {
+        $('#tabperiodopao').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+        return[true,'']; //no error
+      }
   });
     </script>
     <table id="tabperiodopao" class="scroll" alignalign="center"></table> 

@@ -34,15 +34,21 @@ class AccionEstInfraUnidadMedidaController extends Controller {
             $i++;
         }
 
-        $datos = json_encode($rows);
+        if ($numfilas != 0) {
+            array_multisort($rows, SORT_ASC);
+        } else {
+            $rows[0]['id'] = 0;
+            $rows[0]['cell'] = array(' ', ' ', ' ', ' ',' ');
+        }
 
+        $datos = json_encode($rows);
+        $pages = floor($numfilas / 10) + 1;
 
         $jsonresponse = '{
                "page":"1",
-               "total":"1",
+               "total":"' . $pages . '",
                "records":"' . $numfilas . '", 
                "rows":' . $datos . '}';
-
 
         $response = new Response($jsonresponse);
         return $response;
