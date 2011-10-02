@@ -29,9 +29,9 @@ class TipoHorario
     private $tipoHorDes;
 
     /**
-     * @var integer $tipoCantidadHor
+     * @var bigint $tipoCantidadHor
      *
-     * @ORM\Column(name="tiphor_cantidadhoras", type="integer")
+     * @ORM\Column(name="tiphor_cantidadhoras", type="bigint")
      */
     private $tipoCantidadHor;
 
@@ -73,7 +73,7 @@ class TipoHorario
     /**
      * Set tipoCantidadHor
      *
-     * @param integer $tipoCantidadHor
+     * @param bigint $tipoCantidadHor
      */
     public function setTipoCantidadHor($tipoCantidadHor){
         $this->tipoCantidadHor = $tipoCantidadHor;
@@ -82,7 +82,7 @@ class TipoHorario
     /**
      * Get tipoCantidadHor
      *
-     * @return integer 
+     * @return bigint
      */
     public function getTipoCantidadHor(){
         return $this->tipoCantidadHor;

@@ -1,3 +1,23 @@
+#Routing de RRMedicoBundle
 MinSalSidPlaRRMedicoBundle_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: MinSalSidPlaRRMedicoBundle:Default:index }
+
+
+#TipoHorario
+MinSalSidPlaRRMedicoBundle_consultarTipoHorarioJSON:
+    pattern:  /consultarTipoHorarioJSON
+    defaults: { _controller: MinSalSidPlaRRMedicoBundle:AccionRRMedicoTipoHorario:consultarTipoHorarioJSON }
+
+MinSalSidPlaRRMedicoBundle_manttTipoHorario:
+    pattern:  /manttTipoHorario
+    defaults: { _controller: MinSalSidPlaRRMedicoBundle:AccionRRMedicoTipoHorario:manttTipoHorario }
+
+MinSalSidPlaRRMedicoBundle_consultarTipoHorario:
+    pattern:  /consultarTipoHorario
+    defaults: { _controller: MinSalSidPlaRRMedicoBundle:AccionRRMedicoTipoHorario:consultarTipoHorario}
+
+
+
+
+#********************************

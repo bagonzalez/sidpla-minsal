@@ -1,0 +1,88 @@
+{% block body %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#agregarTipoHoraButton').button();
+    $('#editarTipoHoraButton').button();
+    $('#eliminarTipoHoraButton').button();
+       
+    $('#tabTipoH').jqGrid({ 
+          url: 'consultarTipoHorarioJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Codigo','Nombre','Cantidad de Horas','Horario'],
+          colModel:[
+            { name:'codigo', index: 'codigo', width:40,align:'center',editable:false,editoptions:{size:15}},
+            { name:'nomTipHo', index: 'nomTipHo', width:300,editable:true,editoptions:{size:30,maxlength: 100}, formoptions:{elmprefix:"(*)"},editrules:{required:true}},
+            { name:'cantH', index: 'cantH',align:"center", width:100,editable:true,formoptions:{elmprefix:"(*)"},editrules:{required:true,integer:true,maxValue:24,minValue:1}},
+            { name:'tipoH', index: 'tipoH', width:100,align:"center",editable:true,editoptions:{size:30},edittype:"select",editoptions:{value:"Normal:Horario Normal;Ampliado:Horario Ampliado"},
+                formoptions:{label: "Tipo"}},
+            ],
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          pager: jQuery('#pagerH'),
+          loadonce:true,
+          viewrecords: true,          
+          caption: 'Gestion Unidades de Tipo Horario',
+          addCaption: "Agregar Tipo Horario",
+          editCaption: "Editar Tipo Horario",
+          height: "100%",
+          editurl:'manttTipoHorario'
+                     
+        });
+   $('#tabTipoH').jqGrid('navGrid','#pager',{edit:false,add:false,del:false,view:true,
+     beforeRefresh: function() {$('#tabTipoH').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}
+   ).hideCol('codigo');   
+ 
+    /* Funcion para regargar los JQGRID luego de agregar y editar*/
+   function despuesAgregarEditar() {
+      $('#tabTipoH').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+      return[true,'']; //no error
+   }
+ 
+  //agregar
+  $("#agregarTipoHoraButton").click(function(){
+     jQuery('#tabTipoH').jqGrid('editGridRow',"new",
+        {closeAfterAdd:true,addCaption: "Agregar Tipo Horario",height:250,align:'center',reloadAfterSubmit:true,
+            width: 600,processData: "Cargando...",bottominfo:"Campos marcados con (*) son obligatorios <br/> <br/>Horario Ampliado (Noche y Fin de Semana)",afterSubmit:despuesAgregarEditar, 
+         onclickSubmit: function(rp_ge, postdata) {
+            alert("datos guardados con exito!");
+         }});
+  });
+    
+         //editar
+$("#editarTipoHoraButton").click(function(){
+  var gr = jQuery('#tabTipoH').jqGrid('getGridParam','selrow');
+  if( gr != null )
+    jQuery('#tabTipoH').jqGrid('editGridRow',gr,
+        {closeAfterEdit:true,editCaption: "Editar Tipo Horario",height:250,align:'center',reloadAfterSubmit:true,
+         width: 600,processData: "Cargando...",afterSubmit:despuesAgregarEditar, bottominfo:"Campos marcados con (*) son obligatorios", 
+         onclickSubmit: function(rp_ge, postdata) {
+                alert("Tipo Horario editado con exito!");
+          }});
+ else 
+     alert("Por favor seleccione una fila para editar!"); 
+ });
+    
+        //eliminar
+$("#eliminarTipoHoraButton").click(function(){
+  var grs = jQuery('#tabTipoH').jqGrid('getGridParam','selrow');
+  if( grs != null ) jQuery('#tabTipoH').jqGrid('delGridRow',grs,
+    {msg: "Desea Eliminar este Tipo Horario?",caption:"Eliminando Tipo Horario",height:100,
+     align:'center',reloadAfterSubmit:true,width: 300,processData: "Cargando...",
+     onclickSubmit: function(rp_ge, postdata) {
+        alert("Tipo Horario eliminado con exito!");
+  }}); 
+  else 
+     alert("Por favor seleccione una fila para borrar!"); 
+  }); 
+});
+    </script>
+    <table id="tabTipoH" class="scroll" alignalign="center"></table>
+    <div id="pagerH" class="scroll"></div>  
+    <br></br>
+    <input type="button" id="agregarTipoHoraButton" value="  Agregar  " />
+    <input type="button" id="editarTipoHoraButton" value="   Editar   " />
+    <input type="button" id="eliminarTipoHoraButton" value="  Eliminar  " />
+    
+{% endblock %}
