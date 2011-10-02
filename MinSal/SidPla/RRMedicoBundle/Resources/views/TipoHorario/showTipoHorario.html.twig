@@ -15,7 +15,7 @@ $(document).ready(function(){
             { name:'nomTipHo', index: 'nomTipHo', width:300,editable:true,editoptions:{size:30,maxlength: 100}, formoptions:{elmprefix:"(*)"},editrules:{required:true}},
             { name:'cantH', index: 'cantH',align:"center", width:100,editable:true,formoptions:{elmprefix:"(*)"},editrules:{required:true,integer:true,maxValue:24,minValue:1}},
             { name:'tipoH', index: 'tipoH', width:100,align:"center",editable:true,editoptions:{size:30},edittype:"select",editoptions:{value:"Normal:Horario Normal;Ampliado:Horario Ampliado"},
-                formoptions:{label: "Tipo"}},
+                formoptions:{label: "Turno"}},
             ],
           rowNum:10,
           rowList:[10,20,30],
@@ -23,9 +23,9 @@ $(document).ready(function(){
           pager: jQuery('#pagerH'),
           loadonce:true,
           viewrecords: true,          
-          caption: 'Gestion Unidades de Tipo Horario',
-          addCaption: "Agregar Tipo Horario",
-          editCaption: "Editar Tipo Horario",
+          caption: 'Gestionar Tipo de  Horario Medico',
+          addCaption: "Agregar Tipo Horario Medico",
+          editCaption: "Editar Tipo Horario Medico",
           height: "100%",
           editurl:'manttTipoHorario'
                      
@@ -58,7 +58,7 @@ $("#editarTipoHoraButton").click(function(){
         {closeAfterEdit:true,editCaption: "Editar Tipo Horario",height:250,align:'center',reloadAfterSubmit:true,
          width: 600,processData: "Cargando...",afterSubmit:despuesAgregarEditar, bottominfo:"Campos marcados con (*) son obligatorios", 
          onclickSubmit: function(rp_ge, postdata) {
-                alert("Tipo Horario editado con exito!");
+                alert("Tipo Horario medico editado con exito!");
           }});
  else 
      alert("Por favor seleccione una fila para editar!"); 
