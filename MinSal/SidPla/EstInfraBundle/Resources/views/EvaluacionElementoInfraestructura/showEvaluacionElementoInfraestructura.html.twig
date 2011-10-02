@@ -1,59 +1,66 @@
 {% block body %}
 <script type="text/javascript">
-    $(document).ready(function(){
-        var seleccionado;       
-        var myGrid = $('#tabEvaInfra');        
-        myGrid.jqGrid({ 
-          url: 'consultarEvaluacionElementoJSON?idInfra={{idInfra}}',
-          datatype:'json',
-          altRows:true,
-          colNames:['Codigo','Elemento', 'Estado', 'Cantidad','Unidad','Accion'], 
-          colModel:[ 
-                  {name:'codigo',index:'codigo', width:50, editable: false,align:'center'},
-                  {name:'elemento',index:'elemento', width:180,editable: false,edittype:"select",editoptions: {value:"{{ elementoInfra }}" }},
-                  {name:'estado',index:'estado', width:100, editable: true,edittype:"select",editoptions: {value:"{{ estadosInfra }}" },align:'center',
-                        editrules:{custom:true, custom_func:validaEstado}
-                  },
-                  {name:'cantidad',index:'cantidad', width:90, editable: true,align:'center'},
-                  {name:'unidad',index:'unidad', width:50, editable: false,edittype:"select",editoptions:{value:"{{ unidadMedida }}" },align:'center'},
-                  {name:'act',index:'act', width:100,sortable:false,align:'center'}           
-          ],
-          scroll:true,
-          rowNum:10,
-          rowList:[10,20,30],
-          multiselect: false,
-          pager: jQuery('#pager1'),
-          viewrecords: true,          
-          caption: 'Evaluacion Elementos de Infraestructura',
-          height: "100%",
-          onSelectRow: function(id){
-                if(id && id!==seleccionado){
-                jQuery('#tabEvaInfra').restoreRow(seleccionado);
-                jQuery('#tabEvaInfra').editRow(id,true);
-                seleccionado=id;}
-          },
-        gridComplete: 
-            function(){ 
-                var ids = jQuery("#tabEvaInfra").jqGrid('getDataIDs');
-                for(var i=0;i < ids.length;i++){
-                    var cl = ids[i]; 
-                    guardar = "<input style='height:18px;width:50px;' type='button' value='Guardar' onclick=\"jQuery('#tabEvaInfra').saveRow('"+cl+"');\" />";
-                    jQuery("#tabEvaInfra").jqGrid('setRowData',ids[i],{act:guardar}); } },
-        editurl:'manttEvaluacionElemento'
-                     
-        });
-        myGrid.jqGrid('navGrid','#pager1',{edit:false,add:false,del:false,view:true});
-        function validaEstado(value, colname) {
-        if (value == -1 ) 
-            return [false,"Seleccione una estado de Infraestructura"];
-        else 
-            return [true,""];
-       }
+$(document).ready(function(){
+   var seleccionado;       
+   var myGrid = $('#tabEvaInfra');        
+     myGrid.jqGrid({ 
+     url: 'consultarEvaluacionElementoJSON?idInfra={{idInfra}}',
+     datatype:'json',
+     altRows:true,
+     colNames:['Codigo','Elemento', 'Estado', 'Cantidad','Unidad','Accion'], 
+     colModel:[ 
+        {name:'codigo',index:'codigo', width:50, editable: false,align:'center'},
+        {name:'elemento',index:'elemento', width:180,editable: false,edittype:"select",editoptions: {value:"{{ elementoInfra }}" }},
+        {name:'estado',index:'estado', width:100, editable: true,edittype:"select",editoptions: {value:"{{ estadosInfra }}" },align:'center',
+              editrules:{custom:true, custom_func:validaEstado}
+        },
+        {name:'cantidad',index:'cantidad', width:90, editable: true,align:'center'},
+        {name:'unidad',index:'unidad', width:50, editable: false,edittype:"select",editoptions:{value:"{{ unidadMedida }}" },align:'center'},
+        {name:'act',index:'act', width:100,sortable:false,align:'center'}           
+     ],
+     rowNum:10,
+     rowList:[10,20,30],
+     multiselect: false,
+     pager: jQuery('#pager1'),
+     loadonce:true,
+     viewrecords: true,          
+     caption: 'Evaluacion Elementos de Infraestructura',
+     height: "100%",
+     onSelectRow: function(id){
+          if(id && id!==seleccionado){
+          jQuery('#tabEvaInfra').restoreRow(seleccionado);
+          jQuery('#tabEvaInfra').editRow(id,true);
+          seleccionado=id;}
+     },
+    editurl:'manttEvaluacionElemento',
+    gridComplete: 
+      function(){ 
+          var ids = jQuery("#tabEvaInfra").jqGrid('getDataIDs');
+          for(var i=0;i < ids.length;i++){
+             var cl = ids[i]; 
+             guardar = "<input style='height:18px;width:50px;' type='button' value='Guardar' onclick=\"jQuery('#tabEvaInfra').saveRow('"+cl+"');"
+                 +"$('#tabEvaInfra').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');\" />";
+             jQuery("#tabEvaInfra").jqGrid('setRowData',ids[i],{act:guardar});
+         } 
+       }          
+    });
+      
+   myGrid.jqGrid('navGrid','#pager1',{edit:false,add:false,del:false,
+      beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}
+   ).hideCol('codigo');
+   
+  
+   
+   function validaEstado(value, colname) {
+     if (value == -1 ) 
+          return [false,"Seleccione una estado de Infraestructura"];
+     else 
+          return [true,""];
+   }
  
-   });
+ });
  
     </script>
-   <table id="tabEvaInfra" class="scroll" alignalign="center">
-   </table> 
-   <div id="pager1" class="scroll" style="text-align:center;"></div>  
+   <table id="tabEvaInfra" class="scroll" alignalign="center"></table> 
+   <div id="pager1" class="scroll"></div>  
 {% endblock %}

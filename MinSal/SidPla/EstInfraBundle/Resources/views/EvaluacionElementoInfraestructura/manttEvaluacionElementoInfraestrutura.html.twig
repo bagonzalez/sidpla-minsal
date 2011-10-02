@@ -7,33 +7,30 @@
 $(document).ready(function(){
    $('#btnagregar').button();
    $("#btnagregar").click(function(){
-       window.location='seleccionaElementos?idInfra={{ idInfra }}';
+       document.location.href='seleccionaElementos?idInfra={{ idInfra }}';
    });
   
  });          
 </script>
-    <br></br>
-    <h1 style='text-align: center;'>Evaluacion Infraestructura</h1>
-    <table align="center">
-        <tr>
-            <td>
-                <p style=' font-size: 12px'>Solo de clic sobre el elemento, realice el cambio y de presione en guardar justo al lado del elementos que esta evaluando.</p>
-                
-            </td>
-        </tr>
-        <tr>
-            <td align="center">
-                <br></br>  
-                    {%include 'MinSalSidPlaEstInfraBundle:EvaluacionElementoInfraestructura:showEvaluacionElementoInfraestructura.html.twig' %}
-            </td>
-
-        </tr>
-        <tr align="right">
-            <td>
-                <input type="button" id="btnagregar" value="Agregar Elementos" />
-            </td>
-        </tr>
-
-    </table>   
+<h1 style='text-align: center;'>Evaluacion Infraestructura</h1>
+<table align="center">
+   <tr>
+      <td>
+         <p style=' font-size: 12px'>Para editar las cantidades de clic sobre el elemento, realice el cambio y presione en guardar justo al lado del elementos que esta evaluando.</p>
+         <p style=' font-size: 12px'><strong>NOTA:</strong></p>
+         <p style=' font-size: 12px'>Doy fe que toda la información proporcionada en esta pagina es real y puede ser utilizada segun sea conveniente</p>
+      </td>
+   </tr>
+   <tr align="right">
+      <td>
+          <input type="button" id="btnagregar" value="Gestionar Elementos" />
+      </td>
+   </tr>
+   <tr>
+     <td align="center">
+       {%include 'MinSalSidPlaEstInfraBundle:EvaluacionElementoInfraestructura:showEvaluacionElementoInfraestructura.html.twig' %}
+     </td>
+   </tr>
+</table>   
 
 {% endblock %}

@@ -106,10 +106,11 @@ class AccionAdminRolesController extends Controller {
         }
         $datos = json_encode($rows);
 
+        $pages = floor($numfilas / 10) + 1;
 
         $jsonresponse = '{
                "page":"1",
-               "total":"' . $numfilas . '", 
+               "total":"' . $pages . '",
                "records":"' . $numfilas . '", 
                "rows":' . $datos . '}';
 
@@ -186,7 +187,6 @@ class AccionAdminRolesController extends Controller {
         $opciones = $rolDao->consultarOpcSeleccRol($idRol);
 
         $numfilas = count($opciones);
-        $datos = '[]';
         $opc = new OpcionSistema();
         $i = 0;
 
@@ -198,16 +198,22 @@ class AccionAdminRolesController extends Controller {
             $i++;
         }
 
-        if ($numfilas > 0)
-            $datos = json_encode($rows);
+        if ($numfilas != 0) {
+            array_multisort($rows, SORT_ASC);
+        } else {
+            $rows[0]['id'] = 0;
+            $rows[0]['cell'] = array(' ', ' ');
+        }
+        
+        $datos = json_encode($rows);
+        $pages = floor($numfilas / 25)+1;
 
         $jsonresponse = '{
                "page":"1",
-               "total":"1",
+               "total":"' . $pages . '",
                "records":"' . $numfilas . '", 
                "rows":' . $datos . '}';
-
-
+        
         $response = new Response($jsonresponse);
         return $response;
     }
@@ -223,7 +229,6 @@ class AccionAdminRolesController extends Controller {
         $opciones = $rolDao->consultarOpcNoSeleccRol($idRol);
 
         $numfilas = count($opciones);
-        $datos = '[]';
         $opc = new OpcionSistema();
         $i = 0;
 
@@ -235,12 +240,19 @@ class AccionAdminRolesController extends Controller {
             $i++;
         }
 
-        if ($numfilas > 0)
-            $datos = json_encode($rows);
+        if ($numfilas != 0) {
+            array_multisort($rows, SORT_ASC);
+        } else {
+            $rows[0]['id'] = 0;
+            $rows[0]['cell'] = array(' ', ' ');
+        }
+        
+        $datos = json_encode($rows);
+        $pages = floor($numfilas / 25)+1;
 
         $jsonresponse = '{
                "page":"1",
-               "total":"1",
+               "total":"' . $pages . '",
                "records":"' . $numfilas . '", 
                "rows":' . $datos . '}';
 

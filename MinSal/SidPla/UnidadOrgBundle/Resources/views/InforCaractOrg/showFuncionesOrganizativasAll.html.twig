@@ -18,6 +18,7 @@
           multiselect: false,
           sortname: 'id',
           sortorder: "asc",
+          loadonce:true,
           pager: jQuery('#pager'),
           viewrecords: true,          
           caption: 'Funciones Especificas',
@@ -28,18 +29,23 @@
             
         });
         myGrid.jqGrid('navGrid','#pager',
-        {edit:true,add:true,del:true},
+        {edit:true,add:true,del:true,
+            beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}
+        },
         {width:450,height:200, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos editados con exito!");},closeAfterEdit:true },//edit
+        alert("datos editados con exito!");},closeAfterEdit:true,afterSubmit:despuesAgregarEditarFun },//edit
         {width:450,height:200,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");},closeAfterAdd:true },//add
+        alert("datos guardados con exito!");},closeAfterAdd:true,afterSubmit:despuesAgregarEditarFun },//add
         {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
         alert("Mensaje eliminado con exito!");
           } },//del
         {},//search
         {} //view
         );
-       
+        function despuesAgregarEditarFun() {
+            myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+        return[true,'']; //no error
+      } 
       });
       
     
