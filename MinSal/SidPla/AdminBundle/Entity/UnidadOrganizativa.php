@@ -248,4 +248,14 @@ class UnidadOrganizativa {
         $this->paos[] = $paos;
     }
 
+
+    /**
+     * Add departUnidades
+     *
+     * @param MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni $departUnidades
+     */
+    public function addDepartamentoUni(\MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni $departUnidades)
+    {
+        $this->departUnidades[] = $departUnidades;
+    }
 }
