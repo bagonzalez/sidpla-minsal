@@ -1,0 +1,15 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %} Resultado de Programacion de recurso Medico{% endblock %}
+
+{% block body %}
+
+<h1 style='text-align: center;'>Resultado de Programacion de recurso Medico</h1>
+<table align="center">
+      <tr>
+     <td align="center">
+       {%include 'MinSalSidPlaRRMedicoBundle:ResulPrograRRMed:showResultPrograRRMed.html.twig' %}
+     </td>
+   </tr>
+</table>   
+
+{% endblock %}
