@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="sidpla_recursohumano")
  * @ORM\Entity
  */
-class RecursoHumano
-{
+class RecursoHumano {
+
     /**
      * @var integer $codigoRRHH
      *
@@ -35,13 +35,24 @@ class RecursoHumano
      */
     private $descripcion;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="DepartamentoUni", inversedBy="rrHHs")
+     * @ORM\JoinColumn(name="depuni_codigo", referencedColumnName="depuni_codigo")
+     */
+    private $deptoUnidadRRHH;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="TipoRRHumano", inversedBy="rrHHTipoHum")
+     * @ORM\JoinColumn(name="tiprechum_codigo", referencedColumnName="tiprechum_codigo")
+     */
+    private $tipoRRHH;
 
     /**
      * Get codigoRRHH
      *
      * @return integer 
      */
-    public function getcodigoRRHH()
+    public function getCodigoRRHH()
     {
         return $this->codigoRRHH;
     }
@@ -51,7 +62,7 @@ class RecursoHumano
      *
      * @param integer $cantidad
      */
-    public function setcantidad($cantidad)
+    public function setCantidad($cantidad)
     {
         $this->cantidad = $cantidad;
     }
@@ -61,7 +72,7 @@ class RecursoHumano
      *
      * @return integer 
      */
-    public function getcantidad()
+    public function getCantidad()
     {
         return $this->cantidad;
     }
@@ -71,7 +82,7 @@ class RecursoHumano
      *
      * @param string $descripcion
      */
-    public function setdescripcion($descripcion)
+    public function setDescripcion($descripcion)
     {
         $this->descripcion = $descripcion;
     }
@@ -81,8 +92,48 @@ class RecursoHumano
      *
      * @return string 
      */
-    public function getdescripcion()
+    public function getDescripcion()
     {
         return $this->descripcion;
+    }
+
+    /**
+     * Set deptoUnidadRRHH
+     *
+     * @param MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni $deptoUnidadRRHH
+     */
+    public function setDeptoUnidadRRHH(\MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni $deptoUnidadRRHH)
+    {
+        $this->deptoUnidadRRHH = $deptoUnidadRRHH;
+    }
+
+    /**
+     * Get deptoUnidadRRHH
+     *
+     * @return MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni 
+     */
+    public function getDeptoUnidadRRHH()
+    {
+        return $this->deptoUnidadRRHH;
+    }
+
+    /**
+     * Set tipoRRHH
+     *
+     * @param MinSal\SidPla\DepUniBundle\Entity\TipoRRHumano $tipoRRHH
+     */
+    public function setTipoRRHH(\MinSal\SidPla\DepUniBundle\Entity\TipoRRHumano $tipoRRHH)
+    {
+        $this->tipoRRHH = $tipoRRHH;
+    }
+
+    /**
+     * Get tipoRRHH
+     *
+     * @return MinSal\SidPla\DepUniBundle\Entity\TipoRRHumano 
+     */
+    public function getTipoRRHH()
+    {
+        return $this->tipoRRHH;
     }
 }

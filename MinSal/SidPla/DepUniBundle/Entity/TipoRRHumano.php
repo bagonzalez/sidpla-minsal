@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="sidpla_tiporecursohumano")
  * @ORM\Entity
  */
-class TipoRRHumano
-{
+class TipoRRHumano {
+
     /**
      * @var integer $codTipoRRHH
      *
@@ -28,13 +28,24 @@ class TipoRRHumano
      */
     private $DescripRRHH;
 
+    /**
+     * @ORM\OneToMany(targetEntity="RecursoHumano", mappedBy="tipoRRHH")
+     */
+    private $rrHHTipoHum;
 
+
+
+    public function __construct()
+    {
+        $this->rrHHTipoHum = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get codTipoRRHH
      *
      * @return integer 
      */
-    public function getcodTipoRRHH()
+    public function getCodTipoRRHH()
     {
         return $this->codTipoRRHH;
     }
@@ -57,5 +68,25 @@ class TipoRRHumano
     public function getDescripRRHH()
     {
         return $this->DescripRRHH;
+    }
+
+    /**
+     * Add rrHHTipoHum
+     *
+     * @param MinSal\SidPla\DepUniBundle\Entity\RecursoHumano $rrHHTipoHum
+     */
+    public function addRrHHTipoHum(\MinSal\SidPla\DepUniBundle\Entity\RecursoHumano $rrHHTipoHum)
+    {
+        $this->rrHHTipoHum[] = $rrHHTipoHum;
+    }
+
+    /**
+     * Get rrHHTipoHum
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getRrHHTipoHum()
+    {
+        return $this->rrHHTipoHum;
     }
 }
