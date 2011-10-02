@@ -228,34 +228,20 @@ class AccionAdminCensoUsuarioController extends Controller{
     
     public function consultarPoblacionHumanaJSONAction(){
         
-       $request=$this->getRequest();
-       
-       $page = $request->get('page'); // get the requested page 
-       $limit = $request->get('rows'); // get how many rows we want to have into the grid 
-       $sidx = $request->get('sidx'); // get index row - i.e. user click to sort 
-       $sord = $request->get('sord'); // get the direction
-       if(!$sidx) $sidx =1;
+       $request=$this->getRequest();       
+      
        
        $rows='';
        
        $paoElaboracion=$this->obtenerPaoElaboracionAction();       
        $censoPoblacion=$paoElaboracion->getCesopoblacion();
-       
-        
            
         $poblacionHumana=$censoPoblacion->getPoblacionHumana();
         $regPobHumana=new PoblacionHumana();
 
-
         $i=0;
-        $numfilas=count($poblacionHumana); 
+        $numfilas=count($poblacionHumana);         
         
-        if( $numfilas >0 ) { 
-            $total_pages = ceil($numfilas/$limit);             
-        } else { 
-            $total_pages = 0;             
-        }
-        if ($page > $total_pages) $page=$total_pages;
        
             foreach ($poblacionHumana as $regPobHumana) {                    
                     
@@ -272,8 +258,8 @@ class AccionAdminCensoUsuarioController extends Controller{
             
             
            $jsonresponse='{
-               "page":"'.$page.'",
-               "total":"'.$total_pages.'",
+               "page":"1",
+               "total":"1",
                "records":"'.$numfilas.'", 
                "rows":'.$datos.'}';
             
@@ -282,6 +268,27 @@ class AccionAdminCensoUsuarioController extends Controller{
             return $response;            
         
     }
+    
+     public function procesarPoblacionHumanaAction(){
+         
+        $paoElaboracion=$this->obtenerPaoElaboracionAction();       
+        $censoPoblacion=$paoElaboracion->getCesopoblacion();
+           
+        $poblacionHumana=$censoPoblacion->getPoblacionHumana();
+        $regPobHumana=new PoblacionHumana();
+
+        $i=0;
+        $numfilas=count($poblacionHumana);         
+        
+       
+        foreach ($poblacionHumana as $regPobHumana) { 
+           //$regPobHumana->
+
+        }
+         
+         
+
+     }
     
     
    public function manttPoblacionHumanaEdicionAction(){
