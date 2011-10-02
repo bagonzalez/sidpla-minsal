@@ -1,0 +1,52 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+          
+          
+         
+          $('#agregar').click(function() {
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_ingresoActividades') }}';
+            
+            
+           });
+          
+         
+      
+      });
+      </script>
+<br></br>
+    <br></br>         
+    <br></br>    
+    <form id = "formulario"  action="" method="post">
+        <table align="center">
+            <tr><td align="center"><h1>Gestion de Actividades</h1>
+                </td>
+            </tr>
+           <tr>
+                        
+                        <td >Objetivo:<br><textarea readonly="readonly" rows="1" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
+                    </tr>
+                     <tr>
+                        
+                        <td >Resultado Esperado:<br><textarea readonly="readonly" rows="1" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcionResultado}}</textarea></td>
+                    </tr>
+            <tr>
+                <td align="center">
+                <br></br>                
+                {% include 'MinSalSidPlaGesObjEspBundle:GestionActividades:showAllActividades.html.twig'  with {'idfila': idfila} %} 
+                </td>
+            </tr>        
+            <tr>
+                <td align="center">
+                    <input type="submit" value="Agregar Actividades" name= "agregar" id="agregar"</input>                    
+                </td>
+            </tr>
+        
+        </table>        
+    </form>
+    <br></br>
+    <br></br>
+    
+    
+{% endblock %}

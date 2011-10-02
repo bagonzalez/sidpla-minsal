@@ -104,6 +104,11 @@ class ResultadoEsperado
      * @ORM\OneToMany(targetEntity="MedioVerificacion", mappedBy="idResulEspe")
      */
     protected $medioVerificacion;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Actividad", mappedBy="idResEsp")
+     */
+    protected $actividades;
 
     /**
      * Set idResEsp
@@ -372,5 +377,24 @@ class ResultadoEsperado
         return $this->medioVerificacion;
     }
     
-    
+   
+    /**
+     * Add actividades
+     *
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\Actividad $actividades
+     */
+    public function addActividades(\MinSal\SidPla\GesObjEspBundle\Entity\Actividad $actividades)
+    {
+        $this->actividades[] = $actividades;
+    }
+
+    /**
+     * Get actividades
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getActividades()
+    {
+        return $this->actividades;
+    }
 }

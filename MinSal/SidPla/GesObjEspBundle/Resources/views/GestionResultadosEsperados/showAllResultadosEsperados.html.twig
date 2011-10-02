@@ -30,9 +30,9 @@
           gridComplete: function(){
               var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
               for(var i=0;i < ids.length;i++){ var cl = ids[i];
-                  be = "<input style='height:22px;width:100px;' type='submit' id='editar' value='Editar' onclick=\" $('#idfilaResultado').attr('value', '"+cl+"');document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados')}}' \" />";
-                  se = "<input style='height:22px;width:100px;' type='button' value='Guardar' onclick=\"jQuery('#theGridObj').saveRow('"+cl+"');\" />"; 
-                  ce = "<input style='height:22px;width:100px;' type='submit' value='Actividades' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
+                  be = "<input style='height:22px;width:100px;' type='submit' id='editar' value='Editar' onclick=\" $('#idfilaResultado').attr('value', '"+cl+"');this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados') }}'; \" />";
+                  se = "<input style='height:22px;width:100px;' type='button' id='eliminar' value='Eliminar' onclick=\"jQuery('#theGridObj').saveRow('"+cl+"');\" />"; 
+                  ce = "<input style='height:22px;width:100px;' type='submit' id='Actividades'value='Actividades' onclick=\" $('#idfilaResultado').attr('value', '"+cl+"'); this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}'; \" />";
                   jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+se+ce}); } },
           pager: jQuery('#pagerObj'),
           viewrecords: true,  
