@@ -1,0 +1,31 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %}Tipos de Recurso Humano{% endblock %}
+
+{% block body %}
+<script type="text/javascript">
+$(document).ready(function(){
+   $('#agregarTipoRRButton').button();
+   $('#editarTipoRRButton').button();
+   $('#eliminarTipoRRButton').button();
+      
+});
+      
+</script>
+   <h1 style='text-align: center;'>Tipos de Recurso Humano</h1>
+    <table align="center">
+        <tr>
+            <td align="center">
+                <br></br>  
+                 {% include 'MinSalSidPlaDepUniBundle:TipoRRHumano:showTipoRRHumano.html.twig'%}
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <input type="button" id="agregarTipoRRButton" value="  Agregar  " />
+                <input type="button" id="editarTipoRRButton" value="   Editar   " />
+                <input type="button" id="eliminarTipoRRButton" value="  Eliminar  " />
+                
+            </td>
+        </tr>        
+    </table>    
+{% endblock %}

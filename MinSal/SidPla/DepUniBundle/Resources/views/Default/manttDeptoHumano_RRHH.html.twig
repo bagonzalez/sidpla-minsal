@@ -1,0 +1,43 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %} Asignación de Recurso Humano {% endblock %}
+
+{% block body %}
+
+<script type="text/javascript">  
+ $(document).ready(function(){           
+    $('#tabs').tabs(); 
+    $('#pestaniaDeptoUni').click(function(){$('#tabUnidMed').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');});
+    $('#pestaniaRRHH').click(function(){$('#tabElemInfra').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');});
+           
+ });
+      
+    </script>
+    <h1 style=" text-align: center">Asignación de Recurso Humano al Departamento</h1>
+    <div id="tabs">
+        <ul>
+            <li><a href="#tabs-1" id='pestaniaDeptoUni'>Gestionar Departamentos</a></li>
+            <li><a href="#tabs-2" id='pestaniaRRHH'>Gestionar Recurso Humano</a></li>                
+        </ul>
+        <div id="tabs-1" align="center">
+            <table align="center">
+                <tr>
+                    <td align="center">
+                        <br></br>  
+                    {#include 'MinSalSidPlaEstInfraBundle:ElementoInfraestructura:showElementoInfraestructura.html.twig' #}
+                    </td>
+                </tr>  
+            </table>   
+        </div>
+        <div id="tabs-2" align="center">
+            <table align="center">
+                <tr>
+                    <td align="center">
+                        <br></br> 
+                  {# include 'MinSalSidPlaEstInfraBundle:UnidadMedida:showUnidadMedida.html.twig' #}
+                    </td>
+                </tr>        
+            </table>   
+        </div>
+     </div>
+
+{% endblock %}

@@ -5,6 +5,7 @@ namespace MinSal\SidPla\EstInfraBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+//Entidades necesarias para las consultas
 use MinSal\SidPla\EstInfraBundle\Entity\EvaluacionElementoInfra;
 use MinSal\SidPla\EstInfraBundle\EntityDao\EvaluacionElementoInfraDao;
 use MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada;

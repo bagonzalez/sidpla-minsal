@@ -11,7 +11,7 @@
           colNames:['Id','Función Especifica'],
           colModel:[            
             { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
-            { name:'funcion', index: 'funcion', width:700,editable:true,editoptions:{size:40},formoptions:{ rowpos:1, label: "Funcion Especifica:", elmprefix:"(*)"},editrules:{required:true}  }
+            { name:'funcion', index: 'funcion', width:700,editable:true,editoptions:{size:40,maxlength: 300},formoptions:{ rowpos:1, label: "Funcion Especifica:", elmprefix:"(*)"},editrules:{required:true}  }
             ],
           rowNum:10,
           rowList:[10,20,30],
@@ -41,7 +41,7 @@
           } },//del
         {},//search
         {} //view
-        );
+        ).hideCol('id');
         function despuesAgregarEditarFun() {
             myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
         return[true,'']; //no error

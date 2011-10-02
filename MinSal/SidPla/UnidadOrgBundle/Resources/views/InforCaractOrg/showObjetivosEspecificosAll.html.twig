@@ -11,7 +11,7 @@
           colNames:['Id','Objetivo'],
           colModel:[            
             { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
-            { name:'objetivo', index: 'objetivo', width:700,editable:true,editoptions:{size:40},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  }
+            { name:'objetivo', index: 'objetivo', width:700,editable:true,editoptions:{size:40,maxlength: 300},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  }
             ],
           rowNum:10,
           rowList:[10,20,30],
@@ -39,7 +39,7 @@
           } },//del
         {},//search
         {} //view
-        );
+       ).hideCol('id');
        
       });
       

@@ -14,9 +14,6 @@ class AccionNotificacionSistemaController extends Controller {
 
         $opciones = $this->getRequest()->getSession()->get('opciones');
         
-        $notificacionDao = new NotificacionSistemaDao($this->getDoctrine());
-        
-
         return $this->render('MinSalSidPlaAdminBundle:NotificacionSistema:showNotificacionSistema.html.twig'
                         , array('opciones' => $opciones));
     }
