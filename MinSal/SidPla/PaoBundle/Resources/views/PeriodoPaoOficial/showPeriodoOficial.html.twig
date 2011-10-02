@@ -6,10 +6,13 @@
         $('#editarPerOfiButton').button();
         $('#eliminarPerOfiButton').button();
         $('#selanio').change(cargarAnio);
-        
+
         function cargarAnio(){
-            $('#tabperiodooficial').setGridParam({url:'consultarPeriodoOficialJSON?anio='+$('#selanio').val(),editurl:'manttPeriodoOficial?anio='+$('#selanio').val()}); 
-            $('#tabperiodooficial').trigger("reloadGrid"); 
+            $('#tabperiodooficial').setGridParam({
+               url:'consultarPeriodoOficialJSON?anio='+$('#selanio').val(),
+               editurl:'manttPeriodoOficial?anio='+$('#selanio').val(),
+               datatype:'json'
+           }).trigger("reloadGrid"); 
         }
         
         function validaTipoPeriodo(value, colname) {
@@ -61,59 +64,69 @@
       rowNum:10,
       rowList:[10,20,30],
       multiselect: false,
-      pager: jQuery('#pager'),
+      loadonce:true,
+      pager: jQuery('#pagerPer'),
       viewrecords: true,          
       caption: 'Periodo Oficial',
       height: "100%",
       editurl:'manttPeriodoOficial'
                      
     });
-    myGrid.jqGrid('navGrid','#pager',
-        {edit:false,add:false,del:false}
-    );    
+    myGrid.jqGrid('navGrid','#pagerPer',{edit:false,add:false,del:false,
+             beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}
+    ).hideCol('codigo');
     
- 
+    /* Funcion para regargar los JQGRID luego de agregar y editar*/
+    function despuesAgregarEditar() {
+        myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+        return[true,'']; //no error
+    } 
     
      //agregar
   $("#agregarPerOfiButton").click(function(){
-        jQuery('#tabperiodooficial').jqGrid('editGridRow',"new",{closeAfterAdd:true,addCaption: "Agregar Periodo Oficial",height:200,align:'center',reloadAfterSubmit:true,
-        top : 250 ,left: 250,width: 600,processData: "Cargando...",
-        bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");
-          }});
-        });
+   jQuery('#tabperiodooficial').jqGrid('editGridRow',"new",
+    {closeAfterAdd:true,addCaption: "Agregar Periodo Oficial",height:200,align:'center',reloadAfterSubmit:true,
+     width: 600,processData: "Cargando...",bottominfo:"Campos marcados con (*) son obligatorios",afterSubmit:despuesAgregarEditar, 
+     onclickSubmit: function(rp_ge, postdata) {
+          alert("datos guardados con exito!");
+     }});
+  });
       
-      
-         //editar
-    $("#editarPerOfiButton").click(function(){
-          var gr = jQuery('#tabperiodooficial').jqGrid('getGridParam','selrow');
-          if( gr != null )
-             jQuery("#tabperiodooficial").jqGrid('editGridRow',gr,{closeAfterEdit:true,editCaption: "Editando Periodo Oficial",height:200,align:'center',reloadAfterSubmit:true,
-                 top : 250 ,left: 250,width: 600,processData: "Cargando...", onclickSubmit: function(rp_ge, postdata) {
-        alert("Periodo Oficial editado con exito!");
-          }, bottominfo:"Campos marcados con (*) son obligatorios"});
-             else alert("Por favor seleccione una fila para editar!"); 
-          });
-    
-        //eliminar
-    $("#eliminarPerOfiButton").click(function(){
-         var grs = jQuery('#tabperiodooficial').jqGrid('getGridParam','selrow');
-         if( grs != null ) jQuery('#tabperiodooficial').jqGrid('delGridRow',grs,{msg: "Desea Eliminar este Periodo Oficial?",caption:"Eliminando Periodo Oficial",height:100,align:'center',reloadAfterSubmit:true,
-             top : 300 ,left: 600,width: 300,processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
-        alert("Periodo Oficial eliminado con exito!");
+  //editar
+  $("#editarPerOfiButton").click(function(){
+    var gr = jQuery('#tabperiodooficial').jqGrid('getGridParam','selrow');
+    if( gr != null )
+      jQuery("#tabperiodooficial").jqGrid('editGridRow',gr,
+       {closeAfterEdit:true,editCaption: "Editando Periodo Oficial",height:200,align:'center',reloadAfterSubmit:true,
+        width: 600,processData: "Cargando...",afterSubmit:despuesAgregarEditar, 
+        onclickSubmit: function(rp_ge, postdata) {
+            alert("Periodo Oficial editado con exito!");
+        },bottominfo:"Campos marcados con (*) son obligatorios"});
+        else 
+            alert("Por favor seleccione una fila para editar!"); 
+  });
+ 
+ //eliminar
+ $("#eliminarPerOfiButton").click(function(){
+    var grs = jQuery('#tabperiodooficial').jqGrid('getGridParam','selrow');
+     if( grs != null ) jQuery('#tabperiodooficial').jqGrid('delGridRow',grs,
+          {msg: "Desea Eliminar este Periodo Oficial?",caption:"Eliminando Periodo Oficial",height:100,align:'center',reloadAfterSubmit:true,
+           width: 300,processData: "Cargando...",
+           onclickSubmit: function(rp_ge, postdata) {
+                alert("Periodo Oficial eliminado con exito!");
           }}); 
-         else alert("Por favor seleccione una fila para borrar!"); }); 
+         else 
+             alert("Por favor seleccione una fila para borrar!"); 
+  }); 
  
   //fin     
-    
-    
+  
   });
     </script>
-    <table id="tabperiodooficial" class="scroll" align="center"></table> 
+    <table id="tabperiodooficial" class="scroll" align="center"></table>
+    <div id="pagerPer" class="scroll" style="text-align:center;"></div>
     <br></br>
        <input type="button" id="agregarPerOfiButton" value="  Agregar  " />
        <input type="button" id="editarPerOfiButton" value="   Editar   " />
        <input type="button" id="eliminarPerOfiButton" value="  Eliminar  " />
-    <div id="pager" class="scroll" style="text-align:center;"></div>
-
 {% endblock %}

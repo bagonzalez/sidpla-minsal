@@ -12,8 +12,8 @@
           colNames:['Id','Nombre', 'Descripcion'],
           colModel:[
             { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}  },
-            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}, editrules:{required:true},formoptions:{ rowpos:1, label: "Nombre", elmprefix:"(*)"} },
-            { name:'funciones', index: 'funciones',width:300,editable:true,editoptions:{size:50},editrules:{required:true},formoptions:{ rowpos:2, label: "Descripcion", elmprefix:"(*)"}  } ],            
+            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25,maxlength: 10}, editrules:{required:true},formoptions:{ rowpos:1, label: "Nombre", elmprefix:"(*)"} },
+            { name:'funciones', index: 'funciones',width:300,editable:true,editoptions:{size:50,maxlength: 300},editrules:{required:true},formoptions:{ rowpos:2, label: "Descripcion", elmprefix:"(*)"}  } ],            
           rowNum:10,
           rowList:[10,20,30],
           loadonce:true,
@@ -24,7 +24,8 @@
           height: "100%",
           editurl: 'manttRolEdicion'
         });
-        myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,beforeRefresh: function() {$("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}});
+        myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,
+            beforeRefresh: function() {$("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}).hideCol('id');
         
         function despuesAgregarEditar() {
         $("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');

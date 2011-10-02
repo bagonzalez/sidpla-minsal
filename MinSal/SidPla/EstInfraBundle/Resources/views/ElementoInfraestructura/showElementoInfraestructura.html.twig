@@ -10,26 +10,25 @@
         else 
             return [true,""];
        }
-      
-
-        var myGrid = $('#tabElemInfra');        
-        myGrid.jqGrid({ 
+      $('#tabElemInfra').jqGrid({ 
           url: 'consultarElementoInfraestructuraJSON',
           datatype:'json',
           altRows:true,
           colNames:['Codigo','Nombre del elemento','Unidad de medida','Descripcion'],
           colModel:[
             { name:'codigo', index: 'codigo', width:40,align:'center',editable:false,editoptions:{size:15}},
-            { name:'nomelem', index: 'nomelem', width:150,editable:true,editoptions:{size:30}, formoptions:{label: "Nombre del elemento",elmprefix:"(*)"},editrules:{required:true}},
-            { name:'abreunidmed', index: 'abreunidmed', width:150,editable:true,editoptions:{size:30},edittype:"select",
+            { name:'nomelem', index: 'nomelem', width:150,editable:true,editoptions:{size:30,maxlength: 150}, 
+                formoptions:{label: "Nombre del elemento",elmprefix:"(*)"},editrules:{required:true}},
+            { name:'abreunidmed', index: 'abreunidmed', width:150,editable:true,editoptions:{size:30},edittype:"select",align:"center",
                         editoptions: {value:"{{comboUniMed}}"},editrules:{custom:true, custom_func:validaUnidad}
             },//Fin del nombre
-            { name:'descripcion', index: 'descripcion', width:500,editable:true, editoptions:{size:50},formoptions:{label: "Descripcion"}}
+            { name:'descripcion', index: 'descripcion',edittype:"textarea",width:500,
+                editoptions:{rows:"5",cols:"40",maxlength: 250},editable:true,formoptions:{label: "Descripcion"}}
           ],
-        scroll:true,
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
+          loadonce:true,
           pager: jQuery('#pager1'),
           viewrecords: true,          
           caption: 'Gestion Elementos de Infraestructura',
@@ -39,53 +38,62 @@
           editurl:'manttElementoInfraestrutura'
                      
         });
-        myGrid.jqGrid('navGrid','#pager1',
-            {edit:false,add:false,del:false,view:true},{multipleSearch:true, multipleGroup:true}
-            //El de Editar
-          );    
-   //inicio
-  
+        $('#tabElemInfra').jqGrid('navGrid','#pager1',
+            {edit:false,add:false,del:false,view:true,
+            beforeRefresh: function() {$('#tabElemInfra').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}
+        ).hideCol('codigo');    
+   
+   /* Funcion para regargar los JQGRID luego de agregar y editar*/
+   function despuesAgregarEditar() {
+      $('#tabElemInfra').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+      return[true,'']; //no error
+   }
   //agregar
   $("#agregarElementoButton").click(function(){
-        jQuery('#tabElemInfra').jqGrid('editGridRow',"new",{closeAfterAdd:true,addCaption: "Agregar Elemento Infraestructura",height:200,align:'center',reloadAfterSubmit:true,
-        top : 250 ,left: 250,width: 600,processData: "Cargando...",
-        bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");
+   jQuery('#tabElemInfra').jqGrid('editGridRow',"new",
+        {closeAfterAdd:true,addCaption: "Agregar Elemento Infraestructura",height:250,align:'center',reloadAfterSubmit:true,
+         width: 600,processData: "Cargando...",afterSubmit:despuesAgregarEditar,bottominfo:"Campos marcados con (*) son obligatorios", 
+         onclickSubmit: function(rp_ge, postdata) {
+                alert("datos guardados con exito!");
+         }});
+ });
+//editar
+$("#editarElementoButton").click(function(){
+  var gr = jQuery('#tabElemInfra').jqGrid('getGridParam','selrow');
+  if( gr != null )
+   jQuery("#tabElemInfra").jqGrid('editGridRow',gr,
+        {closeAfterEdit:true,editCaption: "Editando Elemento Infraestructura",height:250,align:'center',reloadAfterSubmit:true,
+         width: 600,processData: "Cargando...",bottominfo:"Campos marcados con (*) son obligatorios",afterSubmit:despuesAgregarEditar,
+         onclickSubmit: function(rp_ge, postdata) {
+            alert("Elemento de Infraestrutura editado con exito!");
           }});
-        });
-    
-         //editar
-    $("#editarElementoButton").click(function(){
-          var gr = jQuery('#tabElemInfra').jqGrid('getGridParam','selrow');
-          if( gr != null )
-             jQuery("#tabElemInfra").jqGrid('editGridRow',gr,{closeAfterEdit:true,editCaption: "Editando Elemento Infraestructura",height:200,align:'center',reloadAfterSubmit:true,
-                 top : 250 ,left: 250,width: 600,processData: "Cargando...", onclickSubmit: function(rp_ge, postdata) {
-        alert("Elemento de Infraestrutura editado con exito!");
-          }, bottominfo:"Campos marcados con (*) son obligatorios"});
-             else alert("Por favor seleccione una fila para editar!"); 
-          });
-    
-        //eliminar
-    $("#eliminarElementoButton").click(function(){
-         var grs = jQuery('#tabElemInfra').jqGrid('getGridParam','selrow');
-         if( grs != null ) jQuery('#tabElemInfra').jqGrid('delGridRow',grs,{msg: "Desea Eliminar este Elemento Infraestructura?",caption:"Eliminando Elemento Infraestructura",height:100,align:'center',reloadAfterSubmit:true,
-             top : 300 ,left: 600,width: 300,processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
+  else 
+      alert("Por favor seleccione una fila para editar!"); 
+});
+
+//eliminar
+$("#eliminarElementoButton").click(function(){
+   var grs = jQuery('#tabElemInfra').jqGrid('getGridParam','selrow');
+   if( grs != null ) jQuery('#tabElemInfra').jqGrid('delGridRow',grs,
+      {msg: "Desea Eliminar este Elemento Infraestructura?",caption:"Eliminando Elemento Infraestructura",
+      height:100,align:'center',reloadAfterSubmit:true,width: 300,processData: "Cargando...",
+      onclickSubmit: function(rp_ge, postdata) {
         alert("Elemento de Infraestrutura eliminado con exito!");
           }}); 
-         else alert("Por favor seleccione una fila para borrar!"); }); 
+    else 
+        alert("Por favor seleccione una fila para borrar!"); 
+ }); 
  
   //fin
-
-
-   });//Fin del JQuery
+});//Fin del JQuery
       
     </script>
-   <table id="tabElemInfra" class="scroll" align="center">
-    
+   <table id="tabElemInfra" class="scroll"></table>
+   <div id="pager1" class="scroll"></div>  
    </table> 
     <br></br>
        <input type="button" id="agregarElementoButton" value="  Agregar  " />
        <input type="button" id="editarElementoButton" value="   Editar   " />
        <input type="button" id="eliminarElementoButton" value="  Eliminar  " />
-    <div id="pager1" class="scroll" style="text-align:center;"></div>  
+
 {% endblock %}

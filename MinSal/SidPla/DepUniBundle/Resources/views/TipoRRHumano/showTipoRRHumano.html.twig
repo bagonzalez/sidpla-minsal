@@ -1,0 +1,86 @@
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+        
+        $('#agregarTipoRRButton').button();
+        $('#editarTipoRRButton').button();
+        $('#eliminarTipoRRButton').button();
+                  
+        var myGrid = $('#tabTipoRRHH');        
+        myGrid.jqGrid({ 
+          url: 'consultarTipoRRHHJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Codigo','Nombre'],
+          colModel:[
+            { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}  },
+            { name:'nombre', index: 'nombre',width:280,editable:true,editoptions:{size:60,maxlength:60}, formoptions:{ rowpos:1, label: "Nombre",elmprefix:"(*)"},editrules:{required:true} }
+          ],            
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          loadonce:true,
+          pager: jQuery('#pager'),
+          viewrecords: true,          
+          caption: 'Tipos de recurso humano',
+          height: "100%",
+          editurl:'manttTipoRRHHEdicion'
+           
+        });
+        
+         myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,
+             beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}).hideCol('codigo');
+         
+      /* Funcion para regargar los JQGRID luego de agregar y editar*/
+      function despuesAgregarEditar() {
+        myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+        return[true,'']; //no error
+      }         
+  //agregar
+  $("#agregarTipoRRButton").click(function(){
+        jQuery('#tabTipoRRHH').jqGrid('editGridRow',"new",
+        {closeAfterAdd:true,addCaption: "Agregar Tipo de Recurso Humano",
+         height:200,align:'center',reloadAfterSubmit:true,width:550,
+         processData: "Cargando...",afterSubmit:despuesAgregarEditar,
+         bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+                alert("datos guardados con exito!");}
+        });
+        });
+
+   //editar
+    $("#editarTipoRRButton").click(function(){
+          var gr = jQuery('#tabTipoRRHH').jqGrid('getGridParam','selrow');
+          if( gr != null )
+             jQuery("#tabTipoRRHH").jqGrid('editGridRow',gr,
+            {closeAfterEdit:true,editCaption: "Editando Tipo de Recurso Humano",
+             height:200,align:'center',reloadAfterSubmit:true,width:550,
+             processData: "Cargando...",afterSubmit:despuesAgregarEditar,
+             bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+                    alert("Tipo de Recurso Humano editado con exito!");
+                ;}
+        });
+          else alert("Por favor seleccione una fila para editar!"); 
+          });
+    
+        //eliminar
+    $("#eliminarTipoRRButton").click(function(){
+         var grs = jQuery('#tabTipoRRHH').jqGrid('getGridParam','selrow');
+         if( grs != null ) jQuery('#tabTipoRRHH').jqGrid('delGridRow',grs,
+            {msg: "Desea Eliminar esta Tipo de Recurso Humano?",caption:"Eliminando Tipo de Recurso Humano",
+             height:100,align:'center',reloadAfterSubmit:true,width:550,
+             processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
+                alert("Tipo de Recurso Humano eliminado con exito!");
+            }}); 
+         else alert("Por favor seleccione una fila para borrar!"); }); 
+ 
+  //fin          
+            
+            
+            
+            
+      });
+ </script>
+<table id="tabTipoRRHH" class="scroll" align="center"></table>
+<div id="pager" class="scroll"></div>
+   
+{% endblock %}

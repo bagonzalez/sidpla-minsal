@@ -6,18 +6,16 @@
 <script type="text/javascript">  
  $(document).ready(function(){           
     $('#tabs').tabs(); 
-    $('#pestaniaUniMed').click(function(){$('#tabUnidMed').trigger("reloadGrid");});
-    
+    $('#pestaniaUniMed').click(function(){$('#tabUnidMed').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');});
+    $('#pestaniaEleInfra').click(function(){$('#tabElemInfra').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');});
            
  });
       
 </script>
-<br></br>
-<br></br>
-<br></br>
+<h1 style=" text-align: center">Mantenimiento Elementos Infraestructura</h1>
 <div id="tabs">
         <ul>
-                <li><a href="#tabs-1">Gestionar elementos de infraestructura</a></li>
+                <li><a href="#tabs-1" id='pestaniaEleInfra'>Gestionar elementos de infraestructura</a></li>
                 <li><a href="#tabs-2" id='pestaniaUniMed'>Gestionar unidades de medidas</a></li>                
         </ul>
         <div id="tabs-1" align="center">

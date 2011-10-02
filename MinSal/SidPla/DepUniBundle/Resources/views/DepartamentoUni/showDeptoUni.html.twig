@@ -1,0 +1,110 @@
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+        
+        $('#agregarDptoUniButton').button();
+        $('#editarDptoUniButton').button();
+        $('#eliminarDptoUniButton').button();
+        
+        function validaTipo(value, colname) {
+        if (value == 0 ) 
+            return [false,"Seleccione una tipo de mensaje"];
+        else 
+            return [true,""];
+       }
+               
+        var myGrid = $('#tabdptouni');        
+        myGrid.jqGrid({ 
+          url: 'consultarNotificacionJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Codigo','Nombre', 'Mensaje','Tipo Mensaje'],
+          colModel:[
+            { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}  },
+            { name:'nombre', index: 'nombre',width:150,editable:true,editoptions:{size:25,maxlength:100}, formoptions:{ rowpos:1, label: "Nombre",elmprefix:"(*)"},editrules:{required:true} },
+            { name:'mensaje', index: 'mensaje',width:300,editable:true,editoptions:{size:50,maxlength: 100}, formoptions:{ rowpos:2, label: "Mensaje",elmprefix:"(*)"},editrules:{required:true} },
+            { name:'tipomensaje', index: 'tipomensaje',editable:true,edittype:"select",editoptions:{value:"0:Seleccione;error:error;informativo:informativo;advertencia:advertencia;error fatal:error fatal;error controlado:error controlado;notificacion correo:notificacion correo"},
+                formoptions:{ rowpos:3, label: "Tipo de mensaje",elmprefix:"(*)"}, editrules:{custom:true, custom_func:validaTipo}}],            
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          loadonce:true,
+          pager: jQuery('#pagerdptouni'),
+          viewrecords: true,          
+          caption: 'Departamentos de la Unidad',
+          height: "100%"/*,
+          editurl:'manttNotificacionEdicion'*/
+           
+        });
+        
+         myGrid.jqGrid('navGrid','#pagerdptouni',{edit:false,add:false,del:false,
+             beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}).hideCol('codigo');
+         
+      /* Funcion para regargar los JQGRID luego de agregar y editar*/
+      function despuesAgregarEditar() {
+        myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+        return[true,'']; //no error
+      }         
+  //agregar
+  $("#agregarDptoUniButton").click(function(){
+        jQuery('#tabdptouni').jqGrid('editGridRow',"new",
+        {closeAfterAdd:true,addCaption: "Agregar Notificacion al Sistema",
+         height:200,align:'center',reloadAfterSubmit:true,width:550,
+         processData: "Cargando...",afterSubmit:despuesAgregarEditar,
+         bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+                alert("datos guardados con exito!");}
+        });
+        });
+
+   //editar
+    $("#editarDptoUniButton").click(function(){
+          var gr = jQuery('#tabdptouni').jqGrid('getGridParam','selrow');
+          if( gr != null )
+             jQuery("#tabdptouni").jqGrid('editGridRow',gr,
+            {closeAfterEdit:true,editCaption: "Editando Departamento de la Unidad",
+             height:200,align:'center',reloadAfterSubmit:true,width:550,
+             processData: "Cargando...",afterSubmit:despuesAgregarEditar,
+             bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+                    alert("Notificacion al Sistema editado con exito!");
+                ;}
+        });
+          else alert("Por favor seleccione una fila para editar!"); 
+          });
+    
+        //eliminar
+    $("#eliminarDptoUniButton").click(function(){
+         var grs = jQuery('#tabdptouni').jqGrid('getGridParam','selrow');
+         if( grs != null ) jQuery('#tabdptouni').jqGrid('delGridRow',grs,
+            {msg: "Desea Eliminar esta Departamento de la Unidad?",caption:"Eliminando Departamento de la Unidad",
+             height:100,align:'center',reloadAfterSubmit:true,width:550,
+             processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
+                alert("Notificacion al Sistema eliminado con exito!");
+            }}); 
+         else alert("Por favor seleccione una fila para borrar!"); }); 
+ 
+  //fin          
+            
+            
+            
+            
+      });
+    </script>
+    <h1 style='text-align: center;'>Departamentos de la Unidad</h1>
+    <table align="center">
+        <tr>
+            <td align="center">
+                <br></br>  
+                <table id="tabdptouni" class="scroll" align="center"></table>
+                <div id="pagerdptouni" class="scroll"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <input type="button" id="agregarDptoUniButton" value="  Agregar  " />
+                <input type="button" id="editarDptoUniButton" value="   Editar   " />
+                <input type="button" id="eliminarDptoUniButton" value="  Eliminar  " />
+                
+            </td>
+        </tr>        
+    </table>    
+{% endblock %}

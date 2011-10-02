@@ -13,8 +13,8 @@
           colNames:['Id','Nombre', 'Texto'],
           colModel:[
             { name:'id', index: 'id',sorttype:'int', width:20,editable:false,editoptions:{size:15}, searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}  },
-            { name:'Nombre', index: 'Nombre', width:300,editable:true,editoptions:{size:100},formoptions:{ rowpos:1, label: "Nombre", elmprefix:"(*)"},editrules:{required:true}  },
-            { name:'texto', index: 'texto',width:300, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"15",cols:"100"},formoptions:{ rowpos:2, label: "texto", elmprefix:"(*)"},editrules:{required:true} } ],            
+            { name:'Nombre', index: 'Nombre', width:300,editable:true,editoptions:{size:100,maxlength:100},formoptions:{ rowpos:1, label: "Nombre", elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'texto', index: 'texto',width:300, sortable:false,editable:true,edittype:"textarea", editoptions:{rows:"15",cols:"100",maxlength:2000},formoptions:{ rowpos:2, label: "texto", elmprefix:"(*)"},editrules:{required:true} } ],            
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
@@ -29,14 +29,14 @@
           addCaption: "Nuevo Mensaje Correo",
           editurl: 'manttMenCorrtempEdicion'
         });
-         myGrid.jqGrid('navGrid','#pager',
-        {edit:false,add:false,del:false,view:true,beforeRefresh: function() {$("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}},
+         myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,view:true,       
+           beforeRefresh: function() {$("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}},
         {},//edit
         {},//add
         {},//del
         {multipleSearch:false, multipleGroup:false}, //search
         {width:550,height:100}//view
-        );
+        ).hideCol('id');
         
  
           

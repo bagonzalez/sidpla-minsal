@@ -60,16 +60,18 @@ class AccionAdminUnidadOrgController extends Controller {
             array_multisort($rows, SORT_ASC);
         } else {
             $rows[0]['id'] = 0;
-            $rows[0]['cell'] = array(' ', ' ', ' ', ' ', ' '.' ');
+            $rows[0]['cell'] = array(' ', ' ', ' ', ' ', ' ' . ' ');
         }
         $datos = json_encode($rows);
 
+        $pages = floor($numfilas / 10) + 1;
 
         $jsonresponse = '{
                "page":"1",
-               "total":"' . $numfilas . '", 
+               "total":"' . $pages . '",
                "records":"' . $numfilas . '", 
                "rows":' . $datos . '}';
+
 
 
         $response = new Response($jsonresponse);
@@ -158,13 +160,14 @@ class AccionAdminUnidadOrgController extends Controller {
         }
 
         $datos = json_encode($rows);
-
+        $pages = floor($numfilas / 10) + 1;
 
         $jsonresponse = '{
                "page":"1",
-               "total":"1",
+               "total":"' . $pages . '",
                "records":"' . $numfilas . '", 
                "rows":' . $datos . '}';
+
 
 
         $response = new Response($jsonresponse);

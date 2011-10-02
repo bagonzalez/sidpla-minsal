@@ -8,7 +8,14 @@
         $('#agregarNotiSisteButton').button();
         $('#editarNotiSisteButton').button();
         $('#eliminarNotiSisteButton').button();
-                
+        
+        function validaTipo(value, colname) {
+        if (value == 0 ) 
+            return [false,"Seleccione una tipo de mensaje"];
+        else 
+            return [true,""];
+       }
+               
         var myGrid = $('#tabnotificacion');        
         myGrid.jqGrid({ 
           url: 'consultarNotificacionJSON',
@@ -17,10 +24,10 @@
           colNames:['Codigo','Nombre', 'Mensaje','Tipo Mensaje'],
           colModel:[
             { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}  },
-            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:1, label: "Nombre",elmprefix:"(*)"},editrules:{required:true} },
-            { name:'mensaje', index: 'mensaje',width:300,editable:true,editoptions:{size:50}, formoptions:{ rowpos:2, label: "Mensaje",elmprefix:"(*)"},editrules:{required:true} },
-            { name:'tipomensaje', index: 'tipomensaje',editable:true,edittype:"select",editoptions:{value:"error:error;informativo:informativo;advertencia:advertencia;errorfatal:error fatal;error controlado:error controlado;notificacion correo:notificacion correo"},
-                formoptions:{ rowpos:3, label: "Tipo de mensaje",elmprefix:"(*)"},editrules:{required:true}}],            
+            { name:'nombre', index: 'nombre',width:150,editable:true,editoptions:{size:25,maxlength:100}, formoptions:{ rowpos:1, label: "Nombre",elmprefix:"(*)"},editrules:{required:true} },
+            { name:'mensaje', index: 'mensaje',width:300,editable:true,editoptions:{size:50,maxlength: 100}, formoptions:{ rowpos:2, label: "Mensaje",elmprefix:"(*)"},editrules:{required:true} },
+            { name:'tipomensaje', index: 'tipomensaje',editable:true,edittype:"select",editoptions:{value:"0:Seleccione;error:error;informativo:informativo;advertencia:advertencia;error fatal:error fatal;error controlado:error controlado;notificacion correo:notificacion correo"},
+                formoptions:{ rowpos:3, label: "Tipo de mensaje",elmprefix:"(*)"}, editrules:{custom:true, custom_func:validaTipo}}],            
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
@@ -34,12 +41,13 @@
         });
         
          myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,
-             beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}});
-            
-  function despuesAgregarEditar() {
+             beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}).hideCol('codigo');
+         
+      /* Funcion para regargar los JQGRID luego de agregar y editar*/
+      function despuesAgregarEditar() {
         myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
         return[true,'']; //no error
-    }   
+      }         
   //agregar
   $("#agregarNotiSisteButton").click(function(){
         jQuery('#tabnotificacion').jqGrid('editGridRow',"new",
@@ -85,16 +93,20 @@
       });
     </script>
     <h1 style='text-align: center;'>Notificaciones del Sistema</h1>
-   <table align="center">
+    <table align="center">
         <tr>
             <td align="center">
                 <br></br>  
-                <table id="tabnotificacion" class="scroll" alignalign="center"></table> 
-                 <br></br>
-                  <input type="button" id="agregarNotiSisteButton" value="  Agregar  " />
-                  <input type="button" id="editarNotiSisteButton" value="   Editar   " />
-                  <input type="button" id="eliminarNotiSisteButton" value="  Eliminar  " />
-                <div id="pager" class="scroll" style="text-align:center;"></div>
+                <table id="tabnotificacion" class="scroll" align="center"></table>
+                <div id="pager" class="scroll"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <input type="button" id="agregarNotiSisteButton" value="  Agregar  " />
+                <input type="button" id="editarNotiSisteButton" value="   Editar   " />
+                <input type="button" id="eliminarNotiSisteButton" value="  Eliminar  " />
+                
             </td>
         </tr>        
     </table>    

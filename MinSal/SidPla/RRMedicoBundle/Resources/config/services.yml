@@ -1,0 +1,7 @@
+parameters:
+#    min_sal_sid_pla_rr_medico.example.class: MinSal\SidPla\RRMedicoBundle\Example
+
+services:
+#    min_sal_sid_pla_rr_medico.example:
+#        class: %min_sal_sid_pla_rr_medico.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
