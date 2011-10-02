@@ -5,14 +5,17 @@
 <script type="text/javascript">        
       $(document).ready(function(){
           
-          $('#regresar').click(function() {
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}';
-           //  document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}'
+          
+          
+           $('#regresar').click(function() {
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
+           
           });
            $('#guardar').click(function() {
             this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_guardarResultadosEsperados') }}';
-             //document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_guardarResultadosEsperados') }}'
-          });
+            });
+           
+          
           $('#tabs').tabs();
       //jAlert('This is a custom alert box', 'Alert Dialog');
          $.getJSON('consultarTipoMeta', function(data) {
@@ -34,44 +37,46 @@
 <br></br>
 <br></br>
 <br></br>
-<h2 class="demoHeaders">Ingreso de Resultados Esperados</h2>
+<h2 class="demoHeaders">Edicion de Actividades</h2>
 <div id="tabs">
         <ul>
-                <li><a href="#tabs-1">Nuevo Resultado</a></li>
+                <li><a href="#tabs-1">Actividad</a></li>
                 
         </ul>
         <div id="tabs-1" >
-            <form action="{{ path('MinSalSidPlaGesObjEspBundle_guardarResultadosEsperados')}}" method="post" >
+            <form action="" method="post" >
                 <table align="center" id="datos"  >
                     <tr>
-                        <td colspan="4" align="center" >Datos de Resultado Esperado <br><br></td>
+                        <td colspan="4" align="center" >Datos de la Actividad <br><br></td>
                     </tr>
                     
                     <tr>
                         <td >Objetivo:</td>
-                        <td colspan="3" ><textarea rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
+                        <td colspan="3" ><textarea readonly="readonly" rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
                     </tr>
                     <tr>
                         <td >Resultado Esperado:</td>
-                        <td colspan="3" ><textarea rows="4" cols="100" name= 'resultadoEsperado'  size="60%" id="resultadoEsperado" ></textarea></td>
+                        <td colspan="3" ><textarea readonly="readonly" rows="4" cols="100" name= 'resultadoEsperado'  size="60%" id="resultadoEsperado" >{{descripcionResultado}}</textarea></td>
+                    </tr>
+                    <tr>
+                        <td >Actividad:</td>
+                        <td colspan="3" ><input size="100%" name="actividad" id="actividad" ></input></td>
                     </tr>
                     <tr>
                         <td >Indicador:</td>
                         <td colspan="3" ><input size="100%" name="Indicador" id="Indicador" ></input></td>
                     </tr>
-                    <tr>
-                        <td >Medio de Verificacion:</td>
-                        <td colspan="3" ><input size="100%" name="medioverificacion" id="medioverificacion" ></input></td>
-                    </tr>
+                    
                     <tr>
                         <td >Responsables:</td>
                         <td colspan="3" ><input size="100%" name="responsable" id="responsable" ></input></td>
                     </tr>
+                    
                     <tr>
                         <td >Supuestos Factores:</td>
                         <td colspan="3" ><input size="100%" name="supuestosfactores" id="supuestosfactores" ></input></td>
                     </tr>
-                    <tr>
+                     <tr>
                         <td >Meta anual:</td>
                         <td colspan="3" ><input size="20%" name="metaAnual" id="metaAnual" ></input><select name="selectipometa"  id='selectipometa'><option value='0'>Seleccione el tipo de meta</option></select></td>
                     </tr>
@@ -79,6 +84,18 @@
                         <td >Descripcion Meta anual:</td>
                         <td colspan="3" ><input size="100%" name="descripMetaAnual" id="descripMetaAnual" ></input></td>
                     </tr>
+                   
+                    
+                    <tr>
+                        <td >fecha inicio:</td>
+                        <td colspan="3" ><input size="100%" name="fechainicio" id="fechainicio" ></input></td>
+                    </tr>
+                      <tr>
+                        <td >fecha fin:</td>
+                        <td colspan="3" ><input size="100%" name="fechafin" id="fechafin" ></input></td>
+                    </tr>
+                    
+                    
                    
                         <tr>
                         <td>Programado:</td>
@@ -99,16 +116,14 @@
                         </tr>   
                       
                        
-                       <tr>  
                            <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
-                           
-                    <td colspan="3" align="center" ><br><br><button type="submmit" id="guardar"  >Guardar</button>
-                            <button type="reset"  >Limpiar</button>
-                        </td> 
-                         </td> 
-                        <td colspan="1" align="center" ><br><br><button type="submmit" id="regresar"  >Regresar</button>
+                           <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
+                        <td colspan="3" align="center" ><br><br><button type="submmit" id="guardar"  >Guardar</button>
                             
-                        </td>
+                        </td> 
+                        <td colspan="1" align="center" ><br><br><button type="submmit" name="regresar" id="regresar"  >Regresar</button>
+                            
+                        </td> 
                     </tr>                    
                 </table>
             </form>            

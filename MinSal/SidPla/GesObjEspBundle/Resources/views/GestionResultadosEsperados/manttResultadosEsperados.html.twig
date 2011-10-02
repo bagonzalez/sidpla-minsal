@@ -7,13 +7,18 @@
          
           $('#agregar').click(function() {
             
-             document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}';
-            $('#formulario').css("action","{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}");
+             //document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}';
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}';
            });
           
           $('#editar').click(function() {
-            $('#formulario').css("action","{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados') }}");
+            
              document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados') }}';
+          });
+          
+          $("submit[id$='Actividades']").click(function() {
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
+            // document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
           });
       
       });
@@ -21,12 +26,16 @@
 <br></br>
     <br></br>         
     <br></br>    
-    <form id = "formulario"  action="{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados')}}" method="post">
+    <form action= "" method="post">
         <table align="center">
             <tr><td align="center"><h1>Gestion de Resultados Esperados</h1>
                 </td>
             </tr>
-           
+                    <tr>
+                        
+                        <td >Objetivo:<br><textarea readonly="readonly" rows="1" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
+                    </tr>
+                     
             <tr>
                 <td align="center">
                 <br></br>                
@@ -36,6 +45,8 @@
             <tr>
                 <td align="center">
                     <input type="submit" value="Agregar Resultado Esperado" id="agregar"</input>                    
+                    
+                    
                 </td>
             </tr>
         

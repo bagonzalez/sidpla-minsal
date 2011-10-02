@@ -35,10 +35,14 @@ class AccionAdminResultadosEsperadosController extends Controller {
         
           $request=$this->getRequest();        
           $idfila=$request->get('idfila');  
-          $prueba=5;
+          $objetivoAux=new ObjetivoEspecifico();
+        $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
+        $objetivoAux=$objetivoDao->getObjetEspecif($idfila);         
+        $objetivosEspec=$objetivoAux->getDescripcion();
+          
                
         return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
-                array( 'opciones' => $opciones,'idfila' => $idfila,'prueba' => $prueba));
+                array( 'opciones' => $opciones,'idfila' => $idfila,'descripcion' => $objetivosEspec));
         
     }
     
@@ -163,8 +167,8 @@ class AccionAdminResultadosEsperadosController extends Controller {
         
           $request=$this->getRequest();        
           $idfila=$request->get('idfila');  
-          
-        $objetivoAux=new ObjetivoEspecifico();
+         
+          $objetivoAux=new ObjetivoEspecifico();
         $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
         $objetivoAux=$objetivoDao->getObjetEspecif($idfila);         
         

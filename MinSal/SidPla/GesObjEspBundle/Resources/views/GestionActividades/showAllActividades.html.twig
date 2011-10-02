@@ -2,17 +2,16 @@
 {% block body %}
     <script type="text/javascript">
       $(document).ready(function(){
-
         var myGrid = $('#theGridObj');        
         myGrid.jqGrid({    
-          url: 'consultarObjetivosEspecificosJSON?idCaractOrg={{idCaractOrg}}',
+          url: 'consultarActividadesJSON?idfilaResultado={{idfilaResultado}}',
           datatype:'json',
           altRows:true,          
-          colNames:['Id','Objetivo','Actions'],
+          colNames:['Id','Actividad','Actions'],
           colModel:[ 
-            { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
-            { name:'objetivo', index: 'objetivo', width:500,editable:true,editoptions:{size:40},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  },
-            {name:'act',index:'act', width:320,sortable:false}],
+            { name:'id', index: 'id', width:15,editable:false,formatter: 'integer',hidden: true,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
+            { name:'actividad', index: 'actividad', width:400,editable:true,editoptions:{size:10}},
+            {name:'act',index:'act', width:200,sortable:false}],
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
@@ -21,24 +20,25 @@
           gridComplete: function(){
               var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
               for(var i=0;i < ids.length;i++){ var cl = ids[i];
-                  be = "<input style='height:22px;width:100px;' type='button' value='Editar' onclick=\"jQuery('#theGridObj').editRow('"+cl+"');\" />";
-                  se = "<input style='height:22px;width:100px;' type='button' value='Eliminar' onclick=\"jQuery('#theGridObj').saveRow('"+cl+"');\" />"; 
-                  ce = "<input style='height:22px;width:120px;' type='submit' value='Resultados Esperados' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
-                  jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+se+ce}); } },
+                  be = "<input style='height:22px;width:100px;' type='submit' id='Editar' value='Editar' onclick=\" $('#idfilaActividad').attr('value', '"+cl+"');this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editarActividad') }}' \" />";
+                  se = "<input style='height:22px;width:100px;' type='button' value='Eliminar'\" />"; 
+                  //ce = "<input style='height:22px;width:100px;' type='submit' value='Actividades' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
+                  jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+se}); } },
           pager: jQuery('#pagerObj'),
-          viewrecords: true,          
-          caption: 'Objetivos Especificos',
+          viewrecords: true,  
+          rownumbers: true,
+          caption: 'Actividades',
           height: "100%",
           editCaption: "Editar Registro",
           addCaption: "Nuevo Registro",
-          editurl:'manttObjetivosEspecificos?idCaractOrg={{idCaractOrg}}'         
+          editurl:''         
             
         });
         myGrid.jqGrid('navGrid','#pagerObj',
         {edit:true,add:true,del:true},
         {width:450,height:200, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
         alert("datos editados con exito!");},closeAfterEdit:true },//edit
-        {width:450,height:200,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        {width:450,height:1000,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
         alert("datos guardados con exito!");},closeAfterAdd:true },//add
         {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
         alert("Mensaje eliminado con exito!");
@@ -60,7 +60,9 @@
    
     
     </script>
-    <input type='hidden' name='idfila' id="idfila" value='' />  
+    <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
+    <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
+     <input type='hidden' name='idfilaActividad' id="idfilaActividad" value='' /> 
     <div id="grid_wrapper" class="ui-corner-all floatLeft">
         <table id="theGridObj" class="scroll" ></table> 
         <div id="pagerObj"  class="scroll" style="text-align:center;"></div> 
@@ -68,3 +70,11 @@
        
     
 {% endblock %}
+
+
+
+
+
+
+
+
