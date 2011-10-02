@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="sidpla_tipohorario")
  * @ORM\Entity
  */
-class TipoHorario
-{
+class TipoHorario {
+
     /**
      * @var integer $codTipoHor
      *
@@ -42,13 +42,25 @@ class TipoHorario
      */
     private $tipoHorTurno;
 
+    /**
+     * @ORM\OneToMany(targetEntity="ResulPrograRRMed", mappedBy="tipoRRHH")
+     */
+    private $resProTip;
 
+   
+
+    public function __construct()
+    {
+        $this->resProTip = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get codTipoHor
      *
      * @return integer 
      */
-    public function getcodTipoHor(){
+    public function getCodTipoHor()
+    {
         return $this->codTipoHor;
     }
 
@@ -57,7 +69,8 @@ class TipoHorario
      *
      * @param string $tipoHorDes
      */
-    public function setTipoHorDes($tipoHorDes){
+    public function setTipoHorDes($tipoHorDes)
+    {
         $this->tipoHorDes = $tipoHorDes;
     }
 
@@ -66,7 +79,8 @@ class TipoHorario
      *
      * @return string 
      */
-    public function getTipoHorDes(){
+    public function getTipoHorDes()
+    {
         return $this->tipoHorDes;
     }
 
@@ -75,16 +89,18 @@ class TipoHorario
      *
      * @param bigint $tipoCantidadHor
      */
-    public function setTipoCantidadHor($tipoCantidadHor){
+    public function setTipoCantidadHor($tipoCantidadHor)
+    {
         $this->tipoCantidadHor = $tipoCantidadHor;
     }
 
     /**
      * Get tipoCantidadHor
      *
-     * @return bigint
+     * @return bigint 
      */
-    public function getTipoCantidadHor(){
+    public function getTipoCantidadHor()
+    {
         return $this->tipoCantidadHor;
     }
 
@@ -93,7 +109,8 @@ class TipoHorario
      *
      * @param string $tipoHorTurno
      */
-    public function setTipoHorTurno($tipoHorTurno){
+    public function setTipoHorTurno($tipoHorTurno)
+    {
         $this->tipoHorTurno = $tipoHorTurno;
     }
 
@@ -102,7 +119,28 @@ class TipoHorario
      *
      * @return string 
      */
-    public function getTipoHorTurno(){
+    public function getTipoHorTurno()
+    {
         return $this->tipoHorTurno;
+    }
+
+    /**
+     * Add resProTip
+     *
+     * @param MinSal\SidPla\RRMedicoBundle\Entity\ResulPrograRRMed $resProTip
+     */
+    public function addResProTip(\MinSal\SidPla\RRMedicoBundle\Entity\ResulPrograRRMed $resProTip)
+    {
+        $this->resProTip[] = $resProTip;
+    }
+
+    /**
+     * Get resProTip
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getResProTip()
+    {
+        return $this->resProTip;
     }
 }

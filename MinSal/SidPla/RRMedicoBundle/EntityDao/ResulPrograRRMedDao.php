@@ -2,10 +2,10 @@
 
 namespace MinSal\SidPla\RRMedicoBundle\EntityDao;
 
-use MinSal\SidPla\RRMedicoBundle\Entity\TipoHorario;
+use MinSal\SidPla\RRMedicoBundle\Entity\ResulPrograRRMed;
 use Doctrine\ORM\Query\ResultSetMapping;
 
-class TipoHorarioDao {
+class ResulPrograRRMedDao {
 
     var $doctrine;
     var $repositorio;
@@ -15,49 +15,31 @@ class TipoHorarioDao {
     function __construct($doctrine) {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
-        $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaRRMedicoBundle:TipoHorario');
+        $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaRRMedicoBundle:ResulPrograRRMed');
     }
 
-    
-    public function obtenerTipoHorarios() {
-        $cadena="";
-        $TipoHorarios=$this->getTipoHorario();
-        $aux = new TipoHorario();
-        $n =  count($TipoHorarios);
-        $i = 1;
-        
-        foreach ($TipoHorarios as $aux) {
-            if ($i < $n)
-                $cadena.=$aux->getCodTipoHor().":".$aux->getTipoHorDes().';';
-            else
-                $cadena.=$aux->getCodTipoHor().":".$aux->getTipoHorDes();
-            $i++;
-        }
-
-        return $cadena;
-    }
-  
+   
     /*
-     * Obtiene todos los tipos de horarios
+     * Obtiene todos los Resultados RRMed
      */
 
-    public function getTipoHorario() {
-        $tipoHorario = $this->em->createQuery("SELECT th
-                                                FROM MinSalSidPlaRRMedicoBundle:TipoHorario th
-                                                ORDER BY th.codTipoHor ASC");
-        return $tipoHorario->getResult();
+    public function getResulPrograRRMed() {
+        $resulPrograRRMedo = $this->em->createQuery("SELECT rp
+                                                FROM MinSalSidPlaRRMedicoBundle:ResulPrograRRMed rp
+                                                ORDER BY rp.codResproRR ASC");
+        return $resulPrograRRMedo->getResult();
     }
 
     /*
-     * Obtiene un tipo de horario especifico
+     * Obtiene una Resultado RRMed
      */
-    public function getTipoHorarioEspecifico($codigo) {
-        $tipoHorario = $this->repositorio->find($codigo);
-        return $tipoHorario ;
+    public function getResulPrograRRMedEspecifico($codigo) {
+        $resulPrograRRMed= $this->repositorio->find($codigo);
+        return $resulPrograRRMed ;
     }
     
        /*
-     * Agregar Tipo Horario
+     * Agregar Resultado RRMed
      */
 
     public function agregarTipoHorario($DescTipoHorario,$cantHoras ,$tipTurno) {
@@ -75,7 +57,7 @@ class TipoHorarioDao {
     }
     
     /*
-     * Editar un tipo de Horario
+     * Editar un tipo de periodo
      */
 
     public function editarTipoHorario($codTipoH, $DescTipoHorario,$cantHoras,$tipTurno) {
@@ -93,7 +75,7 @@ class TipoHorarioDao {
     }
     
     /*
-     * Eliminar un tipo de Horario
+     * Eliminar un tipo de periodo
      */
 
     public function eliminarTipoHorario($codigo) {

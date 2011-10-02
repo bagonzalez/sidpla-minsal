@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="sidpla_resultadoprogrecurso")
  * @ORM\Entity
  */
-class ResulPrograRRMed
-{
+class ResulPrograRRMed {
+
     /**
      * @var integer $codResproRR
      *
@@ -42,13 +42,28 @@ class ResulPrograRRMed
      */
     private $ConsulasDispo;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="TipoHorario", inversedBy="resProTip")
+     * @ORM\JoinColumn(name="tiphor_codigo", referencedColumnName="tiphor_codigo")
+     */
+    private $tipoRRHH;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="PrograRRMed", inversedBy="resProRRMed")
+     * @ORM\JoinColumn(name="prorecmed_codigo", referencedColumnName="prorecmed_codigo")
+     */
+    private $prograRRHH;
+
+    
+
 
     /**
      * Get codResproRR
      *
      * @return integer 
      */
-    public function getcodResproRR(){
+    public function getCodResproRR()
+    {
         return $this->codResproRR;
     }
 
@@ -57,7 +72,8 @@ class ResulPrograRRMed
      *
      * @param integer $cantRRMedDispo
      */
-    public function setCantRRMedDispo($cantRRMedDispo){
+    public function setCantRRMedDispo($cantRRMedDispo)
+    {
         $this->cantRRMedDispo = $cantRRMedDispo;
     }
 
@@ -66,25 +82,28 @@ class ResulPrograRRMed
      *
      * @return integer 
      */
-    public function getCantRRMedDispo(){
+    public function getCantRRMedDispo()
+    {
         return $this->cantRRMedDispo;
     }
 
     /**
      * Set totalHorasRR
      *
-     * @param integer $totalHorasRR
+     * @param float $totalHorasRR
      */
-    public function setTotalHorasRR($totalHorasRR){
+    public function setTotalHorasRR($totalHorasRR)
+    {
         $this->totalHorasRR = $totalHorasRR;
     }
 
     /**
      * Get totalHorasRR
      *
-     * @return integer 
+     * @return float 
      */
-    public function getTotalHorasRR(){
+    public function getTotalHorasRR()
+    {
         return $this->totalHorasRR;
     }
 
@@ -93,7 +112,8 @@ class ResulPrograRRMed
      *
      * @param integer $consulasDispo
      */
-    public function setConsulasDispo($consulasDispo){
+    public function setConsulasDispo($consulasDispo)
+    {
         $this->ConsulasDispo = $consulasDispo;
     }
 
@@ -102,7 +122,48 @@ class ResulPrograRRMed
      *
      * @return integer 
      */
-    public function getConsulasDispo(){
+    public function getConsulasDispo()
+    {
         return $this->ConsulasDispo;
+    }
+
+    /**
+     * Set tipoRRHH
+     *
+     * @param MinSal\SidPla\RRMedicoBundle\Entity\TipoHorario $tipoRRHH
+     */
+    public function setTipoRRHH(\MinSal\SidPla\RRMedicoBundle\Entity\TipoHorario $tipoRRHH)
+    {
+        $this->tipoRRHH = $tipoRRHH;
+    }
+
+    /**
+     * Get tipoRRHH
+     *
+     * @return MinSal\SidPla\RRMedicoBundle\Entity\TipoHorario 
+     */
+    public function getTipoRRHH()
+    {
+        return $this->tipoRRHH;
+    }
+
+    /**
+     * Set prograRRHH
+     *
+     * @param MinSal\SidPla\RRMedicoBundle\Entity\PrograRRMed $prograRRHH
+     */
+    public function setPrograRRHH(\MinSal\SidPla\RRMedicoBundle\Entity\PrograRRMed $prograRRHH)
+    {
+        $this->prograRRHH = $prograRRHH;
+    }
+
+    /**
+     * Get prograRRHH
+     *
+     * @return MinSal\SidPla\RRMedicoBundle\Entity\PrograRRMed 
+     */
+    public function getPrograRRHH()
+    {
+        return $this->prograRRHH;
     }
 }

@@ -42,13 +42,23 @@ class PrograRRMed
      */
     private $totalMinutos;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="ResulPrograRRMed", mappedBy="prograRRHH")
+     */
+    private $resProRRMed;
+   
+    public function __construct()
+    {
+        $this->resProRRMed = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get codPrograRRMed
      *
      * @return integer 
      */
-    public function getcodPrograRRMed(){
+    public function getCodPrograRRMed()
+    {
         return $this->codPrograRRMed;
     }
 
@@ -57,7 +67,8 @@ class PrograRRMed
      *
      * @param float $totaHoras
      */
-    public function setTotaHoras($totaHoras){
+    public function setTotaHoras($totaHoras)
+    {
         $this->totaHoras = $totaHoras;
     }
 
@@ -66,7 +77,8 @@ class PrograRRMed
      *
      * @return float 
      */
-    public function getTotaHoras(){
+    public function getTotaHoras()
+    {
         return $this->totaHoras;
     }
 
@@ -75,7 +87,8 @@ class PrograRRMed
      *
      * @param float $totalConsul
      */
-    public function setTotalConsul($totalConsul){
+    public function setTotalConsul($totalConsul)
+    {
         $this->totalConsul = $totalConsul;
     }
 
@@ -84,7 +97,8 @@ class PrograRRMed
      *
      * @return float 
      */
-    public function getTotalConsul(){
+    public function getTotalConsul()
+    {
         return $this->totalConsul;
     }
 
@@ -93,7 +107,8 @@ class PrograRRMed
      *
      * @param float $totalMinutos
      */
-    public function setTotalMinutos($totalMinutos){
+    public function setTotalMinutos($totalMinutos)
+    {
         $this->totalMinutos = $totalMinutos;
     }
 
@@ -102,7 +117,28 @@ class PrograRRMed
      *
      * @return float 
      */
-    public function getTotalMinutos(){
+    public function getTotalMinutos()
+    {
         return $this->totalMinutos;
+    }
+
+    /**
+     * Add resProRRMed
+     *
+     * @param MinSal\SidPla\RRMedicoBundle\Entity\ResulPrograRRMed $resProRRMed
+     */
+    public function addResProRRMed(\MinSal\SidPla\RRMedicoBundle\Entity\ResulPrograRRMed $resProRRMed)
+    {
+        $this->resProRRMed[] = $resProRRMed;
+    }
+
+    /**
+     * Get resProRRMed
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getResProRRMed()
+    {
+        return $this->resProRRMed;
     }
 }
