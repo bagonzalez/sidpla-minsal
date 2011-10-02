@@ -1,0 +1,3 @@
+MinSalSidPlaDepUniBundle_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: MinSalSidPlaDepUniBundle:Default:index }

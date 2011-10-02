@@ -1,0 +1,7 @@
+parameters:
+#    min_sal_sid_pla_dep_uni.example.class: MinSal\SidPla\DepUniBundle\Example
+
+services:
+#    min_sal_sid_pla_dep_uni.example:
+#        class: %min_sal_sid_pla_dep_uni.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]
