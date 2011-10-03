@@ -20,13 +20,18 @@ $(document).ready(function(){
       colNames:['Id','Elemento'],
       colModel:[            
            { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10}  },
-           { name:'elemento', index: 'elemento', width:150,editable:true,editoptions:{size:40}}
+           { name:'elemento', index: 'elemento', width:200,editable:true,editoptions:{size:40}}
       ],          
-      viewrecords: true,          
+      rowNum:25,
+      viewrecords: true,
+      loadonce:true,
+      pager: jQuery('#pagerDispo'),
       caption: 'Elementos Infraestructura Disponibles',
       height: "100%"
    });//Fin de Grid Disponibles
-   
+   $('#tabElemDispo').jqGrid('navGrid','#pagerDispo',{edit:false,add:false,del:false,refresh:false,search:false,
+     beforeRefresh: function() {$('#tabElemDispo').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}
+   ).hideCol('id');
    
    /* Cargar los Elementos Infraestructura Asignados*/
          
@@ -37,20 +42,31 @@ $(document).ready(function(){
       colNames:['Id','Elemento'],
       colModel:[            
            { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10}  },
-           { name:'elemento', index: 'elemento', width:150,editable:true,editoptions:{size:40}}
-      ],          
-      viewrecords: true,          
+           { name:'elemento', index: 'elemento', width:200,editable:true,editoptions:{size:40}}
+      ],
+      rowNum:25,
+      viewrecords: true,
+      loadonce:true,
+      pager: jQuery('#pagerAsig'),
       caption: 'Elementos Infraestructura Asignados',
       height: "100%"
    });//Fin de Grid Asignados
+   
+   $('#tabAsig').jqGrid('navGrid','#pagerAsig',{edit:false,add:false,del:false,refresh:false,search:false,
+     beforeRefresh: function() {$('#tabAsig').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}
+   ).hideCol('id')
    
    /*Boton de Asignar*/
   $('#agregar').click(function(){ 
        var id = jQuery("#tabElemDispo").jqGrid('getGridParam','selrow'); 
        if (id) { 
-         var eleInfra = jQuery("#tabElemDispo").jqGrid('getRowData',id);                     
-         $('#tabAsig').setGridParam({url:'manttElemSelec?id='+eleInfra.id+'&oper=agregar&idInfra={{idInfra}}'}).trigger("reloadGrid");
-         $('#tabElemDispo').trigger("reloadGrid");
+         var eleInfra = jQuery("#tabElemDispo").jqGrid('getRowData',id);
+         
+         $('#tabAsig').setGridParam({url:'asignarElemSelec?id='+eleInfra.id+'&idInfra={{idInfra}}'}); 
+         $('#tabAsig').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+
+         $('#tabElemDispo').setGridParam({url:'consultarDisponiblesJSON?idInfra= {{idInfra}}'}); 
+         $('#tabElemDispo').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
        } 
        else 
          alert("Por favor seleccione un elemento de la tabla de la izquierda para agregar");        
@@ -61,9 +77,10 @@ $(document).ready(function(){
        var id = jQuery("#tabAsig").jqGrid('getGridParam','selrow'); 
        if (id) { 
          var eleInfra = jQuery("#tabAsig").jqGrid('getRowData',id);                     
+         $('#tabAsig').setGridParam({url:'quitarElemSelec?id='+eleInfra.id+'&idInfra={{idInfra}}'}); 
+         $('#tabAsig').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
          
-         $('#tabElemDispo').setGridParam({url:'manttElemSelec?id='+eleInfra.id+'&oper=eliminar&idInfra={{idInfra}}'}).trigger("reloadGrid");
-         $('#tabAsig').trigger("reloadGrid");
+         $('#tabElemDispo').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
        } 
        else 
          alert("Por favor seleccione un elemento de la tabla de la derecha para quitar");        
@@ -79,7 +96,7 @@ $(document).ready(function(){
     <table align="center">
         <tr>
             <td colspan='3'>
-                <p style='font-size: 12px'>Debe de tomar en cuenta</p>
+                <p style='font-size: 12px'>Indicaciones</p>
                 <ul>
                     <li style='font-size: 12px'>Los elementos de la tabla izquierda son los que usted tiene disponibles para seleccionar</li>
                     <li style='font-size: 12px'>Los elementos de la tabla derecha son los que usted ha seleccionado para ser evaluados</li>
@@ -96,7 +113,8 @@ $(document).ready(function(){
         </tr>
         <tr>
             <td align="center" valign="top"> <h2>Disponibles</h2>
-              <table id="tabElemDispo" class="scroll" ></table>                
+              <table id="tabElemDispo" class="scroll" ></table> 
+              <div id="pagerDispo" class="scroll"></div>  
             </td>
             <td align="center">
                 <p> <input  id='agregar' type="button" value=">>"/> </p>
@@ -104,7 +122,8 @@ $(document).ready(function(){
                     
             </td>
             <td align="center" valign="top"> <h2>Asignados</h2>
-              <table id="tabAsig" class="scroll" ></table>                
+              <table id="tabAsig" class="scroll" ></table>
+              <div id="pagerAsig" class="scroll"></div>  
             </td>
         </tr>
         

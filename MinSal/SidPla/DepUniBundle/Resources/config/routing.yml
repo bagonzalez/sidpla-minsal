@@ -1,0 +1,18 @@
+#ROUTING DE DEPUNIBUNDLE
+MinSalSidPlaDepUniBundle_principal:
+    pattern:  /principal
+    defaults: { _controller: MinSalSidPlaDepUniBundle:Default:principal }
+
+#TIPORRHUMANO
+MinSalSidPlaDepUniBundle_mantenimientoTipoRecurso:
+    pattern:  /mantenimientoTipoRecurso
+    defaults: { _controller: MinSalSidPlaDepUniBundle:AccionDepUniTipoRRHH:mantenimientoTipoRecurso }
+    
+MinSalSidPlaDepUniBundle_consultarTipoRRHHJSON:
+    pattern:  /consultarTipoRRHHJSON
+    defaults: { _controller: MinSalSidPlaDepUniBundle:AccionDepUniTipoRRHH:consultarTipoRRHHJSON }
+    
+MinSalSidPlaDepUniBundle_manttTipoRRHHEdicion:
+    pattern:  /manttTipoRRHHEdicion
+    defaults: { _controller: MinSalSidPlaDepUniBundle:AccionDepUniTipoRRHH:manttTipoRRHHEdicion }
+    

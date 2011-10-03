@@ -17,24 +17,22 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  
-  
+
+
  */
 
 namespace MinSal\SidPla\UnidadOrgBundle\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
-
 use MinSal\SidPla\UnidadOrgBundle\Form\Type\InfoCaractOrgType;
 use MinSal\SidPla\UnidadOrgBundle\Form\Type\CaractOrgType;
 use MinSal\SidPla\UnidadOrgBundle\Entity\CaractOrg;
 use MinSal\SidPla\AdminBundle\Entity\InformacionGeneral;
-
 use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
-
 use MinSal\SidPla\UsersBundle\Entity\User;
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
 use MinSal\SidPla\UnidadOrgBundle\Entity\FuncionEspecifica;
@@ -43,229 +41,228 @@ use MinSal\SidPla\UnidadOrgBundle\EntityDao\CaractOrgDao;
 use MinSal\SidPla\UnidadOrgBundle\EntityDao\ObjetivoEspecificoDao;
 use MinSal\SidPla\UnidadOrgBundle\EntityDao\FuncionEspecificaDao;
 
-
-
-
 /**
  * Description of AccionInfoCaractOrganizacionController
  *
  * @author bgonzalez
  */
-class AccionInfoCaractOrganizacionController extends Controller
-{
-    public function ingresarInfoCaractAction()
-    {
-        $opciones=$this->getRequest()->getSession()->get('opciones');
-        
-        $user=new User();
-        $empleado=new Empleado();
-        
-        $user = $this->get('security.context')->getToken()->getUser();
-        
-        $empleado=$user->getEmpleado();
-        
-        $idUnidad=$empleado->getUnidadOrganizativa()->getIdUnidadOrg();
+class AccionInfoCaractOrganizacionController extends Controller {
 
-        
-        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());
-        $unidad=new UnidadOrganizativa();
-        $infoGeneral=new InformacionGeneral();
-        
-        $unidad=$unidaDao->getUnidadOrg($idUnidad);
-        
-        $nombreUnidad=$unidad->getNombreUnidad();
-        $nombreUnidadPadre=$unidad->getParent()->getNombreUnidad();
-        
-        $infoGeneral=$unidad->getInformacionGeneral();
-        $caractOrg=$unidad->getCaractOrg();
-        
-        
+    public function ingresarInfoCaractAction() {
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+
+        $user = new User();
+        $empleado = new Empleado();
+
+        $user = $this->get('security.context')->getToken()->getUser();
+
+        $empleado = $user->getEmpleado();
+
+        $idUnidad = $empleado->getUnidadOrganizativa()->getIdUnidadOrg();
+
+
+        $unidaDao = new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad = new UnidadOrganizativa();
+        $infoGeneral = new InformacionGeneral();
+
+        $unidad = $unidaDao->getUnidadOrg($idUnidad);
+
+        $nombreUnidad = $unidad->getNombreUnidad();
+        $nombreUnidadPadre = $unidad->getParent()->getNombreUnidad();
+
+        $infoGeneral = $unidad->getInformacionGeneral();
+        $caractOrg = $unidad->getCaractOrg();
+
+
         $form = $this->createForm(new InfoCaractOrgType(), $infoGeneral);
         $formCaract = $this->createForm(new CaractOrgType(), $caractOrg);
-        
-        return $this->render('MinSalSidPlaUnidadOrgBundle:InforCaractOrg:ingresoInfoCaractOrg.html.twig', 
-                array( 'form' => $form->createView(), 
-                       'formOrg' => $formCaract->createView(), 
-                       'opciones' => $opciones,
-                       'unidadOrg' => $nombreUnidad,
-                       'unidadPadre' => $nombreUnidadPadre, 
-                       'idCaractOrg' => $caractOrg->getIdCaractOrg(),
-                ));        
-        
-    } 
-    
-    public function guardarCaracteristicasAction(Request $peticion)
-    {
-         $opciones=$this->getRequest()->getSession()->get('opciones');
-         $request=$this->getRequest();         
-         
-         $caractOrg=new CaractOrg(); 
-         $form = $this->createForm(new CaractOrgType(), $caractOrg);
-         
-        if ($peticion->getMethod() == 'POST') {            
+
+        return $this->render('MinSalSidPlaUnidadOrgBundle:InforCaractOrg:ingresoInfoCaractOrg.html.twig', array('form' => $form->createView(),
+                    'formOrg' => $formCaract->createView(),
+                    'opciones' => $opciones,
+                    'unidadOrg' => $nombreUnidad,
+                    'unidadPadre' => $nombreUnidadPadre,
+                    'idCaractOrg' => $caractOrg->getIdCaractOrg(),
+                ));
+    }
+
+    public function guardarCaracteristicasAction(Request $peticion) {
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+        $request = $this->getRequest();
+
+        $caractOrg = new CaractOrg();
+        $form = $this->createForm(new CaractOrgType(), $caractOrg);
+
+        if ($peticion->getMethod() == 'POST') {
             $form->bindRequest($peticion);
-            
+
             if ($form->isValid()) {
-                    $catOrgDao = new CaractOrgDao($this->getDoctrine());  
-                    
-                    $caractOrgAux=$catOrgDao->getCaractOrg($caractOrg->getIdCaractOrg());
-                    
-                     $caractOrgAux->setFuncionPrincipal($caractOrg->getFuncionPrincipal());
-                     $caractOrgAux->setMision($caractOrg->getMision());
-                     $caractOrgAux->setVision($caractOrg->getVision());
-                     $caractOrgAux->setObjetivoGeneral($caractOrg->getObjetivoGeneral());  
-         
-                                    
-                     $this->getDoctrine()->getEntityManager()->persist($caractOrgAux);
-                     $this->getDoctrine()->getEntityManager()->flush();
-                    
+                $catOrgDao = new CaractOrgDao($this->getDoctrine());
+
+                $caractOrgAux = $catOrgDao->getCaractOrg($caractOrg->getIdCaractOrg());
+
+                $caractOrgAux->setFuncionPrincipal($caractOrg->getFuncionPrincipal());
+                $caractOrgAux->setMision($caractOrg->getMision());
+                $caractOrgAux->setVision($caractOrg->getVision());
+                $caractOrgAux->setObjetivoGeneral($caractOrg->getObjetivoGeneral());
+
+
+                $this->getDoctrine()->getEntityManager()->persist($caractOrgAux);
+                $this->getDoctrine()->getEntityManager()->flush();
             }
         }
-         
+
         return $this->ingresarInfoCaractAction();
     }
-    
-    public function consultarFuncionesOrgAction()
-    {
-        
-        $request=$this->getRequest();        
-        $idCaractOrg=$request->get('idCaractOrg');
-        
-        $caractOrgAux=new CaractOrg();
-        $catOrgDao = new CaractOrgDao($this->getDoctrine());                      
-        $caractOrgAux=$catOrgDao->getCaractOrg($idCaractOrg);         
-        
-        $funciones=$caractOrgAux->getFuncionesEspec();
-        
-        $numfilas=count($funciones);  
-            
-        $funcionEspec=new FuncionEspecifica();
-        $i=0;
 
-        foreach ($funciones as $funcionEspec) {        
-            $rows[$i]['id']= $funcionEspec->getIdFuncEspec();
-            $rows[$i]['cell']= array($funcionEspec->getIdFuncEspec(),
-                                     $funcionEspec->getFuncDescripcion()
-                                     );    
+    public function consultarFuncionesOrgAction() {
+
+        $request = $this->getRequest();
+        $idCaractOrg = $request->get('idCaractOrg');
+
+        $caractOrgAux = new CaractOrg();
+        $catOrgDao = new CaractOrgDao($this->getDoctrine());
+        $caractOrgAux = $catOrgDao->getCaractOrg($idCaractOrg);
+
+        $funciones = $caractOrgAux->getFuncionesEspec();
+
+        $numfilas = count($funciones);
+
+        $funcionEspec = new FuncionEspecifica();
+        $i = 0;
+
+        foreach ($funciones as $funcionEspec) {
+            $rows[$i]['id'] = $funcionEspec->getIdFuncEspec();
+            $rows[$i]['cell'] = array($funcionEspec->getIdFuncEspec(),
+                $funcionEspec->getFuncDescripcion()
+            );
             $i++;
         }
-            
-        $datos=json_encode($rows);  
-        $jsonresponse='{
-           "page":"1",
-           "total":"'.($numfilas/10).'",
-           "records":"'.$numfilas.'", 
-           "rows":'.$datos.'}';
-            
-            
-        $response=new Response($jsonresponse);              
-        return $response; 
-    }
-    
-    public function consultarObjetivosOrgEspecAction()
-    {
-        
-        $request=$this->getRequest();        
-        $idCaractOrg=$request->get('idCaractOrg');
-        
-        $caractOrgAux=new CaractOrg();
-        $catOrgDao = new CaractOrgDao($this->getDoctrine());                      
-        $caractOrgAux=$catOrgDao->getCaractOrg($idCaractOrg);         
-        
-        $objetivosEspec=$caractOrgAux->getObjetivosEspec();
-        
-        $numfilas=count($objetivosEspec);  
-            
-        $objetivoEspec=new ObjetivoEspecifico();
-        $i=0;
 
-        foreach ($objetivosEspec as $objetivoEspec) { 
-            $rows[$i]['id']= $objetivoEspec->getIdObjEspec();
-            $rows[$i]['cell']= array($objetivoEspec->getIdObjEspec(),
-                                     $objetivoEspec->getDescripcion()
-                                     );    
-            $i++;
+        if ($numfilas != 0) {
+            array_multisort($rows, SORT_ASC);
+        } else {
+            $rows[0]['id'] = 0;
+            $rows[0]['cell'] = array(' ', ' ');
         }
-            
-            $datos=json_encode($rows);            
-            
-            
-            $jsonresponse='{
+
+        $datos = json_encode($rows);
+        $pages = floor($numfilas / 10) + 1;
+
+        $jsonresponse = '{
                "page":"1",
-               "total":"'.($numfilas/10).'",
-               "records":"'.$numfilas.'", 
-               "rows":'.$datos.'}';
-            
-            
-            $response=new Response($jsonresponse);              
-            return $response;            
-        
-        
+               "total":"' . $pages . '",
+               "records":"' . $numfilas . '", 
+               "rows":' . $datos . '}';
+
+
+        $response = new Response($jsonresponse);
+        return $response;
     }
-    
-    public function manttObjEspecAction()
-    {
-        
-        $request=$this->getRequest();            
-        
-        $objetivo=$request->get('objetivo');            
-        $id=$request->get('id');
-        $idCaractOrg=$request->get('idCaractOrg');
 
-        $operacion=$request->get('oper'); 
+    public function consultarObjetivosOrgEspecAction() {
 
-        $objDao = new ObjetivoEspecificoDao($this->getDoctrine()); 
+        $request = $this->getRequest();
+        $idCaractOrg = $request->get('idCaractOrg');
 
-        if($operacion=='edit'){   
-            $objDao->editObjEspec($objetivo, $id);            
+        $caractOrgAux = new CaractOrg();
+        $catOrgDao = new CaractOrgDao($this->getDoctrine());
+        $caractOrgAux = $catOrgDao->getCaractOrg($idCaractOrg);
+
+        $objetivosEspec = $caractOrgAux->getObjetivosEspec();
+
+        $numfilas = count($objetivosEspec);
+
+        $objetivoEspec = new ObjetivoEspecifico();
+        $i = 0;
+
+        foreach ($objetivosEspec as $objetivoEspec) {
+            $rows[$i]['id'] = $objetivoEspec->getIdObjEspec();
+            $rows[$i]['cell'] = array($objetivoEspec->getIdObjEspec(),
+                $objetivoEspec->getDescripcion()
+            );
+            $i++;
         }
 
-        if($operacion=='del'){
+        if ($numfilas != 0) {
+            array_multisort($rows, SORT_ASC);
+        } else {
+            $rows[0]['id'] = 0;
+            $rows[0]['cell'] = array(' ', ' ');
+        }
+
+        $datos = json_encode($rows);
+        $pages = floor($numfilas / 10) + 1;
+
+        $jsonresponse = '{
+               "page":"1",
+               "total":"' . $pages . '",
+               "records":"' . $numfilas . '", 
+               "rows":' . $datos . '}';
+
+
+
+        $response = new Response($jsonresponse);
+        return $response;
+    }
+
+    public function manttObjEspecAction() {
+
+        $request = $this->getRequest();
+
+        $objetivo = $request->get('objetivo');
+        $id = $request->get('id');
+        $idCaractOrg = $request->get('idCaractOrg');
+
+        $operacion = $request->get('oper');
+
+        $objDao = new ObjetivoEspecificoDao($this->getDoctrine());
+
+        if ($operacion == 'edit') {
+            $objDao->editObjEspec($objetivo, $id);
+        }
+
+        if ($operacion == 'del') {
             $objDao->delObjEspec($id);
         }
 
-        if($operacion=='add'){
-            $catOrgDao = new CaractOrgDao($this->getDoctrine());                      
-            $catOrgDao->agregarObjEspec($objetivo, $idCaractOrg );           
+        if ($operacion == 'add') {
+            $catOrgDao = new CaractOrgDao($this->getDoctrine());
+            $catOrgDao->agregarObjEspec($objetivo, $idCaractOrg);
         }
 
-        return new Response("{sc:true,msg:''}"); 
-        
+        return new Response("{sc:true,msg:''}");
     }
-    
-    
-     public function manttFuncEspecAction()
-    {
-         
-        
-        $request=$this->getRequest();            
-        
-        $idCaractOrg=$request->get('idCaractOrg');        
-        $funcion=$request->get('funcion');            
-        $id=$request->get('id');
 
-        $operacion=$request->get('oper'); 
+    public function manttFuncEspecAction() {
 
-        $funcDao = new FuncionEspecificaDao($this->getDoctrine()); 
 
-        if($operacion=='edit'){                
+        $request = $this->getRequest();
+
+        $idCaractOrg = $request->get('idCaractOrg');
+        $funcion = $request->get('funcion');
+        $id = $request->get('id');
+
+        $operacion = $request->get('oper');
+
+        $funcDao = new FuncionEspecificaDao($this->getDoctrine());
+
+        if ($operacion == 'edit') {
             $funcDao->editFuncionEspec($funcion, $id);
         }
 
-        if($operacion=='del'){
+        if ($operacion == 'del') {
             $funcDao->delFuncionEspec($id);
         }
 
-        if($operacion=='add'){
-            $catOrgDao = new CaractOrgDao($this->getDoctrine());                      
-            $catOrgDao->agregarFuncEspec($funcion, $idCaractOrg );      
-            
+        if ($operacion == 'add') {
+            $catOrgDao = new CaractOrgDao($this->getDoctrine());
+            $catOrgDao->agregarFuncEspec($funcion, $idCaractOrg);
         }
 
-        return new Response("{sc:true,msg:'ff'}"); 
-        
+        return new Response("{sc:true,msg:'ff'}");
     }
-    
+
 }
 
 ?>

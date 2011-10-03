@@ -22,17 +22,16 @@
           loadonce:true,
           pager: jQuery('#pager'),
           viewrecords: true,          
-            caption: 'Unidades Organizativas',
-            height: "100%",
-            editurl: 'manttUnidadEdicion'
+          caption: 'Unidades Organizativas',
+          height: "100%",
+          editurl: 'manttUnidadEdicion'
         });
-         myGrid.jqGrid('navGrid','#pager',
-        {edit:false,add:false,del:false},
-        {width:550,height:200},
-        {width:550,height:200},
-        {width:550,height:100},
-        {multipleSearch:true, multipleGroup:true}
-        );
+        
+        myGrid.jqGrid('navGrid','#pager',
+        {edit:false,add:false,del:false,
+            beforeRefresh: function() {myGridDisponibles.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}},
+        {width:550,height:200},{width:550,height:200},{width:550,height:100},{multipleSearch:true, multipleGroup:true}
+        ).hideCol('id');
           
           
       });

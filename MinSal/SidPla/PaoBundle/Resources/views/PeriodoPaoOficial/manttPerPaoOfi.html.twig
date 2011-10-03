@@ -1,26 +1,18 @@
-{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
-{% block titulo %}Periodo Oficial {% endblock %}
-
 {% block body %}
-<script type="text/javascript">
-    </script>
-    <h1 style='text-align: center;'>Periodo Oficial</h1>
-    <form>
-        <table align="center">
-            <tr>
-                <td align="center"><strong>Seleccione el Año a Gestionar </strong>
-                <select id='selanio'>
-                        <option value='{{ "now" | date("Y") }}'>{{ "now" | date("Y") }}</option>
-                        <option value='{{ "now" | date("Y")+1 }}'>{{ "now" | date("Y")+1 }}</option>
-                </select>
-                </td>
-            </tr>
-            <tr>
-                <td colspan="2" align="center">
-                    <br></br>  
+<table align="center">
+    <tr>
+        <td align="center"><strong>Seleccione el Año a Gestionar </strong>
+            <select id='selanio'>
+                <option value='{{ "now" | date("Y") }}'>{{ "now" | date("Y") }}</option>
+                <option value='{{ "now" | date("Y")+1 }}'>{{ "now" | date("Y")+1 }}</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="2" align="center">
+            <br></br>  
                 {% include 'MinSalSidPlaPaoBundle:PeriodoPaoOficial:showPeriodoOficial.html.twig'%}
-                </td>
-            </tr>        
-        </table>    
-    </form>
+        </td>
+    </tr>        
+</table>    
 {% endblock %}

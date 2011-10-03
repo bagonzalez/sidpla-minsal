@@ -11,17 +11,6 @@ use MinSal\SidPla\PaoBundle\EntityDao\TipoPeriodoDao;
 
 class AccionPaoPeriodoOficialController extends Controller {
 
-    public function mantenimientoPeriodoOficialAction() {
-
-        $opciones = $this->getRequest()->getSession()->get('opciones');
-
-        $tipoPeriodoDao = new TipoPeriodoDao($this->getDoctrine());
-        $combobox = $tipoPeriodoDao->obtenerTiposPeriodos();
-
-        return $this->render('MinSalSidPlaPaoBundle:PeriodoPaoOficial:manttPerPaoOfi.html.twig'
-                        , array('opciones' => $opciones, 'combotipoperiodos' => $combobox));
-    }
-
     public function consultarPeriodoOficialJSONAction() {
 
         $periodoOficialDao = new PeriodoOficialDao($this->getDoctrine());

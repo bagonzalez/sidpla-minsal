@@ -17,9 +17,9 @@ MinSalSidPlaPaoBundle_manttTipoPeriodo:
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoTipoPeriodo:manttTipoPeriodo }
     
 #PARA PERIODO OFICIAL
-MinSalSidPlaPaoBundle_mantenimientoPeriodoOficial:
-    pattern:  /mantenimientoPeriodoOficial
-    defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoPeriodoOficial:mantenimientoPeriodoOficial  }
+#MinSalSidPlaPaoBundle_mantenimientoPeriodoOficial:
+ #   pattern:  /mantenimientoPeriodoOficial
+  #  defaults: { _controller: MinSalSidPlaPaoBundle:AccionPaoPeriodoOficial:mantenimientoPeriodoOficial  }
     
 MinSalSidPlaPaoBundle_consultarPeriodoOficialJSON:
     pattern:  /consultarPeriodoOficialJSON
@@ -59,3 +59,8 @@ MinSalSidPlaPaoBundle_manttJustificacionEdicion:
 MinSalSidPlaPaoBundle_actualizarJustificacion:
     pattern:  /actualizarJustificacion    
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:actualizarJustificacion }
+
+MinSalSidPlaPaoBundle_reporteJustificacion:
+    pattern:  /reporteJustificacion    
+    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:reporteJustificacion }
+

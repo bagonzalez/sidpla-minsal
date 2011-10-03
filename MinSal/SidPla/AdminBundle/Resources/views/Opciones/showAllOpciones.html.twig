@@ -13,10 +13,10 @@
           colNames:['Id','Nombre', 'Descripcion', 'Enlace', 'Padre'],
           colModel:[            
             { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
-            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:40},formoptions:{ rowpos:1, label: "Nombre", elmprefix:"(*)"},editrules:{required:true}  },
-            { name:'descripcion', index: 'descripcion', width:300,editable:true,editoptions:{size:70},formoptions:{ rowpos:2, label: "Descripcion",elmprefix:"   "},editrules:{required:false}  },
-            { name:'enlace', index: 'enlace', width:300,editable:true,editoptions:{size:70},formoptions:{ rowpos:3, label: "Enlace", elmprefix:"(*)"},editrules:{required:true}  } ,
-            { name:'opcpadre', index: 'opcpadre', width:50,editable:true,editoptions:{size:40} ,formoptions:{ rowpos:4, label: "Padre"} } ],
+            { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:40,maxlength:50},formoptions:{rowpos:1, label: "Nombre", elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'descripcion', index: 'descripcion', width:300,editable:true,editoptions:{size:70,maxlength:100},formoptions:{ rowpos:2, label: "Descripcion",elmprefix:"   "},editrules:{required:false}  },
+            { name:'enlace', index: 'enlace', width:300,editable:true,editoptions:{size:70,maxlength:150},formoptions:{ rowpos:3, label: "Enlace", elmprefix:"(*)"},editrules:{required:true}  } ,
+            { name:'opcpadre', index: 'opcpadre', width:50,editable:true,editoptions:{size:40} ,formoptions:{rowpos:4, label: "Padre"} } ],
           rowNum:10,
           rowList:[10,20,30],//Lo cambie porque necesitaba ver las demas opciones y no m surben los botones de la siguiente pagina
           multiselect: false,
@@ -27,8 +27,8 @@
           viewrecords: true,          
           caption: 'Opciones del sistema',
           height: "100%",
-          editCaption: "Editar Registro",
-          addCaption: "Nuevo Registro",
+          editCaption: "Editar Opcion",
+          addCaption: "Agregar Opcion",
           editurl:'manttOpcEdicion'            
         });
         
