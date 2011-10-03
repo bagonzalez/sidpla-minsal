@@ -1,0 +1,122 @@
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+        
+        $('#agregarRRHHButton').button();
+        $('#editarRRHHButton').button();
+        $('#eliminarRRHHButton').button();
+        
+        function validaDepto(value, colname) {
+        if (value == 0 ) 
+            return [false,"Seleccione una Unidad a la que Pertenece el Recurso Humano"];
+        else 
+            return [true,""];
+        }
+        
+        function validatipoRRHH(value, colname) {
+        if (value == 0 ) 
+            return [false,"Seleccione un tipo de recurso humano"];
+        else 
+            return [true,""];
+       }
+              
+        var myGridRRHH = $('#tabRRHH');        
+        myGridRRHH.jqGrid({ 
+          url: 'consultarRRHHJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Codigo','Unidad','Tipo Recurso','Cantidad','Descripción'],
+          colModel:[
+            { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}  },
+            { name:'depto', index: 'depto', width:150,editable:true,editoptions:{size:30},edittype:"select",
+                        editoptions: {value:"0:Seleccione;{{combodepto}}"},editrules:{custom:true, custom_func:validaDepto}
+            },
+            {name:'tipoRRHH', index: 'tipoRRHH', width:150,editable:true,editoptions:{size:30},edittype:"select",
+                        editoptions: {value:"0:Seleccione;{{comboRRHH}}"},editrules:{custom:true, custom_func:validatipoRRHH}
+            },
+            { name:'cant', index: 'cant',width:80,align:"center",editable:true,editoptions:{size:30},
+                editrules:{required:true, integer:true,minValue:0},formoptions:{elmprefix:"(*)"}},
+            { name:'descripcion', index: 'descripcion', width:300,edittype:"textarea",editable:true, editoptions:{rows:"5",cols:"40",maxlength: 300}}
+          ],
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          loadonce:true,
+          pager: jQuery('#pagerRRHH'),
+          viewrecords: true,          
+          caption: 'Recurso Humano de la unidad',
+          height: "100%",
+          editurl:'manttRRHHEdicion'
+           
+        });
+        
+         myGridRRHH.jqGrid('navGrid','#pagerRRHH',{edit:false,add:false,del:false,
+             beforeRefresh: function() {myGridRRHH.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}).hideCol('codigo');
+         
+      /* Funcion para regargar los JQGRID luego de agregar y editar*/
+      function despuesAgregarEditar() {
+        myGridRRHH.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+        return[true,'']; //no error
+      }         
+  //agregar
+  $("#agregarRRHHButton").click(function(){
+        jQuery('#tabRRHH').jqGrid('editGridRow',"new",
+        {closeAfterAdd:true,addCaption: "Agregar Recurso Humano a la Unidad",
+         height:250,align:'center',reloadAfterSubmit:true,width:550,
+         processData: "Cargando...",afterSubmit:despuesAgregarEditar,
+         bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+                alert("datos guardados con exito!");}
+        });
+        });
+
+   //editar
+    $("#editarRRHHButton").click(function(){
+          var gr = jQuery('#tabRRHH').jqGrid('getGridParam','selrow');
+          if( gr != null )
+             jQuery("#tabRRHH").jqGrid('editGridRow',gr,
+            {closeAfterEdit:true,editCaption: "Editando Recurso Humano a la Unidad",
+             height:250,align:'center',reloadAfterSubmit:true,width:550,
+             processData: "Cargando...",afterSubmit:despuesAgregarEditar,
+             bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+                    alert("El recurso humano ha sido editado con exito!");
+                ;}
+        });
+          else alert("Por favor seleccione una fila para editar!"); 
+          });
+    
+        //eliminar
+    $("#eliminarRRHHButton").click(function(){
+         var grs = jQuery('#tabRRHH').jqGrid('getGridParam','selrow');
+         if( grs != null ) jQuery('#tabRRHH').jqGrid('delGridRow',grs,
+            {msg: "Desea Eliminar esta Recurso Humano a la Unidad?",caption:"Eliminando Recurso Humano a la Unidad",
+             height:100,align:'center',reloadAfterSubmit:true,width:550,
+             processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
+                alert("El recurso humano se ha eliminado con exito!");
+            }}); 
+         else alert("Por favor seleccione una fila para borrar!"); }); 
+ 
+  //fin          
+            
+            
+            
+            
+      });
+    </script>
+    <h1 style='text-align: center;'>Recurso Humano de la Unidad</h1>
+    <table align="center">
+        <tr>
+            <td align="center">
+                <table id="tabRRHH" class="scroll" align="center"></table>
+                <div id="pagerRRHH" class="scroll"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <input type="button" id="agregarRRHHButton" value="  Agregar  " />
+                <input type="button" id="editarRRHHButton" value="   Editar   " />
+                <input type="button" id="eliminarRRHHButton" value="  Eliminar  " />
+                
+            </td>
+        </tr>        
+    </table>    
+{% endblock %}

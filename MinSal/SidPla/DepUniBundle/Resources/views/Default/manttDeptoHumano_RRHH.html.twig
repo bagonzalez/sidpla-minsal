@@ -6,8 +6,8 @@
 <script type="text/javascript">  
  $(document).ready(function(){           
     $('#tabs').tabs(); 
-    $('#pestaniaDeptoUni').click(function(){$('#tabUnidMed').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');});
-    $('#pestaniaRRHH').click(function(){$('#tabElemInfra').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');});
+    $('#pestaniaDeptoUni').click(function(){$('#tabdptouni').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');});
+    $('#pestaniaRRHH').click(function(){$('#tabRRHH').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');});
            
  });
       
@@ -22,8 +22,7 @@
             <table align="center">
                 <tr>
                     <td align="center">
-                        <br></br>  
-                    {#include 'MinSalSidPlaEstInfraBundle:ElementoInfraestructura:showElementoInfraestructura.html.twig' #}
+                        {%include 'MinSalSidPlaDepUniBundle:DepartamentoUni:showDeptoUni.html.twig' %}
                     </td>
                 </tr>  
             </table>   
@@ -32,8 +31,7 @@
             <table align="center">
                 <tr>
                     <td align="center">
-                        <br></br> 
-                  {# include 'MinSalSidPlaEstInfraBundle:UnidadMedida:showUnidadMedida.html.twig' #}
+                        {%include 'MinSalSidPlaDepUniBundle:RecursoHumano:showRecursoHumano.html.twig' %}
                     </td>
                 </tr>        
             </table>   
