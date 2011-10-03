@@ -26,6 +26,10 @@ use MinSal\SidPla\GesObjEspBundle\EntityDao\ResultadoEsperadoDao;
 use MinSal\SidPla\GesObjEspBundle\Entity\TipoMeta;
 use MinSal\SidPla\GesObjEspBundle\EntityDao\TipoMetaDao;
 
+use MinSal\SidPla\GesObjEspBundle\Entity\Resultadore;
+use MinSal\SidPla\GesObjEspBundle\EntityDao\ResultadoreDao;
+
+
 class AccionAdminResultadosEsperadosController extends Controller {
     //put your code here
 
@@ -213,10 +217,10 @@ class AccionAdminResultadosEsperadosController extends Controller {
            
                                              
                
-            // $selectipometa=1;  
+          
            
                $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
-           $objetivoDao->agregarResulEsperado($restmpcodigo,
+          $idResultadoEsp= $objetivoDao->agregarResulEsperado($restmpcodigo,
                                        $tipometa,
                                         $resEspeDesc,
                                         $resEspNomencl,
@@ -226,15 +230,35 @@ class AccionAdminResultadosEsperadosController extends Controller {
                                         $resEspResponsable,
                                         $resEspEntidadControl,
                                         $resEspIndicador,
-                                        $idobjetivo); 
+                                        $idobjetivo,
+                                        $medioverificacion ); 
                
-         
-           //es en este punto dende tengo que obtener el id del nuevo resultado esperado
-           //para poder ingresar los valores en la tablas sidpla_resultadore y sidpla_tipomedioverificacion
-           //no hayo como obtener el valor de  'Resultado'.$objResulesperado->getIdResEsp() que viene
-           // en el return $matrizmensaje  del metodo agregarResulEsperado del archivo ObjetivoEspecificoDao.php
-            return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
-                array( 'opciones' => $opciones,'idfila' => $idfila,));
+           
+           $trimesuno=1;
+           $trimesdos=2;
+           $trimestres=3;
+           $trimescuatro=4;
+           
+          //inicia proceso de guardar el valor de lo programado en sidpla_resultadore
+           $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
+           $resultadoDao->agregarResultadore($idResultadoEsp,$trimesuno,$trimUno); 
+          
+          $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
+          $resultadoDao->agregarResultadore($idResultadoEsp,$trimesdos,$trimDos); 
+          
+          $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
+          $resultadoDao->agregarResultadore($idResultadoEsp,$trimestres,$trimTres); 
+          
+          $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
+          $resultadoDao->agregarResultadore($idResultadoEsp,$trimescuatro,$trimCuatro); 
+          
+          
+           $objetivoAux=new ObjetivoEspecifico();
+           $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
+           $objetivoAux=$objetivoDao->getObjetEspecif($idfila);         
+           $objetivosEspec=$objetivoAux->getDescripcion();
+           return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
+                array( 'opciones' => $opciones,'idfila' => $idfila,'descripcion' => $objetivosEspec));
         
     }
     
@@ -305,10 +329,40 @@ public function editarResultadosEsperadosAction()
            $resultadoEsperadoTipoMeta=$resultadoAux->getIdTipoMeta();
            $resultadoEsperadoDescripcionMetaAnual=$resultadoAux->getResEspDescMetAnual();
            
-       
+           
+          
+           
+           //inicia el proceso  de recuperar los atos de la tabla resultadore
+           $resultAux=new ResultadoEsperado();
+           $resultDao = new ResultadoEsperadoDao($this->getDoctrine());                      
+           $resultAux=$resultDao->getResulEspera($id);         
+           $resultadoresEspe=$resultAux->getResultadore();
+           $numfilas=count($resultadoresEspe);  
+           $resultadoreEspec=new Resultadore();
+           $i=0;
+           $programadoPrimerTrimestre=0;
+           $programadoSegundoTrimestre=0;
+           
+        foreach ($resultadoresEspe as $resultadoreEspec) { 
+            
+            $trimestre=$resultadoreEspec->getResultadoreTrimestre();
+            if($trimestre==1){
+                $programadoPrimerTrimestre=$resultadoreEspec->getResultadoreProgramado();
+            } 
+            
+             if($trimestre==2){
+                $programadoSegundoTrimestre=$resultadoreEspec->getResultadoreProgramado();
+            } 
+            
+        }
+           
+        
+        
+        
+           
                
         return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:EditarResultadoEsperado.html.twig', 
-                array( 'opciones' => $opciones,'idfila' => $idfila,'descripcion' => $objetivosEspec,'idResultado' => $id,
+                array( 'opciones' => $opciones,'idfila' => $idfila,'descripcion' => $objetivosEspec,'idfilaResultado' => $id,
                     'resultadoEsperadoDescrp' => $resultadoEsperadoDescrp
                     ,'resultadoEsperadoIndicador' => $resultadoEsperadoIndicador
                     ,'resultadoEsperadoMedioVerificacion' => $resultadoEsperadoMedioVerificacion
@@ -317,6 +371,8 @@ public function editarResultadosEsperadosAction()
                     ,'resultadoEsperadoMetaAnual' => $resultadoEsperadoMetaAnual
                     ,'resultadoEsperadoTipoMeta' => $resultadoEsperadoTipoMeta
                     ,'resultadoEsperadoDescripcionMetaAnual' => $resultadoEsperadoDescripcionMetaAnual
+                    ,'trim1' => $programadoPrimerTrimestre
+                    ,'trim2' => $programadoSegundoTrimestre
                     ));
         
     }
@@ -341,9 +397,9 @@ public function editarResultadosEsperadosAction()
           
           
           
-           $resEspNomencl="pruebanomenc";
+               $resEspNomencl="pruebanomenc";
                $restmpcodigo=1;
-              $resEspEntidadControl=true;
+               $resEspEntidadControl=true;
               
               
           $objDao = new ResultadoEsperadoDao($this->getDoctrine());
@@ -358,12 +414,16 @@ public function editarResultadosEsperadosAction()
                                         $resEspEntidadControl,
                                         $resEspIndicador,
                                         $idobjetivo,
+                                        $medioverificacion,
                                         $id);            
          
-          
+          $objetivoAux=new ObjetivoEspecifico();
+           $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
+           $objetivoAux=$objetivoDao->getObjetEspecif($idfila);         
+           $objetivosEspec=$objetivoAux->getDescripcion();
                
         return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
-                array( 'opciones' => $opciones,'idfila' => $idfila));
+                array( 'opciones' => $opciones,'idfila' => $idfila,'descripcion' => $objetivosEspec));
         
     }
 

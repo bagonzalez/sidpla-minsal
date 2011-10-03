@@ -33,7 +33,7 @@ class Actividad
     /**
      * @var integer $idTipoMedVeri
      *
-     * @ORM\Column(name="tipmedver_codigo", type="integer")
+     * @ORM\Column(name="actividad_medioverificacion", type="string", length=50)
      */
     private $idTipoMedVeri;
 
@@ -80,6 +80,20 @@ class Actividad
 
 
     /**
+     * @var string $supuestosFactores
+     *
+     * @ORM\Column(name="actividad_supuestosfactores", type="string", length=300)
+     */
+    private $supuestosFactores;
+    
+    /**
+     * @var string $actIndicador
+     *
+     * @ORM\Column(name="actividad_indicador", type="string", length=150)
+     */
+    private $actIndicador;
+      
+    /**
      * Set idAct
      *
      * @param integer $idAct
@@ -122,7 +136,7 @@ class Actividad
     /**
      * Set idTipoMedVeri
      *
-     * @param integer $idTipoMedVeri
+     * @param string $idTipoMedVeri
      */
     public function setIdTipoMedVeri($idTipoMedVeri)
     {
@@ -132,7 +146,7 @@ class Actividad
     /**
      * Get idTipoMedVeri
      *
-     * @return integer 
+     * @return string 
      */
     public function getIdTipoMedVeri()
     {
@@ -257,5 +271,45 @@ class Actividad
     public function getActNomenclatura()
     {
         return $this->actNomenclatura;
+    }
+    
+     /**
+     * Set supuestosFactores
+     *
+     * @param string $supuestosFactores
+     */
+    public function setSupuestosFactores($supuestosFactores)
+    {
+        $this->supuestosFactores = $supuestosFactores;
+    }
+
+    /**
+     * Get supuestosFactores
+     *
+     * @return string 
+     */
+    public function getSupuestosFactores()
+    {
+        return $this->supuestosFactores;
+    }
+    
+      /**
+     * Set actIndicador
+     *
+     * @param string $actIndicador
+     */
+    public function setActIndicador($actIndicador)
+    {
+        $this->actIndicador = $actIndicador;
+    }
+
+    /**
+     * Get actIndicador
+     *
+     * @return string 
+     */
+    public function getActIndicador()
+    {
+        return $this->actIndicador;
     }
 }

@@ -99,9 +99,10 @@ class ResultadoEsperado
      */
     private $resEspIndicador;
 
-    
     /**
-     * @ORM\OneToMany(targetEntity="MedioVerificacion", mappedBy="idResulEspe")
+     * @var string $resEspIndicador
+     *
+     * @ORM\Column(name="resesp_medioverificacion", type="string", length=150)
      */
     protected $medioVerificacion;
     
@@ -109,6 +110,11 @@ class ResultadoEsperado
      * @ORM\OneToMany(targetEntity="Actividad", mappedBy="idResEsp")
      */
     protected $actividades;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="Resultadore", mappedBy="idResEsp")
+     */
+    protected $Resultadore;
 
     /**
      * Set idResEsp
@@ -352,25 +358,24 @@ class ResultadoEsperado
 
      public function __construct()
     {
-          $this->medioVerificacion= new ArrayCollection();
-        
-        
+      $this->actividades= new ArrayCollection();  
+      $this->Resultadore= new ArrayCollection();  
     }
     
     /**
      * Add medioVerificacion
      *
-     * @param MinSal\SidPla\GesObjEspBundle\Entity\MedioVerificacion $medioVerificacion
+     * @param strig $medioVerificacion
      */
-    public function addmedioVerificacion(\MinSal\SidPla\GesObjEspBundle\Entity\MedioVerificacion $medioVerificacion)
+    public function setmedioVerificacion($medioVerificacion)
     {
-        $this->medioVerificacion[] = $medioVerificacion;
+        $this->medioVerificacion = $medioVerificacion;
     }
 
     /**
      * Get medioVerificacion
      *
-     * @return Doctrine\Common\Collections\Collection 
+     * @return string 
      */
     public function getmedioVerificacion()
     {
@@ -386,6 +391,7 @@ class ResultadoEsperado
     public function addActividades(\MinSal\SidPla\GesObjEspBundle\Entity\Actividad $actividades)
     {
         $this->actividades[] = $actividades;
+        
     }
 
     /**
@@ -396,5 +402,26 @@ class ResultadoEsperado
     public function getActividades()
     {
         return $this->actividades;
+    }
+    
+    /**
+     * Add Resultadore
+     *
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\Resultadore $Resultadore
+     */
+    public function addResultadore(\MinSal\SidPla\GesObjEspBundle\Entity\Resultadore $Resultadore)
+    {
+        $this->Resultadore[] = $Resultadore;
+        
+    }
+
+    /**
+     * Get Resultadore
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getResultadore()
+    {
+        return $this->Resultadore;
     }
 }

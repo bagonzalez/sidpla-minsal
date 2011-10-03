@@ -14,7 +14,8 @@
 namespace MinSal\SidPla\GesObjEspBundle\EntityDao;
 
 use MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado;
-use MinSal\SidPla\GesObjEspBundle\Entity\MedioVerificacion;
+use MinSal\SidPla\GesObjEspBundle\Entity\Actividad;
+use MinSal\SidPla\GesObjEspBundle\Entity\Resultadore;
 
 class ResultadoEsperadoDao {
     //put your code here
@@ -64,6 +65,7 @@ class ResultadoEsperadoDao {
                                         $resEspEntidadControl,
                                         $resEspIndicador,
                                         $idobjetivo,
+                                        $medioverificacion,
                                         $id){  
           
    
@@ -79,39 +81,78 @@ class ResultadoEsperadoDao {
          $objResulesperado->setResEspResponsable($resEspResponsable);                         
          $objResulesperado->setResEspEntidadControl($resEspEntidadControl);
          $objResulesperado->setResEspIndicador($resEspIndicador);
-        
+        $objResulesperado->setmedioVerificacion($medioverificacion);
          
-         $this->em->flush();            
+         
+        $this->em->flush();            
          $matrizMensajes = array('El proceso de editar termino con exito');
  
          return $matrizMensajes;
    }
    
-   
-   public function agregarMedioVerificacion($descrpMedVeri,$idResultado) {
+   public function agregarActividad($idfilaResultado,
+                                       $tipometa,
+                                        $actividad,
+                                        $resEspNomencl,
+                                        $supuestosfactores,
+                                        $metaAnual,
+                                        $descripMetaAnual,
+                                        $responsable,
+                                        $indicador,
+                                        $medioverifindicador ){
          
       
-         $resultadoAux=new ResultadoEsperado();
-         $resultadoAux=$this->getResulEspera($idResultado); 
-            
-         $objMedVerif=new MedioVerificacion();
-         $objMedVerif->setMedVerfDescricion($descrpMedVeri);                         
-         $objMedVerif->setIdResulEspe($resultadoAux);
+           $resultadoAux=new ResultadoEsperado();
+           $resultadoAux=$this->getResulEspera($idfilaResultado); 
+     
+         $objActividad=new Actividad();
+         $objActividad->setIdTipoMeta($tipometa);                         
+         $objActividad->setActDescripcion($actividad);                         
+         $objActividad->setActNomenclatura($resEspNomencl);                         
+         $objActividad->setSupuestosFactores($supuestosfactores);                         
+         $objActividad->setActMetaAnual($metaAnual);                         
+         $objActividad->setActDescMetaAnu($descripMetaAnual);                         
+         $objActividad->setActResponsable($responsable);                         
+         $objActividad->setActIndicador($indicador);
+         $objActividad->setIdTipoMedVeri($medioverifindicador);
+         $objActividad->setIdResEsp($resultadoAux);
+                 
+         $resultadoAux->addActividades($objActividad);
 
-         
-         $resultadoAux->addmedioVerificacion($objMedVerif);
-
-         $this->em->persist($objMedVerif);
+         $this->em->persist($objActividad);
          $this->em->persist($resultadoAux);
          $this->em->flush();
         
         
-        $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ');
+       // $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ','Resultado'.$objResulesperado->getIdResEsp());
 
-        return $matrizMensajes;
+        return $objActividad->getIdAct();
     }
    
-   
+    
+    public function agregarResultadore($idResultadoEsp,$trimes,$trim) {
+         
+      
+           $resultadoAux=new ResultadoEsperado();
+           $resultadoAux=$this->getResulEspera($idResultadoEsp); 
+     
+         $objresultadore=new Resultadore();
+         $objresultadore->setResultadoreTrimestre($trimes);                         
+         $objresultadore->setResultadoreProgramado($trim);                         
+         $objresultadore->setIdResEsp($resultadoAux);                         
+         
+                 
+         $resultadoAux->addResultadore($objresultadore);
+
+         $this->em->persist($objresultadore);
+         $this->em->persist($resultadoAux);
+         $this->em->flush();
+        
+        
+       // $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ','Resultado'.$objResulesperado->getIdResEsp());
+
+        return $objresultadore->getIdResultadore();
+    }
    
 }
 

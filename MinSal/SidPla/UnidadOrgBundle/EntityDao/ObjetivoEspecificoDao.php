@@ -88,14 +88,15 @@ class ObjetivoEspecificoDao {
                                         $resEspResponsable,
                                         $resEspEntidadControl,
                                         $resEspIndicador,
-                                        $idObjetivo) {
+                                        $idObjetivo,
+                                        $medioverificacion) {
          
       
            $objetivoespecificoAux=new ObjetivoEspecifico();
            $objetivoespecificoAux=$this->getObjetEspecif($idObjetivo); 
-        $tipometa=1;
+       // $tipometa=1;
         
-      //  $resEspCondi="gfdsfsdf";
+     //  $resEspCondi="gfdsfsdf";
        // $resEspMetAnual=100;
        // $resEspDescMetAnual="ttttt";
        // $resEspResponsable="neto";
@@ -110,8 +111,9 @@ class ObjetivoEspecificoDao {
          $objResulesperado->setResEspResponsable($resEspResponsable);                         
          $objResulesperado->setResEspEntidadControl($resEspEntidadControl);
          $objResulesperado->setResEspIndicador($resEspIndicador);
+         $objResulesperado->setmedioVerificacion($medioverificacion);
          $objResulesperado->setIdObjEsp($objetivoespecificoAux);
-
+                 
          $objetivoespecificoAux->addResultadoEsperado($objResulesperado);
 
          $this->em->persist($objResulesperado);
@@ -119,9 +121,9 @@ class ObjetivoEspecificoDao {
          $this->em->flush();
         
         
-        $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ','Resultado'.$objResulesperado->getIdResEsp());
+       // $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ','Resultado'.$objResulesperado->getIdResEsp());
 
-        return $matrizMensajes;
+        return $objResulesperado->getIdResEsp();
     }
  
 }

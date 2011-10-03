@@ -1,0 +1,15 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %} Tipo Horario Medico{% endblock %}
+
+{% block body %}
+
+<h1 style='text-align: center;'>Tipo Horario Medico</h1>
+<table align="center">
+      <tr>
+     <td align="center">
+       {%include 'MinSalSidPlaRRMedicoBundle:TipoHorario:showTipoHorario.html.twig' %}
+     </td>
+   </tr>
+</table>   
+
+{% endblock %}

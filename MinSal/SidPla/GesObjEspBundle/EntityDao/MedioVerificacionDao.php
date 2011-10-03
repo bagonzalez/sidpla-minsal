@@ -13,6 +13,7 @@
 namespace MinSal\SidPla\GesObjEspBundle\EntityDao;
 
 use MinSal\SidPla\GesObjEspBundle\Entity\MedioVerificacion;
+use MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado;
 class MedioVerificacionDao {
     //put your code here
 
@@ -26,6 +27,10 @@ class MedioVerificacionDao {
         $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaGesObjEspBundle:MedioVerificacion');
     } 
     
+    public function getMedver($id) {	    
+        $MedEsp=$this->repositorio->find($id);
+        return $MedEsp;
+    }
     
     public function delMedVerif($id){            
 
@@ -53,7 +58,7 @@ class MedioVerificacionDao {
          $matrizMensajes = array('El proceso de editar termino con exito');
           return $matrizMensajes;
    }
-     
+           
 }
 
 ?>

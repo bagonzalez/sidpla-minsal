@@ -11,7 +11,7 @@
           });
            
            $('#agregar').click(function() {
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editandoResultadosEsperados') }}';
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_guardarActividades') }}';
              
           });
           
@@ -64,9 +64,13 @@
                     </tr>
                     <tr>
                         <td >Indicador:</td>
-                        <td colspan="3" ><input size="100%" name="Indicador" id="Indicador" ></input></td>
+                        <td colspan="3" ><input size="100%" name="indicador" id="indicador" ></input></td>
                     </tr>
                     
+                    <tr>
+                        <td >Medio Verificacion:</td>
+                        <td colspan="3" ><input size="100%" name="medioverifindicador" id="medioverifindicador" ></input></td>
+                    </tr>
                     <tr>
                         <td >Responsables:</td>
                         <td colspan="3" ><input size="100%" name="responsable" id="responsable" ></input></td>
