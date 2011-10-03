@@ -26,6 +26,8 @@ use MinSal\SidPla\UsersBundle\Entity\User;
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 
+use \PHPExcel_IOFactory;  
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -271,6 +273,8 @@ class AccionAdminCensoUsuarioController extends Controller{
     
      public function procesarPoblacionHumanaAction(){
          
+        $opciones=$this->getRequest()->getSession()->get('opciones');
+         
         $paoElaboracion=$this->obtenerPaoElaboracionAction();       
         $censoPoblacion=$paoElaboracion->getCesopoblacion();
            
@@ -280,14 +284,35 @@ class AccionAdminCensoUsuarioController extends Controller{
         $i=0;
         $numfilas=count($poblacionHumana);         
         
+        /**	Load the quadratic equation solver worksheet into memory			**/
+	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
+        
        
         foreach ($poblacionHumana as $regPobHumana) { 
-           //$regPobHumana->
+           $regPobHumana->getIdPobHum();
+           $regPobHumana->getCategoriaCenso()->getDescripcionCategoria();
+           
 
         }
-         
-         
+                $objPHPExcel->setActiveSheetIndex(3);
+		/**	Set our A, B and C values			**/
+		$objPHPExcel->getActiveSheet()->setCellValue('D22', 2);
+		$objPHPExcel->getActiveSheet()->setCellValue('D24',1);
+		$objPHPExcel->getActiveSheet()->setCellValue('D26', 1);
+                
+                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+                $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
 
+		
+		//$callStartTime = microtime(true);
+                
+		//echo $objPHPExcel->getActiveSheet()->getCell('B5')->getCalculatedValue().'<br />';
+		//echo $objPHPExcel->getActiveSheet()->getCell('B6')->getCalculatedValue().'<br />';
+		//$callEndTime = microtime(true);
+		//$callTime = $callEndTime - $callStartTime;
+         
+                return $this->render('MinSalSidPlaCensoBundle:CensoUsuario:manttCensoUsuario.html.twig'
+                , array('opciones' => $opciones,));      
      }
     
     

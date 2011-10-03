@@ -340,18 +340,19 @@ public function editarResultadosEsperadosAction()
            $numfilas=count($resultadoresEspe);  
            $resultadoreEspec=new Resultadore();
            $i=0;
-           $trim1=0;
+           $programadoPrimerTrimestre=0;
+           $programadoSegundoTrimestre=0;
+           
         foreach ($resultadoresEspe as $resultadoreEspec) { 
             
-            $trim1=$resultadoreEspec->getResultadoreProgramado();
-             if(1==1){   
-              $trim1=$resultadoreEspec->getResultadoreProgramado();          
-             }
+            $trimestre=$resultadoreEspec->getResultadoreTrimestre();
+            if($trimestre==1){
+                $programadoPrimerTrimestre=$resultadoreEspec->getResultadoreProgramado();
+            } 
             
-            //if($resultadoreEspec->getIdResEsp()==$resultadoAux->getIdResEsp()){   
-              //$trim1=$resultadoreEspec->getResultadoreProgramado();          
-             //}
-            
+             if($trimestre==2){
+                $programadoSegundoTrimestre=$resultadoreEspec->getResultadoreProgramado();
+            } 
             
         }
            
@@ -370,7 +371,8 @@ public function editarResultadosEsperadosAction()
                     ,'resultadoEsperadoMetaAnual' => $resultadoEsperadoMetaAnual
                     ,'resultadoEsperadoTipoMeta' => $resultadoEsperadoTipoMeta
                     ,'resultadoEsperadoDescripcionMetaAnual' => $resultadoEsperadoDescripcionMetaAnual
-                    ,'trim1' => $trim1
+                    ,'trim1' => $programadoPrimerTrimestre
+                    ,'trim2' => $programadoSegundoTrimestre
                     ));
         
     }

@@ -16,8 +16,8 @@ use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 use MinSal\SidPla\PaoBundle\Entity\Pao;
 use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 
-use Java;
-use JavaClass;
+use \Java;
+use \JavaClass;
 
 /*
  * To change this template, choose Tools | Templates
