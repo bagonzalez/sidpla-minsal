@@ -12,7 +12,7 @@
            
           });
            $('#guardar').click(function() {
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_guardarResultadosEsperados') }}';
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editandoActividades') }}';
             });
            
           
@@ -50,7 +50,7 @@
                         <td colspan="4" align="center" >Datos de la Actividad <br><br></td>
                     </tr>
                     
-                    <tr>
+                   <tr>
                         <td >Objetivo:</td>
                         <td colspan="3" ><textarea readonly="readonly" rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
                     </tr>
@@ -60,35 +60,39 @@
                     </tr>
                     <tr>
                         <td >Actividad:</td>
-                        <td colspan="3" ><input size="100%" name="actividad" id="actividad" ></input></td>
+                        <td colspan="3" ><input size="100%" name="actividad" id="actividad" value="{{actividad}}" ></input></td>
                     </tr>
                     <tr>
                         <td >Indicador:</td>
-                        <td colspan="3" ><input size="100%" name="Indicador" id="Indicador" ></input></td>
+                        <td colspan="3" ><input size="100%" name="indicador" id="indicador" value="{{indicador}}" ></input></td>
                     </tr>
                     
                     <tr>
+                        <td >Medio Verificacion:</td>
+                        <td colspan="3" ><input size="100%" name="medioverifindicador" id="medioverifindicador" value="{{medioverifi}}" ></input></td>
+                    </tr>
+                    <tr>
                         <td >Responsables:</td>
-                        <td colspan="3" ><input size="100%" name="responsable" id="responsable" ></input></td>
+                        <td colspan="3" ><input size="100%" name="responsable" id="responsable" value="{{responsable}}"></input></td>
                     </tr>
                     
                     <tr>
                         <td >Supuestos Factores:</td>
-                        <td colspan="3" ><input size="100%" name="supuestosfactores" id="supuestosfactores" ></input></td>
+                        <td colspan="3" ><input size="100%" name="supuestosfactores" id="supuestosfactores" value="{{supuestos}}"  ></input></td>
                     </tr>
                      <tr>
                         <td >Meta anual:</td>
-                        <td colspan="3" ><input size="20%" name="metaAnual" id="metaAnual" ></input><select name="selectipometa"  id='selectipometa'><option value='0'>Seleccione el tipo de meta</option></select></td>
+                        <td colspan="3" ><input size="20%" name="metaAnual" id="metaAnual"value="{{metaanual}}" ></input><select name="selectipometa"  id='selectipometa'><option value='0'>Seleccione el tipo de meta</option></select></td>
                     </tr>
                     <tr>
                         <td >Descripcion Meta anual:</td>
-                        <td colspan="3" ><input size="100%" name="descripMetaAnual" id="descripMetaAnual" ></input></td>
+                        <td colspan="3" ><input size="100%" name="descripMetaAnual" id="descripMetaAnual" value="{{descmetaanual}}" ></input></td>
                     </tr>
                    
                     
                     <tr>
                         <td >fecha inicio:</td>
-                        <td colspan="3" ><input size="100%" name="fechainicio" id="fechainicio" ></input></td>
+                        <td colspan="3" ><input size="100%" name="fechainicio" id="fechainicio"  ></input></td>
                     </tr>
                       <tr>
                         <td >fecha fin:</td>
@@ -118,7 +122,8 @@
                        
                            <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
                            <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
-                        <td colspan="3" align="center" ><br><br><button type="submmit" id="guardar"  >Guardar</button>
+                           <input type='hidden' name='idfilaActividad' id="idfilaActividad" value='{{idfilaActividad}}' /> 
+                           <td colspan="3" align="center" ><br><br><button type="submmit" id="guardar"  >Guardar</button>
                             
                         </td> 
                         <td colspan="1" align="center" ><br><br><button type="submmit" name="regresar" id="regresar"  >Regresar</button>

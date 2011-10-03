@@ -63,7 +63,7 @@
                     </tr>
                     <tr>
                         <td >Medio de Verificacion:</td>
-                        <td colspan="3" ><input size="100%" name="medioverificacion" id="medioverificacion"  value="" ></input></td>
+                        <td colspan="3" ><input size="100%" name="medioverificacion" id="medioverificacion"  value="{{resultadoEsperadoMedioVerificacion}}" ></input></td>
                     </tr>
                     <tr>
                         <td >Responsables:</td>
@@ -94,7 +94,7 @@
                         <TD WIDTH="25%" align="center">4to Trimestre</TD>
                          </tr>
                         <tr>
-                        <TD WIDTH="25%"align="center"> <input size="25%" name="trimUno" id="trimUno" ></input></TD>
+                        <TD WIDTH="25%"align="center"> <input size="25%" name="trimUno" id="trimUno" value='{{trim1}}' ></input></TD>
                         <TD WIDTH="25%"align="center"><input size="25%" name="trimDos" id="trimDos" ></input></TD>
                         <TD WIDTH="25%"align="center"><input size="25%" name="trimTres" id="trimTres" ></input></TD>
                         <TD WIDTH="25%"align="center"><input size="25%" name="trimCuatro" id="trimCuatro" ></input></TD>
@@ -103,7 +103,7 @@
                        
                        <tr>  
                            <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
-                           <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='' /> 
+                           <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
                     <td colspan="3" align="center" ><br><br><button type="submmit" id="agregar"  >Guardar</button>
                            
                         </td> 
