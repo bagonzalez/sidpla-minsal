@@ -26,7 +26,8 @@ use MinSal\SidPla\UsersBundle\Entity\User;
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 
-use \PHPExcel_IOFactory;  
+use \PHPExcel_IOFactory; 
+use \PHPExcel_Cell;
 
 /*
  * To change this template, choose Tools | Templates
@@ -286,20 +287,86 @@ class AccionAdminCensoUsuarioController extends Controller{
         
         /**	Load the quadratic equation solver worksheet into memory			**/
 	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
+        $objPHPExcel->setActiveSheetIndex(3);
+        $objWorksheet = $objPHPExcel->getActiveSheet();
         
-       
+        $highestRow = $objWorksheet->getHighestRow(); // e.g. 10
+        $highestColumn = $objWorksheet->getHighestColumn(); // e.g 'F'
+
+        $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
+
+        $fila=0;
+        
         foreach ($poblacionHumana as $regPobHumana) { 
            $regPobHumana->getIdPobHum();
-           $regPobHumana->getCategoriaCenso()->getDescripcionCategoria();
+           $nombreCatego=$regPobHumana->getCategoriaCenso()->getDescripcionCategoria();
+            
+           $col = 0;
+           
+           for ($row = 1; $row <= $highestRow; ++$row) {             
+               $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;
+               if($nombreCatego==$nombreMax){
+                   $fila=$row;                   
+               }
+           }
+           
+           $area=$regPobHumana->getPobHumArea();
+           $sexo=$regPobHumana->getPobhumsexo();
+           $resultado=$regPobHumana->getPobHumCant();
+           
+           
+           if($area=='URBANA'){               
+               if($sexo=='H'){
+                   if($resultado>0)
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $fila, $resultado);
+               }
+               
+               if($sexo=='M'){
+                   if($resultado>0)
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $fila, $resultado);
+               }
+           }
+           
+           if($area=='RURAL'){               
+               if($sexo=='H'){
+                   if($resultado>0)
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(9, $fila, $resultado);
+               }
+               
+               if($sexo=='M'){
+                   if($resultado>0)
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $fila, $resultado);
+               }
+           }
+           
+           if($area=='PROMOTOR'){               
+               if($sexo=='H'){
+                   if($resultado>0)
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(23, $fila, $resultado);
+               }
+               
+               if($sexo=='M'){
+                   if($resultado>0)
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(25, $fila, $resultado);
+               }
+           }
+           
            
 
         }
-                $objPHPExcel->setActiveSheetIndex(3);
-		/**	Set our A, B and C values			**/
-		$objPHPExcel->getActiveSheet()->setCellValue('D22', 2);
-		$objPHPExcel->getActiveSheet()->setCellValue('D24',1);
-		$objPHPExcel->getActiveSheet()->setCellValue('D26', 1);
-                
+        
+            
+           
+           
+         
+        
+        	/**	Set our A, B and C values			**/
+		//$objPHPExcel->getActiveSheet()->setCellValue('D22', 2);
+		//$objPHPExcel->getActiveSheet()->setCellValue('D24',1);
+		//$objPHPExcel->getActiveSheet()->setCellValue('D26', 1);
+        
+         
+	        
                 $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
                 $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
 
