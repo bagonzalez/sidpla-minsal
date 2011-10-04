@@ -9,7 +9,7 @@
               
         var myGrid = $('#tabdptouni');        
         myGrid.jqGrid({ 
-          url: 'consultarDeptoUniJSON',
+          url: '{{ path('MinSalSidPlaDepUniBundle_consultarDeptoUniJSON') }}',
           datatype:'json',
           altRows:true,
           colNames:['Codigo','Nombre', 'Cantidad de Personas'],
@@ -86,8 +86,7 @@
     <table align="center">
         <tr>
             <td align="center">
-                <table id="tabdptouni" class="scroll" align="center"></table>
-                <div id="pagerdptouni" class="scroll"></div>
+                {%include 'MinSalSidPlaDepUniBundle:DepartamentoUni:gridDeptoUni.html.twig' %}
             </td>
         </tr>
         <tr>

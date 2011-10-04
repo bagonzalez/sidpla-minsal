@@ -8,7 +8,15 @@ use MinSal\SidPla\RRMedicoBundle\Entity\ResulPrograRRMed;
 use MinSal\SidPla\RRMedicoBundle\EntityDao\ResulPrograRRMedDao;
 use MinSal\SidPla\RRMedicoBundle\EntityDao\TipoHorarioDao;
 
+//Para saber que unidad organizativa a la que pertenece y mostrar los periodos asociados
+use MinSal\SidPla\UsersBundle\Entity\User;
+use MinSal\SidPla\AdminBundle\Entity\Empleado;
+use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
+use MinSal\SidPla\PaoBundle\Entity\Pao;
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;  
+
 class AccionRRMedicoResulPrograRRMedController extends Controller {
+    
     public function consultarResulPrograRRMedAction() {
      $opciones = $this->getRequest()->getSession()->get('opciones');
   
@@ -23,10 +31,15 @@ class AccionRRMedicoResulPrograRRMedController extends Controller {
     
      public function consultarResulPrograRRMedJSONAction(){
         
-        $resulPrograRRMedDao=new ResulPrograRRMedDao($this->getDoctrine());
-        $resulPrograRRMed=$resulPrograRRMedDao->getResulPrograRRMed();
-        
+       $anio = $this->getRequest()->get('anio');
 
+        if ($anio == 0)
+            $anio = date("Y");
+
+        $pao = $this->obtenerPao($anio);
+
+        $resulPrograRRMed = $pao->getProgramacionesRRMed();
+       
         $numfilas = count($resulPrograRRMed);
 
         $aux = new ResulPrograRRMed();
@@ -92,6 +105,24 @@ class AccionRRMedicoResulPrograRRMedController extends Controller {
         }
 
         return new Response("{sc:true,msg:''}");
+    }
+    
+    
+    public function obtenerPao($anio) {
+
+        $user = new User();
+        $empleado = new Empleado();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $empleado = $user->getEmpleado();
+        $idUnidad = $empleado->getUnidadOrganizativa()->getIdUnidadOrg();
+        $unidaDao = new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad = new UnidadOrganizativa();
+        $unidad = $unidaDao->getUnidadOrg($idUnidad);
+
+        $pao = new Pao();
+        $pao = $unidaDao->getPaoAnio($idUnidad, $anio);
+
+        return $pao;
     }
 
 }

@@ -88,15 +88,18 @@ class RecursoHumanoDao {
     public function cuantoRRHH($codDepto) {
              
         $rsm = new ResultSetMapping;
-        //$rsm->addEntityResult('MinSalSidPlaDepUniBundle:RecursoHumano', 'rh');
-        //$rsm->addScalarResult('rechum_cantidad', 'cantidad');
-        $query = $this->em->createNativeQuery('SELECT sum(rechum_cantidad)
+        $rsm->addScalarResult('cantidad', 'cantidad');
+        $query = $this->em->createNativeQuery('SELECT sum(rechum_cantidad) cantidad 
                                                FROM sidpla_recursohumano
                                                WHERE depuni_codigo=?
                                                GROUP BY depuni_codigo', $rsm);
         $query->setParameter(1, $codDepto);
-                
-        return $query->getResult();
+        
+        $x=$query->getResult();
+        if (count($x)==0)
+            return 0;
+        else
+            return $x[0]['cantidad'];
     }
 
 }

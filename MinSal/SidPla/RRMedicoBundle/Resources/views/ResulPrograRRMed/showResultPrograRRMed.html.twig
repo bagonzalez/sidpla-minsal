@@ -7,7 +7,7 @@ $(document).ready(function(){
      url: 'consultarResulPrograRRMedJSON',
      datatype:'json',
      altRows:true,
-     colNames:['Codigo','Horario de Recurso Medico', 'Cantidad', 'Total Horas','Total Minutos','Total Consultas Diarias'], 
+     colNames:['Codigo','Horario de Recurso Medico', 'Cantidad', 'Total Horas','Total Minutos','Total Consultas Diarias', 'Acciones'], 
      colModel:[ 
         {name:'codigo',index:'codigo', width:50, editable: false,align:'center'},
         { name:'horarioRM', index: 'horarioRM', width:250,editable:true,editoptions:{size:30},edittype:"select",
@@ -15,7 +15,8 @@ $(document).ready(function(){
         {name:'cantidad',index:'cantidad', width:90, editable: true,align:'center'},
         {name:'totalHoras',index:'totalHoras', width:90, editable: false,align:'center'},
         {name:'totalMin',index:'totalMin', width:90, editable: false,align:'center'},
-        {name:'totalConsultas',index:'totalConsultas', width:90, editable: false,align:'center'}
+        {name:'totalConsultas',index:'totalConsultas', width:120, editable: false,align:'center'},
+        {name:'act',index:'act', width:100,sortable:false,align:'center'}           
      ],
      
      rowNum:10,
