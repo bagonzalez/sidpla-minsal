@@ -295,7 +295,7 @@ class AccionAdminCensoUsuarioController extends Controller{
 
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
 
-        $fila=0;
+        
         
         foreach ($poblacionHumana as $regPobHumana) { 
            $regPobHumana->getIdPobHum();
@@ -303,11 +303,23 @@ class AccionAdminCensoUsuarioController extends Controller{
             
            $col = 0;
            
-           for ($row = 1; $row <= $highestRow; ++$row) {             
+           /*for ($row = 1; $row <= $highestRow; ++$row) {             
                $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;
                if($nombreCatego==$nombreMax){
                    $fila=$row;                   
                }
+           }*/
+           $row=1;
+           $fila=0;
+           
+           while ($row <= $highestRow && $fila==0 ) {             
+               $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;
+               
+               if($nombreCatego==$nombreMax){
+                   $fila=$row;                   
+               }
+               
+               ++$row;
            }
            
            $area=$regPobHumana->getPobHumArea();
@@ -350,37 +362,134 @@ class AccionAdminCensoUsuarioController extends Controller{
                     $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(25, $fila, $resultado);
                }
            }
-           
-           
 
         }
         
-            
-           
-           
-         
-        
-        	/**	Set our A, B and C values			**/
-		//$objPHPExcel->getActiveSheet()->setCellValue('D22', 2);
-		//$objPHPExcel->getActiveSheet()->setCellValue('D24',1);
-		//$objPHPExcel->getActiveSheet()->setCellValue('D26', 1);
-        
-         
-	        
-                $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-                $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
+                
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
 
 		
-		//$callStartTime = microtime(true);
-                
-		//echo $objPHPExcel->getActiveSheet()->getCell('B5')->getCalculatedValue().'<br />';
-		//echo $objPHPExcel->getActiveSheet()->getCell('B6')->getCalculatedValue().'<br />';
-		//$callEndTime = microtime(true);
-		//$callTime = $callEndTime - $callStartTime;
+        //$callStartTime = microtime(true);
+
+        //echo $objPHPExcel->getActiveSheet()->getCell('B5')->getCalculatedValue().'<br />';
+        //echo $objPHPExcel->getActiveSheet()->getCell('B6')->getCalculatedValue().'<br />';
+        //$callEndTime = microtime(true);
+        //$callTime = $callEndTime - $callStartTime;
          
-                return $this->render('MinSalSidPlaCensoBundle:CensoUsuario:manttCensoUsuario.html.twig'
-                , array('opciones' => $opciones,));      
+        return $this->render('MinSalSidPlaCensoBundle:CensoUsuario:manttCensoUsuario.html.twig'
+        , array('opciones' => $opciones,));      
      }
+     
+      public function procesarInfRelevanteAction(){
+        $opciones=$this->getRequest()->getSession()->get('opciones');         
+        $paoElaboracion=$this->obtenerPaoElaboracionAction();       
+        $censoPoblacion=$paoElaboracion->getCesopoblacion();
+        
+        $infRelevante=$censoPoblacion->getInformacionRelevante();
+        $regInfRel=new InformacionRelevante();
+        
+        /**	Load the quadratic equation solver worksheet into memory			**/
+	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
+        $objPHPExcel->setActiveSheetIndex(3);
+        $objWorksheet = $objPHPExcel->getActiveSheet();
+        
+        $highestRow = $objWorksheet->getHighestRow(); // e.g. 10
+        $highestColumn = $objWorksheet->getHighestColumn(); // e.g 'F'
+
+        $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
+
+        $fila=0;
+        
+        
+        foreach ($infRelevante as $regInfRel) {
+            $nombreCatego=$regInfRel->getCategoriaCenso()->getDescripcionCategoria();
+            
+             $col = 0;
+             $row=1;
+             $fila=0;
+            
+            while ($row <= $highestRow && $fila==0 ) {             
+               $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;
+               
+               if($nombreCatego==$nombreMax){
+                   $fila=$row;                   
+               }
+               
+               ++$row;
+           }
+           
+           $resultado=$regInfRel->getInfRelCant();
+           if($resultado>0)
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(7, $fila, $resultado);
+
+        }
+        
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
+         return $this->render('MinSalSidPlaCensoBundle:CensoUsuario:manttCensoUsuario.html.twig'
+        , array('opciones' => $opciones,));    
+  }
+  
+   public function procesarInfComplementariaAction(){
+        $opciones=$this->getRequest()->getSession()->get('opciones');         
+        $paoElaboracion=$this->obtenerPaoElaboracionAction();       
+        $censoPoblacion=$paoElaboracion->getCesopoblacion();
+        
+        $infComplementaria=$censoPoblacion->getInformacionComplementaria();
+        $regInfComple=new InformacionComplementaria();
+        
+        /**	Load the quadratic equation solver worksheet into memory			**/
+	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
+        $objPHPExcel->setActiveSheetIndex(3);
+        $objWorksheet = $objPHPExcel->getActiveSheet();
+        
+        $highestRow = $objWorksheet->getHighestRow(); // e.g. 10
+        $highestColumn = $objWorksheet->getHighestColumn(); // e.g 'F'
+
+        $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
+
+        $fila=0;
+        
+        
+        foreach ($infComplementaria as $regInfComple) {
+            $nombreCatego=$regInfComple->getCategoriaCenso()->getDescripcionCategoria();
+            
+             $col = 0;
+             $row=1;
+             $fila=0;
+            
+            while ($row <= $highestRow && $fila==0 ) {             
+               $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;
+               
+               if($nombreCatego==$nombreMax){
+                   $fila=$row;                   
+               }
+               
+               ++$row;
+           }
+           
+           $resultado=$regInfComple->getCantidadInfoComp();
+           $area=$regInfComple->getAreaInfoComp();
+           
+            if($area=='URBANA'){               
+                if($resultado>0)
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $fila, $resultado);
+               
+           }
+           
+           if($area=='RURAL'){                              
+                if($resultado>0)
+                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $fila, $resultado);               
+           }
+
+        }
+        
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
+         return $this->render('MinSalSidPlaCensoBundle:CensoUsuario:manttCensoUsuario.html.twig'
+        , array('opciones' => $opciones,));    
+  }
     
     
    public function manttPoblacionHumanaEdicionAction(){
