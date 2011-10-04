@@ -6,32 +6,35 @@
  */
 
 /**
- * Description of ResultadoreDao
+ * Description of ResulActividadDao
  *
  * @author edwin
  */
+
 namespace MinSal\SidPla\GesObjEspBundle\EntityDao;
 
-use MinSal\SidPla\GesObjEspBundle\Entity\Resultadore;
-class ResultadoreDao {
+use MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad;
+class ResulActividadDao {
     //put your code here
 
-    var $doctrine;
+    
+     var $doctrine;
     var $repositorio;
     var $em;    
 	
     function __construct($doctrine){ 
         $this->doctrine=$doctrine;      	
         $this->em=$this->doctrine->getEntityManager();
-        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaGesObjEspBundle:Resultadore');
+        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaGesObjEspBundle:ResulActividad');
     } 
     
-    public function getResultadore($id) {	    
+    
+     public function getResulActividad($id) {	    
         $ResultEsp=$this->repositorio->find($id);
         return $ResultEsp;
     }
     
-    public function delResultadore($id){            
+    public function delResulActividad($id){            
 
         $Res=$this->repositorio->find($id);
 
@@ -47,12 +50,13 @@ class ResultadoreDao {
         return $matrizMensajes;
     }
     
-     public function editresultadore($trim,$id){
+     public function editResulActividad($trim,$id,$fechainicio,$fechafin){
          
-         $objResultadore=new Resultadore();
+         $objResultadore=new ResulActividad();
          $objResultadore=$this->repositorio->find($id);
-         $objResultadore->setResultadoreProgramado($trim);                         
-        
+         $objResultadore->setResulActProgramado($trim);                         
+         $objResultadore->setResulActFechaInicio($fechainicio);
+         $objResultadore->setResulActFechaFin($fechafin);
          $this->em->flush();            
          $matrizMensajes = array('El proceso de editar termino con exito');
  

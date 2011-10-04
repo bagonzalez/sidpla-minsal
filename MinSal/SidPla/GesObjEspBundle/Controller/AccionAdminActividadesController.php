@@ -25,6 +25,9 @@ use MinSal\SidPla\GesObjEspBundle\EntityDao\ResultadoEsperadoDao;
 use MinSal\SidPla\GesObjEspBundle\Entity\Actividad;
 use MinSal\SidPla\GesObjEspBundle\EntityDao\ActividadDao;
 
+use MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad;
+use MinSal\SidPla\GesObjEspBundle\EntityDao\ResulActividadDao;
+
 
 class AccionAdminActividadesController extends Controller{
     //put your code here
@@ -136,6 +139,7 @@ class AccionAdminActividadesController extends Controller{
           $request=$this->getRequest();        
           $idfila=$request->get('idfila');
           $idfilaResultado=$request->get('idfilaResultado');  //representa en este caso el codigo del resultado esperado 
+         // $idfilaActividad=$request->get('idfilaActividad'); 
           
           $actividad=$request->get('actividad');
           $indicador=$request->get('indicador');
@@ -156,8 +160,8 @@ class AccionAdminActividadesController extends Controller{
                $trimDos=$request->get('trimDos');
                $trimTres=$request->get('trimTres');
                $trimCuatro=$request->get('trimCuatro');
-           
-                                             
+               $fechainicio=$request->get('fechainicio');
+               $fechafin=$request->get('fechafin');                              
                
             // $selectipometa=1;  
            
@@ -175,9 +179,27 @@ class AccionAdminActividadesController extends Controller{
                
            
           
-          //aqui tiene que ir el codigo para guardar lo programado el sidpla_resultadore
+          //aqui tiene que ir el codigo para guardar lo programado el sidpla_resultadoactividad
           
+          $trimesuno=1;
+           $trimesdos=2;
+           $trimestres=3;
+           $trimescuatro=4;
+           
           
+          //inicia proceso de guardar el valor de lo programado en sidpla_resultadore
+           $resultadoDao = new ActividadDao($this->getDoctrine());                      
+           $resultadoDao->agregarResulActividad($idActividad,$trimesuno,$trimUno,$fechainicio,$fechafin); 
+          
+           $resultadoDao = new ActividadDao($this->getDoctrine());                      
+           $resultadoDao->agregarResulActividad($idActividad,$trimesdos,$trimDos,$fechainicio,$fechafin); 
+           
+           $resultadoDao = new ActividadDao($this->getDoctrine());                      
+           $resultadoDao->agregarResulActividad($idActividad,$trimestres,$trimTres,$fechainicio,$fechafin); 
+           
+           $resultadoDao = new ActividadDao($this->getDoctrine());                      
+           $resultadoDao->agregarResulActividad($idActividad,$trimescuatro,$trimCuatro,$fechainicio,$fechafin); 
+       
           
           
                   
@@ -232,7 +254,71 @@ class AccionAdminActividadesController extends Controller{
            $metaanual=$actividadAux->getActMetaAnual();
            $descmetaanual=$actividadAux->getActDescMetaAnu();
            $tipometa=$actividadAux->getIdTipoMeta();
-           //$fechainicio=$actividadAux->get;
+           
+           
+           
+           //inicia el proceso  de recuperar los atos de la tabla resultadore
+           $resultAux=new Actividad();
+           $resultDao = new ActividadDao($this->getDoctrine());                      
+           $resultAux=$resultDao->getActividad($idfilaActividad);         
+           $resultaEspe=$resultAux->getResulAct();
+           $numfilas=count($resultaEspe);  
+           $resultadoreEspec=new ResulActividad();
+           $i=0;
+           $programadoPrimerTrimestre=0;
+           $programadoSegundoTrimestre=0;
+           $programadoTercerTrimestre=0;
+           $programadoCuartoTrimestre=0;
+           $iduno=0;
+           $iddos=0;
+           $idtres=0;
+           $idcuatro=0;
+           $fechainiciotrimuno=0;
+           $fechainiciotrimdos=0;
+           $fechainiciotrimtres=0;
+           $fechainiciotrimcuatro=0;
+           $fechafintrimuno=0;
+           $fechafintrimdos=0;
+           $fechafintrimtres=0;
+           $fechafintrimcuatro=0;
+           
+           
+        foreach ($resultaEspe as $resultadoreEspec) { 
+            
+            $trimestre=$resultadoreEspec->getResulActTrimestre();
+            if($trimestre==1){
+                $programadoPrimerTrimestre=$resultadoreEspec->getResulActProgramado();
+                $fechainiciotrimuno=$resultadoreEspec->getResulActFechaInicio();
+                $fechafintrimuno=$resultadoreEspec->getResulActFechaFin();
+                                                
+                $iduno=$resultadoreEspec->getIdResulAct();
+                
+            } 
+            
+             if($trimestre==2){
+                $programadoSegundoTrimestre=$resultadoreEspec->getResulActProgramado();
+                //$fechainiciotrimdos=$resultadoreEspec->getResulActFechaInicio();
+                //$fechafintrimdos=$resultadoreEspec->getResulActFechaFin();
+                $iddos=$resultadoreEspec->getIdResulAct();
+            } 
+            
+             if($trimestre==3){
+                $programadoTercerTrimestre=$resultadoreEspec->getResulActProgramado();
+                // $fechainiciotrimtres=$resultadoreEspec->getResulActFechaInicio();
+                // $fechafintrimtres=$resultadoreEspec->getResulActFechaFin();
+                $idtres=$resultadoreEspec->getIdResulAct();
+            } 
+            
+             if($trimestre==4){
+                $programadoCuartoTrimestre=$resultadoreEspec->getResulActProgramado();
+               // $fechainiciotrimcuatro=$resultadoreEspec->getResulActFechaInicio();
+               // $fechafintrimcuatro=$resultadoreEspec->getResulActFechaFin();
+                $idcuatro=$resultadoreEspec->getIdResulAct();
+            } 
+            
+        }
+           
+           
            
         
         
@@ -252,6 +338,15 @@ class AccionAdminActividadesController extends Controller{
                     'tipometa'=>$tipometa,
                     'descripcionResultado'=>$resultadoesperado,
                     'idfilaActividad'=>$idfilaActividad
+                    ,'trim1' => $programadoPrimerTrimestre
+                    ,'trim2' => $programadoSegundoTrimestre
+                    ,'trim3' => $programadoTercerTrimestre
+                    ,'trim4' => $programadoCuartoTrimestre
+                    ,'iduno' => $iduno
+                    ,'iddos' => $iddos
+                    ,'idtres' => $idtres
+                    ,'idcuatro' => $idcuatro
+                    
                     ));
         
     }
@@ -287,8 +382,12 @@ class AccionAdminActividadesController extends Controller{
                $trimTres=$request->get('trimTres');
                $trimCuatro=$request->get('trimCuatro');
            
-                                             
-               
+               $iduno=$request->get('iduno');
+               $iddos=$request->get('iddos');
+               $idtres=$request->get('idtres');
+               $idcuatro=$request->get('idcuatro');
+               $fechainicio=$request->get('fechainicio');                              
+               $fechafin=$request->get('fechafin');
             // $selectipometa=1;  
            
                $resultadoDao = new ActividadDao($this->getDoctrine());                      
@@ -303,7 +402,25 @@ class AccionAdminActividadesController extends Controller{
                                         $indicador,
                                         $medioverifindicador,
                                         $id); 
-                          
+            
+          
+          
+         //inicia proceso de guardar el valor de lo programado en sidpla_resultadore
+           $resultadoDao = new ResulActividadDao($this->getDoctrine());                      
+           $resultadoDao->editResulActividad($trimUno,$iduno,$fechainicio,$fechafin,$id); 
+          
+           $resultadoDao = new ResulActividadDao($this->getDoctrine());                      
+           $resultadoDao->editResulActividad($trimDos,$iddos,$fechainicio,$fechafin,$id); 
+           
+           $resultadoDao = new ResulActividadDao($this->getDoctrine());                      
+           $resultadoDao->editResulActividad($trimTres,$idtres,$fechainicio,$fechafin,$id); 
+           
+           $resultadoDao = new ResulActividadDao($this->getDoctrine());                      
+           $resultadoDao->editResulActividad($trimCuatro,$idcuatro,$fechainicio,$fechafin,$id); 
+          
+          
+          
+          
          
           $objetivoAux=new ObjetivoEspecifico();
            $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
@@ -316,11 +433,7 @@ class AccionAdminActividadesController extends Controller{
         $resultadoAux=$resultadoDao->getResulEspera($idfilaResultado);         
         $resultadoesperado=$resultadoAux->getResEspeDesc();
           
-       //obteniendo el resultado para mandarlo a la plantilla
-        $resultadoAux=new ResultadoEsperado();
-        $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
-        $resultadoAux=$resultadoDao->getResulEspera($idfilaResultado);         
-        $resultadoesperado=$resultadoAux->getResEspeDesc();
+      
                 
            
         return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:manttActividades.html.twig', 

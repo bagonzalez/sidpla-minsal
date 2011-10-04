@@ -5,7 +5,7 @@
 <script type="text/javascript">        
       $(document).ready(function(){
           
-           
+          
            $('#regresar').click(function() {
             this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}';
            
@@ -16,19 +16,14 @@
              
           });
           $('#tabs').tabs();
-      //jAlert('This is a custom alert box', 'Alert Dialog');
-         $.getJSON('consultarTipoMeta', function(data) {
-                  var i=0;
-                  $.each(data, function(key, val) {
-                      if(key=='rows'){
-                        $.each(val, function(id, registro){
-                            $('#selectipometa').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
-                        });                    
-                      }
-                  });
-          });
-    
-
+      
+         
+         if('{{resultadoEsperadoTipoMeta}}'==1){
+            $('#selectipometa').val('1');
+          }
+          if('{{resultadoEsperadoTipoMeta}}'==2){
+             $('#selectipometa').val('2');
+         }
 });
       
 </script>
@@ -75,7 +70,7 @@
                     </tr>
                     <tr>
                         <td >Meta anual:</td>
-                        <td colspan="3" ><input size="20%" name="metaAnual" id="metaAnual" value="{{resultadoEsperadoMetaAnual}}" ></input><select name="selectipometa"  id='selectipometa'><option value='0'>Seleccione el tipo de meta</option></select></td>
+                        <td colspan="3" ><input size="20%" name="metaAnual" id="metaAnual" value="{{resultadoEsperadoMetaAnual}}" ></input><select name="selectipometa"  id='selectipometa'><option value='0'>Seleccione el tipo de meta</option><option value='1'>Valor absoluto</option><option value='2'>Porcentaje</option></select></td>
                     </tr>
                     <tr>
                         <td >Descripcion Meta anual:</td>
@@ -96,14 +91,18 @@
                         <tr>
                         <TD WIDTH="25%"align="center"> <input size="25%" name="trimUno" id="trimUno" value='{{trim1}}' ></input></TD>
                         <TD WIDTH="25%"align="center"><input size="25%" name="trimDos" id="trimDos"  value='{{trim2}}'></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimTres" id="trimTres" ></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimCuatro" id="trimCuatro" ></input></TD>
+                        <TD WIDTH="25%"align="center"><input size="25%" name="trimTres" id="trimTres" value='{{trim3}}' ></input></TD>
+                        <TD WIDTH="25%"align="center"><input size="25%" name="trimCuatro" id="trimCuatro" value='{{trim4}}' ></input></TD>
                         </tr>   
                       
                        
                        <tr>  
                            <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
                            <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
+                           <input type='hidden' name='iduno' id="iduno" value='{{iduno}}' />  
+                           <input type='hidden' name='iddos' id="iddos" value='{{iddos}}' /> 
+                           <input type='hidden' name='idtres' id="idtres" value='{{idtres}}' /> 
+                           <input type='hidden' name='idcuatro' id="idcuatro" value='{{idcuatro}}' /> 
                     <td colspan="3" align="center" ><br><br><button type="submmit" id="agregar"  >Guardar</button>
                            
                         </td> 

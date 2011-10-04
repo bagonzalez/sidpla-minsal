@@ -92,6 +92,11 @@ class Actividad
      * @ORM\Column(name="actividad_indicador", type="string", length=150)
      */
     private $actIndicador;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="ResulActividad", mappedBy="idActividad")
+     */
+    protected $resulAct;
       
     /**
      * Set idAct
@@ -311,5 +316,32 @@ class Actividad
     public function getActIndicador()
     {
         return $this->actIndicador;
+    }
+    
+    public function __construct()
+    {
+      $this->resulAct= new ArrayCollection();  
+        
+    }
+    
+    /**
+     * Add resulAct
+     *
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad $resulAct
+     */
+    public function addResulAct(\MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad $resulAct)
+    {
+        $this->resulAct[] = $resulAct;
+        
+    }
+
+    /**
+     * Get resulAct
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getResulAct()
+    {
+        return $this->resulAct;
     }
 }
