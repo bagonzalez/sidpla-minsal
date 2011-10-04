@@ -342,16 +342,36 @@ public function editarResultadosEsperadosAction()
            $i=0;
            $programadoPrimerTrimestre=0;
            $programadoSegundoTrimestre=0;
+           $programadoTercerTrimestre=0;
+           $programadoCuartoTrimestre=0;
+           $iduno=0;
+           $iddos=0;
+           $idtres=0;
+           $idcuatro=0;
+           
            
         foreach ($resultadoresEspe as $resultadoreEspec) { 
             
             $trimestre=$resultadoreEspec->getResultadoreTrimestre();
             if($trimestre==1){
                 $programadoPrimerTrimestre=$resultadoreEspec->getResultadoreProgramado();
+                $iduno=$resultadoreEspec->getIdResultadore();
+                
             } 
             
              if($trimestre==2){
                 $programadoSegundoTrimestre=$resultadoreEspec->getResultadoreProgramado();
+                $iddos=$resultadoreEspec->getIdResultadore();
+            } 
+            
+             if($trimestre==3){
+                $programadoTercerTrimestre=$resultadoreEspec->getResultadoreProgramado();
+                $idtres=$resultadoreEspec->getIdResultadore();
+            } 
+            
+             if($trimestre==4){
+                $programadoCuartoTrimestre=$resultadoreEspec->getResultadoreProgramado();
+                $idcuatro=$resultadoreEspec->getIdResultadore();
             } 
             
         }
@@ -373,6 +393,12 @@ public function editarResultadosEsperadosAction()
                     ,'resultadoEsperadoDescripcionMetaAnual' => $resultadoEsperadoDescripcionMetaAnual
                     ,'trim1' => $programadoPrimerTrimestre
                     ,'trim2' => $programadoSegundoTrimestre
+                    ,'trim3' => $programadoTercerTrimestre
+                    ,'trim4' => $programadoCuartoTrimestre
+                    ,'iduno' => $iduno
+                    ,'iddos' => $iddos
+                    ,'idtres' => $idtres
+                    ,'idcuatro' => $idcuatro
                     ));
         
     }
@@ -396,6 +422,18 @@ public function editarResultadosEsperadosAction()
           $resEspDescMetAnual=$request->get('descripMetaAnual');
           
           
+          
+          
+               $trimUno=$request->get('trimUno');
+               $trimDos=$request->get('trimDos');
+               $trimTres=$request->get('trimTres');
+               $trimCuatro=$request->get('trimCuatro');
+              
+               $iduno=$request->get('iduno');
+               $iddos=$request->get('iddos');
+               $idtres=$request->get('idtres');
+               $idcuatro=$request->get('idcuatro');
+               
           
                $resEspNomencl="pruebanomenc";
                $restmpcodigo=1;
@@ -421,6 +459,20 @@ public function editarResultadosEsperadosAction()
            $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
            $objetivoAux=$objetivoDao->getObjetEspecif($idfila);         
            $objetivosEspec=$objetivoAux->getDescripcion();
+           
+           
+          //actualizando en sidpla resultadore 
+           $ResultadoreDao = new ResultadoreDao($this->getDoctrine()); 
+           $ResultadoreDao->editresultadore($trimUno,$iduno);
+          
+           $ResultadoreDao = new ResultadoreDao($this->getDoctrine()); 
+           $ResultadoreDao->editresultadore($trimDos,$iddos);
+           
+           $ResultadoreDao = new ResultadoreDao($this->getDoctrine()); 
+           $ResultadoreDao->editresultadore($trimTres,$idtres);
+           
+           $ResultadoreDao = new ResultadoreDao($this->getDoctrine()); 
+           $ResultadoreDao->editresultadore($trimCuatro,$idcuatro);
                
         return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
                 array( 'opciones' => $opciones,'idfila' => $idfila,'descripcion' => $objetivosEspec));

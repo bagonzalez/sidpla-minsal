@@ -75,8 +75,14 @@ MinSalSidPlaCensoBundle_ingresarInfReleva:
 MinSalSidPlaCensoBundle_procesarPoblacionHumana:
     pattern:  /procesarPoblacionHumana
     defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:procesarPoblacionHumana }
-
- 
     
+MinSalSidPlaCensoBundle_procesarInfRelevante:
+    pattern:  /procesarInfRelevante
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:procesarInfRelevante }
+    
+MinSalSidPlaCensoBundle_procesarInfComplementaria:
+    pattern:  /procesarInfComplementaria
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:procesarInfComplementaria }
+
     
     

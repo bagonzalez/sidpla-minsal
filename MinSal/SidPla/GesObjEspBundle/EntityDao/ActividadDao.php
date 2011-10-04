@@ -13,6 +13,7 @@
 namespace MinSal\SidPla\GesObjEspBundle\EntityDao;
 use MinSal\SidPla\GesObjEspBundle\Entity\Actividad;
 use MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado;
+use MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad;
 class ActividadDao {
     //put your code here
 
@@ -62,7 +63,30 @@ class ActividadDao {
          return $matrizMensajes;
     }
     
-    
+    public function agregarResulActividad($idActividad,$trimes,$trim,$fechInicio,$fechaFin) {
+         
+      
+           $resultadoAux=new Actividad();
+           $resultadoAux=$this->getActividad($idActividad); 
+     
+         $objresultadore=new ResulActividad();
+         $objresultadore->setResulActTrimestre($trimes);                         
+         $objresultadore->setResulActProgramado($trim); 
+         $objresultadore->setResulActFechaInicio($fechInicio);
+         $objresultadore->setResulActFechaFin($fechaFin);
+         $objresultadore->setIdActividad($resultadoAux);                         
+         
+                 
+         $resultadoAux->addResulAct($objresultadore);
+
+         $this->em->persist($objresultadore);
+         $this->em->persist($resultadoAux);
+         $this->em->flush();
+        
+        
+      
+        return $objresultadore->getIdResulAct();
+    }
     
     
     
