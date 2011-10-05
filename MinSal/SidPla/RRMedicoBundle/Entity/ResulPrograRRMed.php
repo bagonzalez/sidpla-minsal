@@ -46,7 +46,7 @@ class ResulPrograRRMed {
      * @ORM\ManyToOne(targetEntity="TipoHorario", inversedBy="resProTip")
      * @ORM\JoinColumn(name="tiphor_codigo", referencedColumnName="tiphor_codigo")
      */
-    private $tipoRRHH;
+    private $tipoHorario;
 
     /**
      * @ORM\ManyToOne(targetEntity="PrograRRMed", inversedBy="resProRRMed")
@@ -128,23 +128,23 @@ class ResulPrograRRMed {
     }
 
     /**
-     * Set tipoRRHH
+     * Set tipoHorario
      *
-     * @param MinSal\SidPla\RRMedicoBundle\Entity\TipoHorario $tipoRRHH
+     * @param MinSal\SidPla\RRMedicoBundle\Entity\TipoHorario $tipoHorario
      */
-    public function setTipoRRHH(\MinSal\SidPla\RRMedicoBundle\Entity\TipoHorario $tipoRRHH)
+    public function settipoHorario(\MinSal\SidPla\RRMedicoBundle\Entity\TipoHorario $tipoHorario)
     {
-        $this->tipoRRHH = $tipoRRHH;
+        $this->tipoHorario = $tipoHorario;
     }
 
     /**
-     * Get tipoRRHH
+     * Get tipoHorario
      *
      * @return MinSal\SidPla\RRMedicoBundle\Entity\TipoHorario 
      */
-    public function getTipoRRHH()
+    public function gettipoHorario()
     {
-        return $this->tipoRRHH;
+        return $this->tipoHorario;
     }
 
     /**

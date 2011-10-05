@@ -43,9 +43,9 @@ class PrograRRMed {
     private $totalMinutos;
 
     /**
-     * @var string $turnoProg
+     * @var bigint $turnoProg
      *
-     * @ORM\Column(name="prorecmed_turno", type="string", length=10)
+     * @ORM\Column(name="prorecmed_turno", type="bigint")
      */
     private $turnoProg;
 
@@ -148,7 +148,7 @@ class PrograRRMed {
     /**
      * Set turnoProg
      *
-     * @param string $turnoProg
+     * @param bigint $turnoProg
      */
     public function setTurnoProg($turnoProg) {
         $this->turnoProg = $turnoProg;
@@ -157,7 +157,7 @@ class PrograRRMed {
     /**
      * Get turnoProg
      *
-     * @return string 
+     * @return bigint
      */
     public function getTurnoProg() {
         return $this->turnoProg;

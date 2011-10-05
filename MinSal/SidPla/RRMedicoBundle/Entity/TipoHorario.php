@@ -36,14 +36,14 @@ class TipoHorario {
     private $tipoCantidadHor;
 
     /**
-     * @var string $tipoHorTurno
+     * @var bigint $tipoHorTurno
      *
-     * @ORM\Column(name="tiphor_turno", type="string", length=10)
+     * @ORM\Column(name="tiphor_turno", type="bigint")
      */
     private $tipoHorTurno;
 
     /**
-     * @ORM\OneToMany(targetEntity="ResulPrograRRMed", mappedBy="tipoRRHH")
+     * @ORM\OneToMany(targetEntity="ResulPrograRRMed", mappedBy="tipoHorario")
      */
     private $resProTip;
 
@@ -107,7 +107,7 @@ class TipoHorario {
     /**
      * Set tipoHorTurno
      *
-     * @param string $tipoHorTurno
+     * @param bigint $tipoHorTurno
      */
     public function setTipoHorTurno($tipoHorTurno)
     {
@@ -117,7 +117,7 @@ class TipoHorario {
     /**
      * Get tipoHorTurno
      *
-     * @return string 
+     * @return bigint 
      */
     public function getTipoHorTurno()
     {

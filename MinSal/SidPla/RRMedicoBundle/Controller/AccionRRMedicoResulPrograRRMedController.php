@@ -1,69 +1,80 @@
 <?php
+
 namespace MinSal\SidPla\RRMedicoBundle\Controller;
+
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-
 use MinSal\SidPla\RRMedicoBundle\Entity\ResulPrograRRMed;
 use MinSal\SidPla\RRMedicoBundle\EntityDao\ResulPrograRRMedDao;
 use MinSal\SidPla\RRMedicoBundle\EntityDao\TipoHorarioDao;
-
+use MinSal\SidPla\RRMedicoBundle\Entity\PrograRRMed;
 //Para saber que unidad organizativa a la que pertenece y mostrar los periodos asociados
 use MinSal\SidPla\UsersBundle\Entity\User;
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 use MinSal\SidPla\PaoBundle\Entity\Pao;
-use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;  
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 
 class AccionRRMedicoResulPrograRRMedController extends Controller {
-    
-    public function consultarResulPrograRRMedAction() {
-     $opciones = $this->getRequest()->getSession()->get('opciones');
-  
-     $TipoHorarioDao= new TipoHorarioDao($this->getDoctrine());
-     $comboResulRRmed=$TipoHorarioDao->obtenerTipoHorarios();
-        
-    return $this->render('MinSalSidPlaRRMedicoBundle:ResulPrograRRMed:manttResultPrograRRMed.html.twig'
-                         , array('opciones' => $opciones,'comboResulRRmed'=>$comboResulRRmed));
-     
 
-    }
-    
-     public function consultarResulPrograRRMedJSONAction(){
+    public function consultarResulPrograRRMedAction() {
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+
+        $TipoHorarioDao = new TipoHorarioDao($this->getDoctrine());
         
-       $anio = $this->getRequest()->get('anio');
+
+        return $this->render('MinSalSidPlaRRMedicoBundle:ResulPrograRRMed:manttResultPrograRRMed.html.twig'
+                        , array('opciones' => $opciones,'turno'=>1));
+    }
+
+    public function consultarResulPrograRRMedJSONAction() {
+
+        $anio = $this->getRequest()->get('anio');
+        $turno = $this->getRequest()->get('turno');
 
         if ($anio == 0)
             $anio = date("Y");
-
+        
         $pao = $this->obtenerPao($anio);
+        
+        $resulProgRRDao=new ResulPrograRRMedDao($this->getDoctrine());
+        
+        $prograRRMed = $pao->getProgramacionesRRMed();
+        $aux = new PrograRRMed();
 
-        $resulPrograRRMed = $pao->getProgramacionesRRMed();
-       
-        $numfilas = count($resulPrograRRMed);
-
-        $aux = new ResulPrograRRMed();
+        
         $i = 0;
+        $numfilas = 0;
+        foreach ($prograRRMed as $aux) {
+            if ($aux->getTurnoProg() == $turno) {
+                $i = 0;
 
-        foreach ($resulPrograRRMed as $aux) {
-            $rows[$i]['id'] = $aux->getCodResproRR();
-            $rows[$i]['cell'] = array($aux->getCodResproRR(),
-                $aux->getTipoRRHH()->getTipoHorDes(),
-                $aux->getCantRRMedDispo(),
-                $aux->getTotalHorasRR(),
-                0,
-                $aux->getConsulasDispo()
-                               
-            );
-          
-            $i++;
+                $resulRRMed = $aux->getResProRRMed();
+                $numfilas = count($resulRRMed);
+                $aux2 = new ResulPrograRRMed();
+
+                foreach ($resulRRMed as $aux2) {
+                    $rows[$i]['id'] = $aux2->getCodResproRR();
+                    $min =$resulProgRRDao->calcularMin($aux2->getCantRRMedDispo(),$aux2->gettipoHorario()->getTipoCantidadHor(), $turno);
+                            $rows[$i]['cell'] = array($aux2->getCodResproRR(),
+                        $aux2->gettipoHorario()->getTipoHorDes(),
+                        $aux2->getCantRRMedDispo(),
+                        $aux2->getTotalHorasRR(),
+                        $min,
+                        $aux2->getConsulasDispo()
+                    );
+
+                    $i++;
+                }
+            }
         }
 
         if ($numfilas != 0) {
             array_multisort($rows, SORT_ASC);
         } else {
             $rows[0]['id'] = 0;
-            $rows[0]['cell'] = array(' ', ' ', ' ', ' ',' ');
+            $rows[0]['cell'] = array(' ', ' ', ' ', ' ', ' ');
         }
 
         $datos = json_encode($rows);
@@ -82,32 +93,17 @@ class AccionRRMedicoResulPrograRRMedController extends Controller {
     public function manttResulPrograRRMedAction() {
         $request = $this->getRequest();
         
-        $codTipoHora=$request->get('id');
-        $nomTipoHora=$request->get('nomTipHo');
-        $canthoras=(int)$request->get('cantH');
-        $tipohorario=$request->get('tipoH');
-       
-                    
-        $operacion = $request->get('oper');
-
-        $tipohorarioDao=new TipoHorarioDao($this->getDoctrine());
-
-        switch ($operacion){
-            case 'edit':
-                $tipohorarioDao->editarTipoHorario($codTipoHora, $nomTipoHora, $canthoras, $tipohorario);
-               break;
-            case 'del':
-               $tipohorarioDao->eliminarTipoHorario($codTipoHora);
-                break;
-            case 'add':
-                $tipohorarioDao->agregarTipoHorario($nomTipoHora, $canthoras, $tipohorario);
-                break;
-        }
+        $cant=$this->getRequest()->get('cantidad');
+        $codResulProga=$this->getRequest()->get('id');
+        
+        $resulProgRRDao= new ResulPrograRRMedDao($this->getDoctrine());
+        
+        $resulProgRRDao->editarResulPrograRRMed($codResulProga, $cant);
+        
 
         return new Response("{sc:true,msg:''}");
     }
-    
-    
+
     public function obtenerPao($anio) {
 
         $user = new User();

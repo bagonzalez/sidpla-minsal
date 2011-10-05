@@ -29,10 +29,14 @@ class AccionRRMedicoTipoHorarioController extends Controller {
 
         foreach ($tipoHorario as $aux) {
             $rows[$i]['id'] = $aux->getcodTipoHor();
+            if($aux->getTipoHorTurno()==1)
+                $b='Normal';
+            else
+               $b='Ampliado';
             $rows[$i]['cell'] = array($aux->getcodTipoHor(),
                 $aux->getTipoHorDes(),
                 $aux->getTipoCantidadHor(),
-                $aux->getTipoHorTurno()
+                $b
                                
             );
           
@@ -40,6 +44,7 @@ class AccionRRMedicoTipoHorarioController extends Controller {
         }
 
         if ($numfilas != 0) {
+            
             array_multisort($rows, SORT_ASC);
         } else {
             $rows[0]['id'] = 0;

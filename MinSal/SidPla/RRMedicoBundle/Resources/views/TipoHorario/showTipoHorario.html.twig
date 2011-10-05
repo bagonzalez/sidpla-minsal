@@ -14,7 +14,7 @@ $(document).ready(function(){
             { name:'codigo', index: 'codigo', width:40,align:'center',editable:false,editoptions:{size:15}},
             { name:'nomTipHo', index: 'nomTipHo', width:300,editable:true,editoptions:{size:30,maxlength: 100}, formoptions:{elmprefix:"(*)"},editrules:{required:true}},
             { name:'cantH', index: 'cantH',align:"center", width:100,editable:true,formoptions:{elmprefix:"(*)"},editrules:{required:true,integer:true,maxValue:24,minValue:1}},
-            { name:'tipoH', index: 'tipoH', width:100,align:"center",editable:true,editoptions:{size:30},edittype:"select",editoptions:{value:"Normal:Horario Normal;Ampliado:Horario Ampliado"},
+            { name:'tipoH', index: 'tipoH', width:100,align:"center",editable:true,editoptions:{size:30},edittype:"select",editoptions:{value:"1:Horario Normal;2:Horario Ampliado"},
                 formoptions:{label: "Turno"}},
             ],
           rowNum:10,

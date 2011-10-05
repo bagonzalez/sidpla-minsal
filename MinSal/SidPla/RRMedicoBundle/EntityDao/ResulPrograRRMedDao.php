@@ -5,6 +5,8 @@ namespace MinSal\SidPla\RRMedicoBundle\EntityDao;
 use MinSal\SidPla\RRMedicoBundle\Entity\ResulPrograRRMed;
 use Doctrine\ORM\Query\ResultSetMapping;
 
+use MinSal\SidPla\RRMedicoBundle\Entity\TipoHorario;
+
 class ResulPrograRRMedDao {
 
     var $doctrine;
@@ -18,18 +20,6 @@ class ResulPrograRRMedDao {
         $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaRRMedicoBundle:ResulPrograRRMed');
     }
 
-   
-    /*
-     * Obtiene todos los Resultados RRMed
-     */
-
-    public function getResulPrograRRMed() {
-        $resulPrograRRMedo = $this->em->createQuery("SELECT rp
-                                                FROM MinSalSidPlaRRMedicoBundle:ResulPrograRRMed rp
-                                                ORDER BY rp.codResproRR ASC");
-        return $resulPrograRRMedo->getResult();
-    }
-
     /*
      * Obtiene una Resultado RRMed
      */
@@ -38,57 +28,51 @@ class ResulPrograRRMedDao {
         return $resulPrograRRMed ;
     }
     
-       /*
-     * Agregar Resultado RRMed
+     /*
+     * calcula los minutos del recurso medico
      */
 
-    public function agregarTipoHorario($DescTipoHorario,$cantHoras ,$tipTurno) {
-
-        $tipoHorario= new TipoHorario();
-        $tipoHorario->setTipoHorDes($DescTipoHorario);  
-        $tipoHorario->setTipoCantidadHor($cantHoras);
-        $tipoHorario->setTipoHorTurno($tipTurno);
+    public function calcularMin($cantPer, $horario,$turno){
         
-        $this->em->persist($tipoHorario);
+        if ($turno==1)
+            $min=$cantPer*($horario*60-40);
+        else
+            $min=$cantPer*$horario*60;
+        return $min;
+        
+    }
+
+
+    /*
+     * Editar un resultado programacion recurso
+     */
+
+    public function editarResulPrograRRMed($codResulProgra, $cantResult) {
+       // $resulPrograRR=new ResulPrograRRMed();
+        $resulPrograRR= $this->getResulPrograRRMedEspecifico($codResulProgra);
+        
+      //  $tipoHorario= new TipoHorario();
+        $tipoHorario=$resulPrograRR->gettipoHorario();
+        $horas=$tipoHorario->getTipoCantidadHor();
+        $turno=$tipoHorario->getTipoHorTurno();
+        
+        if($tipoHorario->getTipoHorTurno()==1){
+            $totalHorasdiarias= $cantResult*$horas;
+            $consultasDiasDisponibles=($this->calcularMin($cantResult, $horas,$turno))/10;
+        }
+        
+        
+        $resulPrograRR->setCantRRMedDispo($cantResult);
+        $resulPrograRR->setTotalHorasRR($totalHorasdiarias);
+        $resulPrograRR->setConsulasDispo($consultasDiasDisponibles);
+        
+        $this->em->persist($resulPrograRR);
         $this->em->flush();
-        $matrizMensajes = array('El proceso de almacenar el tipo horario termino con exito');
+        $matrizMensajes = array('El proceso de almacenar editar el resultado programacion recurso termino con exito');
 
         return $matrizMensajes;
     }
     
-    /*
-     * Editar un tipo de periodo
-     */
-
-    public function editarTipoHorario($codTipoH, $DescTipoHorario,$cantHoras,$tipTurno) {
-
-        $tipoHorario= $this->getTipoHorarioEspecifico($codTipoH);
-         $tipoHorario->setTipoHorDes($DescTipoHorario);  
-        $tipoHorario->setTipoCantidadHor($cantHoras);
-        $tipoHorario->setTipoHorTurno($tipTurno);
-        
-        $this->em->persist($tipoHorario);
-        $this->em->flush();
-        $matrizMensajes = array('El proceso de almacenar el tipo horario termino con exito');
-
-        return $matrizMensajes;
-    }
     
-    /*
-     * Eliminar un tipo de periodo
-     */
-
-    public function eliminarTipoHorario($codigo) {
-
-          $tipoHorario= $this->getTipoHorarioEspecifico($codigo);
-
-        $this->em->remove($tipoHorario);
-        $this->em->flush();
-
-        $matrizMensajes = array('El proceso de eliminar termino con exito');
-
-        return $matrizMensajes;
-    }
-
 }
 ?>

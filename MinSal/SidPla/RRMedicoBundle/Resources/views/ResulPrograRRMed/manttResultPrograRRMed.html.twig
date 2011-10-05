@@ -2,11 +2,35 @@
 {% block titulo %} Resultado de Programacion de recurso Medico{% endblock %}
 
 {% block body %}
+<script type="text/javascript">
+$(document).ready(function(){
+  $('#selHorario').change(cargarPrograRRMedico);
+  
+ function cargarPrograRRMedico(){
+            $('#tabPrograRHHH').setGridParam({
+               url:'consultarResulPrograRRMedJSON?turno='+$('#selHorario').val(),
+               datatype:'json'
+           }).trigger("reloadGrid"); 
+        }
 
+ 
+ });
+ 
+    </script>
 <h1 style='text-align: center;'>Resultado de Programacion de recurso Medico</h1>
 <table align="center">
-      <tr>
+      
+    <tr>
+        <td align="center">
+              <select id='selHorario'>
+                <option value='1'>Horario Normal</option>
+                <option value='2'>Horario Ampliado</option>
+            </select>
+        </td>
+    </tr>
+    <tr>
      <td align="center">
+         <br></br>
        {%include 'MinSalSidPlaRRMedicoBundle:ResulPrograRRMed:showResultPrograRRMed.html.twig' %}
      </td>
    </tr>

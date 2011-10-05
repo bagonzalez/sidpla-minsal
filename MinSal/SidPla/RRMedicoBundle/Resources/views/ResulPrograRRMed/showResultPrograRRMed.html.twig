@@ -2,16 +2,15 @@
 <script type="text/javascript">
 $(document).ready(function(){
    var seleccionado;       
-   var myGrid = $('#tabEvaInfra');        
+   var myGrid = $('#tabPrograRHHH');        
      myGrid.jqGrid({ 
-     url: 'consultarResulPrograRRMedJSON',
+     url: 'consultarResulPrograRRMedJSON?turno={{turno}}',
      datatype:'json',
      altRows:true,
      colNames:['Codigo','Horario de Recurso Medico', 'Cantidad', 'Total Horas','Total Minutos','Total Consultas Diarias', 'Acciones'], 
      colModel:[ 
         {name:'codigo',index:'codigo', width:50, editable: false,align:'center'},
-        { name:'horarioRM', index: 'horarioRM', width:250,editable:true,editoptions:{size:30},edittype:"select",
-               editoptions: {value:"{{comboResulRRmed}}"}},
+        { name:'horarioRM', index: 'horarioRM', width:250,editable:false,editoptions:{size:100}},
         {name:'cantidad',index:'cantidad', width:90, editable: true,align:'center'},
         {name:'totalHoras',index:'totalHoras', width:90, editable: false,align:'center'},
         {name:'totalMin',index:'totalMin', width:90, editable: false,align:'center'},
@@ -29,19 +28,19 @@ $(document).ready(function(){
      height: "100%",
      onSelectRow: function(id){
           if(id && id!==seleccionado){
-          jQuery('#tabEvaInfra').restoreRow(seleccionado);
-          jQuery('#tabEvaInfra').editRow(id,true);
+          jQuery('#tabPrograRHHH').restoreRow(seleccionado);
+          jQuery('#tabPrograRHHH').editRow(id,true);
           seleccionado=id;}
      },
-   // editurl:'manttResulPrograRRMed',
+    editurl:'manttResulPrograRRMed',
     gridComplete: 
       function(){ 
-          var ids = jQuery("#tabEvaInfra").jqGrid('getDataIDs');
+          var ids = jQuery("#tabPrograRHHH").jqGrid('getDataIDs');
           for(var i=0;i < ids.length;i++){
              var cl = ids[i]; 
-             guardar = "<input style='height:18px;width:50px;' type='button' value='Guardar' onclick=\"jQuery('#tabEvaInfra').saveRow('"+cl+"');"
-                 +"$('#tabEvaInfra').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');\" />";
-             jQuery("#tabEvaInfra").jqGrid('setRowData',ids[i],{act:guardar});
+             guardar = "<input style='height:18px;width:50px;' type='button' value='Guardar' onclick=\"jQuery('#tabPrograRHHH').saveRow('"+cl+"');"
+                 +"$('#tabPrograRHHH').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');\" />";
+             jQuery("#tabPrograRHHH").jqGrid('setRowData',ids[i],{act:guardar});
          } 
        }          
     });
@@ -62,6 +61,6 @@ $(document).ready(function(){
  });
  
     </script>
-   <table id="tabEvaInfra" class="scroll" alignalign="center"></table> 
+   <table id="tabPrograRHHH" class="scroll" alignalign="center"></table> 
    <div id="pager1" class="scroll"></div>  
 {% endblock %}

@@ -22,6 +22,11 @@ MinSalSidPlaRRMedicoBundle_consultarTipoHorario:
 MinSalSidPlaRRMedicoBundle_consultarResulPrograRRMed:
     pattern:  /consultarResulPrograRRMed
     defaults: { _controller: MinSalSidPlaRRMedicoBundle:AccionRRMedicoResulPrograRRMed:consultarResulPrograRRMed}
+    
 MinSalSidPlaRRMedicoBundle_consultarResulPrograRRMedJSON:
     pattern:  /consultarResulPrograRRMedJSON
     defaults: { _controller: MinSalSidPlaRRMedicoBundle:AccionRRMedicoResulPrograRRMed:consultarResulPrograRRMedJSON}
+
+MinSalSidPlaRRMedicoBundle_manttResulPrograRRMed:
+    pattern:  /manttResulPrograRRMed
+    defaults: { _controller: MinSalSidPlaRRMedicoBundle:AccionRRMedicoResulPrograRRMed:manttResulPrograRRMed}
