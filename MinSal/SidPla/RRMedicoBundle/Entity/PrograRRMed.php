@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="sidpla_prograrecursomedico")
  * @ORM\Entity
  */
-class PrograRRMed
-{
+class PrograRRMed {
+
     /**
      * @var integer $codPrograRRMed
      *
@@ -43,22 +43,33 @@ class PrograRRMed
     private $totalMinutos;
 
     /**
+     * @var string $turnoProg
+     *
+     * @ORM\Column(name="prorecmed_turno", type="string", length=10)
+     */
+    private $turnoProg;
+
+    /**
      * @ORM\OneToMany(targetEntity="ResulPrograRRMed", mappedBy="prograRRHH")
      */
     private $resProRRMed;
-   
-    public function __construct()
-    {
+
+    /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PaoBundle\Entity\Pao", inversedBy="programacionesRRMed")
+     * @ORM\JoinColumn(name="pao_codigo", referencedColumnName="pao_codigo")
+     */
+    private $paoProRRMed;
+
+    public function __construct() {
         $this->resProRRMed = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get codPrograRRMed
      *
      * @return integer 
      */
-    public function getCodPrograRRMed()
-    {
+    public function getCodPrograRRMed() {
         return $this->codPrograRRMed;
     }
 
@@ -67,8 +78,7 @@ class PrograRRMed
      *
      * @param float $totaHoras
      */
-    public function setTotaHoras($totaHoras)
-    {
+    public function setTotaHoras($totaHoras) {
         $this->totaHoras = $totaHoras;
     }
 
@@ -77,8 +87,7 @@ class PrograRRMed
      *
      * @return float 
      */
-    public function getTotaHoras()
-    {
+    public function getTotaHoras() {
         return $this->totaHoras;
     }
 
@@ -87,8 +96,7 @@ class PrograRRMed
      *
      * @param float $totalConsul
      */
-    public function setTotalConsul($totalConsul)
-    {
+    public function setTotalConsul($totalConsul) {
         $this->totalConsul = $totalConsul;
     }
 
@@ -97,8 +105,7 @@ class PrograRRMed
      *
      * @return float 
      */
-    public function getTotalConsul()
-    {
+    public function getTotalConsul() {
         return $this->totalConsul;
     }
 
@@ -107,8 +114,7 @@ class PrograRRMed
      *
      * @param float $totalMinutos
      */
-    public function setTotalMinutos($totalMinutos)
-    {
+    public function setTotalMinutos($totalMinutos) {
         $this->totalMinutos = $totalMinutos;
     }
 
@@ -117,8 +123,7 @@ class PrograRRMed
      *
      * @return float 
      */
-    public function getTotalMinutos()
-    {
+    public function getTotalMinutos() {
         return $this->totalMinutos;
     }
 
@@ -127,8 +132,7 @@ class PrograRRMed
      *
      * @param MinSal\SidPla\RRMedicoBundle\Entity\ResulPrograRRMed $resProRRMed
      */
-    public function addResProRRMed(\MinSal\SidPla\RRMedicoBundle\Entity\ResulPrograRRMed $resProRRMed)
-    {
+    public function addResProRRMed(\MinSal\SidPla\RRMedicoBundle\Entity\ResulPrograRRMed $resProRRMed) {
         $this->resProRRMed[] = $resProRRMed;
     }
 
@@ -137,8 +141,46 @@ class PrograRRMed
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getResProRRMed()
-    {
+    public function getResProRRMed() {
         return $this->resProRRMed;
     }
+
+    /**
+     * Set turnoProg
+     *
+     * @param string $turnoProg
+     */
+    public function setTurnoProg($turnoProg) {
+        $this->turnoProg = $turnoProg;
+    }
+
+    /**
+     * Get turnoProg
+     *
+     * @return string 
+     */
+    public function getTurnoProg() {
+        return $this->turnoProg;
+    }
+    
+     /**
+     * Set paoProRRMed 
+     *
+     * @param MinSal\SidPla\PaoBundle\Entity\Pao $paoProRRMed 
+     */
+    public function setpaoProRRMed (\MinSal\SidPla\PaoBundle\Entity\Pao $paoProRRMed )
+    {
+        $this->paoProRRMed  = $paoProRRMed ;
+    }
+
+    /**
+     * Get paoProRRMed 
+     *
+     * @return MinSal\SidPla\PaoBundle\Entity\Pao 
+     */
+    public function getpaoProRRMed ()
+    {
+        return $this->paoProRRMed ;
+    }
+
 }

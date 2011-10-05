@@ -1,0 +1,41 @@
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+        
+        $('#agregarDptoUniButton').button();
+        $('#editarDptoUniButton').button();
+        $('#eliminarDptoUniButton').button();
+        
+              
+        var myGrid = $('#tabdptouni');        
+        myGrid.jqGrid({ 
+          url: '{{ path('MinSalSidPlaDepUniBundle_consultarDeptoUniJSON') }}',
+          datatype:'json',
+          altRows:true,
+          colNames:['Codigo','Nombre', 'Cantidad de Personas'],
+          colModel:[
+            { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}  },
+            { name:'nombre', index: 'nombre',width:350,editable:true,editoptions:{size:25,maxlength:100}, formoptions:{ rowpos:1, elmprefix:"(*)"},editrules:{required:true} },
+            { name:'cant', index: 'cant',width:130,align:"center",editable:false,editoptions:{size:50,maxlength: 100},editrules:{required:false}}
+            ],
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          loadonce:true,
+          pager: jQuery('#pagerdptouni'),
+          viewrecords: true,          
+          caption: 'Departamentos de la Unidad',
+          height: "100%",
+          editurl:'manttDeptoUniEdicion'
+           
+        });
+        
+         myGrid.jqGrid('navGrid','#pagerdptouni',{edit:false,add:false,del:false,
+             beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}).hideCol('codigo');
+      });
+    </script>
+
+  <table id="tabdptouni" class="scroll" align="center"></table>
+  <div id="pagerdptouni" class="scroll"></div>
+ 
+{% endblock %}

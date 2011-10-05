@@ -28,7 +28,7 @@ class TipoRRHumanoDao {
     }
 
     /*
-     * Agregar Notificacion del Sistema
+     * Agregar Tipo Recurso Humano
      */
 
     public function getTipoRRHHEspecifico($codigo) {
@@ -70,6 +70,28 @@ class TipoRRHumanoDao {
         $matrizMensajes = array('El proceso de eliminar el tipo recurso humano termino con exito');
 
         return $matrizMensajes;
+    }
+    
+        /*Para otras entidades*/
+    public function obtenerRRHHcadena() {
+        $cadena = "";
+               
+        $tipoRRHH = $this->getTipoRRHH();
+        
+        $aux = new TipoRRHumano();
+        $n = count($tipoRRHH);
+        
+        $i = 1;
+        
+        foreach ($tipoRRHH as $aux) {
+            if ($i < $n)
+                $cadena.=$aux->getCodTipoRRHH().":".$aux->getDescripRRHH().';';
+            else
+                $cadena.=$aux->getCodTipoRRHH().":".$aux->getDescripRRHH();
+            $i++;
+        }
+
+        return $cadena;
     }
 
 }

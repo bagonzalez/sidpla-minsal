@@ -15,4 +15,22 @@ MinSalSidPlaDepUniBundle_consultarTipoRRHHJSON:
 MinSalSidPlaDepUniBundle_manttTipoRRHHEdicion:
     pattern:  /manttTipoRRHHEdicion
     defaults: { _controller: MinSalSidPlaDepUniBundle:AccionDepUniTipoRRHH:manttTipoRRHHEdicion }
+
+#DEPARTAMENTOUNI
+MinSalSidPlaDepUniBundle_consultarDeptoUniJSON:
+    pattern:  /consultarDeptoUniJSON
+    defaults: { _controller: MinSalSidPlaDepUniBundle:AccionDepUniDeptoUni:consultarDeptoUniJSON }
+    
+MinSalSidPlaDepUniBundle_manttDeptoUniEdicion:
+    pattern:  /manttDeptoUniEdicion
+    defaults: { _controller: MinSalSidPlaDepUniBundle:AccionDepUniDeptoUni:manttDeptoUniEdicion }
+
+#RECURSOHUMANO
+MinSalSidPlaDepUniBundle_consultarRRHHJSON:
+    pattern:  /consultarRRHHJSON
+    defaults: { _controller: MinSalSidPlaDepUniBundle:AccionDepUniRRHH:consultarRRHHJSON}
+
+MinSalSidPlaDepUniBundle_manttRRHHEdicion:
+    pattern:  /manttRRHHEdicion
+    defaults: { _controller: MinSalSidPlaDepUniBundle:AccionDepUniRRHH:manttRRHHEdicion}
     

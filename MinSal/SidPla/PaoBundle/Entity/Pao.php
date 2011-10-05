@@ -51,11 +51,16 @@ class Pao {
      */
     private $periodoCalendarizacion;
 
-     /**
+    /**
      * @ORM\OneToOne(targetEntity="MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada", mappedBy="paoInfraEva")
      * @ORM\JoinColumn(name="infeva_codigo", referencedColumnName="infeva_codigo")
      */
     private $infraEvaluadaPao;
+
+    /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\RRMedicoBundle\Entity\PrograRRMed", mappedBy="paoProRRMed")
+     */
+    private $programacionesRRMed;
 
     /**
      * Set idPao
@@ -148,6 +153,7 @@ class Pao {
     }
 
     public function __construct() {
+        $this->programacionesRRMed = new \Doctrine\Common\Collections\ArrayCollection();
         $this->periodoCalendarizacion = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
@@ -167,6 +173,24 @@ class Pao {
      */
     public function getPeriodoCalendarizacion() {
         return $this->periodoCalendarizacion;
+    }
+
+    /**
+     * Add programacionesRRMed
+     *
+     * @param MinSal\SidPla\RRMedicoBundle\Entity\PrograRRMed $programacionesRRMed
+     */
+    public function addPrograRRMed(\MinSal\SidPla\RRMedicoBundle\Entity\PrograRRMed $programacionesRRMed) {
+        $this->programacionesRRMed[] = $programacionesRRMed;
+    }
+
+    /**
+     * Get programacionesRRMed
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getProgramacionesRRMed() {
+        return $this->programacionesRRMed;
     }
 
     /**

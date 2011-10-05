@@ -89,15 +89,6 @@ class UnidadOrganizativa {
     }
 
     /**
-     * Add departUnidades
-     *
-     * @param \MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni $departUnidades
-     */
-    public function addDepartUnidades(\MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni $departUnidades) {
-        $this->departUnidades[] = $departUnidades;
-    }
-
-    /**
      * Get departUnidades
      *
      * @return Doctrine\Common\Collections\Collection 

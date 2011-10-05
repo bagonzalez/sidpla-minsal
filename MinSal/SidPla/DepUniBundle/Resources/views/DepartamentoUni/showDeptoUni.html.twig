@@ -6,25 +6,18 @@
         $('#editarDptoUniButton').button();
         $('#eliminarDptoUniButton').button();
         
-        function validaTipo(value, colname) {
-        if (value == 0 ) 
-            return [false,"Seleccione una tipo de mensaje"];
-        else 
-            return [true,""];
-       }
-               
+              
         var myGrid = $('#tabdptouni');        
         myGrid.jqGrid({ 
-          url: 'consultarNotificacionJSON',
+          url: '{{ path('MinSalSidPlaDepUniBundle_consultarDeptoUniJSON') }}',
           datatype:'json',
           altRows:true,
-          colNames:['Codigo','Nombre', 'Mensaje','Tipo Mensaje'],
+          colNames:['Codigo','Nombre', 'Cantidad de Personas'],
           colModel:[
             { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}  },
-            { name:'nombre', index: 'nombre',width:150,editable:true,editoptions:{size:25,maxlength:100}, formoptions:{ rowpos:1, label: "Nombre",elmprefix:"(*)"},editrules:{required:true} },
-            { name:'mensaje', index: 'mensaje',width:300,editable:true,editoptions:{size:50,maxlength: 100}, formoptions:{ rowpos:2, label: "Mensaje",elmprefix:"(*)"},editrules:{required:true} },
-            { name:'tipomensaje', index: 'tipomensaje',editable:true,edittype:"select",editoptions:{value:"0:Seleccione;error:error;informativo:informativo;advertencia:advertencia;error fatal:error fatal;error controlado:error controlado;notificacion correo:notificacion correo"},
-                formoptions:{ rowpos:3, label: "Tipo de mensaje",elmprefix:"(*)"}, editrules:{custom:true, custom_func:validaTipo}}],            
+            { name:'nombre', index: 'nombre',width:350,editable:true,editoptions:{size:25,maxlength:100}, formoptions:{ rowpos:1, elmprefix:"(*)"},editrules:{required:true} },
+            { name:'cant', index: 'cant',width:130,align:"center",editable:false,editoptions:{size:50,maxlength: 100},editrules:{required:false}}
+            ],
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
@@ -32,8 +25,8 @@
           pager: jQuery('#pagerdptouni'),
           viewrecords: true,          
           caption: 'Departamentos de la Unidad',
-          height: "100%"/*,
-          editurl:'manttNotificacionEdicion'*/
+          height: "100%",
+          editurl:'manttDeptoUniEdicion'
            
         });
         
@@ -48,7 +41,7 @@
   //agregar
   $("#agregarDptoUniButton").click(function(){
         jQuery('#tabdptouni').jqGrid('editGridRow',"new",
-        {closeAfterAdd:true,addCaption: "Agregar Notificacion al Sistema",
+        {closeAfterAdd:true,addCaption: "Agregar Unidad al Departamento",
          height:200,align:'center',reloadAfterSubmit:true,width:550,
          processData: "Cargando...",afterSubmit:despuesAgregarEditar,
          bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
@@ -65,7 +58,7 @@
              height:200,align:'center',reloadAfterSubmit:true,width:550,
              processData: "Cargando...",afterSubmit:despuesAgregarEditar,
              bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-                    alert("Notificacion al Sistema editado con exito!");
+                    alert("Unidad ha sido editada con exito!");
                 ;}
         });
           else alert("Por favor seleccione una fila para editar!"); 
@@ -78,7 +71,7 @@
             {msg: "Desea Eliminar esta Departamento de la Unidad?",caption:"Eliminando Departamento de la Unidad",
              height:100,align:'center',reloadAfterSubmit:true,width:550,
              processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
-                alert("Notificacion al Sistema eliminado con exito!");
+                alert("La Unidad se ha eliminado con exito!");
             }}); 
          else alert("Por favor seleccione una fila para borrar!"); }); 
  
@@ -93,9 +86,7 @@
     <table align="center">
         <tr>
             <td align="center">
-                <br></br>  
-                <table id="tabdptouni" class="scroll" align="center"></table>
-                <div id="pagerdptouni" class="scroll"></div>
+                {%include 'MinSalSidPlaDepUniBundle:DepartamentoUni:gridDeptoUni.html.twig' %}
             </td>
         </tr>
         <tr>

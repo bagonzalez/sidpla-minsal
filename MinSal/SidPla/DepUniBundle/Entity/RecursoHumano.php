@@ -102,7 +102,7 @@ class RecursoHumano {
      *
      * @param MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni $deptoUnidadRRHH
      */
-    public function setDeptoUnidadRRHH(\MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni $deptoUnidadRRHH)
+    public function setDeptoUnidadRRHH($deptoUnidadRRHH)
     {
         $this->deptoUnidadRRHH = $deptoUnidadRRHH;
     }
@@ -122,7 +122,7 @@ class RecursoHumano {
      *
      * @param MinSal\SidPla\DepUniBundle\Entity\TipoRRHumano $tipoRRHH
      */
-    public function setTipoRRHH(\MinSal\SidPla\DepUniBundle\Entity\TipoRRHumano $tipoRRHH)
+    public function setTipoRRHH($tipoRRHH)
     {
         $this->tipoRRHH = $tipoRRHH;
     }

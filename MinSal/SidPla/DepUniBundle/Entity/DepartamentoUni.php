@@ -89,7 +89,7 @@ class DepartamentoUni {
     /**
      * Get uniOrgDep
      *
-     * @return MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa 
+     * @return MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa
      */
     public function getUniOrgDep()
     {

@@ -6,10 +6,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 
-use MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni;
-use MinSal\SidPla\DepUniBundle\EntityDao\DepartamentoUniDao;
-
+use MinSal\SidPla\DepUniBundle\Entity\RecursoHumano;
 use MinSal\SidPla\DepUniBundle\EntityDao\RecursoHumanoDao;
+
+use MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni;
 
 //Para saber que unidad organizativa a la que pertenece y mostrar los elementos asociados
 use MinSal\SidPla\UsersBundle\Entity\User;
@@ -17,33 +17,37 @@ use MinSal\SidPla\AdminBundle\Entity\Empleado;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 
-class AccionDepUniDeptoUniController extends Controller {
+class AccionDepUniRRHHController extends Controller {
 
-    public function consultarDeptoUniJSONAction() {
-        
-        $unidadOrg=$this->obtenerUniOrg();
-        $deptosUni=$unidadOrg->getDepartUnidades();
-        $rrHH=new RecursoHumanoDao($this->getDoctrine());
+    public function consultarRRHHJSONAction() {
+
+        $unidadOrg = $this->obtenerUniOrg();
+        $deptosUni = $unidadOrg->getDepartUnidades();
+
         $aux = new DepartamentoUni();
-        $i = 0;
-
+        $numfilas=0;
+        $j=0;
         foreach ($deptosUni as $aux) {
-            $rows[$i]['id'] = $aux->getCodDeptoUnidad();
-            $cant=$rrHH->cuantoRRHH($aux->getCodDeptoUnidad());
-            $rows[$i]['cell'] = array($aux->getCodDeptoUnidad(),
-                $aux->getNombreDepto(),
-                $cant
-            );
-            $i++;
+            $rrHH=$aux->getRrHHs();
+            $aux2=new RecursoHumano();
+            $numfilas += count($rrHH);
+            foreach($rrHH as $aux2){
+                $rows[$j]['id'] = $aux2->getCodigoRRHH();
+                $rows[$j]['cell'] = array($aux2->getCodigoRRHH(),
+                    $aux2->getDeptoUnidadRRHH()->getNombreDepto(),
+                    $aux2->getTipoRRHH()->getDescripRRHH(),
+                    $aux2->getCantidad(),
+                    $aux2->getDescripcion()
+                );
+                $j++;
+            }
         }
-
-        $numfilas = count($deptosUni);
 
         if ($numfilas != 0) {
             array_multisort($rows, SORT_ASC);
         } else {
             $rows[0]['id'] = 0;
-            $rows[0]['cell'] = array(' ', ' ', ' ');
+            $rows[0]['cell'] = array(' ', ' ',' ',' ',' ');
         }
 
         $datos = json_encode($rows);
@@ -74,27 +78,29 @@ class AccionDepUniDeptoUniController extends Controller {
         return $unidad;
     }
     
-    public function manttDeptoUniEdicionAction() {
+    public function manttRRHHEdicionAction() {
         $request = $this->getRequest();
         
 
-        $codigoDeptoUni = $request->get('id');
-        $nombreDeptoUni=$request->get('nombre');
-        $unidadOrg=$this->obtenerUniOrg();      
-
+        $codigoRRHH = $request->get('id');
+        $codDeptoUni=$request->get('depto');
+        $codTipoRR=$request->get('tipoRRHH');
+        $cantRRHH=(int)$request->get('cant');
+        $descRRHH=$request->get('descripcion');
+        
         $operacion = $request->get('oper');
 
-        $deptoUniDao=new DepartamentoUniDao($this->getDoctrine());
+        $rrHHDao=new RecursoHumanoDao($this->getDoctrine());
 
         switch ($operacion){
             case 'add':
-                $deptoUniDao->agregarDeptoUni($nombreDeptoUni, $unidadOrg);
+                $rrHHDao->agregarRRHH($codDeptoUni,$codTipoRR, $cantRRHH, $descRRHH);    
             break;
             case 'edit':
-                $deptoUniDao->editarDeptoUni($codigoDeptoUni,$nombreDeptoUni, $unidadOrg);
+                $rrHHDao->editarRRHH($codigoRRHH,$codDeptoUni,$codTipoRR, $cantRRHH, $descRRHH);
                 break;
             case 'del':
-               $deptoUniDao->eliminarDeptoUni($codigoDeptoUni);
+                 $rrHHDao->eliminarRRHH($codigoRRHH);
                 break;
         }
 
