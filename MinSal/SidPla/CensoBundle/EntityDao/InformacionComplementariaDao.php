@@ -32,6 +32,14 @@ class InformacionComplementariaDAO {
         return $mensajes;
     }
     
+    public function getInfoComplementaria($id) {	    
+        $infComplementaria=$this->repositorio->find($id);
+        if(!$infComplementaria){
+            $infComplementaria = new InformacionComplementaria();
+        }
+        return $infComplementaria;
+    }
+    
     
     /*
      *  Almacena los datos de informacion complementaria  ingresado en el sistema

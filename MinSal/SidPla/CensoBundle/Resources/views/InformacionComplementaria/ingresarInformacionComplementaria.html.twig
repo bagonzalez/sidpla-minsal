@@ -2,15 +2,15 @@
  <script type="text/javascript">
      
      $(document).ready(function(){
-         $('#guardarPobHumana').click(function(){
-                document.location.href='{{ path('MinSalSidPlaCensoBundle_ingresarPoblacionHumana') }}'
+         $('#guardarInfComp').click(function(){
+                document.location.href='{{ path('MinSalSidPlaCensoBundle_ingresarInfComplementaria') }}'
          });
          
      });
  </script>
 <br></br>
 
-<form action="{{ path('MinSalSidPlaCensoBundle_ingresarPoblacionHumana') }}" method="post" >    
+<form action="{{ path('MinSalSidPlaCensoBundle_ingresarInfComplementaria') }}" method="post" >    
     
     <input name="idAreaUrbana" id="idAreaUrbanaInfCom" value=0 type="hidden"/>    
     <input name="idAreaRural" id="idAreaRuralInfCom" value=0 type="hidden"/>    
@@ -28,7 +28,7 @@
         <tr>            
             <td align="center"  colspan="3" >AREA URBANA</td>
             <td align="center"  colspan="3" >AREA RURAL</td>
-            <td align="center"  colspan="3" >PROMOTORES DE SALUD</td>
+            <!--<td align="center"  colspan="3" >PROMOTORES DE SALUD</td>-->
             <td align="center"  colspan="3" >TOTAL GENERAL</td>            
         </tr>
        
@@ -37,7 +37,7 @@
 
             <td  colspan="3"  align="center" ><input  type="text"   name="_urbanaComple" value="0" size="15%" ></input></td>      
             <td  colspan="3"  align="center" ><input name="_ruralComple" value="0" size="15%" ></input></td>
-            <td  colspan="3"  align="center" ><input name="_promotorComple" value="0" size="15%" ></input></td>
+            <!--<td  colspan="3"  align="center" ><input name="_promotorComple" value="0" size="15%" ></input></td>-->
             <td  colspan="3"  align="center" ><input id="totalComple" value="0" size="15%" ></input></td>
             
         </tr>  
