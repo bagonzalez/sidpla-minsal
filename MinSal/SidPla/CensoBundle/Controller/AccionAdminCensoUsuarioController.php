@@ -708,6 +708,35 @@ class AccionAdminCensoUsuarioController extends Controller{
         
     }  
     
+     public function ingresarInfComplementariaAction(){
+        
+        $request=$this->getRequest();
+        
+        $idAreaUrbana=$request->get('idAreaUrbana');
+        $idAreaRural=$request->get('idAreaRural');
+        $idAreaPromotor=$request->get('idAreaPromotor');
+        
+            
+        $cantUrbana=$request->get('_urbanaComple');
+        $cantRural=$request->get('_ruralComple');
+            
+        $infComplementaDao=new InformacionComplementariaDao($this->getDoctrine()); 
+        
+                
+        $regInfComple=$infComplementaDao->getInfoComplementaria($idAreaUrbana);
+        $regInfComple->setCantidadInfoComp($cantUrbana);
+        
+        $this->getDoctrine()->getEntityManager()->persist($regInfComple);
+        $this->getDoctrine()->getEntityManager()->flush(); 
+        
+        $regInfComple=$infComplementaDao->getInfoComplementaria($idAreaRural);
+        $regInfComple->setCantidadInfoComp($cantRural);      
+        
+        $this->getDoctrine()->getEntityManager()->persist($regInfComple);
+        $this->getDoctrine()->getEntityManager()->flush();
+                                 
+        return $this->consultarInformacionComplementariaAction();                  
+    }     
     
 }
 

@@ -72,6 +72,11 @@ MinSalSidPlaCensoBundle_ingresarInfReleva:
     pattern:  /ingresarInfReleva
     defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:ingresarInfReleva }
 
+MinSalSidPlaCensoBundle_ingresarInfComplementaria:
+    pattern:  /ingresarInfComplementaria
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:ingresarInfComplementaria }
+
+
 MinSalSidPlaCensoBundle_procesarPoblacionHumana:
     pattern:  /procesarPoblacionHumana
     defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:procesarPoblacionHumana }
