@@ -16,10 +16,6 @@ use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 use MinSal\SidPla\PaoBundle\Entity\Pao;
 use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 
-use \Java;
-use \JavaClass;
-
-
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -149,108 +145,6 @@ class AccionJustificacionController extends Controller {
             
         }
         
-        
-        /** 
-         * convert a php value to a java one... 
-         * @param string $value 
-         * @param string $className 
-         * @returns boolean success 
-         */  
-        function convertValue($value, $className)  
-        {  
-            // if we are a string, just use the normal conversion  
-            // methods from the java extension...  
-            try   
-            {  
-                if ($className == 'java.lang.String')  
-                {  
-                    $temp = new Java('java.lang.String', $value);  
-                    return $temp;  
-                }  
-                else if ($className == 'java.lang.Boolean' ||  
-                    $className == 'java.lang.Integer' ||  
-                    $className == 'java.lang.Long' ||  
-                    $className == 'java.lang.Short' ||  
-                    $className == 'java.lang.Double' ||  
-                    $className == 'java.math.BigDecimal')  
-                {  
-                    $temp = new Java($className, $value);  
-                    return $temp;  
-                }  
-                else if ($className == 'java.sql.Timestamp' ||  
-                    $className == 'java.sql.Time')  
-                {  
-                    $temp = new Java($className);  
-                    $javaObject = $temp->valueOf($value);  
-                    return $javaObject;  
-                }  
-            }  
-            catch (Exception $err)  
-            {  
-                echo (  'unable to convert value, ' . $value .  
-                        ' could not be converted to ' . $className);  
-                return false;  
-            }
-
-            echo (  'unable to convert value, class name '.$className.  
-                    ' not recognised');  
-            return false;  
-        }
-
-
-        
-        public function reporteJustificacionAction(){
-            $opciones=$this->getRequest()->getSession()->get('opciones');
-            $request=$this->getRequest();
-            $JustiPao=$request->get('justificacion');            
-            $id=$request->get('id');
-            //$JustiDao=new JustificacionDao($this->getDoctrine());
-            //$JustiDao-> actualizacionJustificacion($JustiPao, $id);
-            
-            try {
-                
-                $compileManager = new JavaClass("net.sf.jasperreports.engine.JasperCompileManager");                
-                $report = $compileManager->compileReport(__DIR__."/jasperReports/reporteJustificacion.jrxml");
-                
-                $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
-
-                $params = new Java("java.util.HashMap");
-                $params->put("idJustificacion", new java("java.lang.Integer", $id));
-
-                $memo=new Java('org.postgresql.Driver');
-                $drm=new JavaClass("java.sql.DriverManager");
-                $Conn = $drm->getConnection("jdbc:postgresql://edwinpc.dyndns-wiki.com:5432/sidpla", "sidpla" , "sidplaDB");              
-
-                $jasperPrint = $fillManager->fillReport($report, $params, $Conn);
-                $outputPath = realpath(".")."/"."output.pdf";
-
-                $exportManager = new JavaClass("net.sf.jasperreports.engine.JasperExportManager");
-                $exportManager->exportReportToPdfFile($jasperPrint, $outputPath);
-            
-                header("Content-type: application/pdf");
-                readfile($outputPath);
-                unlink($outputPath);                
-                $Conn->close();
-                $this->getResponse()->clearHttpHeaders();
-                $this->getResponse()->setHttpHeader('Pragma: public', true);
-                $this->getResponse()->setContentType('application/pdf');
-
-                $this->getResponse()->setHttpHeader('Content-Disposition', 'attachment; filename="nombre.pdf"');
-                $this->getResponse()->sendHttpHeaders();
-                
-           }
-          catch( Exception $ex ) {
-            print $ex->getCause();
-            if( $Conn != null ) {
-              $Conn->close();
-            }
-              throw $ex;
-          }
-  
-             return $this->getResponse();
-            
-        }
-      
         
         }
      ?>
