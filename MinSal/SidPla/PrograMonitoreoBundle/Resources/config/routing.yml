@@ -1,0 +1,3 @@
+MinSalSidPlaPrograMonitoreoBundle_homepage:
+    pattern:  /
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:Default:index }
