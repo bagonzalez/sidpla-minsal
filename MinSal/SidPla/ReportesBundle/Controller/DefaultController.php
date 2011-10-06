@@ -34,7 +34,16 @@ class DefaultController extends Controller
     {
         $memo=new Java('org.postgresql.Driver');
         $drm=new JavaClass("java.sql.DriverManager");
-        $Conn = $drm->getConnection("jdbc:postgresql://edwinpc.dyndns-wiki.com:5432/sidpla", "sidpla" , "sidplaDB");                          
+        
+        $host=$this->container->getParameter('database_host');
+        $userdb=$this->container->getParameter('database_user');
+        $password=$this->container->getParameter('database_password');
+        $port=$this->container->getParameter('database_port');
+        $db=$this->container->getParameter('database_name');
+        
+        
+        
+        $Conn = $drm->getConnection("jdbc:postgresql://".$host.":".$port."/".$db, $userdb , $password);                          
         return $Conn;
     }
     
