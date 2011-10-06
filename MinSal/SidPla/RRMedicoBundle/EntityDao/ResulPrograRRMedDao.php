@@ -6,6 +6,8 @@ use MinSal\SidPla\RRMedicoBundle\Entity\ResulPrograRRMed;
 use Doctrine\ORM\Query\ResultSetMapping;
 
 use MinSal\SidPla\RRMedicoBundle\Entity\TipoHorario;
+use MinSal\SidPla\RRMedicoBundle\Entity\PrograRRMed;
+use MinSal\SidPla\RRMedicoBundle\EntityDao\PrograRRMedDao;
 
 class ResulPrograRRMedDao {
 
@@ -48,10 +50,12 @@ class ResulPrograRRMedDao {
      */
 
     public function editarResulPrograRRMed($codResulProgra, $cantResult) {
-       // $resulPrograRR=new ResulPrograRRMed();
+        
         $resulPrograRR= $this->getResulPrograRRMedEspecifico($codResulProgra);
         
-      //  $tipoHorario= new TipoHorario();
+        
+        $codPrograRRMed=$resulPrograRR->getPrograRRHH()->getCodPrograRRMed();
+        
         $tipoHorario=$resulPrograRR->gettipoHorario();
         $horas=$tipoHorario->getTipoCantidadHor();
         $turno=$tipoHorario->getTipoHorTurno();
@@ -61,7 +65,6 @@ class ResulPrograRRMedDao {
             $consultasDiasDisponibles=($this->calcularMin($cantResult, $horas,$turno))/10;
         }
         
-        
         $resulPrograRR->setCantRRMedDispo($cantResult);
         $resulPrograRR->setTotalHorasRR($totalHorasdiarias);
         $resulPrograRR->setConsulasDispo($consultasDiasDisponibles);
@@ -69,7 +72,10 @@ class ResulPrograRRMedDao {
         $this->em->persist($resulPrograRR);
         $this->em->flush();
         $matrizMensajes = array('El proceso de almacenar editar el resultado programacion recurso termino con exito');
-
+        
+        $prograRRMedDao= new PrograRRMedDao($this->doctrine);
+        $resul=$prograRRMedDao->editarPrograRRMed($codPrograRRMed);
+        
         return $matrizMensajes;
     }
     
