@@ -1,0 +1,3 @@
+MinSalSidPlaReportesBundle_homepage:
+    pattern:  /
+    defaults: { _controller: MinSalSidPlaReportesBundle:Default:index }
