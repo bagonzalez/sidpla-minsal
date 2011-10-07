@@ -61,6 +61,12 @@ class Pao {
      * @ORM\OneToMany(targetEntity="MinSal\SidPla\RRMedicoBundle\Entity\PrograRRMed", mappedBy="paoProRRMed")
      */
     private $programacionesRRMed;
+    
+    /**
+     * @ORM\OneToOne(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo", mappedBy="pao")
+     * @ORM\JoinColumn(name="promon_codigo", referencedColumnName="promon_codigo")
+     */
+    private $programacionMonitoreo;
 
     /**
      * Set idPao
@@ -198,7 +204,8 @@ class Pao {
      *
      * @param MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada $infraEvaluadaPao
      */
-    public function setinfraEvaluadaPao($infraEvaluadaPao) {
+    public function setInfraEvaluadaPao(\MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada $infraEvaluadaPao)
+    {
         $this->infraEvaluadaPao = $infraEvaluadaPao;
     }
 
@@ -207,8 +214,28 @@ class Pao {
      *
      * @return MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada 
      */
-    public function getinfraEvaluadaPao() {
+    public function getInfraEvaluadaPao()
+    {
         return $this->infraEvaluadaPao;
     }
 
+    /**
+     * Set programacionMonitoreo
+     *
+     * @param MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo $programacionMonitoreo
+     */
+    public function setProgramacionMonitoreo(\MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo $programacionMonitoreo)
+    {
+        $this->programacionMonitoreo = $programacionMonitoreo;
+    }
+
+    /**
+     * Get programacionMonitoreo
+     *
+     * @return MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo 
+     */
+    public function getProgramacionMonitoreo()
+    {
+        return $this->programacionMonitoreo;
+    }
 }
