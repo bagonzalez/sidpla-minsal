@@ -31,9 +31,16 @@ class ResulPrograRRMed {
     /**
      * @var integer $totalHorasRR
      *
-     * @ORM\Column(name="resprorec_totalhorasrecurso", type="float")
+     * @ORM\Column(name="resprorec_totalhorasrecurso", type="integer")
      */
     private $totalHorasRR;
+    
+     /**
+     * @var integer $totalMinRR
+     *
+     * @ORM\Column(name="resprorec_totalminutos", type="integer")
+     */
+    private $totalMinRR;
 
     /**
      * @var integer $ConsulasDispo
@@ -90,17 +97,40 @@ class ResulPrograRRMed {
     /**
      * Set totalHorasRR
      *
-     * @param float $totalHorasRR
+     * @param integer $totalHorasRR
      */
     public function setTotalHorasRR($totalHorasRR)
     {
         $this->totalHorasRR = $totalHorasRR;
     }
+    
+    
 
+    /**
+     * Get totalMinRR
+     *
+     * @return integer 
+     */
+    public function gettotalMinRR()
+    {
+        return $this->totalMinRR;
+    }
+
+    /**
+     * Set totalMinRR
+     *
+     * @param integer $totalMinRR
+     */
+    public function settotalMinRR($totalMinRR)
+    {
+        $this->totalMinRR = $totalMinRR;
+    }
+    
+    
     /**
      * Get totalHorasRR
      *
-     * @return float 
+     * @return integer 
      */
     public function getTotalHorasRR()
     {

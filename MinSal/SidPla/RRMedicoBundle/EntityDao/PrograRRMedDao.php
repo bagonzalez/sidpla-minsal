@@ -31,7 +31,7 @@ class PrograRRMedDao {
         $prograRRMed = new PrograRRMed();
         $prograRRMed = $this->getPrograEspecifico($codProgra);
 
-        $prograRRMed->setTotalMinutos(14);
+        $prograRRMed->setTotalMinutos($this->cuantosMinutos($codProgra));
         $prograRRMed->setTotaHoras($this->cuantosHoras($codProgra));
         $prograRRMed->setTotalConsul($this->cuantosConsultas($codProgra));
 
@@ -74,6 +74,23 @@ class PrograRRMedDao {
             return 0;
         else
             return $x[0]['consul'];
+    }
+    
+        public function cuantosMinutos($codProgra) {
+
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('minutos', 'minutos');
+        $query = $this->em->createNativeQuery('SELECT sum (resprorec_totalminutos) minutos
+                                               FROM sidpla_resultadoprogrecurso
+                                               WHERE prorecmed_codigo = ?
+                                               Group BY prorecmed_codigo', $rsm);
+        $query->setParameter(1, $codProgra);
+
+        $x = $query->getResult();
+        if (count($x) == 0)
+            return 0;
+        else
+            return $x[0]['minutos'];
     }
 
 }

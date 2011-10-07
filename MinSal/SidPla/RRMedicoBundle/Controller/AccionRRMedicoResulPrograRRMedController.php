@@ -54,12 +54,11 @@ class AccionRRMedicoResulPrograRRMedController extends Controller {
 
                 foreach ($resulRRMed as $aux2) {
                     $rows[$i]['id'] = $aux2->getCodResproRR();
-                    $min = $resulProgRRDao->calcularMin($aux2->getCantRRMedDispo(), $aux2->gettipoHorario()->getTipoCantidadHor(), $turno);
                     $rows[$i]['cell'] = array($aux2->getCodResproRR(),
                         $aux2->gettipoHorario()->getTipoHorDes(),
                         $aux2->getCantRRMedDispo(),
                         $aux2->getTotalHorasRR(),
-                        $min,
+                        $aux2->gettotalMinRR(),
                         $aux2->getConsulasDispo()
                     );
 
