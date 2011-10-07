@@ -149,12 +149,15 @@ class PeriodoOficial
     {
         return $this->activoPerOfi;
     }
-     /**
+
+
+
+    /**
      * Set tipPerioPerOfi
      *
      * @param MinSal\SidPla\PaoBundle\Entity\TipoPeriodo $tipPerioPerOfi
      */
-    public function settipPerioPerOfi($tipPerioPerOfi)
+    public function setTipPerioPerOfi(\MinSal\SidPla\PaoBundle\Entity\TipoPeriodo $tipPerioPerOfi)
     {
         $this->tipPerioPerOfi = $tipPerioPerOfi;
     }
@@ -162,11 +165,10 @@ class PeriodoOficial
     /**
      * Get tipPerioPerOfi
      *
-     * @return MinSal\SidPla\PaoBundle\Entity\TipoPeriodo
+     * @return MinSal\SidPla\PaoBundle\Entity\TipoPeriodo 
      */
-    public function gettipPerioPerOfi()
+    public function getTipPerioPerOfi()
     {
         return $this->tipPerioPerOfi;
     }
-
 }
