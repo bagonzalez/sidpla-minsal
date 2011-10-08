@@ -34,7 +34,7 @@
               for(var i=0;i < ids.length;i++){ var cl = ids[i];
                   record= jQuery('#theGrid').jqGrid("getRowData",cl);
                   var nombre= record.nombrePrimero +" "+record.nombreSegundo +" "+record.primerApellido+" "+record.segundoApellido;
-                  be = "<input style='height:22px;width:75 px;' type='button' id='seleccionempleado' value='seleccionar' onclick=\" $('#idempleado').attr('value', '"+cl+"');  $('#responsable').attr('value', '"+nombre+"');\" />";
+                  be = "<input class='jqmClose' style='height:22px;width:75 px;' type='button' id='seleccionempleado' value='seleccionar' onclick=\" $('#idempleado').attr('value', '"+cl+"');  $('#responsable').attr('value', '"+nombre+"'); \" />";
                   
                   jQuery("#theGrid").jqGrid('setRowData',ids[i],{act:be}); } },
           rowNum:10,
