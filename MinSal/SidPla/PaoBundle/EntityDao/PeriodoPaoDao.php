@@ -14,6 +14,7 @@ use MinSal\SidPla\PaoBundle\EntityDao\PaoDao;
 use MinSal\SidPla\PaoBundle\Entity\Pao;
 
 
+
 class PeriodoPaoDao {
     var $doctrine;
     var $repositorio;
@@ -52,6 +53,37 @@ class PeriodoPaoDao {
 
         return $matrizMensajes;
     }
+    
+     public function getMinFechaPao($idPao) {         
+      
+         $qb = $this->em->createQueryBuilder();
+         $qb->select($qb->expr()->min('p.fechIniPerPao'))
+            ->from('MinSalSidPlaPaoBundle:PeriodoPao', 'p')
+            ->join('p.paoPerPao','pao')
+            ->where('pao.idPao = ?1')            
+            ->setParameter(1, $idPao);
+         
+         $query = $qb->getQuery();
+         $result = $query->getResult();
+             
+        return $result;
+    }
+    
+     public function getMaxFechaPao($idPao) {         
+      
+         $qb = $this->em->createQueryBuilder();
+         $qb->select($qb->expr()->max('p.fechIniPerPao'))
+            ->from('MinSalSidPlaPaoBundle:PeriodoPao', 'p')
+            ->join('p.paoPerPao','pao')
+            ->where('pao.idPao = ?1')            
+            ->setParameter(1, $idPao);
+         
+         $query = $qb->getQuery();
+         $result = $query->getResult();
+             
+        return $result;
+    }
+    
 }
 
 ?>
