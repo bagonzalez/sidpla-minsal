@@ -8,10 +8,11 @@
           url: 'consultarObjetivosEspecificosJSON?idCaractOrg={{idCaractOrg}}',
           datatype:'json',
           altRows:true,          
-          colNames:['Id','Objetivo','Actions'],
+          colNames:['Id','Objetivo','Eliminar','Actions'],
           colModel:[ 
             { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
             { name:'objetivo', index: 'objetivo', width:580,editable:true,editoptions:{size:40,maxlength: 300},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  },
+             {name: 'eliminar', width:80, fixed:true, sortable:false, resize:false, formatter:'actions', formatoptions:{keys:true,"editbutton":false}},
             {name:'act',index:'act', width:280,sortable:false}],
           rowNum:10,
           rowList:[10,20,30],
@@ -23,7 +24,7 @@
               var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
               for(var i=0;i < ids.length;i++){ var cl = ids[i];
                   be = "<input style='height:22px;width:70px;' type='button' value='Editar' onclick=\"jQuery('#theGridObj').editRow('"+cl+"');\" />";
-                  se = "<input style='height:22px;width:70px;' type='button' value='Eliminar' onclick=\"jQuery('#theGridObj').saveRow('"+cl+"');\" />"; 
+                  se = "<input style='height:22px;width:70px;' type='button' value='Eliminar' onclick=\"jQuery('#theGridObj').jqGrid('delGridRow','"+cl+"',{msg: 'Desea eliminar este objetivo especifico?'}); \" />"; 
                   ce = "<input style='height:22px;width:120px;' type='submit' value='Resultados Esperados' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
                   jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+"   "+se+"   "+ce}); } 
           },

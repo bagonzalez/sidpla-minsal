@@ -24,7 +24,7 @@ class Resultadore
    
     
     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado", inversedBy="Resultadore")
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado", inversedBy="Resultadore", cascade={"remove"})
      * @ORM\JoinColumn(name="resesp_codigo", referencedColumnName="resesp_codigo")
      */
     private $idResEsp;

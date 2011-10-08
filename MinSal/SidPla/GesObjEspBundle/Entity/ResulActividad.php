@@ -23,7 +23,7 @@ class ResulActividad
 
     
     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\Actividad", inversedBy="resulAct")
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\Actividad", inversedBy="resulAct", cascade={"remove"})
      * @ORM\JoinColumn(name="actividad_codigo", referencedColumnName="actividad_codigo")
      */
     private $idActividad;

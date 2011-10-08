@@ -119,10 +119,16 @@ class AccionAdminObjetivosEspecificosController extends Controller {
         $objDao = new ObjetivoEspecificoDao($this->getDoctrine());
 
         if ($operacion == 'edit') {
-            $objDao->editObjEspec($objetivo, $id);
+          $objDao->editObjEspec($objetivo, $id);
         }
 
         if ($operacion == 'del') {
+            //eliminar los resultados esperados
+            
+            
+            
+            
+            
             $objDao->delObjEspec($id);
         }
 

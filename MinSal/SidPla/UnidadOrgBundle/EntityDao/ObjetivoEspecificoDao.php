@@ -101,7 +101,7 @@ class ObjetivoEspecificoDao {
        // $resEspDescMetAnual="ttttt";
        // $resEspResponsable="neto";
          $objResulesperado=new ResultadoEsperado();
-         $objResulesperado->setIdResTempl($idResTempl);                         
+        // $objResulesperado->setIdResTempl($idResTempl);                         
          $objResulesperado->setIdTipoMeta($tipometa);                         
          $objResulesperado->setResEspeDesc($resEspeDesc);                         
          $objResulesperado->setResEspNomencl($resEspNomencl);                         

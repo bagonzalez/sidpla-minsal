@@ -4,6 +4,8 @@ namespace MinSal\SidPla\UnidadOrgBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+use SymfonyComponentValidatorConstraints as Assert;
+use DoctrineCommonCollectionsArrayCollection; 
 /**
  * MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico
  *
@@ -56,7 +58,7 @@ class ObjetivoEspecifico
     protected $caractOrg;
 
      /**
-     * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado", mappedBy="idObjEsp")
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado", mappedBy="idObjEsp", cascade={"persist", "remove"})
      */
     protected $resultadosEsperados;
     
