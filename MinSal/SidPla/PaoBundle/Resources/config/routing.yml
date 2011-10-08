@@ -55,7 +55,4 @@ MinSalSidPlaPaoBundle_actualizarJustificacion:
     pattern:  /actualizarJustificacion    
     defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:actualizarJustificacion }
 
-MinSalSidPlaPaoBundle_reporteJustificacion:
-    pattern:  /reporteJustificacion    
-    defaults: { _controller: MinSalSidPlaPaoBundle:AccionJustificacion:reporteJustificacion }
 

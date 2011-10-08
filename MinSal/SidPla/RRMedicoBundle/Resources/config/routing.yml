@@ -30,3 +30,9 @@ MinSalSidPlaRRMedicoBundle_consultarResulPrograRRMedJSON:
 MinSalSidPlaRRMedicoBundle_manttResulPrograRRMed:
     pattern:  /manttResulPrograRRMed
     defaults: { _controller: MinSalSidPlaRRMedicoBundle:AccionRRMedicoResulPrograRRMed:manttResulPrograRRMed}
+    
+MinSalSidPlaRRMedicoBundle_obtenerProgramacionJSON:
+    pattern:  /obtenerProgramacionJSON
+    defaults: { _controller: MinSalSidPlaRRMedicoBundle:AccionRRMedicoResulPrograRRMed:obtenerProgramacionJSON}
+        
+    

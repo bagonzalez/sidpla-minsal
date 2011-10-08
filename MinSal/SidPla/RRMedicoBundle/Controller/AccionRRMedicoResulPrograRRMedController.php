@@ -21,30 +21,28 @@ class AccionRRMedicoResulPrograRRMedController extends Controller {
     public function consultarResulPrograRRMedAction() {
         $opciones = $this->getRequest()->getSession()->get('opciones');
 
-        $TipoHorarioDao = new TipoHorarioDao($this->getDoctrine());
-        
-
         return $this->render('MinSalSidPlaRRMedicoBundle:ResulPrograRRMed:manttResultPrograRRMed.html.twig'
-                        , array('opciones' => $opciones,'turno'=>1));
+                        , array('opciones' => $opciones, 'turno' => 1));
     }
 
     public function consultarResulPrograRRMedJSONAction() {
+        $request = $this->getRequest();
 
         $anio = $this->getRequest()->get('anio');
         $turno = $this->getRequest()->get('turno');
 
         if ($anio == 0)
             $anio = date("Y");
-        
+
         $pao = $this->obtenerPao($anio);
-        
-        $resulProgRRDao=new ResulPrograRRMedDao($this->getDoctrine());
-        
+
+        $resulProgRRDao = new ResulPrograRRMedDao($this->getDoctrine());
+
         $prograRRMed = $pao->getProgramacionesRRMed();
         $aux = new PrograRRMed();
 
-        
-        $i = 0;
+
+
         $numfilas = 0;
         foreach ($prograRRMed as $aux) {
             if ($aux->getTurnoProg() == $turno) {
@@ -56,12 +54,11 @@ class AccionRRMedicoResulPrograRRMedController extends Controller {
 
                 foreach ($resulRRMed as $aux2) {
                     $rows[$i]['id'] = $aux2->getCodResproRR();
-                    $min =$resulProgRRDao->calcularMin($aux2->getCantRRMedDispo(),$aux2->gettipoHorario()->getTipoCantidadHor(), $turno);
-                            $rows[$i]['cell'] = array($aux2->getCodResproRR(),
+                    $rows[$i]['cell'] = array($aux2->getCodResproRR(),
                         $aux2->gettipoHorario()->getTipoHorDes(),
                         $aux2->getCantRRMedDispo(),
                         $aux2->getTotalHorasRR(),
-                        $min,
+                        $aux2->gettotalMinRR(),
                         $aux2->getConsulasDispo()
                     );
 
@@ -92,14 +89,14 @@ class AccionRRMedicoResulPrograRRMedController extends Controller {
 
     public function manttResulPrograRRMedAction() {
         $request = $this->getRequest();
-        
-        $cant=$this->getRequest()->get('cantidad');
-        $codResulProga=$this->getRequest()->get('id');
-        
-        $resulProgRRDao= new ResulPrograRRMedDao($this->getDoctrine());
-        
+
+        $cant = $this->getRequest()->get('cantidad');
+        $codResulProga = $this->getRequest()->get('id');
+
+        $resulProgRRDao = new ResulPrograRRMedDao($this->getDoctrine());
+
         $resulProgRRDao->editarResulPrograRRMed($codResulProga, $cant);
-        
+
 
         return new Response("{sc:true,msg:''}");
     }
@@ -119,6 +116,47 @@ class AccionRRMedicoResulPrograRRMedController extends Controller {
         $pao = $unidaDao->getPaoAnio($idUnidad, $anio);
 
         return $pao;
+    }
+
+    public function obtenerProgramacionJSONAction() {
+        $request = $this->getRequest();
+        $numfilas = 0;
+        $turno = $this->getRequest()->get('turno');
+        $pao = $this->obtenerPao(date("Y"));
+
+        $resulProgRRDao = new ResulPrograRRMedDao($this->getDoctrine());
+
+        $prograRRMed = $pao->getProgramacionesRRMed();
+        $aux = new PrograRRMed();
+
+        
+        $numfilas = count($prograRRMed);
+        foreach ($prograRRMed as $aux) {
+            if ($aux->getTurnoProg()== $turno) {
+                $rows[0]['id'] = $aux->getCodPrograRRMed();
+                $rows[0]['cell'] = array($aux->getTotalMinutos(),
+                    $aux->getTotaHoras(),
+                    $aux->getTotalConsul()
+                );
+            }
+        }
+
+        if ($numfilas == 0) {
+            $rows[0]['id'] = 0;
+            $rows[0]['cell'] = array(' ', ' ', ' ');
+        }
+
+        $datos = json_encode($rows);
+        $pages = floor($numfilas / 10) + 1;
+
+        $jsonresponse = '{
+               "page":"1",
+               "total":"' . $pages . '",
+               "records":"' . $numfilas . '", 
+               "rows":' . $datos . '}';
+
+        $response = new Response($jsonresponse);
+        return $response;
     }
 
 }

@@ -34,14 +34,27 @@ $(document).ready(function(){
      },
     editurl:'manttResulPrograRRMed',
     gridComplete: 
-      function(){ 
+      function(){
+               $.getJSON('obtenerProgramacionJSON?turno='+$('#selHorario').val(), 
+            function(data) {
+               $.each(data, function(key, val) {
+                 if(key=='rows'){
+                    $.each(val, function(id, registro){
+                         $("#totmin").attr('value', registro['cell'][0]);
+                         $("#tothor").attr('value', registro['cell'][1]);
+                         $("#totcon").attr('value', registro['cell'][2]);
+
+                        });                    
+                      }
+                  });
+              });  
           var ids = jQuery("#tabPrograRHHH").jqGrid('getDataIDs');
           for(var i=0;i < ids.length;i++){
              var cl = ids[i]; 
              guardar = "<input style='height:18px;width:50px;' type='button' value='Guardar' onclick=\"jQuery('#tabPrograRHHH').saveRow('"+cl+"');"
                  +"$('#tabPrograRHHH').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');\" />";
              jQuery("#tabPrograRHHH").jqGrid('setRowData',ids[i],{act:guardar});
-         } 
+         }
        }          
     });
       
