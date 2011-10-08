@@ -14,6 +14,8 @@ namespace MinSal\SidPla\GesObjEspBundle\EntityDao;
 use MinSal\SidPla\GesObjEspBundle\Entity\Actividad;
 use MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado;
 use MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad;
+use MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo;
+
 class ActividadDao {
     //put your code here
 
@@ -63,7 +65,7 @@ class ActividadDao {
          return $matrizMensajes;
     }
     
-    public function agregarResulActividad($idActividad,$trimes,$trim,$fechInicio,$fechaFin) {
+    public function agregarResulActividad($idActividad,$trimes,$trim,$fechInicio,$fechaFin, $programacionMonitoreo) {
          
       
            $resultadoAux=new Actividad();
@@ -74,13 +76,17 @@ class ActividadDao {
          $objresultadore->setResulActProgramado($trim); 
          $objresultadore->setResulActFechaInicio($fechInicio);
          $objresultadore->setResulActFechaFin($fechaFin);
-         $objresultadore->setIdActividad($resultadoAux);                         
+         $objresultadore->setIdActividad($resultadoAux);  
          
+         $objresultadore->setProgramacionMonitoreo($programacionMonitoreo);
+         
+         $programacionMonitoreo->addResultadoact($objresultadore);
                  
          $resultadoAux->addResulAct($objresultadore);
 
          $this->em->persist($objresultadore);
          $this->em->persist($resultadoAux);
+         $this->em->persist($programacionMonitoreo);
          $this->em->flush();
         
         

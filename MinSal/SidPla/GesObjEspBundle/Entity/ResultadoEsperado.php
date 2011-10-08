@@ -4,6 +4,7 @@ namespace MinSal\SidPla\GesObjEspBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
+
 use SymfonyComponentValidatorConstraints as Assert; 
 use SymfonyComponentValidatorMappingClassMetadata;
 use SymfonyComponentValidatorConstraintsNotBlank;
@@ -115,7 +116,7 @@ class ResultadoEsperado
     protected $actividades;
     
     /**
-     * @ORM\OneToMany(targetEntity="Resultadore", mappedBy="idResEsp",cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="Resultadore", mappedBy="idResEsp", cascade={"persist", "remove"})
      */
     protected $Resultadore;
 

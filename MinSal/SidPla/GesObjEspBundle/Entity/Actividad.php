@@ -94,7 +94,7 @@ class Actividad
     private $actIndicador;
     
     /**
-     * @ORM\OneToMany(targetEntity="ResulActividad", mappedBy="idActividad",cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="ResulActividad", mappedBy="idActividad", cascade={"persist", "remove"})
      */
     protected $resulAct;
       

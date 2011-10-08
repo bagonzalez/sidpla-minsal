@@ -26,10 +26,31 @@ use MinSal\SidPla\UnidadOrgBundle\EntityDao\CaractOrgDao;
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
 use MinSal\SidPla\UsersBundle\Entity\User;
 
+use MinSal\SidPla\PaoBundle\Entity\Pao;
+
+
 class AccionAdminObjetivosEspecificosController extends Controller {
 
     //put your code here
 
+    public function obtenerPaoElaboracionAction(){
+        
+        $user=new User();
+        $empleado=new Empleado();        
+        $user = $this->get('security.context')->getToken()->getUser();        
+        $empleado=$user->getEmpleado();        
+        $idUnidad=$empleado->getUnidadOrganizativa()->getIdUnidadOrg();        
+        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad=new UnidadOrganizativa();              
+        $unidad=$unidaDao->getUnidadOrg($idUnidad);
+        
+        $paoElaboracion=new Pao();        
+        $paoElaboracion=$unidaDao->getPaoElaboracion($idUnidad);
+        
+        return $paoElaboracion;
+        
+    }
+    
 
     public function consultarObjetivosEspecificosAction() {
         $opciones = $this->getRequest()->getSession()->get('opciones');
@@ -119,22 +140,20 @@ class AccionAdminObjetivosEspecificosController extends Controller {
         $objDao = new ObjetivoEspecificoDao($this->getDoctrine());
 
         if ($operacion == 'edit') {
-          $objDao->editObjEspec($objetivo, $id);
+            $objDao->editObjEspec($objetivo, $id);
         }
 
         if ($operacion == 'del') {
-            //eliminar los resultados esperados
-            
-            
-            
-            
-            
             $objDao->delObjEspec($id);
         }
 
         if ($operacion == 'add') {
             $catOrgDao = new CaractOrgDao($this->getDoctrine());
-            $catOrgDao->agregarObjEspec($objetivo, $idCaractOrg);
+            
+            $paoElaboracion=$this->obtenerPaoElaboracionAction();       
+            $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+            
+            $catOrgDao->agregarObjEspec($objetivo, $idCaractOrg, $programacionMonitoreo);
         }
 
         return new Response("{sc:true,msg:''}");
