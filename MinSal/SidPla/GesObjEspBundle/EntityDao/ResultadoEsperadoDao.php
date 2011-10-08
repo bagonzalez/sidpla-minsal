@@ -16,6 +16,7 @@ namespace MinSal\SidPla\GesObjEspBundle\EntityDao;
 use MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado;
 use MinSal\SidPla\GesObjEspBundle\Entity\Actividad;
 use MinSal\SidPla\GesObjEspBundle\Entity\Resultadore;
+use MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo;
 
 class ResultadoEsperadoDao {
     //put your code here
@@ -130,7 +131,7 @@ class ResultadoEsperadoDao {
     }
    
     
-    public function agregarResultadore($idResultadoEsp,$trimes,$trim) {
+    public function agregarResultadore($idResultadoEsp,$trimes,$trim, $programacionMonitoreo) {
          
       
            $resultadoAux=new ResultadoEsperado();
@@ -139,13 +140,17 @@ class ResultadoEsperadoDao {
          $objresultadore=new Resultadore();
          $objresultadore->setResultadoreTrimestre($trimes);                         
          $objresultadore->setResultadoreProgramado($trim);                         
-         $objresultadore->setIdResEsp($resultadoAux);                         
+         $objresultadore->setIdResEsp($resultadoAux); 
          
+         $objresultadore->setProgramacionMonitoreo($programacionMonitoreo);
+         
+         $programacionMonitoreo->addResultadores($objresultadore);         
                  
          $resultadoAux->addResultadore($objresultadore);
 
          $this->em->persist($objresultadore);
          $this->em->persist($resultadoAux);
+         $this->em->persist($programacionMonitoreo);
          $this->em->flush();
         
         

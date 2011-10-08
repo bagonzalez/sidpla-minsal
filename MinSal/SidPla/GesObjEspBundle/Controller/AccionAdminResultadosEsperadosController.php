@@ -29,9 +29,33 @@ use MinSal\SidPla\GesObjEspBundle\EntityDao\TipoMetaDao;
 use MinSal\SidPla\GesObjEspBundle\Entity\Resultadore;
 use MinSal\SidPla\GesObjEspBundle\EntityDao\ResultadoreDao;
 
+use MinSal\SidPla\UsersBundle\Entity\User;
+use MinSal\SidPla\AdminBundle\Entity\Empleado;
+use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
+use MinSal\SidPla\PaoBundle\Entity\Pao;
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
+
 
 class AccionAdminResultadosEsperadosController extends Controller {
     //put your code here
+    
+     public function obtenerPaoElaboracionAction(){
+        
+        $user=new User();
+        $empleado=new Empleado();        
+        $user = $this->get('security.context')->getToken()->getUser();        
+        $empleado=$user->getEmpleado();        
+        $idUnidad=$empleado->getUnidadOrganizativa()->getIdUnidadOrg();        
+        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad=new UnidadOrganizativa();              
+        $unidad=$unidaDao->getUnidadOrg($idUnidad);
+        
+        $paoElaboracion=new Pao();        
+        $paoElaboracion=$unidaDao->getPaoElaboracion($idUnidad);
+        
+        return $paoElaboracion;
+        
+    }
 
     public function consultarResultadosEsperadosAction()
     {
@@ -239,18 +263,24 @@ class AccionAdminResultadosEsperadosController extends Controller {
            $trimestres=3;
            $trimescuatro=4;
            
+           
+           $paoElaboracion=$this->obtenerPaoElaboracionAction();
+           $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+           
+           
+           
           //inicia proceso de guardar el valor de lo programado en sidpla_resultadore
            $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
-           $resultadoDao->agregarResultadore($idResultadoEsp,$trimesuno,$trimUno); 
+           $resultadoDao->agregarResultadore($idResultadoEsp,$trimesuno,$trimUno, $programacionMonitoreo); 
           
           $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
-          $resultadoDao->agregarResultadore($idResultadoEsp,$trimesdos,$trimDos); 
+          $resultadoDao->agregarResultadore($idResultadoEsp,$trimesdos,$trimDos, $programacionMonitoreo); 
           
           $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
-          $resultadoDao->agregarResultadore($idResultadoEsp,$trimestres,$trimTres); 
+          $resultadoDao->agregarResultadore($idResultadoEsp,$trimestres,$trimTres, $programacionMonitoreo); 
           
           $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
-          $resultadoDao->agregarResultadore($idResultadoEsp,$trimescuatro,$trimCuatro); 
+          $resultadoDao->agregarResultadore($idResultadoEsp,$trimescuatro,$trimCuatro, $programacionMonitoreo); 
           
           
            $objetivoAux=new ObjetivoEspecifico();

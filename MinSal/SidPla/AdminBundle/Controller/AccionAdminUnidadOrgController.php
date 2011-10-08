@@ -121,7 +121,7 @@ class AccionAdminUnidadOrgController extends Controller {
 
         $nombreUnidad = $request->get('nombreUnidad');
         $direccion = $request->get('direccion');
-        $responsable = $request->get('responsable');
+        $responsable = $request->get('idempleado');
         $telefono = $request->get('telefono');
         $fax = $request->get('fax');
         $tipoUnidad = $request->get('tipoUnidad');

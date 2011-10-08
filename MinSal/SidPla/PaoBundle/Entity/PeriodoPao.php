@@ -22,16 +22,16 @@ class PeriodoPao {
     private $codPerPao;
 
     /**
-     * @var datetime $fechIniPerPao
+     * @var date $fechIniPerPao
      *
-     * @ORM\Column(name="periodopao_fechainicio", type="datetime")
+     * @ORM\Column(name="periodopao_fechainicio", type="date")
      */
     private $fechIniPerPao;
 
     /**
-     * @var datetime $fechFinPerPao
+     * @var date $fechFinPerPao
      *
-     * @ORM\Column(name="periodopao_fechafin", type="datetime")
+     * @ORM\Column(name="periodopao_fechafin", type="date")
      */
     private $fechFinPerPao;
 
@@ -72,7 +72,7 @@ class PeriodoPao {
     /**
      * Set fechIniPerPao
      *
-     * @param datetime $fechIniPerPao
+     * @param date $fechIniPerPao
      */
     public function setFechIniPerPao($fechIniPerPao) {
         $date = new \DateTime($fechIniPerPao);
@@ -82,7 +82,7 @@ class PeriodoPao {
     /**
      * Get fechIniPerPao
      *
-     * @return datetime 
+     * @return date 
      */
     public function getFechIniPerPao() {
         return $this->fechIniPerPao;
@@ -91,7 +91,7 @@ class PeriodoPao {
     /**
      * Set fechFinPerPao
      *
-     * @param datetime $fechFinPerPao
+     * @param date $fechFinPerPao
      */
     public function setFechFinPerPao($fechFinPerPao) {
         $date = new \DateTime($fechFinPerPao);
@@ -101,7 +101,7 @@ class PeriodoPao {
     /**
      * Get fechFinPerPao
      *
-     * @return datetime 
+     * @return date 
      */
     public function getFechFinPerPao() {
         return $this->fechFinPerPao;

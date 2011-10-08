@@ -23,7 +23,7 @@ class ResulActividad
 
     
     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\Actividad", inversedBy="resulAct")
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\Actividad", inversedBy="resulAct", cascade={"remove"})
      * @ORM\JoinColumn(name="actividad_codigo", referencedColumnName="actividad_codigo")
      */
     private $idActividad;
@@ -69,6 +69,14 @@ class ResulActividad
      * @ORM\Column(name="resact_fechafin", type="date")
      */
     private $resulActFechaFin;
+    
+    
+     
+     /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo", inversedBy="resultadoact")
+     * @ORM\JoinColumn(name="promon_codigo", referencedColumnName="promon_codigo")
+     */
+    protected $programacionMonitoreo;
 
      
     /**
@@ -230,6 +238,28 @@ class ResulActividad
     public function getResulActFechaFin()
     {
         return $this->resulActFechaFin;
+    }
+    
+    
+        
+     /**
+     * Set programacionMonitoreo
+     *
+     * @param integer $programacionMonitoreo
+     */
+    public function setProgramacionMonitoreo($programacionMonitoreo)
+    {
+        $this->programacionMonitoreo = $programacionMonitoreo;
+    }
+
+    /**
+     * Get programacionMonitoreo
+     *
+     * @return integer 
+     */
+    public function getProgramacionMonitoreo()
+    {
+        return $this->programacionMonitoreo;
     }
     
    

@@ -56,9 +56,16 @@ class ObjetivoEspecifico
     protected $caractOrg;
 
      /**
-     * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado", mappedBy="idObjEsp")
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado", mappedBy="idObjEsp",   cascade={"persist", "remove"})
      */
     protected $resultadosEsperados;
+    
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo", inversedBy="objetivosEspec")
+     * @ORM\JoinColumn(name="promon_codigo", referencedColumnName="promon_codigo")
+     */
+    //protected $programacionMonitoreo;
     
     /**
      * Set idObjEspec
@@ -204,6 +211,27 @@ class ObjetivoEspecifico
     public function getResultadoEsperado()
     {
         return $this->resultadosEsperados;
+    }
+    
+    
+     /**
+     * Set programacionMonitoreo
+     *
+     * @param integer $programacionMonitoreo
+     */
+    public function setProgramacionMonitoreo($programacionMonitoreo)
+    {
+        $this->programacionMonitoreo = $programacionMonitoreo;
+    }
+
+    /**
+     * Get programacionMonitoreo
+     *
+     * @return integer 
+     */
+    public function getProgramacionMonitoreo()
+    {
+        return $this->programacionMonitoreo;
     }
     
     

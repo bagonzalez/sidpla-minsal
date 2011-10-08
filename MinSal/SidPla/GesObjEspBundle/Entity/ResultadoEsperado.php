@@ -5,6 +5,10 @@ namespace MinSal\SidPla\GesObjEspBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\Common\Collections\ArrayCollection;
 
+use SymfonyComponentValidatorConstraints as Assert; 
+use SymfonyComponentValidatorMappingClassMetadata;
+use SymfonyComponentValidatorConstraintsNotBlank;
+
 /**
  * MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado
  *
@@ -23,7 +27,7 @@ class ResultadoEsperado
     private $idResEsp;
          
     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico", inversedBy="resultadosEsperados")
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico", inversedBy="resultadosEsperados", cascade={"remove"})
      * @ORM\JoinColumn(name="objesp_codigo", referencedColumnName="objesp_codigo")
      */
     private $idObjEsp;
@@ -107,12 +111,12 @@ class ResultadoEsperado
     protected $medioVerificacion;
     
     /**
-     * @ORM\OneToMany(targetEntity="Actividad", mappedBy="idResEsp")
+     * @ORM\OneToMany(targetEntity="Actividad", mappedBy="idResEsp", cascade={"persist", "remove"})
      */
     protected $actividades;
     
     /**
-     * @ORM\OneToMany(targetEntity="Resultadore", mappedBy="idResEsp")
+     * @ORM\OneToMany(targetEntity="Resultadore", mappedBy="idResEsp", cascade={"persist", "remove"})
      */
     protected $Resultadore;
 
