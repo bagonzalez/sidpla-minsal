@@ -28,10 +28,33 @@ use MinSal\SidPla\GesObjEspBundle\EntityDao\ActividadDao;
 use MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad;
 use MinSal\SidPla\GesObjEspBundle\EntityDao\ResulActividadDao;
 
+use MinSal\SidPla\UsersBundle\Entity\User;
+use MinSal\SidPla\AdminBundle\Entity\Empleado;
+use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
+use MinSal\SidPla\PaoBundle\Entity\Pao;
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
+
 
 class AccionAdminActividadesController extends Controller{
     //put your code here
 
+    public function obtenerPaoElaboracionAction(){
+        
+        $user=new User();
+        $empleado=new Empleado();        
+        $user = $this->get('security.context')->getToken()->getUser();        
+        $empleado=$user->getEmpleado();        
+        $idUnidad=$empleado->getUnidadOrganizativa()->getIdUnidadOrg();        
+        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad=new UnidadOrganizativa();              
+        $unidad=$unidaDao->getUnidadOrg($idUnidad);
+        
+        $paoElaboracion=new Pao();        
+        $paoElaboracion=$unidaDao->getPaoElaboracion($idUnidad);
+        
+        return $paoElaboracion;
+        
+    }
     
     
     public function consultarActividadesAction()
@@ -161,7 +184,20 @@ class AccionAdminActividadesController extends Controller{
                $trimTres=$request->get('trimTres');
                $trimCuatro=$request->get('trimCuatro');
                $fechainicio=$request->get('fechainicio');
-               $fechafin=$request->get('fechafin');                              
+               $fechafin=$request->get('fechafin');  
+               
+               $fechaInicioPrimer = $request->get('datepickerInicioPrimer');
+               $fechaFinPrimer = $request->get('datepickerFinPrimer');
+               
+               $fechaInicioSegundo = $request->get('datepickerInicioSegundo');
+               $fechaFinSegundo = $request->get('datepickerFinSegundo');
+               
+               $fechaInicioTercero = $request->get('datepickerInicioTercer');
+               $fechaFinTercero = $request->get('datepickerFinTercer');
+               
+               $fechaInicioCuarto = $request->get('datepickerInicioCuarto');
+               $fechaFinCuarto = $request->get('datepickerFinCuarto');
+               
                
             // $selectipometa=1;  
            
@@ -186,22 +222,18 @@ class AccionAdminActividadesController extends Controller{
            $trimestres=3;
            $trimescuatro=4;
            
+           
+            $paoElaboracion=$this->obtenerPaoElaboracionAction();
+           $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+           
           
           //inicia proceso de guardar el valor de lo programado en sidpla_resultadore
            $resultadoDao = new ActividadDao($this->getDoctrine());                      
-           $resultadoDao->agregarResulActividad($idActividad,$trimesuno,$trimUno,$fechainicio,$fechafin); 
-          
-           $resultadoDao = new ActividadDao($this->getDoctrine());                      
-           $resultadoDao->agregarResulActividad($idActividad,$trimesdos,$trimDos,$fechainicio,$fechafin); 
-           
-           $resultadoDao = new ActividadDao($this->getDoctrine());                      
-           $resultadoDao->agregarResulActividad($idActividad,$trimestres,$trimTres,$fechainicio,$fechafin); 
-           
-           $resultadoDao = new ActividadDao($this->getDoctrine());                      
-           $resultadoDao->agregarResulActividad($idActividad,$trimescuatro,$trimCuatro,$fechainicio,$fechafin); 
+           $resultadoDao->agregarResulActividad($idActividad,$trimesuno,$trimUno,$fechaInicioPrimer,$fechaFinPrimer, $programacionMonitoreo); 
+           $resultadoDao->agregarResulActividad($idActividad,$trimesdos,$trimDos,$fechaInicioSegundo,$fechaFinSegundo, $programacionMonitoreo); 
+           $resultadoDao->agregarResulActividad($idActividad,$trimestres,$trimTres,$fechaInicioTercero,$fechaFinTercero, $programacionMonitoreo); 
+           $resultadoDao->agregarResulActividad($idActividad,$trimescuatro,$trimCuatro,$fechaInicioCuarto,$fechaFinCuarto, $programacionMonitoreo); 
        
-          
-          
                   
            $objetivoAux=new ObjetivoEspecifico();
            $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
@@ -371,6 +403,8 @@ class AccionAdminActividadesController extends Controller{
           $tipometa=$request->get('selectipometa');
           $descripMetaAnual=$request->get('descripMetaAnual');
           
+          
+          
               
               //este  valor es  fusilados porque no se bien como  funcionan
           //asi que solo los asigno y lo mando
@@ -389,6 +423,21 @@ class AccionAdminActividadesController extends Controller{
                $fechainicio=$request->get('fechainicio');                              
                $fechafin=$request->get('fechafin');
             // $selectipometa=1;  
+             
+               $fechaInicioPrimer = $request->get('datepickerInicioPrimer');
+               $fechaFinPrimer = $request->get('datepickerFinPrimer');
+               
+               $fechaInicioSegundo = $request->get('datepickerInicioSegundo');
+               $fechaFinSegundo = $request->get('datepickerFinSegundo');
+               
+               $fechaInicioTercero = $request->get('datepickerInicioTercer');
+               $fechaFinTercero = $request->get('datepickerFinTercer');
+               
+               $fechaInicioCuarto = $request->get('datepickerInicioCuarto');
+               $fechaFinCuarto = $request->get('datepickerFinCuarto');
+               
+               
+               
            
                $resultadoDao = new ActividadDao($this->getDoctrine());                      
           $idActividad= $resultadoDao->editActividad($idfilaResultado,
@@ -407,19 +456,10 @@ class AccionAdminActividadesController extends Controller{
           
          //inicia proceso de guardar el valor de lo programado en sidpla_resultadore
            $resultadoDao = new ResulActividadDao($this->getDoctrine());                      
-           $resultadoDao->editResulActividad($trimUno,$iduno,$fechainicio,$fechafin,$id); 
-          
-           $resultadoDao = new ResulActividadDao($this->getDoctrine());                      
-           $resultadoDao->editResulActividad($trimDos,$iddos,$fechainicio,$fechafin,$id); 
-           
-           $resultadoDao = new ResulActividadDao($this->getDoctrine());                      
-           $resultadoDao->editResulActividad($trimTres,$idtres,$fechainicio,$fechafin,$id); 
-           
-           $resultadoDao = new ResulActividadDao($this->getDoctrine());                      
-           $resultadoDao->editResulActividad($trimCuatro,$idcuatro,$fechainicio,$fechafin,$id); 
-          
-          
-          
+           $resultadoDao->editResulActividad($trimUno,$iduno, $fechaInicioPrimer,$fechaFinPrimer, $id);            
+           $resultadoDao->editResulActividad($trimDos,$iddos,$fechaInicioSegundo, $fechaFinSegundo,$id);
+           $resultadoDao->editResulActividad($trimTres,$idtres,$fechaInicioTercero, $fechaFinTercero, $id); 
+           $resultadoDao->editResulActividad($trimCuatro, $idcuatro, $fechaInicioCuarto, $fechaFinCuarto, $id); 
           
          
           $objetivoAux=new ObjetivoEspecifico();

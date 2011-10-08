@@ -30,16 +30,16 @@ class PeriodoOficial
     private $anioPerOfi;
 
     /**
-     * @var datetime $fechIniPerOfi
+     * @var date $fechIniPerOfi
      *
-     * @ORM\Column(name="periodoficial_fechainicio", type="datetime")
+     * @ORM\Column(name="periodoficial_fechainicio", type="date")
      */
     private $fechIniPerOfi;
 
     /**
-     * @var datetime $fechFinPerOfi
+     * @var date $fechFinPerOfi
      *
-     * @ORM\Column(name="periodoficial_fechafin", type="datetime")
+     * @ORM\Column(name="periodoficial_fechafin", type="date")
      */
     private $fechFinPerOfi;
 
@@ -111,7 +111,7 @@ class PeriodoOficial
     /**
      * Set fechFinPerOfi
      *
-     * @param datetime $fechFinPerOfi
+     * @param date $fechFinPerOfi
      */
     public function setFechFinPerOfi($fechFinPerOfi)
     {
@@ -123,7 +123,7 @@ class PeriodoOficial
     /**
      * Get fechFinPerOfi
      *
-     * @return datetime 
+     * @return date 
      */
     public function getFechFinPerOfi()
     {

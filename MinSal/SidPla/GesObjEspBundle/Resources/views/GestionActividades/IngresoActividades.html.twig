@@ -5,6 +5,23 @@
 <script type="text/javascript">        
       $(document).ready(function(){
           
+          $('#dialogPrimer').jqm();
+          $('#dialogSegundo').jqm();
+          $('#dialogTercer').jqm();
+          $('#dialogCuarto').jqm();
+          
+          $( "#datepickerInicioPrimer" ).datepicker();
+          $( "#datepickerFinPrimer" ).datepicker();
+          
+          $( "#datepickerInicioSegundo" ).datepicker();
+          $( "#datepickerFinSegundo" ).datepicker();
+          
+          $( "#datepickerInicioTercer" ).datepicker();
+          $( "#datepickerFinTercer" ).datepicker();
+          
+          $( "#datepickerInicioCuarto" ).datepicker();
+          $( "#datepickerFinCuarto" ).datepicker();
+          
           $('#regresar').click(function() {
             this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
            
@@ -14,6 +31,24 @@
             this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_guardarActividades') }}';
              
           });
+          
+          $('#establecerFechaPrimer').click(function() {
+            $('#dialogPrimer').jqmShow();              
+          });
+          
+          $('#establecerFechaSegundo').click(function() {
+            $('#dialogSegundo').jqmShow();              
+          });
+          
+          
+          $('#establecerFechaTercero').click(function() {
+            $('#dialogTercer').jqmShow();              
+          });
+          
+          $('#establecerFechaCuarto').click(function() {
+            $('#dialogCuarto').jqmShow();              
+          });
+          
           
           
           $('#tabs').tabs();
@@ -43,8 +78,9 @@
                 <li><a href="#tabs-1">Nueva Actividad</a></li>
                 
         </ul>
+        <form action="" method="post" >
         <div id="tabs-1" >
-            <form action="" method="post" >
+            
                 <table align="center" id="datos"  >
                     <tr>
                         <td colspan="4" align="center" >Datos de la Actividad <br><br></td>
@@ -92,7 +128,8 @@
                     
                     <tr>
                         <td >fecha inicio:</td>
-                        <td colspan="3" ><input size="100%" name="fechainicio" id="fechainicio" ></input></td>
+                        <td colspan="3" ><input size="100%" name="fechainicio" id="fechainicio" ></input>
+                            </td>
                     </tr>
                       <tr>
                         <td >fecha fin:</td>
@@ -113,10 +150,10 @@
                         <TD WIDTH="25%" align="center">4to Trimestre</TD>
                          </tr>
                         <tr>
-                        <TD WIDTH="25%"align="center"> <input size="25%" name="trimUno" id="trimUno" ></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimDos" id="trimDos" ></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimTres" id="trimTres" ></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimCuatro" id="trimCuatro" ></input></TD>
+                        <TD WIDTH="25%"align="center"> <input size="25%" name="trimUno" id="trimUno" ><input type="button" id="establecerFechaPrimer"  value="..."/></input></TD>
+                        <TD WIDTH="25%"align="center"><input size="25%" name="trimDos" id="trimDos" ><input type="button" id="establecerFechaSegundo"  value="..."/></input></TD>
+                        <TD WIDTH="25%"align="center"><input size="25%" name="trimTres" id="trimTres" ><input type="button" id="establecerFechaTercero"  value="..."/></input></TD>
+                        <TD WIDTH="25%"align="center"><input size="25%" name="trimCuatro" id="trimCuatro" ><input type="button" id="establecerFechaCuarto"  value="..."/></input></TD>
                         </tr>   
                       
                        
@@ -131,10 +168,80 @@
                             
                         </td>
                     </tr>                    
-                </table>
-            </form>            
+                </table>                       
         </div>
-      
+        <div class="jqmWindow" style="width: 400px; top: 45%; left:40%" id="dialogPrimer">
+            <a href="#" class="jqmClose">Cerrar</a>
+            <hr>
+            <p>Primer Trimestre </p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                           <p>Fecha Inicio: <input id="datepickerInicioPrimer"  name="datepickerInicioPrimer"  type="text"></input></p> 
+                        </td>  
+                        <td>
+                            <p>Fecha Fin: <input id="datepickerFinPrimer" name="datepickerFinPrimer" type="text"></input></p>
+                        </td>                            
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="jqmWindow" style="width: 400px; top: 45%; left:60%" id="dialogSegundo">
+            <a href="#" class="jqmClose">Cerrar</a>
+            <hr>
+            <p>Segundo Trimestre </p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                           <p>Fecha Inicio: <input id="datepickerInicioSegundo" name="datepickerInicioSegundo" type="text"></input></p> 
+                        </td>  
+                        <td>
+                            <p>Fecha Fin: <input id="datepickerFinSegundo" name="datepickerFinSegundo" type="text"></input></p>
+                        </td>                            
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="jqmWindow" style="width: 400px; top: 45%; left:80%" id="dialogTercer">
+            <a href="#" class="jqmClose">Cerrar</a>
+            <hr>
+            <p>Tercer Trimestre </p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                           <p>Fecha Inicio: <input id="datepickerInicioTercer" name="datepickerInicioTercer" type="text"></input></p> 
+                        </td>  
+                        <td>
+                            <p>Fecha Fin: <input id="datepickerFinTercer"  name="datepickerFinTercer" type="text"></input></p>
+                        </td>                            
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        
+        <div class="jqmWindow" style="width: 400px; top: 45%; left:90%" id="dialogCuarto">
+            <a href="#" class="jqmClose">Cerrar</a>
+            <hr>
+            <p>Cuarto Trimestre </p>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>
+                           <p>Fecha Inicio: <input id="datepickerInicioCuarto" name="datepickerInicioCuarto" type="text"></input></p> 
+                        </td>  
+                        <td>
+                            <p>Fecha Fin: <input id="datepickerFinCuarto" name="datepickerFinCuarto"  type="text"></input></p>
+                        </td>                            
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+       </form>
 </div>
 
 

@@ -56,6 +56,12 @@ class Resultadore
      * @ORM\Column(name="resultadore_real", type="integer")
      */
     private $resultadoreRealizado;
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo", inversedBy="resultadores")
+     * @ORM\JoinColumn(name="promon_codigo", referencedColumnName="promon_codigo")
+     */
+    protected $programacionMonitoreo;
 
 
 
@@ -177,5 +183,25 @@ class Resultadore
     public function getResultadoreRealizado()
     {
         return $this->resultadoreRealizado;
+    }
+    
+         /**
+     * Set programacionMonitoreo
+     *
+     * @param integer $programacionMonitoreo
+     */
+    public function setProgramacionMonitoreo($programacionMonitoreo)
+    {
+        $this->programacionMonitoreo = $programacionMonitoreo;
+    }
+
+    /**
+     * Get programacionMonitoreo
+     *
+     * @return integer 
+     */
+    public function getProgramacionMonitoreo()
+    {
+        return $this->programacionMonitoreo;
     }
 }
