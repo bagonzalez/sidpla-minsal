@@ -1,0 +1,108 @@
+{# Muestra todos los empleados #}
+
+{% block body %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var myGrid = $('#theGrid');        
+        myGrid.jqGrid({ 
+          url: 'consultarEmpleadosJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Id','Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido', 'DUI', 'Unidad Organizativa','Opcion'],
+          colModel:[
+            { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}},
+            { name:'nombrePrimero', index: 'nombrePrimero', width:150,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:1, label: "Primer Nombre",elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'nombreSegundo', index: 'nombreSegundo',width:150,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:2, label: "Segundo Nombre"} },
+            { name:'primerApellido', index: 'primerApellido', width:150,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:3, label: "Primer Apellido",elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'segundoApellido', index: 'segundoApellido',width:150,editable:true,editoptions:{size:25,maxlength: 35} , formoptions:{ rowpos:4, label: "Segundo Apellido"} },
+            { name:'dui', index: 'dui',width:60,editable:true,editoptions:{size:25,maxlength: 10}, formoptions:{ rowpos:5, label: "DUI",elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'unidad', index: 'unidad',width:150,editable:true,edittype:"select",
+            editoptions:{ size: 1,
+                   dataUrl: 'consultarUnidadesOrgJSONSelect',
+                   dataEvents: [
+                      {  type: 'change',
+                         fn: function(e) {
+                            $('select#unidad').val(this.value);
+                         }
+                      }
+                   ]
+                }},
+             {name:'act',index:'act', width:75,sortable:false}], 
+             
+          gridComplete: function(){
+              var ids = jQuery("#theGrid").jqGrid('getDataIDs');
+              for(var i=0;i < ids.length;i++){ var cl = ids[i];
+                  record= jQuery('#theGrid').jqGrid("getRowData",cl);
+                  var nombre= record.nombrePrimero +" "+record.nombreSegundo +" "+record.primerApellido+" "+record.segundoApellido;
+                  be = "<input class='jqmClose' style='height:22px;width:75 px;' type='button' id='seleccionempleado' value='seleccionar' onclick=\" $('#idempleado').attr('value', '"+cl+"');  $('#responsable').attr('value', '"+nombre+"'); \" />";
+                  
+                  jQuery("#theGrid").jqGrid('setRowData',ids[i],{act:be}); } },
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          loadonce:true,
+          pager: jQuery('#pager'),
+          viewrecords: true, 
+          caption: 'Empleados disponibles',
+          height: "100%",
+          editurl: 'manttEmpleadoEdicion'
+        });
+        myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,
+        beforeRefresh: function() {$("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}
+        ).hideCol('id');
+       
+       function despuesAgregarEditar() {
+        $("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+            return[true,'']; //no error
+        }
+        $("#agregarEmpleado").click(function(){
+        jQuery('#theGrid').jqGrid('editGridRow',"new",
+             {
+              width:550,height:250,bottominfo:"Campos marcados con (*) son obligatorios",
+              afterSubmit:despuesAgregarEditar,closeAfterAdd:true,closeOnEscape: true,align:'center',
+              onclickSubmit: function(rp_ge, postdata){
+                                  alert("datos guardados con exito!");                                  
+                                 }
+              });
+        });
+        
+    
+         //editar
+        $("#editarEmpleado").click(function(){
+          var gr = jQuery('#theGrid').jqGrid('getGridParam','selrow');
+          if( gr != null )
+             jQuery('#theGrid').jqGrid('editGridRow',gr,
+               { width:550,height:250,closeAfterAdd : true,bottominfo:"Campos marcados con (*) son obligatorios",closeAfterEdit:true,
+                 afterSubmit:despuesAgregarEditar,reloadAfterSubmit:true,closeOnEscape: true,align:'center',
+                 onclickSubmit: function(rp_ge, postdata) {
+                              alert("Empleado Guardado con exito!");
+                   }   
+                       });
+          else alert("Por favor seleccione una fila para editar!"); 
+          });
+     
+        //eliminar
+        $("#eliminarEmpleado").click(function(){
+         var grs = jQuery('#theGrid').jqGrid('getGridParam','selrow');
+         if( grs != null ) 
+             jQuery('#theGrid').jqGrid('delGridRow',grs,
+                 {
+                msg: "Desea Eliminar Este Empleado?",caption:"Eliminando Empleado",
+                width:550,height:160,reloadAfterSubmit:true,align:'center',
+                onclickSubmit: function(rp_ge, postdata) {
+                           alert("Empleado eliminado con exito!");
+                        }
+               
+             }); 
+             else alert("Por favor seleccione una fila para borrar!"); 
+           }); 
+  //fin
+       
+      });
+    </script>
+        
+        <table id="theGrid" class="scroll"></table> 
+        <div id="pager" class="scroll" style="text-align:center;"></div> 
+        
+
+{% endblock %}

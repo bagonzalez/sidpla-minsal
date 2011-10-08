@@ -69,7 +69,7 @@
                     </tr>
                     <tr>
                         <td >Responsable: </td>
-                        <td colspan="3" ><input size="60%" name="responsable" id="responsable"  ></input><input type="button" class="jqModal" value="..." id="buscar"></input></td>
+                        <td colspan="3" ><input size="60%" name="responsable" id="responsable"></input><input type="button" class="jqModal" value="..." id="buscar"></input></td>
                     </tr>  
                     <tr>
                         <td >Tel&eacute;fono:</td>
@@ -112,6 +112,7 @@
                     <tr>
                         <td colspan="4" align="center" ><button type="submmit" id="guardar"  >Guardar</button>
                             <button type="reset" id='limpiar'  >Limpiar</button>
+                        <input type='hidden' name='idempleado' id="idempleado" value='' />
                         </td>                        
                     </tr>                    
                 </table>
@@ -122,7 +123,7 @@
         <div class="jqmWindow" id="dialog">
             <a href="#" class="jqmClose">Cerrar</a>
             <hr>
-            {% include 'MinSalSidPlaAdminBundle:Empleado:showAllEmpleados.html.twig'%}
+            {% include 'MinSalSidPlaAdminBundle:Empleado:showAllEmpleadosforUnitOrg.html.twig'%}
         </div>
 </div>
 

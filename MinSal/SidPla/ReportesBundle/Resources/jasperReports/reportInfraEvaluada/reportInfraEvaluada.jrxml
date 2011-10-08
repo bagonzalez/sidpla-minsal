@@ -63,7 +63,7 @@
 			<pen lineWidth="0.5" lineColor="#000000"/>
 		</box>
 	</style>
-	<subDataset name="Table Dataset 1"/>
+	<style name="Crosstab Data Text" hAlign="Center"/>
 	<parameter name="infraEvaluada" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -74,7 +74,8 @@
      sidpla_estadoinfraestructura."estinf_nombre" AS Estado,
      sidpla_unidadmedida."unimed_alias" AS Unidad_Medida,
      sidpla_evaluacionelementoinfra."evaleleifr_fechaevaluacion" AS Fecha_Evaluacion,
-     sidpla_pao."pao_anio" AS sidpla_pao_pao_anio
+     sidpla_pao."pao_anio" AS sidpla_pao_pao_anio,
+     sidpla_unidadorganizativa."uniorg_nombre" AS "Nombre Unidad"
 FROM
      "public"."sidpla_pao" sidpla_pao INNER JOIN "public"."sidpla_infraestructuraevaluada" sidpla_infraestructuraevaluada ON sidpla_pao."pao_codigo" = sidpla_infraestructuraevaluada."pao_codigo"
      AND sidpla_infraestructuraevaluada."infeva_codigo" = sidpla_pao."infeva_codigo"
@@ -82,8 +83,11 @@ FROM
      INNER JOIN "public"."sidpla_estadoinfraestructura" sidpla_estadoinfraestructura ON sidpla_evaluacionelementoinfra."estinf_codigo" = sidpla_estadoinfraestructura."estinf_codigo"
      INNER JOIN "public"."sidpla_elementoinfraestructura" sidpla_elementoinfraestructura ON sidpla_evaluacionelementoinfra."eleminf_codigo" = sidpla_elementoinfraestructura."eleminf_codigo"
      INNER JOIN "public"."sidpla_unidadmedida" sidpla_unidadmedida ON sidpla_elementoinfraestructura."unimed_codigo" = sidpla_unidadmedida."unimed_codigo"
+     INNER JOIN "public"."sidpla_unidadorganizativa" sidpla_unidadorganizativa ON sidpla_pao."uniorg_codigo" = sidpla_unidadorganizativa."uniorg_codigo"
 WHERE
-     sidpla_infraestructuraevaluada.infeva_codigo = $P{infraEvaluada}]]>
+     sidpla_infraestructuraevaluada.infeva_codigo = $P{infraEvaluada}
+ORDER BY
+     sidpla_estadoinfraestructura."estinf_nombre" ASC]]>
 	</queryString>
 	<field name="nombre_elemento" class="java.lang.String"/>
 	<field name="cantidad" class="java.math.BigDecimal"/>
@@ -91,6 +95,7 @@ WHERE
 	<field name="unidad_medida" class="java.lang.String"/>
 	<field name="fecha_evaluacion" class="java.sql.Timestamp"/>
 	<field name="sidpla_pao_pao_anio" class="java.math.BigDecimal"/>
+	<field name="Nombre Unidad" class="java.lang.String"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -98,14 +103,14 @@ WHERE
 		<band height="11" splitType="Stretch"/>
 	</title>
 	<pageHeader>
-		<band height="79" splitType="Stretch">
+		<band height="121" splitType="Stretch">
 			<image>
-				<reportElement x="33" y="6" width="80" height="45"/>
-				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPlaBundle/Resources/public/img-reportes/escudo.gif"]]></imageExpression>
+				<reportElement x="45" y="6" width="80" height="45"/>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/escudo.gif"]]></imageExpression>
 			</image>
 			<image>
-				<reportElement x="481" y="6" width="79" height="47"/>
-				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPlaBundle/Resources/public/img-reportes/minsalud.jpg"]]></imageExpression>
+				<reportElement x="475" y="6" width="79" height="47"/>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/minsalud.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="113" y="0" width="346" height="24"/>
@@ -119,7 +124,7 @@ WHERE
 				<textElement textAlignment="Center">
 					<font size="16" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PLANIFICACION ANUAL OPERATIVA]]></text>
+				<text><![CDATA[PLANIFICACIÓN ANUAL OPERATIVA]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="113" y="48" width="297" height="24"/>
@@ -135,31 +140,58 @@ WHERE
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sidpla_pao_pao_anio}]]></textFieldExpression>
 			</textField>
-		</band>
-	</pageHeader>
-	<columnHeader>
-		<band height="27" splitType="Stretch">
 			<staticText>
-				<reportElement x="19" y="2" width="100" height="20"/>
+				<reportElement x="113" y="83" width="346" height="16"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Elemento]]></text>
+				<text><![CDATA[Estado de la Infraestructura]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="47" splitType="Stretch">
+			<staticText>
+				<reportElement x="19" y="22" width="185" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Elemento Infraestructura]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="216" y="2" width="100" height="20"/>
+				<reportElement x="216" y="22" width="100" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estado]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="442" y="2" width="116" height="20"/>
+				<reportElement x="442" y="22" width="116" height="20"/>
 				<textElement textAlignment="Center">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Cantidad]]></text>
 			</staticText>
+			<line>
+				<reportElement x="19" y="42" width="553" height="2"/>
+				<graphicElement>
+					<pen lineWidth="1.75"/>
+				</graphicElement>
+			</line>
+			<staticText>
+				<reportElement x="0" y="0" width="185" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Nombre de la Unidad:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="216" y="0" width="356" height="20"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre Unidad}]]></textFieldExpression>
+			</textField>
 		</band>
 	</columnHeader>
 	<detail>
@@ -185,13 +217,7 @@ WHERE
 				<textFieldExpression><![CDATA[$F{nombre_elemento}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="0" y="21" width="572" height="1"/>
-			</line>
-			<line>
-				<reportElement x="193" y="1" width="1" height="20"/>
-			</line>
-			<line>
-				<reportElement x="410" y="1" width="1" height="20"/>
+				<reportElement x="19" y="19" width="553" height="1"/>
 			</line>
 		</band>
 	</detail>
@@ -203,7 +229,7 @@ WHERE
 			<textField>
 				<reportElement x="442" y="7" width="80" height="20"/>
 				<textElement textAlignment="Right"/>
-				<textFieldExpression><![CDATA["Page "+$V{PAGE_NUMBER}+" of"]]></textFieldExpression>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" De"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
 				<reportElement x="522" y="7" width="40" height="20"/>

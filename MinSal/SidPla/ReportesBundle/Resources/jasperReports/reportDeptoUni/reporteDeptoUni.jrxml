@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteDeptoUni" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="codUniOrg" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     UPPER(sidpla_unidadorganizativa."uniorg_nombre") AS "Nombre UniOrg",
+     sidpla_recursohumano."rechum_cantidad" AS "Cantidad RRHH",
+     sidpla_tiporecursohumano."tiprechum_descripcion" AS "Tipo RRHH",
+     sidpla_departamentounidad."depuni_nombre" AS "Nombre Depto"
+FROM
+     "public"."sidpla_unidadorganizativa" sidpla_unidadorganizativa INNER JOIN "public"."sidpla_departamentounidad" sidpla_departamentounidad ON sidpla_unidadorganizativa."uniorg_codigo" = sidpla_departamentounidad."uniorg_codigo"
+     INNER JOIN "public"."sidpla_recursohumano" sidpla_recursohumano ON sidpla_departamentounidad."depuni_codigo" = sidpla_recursohumano."depuni_codigo"
+     INNER JOIN "public"."sidpla_tiporecursohumano" sidpla_tiporecursohumano ON sidpla_recursohumano."tiprechum_codigo" = sidpla_tiporecursohumano."tiprechum_codigo"
+WHERE sidpla_unidadorganizativa."uniorg_codigo"=$P{codUniOrg}]]>
+	</queryString>
+	<field name="Nombre UniOrg" class="java.lang.String"/>
+	<field name="Cantidad RRHH" class="java.lang.Integer"/>
+	<field name="Tipo RRHH" class="java.lang.String"/>
+	<field name="Nombre Depto" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="17" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="123" splitType="Stretch">
+			<image>
+				<reportElement x="472" y="11" width="79" height="47"/>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/minsalud.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="41" y="11" width="80" height="45"/>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/escudo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="91" y="11" width="372" height="24"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MINISTERIO DE SALUD]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="91" y="38" width="372" height="52"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Nombre UniOrg}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="91" y="90" width="372" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Recurso Humano del Departamento]]></text>
+			</staticText>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="29" splitType="Stretch">
+			<staticText>
+				<reportElement x="26" y="2" width="164" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Departamento o Unidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="266" y="2" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Cantidad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="445" y="4" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Profesión]]></text>
+			</staticText>
+			<line>
+				<reportElement x="19" y="24" width="553" height="2"/>
+				<graphicElement>
+					<pen lineWidth="1.75"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="28" splitType="Stretch">
+			<textField isBlankWhenNull="true">
+				<reportElement x="26" y="3" width="207" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Nombre Depto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="300" y="3" width="52" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Cantidad RRHH}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="433" y="3" width="138" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{Tipo RRHH}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="19" y="24" width="553" height="1"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="8" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="21" splitType="Stretch">
+			<textField pattern="dd/MM/yyyy">
+				<reportElement x="471" y="1" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="419" y="0" width="100" height="20"/>
+				<textElement/>
+				<text><![CDATA[Generado:]]></text>
+			</staticText>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

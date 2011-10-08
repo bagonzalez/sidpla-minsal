@@ -76,7 +76,7 @@ class UnidadOrganizativaDao {
         $unidadOrg = new UnidadOrganizativa();
         $unidadOrg->setNombreUnidad($nombreUnidad);
         $unidadOrg->setTipoUnidad($tipoUnidad);
-
+        $unidadOrg->setResponsable($responsable);
         if ($unidadPadre != 0) {
             $unidadParent = $this->repositorio->find($unidadPadre);
             $unidadOrg->setParent($unidadParent);

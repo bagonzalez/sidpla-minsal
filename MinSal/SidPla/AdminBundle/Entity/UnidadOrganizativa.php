@@ -81,6 +81,13 @@ class UnidadOrganizativa {
      * @ORM\OneToMany(targetEntity="MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni", mappedBy="uniOrgDep")
      */
     private $departUnidades;
+    
+    /**
+     * @var string $responsable
+     *
+     * @ORM\Column(name="uniorg_responsable", type="integer")
+     */
+    private $responsable;
 
     public function __construct() {
         $this->subUnidades = new ArrayCollection();
@@ -248,5 +255,23 @@ class UnidadOrganizativa {
     public function addDepartamentoUni(\MinSal\SidPla\DepUniBundle\Entity\DepartamentoUni $departUnidades)
     {
         $this->departUnidades[] = $departUnidades;
+    }
+    
+    /**
+     * Set responsable
+     *
+     * @param interger $responsable
+     */
+    public function setResponsable($responsable) {
+        $this->responsable = $responsable;
+    }
+    
+    /**
+     * Get responsable
+     *
+     * @return interger 
+     */
+    public function getResponsable() {
+        return $this->responsable;
     }
 }
