@@ -71,3 +71,13 @@ MinSalSidPlaGesObjEspBundle_editarActividad:
 MinSalSidPlaGesObjEspBundle_editandoActividades:
     pattern:  /editandoActividades
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminActividades:editandoActividades}
+
+MinSalSidPlaGesObjEspBundle_gestionVinculacion:
+    pattern:  /gestionarVinculacion
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:gestionVinculacion}
+
+MinSalSidPlaGesObjEspBundle_agregarVinculacion:
+    pattern:  /agregarVinculacion
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:agregarVinculacion}
+    
+    
