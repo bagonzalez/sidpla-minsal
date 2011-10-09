@@ -10,17 +10,30 @@
           $('#dialogTercer').jqm();
           $('#dialogCuarto').jqm();
           
-          $( "#datepickerInicioPrimer" ).datepicker();
-          $( "#datepickerFinPrimer" ).datepicker();
+          $.datepicker.setDefaults( $.datepicker.regional[ "es" ] );
+                  
+          var dateInicio = $.datepicker.parseDate("yy-mm-dd", '{{fechaInicio}}');
+          var dateFin = $.datepicker.parseDate("yy-mm-dd", '{{fechaFin}}');
+
+          var finPrimerTri = dateInicio;
+          finPrimerTri.setMonth(finPrimerTri.getMonth()+3);
           
-          $( "#datepickerInicioSegundo" ).datepicker();
-          $( "#datepickerFinSegundo" ).datepicker();
+          var dateInicio = $.datepicker.parseDate("yy-mm-dd", '{{fechaInicio}}');
           
-          $( "#datepickerInicioTercer" ).datepicker();
-          $( "#datepickerFinTercer" ).datepicker();
+          $( "#datepickerInicioPrimer" ).datepicker({defaultDate:dateInicio , minDate: dateInicio, maxDate: finPrimerTri });
+          $( "#datepickerFinPrimer" ).datepicker({ minDate: dateInicio, maxDate: finPrimerTri });
           
-          $( "#datepickerInicioCuarto" ).datepicker();
-          $( "#datepickerFinCuarto" ).datepicker();
+                    
+          
+          
+          $( "#datepickerInicioSegundo" ).datepicker({ minDate: finPrimerTri, maxDate: dateFin });
+          $( "#datepickerFinSegundo" ).datepicker({ minDate: finPrimerTri, maxDate: dateFin });
+          
+          $( "#datepickerInicioTercer" ).datepicker({ minDate: dateInicio, maxDate: dateFin });
+          $( "#datepickerFinTercer" ).datepicker({ minDate: dateInicio, maxDate: dateFin });
+          
+          $( "#datepickerInicioCuarto" ).datepicker({ minDate: dateInicio, maxDate: dateFin });
+          $( "#datepickerFinCuarto" ).datepicker({ minDate: dateInicio, maxDate: dateFin });
           
           $('#regresar').click(function() {
             this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
@@ -127,13 +140,13 @@
                    
                     
                     <tr>
-                        <td >fecha inicio:</td>
-                        <td colspan="3" ><input size="100%" name="fechainicio" id="fechainicio" ></input>
+                        <td >Fecha Inicio:</td>
+                        <td colspan="3" ><input size="100%" readonly="readonly" name="fechainicio" value="{{fechaInicio}}" id="fechainicio" ></input>
                             </td>
                     </tr>
                       <tr>
-                        <td >fecha fin:</td>
-                        <td colspan="3" ><input size="100%" name="fechafin" id="fechafin" ></input></td>
+                        <td >Fecha Fin:</td>
+                        <td colspan="3" ><input size="100%" readonly="readonly" name="fechafin" value="{{fechaFin}}" id="fechafin" ></input></td>
                     </tr>
                     
                     
