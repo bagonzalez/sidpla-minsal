@@ -97,6 +97,16 @@ class Actividad
      * @ORM\OneToMany(targetEntity="ResulActividad", mappedBy="idActividad", cascade={"persist", "remove"})
      */
     protected $resulAct;
+    
+     /**
+     * @ORM\OneToMany(targetEntity="ActividadVinculada", mappedBy="idDepto")
+     */
+    protected $actvinculadasorigen;
+    
+     /**
+     * @ORM\OneToMany(targetEntity="ActividadVinculada", mappedBy="idDepto")
+     */
+    protected $actdestinos;
       
     /**
      * Set idAct
@@ -343,5 +353,45 @@ class Actividad
     public function getResulAct()
     {
         return $this->resulAct;
+    }
+
+    /**
+     * Add resulAct
+     *
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad $resulAct
+     */
+    public function addResulActividad(\MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad $resulAct)
+    {
+        $this->resulAct[] = $resulAct;
+    }
+
+    /**
+     * Add actvinculadasorigen
+     *
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\ActividadVinculada $actvinculadasorigen
+     */
+    public function addActividadVinculada(\MinSal\SidPla\GesObjEspBundle\Entity\ActividadVinculada $actvinculadasorigen)
+    {
+        $this->actvinculadasorigen[] = $actvinculadasorigen;
+    }
+
+    /**
+     * Get actvinculadasorigen
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getActvinculadasorigen()
+    {
+        return $this->actvinculadasorigen;
+    }
+
+    /**
+     * Get actdestinos
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getActdestinos()
+    {
+        return $this->actdestinos;
     }
 }

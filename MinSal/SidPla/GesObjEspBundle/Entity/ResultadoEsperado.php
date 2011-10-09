@@ -366,26 +366,7 @@ class ResultadoEsperado
       $this->Resultadore= new ArrayCollection();  
     }
     
-    /**
-     * Add medioVerificacion
-     *
-     * @param strig $medioVerificacion
-     */
-    public function setmedioVerificacion($medioVerificacion)
-    {
-        $this->medioVerificacion = $medioVerificacion;
-    }
-
-    /**
-     * Get medioVerificacion
-     *
-     * @return string 
-     */
-    public function getmedioVerificacion()
-    {
-        return $this->medioVerificacion;
-    }
-    
+   
    
     /**
      * Add actividades
@@ -427,5 +408,35 @@ class ResultadoEsperado
     public function getResultadore()
     {
         return $this->Resultadore;
+    }
+
+    /**
+     * Set medioVerificacion
+     *
+     * @param string $medioVerificacion
+     */
+    public function setMedioVerificacion($medioVerificacion)
+    {
+        $this->medioVerificacion = $medioVerificacion;
+    }
+
+    /**
+     * Get medioVerificacion
+     *
+     * @return string 
+     */
+    public function getMedioVerificacion()
+    {
+        return $this->medioVerificacion;
+    }
+
+    /**
+     * Add actividades
+     *
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\Actividad $actividades
+     */
+    public function addActividad(\MinSal\SidPla\GesObjEspBundle\Entity\Actividad $actividades)
+    {
+        $this->actividades[] = $actividades;
     }
 }

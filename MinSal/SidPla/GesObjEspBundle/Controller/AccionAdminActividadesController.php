@@ -34,6 +34,8 @@ use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 use MinSal\SidPla\PaoBundle\Entity\Pao;
 use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 
+use MinSal\SidPla\PaoBundle\EntityDao\PeriodoPaoDao;
+
 
 class AccionAdminActividadesController extends Controller{
     //put your code here
@@ -145,13 +147,29 @@ class AccionAdminActividadesController extends Controller{
         $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
         $resultadoAux=$resultadoDao->getResulEspera($idfilaResultado);         
         $resultadoesperado=$resultadoAux->getResEspeDesc();
+        
+        $paoElaboracion=$this->obtenerPaoElaboracionAction();
+        $idPao=$paoElaboracion->getIdPao();
+        
+        $periodoPaoDao=new PeriodoPaoDao($this->getDoctrine());
+        
+        $fechasMin=$periodoPaoDao->getMinFechaPao($idPao);        
+        $fechasMax=$periodoPaoDao->getMaxFechaPao($idPao);
+               
+        
+                
+        $fechaInicioPeriodoPao=$fechasMin[0][1];
+        $fechaFinPeriodoPao=$fechasMax[0][1];
+        
+        //$minDate = date( 'y-m-d', $fechaInicioPeriodoPao );
           
-        
-        
-        
                
         return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:IngresoActividades.html.twig', 
-                array( 'opciones' => $opciones,'idfilaResultado'=>$idfilaResultado,'idfila' => $idfila,'descripcion' => $objetivosEspec,'descripcionResultado'=>$resultadoesperado));
+                array( 'opciones' => $opciones,'idfilaResultado'=>$idfilaResultado,
+                       'idfila' => $idfila,'descripcion' => $objetivosEspec,
+                       'descripcionResultado'=>$resultadoesperado,
+                        'fechaInicio'=>$fechaInicioPeriodoPao,
+                        'fechaFin'=>$fechaFinPeriodoPao));
         
     }
     
