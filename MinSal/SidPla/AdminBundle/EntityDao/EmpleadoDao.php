@@ -62,7 +62,8 @@ class EmpleadoDao {
                                 $segundoNombre,
                                 $primerApellido,
                                 $segundoApellido,
-                                $unidadAsignada) {
+                                $unidadAsignada,
+                                $email) {
         
         $empleado=new Empleado();
         
@@ -71,6 +72,8 @@ class EmpleadoDao {
         $empleado->setSegundoNombre($segundoNombre);
         $empleado->setPrimerApellido($primerApellido);
         $empleado->setSegundoApellido($segundoApellido);
+        $empleado->setEmail($email);
+        
         
         $unidadDao=new UnidadOrganizativaDao($this->doctrine);        
         $unidad=$unidadDao->getUnidadOrg($unidadAsignada);
@@ -106,7 +109,8 @@ class EmpleadoDao {
                                 $primerApellido,
                                 $segundoApellido,
                                 $id, 
-                                $unidadAsignada){
+                                $unidadAsignada,
+                                $email){
             
             $empleado=new Empleado();            
             $empleado=$this->repositorio->find($id);
@@ -120,14 +124,16 @@ class EmpleadoDao {
             $empleado->setSegundoNombre($segundoNombre);
             $empleado->setPrimerApellido($primerApellido);
             $empleado->setSegundoApellido($segundoApellido);
+            $empleado->setEmail($email);
             
             $unidadDao=new UnidadOrganizativaDao($this->doctrine);        
             $unidad=$unidadDao->getUnidadOrg($unidadAsignada);
 
             $empleado->setUnidadOrganizativa($unidad);
             
+            $this->em->persist($empleado);
             $this->em->flush();            
-            $matrizMensajes = array('El proceso de almacenar termino con exito', 'Rol '.$rol->getIdRol());
+            $matrizMensajes = array('El proceso de almacenar rol termino con exito', 'Empleado '.$empleado->getIdEmpleado());
  
             return $matrizMensajes;
         }
