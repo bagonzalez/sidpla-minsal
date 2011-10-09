@@ -10,7 +10,7 @@
           $('#dialogTercer').jqm();
           $('#dialogCuarto').jqm();
           
-          
+          $.datepicker.setDefaults( $.datepicker.regional[ "es" ] );
                   
           var dateInicio = $.datepicker.parseDate("yy-mm-dd", '{{fechaInicio}}');
           var dateFin = $.datepicker.parseDate("yy-mm-dd", '{{fechaFin}}');
