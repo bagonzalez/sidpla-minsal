@@ -7,52 +7,40 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate
  *
- * @ORM\Table()
+ * @ORM\Table(name= "sidpla_objespectemplate")
  * @ORM\Entity
  */
 class ObjespTemplate
 {
     /**
-     * @var integer $id
+     * @var integer $idObjEspTempl
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="objespectmp_codigo", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @var integer $idObjEspTempl
-     *
-     * @ORM\Column(name="idObjEspTempl", type="integer")
-     */
     private $idObjEspTempl;
 
+    
     /**
-     * @var integer $idObjEspec
-     *
-     * @ORM\Column(name="idObjEspec", type="integer")
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico", inversedBy="objetivostemplate", cascade={"remove"})
+     * @ORM\JoinColumn(name="objesp_codigo", referencedColumnName="objesp_codigo")
      */
     private $idObjEspec;
 
     /**
      * @var integer $idObjTemplate
      *
-     * @ORM\Column(name="idObjTemplate", type="integer")
+     * @ORM\Column(name="objtmp_codigo", type="integer")
      */
     private $idObjTemplate;
 
-
+    
     /**
-     * Get id
-     *
-     * @return integer 
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspEntControlBundle\Entity\ResEspTemplate", mappedBy="idObjEspecTempl",   cascade={"persist", "remove"})
      */
-    public function getId()
-    {
-        return $this->id;
-    }
-
+    protected $resultadostemplate;
+    
     /**
      * Set idObjEspTempl
      *
@@ -76,9 +64,9 @@ class ObjespTemplate
     /**
      * Set idObjEspec
      *
-     * @param integer $idObjEspec
+     * @param MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico $idObjEspec
      */
-    public function setIdObjEspec($idObjEspec)
+    public function setIdObjEspec(\MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico $idObjEspec)
     {
         $this->idObjEspec = $idObjEspec;
     }
@@ -86,7 +74,7 @@ class ObjespTemplate
     /**
      * Get idObjEspec
      *
-     * @return integer 
+     * @return MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico 
      */
     public function getIdObjEspec()
     {
@@ -111,5 +99,30 @@ class ObjespTemplate
     public function getIdObjTemplate()
     {
         return $this->idObjTemplate;
+    }
+    
+    public function __construct()
+    {
+        $this->resultadostemplate= new ArrayCollection();
+        
+    }
+    /**
+     * Add resultadostemplate
+     *
+     * @param MinSal\SidPla\GesObjEspEntControlBundle\Entity\ResEspTemplate $resultadostemplate
+     */
+    public function addResultadostemplate(\MinSal\SidPla\GesObjEspEntControlBundle\Entity\ResEspTemplate $resultadostemplate)
+    {
+        $this->resultadostemplate[] = $resultadostemplate;
+    }
+
+    /**
+     * Get resultadostemplate
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getResultadostemplate()
+    {
+        return $this->resultadostemplate;
     }
 }

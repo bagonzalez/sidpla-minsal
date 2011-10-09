@@ -1,0 +1,17 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+
+<script type="text/javascript">
+     $(document).ready(function(){
+        $('#agregarVinculacion').click(function() {
+        $('#agregarVincForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_agregarVinculacion') }}');            
+        
+        });         
+     });
+    
+</script>
+
+<form id="agregarVincForm" action="{{ path('MinSalSidPlaGesObjEspBundle_gestionVinculacion')}}" method="post" >
+    <button type="submmit"  id="agregarVinculacion" >Agregar Vinculaci&oacute;n</button>
+</form>        
+{% endblock %}
