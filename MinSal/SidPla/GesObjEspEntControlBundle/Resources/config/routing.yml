@@ -1,3 +1,19 @@
 MinSalSidPlaGesObjEspEntControlBundle_homepage:
-    pattern:  /hello/{name}
+    pattern:  /
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:Default:index }
+
+
+MinSalSidPlaGesObjEspEntControlBundle_consultarObjetivosEspecificosTemplate:
+    pattern:  /consultarObjetivosEspecificosTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:consultarObjetivosEspecificosTemplate }
+
+MinSalSidPlaGesObjEspEntControlBundle_consultarObjetivosEspecificosTemplateJSON:
+    pattern:  /consultarObjetivosEspecificosTemplateJSON
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:consultarObjetivosEspecificosTemplateJSON }
+
+MinSalSidPlaGesObjEspEntControlBundle_manttObjetivosEspecificosTemplate:
+    pattern:  /manttObjetivosEspecificosTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:manttObjetivosEspecificosTemplate }
+
+
+

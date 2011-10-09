@@ -60,6 +60,11 @@ class ObjetivoEspecifico
      */
     protected $resultadosEsperados;
     
+    /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate", mappedBy="idObjEspec",   cascade={"persist", "remove"})
+     */
+    protected $objetivostemplate;
+    
     
     /**
      * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo", inversedBy="objetivosEspec")
@@ -191,6 +196,7 @@ class ObjetivoEspecifico
     public function __construct()
     {
         $this->resultadosEsperados= new ArrayCollection();
+        $this->objetivostemplate= new ArrayCollection();
     }
     
     /**
@@ -213,6 +219,26 @@ class ObjetivoEspecifico
         return $this->resultadosEsperados;
     }
     
+        
+    /**
+     * Add objetivostemplate
+     *
+     * @param MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate $objetivostemplate
+     */
+    public function addObjetivostemplate(\MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate $objetivostemplate)
+    {
+        $this->objetivostemplate[] = $objetivostemplate;
+    }
+
+    /**
+     * Get objetivostemplate
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getObjetivostemplate()
+    {
+        return $this->objetivostemplate;
+    }
     
      /**
      * Set programacionMonitoreo
