@@ -140,9 +140,7 @@ class AccionJustificacionController extends Controller {
      
                        
             return $this->render('MinSalSidPlaAdminBundle:Default:index.html.twig', array('opciones' => $opciones));
-            //return $this->render('MinSalSidPlaPaoBundle:Justificacion:ManttJustificacion.html.twig' //aqui se define la carpeta en que se
-             //   , array('opciones' => $opciones,));    
-            
+
         }
         
         

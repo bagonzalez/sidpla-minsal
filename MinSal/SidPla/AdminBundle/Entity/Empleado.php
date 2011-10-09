@@ -10,15 +10,15 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="sidpla_empleado")
  * @ORM\Entity
  */
-class Empleado
-{
+class Empleado {
+
     /**
      * @var integer $idEmpleado
      *
      * @ORM\Column(name="empleado_codigo", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     */   
+     */
     private $idEmpleado;
 
     /**
@@ -39,7 +39,7 @@ class Empleado
      * @var string $primerApellido
      *
      * @ORM\Column(name="empleado_primerapellido", type="string", length=35)
-     */    
+     */
     private $primerApellido;
 
     /**
@@ -55,20 +55,26 @@ class Empleado
      * @ORM\Column(name="empleado_dui", type="string", length=10)
      */
     private $dui;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="UnidadOrganizativa", inversedBy="empleados")
      * @ORM\JoinColumn(name="uniorg_codigo", referencedColumnName="uniorg_codigo")
      */
     protected $unidadOrganizativa;
-    
+
     /**
      * @ORM\OneToOne(targetEntity="MinSal\SidPla\UsersBundle\Entity\User", inversedBy="empleado")
      * @ORM\JoinColumn(name="usuario_codigo", referencedColumnName="usuario_codigo")
      */
     private $usuario;
 
-    
+    /**
+     * @var string $email
+     *
+     * @ORM\Column(name="empleado_email", type="string", length=250)
+     */
+    private $email;
+
     /**
      * Set idEmpleado
      *
@@ -114,8 +120,7 @@ class Empleado
      *
      * @param string $segundoNombre
      */
-    public function setSegundoNombre($segundoNombre)
-    {
+    public function setSegundoNombre($segundoNombre) {
         $this->segundoNombre = $segundoNombre;
     }
 
@@ -124,8 +129,7 @@ class Empleado
      *
      * @return string 
      */
-    public function getSegundoNombre()
-    {
+    public function getSegundoNombre() {
         return $this->segundoNombre;
     }
 
@@ -134,9 +138,8 @@ class Empleado
      *
      * @param string $primerApellido(35)
      */
-    public function setPrimerApellido($primerApellido)
-    {
-        $this->primerApellido= $primerApellido;
+    public function setPrimerApellido($primerApellido) {
+        $this->primerApellido = $primerApellido;
     }
 
     /**
@@ -144,8 +147,7 @@ class Empleado
      *
      * @return string 
      */
-    public function getPrimerApellido()
-    {
+    public function getPrimerApellido() {
         return $this->primerApellido;
     }
 
@@ -154,8 +156,7 @@ class Empleado
      *
      * @param string $segundoApellido
      */
-    public function setSegundoApellido($segundoApellido)
-    {
+    public function setSegundoApellido($segundoApellido) {
         $this->segundoApellido = $segundoApellido;
     }
 
@@ -164,8 +165,7 @@ class Empleado
      *
      * @return string 
      */
-    public function getSegundoApellido()
-    {
+    public function getSegundoApellido() {
         return $this->segundoApellido;
     }
 
@@ -174,8 +174,7 @@ class Empleado
      *
      * @param string $dui
      */
-    public function setDui($dui)
-    {
+    public function setDui($dui) {
         $this->dui = $dui;
     }
 
@@ -184,8 +183,7 @@ class Empleado
      *
      * @return string 
      */
-    public function getDui()
-    {
+    public function getDui() {
         return $this->dui;
     }
 
@@ -194,8 +192,7 @@ class Empleado
      *
      * @param MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $unidadOrganizativa
      */
-    public function setUnidadOrganizativa(\MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $unidadOrganizativa)
-    {
+    public function setUnidadOrganizativa(\MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $unidadOrganizativa) {
         $this->unidadOrganizativa = $unidadOrganizativa;
     }
 
@@ -204,8 +201,7 @@ class Empleado
      *
      * @return MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa 
      */
-    public function getUnidadOrganizativa()
-    {
+    public function getUnidadOrganizativa() {
         return $this->unidadOrganizativa;
     }
 
@@ -214,8 +210,7 @@ class Empleado
      *
      * @param MinSal\SidPla\AdminBundle\Entity\User $usuario
      */
-    public function setUsuario(\MinSal\SidPla\UsersBundle\Entity\User $usuario)
-    {
+    public function setUsuario(\MinSal\SidPla\UsersBundle\Entity\User $usuario) {
         $this->usuario = $usuario;
     }
 
@@ -224,13 +219,30 @@ class Empleado
      *
      * @return MinSal\SidPla\AdminBundle\Entity\User 
      */
-    public function getUsuario()
-    {
+    public function getUsuario() {
         return $this->usuario;
     }
-    
-    public function __toString()
-    {
-       return 'ID '.$this->getIdEmpleado().' '.$this->getPrimerNombre().' '.$this->getPrimerApellido();
+
+    public function __toString() {
+        return 'ID ' . $this->getIdEmpleado() . ' ' . $this->getPrimerNombre() . ' ' . $this->getPrimerApellido();
     }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     */
+    public function setEmail($email) {
+        $this->email = $email;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string 
+     */
+    public function getEmail() {
+        return $this->email;
+    }
+
 }

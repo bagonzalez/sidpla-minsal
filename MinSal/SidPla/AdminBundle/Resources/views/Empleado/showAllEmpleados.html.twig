@@ -8,15 +8,16 @@
           url: 'consultarEmpleadosJSON',
           datatype:'json',
           altRows:true,
-          colNames:['Id','Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido', 'DUI', 'Unidad Organizativa'],
+          colNames:['Id','Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido', 'DUI','Email', 'Unidad Organizativa'],
           colModel:[
             { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}},
-            { name:'nombrePrimero', index: 'nombrePrimero', width:150,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:1, label: "Primer Nombre",elmprefix:"(*)"},editrules:{required:true}  },
-            { name:'nombreSegundo', index: 'nombreSegundo',width:150,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:2, label: "Segundo Nombre"} },
-            { name:'primerApellido', index: 'primerApellido', width:150,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:3, label: "Primer Apellido",elmprefix:"(*)"},editrules:{required:true}  },
-            { name:'segundoApellido', index: 'segundoApellido',width:150,editable:true,editoptions:{size:25,maxlength: 35} , formoptions:{ rowpos:4, label: "Segundo Apellido"} },
-            { name:'dui', index: 'dui',width:150,editable:true,editoptions:{size:25,maxlength: 10}, formoptions:{ rowpos:5, label: "DUI",elmprefix:"(*)"},editrules:{required:true}  },
-            { name:'unidad', index: 'unidad',width:150,editable:true,edittype:"select",
+            { name:'nombrePrimero', index: 'nombrePrimero', width:90,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:1, label: "Primer Nombre",elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'nombreSegundo', index: 'nombreSegundo',width:90,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:2, label: "Segundo Nombre"} },
+            { name:'primerApellido', index: 'primerApellido', width:90,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:3, label: "Primer Apellido",elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'segundoApellido', index: 'segundoApellido',width:90,editable:true,editoptions:{size:25,maxlength: 35} , formoptions:{ rowpos:4, label: "Segundo Apellido"} },
+            { name:'dui', index: 'dui',width:90,editable:true,editoptions:{size:25,maxlength: 10}, formoptions:{ rowpos:5, label: "DUI",elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'email', index: 'email',width:150,editable:true,editoptions:{size:50,maxlength: 250}, formoptions:{ rowpos:6, label: "Email"} },
+            { name:'unidad', index: 'unidad',width:300,editable:true,edittype:"select",
                 editoptions:{ size: 1,
                    dataUrl: 'consultarUnidadesOrgJSONSelect',
                    dataEvents: [
@@ -26,8 +27,9 @@
                          }
                       }
                    ]
-                }}
-             ],            
+                }
+              }
+          ],            
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
@@ -49,7 +51,7 @@
         $("#agregarEmpleado").click(function(){
         jQuery('#theGrid').jqGrid('editGridRow',"new",
              {
-              width:550,height:250,bottominfo:"Campos marcados con (*) son obligatorios",
+              width:550,height:300,bottominfo:"Campos marcados con (*) son obligatorios",
               afterSubmit:despuesAgregarEditar,closeAfterAdd:true,closeOnEscape: true,align:'center',
               onclickSubmit: function(rp_ge, postdata){
                                   alert("datos guardados con exito!");                                  
@@ -63,7 +65,7 @@
           var gr = jQuery('#theGrid').jqGrid('getGridParam','selrow');
           if( gr != null )
              jQuery('#theGrid').jqGrid('editGridRow',gr,
-               { width:550,height:250,closeAfterAdd : true,bottominfo:"Campos marcados con (*) son obligatorios",closeAfterEdit:true,
+               { width:550,height:300,closeAfterAdd : true,bottominfo:"Campos marcados con (*) son obligatorios",closeAfterEdit:true,
                  afterSubmit:despuesAgregarEditar,reloadAfterSubmit:true,closeOnEscape: true,align:'center',
                  onclickSubmit: function(rp_ge, postdata) {
                               alert("Empleado Guardado con exito!");

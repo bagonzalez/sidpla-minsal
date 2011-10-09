@@ -47,7 +47,7 @@ class AccionAdminEmpleadosController extends Controller {
         $opciones = $this->getRequest()->getSession()->get('opciones');
 
 
-        return $this->render('MinSalSidPlaAdminBundle:Empleado:manttEmpleados.html.twig', array('opciones' => $opciones,));
+        return $this->render('MinSalSidPlaAdminBundle:Empleado:manttEmpleados.html.twig', array('opciones' => $opciones));
     }
 
     public function consultarEmpleadosJSONAction() {
@@ -74,6 +74,7 @@ class AccionAdminEmpleadosController extends Controller {
                 $emple->getPrimerApellido(),
                 $emple->getSegundoApellido(),
                 $emple->getDui(),
+                $emple->getEmail(),
                 $unidad->getNombreUnidad());
             $i++;
         }
@@ -82,7 +83,7 @@ class AccionAdminEmpleadosController extends Controller {
             array_multisort($rows, SORT_ASC);
         } else {
             $rows[0]['id'] = 0;
-            $rows[0]['cell'] = array(' ', ' ', ' ', ' ', ' ', ' ', ' ');
+            $rows[0]['cell'] = array(' ', ' ',' ', ' ', ' ', ' ', ' ', ' ');
         }
 
         $datos = json_encode($rows);
@@ -114,6 +115,7 @@ class AccionAdminEmpleadosController extends Controller {
         $nombreSegundo = $request->get('nombreSegundo');
         $primerApellido = $request->get('primerApellido');
         $segundoApellido = $request->get('segundoApellido');
+        $email=$request->get('email');
         $unidadAsignada = $request->get('unidad');
 
         $id = $request->get('id');
@@ -122,7 +124,7 @@ class AccionAdminEmpleadosController extends Controller {
         $empleadoDao = new EmpleadoDao($this->getDoctrine());
 
         if ($operacion == 'edit') {
-            $empleadoDao->editEmpleado($dui, $nombrePrimero, $nombreSegundo, $primerApellido, $segundoApellido, $id, $unidadAsignada);
+            $empleadoDao->editEmpleado($dui, $nombrePrimero, $nombreSegundo, $primerApellido, $segundoApellido, $id, $unidadAsignada,$email);
         }
 
         if ($operacion == 'del') {
@@ -130,7 +132,7 @@ class AccionAdminEmpleadosController extends Controller {
         }
 
         if ($operacion == 'add') {
-            $empleadoDao->addEmpleado($dui, $nombrePrimero, $nombreSegundo, $primerApellido, $segundoApellido, $unidadAsignada);
+            $empleadoDao->addEmpleado($dui, $nombrePrimero, $nombreSegundo, $primerApellido, $segundoApellido, $unidadAsignada,$email);
         }
 
         return new Response("{sc:true,msg:''}");
