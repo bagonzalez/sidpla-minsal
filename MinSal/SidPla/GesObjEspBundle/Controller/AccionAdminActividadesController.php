@@ -161,7 +161,7 @@ class AccionAdminActividadesController extends Controller{
         $fechaInicioPeriodoPao=$fechasMin[0][1];
         $fechaFinPeriodoPao=$fechasMax[0][1];
         
-        $minDate = date( 'y-m-d', $fechaInicioPeriodoPao );
+        //$minDate = date( 'y-m-d', $fechaInicioPeriodoPao );
           
                
         return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:IngresoActividades.html.twig', 
