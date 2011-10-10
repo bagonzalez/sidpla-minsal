@@ -11,7 +11,7 @@ class ObjespTemplateDao {
     function __construct($doctrine){ 
         $this->doctrine=$doctrine;      	
         $this->em=$this->doctrine->getEntityManager();
-        $this->repositorio=$this->doctrine->getRepository('GesObjEspEntControlBundle:ObjespTemplate');
+        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaGesObjEspEntControlBundle:ObjespTemplate');
     } 
     
     public function getObjetivoTemplate($id) {	    

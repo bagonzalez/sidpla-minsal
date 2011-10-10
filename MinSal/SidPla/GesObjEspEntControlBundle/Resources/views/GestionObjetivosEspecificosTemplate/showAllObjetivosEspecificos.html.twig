@@ -26,7 +26,7 @@
               for(var i=0;i < ids.length;i++){ var cl = ids[i];
                   be = "<input style='height:22px;width:70px;' type='button' value='Editar' onclick=\"jQuery('#theGridObj').editRow('"+cl+"');\" />";
                   se = "<input style='height:22px;width:70px;' type='button' value='Eliminar' onclick=\"jQuery('#theGridObj').jqGrid('delGridRow','"+cl+"',{msg: 'Desea eliminar este objetivo especifico?'}); \" />"; 
-                  ce = "<input style='height:22px;width:120px;' type='submit' value='Resultados Esperados' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
+                  ce = "<input style='height:22px;width:120px;' type='submit' value='Resultados Esperados' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate')}}' \" />";
                   jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+"   "+se+"   "+ce}); } 
           },
           pager: jQuery('#pagerObj'),

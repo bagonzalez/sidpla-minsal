@@ -17,4 +17,20 @@ MinSalSidPlaGesObjEspEntControlBundle_manttObjetivosEspecificosTemplate:
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:manttObjetivosEspecificosTemplate }
 
 
+#ResultadosTemplate
+MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate:
+    pattern:  /consultarResultadosEsperadosTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:consultarResultadosEsperadosTemplate }
+
+MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplateJSON:
+    pattern:  /consultarResultadosEsperadosTemplateJSON
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:consultarResultadosEsperadosTemplateJSON }
+
+MinSalSidPlaGesObjEspEntControlBundle_manttObjetivosEspecificosTemplate:
+    pattern:  /manttObjetivosEspecificosTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:manttObjetivosEspecificosTemplate }
+
+MinSalSidPlaGesObjEspEntControlBundle_ingresoResultadosEsperadosTemplate:
+    pattern:  /ingresoResultadosEsperadosTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:ingresoResultadosEsperadosTemplate }
 

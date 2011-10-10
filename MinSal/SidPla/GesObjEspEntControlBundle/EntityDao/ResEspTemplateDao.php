@@ -12,7 +12,7 @@ class ResEspTemplateDao {
     function __construct($doctrine){ 
         $this->doctrine=$doctrine;      	
         $this->em=$this->doctrine->getEntityManager();
-        $this->repositorio=$this->doctrine->getRepository('GesObjEspEntControlBundle:ResEspTemplate');
+        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaGesObjEspEntControlBundle:ResEspTemplate');
     } 
     
     public function getResultadoTemplate($id) {	    

@@ -3,6 +3,7 @@
 namespace MinSal\SidPla\GesObjEspEntControlBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate
@@ -28,13 +29,13 @@ class ObjespTemplate {
     private $idObjEspec;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ObjTemplate", inversedBy="especificoObjTmp")
+     * @ORM\ManyToOne(targetEntity="ObjTemplate", inversedBy="especificoObjTmp",cascade={"remove"})
      * @ORM\JoinColumn(name="objtmp_codigo", referencedColumnName="objtmp_codigo")
      */
     private $objTmpEspe;
 
     /**
-     * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspEntControlBundle\Entity\ResEspTemplate", mappedBy="idObjEspecTempl",   cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="ResEspTemplate", mappedBy="idObjEspecTempl",   cascade={"persist", "remove"})
      */
     protected $resultadostemplate;
 
@@ -93,7 +94,7 @@ class ObjespTemplate {
     }
 
     public function __construct() {
-        $this->resultadostemplate = new  \Doctrine\Common\Collections\ArrayCollection();
+        $this->resultadostemplate = new  ArrayCollection();
     }
 
     /**

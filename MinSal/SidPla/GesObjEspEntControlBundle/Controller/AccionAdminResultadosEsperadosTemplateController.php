@@ -11,101 +11,66 @@
  * @author edwin
  */
 
-namespace MinSal\SidPla\GesObjEspBundle\Controller;
+namespace MinSal\SidPla\GesObjEspEntControlBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
 
-use MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico;
-use MinSal\SidPla\UnidadOrgBundle\EntityDao\ObjetivoEspecificoDao;
-
-use MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado;
-use MinSal\SidPla\GesObjEspBundle\EntityDao\ResultadoEsperadoDao;
-
+use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate;
+use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\ObjespTemplateDao;
+use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ResEspTemplate;
+use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\ResEspTemplateDao;
 use MinSal\SidPla\GesObjEspBundle\Entity\TipoMeta;
 use MinSal\SidPla\GesObjEspBundle\EntityDao\TipoMetaDao;
-
-use MinSal\SidPla\GesObjEspBundle\Entity\Resultadore;
-use MinSal\SidPla\GesObjEspBundle\EntityDao\ResultadoreDao;
-
-use MinSal\SidPla\UsersBundle\Entity\User;
-use MinSal\SidPla\AdminBundle\Entity\Empleado;
-use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
-use MinSal\SidPla\PaoBundle\Entity\Pao;
-use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 
 
 class AccionAdminResultadosEsperadosTemplateController extends Controller {
     //put your code here
     
-     public function obtenerPaoElaboracionAction(){
-        
-        $user=new User();
-        $empleado=new Empleado();        
-        $user = $this->get('security.context')->getToken()->getUser();        
-        $empleado=$user->getEmpleado();        
-        $idUnidad=$empleado->getUnidadOrganizativa()->getIdUnidadOrg();        
-        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());
-        $unidad=new UnidadOrganizativa();              
-        $unidad=$unidaDao->getUnidadOrg($idUnidad);
-        
-        $paoElaboracion=new Pao();        
-        $paoElaboracion=$unidaDao->getPaoElaboracion($idUnidad);
-        
-        return $paoElaboracion;
-        
-    }
+    
 
-    public function consultarResultadosEsperadosAction()
+    public function consultarResultadosEsperadosTemplateAction()
     {
         $opciones=$this->getRequest()->getSession()->get('opciones');
         
           $request=$this->getRequest();        
           $idfila=$request->get('idfila');  
-          $objetivoAux=new ObjetivoEspecifico();
-        $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
-        $objetivoAux=$objetivoDao->getObjetEspecif($idfila);         
-        $objetivosEspec=$objetivoAux->getDescripcion();
+          $objetivoAux=new ObjespTemplate();
+        $objetivoDao = new ObjespTemplateDao($this->getDoctrine());                      
+        $objetivoAux=$objetivoDao->getObjetivoTemplate($idfila);         
+        $objetivosEspec=$objetivoAux->getIdObjEspec()->getDescripcion();
           
                
-        return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
+        return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionResultadosEsperadosTemplate:manttResultadosEsperados.html.twig', 
                 array( 'opciones' => $opciones,'idfila' => $idfila,'descripcion' => $objetivosEspec));
         
     }
     
     
-    public function consultarResultadosEsperadosJSONAction()
+    public function consultarResultadosEsperadosTemplateJSONAction()
     {
         
         $request=$this->getRequest();        
         $idobjetivo=$request->get('idfila');
+       
+        $objetivoAux=new ObjespTemplate();
+        $objetivoDao = new ObjespTemplateDao($this->getDoctrine());                      
+        $objetivoAux=$objetivoDao->getObjetivoTemplate($idobjetivo);         
         
-        $objetivoAux=new ObjetivoEspecifico();
-        $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
-        $objetivoAux=$objetivoDao->getObjetEspecif($idobjetivo);         
-        
-        $objetivosEspec=$objetivoAux->getResultadoEsperado();
+        $objetivosEspec=$objetivoAux->getResultadostemplate();
         
         $numfilas=count($objetivosEspec);  
             
-        $objetivoEspec=new ResultadoEsperado();
+        $objetivoEspec=new ResEspTemplate();
         $i=0;
 
         foreach ($objetivosEspec as $objetivoEspec) { 
-            $rows[$i]['id']= $objetivoEspec->getIdResEsp();
-            $rows[$i]['cell']= array($objetivoEspec->getIdResEsp(),
-                                     $objetivoEspec->getIdObjEsp(),
-                                     $objetivoEspec->getIdResTempl(),
-                                     $objetivoEspec->getIdTipoMeta(),
-                                     $objetivoEspec->getResEspeDesc(),
-                                     $objetivoEspec->getResEspNomencl(),
-                                     $objetivoEspec->getResEspCondi(),
-                                     $objetivoEspec->getResEspMetAnual(),
-                                     $objetivoEspec->getResEspDescMetAnual(),
-                                     $objetivoEspec->getResEspResponsable(),
-                                     $objetivoEspec->getResEspEntidadControl(),
-                                     $objetivoEspec->getResEspIndicador()
+            $rows[$i]['id']= $objetivoEspec->getIdResEspTempl();
+            $rows[$i]['cell']= array($objetivoEspec->getIdResEspTempl(),
+                                     $objetivoEspec->getIdObjEspecTempl(),
+                                     $objetivoEspec->getResEspTemplDescripcion(),
+                                     $objetivoEspec->getResEspTemplIndicador()                                     
                                      );    
             $i++;
         }
@@ -127,7 +92,7 @@ class AccionAdminResultadosEsperadosTemplateController extends Controller {
     }
       
     
-    public function manttResultadosEsperadosAction()
+    public function manttResultadosEsperadosTemplateAction()
     {
         
         $request=$this->getRequest();            
@@ -189,28 +154,31 @@ class AccionAdminResultadosEsperadosTemplateController extends Controller {
     
     
     
-    public function ingresoResultadosEsperadosAction()
+    public function ingresoResultadosEsperadosTemplateAction()
     {
-        $opciones=$this->getRequest()->getSession()->get('opciones');
+        
+         $opciones=$this->getRequest()->getSession()->get('opciones');
         
           $request=$this->getRequest();        
           $idfila=$request->get('idfila');  
-         
-          $objetivoAux=new ObjetivoEspecifico();
-        $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
-        $objetivoAux=$objetivoDao->getObjetEspecif($idfila);         
+          $objetivoAux=new ObjespTemplate();
+        $objetivoDao = new ObjespTemplateDao($this->getDoctrine());                      
+        $objetivoAux=$objetivoDao->getObjetivoTemplate($idfila);         
+        $objetivosEspec=$objetivoAux->getIdObjEspec()->getDescripcion();
         
-        $objetivosEspec=$objetivoAux->getDescripcion();
-          
+        
+         
+         
+         
           
                
-        return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:IngresoResultadoEsperado.html.twig', 
+        return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionResultadosEsperadosTemplate:IngresoResultadoEsperado.html.twig', 
                 array( 'opciones' => $opciones,'idfila' => $idfila,'descripcion' => $objetivosEspec));
         
     }
     
     
-    public function guardarResultadosEsperadosAction()
+    public function guardarResultadosEsperadosTemplateAction()
     {
         $opciones=$this->getRequest()->getSession()->get('opciones');
         

@@ -24,8 +24,8 @@ class ResEspTemplate
     
 
     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate", inversedBy="resultadostemplate", cascade={"remove"})
-     * @ORM\JoinColumn(name="objtmp_codigo", referencedColumnName="objtmp_codigo")
+     * @ORM\ManyToOne(targetEntity="ObjespTemplate", inversedBy="resultadostemplate", cascade={"remove"})
+     * @ORM\JoinColumn(name="objespectmp_codigo", referencedColumnName="objespectmp_codigo")
      */
     private $idObjEspecTempl;
 
