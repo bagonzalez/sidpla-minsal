@@ -4,6 +4,11 @@ namespace MinSal\SidPla\GesObjEspEntControlBundle\EntityDao;
 
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjTemplate;
 
+use MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico;
+use MinSal\SidPla\UnidadOrgBundle\EntityDao\ObjetivoEspecificoDao;
+
+use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate;
+
 class ObjTemplateDao {
 
     var $doctrine;
@@ -21,9 +26,44 @@ class ObjTemplateDao {
         
         $objTmp= $this->em->createQuery("SELECT ot
                                          FROM MinSalSidPlaGesObjEspEntControlBundle:ObjTemplate ot
-                                         WHERE ot.anioObjTemp = '2011'");
+                                         WHERE ot.anioObjTemp = '".$anio."'");
         return $objTmp->getResult();
     }
+    
+    public function agregarObjTmp($desObjEsp,$objTmp){
+        $objEspTmp=new ObjespTemplate();
+        $objEspTmp->setObjTmpEspe($objTmp);
+        
+        $objetivoEspecifico=new ObjetivoEspecifico();
+        $objetivoEspecifico->setDescripcion($desObjEsp);
+        $this->em->persist($objetivoEspecifico);
+        $objEspTmp->setIdObjEspec($objetivoEspecifico);
+        $this->em->persist($objEspTmp);
+        
+        $this->em->flush();
+        
+        
+        
+        $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ');
+        
+        return $matrizMensajes;
+        
+    }
+    
+    public function editarObjTmp($desObjEsp,$codObjEsp){
+        
+        $objEspDao = new ObjetivoEspecificoDao($this->doctrine);
+        $objetivoEspecifico=$objEspDao->getObjetEspecif($codObjEsp);
+        $objetivoEspecifico->setDescripcion($desObjEsp);
+        
+        $this->em->persist($objetivoEspecifico);
+        $this->em->flush();
+    
+        $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ');
+        return $matrizMensajes;
+        
+    }
+    
 
 }
 

@@ -1,0 +1,41 @@
+{# empty Twig template #}
+{% block body %}
+<script type="text/javascript">
+    
+     $(document).ready(function(){
+         
+      
+         
+         
+         $('#tabActividad').jqGrid({ 
+              url: '{{path('MinSalSidPlaGesObjEspBundle_obtenerActividadesJSON')}}',
+              datatype:'json',
+              altRows:true,
+              colNames:['Codigo','Actividad','Responsable'],
+              colModel:[
+                { name:'codigo', index: 'codigo', width:40,align:'center',editable:false,editoptions:{size:15}},
+                { name:'nombrePrimero', index: 'nombrePrimero', width:150,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:1, label: "Primer Nombre",elmprefix:"(*)"},editrules:{required:true}  },
+                { name:'nombreSegundo', index: 'nombreSegundo',width:150,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:2, label: "Segundo Nombre"} },                
+              ],
+              rowNum:10,
+              rowList:[10,20,30],
+              multiselect: true,
+              loadonce:true,
+              pager: jQuery('#pager1'),
+              viewrecords: true,          
+              caption: 'Vincular Actividades',
+              height: "100%"
+            });
+        
+    });   
+    
+</script>
+
+   
+    <br></br>
+    <br></br>
+    <table id="tabActividad" class="scroll"></table>
+       <div id="pager1" class="scroll"></div>  
+    
+
+{% endblock %}

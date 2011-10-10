@@ -12,11 +12,16 @@ MinSalSidPlaGesObjEspEntControlBundle_consultarObjetivosEspecificosTemplateJSON:
     pattern:  /consultarObjetivosEspecificosTemplateJSON
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:consultarObjetivosEspecificosTemplateJSON }
 
-MinSalSidPlaGesObjEspEntControlBundle_manttObjetivosEspecificosTemplate:
-    pattern:  /manttObjetivosEspecificosTemplate
-    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:manttObjetivosEspecificosTemplate }
+    
+MinSalSidPlaGesObjEspEntControlBundle_ingresarObjEspTemplate:
+    pattern:  /ingresarObjEspTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:ingresarObjEspTemplate }
+ 
+MinSalSidPlaGesObjEspEntControlBundle_editarObjEspTemplate:
+    pattern:  /editarObjEspTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:editarObjEspTemplate}
 
-
+<<<<<<< HEAD
 #ResultadosTemplate
 MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate:
     pattern:  /consultarResultadosEsperadosTemplate
@@ -33,4 +38,9 @@ MinSalSidPlaGesObjEspEntControlBundle_manttObjetivosEspecificosTemplate:
 MinSalSidPlaGesObjEspEntControlBundle_ingresoResultadosEsperadosTemplate:
     pattern:  /ingresoResultadosEsperadosTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:ingresoResultadosEsperadosTemplate }
+=======
+MinSalSidPlaGesObjEspEntControlBundle_manttObjEspTemplate:
+    pattern:  /manttObjEspTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:manttObjEspTemplate }
+>>>>>>> c534d4cf9ff149eb4a79b38dc6196c7ce4236ccc
 

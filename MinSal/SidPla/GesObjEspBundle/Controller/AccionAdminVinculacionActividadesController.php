@@ -33,6 +33,12 @@ use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 use MinSal\SidPla\PaoBundle\Entity\Pao;
 use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 
+use MinSal\SidPla\PrograMonitoreoBundle\EntityDao\ProgramacionMonitoreoDao;
+use MinSal\SidPla\GesObjEspBundle\Entity\Actividad;
+
+use MinSal\SidPla\GesObjEspBundle\EntityDao\ActividadVinculadaDao;
+use MinSal\SidPla\GesObjEspBundle\Entity\ActividadVinculada;
+
 /**
  * Description of AccionAdminVinculacionActividades
  *
@@ -75,35 +81,106 @@ class AccionAdminVinculacionActividadesController extends Controller {
         
     }
     
+       public function vincularActividadesAction()
+    {
+         $opciones=$this->getRequest()->getSession()->get('opciones');
+          $request = $this->getRequest();
+          //$query = $this->getQuery();
+          
+          $idActividad = $request->get('actividadesCombo');
+          
+            $numero = count($_GET);
+            $tags = array_keys($_GET);// obtiene los nombres de las varibles
+            $valores = array_values($_GET);// obtiene los valores de las varibles
+
+            $actividadVinDao=new ActividadVinculadaDao($this->getDoctrine());
+            // crea las variables y les asigna el valor
+            for($i=0;$i<$numero;$i++){
+                $idActividadAVincular = substr($tags[$i], 17);
+                if($idActividadAVincular!=$idActividad && $idActividadAVincular>0)
+                    $actividadVinDao->guardarActividadVinculada($idActividad, $idActividadAVincular);
+                
+            }
+          
+           
+         
+         return $this->render('MinSalSidPlaGesObjEspBundle:GestionVincular:ingresarVinculacion.html.twig', 
+                array( 'opciones' => $opciones,));
+        
+    }
+    
+     public function obtenerActividadesVincJSONAction()
+    { 
+            $request=$this->getRequest();
+            
+            $idActividad = $request->get('actividadesCombo');
+            
+            $paoElaboracion=$this->obtenerPaoElaboracionAction();
+            $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+            $idProgramon=$programacionMonitoreo->getIdPrograMon();
+            
+            $actividadvincDao=new ActividadVinculadaDao($this->getDoctrine());
+            $actividades=$actividadvincDao->getActividadesVinculadas($idActividad);
+            
+            $numfilas=count($actividades);  
+            
+            
+            $i=0;
+            
+            $actividad=new ActividadVinculada();
+            
+            foreach ($actividades as $actividad) {
+                
+                $rows[$i]['id']= $actividad->getIdActVincu();
+                $rows[$i]['cell']= array($actividad->getIdActVincu(),
+                                         $actividad->getIdActDest(),
+                                         $actividad->getIdActOrigen()                                         
+                                         );    
+                $i++;
+            }
+            
+            $datos=json_encode($rows);            
+            
+            
+            $jsonresponse='{
+               "page":"1",
+               "total":"1",
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
+            
+            
+            $response=new Response($jsonresponse);              
+            return $response;  
+         
+        
+    }
+    
+    
      public function obtenerActividadesJSONAction()
     { 
             $request=$this->getRequest();
             
             $paoElaboracion=$this->obtenerPaoElaboracionAction();
             $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+            $idProgramon=$programacionMonitoreo->getIdPrograMon();
             
+            $promMonDao=new ProgramacionMonitoreoDao($this->getDoctrine());
+            $actividades=$promMonDao->getActividades($idProgramon);
             
-            
-            
-            
-            $categoriaDao=new CategoriaCensoDao($this->getDoctrine());
-            $categorias=$categoriaDao->getCategorias();
-            
-            $numfilas=count($categorias);  
+            $numfilas=count($actividades);  
             
             
             $i=0;
             
-            $categoria=new CategoriaCenso();
+            $actividad=new Actividad();
             
-            foreach ($categorias as $categoria) {
+            foreach ($actividades as $actividad) {
                 
-                $rows[$i]['id']= $categoria->getIdCategoriaCenso();
-                $rows[$i]['cell']= array($categoria->getIdCategoriaCenso(),
-                                         $categoria->getDescripcionCategoria(),
-                                         $categoria->getActivo(),
-                                         $categoria->getDivTabla() ,
-                                         $categoria->getBloque()->getNombreBloque()
+                $rows[$i]['id']= $actividad->getIdAct();
+                $rows[$i]['cell']= array($actividad->getIdAct(),
+                                         $actividad->getActDescripcion(),
+                                         $actividad->getActResponsable()
+                                         
                                          );    
                 $i++;
             }

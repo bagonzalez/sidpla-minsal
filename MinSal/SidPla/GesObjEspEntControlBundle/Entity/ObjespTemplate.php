@@ -23,7 +23,7 @@ class ObjespTemplate {
     private $idObjEspTempl;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico", inversedBy="objetivostemplate", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico", inversedBy="objetivostemplate")
      * @ORM\JoinColumn(name="objesp_codigo", referencedColumnName="objesp_codigo")
      */
     private $idObjEspec;
@@ -38,15 +38,6 @@ class ObjespTemplate {
      * @ORM\OneToMany(targetEntity="ResEspTemplate", mappedBy="idObjEspecTempl",   cascade={"persist", "remove"})
      */
     protected $resultadostemplate;
-
-    /**
-     * Set idObjEspTempl
-     *
-     * @param integer $idObjEspTempl
-     */
-    public function setIdObjEspTempl($idObjEspTempl) {
-        $this->idObjEspTempl = $idObjEspTempl;
-    }
 
     /**
      * Get idObjEspTempl

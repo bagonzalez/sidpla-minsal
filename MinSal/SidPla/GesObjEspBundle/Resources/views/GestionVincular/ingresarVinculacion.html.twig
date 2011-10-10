@@ -1,7 +1,87 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
+<script>
+    $(document).ready(function(){
+        
+                $.getJSON('{{path('MinSalSidPlaGesObjEspBundle_obtenerActividadesJSON')}}', function(data) {
+                      var i=0;
+                      
+                      $.each(data, function(key, val) {
+                          if(key=='rows'){
+                            $.each(val, function(id, registro){
+                                $('#actividadesCombo').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');                                
+                            });                    
+                          }
+                      });
+                      
+                    
+          });
+        // $( "#actividadesCombo" ).combobox();
+         // $('#actividadesCombo').css("width", '200px');
+          
+        
+         $('#vincular').click(function() {
+                    $('#vincularForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_vincularActividades') }}');                    
+                }); 
 
+         $('#desvincular').click(function() {
+                    $('#vincularForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_agregarVinculacion') }}');            
+          }); 
+          
+          $('#actividadesCombo').change(cargarActVin);
+          
+          function cargarActVin(){
+              $.getJSON('{{path('MinSalSidPlaGesObjEspBundle_obtenerActividadesVincJSON')}}?actividadesCombo='+$('#actividadesCombo').val(), function(data) {
+                      var i=0;
+                      
+                      $.each(data, function(key, val) {
+                          if(key=='rows'){
+                            $.each(val, function(id, registro){
+                                $('#actividadesCombo').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+                                $("#tabActividad").setSelection(registro['cell'][1], true);
+                                
+                                $('#tabActividad').jqGrid('setSelection','6'); 
+                            });                    
+                          }
+                      });
 
+                })
+            }
+      
+     }); 
+     
+     
+</script>
+
+<form id="vincularForm">
+<table align="center" >
+    <tbody>
+        <tr>
+            <td align="center">
+                <h1>Vinculaci&oacute;n de Actividades</h1>
+            </td>           
+        </tr>
+        <tr>
+            <td align="center">
+                 <select  id="actividadesCombo" name="actividadesCombo"></select>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                
+                {%include 'MinSalSidPlaGesObjEspBundle:GestionVincular:showActividadesPrograMon.html.twig' %}
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+             <button id="vincular" type="submit" >Vincular Actividades</button>
+             <button id="desvincular" type="submit">Desvincular Actividades</button>
+            </td>
+        </tr>
+    </tbody>
+
+</table>
+</form>
 
 
 {% endblock %}
