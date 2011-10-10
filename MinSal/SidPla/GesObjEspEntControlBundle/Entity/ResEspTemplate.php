@@ -77,7 +77,7 @@ class ResEspTemplate
      *
      * @param MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate $idObjEspecTempl
      */
-    public function setIdObjEspecTempl(\MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate$idObjEspecTempl)
+    public function setIdObjEspecTempl(\MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate $idObjEspecTempl)
     {
         $this->idObjEspecTempl = $idObjEspecTempl;
     }

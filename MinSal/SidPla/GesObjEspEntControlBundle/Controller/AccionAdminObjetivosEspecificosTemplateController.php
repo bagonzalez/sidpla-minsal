@@ -1,112 +1,47 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of AccionAdminObjetivosEspecificosController
- *
- * @author edwin
- */
-
 namespace MinSal\SidPla\GesObjEspEntControlBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
-use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
-use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
-use MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico;
-use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\ObjetivoEspecificoDao;
-use MinSal\SidPla\UnidadOrgBundle\Entity\CaractOrg;
-use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\CaractOrgDao;
-use MinSal\SidPla\AdminBundle\Entity\Empleado;
-use MinSal\SidPla\UsersBundle\Entity\User;
-
-use MinSal\SidPla\PaoBundle\Entity\Pao;
-
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate;
-use MinSal\SidPla\GesObjEspEntControlBundle\eEntityDao\ObjespTemplateDao;
+use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\ObjespTemplateDao;
+use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjTemplate;
+use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\ObjTemplateDao;
+
 class AccionAdminObjetivosEspecificosTemplateController extends Controller {
-
-    //put your code here
-
-    public function obtenerPaoElaboracionAction(){
-        
-        $user=new User();
-        $empleado=new Empleado();        
-        $user = $this->get('security.context')->getToken()->getUser();        
-        $empleado=$user->getEmpleado();        
-        $idUnidad=$empleado->getUnidadOrganizativa()->getIdUnidadOrg();        
-        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());
-        $unidad=new UnidadOrganizativa();              
-        $unidad=$unidaDao->getUnidadOrg($idUnidad);
-        
-        $paoElaboracion=new Pao();        
-        $paoElaboracion=$unidaDao->getPaoElaboracion($idUnidad);
-        
-        return $paoElaboracion;
-        
-    }
-    
 
     public function consultarObjetivosEspecificosTemplateAction() {
         $opciones = $this->getRequest()->getSession()->get('opciones');
 
-        $user = new User();
-        $empleado = new Empleado();
-
-        $user = $this->get('security.context')->getToken()->getUser();
-
-        $empleado = $user->getEmpleado();
-
-        $idUnidad = $empleado->getUnidadOrganizativa()->getIdUnidadOrg();
-
-        $unidaDao = new UnidadOrganizativaDao($this->getDoctrine());
-        $unidad = new UnidadOrganizativa();
-        //$infoGeneral=new InformacionGeneral();
-
-        $unidad = $unidaDao->getUnidadOrg($idUnidad);
-
-        // $nombreUnidad=$unidad->getNombreUnidad();
-        // $nombreUnidadPadre=$unidad->getParent()->getNombreUnidad();
-        // $infoGeneral=$unidad->getInformacionGeneral();
-        $caractOrg = $unidad->getCaractOrg();
-
-
-        // $form = $this->createForm(new InfoCaractOrgType(), $infoGeneral);
-        // $formCaract = $this->createForm(new CaractOrgType(), $caractOrg);
-
-        return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionObjetivosEspecificosTemplate:manttObjetivosEspecificos.html.twig', array('opciones' => $opciones, 'idCaractOrg' => $caractOrg->getIdCaractOrg()));
+        return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionObjetivosEspecificosTemplate:manttObjetivosEspecificos.html.twig', array('opciones' => $opciones));
     }
 
     public function consultarObjetivosEspecificosTemplateJSONAction() {
-
         $request = $this->getRequest();
-        $idCaractOrg ="";
-        //$request->get('idCaractOrg');
+        $anio = $request->get('anio');
 
-        $caractOrgAux = new CaractOrg();
-        $catOrgDao = new CaractOrgDao($this->getDoctrine());
-        $idCaractOrg="";
-        $caractOrgAux = $catOrgDao->getCaractOrg($idCaractOrg);
-        
-        $objetivosEspec = $caractOrgAux->getObjetivosEspec();
 
-        $numfilas = count($objetivosEspec);
+        $objTmpDao = new ObjTemplateDao($this->getDoctrine());
+        $objTmp = $objTmpDao->obtenerObjTempAnio($anio);
 
-        $objetivoEspec = new ObjetivoEspecifico();
-        $i = 0;
-
-        foreach ($objetivosEspec as $objetivoEspec) {
-            $rows[$i]['id'] = $objetivoEspec->getIdObjEspec();
-            $rows[$i]['cell'] = array($objetivoEspec->getIdObjEspec(),
-                $objetivoEspec->getDescripcion()
-            );
-            $i++;
+        $numfilas = 0;
+        $objTmpAux = new ObjTemplate();
+        foreach ($objTmp as $objTmpAux) {
+            $i = 0;
+            $objEspTmps = $objTmpAux->getEspecificoObjTmp();
+            $aux = new ObjespTemplate();
+            $numfilas = count($objEspTmps);
+            
+            foreach ($objEspTmps as $aux) {
+                $rows[$i]['id'] = $aux->getIdObjEspec()->getIdObjEspec();
+                $rows[$i]['cell'] = array($aux->getIdObjEspec()->getIdObjEspec(),
+                    $aux->getIdObjEspec()->getDescripcion()
+                );
+                $i++;
+            }
         }
 
         if ($numfilas != 0) {
@@ -153,10 +88,10 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
 
         if ($operacion == 'add') {
             $catOrgDao = new CaractOrgDao($this->getDoctrine());
-            
-            $paoElaboracion=$this->obtenerPaoElaboracionAction();       
-            $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
-            
+
+            $paoElaboracion = $this->obtenerPaoElaboracionAction();
+            $programacionMonitoreo = $paoElaboracion->getProgramacionMonitoreo();
+
             $catOrgDao->agregarObjEspec($objetivo, $idCaractOrg, $programacionMonitoreo);
         }
 

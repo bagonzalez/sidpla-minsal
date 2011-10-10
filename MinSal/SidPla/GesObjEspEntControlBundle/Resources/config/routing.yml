@@ -1,8 +1,9 @@
+#ROUNTING DEL GesObjEspEntControlBundle
 MinSalSidPlaGesObjEspEntControlBundle_homepage:
     pattern:  /
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:Default:index }
 
-
+#ObjespTemplate
 MinSalSidPlaGesObjEspEntControlBundle_consultarObjetivosEspecificosTemplate:
     pattern:  /consultarObjetivosEspecificosTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:consultarObjetivosEspecificosTemplate }

@@ -7,11 +7,11 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate
  *
- * @ORM\Table(name= "sidpla_objespectemplate")
+ * @ORM\Table(name="sidpla_objespectemplate")
  * @ORM\Entity
  */
-class ObjespTemplate
-{
+class ObjespTemplate {
+
     /**
      * @var integer $idObjEspTempl
      *
@@ -21,7 +21,6 @@ class ObjespTemplate
      */
     private $idObjEspTempl;
 
-    
     /**
      * @ORM\ManyToOne(targetEntity="MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico", inversedBy="objetivostemplate", cascade={"remove"})
      * @ORM\JoinColumn(name="objesp_codigo", referencedColumnName="objesp_codigo")
@@ -29,25 +28,22 @@ class ObjespTemplate
     private $idObjEspec;
 
     /**
-     * @var integer $idObjTemplate
-     *
-     * @ORM\Column(name="objtmp_codigo", type="integer")
+     * @ORM\ManyToOne(targetEntity="ObjTemplate", inversedBy="especificoObjTmp")
+     * @ORM\JoinColumn(name="objtmp_codigo", referencedColumnName="objtmp_codigo")
      */
-    private $idObjTemplate;
+    private $objTmpEspe;
 
-    
     /**
      * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspEntControlBundle\Entity\ResEspTemplate", mappedBy="idObjEspecTempl",   cascade={"persist", "remove"})
      */
     protected $resultadostemplate;
-    
+
     /**
      * Set idObjEspTempl
      *
      * @param integer $idObjEspTempl
      */
-    public function setIdObjEspTempl($idObjEspTempl)
-    {
+    public function setIdObjEspTempl($idObjEspTempl) {
         $this->idObjEspTempl = $idObjEspTempl;
     }
 
@@ -56,8 +52,7 @@ class ObjespTemplate
      *
      * @return integer 
      */
-    public function getIdObjEspTempl()
-    {
+    public function getIdObjEspTempl() {
         return $this->idObjEspTempl;
     }
 
@@ -66,8 +61,7 @@ class ObjespTemplate
      *
      * @param MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico $idObjEspec
      */
-    public function setIdObjEspec(\MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico $idObjEspec)
-    {
+    public function setIdObjEspec(\MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico $idObjEspec) {
         $this->idObjEspec = $idObjEspec;
     }
 
@@ -76,8 +70,7 @@ class ObjespTemplate
      *
      * @return MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico 
      */
-    public function getIdObjEspec()
-    {
+    public function getIdObjEspec() {
         return $this->idObjEspec;
     }
 
@@ -86,8 +79,7 @@ class ObjespTemplate
      *
      * @param integer $idObjTemplate
      */
-    public function setIdObjTemplate($idObjTemplate)
-    {
+    public function setIdObjTemplate($idObjTemplate) {
         $this->idObjTemplate = $idObjTemplate;
     }
 
@@ -96,23 +88,20 @@ class ObjespTemplate
      *
      * @return integer 
      */
-    public function getIdObjTemplate()
-    {
+    public function getIdObjTemplate() {
         return $this->idObjTemplate;
     }
-    
-    public function __construct()
-    {
-        $this->resultadostemplate= new ArrayCollection();
-        
+
+    public function __construct() {
+        $this->resultadostemplate = new  \Doctrine\Common\Collections\ArrayCollection();
     }
+
     /**
      * Add resultadostemplate
      *
      * @param MinSal\SidPla\GesObjEspEntControlBundle\Entity\ResEspTemplate $resultadostemplate
      */
-    public function addResultadostemplate(\MinSal\SidPla\GesObjEspEntControlBundle\Entity\ResEspTemplate $resultadostemplate)
-    {
+    public function addResultadostemplate(\MinSal\SidPla\GesObjEspEntControlBundle\Entity\ResEspTemplate $resultadostemplate) {
         $this->resultadostemplate[] = $resultadostemplate;
     }
 
@@ -121,8 +110,28 @@ class ObjespTemplate
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getResultadostemplate()
-    {
+    public function getResultadostemplate() {
         return $this->resultadostemplate;
+    }
+
+
+    /**
+     * Set objTmpEspe
+     *
+     * @param MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjTemplate $objTmpEspe
+     */
+    public function setObjTmpEspe(\MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjTemplate $objTmpEspe)
+    {
+        $this->objTmpEspe = $objTmpEspe;
+    }
+
+    /**
+     * Get objTmpEspe
+     *
+     * @return MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjTemplate 
+     */
+    public function getObjTmpEspe()
+    {
+        return $this->objTmpEspe;
     }
 }

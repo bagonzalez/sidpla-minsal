@@ -1,22 +1,10 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of ObjespTemplateDao
- *
- * @author edwin
- */
-
-namespace MinSal\SidPla\GesObjEspEntControlBundle\eEntityDao;
+namespace MinSal\SidPla\GesObjEspEntControlBundle\EntityDao;
 
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate;
 class ObjespTemplateDao {
-    //put your code here
-     var $doctrine;
+    var $doctrine;
     var $repositorio;
     var $em;    
 	

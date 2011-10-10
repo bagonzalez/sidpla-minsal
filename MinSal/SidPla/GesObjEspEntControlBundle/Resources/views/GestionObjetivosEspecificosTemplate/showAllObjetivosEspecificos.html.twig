@@ -2,17 +2,18 @@
 {% block body %}
     <script type="text/javascript">
       $(document).ready(function(){
-
+          
+        $('#agregarObjTempButton').button();
         var myGrid = $('#theGridObj');        
         myGrid.jqGrid({    
-          url: 'consultarObjetivosEspecificosTemplateJSON',
+          url: 'consultarObjetivosEspecificosTemplateJSON?anio={{ "now" | date("Y") }}',
           datatype:'json',
           altRows:true,          
-          colNames:['Id','Objetivo','Eliminar','Actions'],
+          colNames:['Id','Objetivo','Eliminar','Acciones'],
           colModel:[ 
             { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
-            { name:'objetivo', index: 'objetivo', width:580,editable:true,editoptions:{size:40,maxlength: 300},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  },
-             {name: 'eliminar', width:80, fixed:true, sortable:false, resize:false, formatter:'actions', formatoptions:{keys:true,"editbutton":false}},
+            { name:'objetivo', index: 'objetivo', width:580,editable:true,edittype:"textarea", editoptions:{rows:"5",cols:"50",maxlength: 300},formoptions:{ rowpos:1, label: "Objetivo Especifico", elmprefix:"(*)"},editrules:{required:true}  },
+            { name: 'eliminar', width:80, fixed:true, sortable:false, resize:false, formatter:'actions', formatoptions:{keys:true,"editbutton":false}},
             {name:'act',index:'act', width:280,sortable:false}],
           rowNum:10,
           rowList:[10,20,30],
@@ -33,22 +34,14 @@
           caption: 'Objetivos Especificos',
           height: "100%",
           editCaption: "Editar Registro",
-          addCaption: "Nuevo Registro",
-          editurl:'manttObjetivosEspecificosTemplate'         
+          addCaption: "Nuevo Registro"//,
+         // editurl:'manttObjetivosEspecificosTemplate'         
             
         });
-        myGrid.jqGrid('navGrid','#pagerObj',{edit:true,add:true,del:true,
+        myGrid.jqGrid('navGrid','#pagerObj',{edit:false,add:false,del:false,search:false,view:false,refresh:false,
          beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}
-        },
-        {width:450,height:200, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos editados con exito!");},closeAfterEdit:true,afterSubmit:despuesAgregarEditar },//edit
-        {width:450,height:200,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");},closeAfterAdd:true,afterSubmit:despuesAgregarEditar },//add
-        {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
-        alert("Mensaje eliminado con exito!");
-          } },//del
-        {},//search
-        {} //view
+        }
+         //view
         ).hideCol('id');
        
              /* Funcion para regargar los JQGRID luego de agregar y editar*/
@@ -56,8 +49,19 @@
         myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
         return[true,'']; //no error
       }
+      
+      //agregar
+     $("#agregarObjTempButton").click(function(){
+        jQuery('#theGridObj').jqGrid('editGridRow',"new",
+            {closeAfterAdd:true,addCaption: "Agregar Objetivo Especifico",width:550,height:200,align:'center',reloadAfterSubmit:true,
+            processData: "Cargando...",bottominfo:"Campos marcados con (*) son obligatorios",afterSubmit:despuesAgregarEditar, 
+            onclickSubmit: function(rp_ge, postdata) {
+                alert("datos guardados con exito!");
+            }});
+     });
+     
        
-      });
+});
       
        //define handler for 'editSubmit' event
     var fn_editSubmit=function(response,postdata){
@@ -74,7 +78,9 @@
     <div id="grid_wrapper" class="ui-corner-all floatLeft">
         <table id="theGridObj" class="scroll" ></table> 
         <div id="pagerObj"  class="scroll" style="text-align:center;"></div> 
-      </div>
+    </div>
+    <br></br>
+    <input type="button" id="agregarObjTempButton" value="  Agregar  " />
        
     
 {% endblock %}
