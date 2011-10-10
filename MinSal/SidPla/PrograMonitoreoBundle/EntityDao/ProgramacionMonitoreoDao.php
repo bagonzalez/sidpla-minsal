@@ -37,24 +37,33 @@ class ProgramacionMonitoreoDao {
     function __construct($doctrine){ 
         $this->doctrine=$doctrine;      	
         $this->em=$this->doctrine->getEntityManager();
-        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaGesObjEspBundle:Actividad');
+        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaPrograMonitoreoBundle:ProgramacionMonitoreo');
     }
     
     
-    public function getActividades(){
+    public function getActividades($idProgramon){
         
              $rsm=new ResultSetMapping;             
              $rsm->addEntityResult('MinSalSidPlaGesObjEspBundle:Actividad', 'a');
-             $rsm->addFieldResult('a', 'opcionsistema_codigo', 'idOpcionSistema');
-             $rsm->addFieldResult('a', 'opcionsistema_nombre', 'nombreOpcion');
-             $query = $this->em->createNativeQuery('SELECT opc.opcionsistema_codigo, opc.opcionsistema_nombre 
-                                                    FROM sidpla_rol_opcion rolopc, sidpla_opcionsistema opc, sidpla_rol rol  
-                                                    WHERE rol.rol_codigo=rolopc.rol_codigo AND opc.opcionsistema_codigo=rolopc.opcionsistema_codigo
-                                                    AND rol.rol_codigo = ?' , $rsm);   
-             $query->setParameter(1, $id);
-             $opciones = $query->getResult();             
+             $rsm->addFieldResult('a', 'actividad_codigo', 'idAct');
+             $rsm->addFieldResult('a', 'actividad_descripcion', 'actDescripcion');
+             $rsm->addFieldResult('a', 'activiadad_responsable', 'actResponsable');
+             $query = $this->em->createNativeQuery('SELECT 
+                      DISTINCT sidpla_actividad.actividad_codigo, 
+                      sidpla_actividad.actividad_descripcion,   
+                      sidpla_actividad.activiadad_responsable
+                    FROM 
+                      public.sidpla_programacionmonitoreo, 
+                      public.sidpla_resultadoactvidad, 
+                      public.sidpla_actividad
+                    WHERE 
+                      sidpla_programacionmonitoreo.promon_codigo = sidpla_resultadoactvidad.promon_codigo AND
+                      sidpla_actividad.actividad_codigo = sidpla_resultadoactvidad.actividad_codigo AND
+                      sidpla_programacionmonitoreo.promon_codigo=?' , $rsm);   
+             $query->setParameter(1, $idProgramon);
+             $actividades = $query->getResult();             
              
-             return $opciones;
+             return $actividades;
     }
     
 }
