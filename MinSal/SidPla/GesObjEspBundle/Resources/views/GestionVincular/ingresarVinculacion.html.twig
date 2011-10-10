@@ -16,8 +16,8 @@
                       
                     
           });
-         $( "#actividadesCombo" ).combobox();
-          $('#actividadesCombo').css("width", '200px');
+        // $( "#actividadesCombo" ).combobox();
+         // $('#actividadesCombo').css("width", '200px');
           
         
          $('#vincular').click(function() {
@@ -27,8 +27,30 @@
          $('#desvincular').click(function() {
                     $('#vincularForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_agregarVinculacion') }}');            
           }); 
+          
+          $('#actividadesCombo').change(cargarActVin);
+          
+          function cargarActVin(){
+              $.getJSON('{{path('MinSalSidPlaGesObjEspBundle_obtenerActividadesVincJSON')}}?actividadesCombo='+$('#actividadesCombo').val(), function(data) {
+                      var i=0;
+                      
+                      $.each(data, function(key, val) {
+                          if(key=='rows'){
+                            $.each(val, function(id, registro){
+                                $('#actividadesCombo').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+                                $("#tabActividad").setSelection(registro['cell'][1], true);
+                                
+                                $('#tabActividad').jqGrid('setSelection','6'); 
+                            });                    
+                          }
+                      });
+
+                })
+            }
       
-     });  
+     }); 
+     
+     
 </script>
 
 <form id="vincularForm">

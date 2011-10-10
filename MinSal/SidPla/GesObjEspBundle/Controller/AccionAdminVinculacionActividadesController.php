@@ -37,6 +37,7 @@ use MinSal\SidPla\PrograMonitoreoBundle\EntityDao\ProgramacionMonitoreoDao;
 use MinSal\SidPla\GesObjEspBundle\Entity\Actividad;
 
 use MinSal\SidPla\GesObjEspBundle\EntityDao\ActividadVinculadaDao;
+use MinSal\SidPla\GesObjEspBundle\Entity\ActividadVinculada;
 
 /**
  * Description of AccionAdminVinculacionActividades
@@ -107,6 +108,53 @@ class AccionAdminVinculacionActividadesController extends Controller {
                 array( 'opciones' => $opciones,));
         
     }
+    
+     public function obtenerActividadesVincJSONAction()
+    { 
+            $request=$this->getRequest();
+            
+            $idActividad = $request->get('actividadesCombo');
+            
+            $paoElaboracion=$this->obtenerPaoElaboracionAction();
+            $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+            $idProgramon=$programacionMonitoreo->getIdPrograMon();
+            
+            $actividadvincDao=new ActividadVinculadaDao($this->getDoctrine());
+            $actividades=$actividadvincDao->getActividadesVinculadas($idActividad);
+            
+            $numfilas=count($actividades);  
+            
+            
+            $i=0;
+            
+            $actividad=new ActividadVinculada();
+            
+            foreach ($actividades as $actividad) {
+                
+                $rows[$i]['id']= $actividad->getIdActVincu();
+                $rows[$i]['cell']= array($actividad->getIdActVincu(),
+                                         $actividad->getIdActDest(),
+                                         $actividad->getIdActOrigen()                                         
+                                         );    
+                $i++;
+            }
+            
+            $datos=json_encode($rows);            
+            
+            
+            $jsonresponse='{
+               "page":"1",
+               "total":"1",
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
+            
+            
+            $response=new Response($jsonresponse);              
+            return $response;  
+         
+        
+    }
+    
     
      public function obtenerActividadesJSONAction()
     { 

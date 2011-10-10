@@ -28,10 +28,21 @@ class ActividadVinculada
     private $actOrigen;
     
     /**
+     * @ORM\Column(name="actividad_actividadorigen", type="integer")
+     */
+    private $idActOrigen;
+    
+    /**
      * @ORM\ManyToOne(targetEntity="Actividad", inversedBy="actdestinos")
      * @ORM\JoinColumn(name="actividad_actividaddestino", referencedColumnName="actividad_codigo")
      */
     private $actDest;
+    
+    /**
+     * @ORM\Column(name="actividad_actividaddestino", type="integer")
+     */
+    private $idActDest;
+
 
     /**
      * @var text $justificacion
@@ -147,5 +158,45 @@ class ActividadVinculada
     public function getActDest()
     {
         return $this->actDest;
+    }
+
+    /**
+     * Set idActOrigen
+     *
+     * @param integer $idActOrigen
+     */
+    public function setIdActOrigen($idActOrigen)
+    {
+        $this->idActOrigen = $idActOrigen;
+    }
+
+    /**
+     * Get idActOrigen
+     *
+     * @return integer 
+     */
+    public function getIdActOrigen()
+    {
+        return $this->idActOrigen;
+    }
+
+    /**
+     * Set idActDest
+     *
+     * @param integer $idActDest
+     */
+    public function setIdActDest($idActDest)
+    {
+        $this->idActDest = $idActDest;
+    }
+
+    /**
+     * Get idActDest
+     *
+     * @return integer 
+     */
+    public function getIdActDest()
+    {
+        return $this->idActDest;
     }
 }

@@ -88,5 +88,9 @@ MinSalSidPlaGesObjEspBundle_vincularActividades:
     pattern:  /vincularActividades
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:vincularActividades}
 
+MinSalSidPlaGesObjEspBundle_obtenerActividadesVincJSON:
+    pattern:  /obtenerActividadesVincJSON
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:obtenerActividadesVincJSON}
+
     
     

@@ -22,7 +22,7 @@
 namespace MinSal\SidPla\GesObjEspBundle\EntityDao;
 use MinSal\SidPla\GesObjEspBundle\Entity\Actividad;
 use MinSal\SidPla\GesObjEspBundle\Entity\ActividadVinculada;
-
+use Doctrine\ORM\Query\ResultSetMapping;
 
 /**
  * Description of ActividadVinculadaDao
@@ -54,6 +54,30 @@ class ActividadVinculadaDao {
         
          $this->em->persist($actividaVinculada);
          $this->em->flush();
+    }
+    
+    
+    public function getActividadesVinculadas($idActividad){
+        
+             $rsm=new ResultSetMapping;             
+             $rsm->addEntityResult('MinSalSidPlaGesObjEspBundle:ActividadVinculada', 'a');
+             $rsm->addFieldResult('a', 'actvin_codigo', 'idActVincu');
+             $rsm->addFieldResult('a', 'actividad_actividaddestino', 'idActOrigen');
+             $rsm->addFieldResult('a', 'actividad_actividadorigen', 'idActDest');
+             $query = $this->em->createNativeQuery('SELECT 
+                      sidpla_actividadvinculada.actvin_codigo,
+                      sidpla_actividadvinculada.actividad_actividaddestino, 
+                      sidpla_actividadvinculada.actividad_actividadorigen
+                    FROM 
+                      public.sidpla_actividadvinculada, 
+                      public.sidpla_actividad
+                    WHERE   
+                      sidpla_actividadvinculada.actividad_actividadorigen = sidpla_actividad.actividad_codigo AND
+                      actividad_actividadorigen=?' , $rsm);   
+             $query->setParameter(1, $idActividad);
+             $actividades = $query->getResult();             
+             
+             return $actividades;        
     }
 }
 
