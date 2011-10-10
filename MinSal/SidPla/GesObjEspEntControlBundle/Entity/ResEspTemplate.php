@@ -7,66 +7,51 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * MinSal\SidPla\GesObjEspEntControlBundle\Entity\ResEspTemplate
  *
- * @ORM\Table()
+ * @ORM\Table(name="sidpla_resespetemplate")
  * @ORM\Entity
  */
 class ResEspTemplate
 {
     /**
-     * @var integer $id
+     * @var integer $idResEspTempl
      *
-     * @ORM\Column(name="id", type="integer")
+     * @ORM\Column(name="restmp_codigo", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @var integer $idResEspTempl
-     *
-     * @ORM\Column(name="idResEspTempl", type="integer")
-     */
     private $idResEspTempl;
 
+    
+
     /**
-     * @var integer $idObjEspecTempl
-     *
-     * @ORM\Column(name="idObjEspecTempl", type="integer")
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate", inversedBy="resultadostemplate", cascade={"remove"})
+     * @ORM\JoinColumn(name="objtmp_codigo", referencedColumnName="objtmp_codigo")
      */
     private $idObjEspecTempl;
 
     /**
      * @var string $resEspTemplIndicador
      *
-     * @ORM\Column(name="resEspTemplIndicador", type="string", length=150)
+     * @ORM\Column(name="restmp_indicador", type="string", length=150)
      */
     private $resEspTemplIndicador;
 
     /**
      * @var string $resEspTemplDescripcion
      *
-     * @ORM\Column(name="resEspTemplDescripcion", type="string", length=200)
+     * @ORM\Column(name="restmp_descripcion", type="string", length=200)
      */
     private $resEspTemplDescripcion;
 
     /**
      * @var string $resEspTemplNomencla
      *
-     * @ORM\Column(name="resEspTemplNomencla", type="string", length=15)
+     * @ORM\Column(name="restmp_nomenclatura", type="string", length=15)
      */
     private $resEspTemplNomencla;
 
 
-    /**
-     * Get id
-     *
-     * @return integer 
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
-
+    
     /**
      * Set idResEspTempl
      *
@@ -90,9 +75,9 @@ class ResEspTemplate
     /**
      * Set idObjEspecTempl
      *
-     * @param integer $idObjEspecTempl
+     * @param MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate $idObjEspecTempl
      */
-    public function setIdObjEspecTempl($idObjEspecTempl)
+    public function setIdObjEspecTempl(\MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate $idObjEspecTempl)
     {
         $this->idObjEspecTempl = $idObjEspecTempl;
     }
@@ -100,7 +85,7 @@ class ResEspTemplate
     /**
      * Get idObjEspecTempl
      *
-     * @return integer 
+     * @return MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate
      */
     public function getIdObjEspecTempl()
     {
@@ -165,5 +150,5 @@ class ResEspTemplate
     public function getResEspTemplNomencla()
     {
         return $this->resEspTemplNomencla;
-    }
+    }   
 }
