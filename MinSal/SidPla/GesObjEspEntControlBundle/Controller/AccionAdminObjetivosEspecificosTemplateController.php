@@ -6,10 +6,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Collections\ArrayCollection;
+
+
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate;
 use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\ObjespTemplateDao;
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjTemplate;
 use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\ObjTemplateDao;
+use MinSal\SidPla\UnidadOrgBundle\EntityDao\ObjetivoEspecificoDao;
+use MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico;
 
 class AccionAdminObjetivosEspecificosTemplateController extends Controller {
 
@@ -23,7 +27,6 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
         $request = $this->getRequest();
         $anio = $request->get('anio');
 
-
         $objTmpDao = new ObjTemplateDao($this->getDoctrine());
         $objTmp = $objTmpDao->obtenerObjTempAnio($anio);
 
@@ -34,7 +37,7 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
             $objEspTmps = $objTmpAux->getEspecificoObjTmp();
             $aux = new ObjespTemplate();
             $numfilas = count($objEspTmps);
-            
+
             foreach ($objEspTmps as $aux) {
                 $rows[$i]['id'] = $aux->getIdObjEspec()->getIdObjEspec();
                 $rows[$i]['cell'] = array($aux->getIdObjEspec()->getIdObjEspec(),
@@ -65,39 +68,54 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
         return $response;
     }
 
-    public function manttObjetivosEspecificosTemplateAction() {
-
+    public function ingresarObjEspTemplateAction() {
+        $opciones = $this->getRequest()->getSession()->get('opciones');
         $request = $this->getRequest();
+        $anio = $request->get('anio');
 
-        $objetivo = $request->get('objetivo');
-        $id = $request->get('id');
-        $idCaractOrg = "";
-        //$request->get('idCaractOrg');
-
-        $operacion = $request->get('oper');
-
-        $objDao = new ObjetivoEspecificoDao($this->getDoctrine());
-
-        if ($operacion == 'edit') {
-            $objDao->editObjEspec($objetivo, $id);
-        }
-
-        if ($operacion == 'del') {
-            $objDao->delObjEspec($id);
-        }
-
-        if ($operacion == 'add') {
-            $catOrgDao = new CaractOrgDao($this->getDoctrine());
-
-            $paoElaboracion = $this->obtenerPaoElaboracionAction();
-            $programacionMonitoreo = $paoElaboracion->getProgramacionMonitoreo();
-
-            $catOrgDao->agregarObjEspec($objetivo, $idCaractOrg, $programacionMonitoreo);
-        }
-
-        return new Response("{sc:true,msg:''}");
+        return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionObjetivosEspecificosTemplate:agregarObjEspTemplate.html.twig', 
+                array('opciones' => $opciones, 'anio' => $anio));
+    }
+    
+    public function editarObjEspTemplateAction() {
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+        $request = $this->getRequest();
+        $idfila = $request->get('idfila');
+        $anio = $request->get('anio');
+        
+        $objEspDao = new ObjetivoEspecificoDao($this->getDoctrine());
+        $objEsp=$objEspDao->getObjetEspecif($idfila);
+        
+        
+        return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionObjetivosEspecificosTemplate:editarObjEspTemplate.html.twig', 
+                array('opciones' => $opciones,'id'=>$idfila,'objEsp'=>$objEsp->getDescripcion(),'anio' => $anio));
     }
 
-}
+    public function manttObjEspTemplateAction() {
+        $request = $this->getRequest();
+        $anio = $request->get('anio');
+        $operacion = $request->get('oper');
+        $objDesc = $request->get('objEspTmp');
+        $codObjEsp=$request->get('idfila');
+
+        $objTmpDao = new ObjTemplateDao($this->getDoctrine());
+        $objTmp = $objTmpDao->obtenerObjTempAnio($anio);
+
+        $numfilas = 0;
+        $objTmpAux = new ObjTemplate();
+        
+        foreach ($objTmp as $objTmpAux) {
+            switch ($operacion) {
+                case 'add':
+                    $objTmpDao->agregarObjTmp($objDesc, $objTmpAux);
+                    break;
+                case 'edit':
+                    $objTmpDao->editarObjTmp($objDesc, $codObjEsp);
+                break;
+            }
+         }
+         return $this->consultarObjetivosEspecificosTemplateAction();
+        }
+    }
 
 ?>
