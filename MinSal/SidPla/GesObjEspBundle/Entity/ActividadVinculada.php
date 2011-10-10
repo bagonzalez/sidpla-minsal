@@ -23,13 +23,13 @@ class ActividadVinculada
     
     /**
      * @ORM\ManyToOne(targetEntity="Actividad", inversedBy="actvinculadasorigen")
-     * @ORM\JoinColumn(name="actividad_codigo", referencedColumnName="actividad_codigo")
+     * @ORM\JoinColumn(name="actividad_actividadorigen", referencedColumnName="actividad_codigo")
      */
     private $actOrigen;
     
     /**
      * @ORM\ManyToOne(targetEntity="Actividad", inversedBy="actdestinos")
-     * @ORM\JoinColumn(name="sid_actividad_codigo", referencedColumnName="sid_actividad_codigo")
+     * @ORM\JoinColumn(name="actividad_actividaddestino", referencedColumnName="actividad_codigo")
      */
     private $actDest;
 
