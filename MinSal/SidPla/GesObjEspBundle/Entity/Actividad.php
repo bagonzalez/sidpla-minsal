@@ -107,6 +107,14 @@ class Actividad
      * @ORM\OneToMany(targetEntity="ActividadVinculada", mappedBy="idDepto")
      */
     protected $actdestinos;
+    
+    
+    /**
+     * @var float $costo
+     *
+     * @ORM\Column(name="actividad_costo", type="float")
+     */
+    private $costo;
       
     /**
      * Set idAct
@@ -277,6 +285,28 @@ class Actividad
     {
         $this->actNomenclatura = $actNomenclatura;
     }
+    
+     /**
+     * Set costo
+     *
+     * @param float $costo
+     */
+    public function setCosto($costo)
+    {
+        $this->costo = $costo;
+    }
+    
+       /**
+     * Get costo
+     *
+     * @return float 
+     */
+    public function getCosto()
+    {
+        return $this->costo;
+    }
+    
+     
 
     /**
      * Get actNomenclatura

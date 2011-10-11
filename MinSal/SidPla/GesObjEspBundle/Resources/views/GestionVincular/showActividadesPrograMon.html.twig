@@ -6,7 +6,7 @@
          
       
          
-         
+         var lastsel;
          $('#tabActividad').jqGrid({ 
               url: '{{path('MinSalSidPlaGesObjEspBundle_obtenerActividadesJSON')}}',
               datatype:'json',
@@ -14,17 +14,33 @@
               colNames:['Codigo','Actividad','Responsable'],
               colModel:[
                 { name:'codigo', index: 'codigo', width:40,align:'center',editable:false,editoptions:{size:15}},
-                { name:'nombrePrimero', index: 'nombrePrimero', width:150,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:1, label: "Primer Nombre",elmprefix:"(*)"},editrules:{required:true}  },
-                { name:'nombreSegundo', index: 'nombreSegundo',width:150,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:2, label: "Segundo Nombre"} },                
+                { name:'actividad', index: 'actividad', width:300,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:1, label: "Actividad",elmprefix:"(*)"},editrules:{required:true}  },
+                { name:'responsable', index: 'responsable',width:300,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:2, label: "Responsable"} },                
               ],
               rowNum:10,
               rowList:[10,20,30],
               multiselect: true,
               loadonce:true,
               pager: jQuery('#pager1'),
-              viewrecords: true,          
+              viewrecords: true,                  
               caption: 'Vincular Actividades',
-              height: "100%"
+              height: "100%",
+                    onSelectRow: function(id, status){ 
+                        if(id && id!==lastsel && status==false){ 
+                            $.getJSON('{{path('MinSalSidPlaGesObjEspBundle_desvincularActividades')}}?actividadDestVin='+id+'&actividadesCombo='+$('#actividadesCombo').val(), function(data) {
+                                  var i=0;
+                                  $.each(data, function(key, val) {
+                                      if(key=='rows'){
+                                        $.each(val, function(id, registro){
+                                            jQuery("#tabActividad").jqGrid('setSelection', registro['cell'][2]);
+
+                                        });                    
+                                      }
+                                  });
+                            })                            
+                            lastsel=id; 
+                        } 
+                    },
             });
         
     });   

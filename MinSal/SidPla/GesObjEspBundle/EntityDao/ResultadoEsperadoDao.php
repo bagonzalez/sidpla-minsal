@@ -100,7 +100,8 @@ class ResultadoEsperadoDao {
                                         $descripMetaAnual,
                                         $responsable,
                                         $indicador,
-                                        $medioverifindicador ){
+                                        $medioverifindicador,
+                                        $costo){
          
       
            $resultadoAux=new ResultadoEsperado();
@@ -117,6 +118,7 @@ class ResultadoEsperadoDao {
          $objActividad->setActIndicador($indicador);
          $objActividad->setIdTipoMedVeri($medioverifindicador);
          $objActividad->setIdResEsp($resultadoAux);
+         $objActividad->setCosto($costo);
                  
          $resultadoAux->addActividades($objActividad);
 

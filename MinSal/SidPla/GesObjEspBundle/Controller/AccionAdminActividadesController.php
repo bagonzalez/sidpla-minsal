@@ -190,6 +190,7 @@ class AccionAdminActividadesController extends Controller{
           $metaAnual=$request->get('metaAnual');
           $tipometa=$request->get('selectipometa');
           $descripMetaAnual=$request->get('descripMetaAnual');
+          $costo=$request->get('costo');
           
               
               //este  valor es  fusilados porque no se bien como  funcionan
@@ -229,7 +230,7 @@ class AccionAdminActividadesController extends Controller{
                                         $descripMetaAnual,
                                         $responsable,
                                         $indicador,
-                                        $medioverifindicador ); 
+                                        $medioverifindicador, $costo ); 
                
            
           

@@ -64,6 +64,19 @@ class AccionAdminVinculacionActividadesController extends Controller {
         
     }
     
+    
+    public function obtenerPaoElaboracionDependenciaAction($idUnidad){
+        
+               
+        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());        
+        
+        $paoElaboracion=new Pao();        
+        $paoElaboracion=$unidaDao->getPaoElaboracion($idUnidad);
+        
+        return $paoElaboracion;
+        
+    }
+    
     public function gestionVinculacionAction()
     {
          $opciones=$this->getRequest()->getSession()->get('opciones');
@@ -77,6 +90,15 @@ class AccionAdminVinculacionActividadesController extends Controller {
          $opciones=$this->getRequest()->getSession()->get('opciones');
          
          return $this->render('MinSalSidPlaGesObjEspBundle:GestionVincular:ingresarVinculacion.html.twig', 
+                array( 'opciones' => $opciones,));
+        
+    }
+    
+       public function agregarVinculacionDependenciasAction()
+    {
+         $opciones=$this->getRequest()->getSession()->get('opciones');
+         
+         return $this->render('MinSalSidPlaGesObjEspBundle:GestionVinculaConDependencias:ingresarVinculacionConDep.html.twig', 
                 array( 'opciones' => $opciones,));
         
     }
@@ -108,6 +130,24 @@ class AccionAdminVinculacionActividadesController extends Controller {
                 array( 'opciones' => $opciones,));
         
     }
+    
+    
+    public function desvincularActividadesAction()
+    {
+         $opciones=$this->getRequest()->getSession()->get('opciones');
+         $request = $this->getRequest();
+          
+         $idActividadOrigen = $request->get('actividadesCombo');
+         $idActividadDest=$request->get('actividadDestVin');
+           
+         $actividadVinDao=new ActividadVinculadaDao($this->getDoctrine());           
+         $actividadVinDao->removeActividadVinculada($idActividadOrigen, $idActividadDest);
+           
+         return $this->render('MinSalSidPlaGesObjEspBundle:GestionVincular:ingresarVinculacion.html.twig', 
+                array( 'opciones' => $opciones,));
+        
+    }
+    
     
      public function obtenerActividadesVincJSONAction()
     { 
@@ -160,9 +200,20 @@ class AccionAdminVinculacionActividadesController extends Controller {
     { 
             $request=$this->getRequest();
             
-            $paoElaboracion=$this->obtenerPaoElaboracionAction();
-            $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
-            $idProgramon=$programacionMonitoreo->getIdPrograMon();
+            $idActividad = $request->get('actividadesCombo');
+            $dependencia = $request->get('dependencia');
+            $idProgramon='';
+            
+            if($dependencia){
+                $paoElaboracion=$this->obtenerPaoElaboracionDependenciaAction($dependencia);
+                $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+                $idProgramon=$programacionMonitoreo->getIdPrograMon();
+            }else{
+                $paoElaboracion=$this->obtenerPaoElaboracionAction();
+                $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+                $idProgramon=$programacionMonitoreo->getIdPrograMon();                
+            }           
+            
             
             $promMonDao=new ProgramacionMonitoreoDao($this->getDoctrine());
             $actividades=$promMonDao->getActividades($idProgramon);
@@ -171,7 +222,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
             
             
             $i=0;
-            
+            $rows='';
             $actividad=new Actividad();
             
             foreach ($actividades as $actividad) {
@@ -199,6 +250,57 @@ class AccionAdminVinculacionActividadesController extends Controller {
             return $response;  
          
         
+    }
+    
+    
+    public function consultarUnidadesDependenciasJSONAction() {
+
+        $unidadOrgDao = new UnidadOrganizativaDao($this->getDoctrine());
+        $unidadesOrg = $unidadOrgDao->getUnidadesOrg();
+
+        $numfilas = count($unidadesOrg);
+
+        $uni = new UnidadOrganizativa();
+        $i = 0;
+
+        foreach ($unidadesOrg as $uni) {
+            if($uni->getTipoUnidad()==1){
+                $infogeneral = $uni->getInformacionGeneral();
+                if ($infogeneral == null)
+                    $infogeneral = new InformacionGeneral();
+
+
+                $rows[$i]['id'] = $uni->getIdUnidadOrg();
+                $rows[$i]['cell'] = array($uni->getIdUnidadOrg(),
+                    $uni->getNombreUnidad(),
+                    $uni->getDescripcionUnidad(),
+                    '',
+                    $infogeneral->getDireccion(),
+                    $infogeneral->getTelefono());
+                $i++;                
+            }            
+        }
+
+        if ($numfilas != 0) {
+            array_multisort($rows, SORT_ASC);
+        } else {
+            $rows[0]['id'] = 0;
+            $rows[0]['cell'] = array(' ', ' ', ' ', ' ', ' ' . ' ');
+        }
+        $datos = json_encode($rows);
+
+        $pages = floor($numfilas / 10) + 1;
+
+        $jsonresponse = '{
+               "page":"1",
+               "total":"' . $pages . '",
+               "records":"' . $numfilas . '", 
+               "rows":' . $datos . '}';
+
+
+
+        $response = new Response($jsonresponse);
+        return $response;
     }
     
     

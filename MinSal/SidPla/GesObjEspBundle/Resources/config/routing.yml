@@ -92,5 +92,16 @@ MinSalSidPlaGesObjEspBundle_obtenerActividadesVincJSON:
     pattern:  /obtenerActividadesVincJSON
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:obtenerActividadesVincJSON}
 
-    
+MinSalSidPlaGesObjEspBundle_desvincularActividades:
+    pattern:  /desvincularActividades
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:desvincularActividades}
+
+MinSalSidPlaGesObjEspBundle_agregarVinculacionDependencias:
+    pattern:  /agregarVinculacionDependencias
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:agregarVinculacionDependencias}
+
+MinSalSidPlaGesObjEspBundle_consultarUnidadesDependenciasJSON:
+    pattern:  /consultarUnidadesDependenciasJSON
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:consultarUnidadesDependenciasJSON}
+
     

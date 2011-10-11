@@ -6,12 +6,23 @@
         $('#agregarVinculacion').click(function() {
         $('#agregarVincForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_agregarVinculacion') }}');            
         
-        });         
+        });   
+        
+        $('#agregarVinculacionDep').click(function() {
+        $('#agregarVincForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_agregarVinculacionDependencias') }}');            
+        
+        });
+        
+        
      });
     
 </script>
 
 <form id="agregarVincForm" action="{{ path('MinSalSidPlaGesObjEspBundle_gestionVinculacion')}}" method="post" >
     <button type="submmit"  id="agregarVinculacion" >Agregar Vinculaci&oacute;n</button>
+    <button type="submmit"  id="agregarVinculacionDep" >Agregar Vinculaci&oacute;n con Dependencias</button>
+    
+    
+    
 </form>        
 {% endblock %}

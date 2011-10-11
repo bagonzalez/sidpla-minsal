@@ -24,23 +24,18 @@
                     $('#vincularForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_vincularActividades') }}');                    
                 }); 
 
-         $('#desvincular').click(function() {
-                    $('#vincularForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_agregarVinculacion') }}');            
-          }); 
           
           $('#actividadesCombo').change(cargarActVin);
           
           function cargarActVin(){
+              $("#tabActividad").resetSelection(); 
               $.getJSON('{{path('MinSalSidPlaGesObjEspBundle_obtenerActividadesVincJSON')}}?actividadesCombo='+$('#actividadesCombo').val(), function(data) {
                       var i=0;
-                      
                       $.each(data, function(key, val) {
                           if(key=='rows'){
                             $.each(val, function(id, registro){
-                                $('#actividadesCombo').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
-                                $("#tabActividad").setSelection(registro['cell'][1], true);
+                                jQuery("#tabActividad").jqGrid('setSelection', registro['cell'][1]);
                                 
-                                $('#tabActividad').jqGrid('setSelection','6'); 
                             });                    
                           }
                       });
@@ -58,12 +53,14 @@
     <tbody>
         <tr>
             <td align="center">
-                <h1>Vinculaci&oacute;n de Actividades</h1>
+                <h1>Vinculaci&oacute;n de Actividades - Dependencia</h1>
             </td>           
         </tr>
         <tr>
-            <td align="center">
-                 <select  id="actividadesCombo" name="actividadesCombo"></select>
+            <td align="center"><p>Actividades: </p>
+                 <select  id="actividadesCombo" name="actividadesCombo">
+                    <option value="0">Seleccione Actividad</option>
+                 </select>
             </td>
         </tr>
         <tr>
@@ -74,8 +71,7 @@
         </tr>
         <tr>
             <td align="center">
-             <button id="vincular" type="submit" >Vincular Actividades</button>
-             <button id="desvincular" type="submit">Desvincular Actividades</button>
+             <button id="vincular" type="submit" >Vincular Actividades</button>             
             </td>
         </tr>
     </tbody>

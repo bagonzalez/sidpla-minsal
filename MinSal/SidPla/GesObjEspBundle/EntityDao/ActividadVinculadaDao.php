@@ -49,11 +49,32 @@ class ActividadVinculadaDao {
         
         $actividaVinculada=new ActividadVinculada();
         $actividaVinculada->setActOrigen($actividadOrigen);
+        $actividaVinculada->setIdActOrigen($idActividad);
+        
         $actividaVinculada->setActDest($actividadDestino);
+        $actividaVinculada->setIdActDest($idActividadAVincular);
         $actividaVinculada->setEstado('unidad');
         
          $this->em->persist($actividaVinculada);
          $this->em->flush();
+    }
+    
+    
+    public function removeActividadVinculada($idActividadOriginal, $idActividadDest){
+        $actividadDao=new ActividadDao($this->doctrine);
+        
+        $actividades=$this->getActividadesVinculadas($idActividadOriginal);
+        
+         $actividad=new ActividadVinculada();
+            
+        foreach ($actividades as $actividad) {
+            if($actividad->getIdActDest()==$idActividadDest){
+                    $this->em->remove($actividad); 
+                    $this->em->flush();
+            }
+        }
+        
+        $this->em->flush();
     }
     
     
@@ -62,8 +83,8 @@ class ActividadVinculadaDao {
              $rsm=new ResultSetMapping;             
              $rsm->addEntityResult('MinSalSidPlaGesObjEspBundle:ActividadVinculada', 'a');
              $rsm->addFieldResult('a', 'actvin_codigo', 'idActVincu');
-             $rsm->addFieldResult('a', 'actividad_actividaddestino', 'idActOrigen');
-             $rsm->addFieldResult('a', 'actividad_actividadorigen', 'idActDest');
+             $rsm->addFieldResult('a', 'actividad_actividaddestino', 'idActDest');
+             $rsm->addFieldResult('a', 'actividad_actividadorigen', 'idActOrigen');
              $query = $this->em->createNativeQuery('SELECT 
                       sidpla_actividadvinculada.actvin_codigo,
                       sidpla_actividadvinculada.actividad_actividaddestino, 
