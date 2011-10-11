@@ -2,6 +2,9 @@
 {% block body %}
 <script>
     $(document).ready(function(){
+        
+        $('#dialogJustificacion').jqm();
+        
          $.getJSON('{{path('MinSalSidPlaGesObjEspBundle_consultarUnidadesDependenciasJSON')}}', function(data) {
                   var i=0;
                   $.each(data, function(key, val) {
@@ -36,8 +39,15 @@
           }
           
           $('#vincular').click(function() {
-                    $('#vincularForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_vincularActividades') }}');                    
+                    $('#dialogJustificacion').jqmShow();                     
           }); 
+          
+          $('#vincularFin').click(function() {                    
+                    $('#vincularForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_vincularActividades') }}');                    
+                    $('#vincularForm').submit();
+          }); 
+          
+          
           
           $('#actividadesCombo').change(cargarActVin);
           
@@ -93,12 +103,32 @@
         </tr>
         <tr>
             <td align="center">
-             <button id="vincular" type="submit" >Vincular Actividades</button>             
+                <input type="button" id="vincular"  value="Vincular Actividades"></input>
             </td>
         </tr>
     </tbody>
 
 </table>
+        <div class="jqmWindow" style="width: 600px; top: 40%; left:50%" id="dialogJustificacion">
+            <a href="#" class="jqmClose">Cerrar</a>
+            <hr>
+            <h2>Justificaci&oacute;n</h2>            
+            <p>Ingrese la justificaci&oacute;n para la vinculaci&oacute;n. Esta sera enviada al responsable de la unidad, con la que desea vincular.  </p>
+            <table>
+                <tbody>
+                    <tr>                        
+                        <td>
+                            <textarea rows="4" size="100%" cols="80"   id="justificacion" name="justificacion"></textarea>
+                        </td>                        
+                    </tr>
+                    <tr>
+                         <td align="center">
+                            <input type="button" id="vincularFin"  value="Vincular Actividades"></input>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 </form>
 
 {% endblock %}

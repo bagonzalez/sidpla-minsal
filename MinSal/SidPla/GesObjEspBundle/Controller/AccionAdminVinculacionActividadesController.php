@@ -110,6 +110,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
           //$query = $this->getQuery();
           
           $idActividad = $request->get('actividadesCombo');
+          $justificacion=$request->get('justificacion');
           
             $numero = count($_GET);
             $tags = array_keys($_GET);// obtiene los nombres de las varibles
@@ -120,7 +121,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
             for($i=0;$i<$numero;$i++){
                 $idActividadAVincular = substr($tags[$i], 17);
                 if($idActividadAVincular!=$idActividad && $idActividadAVincular>0)
-                    $actividadVinDao->guardarActividadVinculada($idActividad, $idActividadAVincular);
+                    $actividadVinDao->guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion);
                 
             }
           
