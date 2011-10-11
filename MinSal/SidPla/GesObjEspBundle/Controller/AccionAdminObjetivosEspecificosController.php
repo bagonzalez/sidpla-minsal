@@ -97,6 +97,7 @@ class AccionAdminObjetivosEspecificosController extends Controller {
 
         $objetivoEspec = new ObjetivoEspecifico();
         $i = 0;
+        $rows='';
 
         foreach ($objetivosEspec as $objetivoEspec) {
             $rows[$i]['id'] = $objetivoEspec->getIdObjEspec();
@@ -105,20 +106,14 @@ class AccionAdminObjetivosEspecificosController extends Controller {
             );
             $i++;
         }
-
-        if ($numfilas != 0) {
-            array_multisort($rows, SORT_ASC);
-        } else {
-            $rows[0]['id'] = 0;
-            $rows[0]['cell'] = array(' ', ' ');
-        }
+      
 
         $datos = json_encode($rows);
-        $pages = floor($numfilas / 10) + 1;
+        
 
         $jsonresponse = '{
                "page":"1",
-               "total":"' . $pages . '",
+               "total":"1",
                "records":"' . $numfilas . '", 
                "rows":' . $datos . '}';
 
