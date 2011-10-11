@@ -30,6 +30,24 @@ class ObjTemplateDao {
         return $objTmp->getResult();
     }
     
+    public function existeObjTmp($anio) {
+        $unidadmedida = $this->em->createQuery("SELECT count(ot)
+                                                FROM MinSalSidPlaGesObjEspEntControlBundle:ObjTemplate ot
+                                                WHERE ot.anioObjTemp = '".$anio."'");
+        return $unidadmedida->getSingleScalarResult();
+    }
+    
+    public function agregarObjetivoTemplate($anio){
+        $objTmp=new ObjTemplate;
+        $objTmp->setAnioObjTemp($anio);
+        
+        $this->em->persist($objTmp);
+        $this->em->flush();
+        $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ');
+        
+        return $matrizMensajes;
+        
+    }
     public function agregarObjTmp($desObjEsp,$objTmp){
         $objEspTmp=new ObjespTemplate();
         $objEspTmp->setObjTmpEspe($objTmp);

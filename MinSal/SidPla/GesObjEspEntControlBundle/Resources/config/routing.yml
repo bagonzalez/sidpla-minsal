@@ -2,6 +2,8 @@
 MinSalSidPlaGesObjEspEntControlBundle_homepage:
     pattern:  /
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:Default:index }
+
+#OBJETIVOS TEMPLATE
 MinSalSidPlaGesObjEspEntControlBundle_consultarObjetivosEspecificosTemplate:
     pattern:  /consultarObjetivosEspecificosTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:consultarObjetivosEspecificosTemplate }
@@ -14,18 +16,17 @@ MinSalSidPlaGesObjEspEntControlBundle_ingresarObjEspTemplate:
 MinSalSidPlaGesObjEspEntControlBundle_editarObjEspTemplate:
     pattern:  /editarObjEspTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:editarObjEspTemplate}
+MinSalSidPlaGesObjEspEntControlBundle_manttObjEspTemplate:
+    pattern:  /manttObjEspTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:manttObjEspTemplate }
+
+#RESULTADOS ESPERADOS
 MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate:
     pattern:  /consultarResultadosEsperadosTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:consultarResultadosEsperadosTemplate }
 MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplateJSON:
     pattern:  /consultarResultadosEsperadosTemplateJSON
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:consultarResultadosEsperadosTemplateJSON }
-MinSalSidPlaGesObjEspEntControlBundle_manttObjetivosEspecificosTemplate:
-    pattern:  /manttObjetivosEspecificosTemplate
-    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:manttObjetivosEspecificosTemplate }
 MinSalSidPlaGesObjEspEntControlBundle_ingresoResultadosEsperadosTemplate:
     pattern:  /ingresoResultadosEsperadosTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:ingresoResultadosEsperadosTemplate }
-MinSalSidPlaGesObjEspEntControlBundle_manttObjEspTemplate:
-    pattern:  /manttObjEspTemplate
-    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:manttObjEspTemplate }

@@ -1,15 +1,33 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
-  
+<script type="text/javascript">
+ $(document).ready(function(){
+   function cargarAnio(){
+      $('#theGridObj').setGridParam({
+          url:'consultarObjetivosEspecificosTemplateJSON?anio='+$('#selanio').val(),
+          datatype:'json'
+         }).trigger("reloadGrid"); 
+   }
+   $('#selanio').change(cargarAnio);
+      
+});
+    </script>
     <form action="{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate') }}" method="post">
         <table align="center">
             <tr><td align="center"><h1>Gestion de Objetivos Especificos Para SIBASI y Regiones de Salud</h1>
                 </td>
             </tr>
-           
+            <tr>
+                <td align="center" style=" font-size: 12px"><strong>Seleccione el Año a Gestionar </strong>
+                    <select id='selanio'>
+                        <option value='{{ "now" | date("Y") }}'>{{ "now" | date("Y") }}</option>
+                        <option value='{{ "now" | date("Y")+1 }}'>{{ "now" | date("Y")+1 }}</option>
+                    </select>
+                </td>
+            </tr>
             <tr>
                 <td align="center">
-                <br></br>                
+                    <br></br>                
                 {% include 'MinSalSidPlaGesObjEspEntControlBundle:GestionObjetivosEspecificosTemplate:showAllObjetivosEspecificos.html.twig' %} 
                 </td>
             </tr>        
@@ -17,6 +35,6 @@
     </form>
     <br></br>
     <br></br>
-    
-    
+
+
 {% endblock %}

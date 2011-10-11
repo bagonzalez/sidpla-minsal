@@ -28,6 +28,8 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
         $anio = $request->get('anio');
 
         $objTmpDao = new ObjTemplateDao($this->getDoctrine());
+        if($objTmpDao->existeObjTmp($anio)==0)
+            $objTmpDao->agregarObjetivoTemplate ($anio);
         $objTmp = $objTmpDao->obtenerObjTempAnio($anio);
 
         $numfilas = 0;
@@ -41,7 +43,8 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
             foreach ($objEspTmps as $aux) {
                 $rows[$i]['id'] = $aux->getIdObjEspec()->getIdObjEspec();
                 $rows[$i]['cell'] = array($aux->getIdObjEspec()->getIdObjEspec(),
-                    $aux->getIdObjEspec()->getDescripcion()
+                    $aux->getIdObjEspec()->getDescripcion(),
+                    $aux->getIdObjEspTempl()
                 );
                 $i++;
             }
@@ -80,7 +83,7 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
     public function editarObjEspTemplateAction() {
         $opciones = $this->getRequest()->getSession()->get('opciones');
         $request = $this->getRequest();
-        $idfila = $request->get('idfila');
+        $idfila = $request->get('idfilaobj');
         $anio = $request->get('anio');
         
         $objEspDao = new ObjetivoEspecificoDao($this->getDoctrine());
@@ -96,7 +99,7 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
         $anio = $request->get('anio');
         $operacion = $request->get('oper');
         $objDesc = $request->get('objEspTmp');
-        $codObjEsp=$request->get('idfila');
+        $codObjEsp=$request->get('idfilaobj');
 
         $objTmpDao = new ObjTemplateDao($this->getDoctrine());
         $objTmp = $objTmpDao->obtenerObjTempAnio($anio);

@@ -5,8 +5,8 @@
           
     $('#agregarObjTempButton').button();
     $('#agregarObjTempButton').click(function() {
-        $('#anio').attr('value', {{ "now" | date("Y") }})//$('#selanio').val()
-         this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_ingresarObjEspTemplate') }}';
+        $('#anio').attr('value', $('#selanio').val());
+        this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_ingresarObjEspTemplate') }}';
     });
         
     var myGrid = $('#theGridObj');        
@@ -14,10 +14,11 @@
       url: 'consultarObjetivosEspecificosTemplateJSON?anio={{ "now" | date("Y") }}',
       datatype:'json',
       altRows:true,          
-      colNames:['Id','Objetivo','Acciones'],
+      colNames:['Id','Objetivo','IDBJTTEMPLATE','Acciones'],
       colModel:[ 
         { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
         { name:'objetivo', index: 'objetivo', width:580,editable:true,edittype:"textarea", editoptions:{rows:"5",cols:"50",maxlength: 300},formoptions:{ rowpos:1, label: "Objetivo Especifico", elmprefix:"(*)"},editrules:{required:true}  },
+        { name:'idobjtmp', index: 'idobjtmp', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
         {name:'act',index:'act', width:280,sortable:false}],
       rowNum:10,
       rowList:[10,20,30],
@@ -28,9 +29,9 @@
       gridComplete: function(){
           var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
           for(var i=0;i < ids.length;i++){ var cl = ids[i];
-              be = "<input style='height:22px;width:70px;' type='submit' value='Editar' onclick=\"$('#idfila').attr('value', '"+cl+"'); $('#anio').attr('value', {{ "now" | date("Y") }});this.form.action='{{path('MinSalSidPlaGesObjEspEntControlBundle_editarObjEspTemplate')}}';\" />";
+              be = "<input style='height:22px;width:70px;' type='submit' value='Editar' onclick=\"$('#idfilaobj').attr('value', '"+cl+"'); $('#anio').attr('value', $('#selanio').val());this.form.action='{{path('MinSalSidPlaGesObjEspEntControlBundle_editarObjEspTemplate')}}';\" />";
               se = "<input style='height:22px;width:70px;' type='button' value='Eliminar' onclick=\"jQuery('#theGridObj').jqGrid('delGridRow','"+cl+"',{msg: 'Desea eliminar este objetivo especifico?'}); \" />"; 
-              ce = "<input style='height:22px;width:120px;' type='submit' value='Resultados Esperados' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
+              ce = "<input style='height:22px;width:120px;' type='submit' value='Resultados Esperados' onclick=\" $('#idfila').attr('value',$('#theGridObj').getCell("+cl+", 'idobjtmp')); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
               jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+"   "+se+"   "+ce}); } 
       },
       pager: jQuery('#pagerObj'),
@@ -38,15 +39,14 @@
       caption: 'Objetivos Especificos',
       height: "100%",
       editCaption: "Editar Registro",
-      addCaption: "Nuevo Registro"//,
-     // editurl:'manttObjetivosEspecificosTemplate'         
+      addCaption: "Nuevo Registro"         
             
     });
     myGrid.jqGrid('navGrid','#pagerObj',{edit:false,add:false,del:false,search:false,view:false,refresh:false,
      beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}
     }
      //view
-    ).hideCol('id');
+    ).hideCol('id').hideCol('idobjtmp');
        
          /* Funcion para regargar los JQGRID luego de agregar y editar*/
   function despuesAgregarEditar() {
@@ -67,8 +67,9 @@ var fn_editSubmit=function(response,postdata){
     
     </script>
     <form action= "" method="post">
+        <input type='hidden' name='idfilaobj' id="idfilaobj" value='' />
+        <input type='hidden' name='anio' id="anio" value='' />
         <input type='hidden' name='idfila' id="idfila" value='' />
-        <input type='hidden' name='anio' id="anio" value='' />  
         <div id="grid_wrapper" class="ui-corner-all floatLeft">
             <table id="theGridObj" class="scroll" ></table> 
             <div id="pagerObj"  class="scroll"></div> 

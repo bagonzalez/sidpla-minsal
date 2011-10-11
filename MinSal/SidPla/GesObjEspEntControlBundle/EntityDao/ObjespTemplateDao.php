@@ -3,6 +3,7 @@
 namespace MinSal\SidPla\GesObjEspEntControlBundle\EntityDao;
 
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate;
+
 class ObjespTemplateDao {
     var $doctrine;
     var $repositorio;

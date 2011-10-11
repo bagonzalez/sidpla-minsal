@@ -7,9 +7,7 @@ $(document).ready(function(){
     $('#guardarObj').click(function(evento) {
          this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_manttObjEspTemplate') }}';
     });
-    
-     
-    
+   
 });
 </script>
 <style type="text/css">
@@ -42,7 +40,7 @@ textarea.error { border: 1px dotted red; }
         </tr>
 
     </table>
-<input type='hidden' name='idfila' id="idfila" value='{{id}}' />
+<input type='hidden' name='idfilaobj' id="idfila" value='{{id}}' />
 <input type='hidden' name='anio' id="anio" value='{{anio}}' />
 <input type='hidden' name='oper' id="oper" value='edit' />
 
