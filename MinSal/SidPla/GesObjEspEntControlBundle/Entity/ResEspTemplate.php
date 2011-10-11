@@ -39,7 +39,7 @@ class ResEspTemplate
     /**
      * @var string $resEspTemplDescripcion
      *
-     * @ORM\Column(name="restmp_descripcion", type="string", length=200)
+     * @ORM\Column(name="restmp_descripcion", type="text")
      */
     private $resEspTemplDescripcion;
 

@@ -19,6 +19,40 @@ class ResEspTemplateDao {
         $resultadotemplate=$this->repositorio->find($id);
         return $resultadotemplate;
     }
+    
+    public function editResulEspTemplate($resEspeDesc,$resEspNomencl,$resEspIndicador,$idobjetivo,$id){  
+          
+   
+         $objResulesperado=new ResEspTemplate();
+         $objResulesperado=$this->repositorio->find($id);
+         $objResulesperado->setResEspTemplDescripcion($resEspeDesc);                         
+         //$objResulesperado->setResEspNomencl($resEspNomencl);                         
+         $objResulesperado->setResEspTemplIndicador($resEspIndicador);                         
+                 
+         
+        $this->em->flush();            
+         $matrizMensajes = array('El proceso de editar termino con exito');
+ 
+         return $matrizMensajes;
+   }
+   
+   public function delResultadoEsperadotemplate($id){            
+
+        $obj=$this->repositorio->find($id);
+
+        if(!$obj){
+            throw $this->createNotFoundException('No se encontro registro con ese id '.$id);
+        }
+
+        $this->em->remove($obj);
+        $this->em->flush();
+
+        $matrizMensajes = array('El proceso de eliminar termino con exito');
+
+        return $matrizMensajes;
+    }
+   
+   
 }
 
 ?>

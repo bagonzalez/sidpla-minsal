@@ -50,7 +50,7 @@ class ObjetivoEspecifico
     private $activo;
     
      /**
-     * @ORM\ManyToOne(targetEntity="CaractOrg", inversedBy="objEspec")
+     * @ORM\ManyToOne(targetEntity="CaractOrg", inversedBy="objEspec",cascade={"remove"})
      * @ORM\JoinColumn(name="carorg_codigo", referencedColumnName="carorg_codigo")
      */
     protected $caractOrg;

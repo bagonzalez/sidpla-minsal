@@ -22,8 +22,8 @@
           gridComplete: function(){
               var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
               for(var i=0;i < ids.length;i++){ var cl = ids[i];
-                  be = "<input style='height:22px;width:75px;' type='submit' id='editar' value='Editar' onclick=\" $('#idfilaResultado').attr('value', '"+cl+"');this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados') }}'; \" />";
-                  se = "<input style='height:22px;width:75px;' type='button' id='eliminar' value='Eliminar' onclick=\"$('#idfilaResultado').attr('value', '"+cl+"'); jQuery('#theGridObj').delRowData('"+cl+"'); alert('resultado eliminado con exito!'); \" />";
+                  be = "<input style='height:22px;width:75px;' type='submit' id='editar' value='Editar' onclick=\" $('#idfilaResultado').attr('value', '"+cl+"');this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_editarResultadosEsperadosTemplate') }}'; \" />";
+                  se = "<input style='height:22px;width:75px;' type='button' id='eliminar' value='Eliminar' onclick=\"// jQuery('#theGridObj').jqGrid('delGridRow','"+cl+"',{msg: 'Desea eliminar este resultado esperado?'}); \" />";
                   
                   jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+se}); } },
           pager: jQuery('#pagerObj'),
@@ -33,12 +33,12 @@
           height: "100%",
           editCaption: "Editar Registro",
           addCaption: "Nuevo Registro",
-          editurl:'manttResultadosEsperadosTemplateJSON?idfila={{idfila}}'         
+          editurl:'manttResultadosEsperadosTemplate'         
             
         });
         myGrid.jqGrid('navGrid','#pagerObj',
-        {edit:false,add:false,del:false},
-        {width:450,height:200, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        {edit:false,add:false,del:true},
+        {width:450,height:200, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
         alert("datos editados con exito!");},closeAfterEdit:true },//edit
         {width:450,height:1000,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
         alert("datos guardados con exito!");},closeAfterAdd:true },//add
@@ -52,11 +52,7 @@
       });
       
        //define handler for 'editSubmit' event
-    var fn_editSubmit=function(response,postdata){
-     var json=response.responseText; //in my case response text form server is "{sc:true,msg:''}"
-     var result=eval("("+json+")"); //create js object from server reponse
-     return [result.sc,result.msg,null]; 
-    }  
+    
 
     
    

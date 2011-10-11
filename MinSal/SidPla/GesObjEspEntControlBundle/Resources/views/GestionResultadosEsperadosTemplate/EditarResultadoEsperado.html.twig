@@ -7,136 +7,25 @@
           
           
            $('#regresar').click(function() {
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}';
+            this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate') }}';
            
           });
            
            $('#agregar').click(function(evento) {
-             var suma = 0;
             
-            
-            metaAnual= Number($("input[id='metaAnual']").val());
-            
-            suma = Number($("input[id='trimUno']").val());
-            suma += Number($("input[id='trimDos']").val());
-            suma += Number($("input[id='trimTres']").val());
-            suma += Number($("input[id='trimCuatro']").val());
-            
-            if(metaAnual==suma){
            
            
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editandoResultadosEsperados') }}';
-             }else{
-                      alert("No coincide la meta anual con lo programado trimestralmente!");
-                      evento.preventDefault();    
-              }
+            this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_editandoResultadosEsperadosTemplate') }}';
+             
              
           });
           $('#tabs').tabs();
       
          
-         if('{{resultadoEsperadoTipoMeta}}'==1){
-            $('#selectipometa').val('1');
-          }
-          if('{{resultadoEsperadoTipoMeta}}'==2){
-             $('#selectipometa').val('2');
-         }
-         
-$("#formulario").validate(
-{
-  rules: {
-    metaAnual: {
-      required: true,
-      digits: true
-    },
-   
-   trimUno: {
-      required: true,
-      digits: true
-    },
+                 
+$("#formulario").validate();
     
-    trimDos: {
-      required: true,
-      digits: true
-    },
-    
-    trimTres: {
-      required: true,
-      digits: true
-    },
-    trimCuatro: {
-      required: true,
-      digits: true
-    }
-    
-  }
-}
-);
-    
-   $('#metaAnual').keydown(function(event) {
-// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57 ) {
-event.preventDefault();
-}
-}
-});
-   
- $('#trimUno').keydown(function(event) {
-// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57 ) {
-event.preventDefault();
-}
-}
-});
-    
-    $('#trimDos').keydown(function(event) {
-// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105 ) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57) {
-event.preventDefault();
-}
-}
-});
-    $('#trimTres').keydown(function(event) {
-// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57 ) {
-event.preventDefault();
-}
-}
-});
-    
-    $('#trimCuatro').keydown(function(event) {
-// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57 ) {
-event.preventDefault();
-}
-}
-}); 
-         
+        
 });
       
 </script>
@@ -160,7 +49,7 @@ textarea.error { border: 1px dotted red; }
                 
         </ul>
         <div id="tabs-1" >
-            <form id="formulario" action="{{ path('MinSalSidPlaGesObjEspBundle_editandoResultadosEsperados')}}" method="post" >
+            <form id="formulario" action="{{ path('MinSalSidPlaGesObjEspEntControlBundle_editandoResultadosEsperadosTemplate')}}" method="post" >
                 <table align="center" id="datos"  >
                     <tr>
                         <td colspan="4" align="center" >Datos de Resultado Esperado <br><br></td>
@@ -178,59 +67,14 @@ textarea.error { border: 1px dotted red; }
                         <td >Indicador(*):</td>
                         <td colspan="3" ><input size="100%" class="required" name="Indicador" id="Indicador" value="{{resultadoEsperadoIndicador}}" ></input></td>
                     </tr>
-                    <tr>
-                        <td >Medio de Verificacion(*):</td>
-                        <td colspan="3" ><input size="100%" class="required" name="medioverificacion" id="medioverificacion"  value="{{resultadoEsperadoMedioVerificacion}}" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Responsables(*):</td>
-                        <td colspan="3" ><input size="100%" class="required" name="responsable" id="responsable" value="{{resultadoEsperadoResponsable}}"></input></td>
-                    </tr>
-                    <tr>
-                        <td >Supuestos Factores(*):</td>
-                        <td colspan="3" ><input size="100%" class="required" name="supuestosfactores" id="supuestosfactores" value="{{resultadoEsperadoSupuestos}}" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Meta anual(*):</td>
-                        <td colspan="3" ><input size="20%" class="required" name="metaAnual" id="metaAnual" value="{{resultadoEsperadoMetaAnual}}" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Tipo de Meta(*):</td>
-                        <td  ><select name="selectipometa"  class="required" id='selectipometa'><option value=''>Seleccione el tipo de meta</option><option value='1'>Valor absoluto</option><option value='2'>Porcentaje</option></select></td>
-                    </tr>
                     
-                    
-                    <tr>
-                        <td >Descripcion Meta anual(*):</td>
-                        <td colspan="3" ><input size="100%" class="required" name="descripMetaAnual" id="descripMetaAnual" value="{{resultadoEsperadoDescripcionMetaAnual}}" ></input></td>
-                    </tr>
-                   
-                        <tr>
-                        <td>Programado:</td>
-                        </tr>
-                       
-                        
-                        <tr>
-                         <TD WIDTH="25%"align="center">1er Trimestre</TD>
-                        <TD WIDTH="25%" align="center">2do trimestre</TD>
-                        <TD WIDTH="25%" align="center">3er Trimestre</TD>
-                        <TD WIDTH="25%" align="center">4to Trimestre</TD>
-                         </tr>
-                        <tr>
-                        <TD WIDTH="25%"align="center"> <input size="25%" name="trimUno" id="trimUno" value='{{trim1}}' ></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimDos" id="trimDos"  value='{{trim2}}'></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimTres" id="trimTres" value='{{trim3}}' ></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimCuatro" id="trimCuatro" value='{{trim4}}' ></input></TD>
-                        </tr>   
+                          
                       
                        
                        <tr>  
                            <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
                            <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
-                           <input type='hidden' name='iduno' id="iduno" value='{{iduno}}' />  
-                           <input type='hidden' name='iddos' id="iddos" value='{{iddos}}' /> 
-                           <input type='hidden' name='idtres' id="idtres" value='{{idtres}}' /> 
-                           <input type='hidden' name='idcuatro' id="idcuatro" value='{{idcuatro}}' /> 
+                           
                     <td colspan="3" align="center" ><br><br><button type="submmit" id="agregar"  >Guardar</button>
                            
                         </td> 

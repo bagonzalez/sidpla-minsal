@@ -29,7 +29,7 @@ class ObjTemplate {
     private $anioObjTemp;
 
     /**
-     * @ORM\OneToMany(targetEntity="ObjespTemplate", mappedBy="objTmpEspe")
+     * @ORM\OneToMany(targetEntity="ObjespTemplate", mappedBy="objTmpEspe", cascade={"persist", "remove"})
      */
     private $especificoObjTmp;
 

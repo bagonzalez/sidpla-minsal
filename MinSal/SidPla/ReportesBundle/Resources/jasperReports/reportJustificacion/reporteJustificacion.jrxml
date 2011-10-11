@@ -31,7 +31,7 @@ AND just.justificacion_codigo= $P{idJustificacion}]]>
 			<textField pattern="dd/MM/yyyy">
 				<reportElement x="472" y="0" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.util.Date"><![CDATA[new java.util.Date()]]></textFieldExpression>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="184" y="10" width="171" height="20"/>
@@ -50,12 +50,12 @@ AND just.justificacion_codigo= $P{idJustificacion}]]>
 			<textField>
 				<reportElement x="122" y="70" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression class="java.math.BigDecimal"><![CDATA[$F{pao_anio}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{pao_anio}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement mode="Transparent" x="122" y="90" width="438" height="20" backcolor="#FFFFFF"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{uniorg_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{uniorg_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement mode="Transparent" x="3" y="90" width="119" height="20" backcolor="#FFFFFF"/>
@@ -81,7 +81,7 @@ AND just.justificacion_codigo= $P{idJustificacion}]]>
 			<textField isStretchWithOverflow="true">
 				<reportElement x="0" y="14" width="572" height="26"/>
 				<textElement/>
-				<textFieldExpression class="java.lang.String"><![CDATA[$F{justificacion_descripcion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{justificacion_descripcion}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>

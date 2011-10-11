@@ -30,7 +30,7 @@
           var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
           for(var i=0;i < ids.length;i++){ var cl = ids[i];
               be = "<input style='height:22px;width:70px;' type='submit' value='Editar' onclick=\"$('#idfilaobj').attr('value', '"+cl+"'); $('#anio').attr('value', $('#selanio').val());this.form.action='{{path('MinSalSidPlaGesObjEspEntControlBundle_editarObjEspTemplate')}}';\" />";
-              se = "<input style='height:22px;width:70px;' type='button' value='Eliminar' onclick=\"jQuery('#theGridObj').jqGrid('delGridRow','"+cl+"',{msg: 'Desea eliminar este objetivo especifico?'}); \" />"; 
+              se = "<input style='height:22px;width:70px;' type='button' value='Eliminar' onclick=\"//jQuery('#theGridObj').jqGrid('delGridRow','"+cl+"',{msg: 'Desea eliminar este objetivo especifico?'}); \" />"; 
               ce = "<input style='height:22px;width:120px;' type='submit' value='Resultados Esperados' onclick=\" $('#idfila').attr('value',$('#theGridObj').getCell("+cl+", 'idobjtmp')); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
               jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+"   "+se+"   "+ce}); } 
       },
@@ -39,8 +39,8 @@
       caption: 'Objetivos Especificos',
       height: "100%",
       editCaption: "Editar Registro",
-      addCaption: "Nuevo Registro"         
-            
+      addCaption: "Nuevo Registro",         
+      editurl:'manttObjEspTemplatedos'      
     });
     myGrid.jqGrid('navGrid','#pagerObj',{edit:false,add:false,del:false,search:false,view:false,refresh:false,
      beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}

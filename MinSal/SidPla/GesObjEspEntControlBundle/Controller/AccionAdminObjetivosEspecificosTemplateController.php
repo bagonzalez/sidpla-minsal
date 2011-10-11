@@ -100,7 +100,8 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
         $operacion = $request->get('oper');
         $objDesc = $request->get('objEspTmp');
         $codObjEsp=$request->get('idfilaobj');
-
+        $id=$request->get('id');
+        
         $objTmpDao = new ObjTemplateDao($this->getDoctrine());
         $objTmp = $objTmpDao->obtenerObjTempAnio($anio);
 
@@ -109,7 +110,7 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
         
         foreach ($objTmp as $objTmpAux) {
             switch ($operacion) {
-                case 'add':
+                 case 'add':
                     $objTmpDao->agregarObjTmp($objDesc, $objTmpAux);
                     break;
                 case 'edit':
@@ -118,6 +119,21 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
             }
          }
          return $this->consultarObjetivosEspecificosTemplateAction();
+        }
+        
+        
+        public function manttObjEspTemplatedosAction() {
+            
+        $request = $this->getRequest();
+        $id = $request->get('id');
+        $operacion = $request->get('oper');
+        $objDao = new ObjetivoEspecificoDao($this->getDoctrine());
+        $objDao->delObjEspec($id);
+        return new Response("{sc:true,msg:''}");
+            
+            
+            
+            
         }
     }
 

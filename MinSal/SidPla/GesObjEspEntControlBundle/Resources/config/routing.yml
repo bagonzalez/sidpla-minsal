@@ -20,6 +20,10 @@ MinSalSidPlaGesObjEspEntControlBundle_manttObjEspTemplate:
     pattern:  /manttObjEspTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:manttObjEspTemplate }
 
+MinSalSidPlaGesObjEspEntControlBundle_manttObjEspTemplatedos:
+    pattern:  /manttObjEspTemplatedos
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:manttObjEspTemplatedos }
+
 #RESULTADOS ESPERADOS
 MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate:
     pattern:  /consultarResultadosEsperadosTemplate
@@ -30,3 +34,21 @@ MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplateJSON:
 MinSalSidPlaGesObjEspEntControlBundle_ingresoResultadosEsperadosTemplate:
     pattern:  /ingresoResultadosEsperadosTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:ingresoResultadosEsperadosTemplate }
+
+MinSalSidPlaGesObjEspEntControlBundle_guardarResultadosEsperadosTemplate:
+    pattern:  /guardarResultadosEsperadosTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:guardarResultadosEsperadosTemplate }
+
+MinSalSidPlaGesObjEspEntControlBundle_editarResultadosEsperadosTemplate:
+    pattern:  /editarResultadosEsperadosTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:editarResultadosEsperadosTemplate }
+
+MinSalSidPlaGesObjEspEntControlBundle_editandoResultadosEsperadosTemplate:
+    pattern:  /editandoResultadosEsperadosTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:editandoResultadosEsperadosTemplate }
+
+MinSalSidPlaGesObjEspEntControlBundle_manttResultadosEsperadosTemplate:
+    pattern:  /manttResultadosEsperadosTemplate
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:manttResultadosEsperadosTemplate }
+
+

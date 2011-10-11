@@ -50,7 +50,7 @@ class ResultadoEsperado
     /**
      * @var  $resEspeDesc
      *
-     * @ORM\Column(name="reses_descripcion", type="string", length=50)
+     * @ORM\Column(name="reses_descripcion", type="text")
      */
     private $resEspeDesc;
 

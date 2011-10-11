@@ -23,19 +23,19 @@ class ObjespTemplate {
     private $idObjEspTempl;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico", inversedBy="objetivostemplate")
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico", inversedBy="objetivostemplate",cascade={"remove"})
      * @ORM\JoinColumn(name="objesp_codigo", referencedColumnName="objesp_codigo")
      */
     private $idObjEspec;
 
     /**
-     * @ORM\ManyToOne(targetEntity="ObjTemplate", inversedBy="especificoObjTmp",cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="ObjTemplate", inversedBy="especificoObjTmp", cascade={"remove"})
      * @ORM\JoinColumn(name="objtmp_codigo", referencedColumnName="objtmp_codigo")
      */
     private $objTmpEspe;
 
     /**
-     * @ORM\OneToMany(targetEntity="ResEspTemplate", mappedBy="idObjEspecTempl",   cascade={"persist", "remove"})
+     * @ORM\OneToMany(targetEntity="ResEspTemplate", mappedBy="idObjEspecTempl", cascade={"persist","remove"})
      */
     protected $resultadostemplate;
 

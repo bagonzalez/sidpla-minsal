@@ -4,144 +4,28 @@
 {% block body %}
 <script type="text/javascript">        
       $(document).ready(function(){
+          
+          
           $('#regresar').click(function() {
              
                        this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate') }}';                    
                 
           });
            $('#guardar').click(function(evento) {
-           
-           var suma = 0;
-            
-            
-            metaAnual= Number($("input[id='metaAnual']").val());
-            
-            suma = Number($("input[id='trimUno']").val());
-            suma += Number($("input[id='trimDos']").val());
-            suma += Number($("input[id='trimTres']").val());
-            suma += Number($("input[id='trimCuatro']").val());
-            
-            if(metaAnual==suma){
+                    
            
            
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_guardarResultadosEsperados') }}';
-             }else{
-                      alert("No coincide la meta anual con lo programado trimestralmente!");
-                      evento.preventDefault();    
-              }
+            this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_guardarResultadosEsperadosTemplate') }}';
+             
           });
-          
           
           $('#tabs').tabs();
       
-         $.getJSON('consultarTipoMeta', function(data) {
-                  var i=0;
-                  $.each(data, function(key, val) {
-                      if(key=='rows'){
-                        $.each(val, function(id, registro){
-                            $('#selectipometa').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
-                        });                    
-                      }
-                  });
-          });
+        
           
           //validando el formulario
-          $("#formulario").validate(
-{
-  rules: {
-    metaAnual: {
-      required: true,
-      digits: true
-    },
-   
-   trimUno: {
-      required: true,
-      digits: true
-    },
-    
-    trimDos: {
-      required: true,
-      digits: true
-    },
-    
-    trimTres: {
-      required: true,
-      digits: true
-    },
-    trimCuatro: {
-      required: true,
-      digits: true
-    }
-    
-  }
-}
-);
-   
-$('#metaAnual').keydown(function(event) {
-// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57 ) {
-event.preventDefault();
-}
-}
-});
-   
- $('#trimUno').keydown(function(event) {
-// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57 ) {
-event.preventDefault();
-}
-}
-});
-    
-    $('#trimDos').keydown(function(event) {
-// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105 ) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57) {
-event.preventDefault();
-}
-}
-});
-    $('#trimTres').keydown(function(event) {
-// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57 ) {
-event.preventDefault();
-}
-}
-});
-    
-    $('#trimCuatro').keydown(function(event) {
-// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57 ) {
-event.preventDefault();
-}
-}
-});
-    
- 
+          $("#formulario").validate();
+  
 });
       
 </script>
@@ -158,7 +42,9 @@ form.cmxform label.error, label.error {
 input.error { border: 1px dotted red; }
 textarea.error { border: 1px dotted red; }
       </style>   
-
+<br></br>
+<br></br>
+<br></br>
 <h2 class="demoHeaders">Ingreso de Resultados Esperados Para SIBASI y Regiones de Salud</h2>
 <div id="tabs">
         <ul>
@@ -184,51 +70,8 @@ textarea.error { border: 1px dotted red; }
                         <td >Indicador(*):</td>
                         <td  ><input size="90%" class="required" name="Indicador" id="Indicador" ></input></td>
                     </tr>
-                    <tr>
-                        <td >Medio de Verificacion(*):</td>
-                        <td  ><input size="90%" class="required" name="medioverificacion" id="medioverificacion" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Responsables(*):</td>
-                        <td  ><input size="90%" class="required" name="responsable" id="responsable" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Supuestos Factores(*):</td>
-                        <td  ><input size="90%" class="required" name="supuestosfactores" id="supuestosfactores" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Meta anual(*):</td>
-                        <td  ><input size="20%"  name="metaAnual" id="metaAnual" ></input></td>
-                    </tr>
                     
-                    <tr>
-                        <td >Tipo de Meta(*):</td>
-                        <td  ><select name="selectipometa" class="required"  id='selectipometa'><option value=''>Seleccione el tipo de meta</option></select></input></td>
-                    </tr>
-                    <tr>
-                        <td >Descripcion Meta anual(*):</td>
-                        <td  ><input size="90%" class="required" name="descripMetaAnual" id="descripMetaAnual" ></input></td>
-                    </tr>
-                     </table>
-                      <table colspan="4"  align="center" id="datos2"  >
-                        <tr>
-                        <td colspan="2" >Programado:</td>
-                        </tr>
-                      
-                        
-                        <tr>
-                         <TD colspan="1" align="center" >1er Trimestre(*)</TD>
-                        <TD colspan="1" align="center">2do trimestre(*)</TD>
-                        <TD colspan="1" align="center">3er Trimestre(*)</TD>
-                        <TD colspan="1" align="center">4to Trimestre(*)</TD>
-                         </tr>
-                        <tr>
-                        <TD colspan="1"> <input  size="25%" name="trimUno" id="trimUno" ></input></TD>
-                        <TD colspan="1"><input   size="25%" name="trimDos" id="trimDos" ></input></TD>
-                        <TD colspan="1"><input   size="25%" name="trimTres" id="trimTres" ></input></TD>
-                        <TD colspan="1"><input   size="25%" name="trimCuatro" id="trimCuatro" ></input></TD>
-                        </tr>   
-                      
+                    
                        
                        <tr>  
                            <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
