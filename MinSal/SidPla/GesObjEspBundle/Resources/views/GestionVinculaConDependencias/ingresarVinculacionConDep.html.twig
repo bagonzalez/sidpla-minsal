@@ -34,6 +34,28 @@
               $('#tabActividad').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
              
           }
+          
+          $('#vincular').click(function() {
+                    $('#vincularForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_vincularActividades') }}');                    
+          }); 
+          
+          $('#actividadesCombo').change(cargarActVin);
+          
+          function cargarActVin(){
+              $("#tabActividad").resetSelection(); 
+              $.getJSON('{{path('MinSalSidPlaGesObjEspBundle_obtenerActividadesVincJSON')}}?actividadesCombo='+$('#actividadesCombo').val(), function(data) {
+                      var i=0;
+                      $.each(data, function(key, val) {
+                          if(key=='rows'){
+                            $.each(val, function(id, registro){
+                                jQuery("#tabActividad").jqGrid('setSelection', registro['cell'][1]);
+                                
+                            });                    
+                          }
+                      });
+
+                })
+            }
         
     });     
      
