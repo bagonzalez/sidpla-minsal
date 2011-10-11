@@ -179,50 +179,49 @@ textarea.error { border: 1px dotted red; }
                         <td align="left" ><textarea rows="4" cols="80" name= 'objetivo'  size="60%" id='objetivo' readonly="readonly" >{{descripcion}}</textarea></td>
                     </tr>
                     <tr>
-                        <td >Resultado Esperado(*):</td>
+                        <td >Resultado Esperado:</td>
                         <td  ><textarea class="required" rows="4" cols="83" name= 'resultadoEsperado'  size="83%" id="resultadoEsperado" ></textarea></td>
                     </tr>
                     <tr>
-                        <td >Indicador(*):</td>
+                        <td >Indicador:</td>
                         <td  ><input size="90%" class="required" name="Indicador" id="Indicador" ></input></td>
                     </tr>
                     <tr>
-                        <td >Medio de Verificacion(*):</td>
+                        <td >Medio de Verificacion:</td>
                         <td  ><input size="90%" class="required" name="medioverificacion" id="medioverificacion" ></input></td>
                     </tr>
                     <tr>
-                        <td >Responsables(*):</td>
+                        <td >Responsables:</td>
                         <td  ><input size="90%" class="required" name="responsable" id="responsable" ></input></td>
                     </tr>
                     <tr>
-                        <td >Supuestos Factores(*):</td>
+                        <td >Supuestos Factores:</td>
                         <td  ><input size="90%" class="required" name="supuestosfactores" id="supuestosfactores" ></input></td>
                     </tr>
                     <tr>
-                        <td >Meta anual(*):</td>
-                        <td  ><input size="20%"  name="metaAnual" id="metaAnual" ></input></td>
-                    </tr>
-                    
+                        <td >Meta anual:</td>
+                        <td  ><input size="20%"  name="metaAnual" id="metaAnual" ></input>
+                              <select name="selectipometa" class="required"  id='selectipometa'><option value=''>Seleccione el tipo de meta</option></select>
+                        </td>
+                    </tr>                    
                     <tr>
-                        <td >Tipo de Meta(*):</td>
-                        <td  ><select name="selectipometa" class="required"  id='selectipometa'><option value=''>Seleccione el tipo de meta</option></select></input></td>
-                    </tr>
-                    <tr>
-                        <td >Descripcion Meta anual(*):</td>
+                        <td >Descripcion Meta anual:</td>
                         <td  ><input size="90%" class="required" name="descripMetaAnual" id="descripMetaAnual" ></input></td>
                     </tr>
                      </table>
+                    <br>
+                    </br>
+                                        
                       <table colspan="4"  align="center" id="datos2"  >
                         <tr>
                         <td colspan="2" >Programado:</td>
-                        </tr>
-                      
+                        </tr>                     
                         
                         <tr>
-                         <TD colspan="1" align="center" >1er Trimestre(*)</TD>
-                        <TD colspan="1" align="center">2do trimestre(*)</TD>
-                        <TD colspan="1" align="center">3er Trimestre(*)</TD>
-                        <TD colspan="1" align="center">4to Trimestre(*)</TD>
+                         <TD colspan="1" align="center" >1er Trimestre</TD>
+                        <TD colspan="1" align="center">2do trimestre</TD>
+                        <TD colspan="1" align="center">3er Trimestre</TD>
+                        <TD colspan="1" align="center">4to Trimestre</TD>
                          </tr>
                         <tr>
                         <TD colspan="1"> <input  size="25%" name="trimUno" id="trimUno" ></input></TD>
