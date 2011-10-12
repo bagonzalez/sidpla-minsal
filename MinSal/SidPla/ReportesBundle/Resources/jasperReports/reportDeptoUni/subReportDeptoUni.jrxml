@@ -8,40 +8,21 @@
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     sidpla_recursohumano."rechum_cantidad" AS "Cantidad RRHH",
-     sidpla_tiporecursohumano."tiprechum_descripcion" AS "Tipo RRHH",
-     sidpla_departamentounidad."depuni_nombre" AS "Nombre Depto"
+     sidpla_departamentounidad."depuni_nombre" AS Nombre_Depto
 FROM
      "public"."sidpla_unidadorganizativa" sidpla_unidadorganizativa INNER JOIN "public"."sidpla_departamentounidad" sidpla_departamentounidad ON sidpla_unidadorganizativa."uniorg_codigo" = sidpla_departamentounidad."uniorg_codigo"
-     INNER JOIN "public"."sidpla_recursohumano" sidpla_recursohumano ON sidpla_departamentounidad."depuni_codigo" = sidpla_recursohumano."depuni_codigo"
-     INNER JOIN "public"."sidpla_tiporecursohumano" sidpla_tiporecursohumano ON sidpla_recursohumano."tiprechum_codigo" = sidpla_tiporecursohumano."tiprechum_codigo"
-WHERE sidpla_unidadorganizativa."uniorg_codigo"=$P{codUniOrg}]]>
+WHERE
+     sidpla_unidadorganizativa."uniorg_codigo" = $P{codUniOrg}]]>
 	</queryString>
-	<field name="Cantidad RRHH" class="java.lang.Integer"/>
-	<field name="Tipo RRHH" class="java.lang.String"/>
-	<field name="Nombre Depto" class="java.lang.String"/>
+	<field name="nombre_depto" class="java.lang.String"/>
 	<columnHeader>
 		<band height="26" splitType="Stretch">
 			<staticText>
-				<reportElement x="2" y="0" width="159" height="22"/>
+				<reportElement x="2" y="0" width="181" height="22"/>
 				<textElement>
 					<font size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Departamento o Unidad]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="181" y="0" width="100" height="20"/>
-				<textElement>
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Cantidad]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="337" y="2" width="100" height="20"/>
-				<textElement>
-					<font size="11" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Profesión]]></text>
+				<text><![CDATA[Departamentos o Unidades]]></text>
 			</staticText>
 			<line>
 				<reportElement x="2" y="22" width="447" height="1"/>
@@ -53,23 +34,13 @@ WHERE sidpla_unidadorganizativa."uniorg_codigo"=$P{codUniOrg}]]>
 	</columnHeader>
 	<detail>
 		<band height="23" splitType="Stretch">
-			<textField>
-				<reportElement x="302" y="0" width="135" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{Tipo RRHH}]]></textFieldExpression>
-			</textField>
 			<line>
 				<reportElement x="1" y="20" width="448" height="1"/>
 			</line>
 			<textField>
-				<reportElement x="2" y="0" width="159" height="20"/>
+				<reportElement x="2" y="0" width="447" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{Nombre Depto}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="193" y="0" width="45" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{Cantidad RRHH}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre_depto}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
