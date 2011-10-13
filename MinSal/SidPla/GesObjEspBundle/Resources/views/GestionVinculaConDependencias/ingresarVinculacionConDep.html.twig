@@ -31,11 +31,11 @@
             
           $('#dependenciasCombo').change(cargarAct);
           
-          function cargarAct(){
+          function cargarAct(){              
               $("#tabActividad").resetSelection(); 
               $("#tabActividad").setGridParam({url: '{{path('MinSalSidPlaGesObjEspBundle_obtenerActividadesJSON')}}?actividadesCombo='+$('#actividadesCombo').val()+'&dependencia='+$('#dependenciasCombo').val() }); 
               $('#tabActividad').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
-             
+              cargarActVin();             
           }
           
           $('#vincular').click(function() {
@@ -70,9 +70,8 @@
     });     
      
 </script>
-
-
 <form id="vincularForm">
+    <input type="hidden" name="vinculacionDepen" value="true" id="vinculacionDepen" ></input>
 <table align="center" >
     <tbody>
         <tr>

@@ -85,6 +85,14 @@ class AccionAdminVinculacionActividadesController extends Controller {
                 array( 'opciones' => $opciones,));
     }
     
+    public function aprobarVinculacionAction()
+    {
+         $opciones=$this->getRequest()->getSession()->get('opciones');
+         
+         return $this->render('MinSalSidPlaGesObjEspBundle:GestionVinculaConDependencias:aprobarVinculacion.html.twig', 
+                array( 'opciones' => $opciones,));
+    }
+    
     public function agregarVinculacionAction()
     {
          $opciones=$this->getRequest()->getSession()->get('opciones');
@@ -103,7 +111,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
         
     }
     
-       public function vincularActividadesAction()
+    public function vincularActividadesAction()
     {
          $opciones=$this->getRequest()->getSession()->get('opciones');
           $request = $this->getRequest();
@@ -111,6 +119,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
           
           $idActividad = $request->get('actividadesCombo');
           $justificacion=$request->get('justificacion');
+          $vinculacionEntreDepen=$request->get('vinculacionDepen');
           
             $numero = count($_GET);
             $tags = array_keys($_GET);// obtiene los nombres de las varibles
@@ -121,7 +130,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
             for($i=0;$i<$numero;$i++){
                 $idActividadAVincular = substr($tags[$i], 17);
                 if($idActividadAVincular!=$idActividad && $idActividadAVincular>0)
-                    $actividadVinDao->guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion);
+                    $actividadVinDao->guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion, $vinculacionEntreDepen);
                 
             }
           

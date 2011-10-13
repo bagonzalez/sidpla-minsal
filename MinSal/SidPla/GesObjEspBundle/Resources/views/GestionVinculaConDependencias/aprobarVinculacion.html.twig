@@ -1,0 +1,73 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script>
+
+</script>
+<br></br>
+<center><h1>Aprobar/Desaprobar Vinculaci&oacute;n</h1></center>
+<form>
+<table align="center">
+    <tbody>
+        <tr>
+            <td>
+                <label>La dependencia:</label>
+            </td>
+            <td>
+                <input size="30" id="nombreDependencia" ></input>                
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Con la actividad:</label>
+            </td>
+            <td>
+                <textarea id="actividadDestino" cols="40" rows="3" ></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Solicita vincularse con su actividad:</label>
+            </td>
+            <td>
+                <textarea id="actividadOrigen" cols="40" rows="3" ></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Presenta la Justificacion:</label>
+            </td>
+            <td>
+                <textarea id="justificacion" cols="40" rows="3" ></textarea>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label>Estado:</label>
+            </td>
+            <td>
+                <input type="radio" name="estado" value="aprobado" >Aprobado</input>
+                <input type="radio" name="estado" value="revision" >Revision</input>
+                <input type="radio" name="estado" value="denegado" >Denegado</input>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <hr></hr>
+                <br></br>
+                <label>Justificaci&oacute;n:</label>
+            </td>            
+        </tr>   
+            <tr>
+            <td colspan="2">
+                <textarea name="justificacionDependencia" cols="70" rows="3" ></textarea>
+            </td>            
+        </tr> 
+        <tr>
+            <td align="center" colspan="2">
+                <input type="button" id="guardarVinDepen" value="Guardar"></input>
+            </td>
+        </tr>
+    </tbody>    
+</table>    
+</form>
+{% endblock %}

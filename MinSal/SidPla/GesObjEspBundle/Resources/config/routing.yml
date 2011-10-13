@@ -104,4 +104,8 @@ MinSalSidPlaGesObjEspBundle_consultarUnidadesDependenciasJSON:
     pattern:  /consultarUnidadesDependenciasJSON
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:consultarUnidadesDependenciasJSON}
 
+MinSalSidPlaGesObjEspBundle_aprobarVinculacion:
+    pattern:  /aprobarVinculacion
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:aprobarVinculacion}
+
     

@@ -42,7 +42,7 @@ class ActividadVinculadaDao {
     } 
     
     
-    public function guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion){
+    public function guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion, $vinculacionEntreDepen){
         $actividadDao=new ActividadDao($this->doctrine);
         $actividadOrigen=$actividadDao->getActividad($idActividad);
         $actividadDestino=$actividadDao->getActividad($idActividadAVincular);
@@ -53,11 +53,19 @@ class ActividadVinculadaDao {
         
         $actividaVinculada->setActDest($actividadDestino);
         $actividaVinculada->setIdActDest($idActividadAVincular);
-        $actividaVinculada->setEstado('unidad');
+        
+        if($vinculacionEntreDepen){
+            $actividaVinculada->setEstado('revision');
+        }else{
+            $actividaVinculada->setEstado('unidad');
+        }        
+        
         $actividaVinculada->setJustificacion($justificacion);
         
+       
          $this->em->persist($actividaVinculada);
-         $this->em->flush();
+         $this->em->flush();            
+        
     }
     
     
