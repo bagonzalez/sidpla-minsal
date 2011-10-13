@@ -43,28 +43,39 @@ class ActividadVinculadaDao {
     
     
     public function guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion, $vinculacionEntreDepen){
-        $actividadDao=new ActividadDao($this->doctrine);
-        $actividadOrigen=$actividadDao->getActividad($idActividad);
-        $actividadDestino=$actividadDao->getActividad($idActividadAVincular);
         
-        $actividaVinculada=new ActividadVinculada();
-        $actividaVinculada->setActOrigen($actividadOrigen);
-        $actividaVinculada->setIdActOrigen($idActividad);
+        $this->em->getConnection()->beginTransaction();
         
-        $actividaVinculada->setActDest($actividadDestino);
-        $actividaVinculada->setIdActDest($idActividadAVincular);
+        try {
+            
+            $actividadDao=new ActividadDao($this->doctrine);
+            $actividadOrigen=$actividadDao->getActividad($idActividad);
+            $actividadDestino=$actividadDao->getActividad($idActividadAVincular);
+
+            $actividaVinculada=new ActividadVinculada();
+            $actividaVinculada->setActOrigen($actividadOrigen);
+            $actividaVinculada->setIdActOrigen($idActividad);
+
+            $actividaVinculada->setActDest($actividadDestino);
+            $actividaVinculada->setIdActDest($idActividadAVincular);
+
+            if($vinculacionEntreDepen){
+                $actividaVinculada->setEstado('revision');
+            }else{
+                $actividaVinculada->setEstado('unidad');
+            }        
+
+            $actividaVinculada->setJustificacion($justificacion);
         
-        if($vinculacionEntreDepen){
-            $actividaVinculada->setEstado('revision');
-        }else{
-            $actividaVinculada->setEstado('unidad');
-        }        
-        
-        $actividaVinculada->setJustificacion($justificacion);
-        
-       
-         $this->em->persist($actividaVinculada);
-         $this->em->flush();            
+            $this->em->persist($actividaVinculada);
+            $this->em->flush();   
+            $this->em->getConnection()->commit();
+             
+        } catch (\Exception $exc) {
+            $this->em->getConnection()->rollback();
+            $this->em->close();
+            return null;
+        }            
         
     }
     
