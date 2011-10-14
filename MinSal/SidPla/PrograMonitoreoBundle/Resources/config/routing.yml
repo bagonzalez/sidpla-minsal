@@ -1,3 +1,7 @@
 MinSalSidPlaPrograMonitoreoBundle_homepage:
     pattern:  /
     defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:Default:index }
+
+MinSalSidPlaPrograMonitoreoBundle_generarProgramacionJSON:
+    pattern:  /generarProgramacionJSON
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionSeguimientoProgramacion:generarProgramacionJSON }

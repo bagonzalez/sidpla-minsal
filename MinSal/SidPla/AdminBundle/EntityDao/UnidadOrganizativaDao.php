@@ -119,6 +119,24 @@ class UnidadOrganizativaDao {
 
         return $pao;
     }
+    
+    
+     public function getPaoSeguimiento($id) {
+        $unidadOrg = new UnidadOrganizativa();
+        $unidadOrg = $this->repositorio->find($id);
+        $paos = $unidadOrg->getPaos();
+
+        $anio = date('Y')+1;
+        $pao = new Pao();
+
+        foreach ($paos as $pao) {
+            if ($pao->getAnio() == $anio) {
+                return $pao;
+            }
+        }
+
+        return $pao;
+    }
 
     public function getPaoAnio($id,$anio) {
         $unidadOrg = new UnidadOrganizativa();

@@ -38,7 +38,7 @@ class Actividad
     private $idTipoMedVeri;
 
     /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado", inversedBy="actividades", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="ResultadoEsperado", inversedBy="actividades", cascade={"remove"})
      * @ORM\JoinColumn(name="resesp_codigo", referencedColumnName="resesp_codigo")
      */
     private $idResEsp;

@@ -187,6 +187,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
             $i=0;
             
             $actividad=new ActividadVinculada();
+            $rows='';
             
             foreach ($actividades as $actividad) {
                 
