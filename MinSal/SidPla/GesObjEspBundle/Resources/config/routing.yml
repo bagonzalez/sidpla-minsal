@@ -108,4 +108,13 @@ MinSalSidPlaGesObjEspBundle_aprobarVinculacion:
     pattern:  /aprobarVinculacion
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:aprobarVinculacion}
 
+MinSalSidPlaGesObjEspBundle_obtenerActividadesVincDependicentesJSON:
+    pattern:  /obtenerActividadesVincDependicentesJSON
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:obtenerActividadesVincDependicentesJSON}
+
+MinSalSidPlaGesObjEspBundle_mostrarActDependendientes:
+    pattern:  /mostrarActDependendientes
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:mostrarActDependendientes}
+
+
     

@@ -120,6 +120,29 @@ class ActividadVinculadaDao {
              
              return $actividades;        
     }
+    
+    public function getActividadesVinculadasDependientes($idActividad){
+        
+             $rsm=new ResultSetMapping;             
+             $rsm->addEntityResult('MinSalSidPlaGesObjEspBundle:ActividadVinculada', 'a');
+             $rsm->addFieldResult('a', 'actvin_codigo', 'idActVincu');
+             $rsm->addFieldResult('a', 'actividad_actividaddestino', 'idActDest');
+             $rsm->addFieldResult('a', 'actividad_actividadorigen', 'idActOrigen');
+             $query = $this->em->createNativeQuery('SELECT 
+                      sidpla_actividadvinculada.actvin_codigo,
+                      sidpla_actividadvinculada.actividad_actividaddestino, 
+                      sidpla_actividadvinculada.actividad_actividadorigen
+                    FROM 
+                      public.sidpla_actividadvinculada, 
+                      public.sidpla_actividad
+                    WHERE   
+                      sidpla_actividadvinculada.actividad_actividaddestino = sidpla_actividad.actividad_codigo AND
+                      actividad_actividaddestino=?' , $rsm);   
+             $query->setParameter(1, $idActividad);
+             $actividades = $query->getResult();             
+             
+             return $actividades;        
+    }
 }
 
 ?>

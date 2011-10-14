@@ -198,10 +198,10 @@ class AccionAdminActividadesController extends Controller{
               $resEspNomencl="pruebanomenc";
              
                   //valores que representan lo programado         
-               $trimUno=$request->get('trimUno');
-               $trimDos=$request->get('trimDos');
-               $trimTres=$request->get('trimTres');
-               $trimCuatro=$request->get('trimCuatro');
+               $cantrimUno=$request->get('trimUno');
+               $cantrimDos=$request->get('trimDos');
+               $cantrimTres=$request->get('trimTres');
+               $cantrimCuatro=$request->get('trimCuatro');
                $fechainicio=$request->get('fechainicio');
                $fechafin=$request->get('fechafin');  
                
@@ -245,13 +245,25 @@ class AccionAdminActividadesController extends Controller{
             $paoElaboracion=$this->obtenerPaoElaboracionAction();
            $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
            
+           //valor de cada segmento de actividad
+           
+           $porcRepresentaUno=$cantrimUno/$metaAnual;
+           $porcRepresentaDos=$cantrimDos/$metaAnual;
+           $porcRepresentaTres=$cantrimTres/$metaAnual;
+           $porcRepresentaCuatro=$cantrimCuatro/$metaAnual;
+           
+           $costoProgramadoSegmentoUno=$porcRepresentaUno*$costo;
+           $costoProgramadoSegmentoDos=$porcRepresentaDos*$costo;
+           $costoProgramadoSegmentoTres=$porcRepresentaTres*$costo;
+           $costoProgramadoSegmentoCuatro=$porcRepresentaCuatro*$costo;
+           
           
           //inicia proceso de guardar el valor de lo programado en sidpla_resultadore
            $resultadoDao = new ActividadDao($this->getDoctrine());                      
-           $resultadoDao->agregarResulActividad($idActividad,$trimesuno,$trimUno,$fechaInicioPrimer,$fechaFinPrimer, $programacionMonitoreo); 
-           $resultadoDao->agregarResulActividad($idActividad,$trimesdos,$trimDos,$fechaInicioSegundo,$fechaFinSegundo, $programacionMonitoreo); 
-           $resultadoDao->agregarResulActividad($idActividad,$trimestres,$trimTres,$fechaInicioTercero,$fechaFinTercero, $programacionMonitoreo); 
-           $resultadoDao->agregarResulActividad($idActividad,$trimescuatro,$trimCuatro,$fechaInicioCuarto,$fechaFinCuarto, $programacionMonitoreo); 
+           $resultadoDao->agregarResulActividad($idActividad,$trimesuno,$cantrimUno,$fechaInicioPrimer,$fechaFinPrimer, $programacionMonitoreo, $costoProgramadoSegmentoUno); 
+           $resultadoDao->agregarResulActividad($idActividad,$trimesdos,$cantrimDos,$fechaInicioSegundo,$fechaFinSegundo, $programacionMonitoreo, $costoProgramadoSegmentoDos); 
+           $resultadoDao->agregarResulActividad($idActividad,$trimestres,$cantrimTres,$fechaInicioTercero,$fechaFinTercero, $programacionMonitoreo, $costoProgramadoSegmentoTres); 
+           $resultadoDao->agregarResulActividad($idActividad,$trimescuatro,$cantrimCuatro,$fechaInicioCuarto,$fechaFinCuarto, $programacionMonitoreo, $costoProgramadoSegmentoCuatro); 
        
                   
            $objetivoAux=new ObjetivoEspecifico();

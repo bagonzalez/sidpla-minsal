@@ -66,6 +66,44 @@ class ProgramacionMonitoreoDao {
              return $actividades;
     }
     
+    
+    public function getProgramacionActividad($idProgramon, $idActividad){
+        
+             $rsm=new ResultSetMapping;             
+             $rsm->addEntityResult('MinSalSidPlaGesObjEspBundle:ResulActividad', 'a');
+             $rsm->addFieldResult('a', 'resact_codigo', 'idResulAct');
+             $rsm->addFieldResult('a', 'resact_fechainicio', 'resulActFechaInicio');
+             $rsm->addFieldResult('a', 'resact_fechafin', 'resulActFechaFin');
+             $rsm->addFieldResult('a', 'resact_programado', 'resulActProgramado');
+             $rsm->addFieldResult('a', 'resact_real', 'resulActRealizado');
+             $rsm->addFieldResult('a', 'resact_trimestre', 'resulActTrimestre');             
+             $rsm->addFieldResult('a', 'resact_costoprogramado', 'costoProgramado');
+             $rsm->addFieldResult('a', 'resact_costoreal', 'costoReal');
+             $query = $this->em->createNativeQuery('SELECT 
+                                      sidpla_resultadoactvidad.resact_codigo,       
+                                      sidpla_resultadoactvidad.resact_fechainicio,      
+                                      sidpla_resultadoactvidad.resact_fechafin,
+                                      sidpla_resultadoactvidad.resact_programado,
+                                      sidpla_resultadoactvidad.resact_real,
+                                      sidpla_resultadoactvidad.resact_trimestre,
+                                      sidpla_resultadoactvidad.resact_costoprogramado,      
+                                      sidpla_resultadoactvidad.resact_costoreal
+                                    FROM 
+                                      public.sidpla_programacionmonitoreo, 
+                                      public.sidpla_resultadoactvidad, 
+                                      public.sidpla_actividad
+                                    WHERE 
+                                      sidpla_programacionmonitoreo.promon_codigo = sidpla_resultadoactvidad.promon_codigo AND
+                                      sidpla_actividad.actividad_codigo = sidpla_resultadoactvidad.actividad_codigo AND
+                                      sidpla_programacionmonitoreo.promon_codigo=?  AND 
+                                      sidpla_actividad.actividad_codigo=?' , $rsm);   
+             $query->setParameter(1, $idProgramon);
+             $query->setParameter(2, $idActividad);
+             $resultadoActividades = $query->getResult();             
+             
+             return $resultadoActividades;
+    }
+    
 }
 
 ?>

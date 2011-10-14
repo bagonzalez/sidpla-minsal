@@ -65,7 +65,7 @@ class ActividadDao {
          return $matrizMensajes;
     }
     
-    public function agregarResulActividad($idActividad,$trimes,$trim,$fechInicio,$fechaFin, $programacionMonitoreo) {
+    public function agregarResulActividad($idActividad,$trimes,$trim,$fechInicio,$fechaFin, $programacionMonitoreo, $costoProgramadoSegmento) {
          
       
            $resultadoAux=new Actividad();
@@ -77,6 +77,7 @@ class ActividadDao {
          $objresultadore->setResulActFechaInicio($fechInicio);
          $objresultadore->setResulActFechaFin($fechaFin);
          $objresultadore->setIdActividad($resultadoAux);  
+         $objresultadore->setCostoProgramado($costoProgramadoSegmento);
          
          $objresultadore->setProgramacionMonitoreo($programacionMonitoreo);
          
