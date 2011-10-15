@@ -11,7 +11,7 @@
           colNames:['Id','Objetivo'],
           colModel:[            
             { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
-            { name:'objetivo', index: 'objetivo', width:700,editable:true,editoptions:{size:40,maxlength: 300},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  }
+            { name:'objetivo', index: 'objetivo', edittype:"textarea",width:700,editable:true,editoptions:{rows:"8",cols:"40",maxlength: 300},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  }
             ],
           rowNum:10,
           rowList:[10,20,30],
@@ -29,17 +29,20 @@
             
         });
         myGrid.jqGrid('navGrid','#pagerObj',
-        {edit:true,add:true,del:true},
-        {width:450,height:200, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos editados con exito!");},closeAfterEdit:true },//edit
-        {width:450,height:200,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");},closeAfterAdd:true },//add
-        {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
-        alert("Mensaje eliminado con exito!");
-          } },//del
+        {edit:true,add:true,del:false,beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}},
+        {width:450,height:250, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos editados con exito!");},closeAfterEdit:true,afterSubmit:despuesAgregarEditar },//edit
+        {width:450,height:250,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");},closeAfterAdd:true,afterSubmit:despuesAgregarEditar },//add
+        {},//del
         {},//search
         {} //view
        ).hideCol('id');
+           
+           function despuesAgregarEditar() {
+        myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+        return[true,'']; //no error
+      }    
        
       });
       
