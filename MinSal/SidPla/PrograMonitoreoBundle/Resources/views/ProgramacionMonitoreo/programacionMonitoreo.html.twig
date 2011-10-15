@@ -26,18 +26,23 @@
     });
 </script>
 
-    <br></br>         
-    <br></br>    
+    <br></br>               
     <form id = "formulario"  action="{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarSegumiento') }}" method="post">
         <table align="center">
-            <tr><td align="center"><h1>Ingreso de Resultados de Actividades - Programaci&oacute;n Monitoreo</h1>
+            <tr><td align="center"><h1>Ingreso de Resultados de Actividades - Programaci&oacute;n Monitoreo</h1>                    
                 </td>
             </tr>
+            <tr>
+                <td align="center">
+                    Seleccione un objetivo especifico y resultado esperado para ingresar sus resultados de actividades. <br>
+                    Cuando ingrese los resultados, seran notificados los responsables de la dependencias, asi como las Unidades que dependen de sus actividades.
+                </td>
+            </tr>            
             {% if objetivos is defined %}                                                                          
                     {% for obj in objetivos %}
                         <tr>
                             <td>
-                                <a  id="mostratObj{{ obj.idObjEspec }}" href="#">{{ obj.descripcion }}</a>                                
+                                <h2>&RightTriangle;<a  id="mostratObj{{ obj.idObjEspec }}" href="#">{{ obj.descripcion }}</a></h2>                                
                             </td>                            
                         </tr>                        
                         <tr>
@@ -47,7 +52,7 @@
                                             {% for res in obj.getResultadoEsperado %}   
                                                     <tr>
                                                         <td>
-                                                             <a  id="mostratRes{{ res.idResEsp }}" href="#">{{ res.resEspeDesc }}</a> 
+                                                            <h3>&RightTriangle;<a  id="mostratRes{{ res.idResEsp }}" href="#">{{ res.resEspeDesc }}</a> </h3>
                                                         </td>
                                                     </tr> 
                                                     <tr>
@@ -116,21 +121,21 @@
                                                                                     <td>
                                                                                         {{ actividad.getActDescripcion }}
                                                                                     </td>
-                                                                                    <td>
+                                                                                    <td align="center">
                                                                                         {{ actividad.actMetaAnual }}
                                                                                     </td>
-                                                                                    <td>
-                                                                                        {{ actividad.actDescMetaAnu }}
+                                                                                    <td >
+                                                                                        {{  actividad.actDescMetaAnu }}
                                                                                     </td>
-                                                                                    <td>
-                                                                                        {{ actividad.costo }}
+                                                                                    <td align="center">
+                                                                                        {{ "$ "  ~ actividad.costo }}
                                                                                     </td>
                                                                                     {% for resultadoAct in actividad.getResulAct %}
                                                                                         {% if trimestre >= resultadoAct.resulActTrimestre  %}
-                                                                                            <td>
+                                                                                            <td align="center">
                                                                                                 {{ resultadoAct.getResulActProgramado }}
                                                                                             </td>
-                                                                                            <td>
+                                                                                            <td align="center">
                                                                                                 {% if resultadoAct.resulActTrimestre == trimestre   %}
                                                                                                     <input name="resultadoRealizado_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}"  ></input>
                                                                                                 {% else %}
@@ -138,10 +143,10 @@
                                                                                                 {% endif %}  
                                                                                                 
                                                                                             </td> 
-                                                                                            <td>
+                                                                                            <td align="center">
                                                                                                  {{ "$ " ~ resultadoAct.costoProgramado }}
                                                                                             </td>
-                                                                                            <td>
+                                                                                            <td align="center">
                                                                                                 {% if resultadoAct.resulActTrimestre == trimestre   %}
                                                                                                     <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}"  ></input>
                                                                                                 {% else %}
