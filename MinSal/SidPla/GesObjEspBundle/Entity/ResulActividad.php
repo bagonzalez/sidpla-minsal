@@ -77,7 +77,7 @@ class ResulActividad
      */
     private $costoProgramado;
     
-       /**
+     /**
      * @var float $costo
      *
      * @ORM\Column(name="resact_costoreal", type="float")

@@ -34,6 +34,11 @@ class ResulActividadDao {
         return $ResultEsp;
     }
     
+     public function guardarResulAct($resulAct) {
+        $this->em->persist($resulAct);
+        $this->em->flush();
+    }
+    
     public function delResulActividad($id){            
 
         $Res=$this->repositorio->find($id);

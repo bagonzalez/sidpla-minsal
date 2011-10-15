@@ -48,10 +48,16 @@ class ProgramacionMonitoreoDao {
              $rsm->addFieldResult('a', 'actividad_codigo', 'idAct');
              $rsm->addFieldResult('a', 'actividad_descripcion', 'actDescripcion');
              $rsm->addFieldResult('a', 'activiadad_responsable', 'actResponsable');
+             $rsm->addFieldResult('a', 'actividad_costo', 'costo');
+             $rsm->addFieldResult('a', 'actividad_metanual', 'actMetaAnual');
+             $rsm->addFieldResult('a', 'actividad_descripmetanual', 'actDescMetaAnu');
              $query = $this->em->createNativeQuery('SELECT 
                       DISTINCT sidpla_actividad.actividad_codigo, 
                       sidpla_actividad.actividad_descripcion,   
-                      sidpla_actividad.activiadad_responsable
+                      sidpla_actividad.activiadad_responsable,
+                      sidpla_actividad.actividad_costo,
+                      sidpla_actividad.actividad_metanual,
+                      sidpla_actividad.actividad_descripmetanual
                     FROM 
                       public.sidpla_programacionmonitoreo, 
                       public.sidpla_resultadoactvidad, 
