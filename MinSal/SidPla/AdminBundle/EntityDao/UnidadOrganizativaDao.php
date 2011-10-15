@@ -133,7 +133,7 @@ class UnidadOrganizativaDao {
             }
         }
 
-        return $pao;
+        return new Pao();
     }
 
 }

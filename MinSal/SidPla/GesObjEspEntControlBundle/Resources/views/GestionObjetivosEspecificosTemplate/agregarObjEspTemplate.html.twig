@@ -8,7 +8,7 @@ $(document).ready(function(){
          this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_manttObjEspTemplate') }}';
     });
     
-  $("#forObjTmp").validate();   
+//  $("#forObjTmp").validate();   
     
 });
 </script>
@@ -22,7 +22,7 @@ input.error { border: 1px dotted red; }
 textarea.error { border: 1px dotted red; }
  </style>  
 
-<form id="forObjTmp" method="post" >
+<form id="forObjTmp" name="forObjTmp" method="post" >
     <table colspan="4"  align="center"><!-- id="datos"  -->
         <tr>
             <td colspan='2'>

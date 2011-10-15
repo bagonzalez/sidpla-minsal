@@ -6,7 +6,7 @@
     
     var myGrid = $('#tabperiodopao');        
     myGrid.jqGrid({
-      url: 'consultarPeriodoPaoJSON',
+      url: 'consultarPeriodoPaoJSON?anio='+$('#selanio').val(),
       datatype:'json',
       altRows:true,
       colNames:['Codigo','Nombre','Fecha Inicio','Fecha Fin','Activo'],

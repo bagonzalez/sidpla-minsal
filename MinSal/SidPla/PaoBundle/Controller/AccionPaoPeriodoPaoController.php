@@ -58,11 +58,9 @@ class AccionPaoPeriodoPaoController extends Controller {
         $periodoPaoDao = new PeriodoPaoDao($this->getDoctrine());
         $anio = $this->getRequest()->get('anio');
 
-        if ($anio == 0)
-            $anio = date("Y");
-
         $pao = $this->obtenerPao($anio);
-
+        
+        $periodoPao=new PeriodoPao();
         $periodoPao = $pao->getPeriodoCalendarizacion();
 
         $aux = new PeriodoPao();
