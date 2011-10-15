@@ -42,7 +42,7 @@
                     {% for obj in objetivos %}
                         <tr>
                             <td>
-                                <h2>&RightTriangle;<a  id="mostratObj{{ obj.idObjEspec }}" href="#">{{ obj.descripcion }}</a></h2>                                
+                                <h3>&RightTriangle;<a  id="mostratObj{{ obj.idObjEspec }}" href="#">{{ obj.descripcion }}</a></h3>                                
                             </td>                            
                         </tr>                        
                         <tr>
@@ -52,7 +52,7 @@
                                             {% for res in obj.getResultadoEsperado %}   
                                                     <tr>
                                                         <td>
-                                                            <h3>&RightTriangle;<a  id="mostratRes{{ res.idResEsp }}" href="#">{{ res.resEspeDesc }}</a> </h3>
+                                                            <h4>&RightTriangle;<a  id="mostratRes{{ res.idResEsp }}" href="#">{{ res.resEspeDesc }}</a></h4>
                                                         </td>
                                                     </tr> 
                                                     <tr>
