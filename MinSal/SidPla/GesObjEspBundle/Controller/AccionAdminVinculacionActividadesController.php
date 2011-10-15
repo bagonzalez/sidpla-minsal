@@ -85,6 +85,23 @@ class AccionAdminVinculacionActividadesController extends Controller {
                 array( 'opciones' => $opciones,));
     }
     
+    
+    public function mostrarActDependendientesAction()
+    {
+         $opciones=$this->getRequest()->getSession()->get('opciones');
+         
+         return $this->render('MinSalSidPlaGesObjEspBundle:GestionVinculaConDependencias:showActividadesDependientes.html.twig', 
+                array( 'opciones' => $opciones,));
+    }
+    
+    public function aprobarVinculacionAction()
+    {
+         $opciones=$this->getRequest()->getSession()->get('opciones');
+         
+         return $this->render('MinSalSidPlaGesObjEspBundle:GestionVinculaConDependencias:aprobarVinculacion.html.twig', 
+                array( 'opciones' => $opciones,));
+    }
+    
     public function agregarVinculacionAction()
     {
          $opciones=$this->getRequest()->getSession()->get('opciones');
@@ -103,7 +120,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
         
     }
     
-       public function vincularActividadesAction()
+    public function vincularActividadesAction()
     {
          $opciones=$this->getRequest()->getSession()->get('opciones');
           $request = $this->getRequest();
@@ -111,6 +128,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
           
           $idActividad = $request->get('actividadesCombo');
           $justificacion=$request->get('justificacion');
+          $vinculacionEntreDepen=$request->get('vinculacionDepen');
           
             $numero = count($_GET);
             $tags = array_keys($_GET);// obtiene los nombres de las varibles
@@ -121,7 +139,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
             for($i=0;$i<$numero;$i++){
                 $idActividadAVincular = substr($tags[$i], 17);
                 if($idActividadAVincular!=$idActividad && $idActividadAVincular>0)
-                    $actividadVinDao->guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion);
+                    $actividadVinDao->guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion, $vinculacionEntreDepen);
                 
             }
           
@@ -169,6 +187,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
             $i=0;
             
             $actividad=new ActividadVinculada();
+            $rows='';
             
             foreach ($actividades as $actividad) {
                 
@@ -197,7 +216,54 @@ class AccionAdminVinculacionActividadesController extends Controller {
     }
     
     
-     public function obtenerActividadesJSONAction()
+    public function obtenerActividadesVincDependicentesJSONAction()
+    { 
+            $request=$this->getRequest();
+            
+            $idActividad = $request->get('actividadesCombo');
+            
+            $paoElaboracion=$this->obtenerPaoElaboracionAction();
+            $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+            $idProgramon=$programacionMonitoreo->getIdPrograMon();
+            
+            $actividadvincDao=new ActividadVinculadaDao($this->getDoctrine());
+            $actividades=$actividadvincDao->getActividadesVinculadasDependientes($idActividad);
+            
+            $numfilas=count($actividades);  
+            
+            
+            $i=0;
+            
+            $actividad=new ActividadVinculada();
+            
+            foreach ($actividades as $actividad) {
+                
+                $rows[$i]['id']= $actividad->getIdActVincu();
+                $rows[$i]['cell']= array($actividad->getIdActVincu(),
+                                         $actividad->getIdActDest(),
+                                         $actividad->getIdActOrigen()                                         
+                                         );    
+                $i++;
+            }
+            
+            $datos=json_encode($rows);            
+            
+            
+            $jsonresponse='{
+               "page":"1",
+               "total":"1",
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
+            
+            
+            $response=new Response($jsonresponse);              
+            return $response;  
+         
+        
+    }
+    
+    
+    public function obtenerActividadesJSONAction()
     { 
             $request=$this->getRequest();
             
@@ -249,7 +315,6 @@ class AccionAdminVinculacionActividadesController extends Controller {
             
             $response=new Response($jsonresponse);              
             return $response;  
-         
         
     }
     

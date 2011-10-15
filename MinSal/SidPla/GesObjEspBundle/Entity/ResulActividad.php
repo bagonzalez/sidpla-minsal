@@ -70,8 +70,23 @@ class ResulActividad
      */
     private $resulActFechaFin;
     
+       /**
+     * @var float $costo
+     *
+     * @ORM\Column(name="resact_costoprogramado", type="float")
+     */
+    private $costoProgramado;
     
-     
+     /**
+     * @var float $costo
+     *
+     * @ORM\Column(name="resact_costoreal", type="float")
+     */
+    private $costoReal;
+    
+ 
+
+         
      /**
      * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo", inversedBy="resultadoact")
      * @ORM\JoinColumn(name="promon_codigo", referencedColumnName="promon_codigo")
@@ -262,6 +277,20 @@ class ResulActividad
         return $this->programacionMonitoreo;
     }
     
+    public function getCostoProgramado() {
+        return $this->costoProgramado;
+    }
+    public function setCostoProgramado($costoProgramado) {
+        $this->costoProgramado = $costoProgramado;
+    }
+
+    public function setCostoReal($costoReal) {
+        $this->costoReal = $costoReal;
+    }
+
+        public function getCostoReal() {
+        return $this->costoReal;
+    }
    
     
     

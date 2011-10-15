@@ -1,3 +1,17 @@
 MinSalSidPlaPrograMonitoreoBundle_homepage:
     pattern:  /
     defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:Default:index }
+
+MinSalSidPlaPrograMonitoreoBundle_generarProgramacionJSON:
+    pattern:  /generarProgramacionJSON
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionSeguimientoProgramacion:generarProgramacionJSON }
+
+MinSalSidPlaPrograMonitoreoBundle_showProgramacionMonitoreo:
+    pattern:  /showProgramacionMonitoreo
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionSeguimientoProgramacion:showProgramacionMonitoreo }
+
+
+MinSalSidPlaPrograMonitoreoBundle_guardarSegumiento:
+    pattern:  /guardarSegumiento
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionSeguimientoProgramacion:guardarSegumiento }
+

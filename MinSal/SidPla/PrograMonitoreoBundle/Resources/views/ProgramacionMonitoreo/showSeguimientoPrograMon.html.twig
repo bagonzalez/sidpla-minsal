@@ -1,0 +1,77 @@
+{% block body %}
+
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var myGrid = $('#theGridObj');        
+        myGrid.jqGrid({    
+          url: '{{path('MinSalSidPlaPrograMonitoreoBundle_generarProgramacionJSON')}}',
+          datatype:'json',
+          altRows:true,          
+          colNames:['Objetivo','Resultado Esp.','Actvidad', 'Desc Actividad', 'Acciones'],
+          colModel:[ 
+            { name:'objt', index: 'obj', width:200,editable:false, editoptions:{size:10}},
+            { name:'result', index: 'result', width:200,editable:true,editoptions:{size:10}},
+            { name:'actividad', index: 'actividad', width:10,editable:true,editoptions:{size:10}},
+            { name:'actividadDesc', index: 'actividadDesc', width:200,editable:true,editoptions:{size:10}},
+            { name:'act',index:'act', width:200,sortable:false}],
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          sortname: 'id',
+          sortorder: "asc",
+          grouping:true, 
+          groupingView : { 
+              groupField : ['objt', 'result'], 
+              groupColumnShow : [false],
+              groupCollapse : true, 
+              groupOrder: ['desc'],
+              groupSummary : [true]
+          },       
+          gridComplete: function(){
+              var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
+              for(var i=0;i < ids.length;i++){ var cl = ids[i];
+                  be = "<input style='height:22px;width:100px;' type='submit' id='Editar' value='Editar' onclick=\" $('#idfilaActividad').attr('value', '"+cl+"');this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editarActividad') }}' \" />";
+                  se = "<input style='height:22px;width:100px;' type='button' value='Eliminar'\" />"; 
+                  //ce = "<input style='height:22px;width:100px;' type='submit' value='Actividades' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
+                  jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+se}); } },
+          pager: jQuery('#pagerObj'),
+          viewrecords: true,  
+          rownumbers: true,
+          caption: 'Actividades',
+          height: "100%",
+          editCaption: "Editar Registro",
+          addCaption: "Nuevo Registro",
+          editurl:''         
+            
+        });
+        myGrid.jqGrid('navGrid','#pagerObj',
+        {edit:true,add:true,del:true},
+        {width:450,height:200, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos editados con exito!");},closeAfterEdit:true },//edit
+        {width:450,height:1000,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");},closeAfterAdd:true },//add
+        {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
+        alert("Mensaje eliminado con exito!");
+          } },//del
+        {},//search
+        {} //view
+        );
+       
+      });
+      
+       //define handler for 'editSubmit' event
+    var fn_editSubmit=function(response,postdata){
+     var json=response.responseText; //in my case response text form server is "{sc:true,msg:''}"
+     var result=eval("("+json+")"); //create js object from server reponse
+     return [result.sc,result.msg,null]; 
+    }  
+    
+</script>
+
+     
+    <div id="grid_wrapper" class="ui-corner-all floatLeft">
+        <table id="theGridObj" class="scroll" ></table> 
+        <div id="pagerObj"  class="scroll" style="text-align:center;"></div> 
+    </div>
+
+{% endblock %}

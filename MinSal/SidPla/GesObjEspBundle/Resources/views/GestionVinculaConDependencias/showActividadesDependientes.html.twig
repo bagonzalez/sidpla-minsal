@@ -36,16 +36,8 @@
               $("#tabActividad").setGridParam({url: '{{path('MinSalSidPlaGesObjEspBundle_obtenerActividadesJSON')}}?actividadesCombo='+$('#actividadesCombo').val()+'&dependencia='+$('#dependenciasCombo').val() }); 
               $('#tabActividad').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
               cargarActVin();             
-          }
-          
-          $('#vincular').click(function() {
-                    $('#dialogJustificacion').jqmShow();                     
-          }); 
-          
-          $('#vincularFin').click(function() {                    
-                    $('#vincularForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_vincularActividades') }}');                    
-                    $('#vincularForm').submit();
-          }); 
+          }        
+         
           
           
           
@@ -53,12 +45,12 @@
           
           function cargarActVin(){
               $("#tabActividad").resetSelection(); 
-              $.getJSON('{{path('MinSalSidPlaGesObjEspBundle_obtenerActividadesVincJSON')}}?actividadesCombo='+$('#actividadesCombo').val(), function(data) {
+              $.getJSON('{{path('MinSalSidPlaGesObjEspBundle_obtenerActividadesVincDependicentesJSON')}}?actividadesCombo='+$('#actividadesCombo').val(), function(data) {
                       var i=0;
                       $.each(data, function(key, val) {
                           if(key=='rows'){
                             $.each(val, function(id, registro){
-                                jQuery("#tabActividad").jqGrid('setSelection', registro['cell'][1]);
+                                jQuery("#tabActividad").jqGrid('setSelection', registro['cell'][2]);
                                 
                             });                    
                           }
@@ -78,8 +70,8 @@
     <tbody>
         <tr>
             <td align="center">
-                <h1>Vinculaci&oacute;n de Actividades entre Dependencia</h1>
-                <h3>Sus actividades dependeran de las actividades de otras dependencias</h3>
+                <h1>Dependencia de Actividades de otras Dependencia</h1>
+                <h3>Actividades de otras Dependencias que dependen de sus actividades</h3>
             </td>           
         </tr>
         <tr>
@@ -102,35 +94,10 @@
             <td align="center">                
                 {%include 'MinSalSidPlaGesObjEspBundle:GestionVincular:showActividadesPrograMon.html.twig' %}
             </td>
-        </tr>
-        <tr>
-            <td align="center">
-                <input type="button" id="vincular"  value="Vincular Actividades"></input>
-            </td>
-        </tr>
+        </tr>        
     </tbody>
 
-</table>
-        <div class="jqmWindow" style="width: 600px; top: 40%; left:50%" id="dialogJustificacion">
-            <a href="#" class="jqmClose">Cerrar</a>
-            <hr>
-            <h2>Justificaci&oacute;n</h2>            
-            <p>Ingrese la justificaci&oacute;n para la vinculaci&oacute;n. Esta sera enviada al responsable de la unidad, con la que desea vincular.  </p>
-            <table>
-                <tbody>
-                    <tr>                        
-                        <td>
-                            <textarea rows="4" size="100%" cols="80"   id="justificacion" name="justificacion"></textarea>
-                        </td>                        
-                    </tr>
-                    <tr>
-                         <td align="center">
-                            <input type="button" id="vincularFin"  value="Vincular Actividades"></input>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+</table>      
 </form>
 
 {% endblock %}
