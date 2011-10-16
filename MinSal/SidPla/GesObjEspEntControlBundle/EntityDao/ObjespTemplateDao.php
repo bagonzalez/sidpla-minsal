@@ -29,13 +29,13 @@ class ObjespTemplateDao {
            $objetivoespecificoAux=$this->getObjetivoTemplate($idObjetivo); 
        // $tipometa=1;
         
-     $resEspNomencl="gfdsfsdf";
+           //$resEspNomencl="gfdsfsdf";
        // $resEspMetAnual=100;
        // $resEspDescMetAnual="ttttt";
        // $resEspResponsable="neto";
          $objResulesperado=new ResEspTemplate();
          $objResulesperado->setResEspTemplDescripcion($resEspeDesc);                         
-         $objResulesperado->setResEspTemplIndicador($resEspNomencl);                         
+         $objResulesperado->setResEspTemplIndicador($resEspIndicador);                         
          $objResulesperado->setIdObjEspecTempl($objetivoespecificoAux);
                  
          $objetivoespecificoAux->addResultadostemplate($objResulesperado);
