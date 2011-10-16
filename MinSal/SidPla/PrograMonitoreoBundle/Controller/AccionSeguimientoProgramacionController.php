@@ -171,7 +171,7 @@ class AccionSeguimientoProgramacionController extends Controller {
         
          $promMonDao=new ProgramacionMonitoreoDao($this->getDoctrine());
          $actividadesProgramon=$promMonDao->getActividades($idProgramon);
-         $trimestre=3;
+         $trimestre=4;
          
          return $this->render('MinSalSidPlaPrograMonitoreoBundle:ProgramacionMonitoreo:programacionMonitoreo.html.twig', 
                 array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 'trimestre' => $trimestre ));
