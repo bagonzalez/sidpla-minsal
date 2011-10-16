@@ -88,11 +88,17 @@ class UnidadOrganizativa {
      * @ORM\Column(name="uniorg_responsable", type="integer")
      */
     private $responsable;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado", mappedBy="unidadOrganizativa")
+     */
+    protected $resultadosEsperados;
 
     public function __construct() {
         $this->subUnidades = new ArrayCollection();
         $this->paos = new ArrayCollection();
         $this->departUnidades = new ArrayCollection();
+        $this->resultadosEsperados=new ArrayCollection();
     }
 
     /**
@@ -273,5 +279,25 @@ class UnidadOrganizativa {
      */
     public function getResponsable() {
         return $this->responsable;
+    }
+
+    /**
+     * Add resultadosEsperados
+     *
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado $resultadosEsperados
+     */
+    public function addResultadoEsperado(\MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado $resultadosEsperados)
+    {
+        $this->resultadosEsperados[] = $resultadosEsperados;
+    }
+
+    /**
+     * Get resultadosEsperados
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getResultadosEsperados()
+    {
+        return $this->resultadosEsperados;
     }
 }

@@ -3,8 +3,12 @@
     <script type="text/javascript">
       $(document).ready(function(){
         var myGrid = $('#theGridObj');        
-        myGrid.jqGrid({    
-          url: 'consultarResultadosEsperadosJSON?idfila={{idfila}}',
+        myGrid.jqGrid({   
+          {% if objUniControl is defined %}                                                                          
+            url: '{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperadosJSON')}}?idfila={{idfila}}&objUniControl={{objUniControl}}',
+          {% else %}
+            url: '{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperadosJSON')}}?idfila={{idfila}}',
+          {% endif %}
           datatype:'json',
           altRows:true,          
           colNames:['Id','idObjetivo','idtemplate','Idtipometa','Resultado Esperado','nomenclatura','Condicionantes','Meta anual','Descrp Meta anual','Responsable','entidad de Control','indicador','Actions'],

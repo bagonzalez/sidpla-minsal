@@ -40,7 +40,9 @@ use MinSal\SidPla\GesObjEspBundle\Entity\Actividad;
 use MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico;
 use MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado;
 
-
+use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\ObjTemplateDao;
+use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjTemplate;
+use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate;
 
 use MinSal\SidPla\PrograMonitoreoBundle\EntityDao\ProgramacionMonitoreoDao;
 
@@ -69,6 +71,67 @@ class AccionSeguimientoProgramacionController extends Controller {
     }
     
     
+    public function consultarObjetivosEspecificosEntControl() {
+        $request = $this->getRequest();
+        $anio = date('Y')+1;        
+
+        $objTmpDao = new ObjTemplateDao($this->getDoctrine());
+         if($objTmpDao->existeObjTmp($anio)==0)
+            $objTmpDao->agregarObjetivoTemplate ($anio);
+        $objTmp = $objTmpDao->obtenerObjTempAnio($anio);
+
+        $numfilas = 0;
+        $objTmpAux = new ObjTemplate();
+        $rows='';
+        
+        $obEspecificos = new  ArrayCollection();
+        
+        
+        $uniControl=new UnidadOrganizativa();            
+        $uniControl=$this->obtenerUnidadOrg();
+        $resultadosEsperados=$uniControl->getResultadosEsperados();
+        
+        foreach ($objTmp as $objTmpAux) {
+            $i = 0;
+            $objEspTmps = $objTmpAux->getEspecificoObjTmp();
+            $aux = new ObjespTemplate();
+            $numfilas = count($objEspTmps);
+
+            foreach ($objEspTmps as $aux) {
+                $objEspec=$aux->getIdObjEspec();                
+                $obEspecificos[]= $objEspec;
+                //$resultadosEspec = new  ArrayCollection();
+                
+                /*foreach ($resultadosEsperados as $resulEspec) {
+                    if($resulEspec->getIdObjEsp()->getIdObjEspec()==$objEspec->getIdObjEspec()){
+                        $resultadosEspec[]=$resulEspec;                        
+                        $objEspec->addResultadoEsperado($resulEspec);
+                    }                    
+                } */               
+            }
+        }
+        
+        
+
+        return $obEspecificos;
+    }
+    
+      public function obtenerUnidadOrg(){
+        
+        $user=new User();
+        $empleado=new Empleado();        
+        $user = $this->get('security.context')->getToken()->getUser();        
+        $empleado=$user->getEmpleado();        
+        $idUnidad=$empleado->getUnidadOrganizativa()->getIdUnidadOrg();        
+        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad=new UnidadOrganizativa();              
+        $unidad=$unidaDao->getUnidadOrg($idUnidad);
+        
+        return $unidad;
+        
+    }
+    
+    
         
     public function obtenerUnidadOrgObjEspec(){
         
@@ -81,7 +144,14 @@ class AccionSeguimientoProgramacionController extends Controller {
         $unidad=new UnidadOrganizativa();              
         $unidad=$unidaDao->getUnidadOrg($idUnidad);
         
-        $objetivosEscpec=$unidad->getCaractOrg()->getObjetivosEspec();        
+        if($unidad->getTipoUnidad()==3){
+            $objetivosEscpec=$this->consultarObjetivosEspecificosEntControl();
+            
+        }else{
+            $objetivosEscpec=$unidad->getCaractOrg()->getObjetivosEspec();                    
+        }
+        
+        
         return $objetivosEscpec;
         
     }
@@ -173,8 +243,12 @@ class AccionSeguimientoProgramacionController extends Controller {
          $actividadesProgramon=$promMonDao->getActividades($idProgramon);
          $trimestre=4;
          
+         $uniControl=new UnidadOrganizativa();            
+         $uniControl=$this->obtenerUnidadOrg();
+         $idUnidad=$uniControl->getIdUnidadOrg();
+         
          return $this->render('MinSalSidPlaPrograMonitoreoBundle:ProgramacionMonitoreo:programacionMonitoreo.html.twig', 
-                array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 'trimestre' => $trimestre ));
+                array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 'trimestre' => $trimestre, 'idUnidad' => $idUnidad ));
     }
     
     
