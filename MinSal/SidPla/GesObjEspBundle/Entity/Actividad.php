@@ -95,6 +95,7 @@ class Actividad
     
     /**
      * @ORM\OneToMany(targetEntity="ResulActividad", mappedBy="idActividad", cascade={"persist", "remove"})
+     * @ORM\OrderBy({"resulActTrimestre" = "ASC"})
      */
     protected $resulAct;
     

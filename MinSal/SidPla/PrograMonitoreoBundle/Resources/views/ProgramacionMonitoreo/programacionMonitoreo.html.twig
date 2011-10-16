@@ -147,7 +147,7 @@
                                                                                                  {{ "$ " ~ resultadoAct.costoProgramado }}
                                                                                             </td>
                                                                                             <td align="center">
-                                                                                                {% if resultadoAct.resulActTrimestre == trimestre   %}
+                                                                                                {% if trimestre == resultadoAct.resulActTrimestre  %}
                                                                                                     <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}"  ></input>
                                                                                                 {% else %}
                                                                                                     <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}" readonly="readonly"  ></input>
