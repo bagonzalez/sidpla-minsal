@@ -48,6 +48,7 @@ class RolSistema
      *      joinColumns={@ORM\JoinColumn(name="rol_codigo", referencedColumnName="rol_codigo")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="opcionsistema_codigo", referencedColumnName="opcionsistema_codigo")}
      *      )
+     * @ORM\OrderBy({"idOpcionSistema" = "ASC"})
      */
     private $opcionesSistema;
     

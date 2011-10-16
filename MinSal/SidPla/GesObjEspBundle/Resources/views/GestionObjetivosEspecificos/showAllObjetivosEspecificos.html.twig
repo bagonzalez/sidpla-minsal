@@ -8,12 +8,11 @@
           url: 'consultarObjetivosEspecificosJSON?idCaractOrg={{idCaractOrg}}',
           datatype:'json',
           altRows:true,          
-          colNames:['Id','Objetivo','Eliminar','Actions'],
+          colNames:['Id','Objetivo','Actions'],
           colModel:[ 
             { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
-            { name:'objetivo', index: 'objetivo', width:580,editable:true,editoptions:{size:40,maxlength: 300},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  },
-             {name: 'eliminar', width:80, fixed:true, sortable:false, resize:false, formatter:'actions', formatoptions:{keys:true,"editbutton":false}},
-            {name:'act',index:'act', width:280,sortable:false}],
+            { name:'objetivo', index: 'objetivo', edittype:"textarea",width:700,editable:true,editoptions:{rows:"8",cols:"40",maxlength: 300},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  },             
+            {name:'act',index:'act', width:120,sortable:false}],
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
@@ -22,11 +21,9 @@
           sortorder: "asc",
           gridComplete: function(){
               var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
-              for(var i=0;i < ids.length;i++){ var cl = ids[i];
-                  be = "<input style='height:22px;width:70px;' type='button' value='Editar' onclick=\"jQuery('#theGridObj').editRow('"+cl+"');\" />";
-                  se = "<input style='height:22px;width:70px;' type='button' value='Eliminar' onclick=\"jQuery('#theGridObj').jqGrid('delGridRow','"+cl+"',{msg: 'Desea eliminar este objetivo especifico?'}); \" />"; 
+              for(var i=0;i < ids.length;i++){ var cl = ids[i];                  
                   ce = "<input style='height:22px;width:120px;' type='submit' value='Resultados Esperados' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
-                  jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+"   "+se+"   "+ce}); } 
+                  jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:ce}); } 
           },
           pager: jQuery('#pagerObj'),
           viewrecords: true,          
@@ -37,16 +34,14 @@
           editurl:'manttObjetivosEspecificos?idCaractOrg={{idCaractOrg}}'         
             
         });
-        myGrid.jqGrid('navGrid','#pagerObj',{edit:true,add:true,del:true,
+        myGrid.jqGrid('navGrid','#pagerObj',{edit:true,add:true,del:false,
          beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}
         },
         {width:450,height:200, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
         alert("datos editados con exito!");},closeAfterEdit:true,afterSubmit:despuesAgregarEditar },//edit
         {width:450,height:200,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
         alert("datos guardados con exito!");},closeAfterAdd:true,afterSubmit:despuesAgregarEditar },//add
-        {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
-        alert("Mensaje eliminado con exito!");
-          } },//del
+        
         {},//search
         {} //view
         ).hideCol('id');
