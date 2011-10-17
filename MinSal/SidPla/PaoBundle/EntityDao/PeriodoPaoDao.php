@@ -84,6 +84,39 @@ class PeriodoPaoDao {
         return $result;
     }
     
+    public function getMinFechaSeguimientoPao($idPao) {         
+      
+         $qb = $this->em->createQueryBuilder();
+         $qb->select($qb->expr()->min('p.fechIniPerPao'))
+            ->from('MinSalSidPlaPaoBundle:PeriodoPao', 'p')
+            ->join('p.paoPerPao','pao')
+            ->join('p.tipPeriodoPerPao','tipop')      
+            ->where('pao.idPao = ?1', 'tipop.idTipPer=3')            
+            ->setParameter(1, $idPao);
+         
+         $query = $qb->getQuery();
+         $result = $query->getResult();
+             
+        return $result;
+    }
+    
+    
+    public function getMaxFechaSeguimientoPao($idPao) {         
+      
+         $qb = $this->em->createQueryBuilder();
+         $qb->select($qb->expr()->min('p.fechIniPerPao'))
+            ->from('MinSalSidPlaPaoBundle:PeriodoPao', 'p')
+            ->join('p.paoPerPao','pao')            
+            ->join('p.tipPeriodoPerPao','tipop')      
+            ->where('pao.idPao = ?1', 'tipop.idTipPer=3')            
+            ->setParameter(1, $idPao);
+         
+         $query = $qb->getQuery();
+         $result = $query->getResult();
+             
+        return $result;
+    }
+    
 }
 
 ?>
