@@ -197,7 +197,9 @@ class AccionAdminResultadosEsperadosController extends Controller {
         }
 
         if($operacion=='add'){
-            $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
+            $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine()); 
+             $unidad=new UnidadOrganizativa();            
+            $unidad=$this->obtenerUnidadOrg();
             $objetivoDao->agregarResulEsperado($idResTempl,
                                         $idTipoMeta,
                                         $resEspeDesc,
@@ -208,7 +210,7 @@ class AccionAdminResultadosEsperadosController extends Controller {
                                         $resEspResponsable,
                                         $resEspEntidadControl,
                                         $resEspIndicador,
-                                        $idobjetivo);           
+                                        $idobjetivo, $unidad);           
         }
 
         return new Response("{sc:true,msg:''}"); 
@@ -266,16 +268,15 @@ class AccionAdminResultadosEsperadosController extends Controller {
                    $resEspEntidadControl=false;
               
               
-              $trimUno=$request->get('trimUno');
-               $trimDos=$request->get('trimDos');
-               $trimTres=$request->get('trimTres');
-               $trimCuatro=$request->get('trimCuatro');
+           $trimUno=$request->get('trimUno');
+           $trimDos=$request->get('trimDos');
+           $trimTres=$request->get('trimTres');
+           $trimCuatro=$request->get('trimCuatro');
            
-                                             
-               
-          
+           $unidad=new UnidadOrganizativa();            
+           $unidad=$this->obtenerUnidadOrg();
            
-               $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
+          $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
           $idResultadoEsp= $objetivoDao->agregarResulEsperado($restmpcodigo,
                                        $tipometa,
                                         $resEspeDesc,
@@ -287,7 +288,7 @@ class AccionAdminResultadosEsperadosController extends Controller {
                                         $resEspEntidadControl,
                                         $resEspIndicador,
                                         $idobjetivo,
-                                        $medioverificacion ); 
+                                        $medioverificacion, $unidad ); 
                
            
            $trimesuno=1;

@@ -89,7 +89,8 @@ class ObjetivoEspecificoDao {
                                         $resEspEntidadControl,
                                         $resEspIndicador,
                                         $idObjetivo,
-                                        $medioverificacion) {
+                                        $medioverificacion,
+                                        $unidadOrganizativa) {
          
       
            $objetivoespecificoAux=new ObjetivoEspecifico();
@@ -113,6 +114,7 @@ class ObjetivoEspecificoDao {
          $objResulesperado->setResEspIndicador($resEspIndicador);
          $objResulesperado->setmedioVerificacion($medioverificacion);
          $objResulesperado->setIdObjEsp($objetivoespecificoAux);
+         $objResulesperado->setUnidadOrganizativa($unidadOrganizativa);
                  
          $objetivoespecificoAux->addResultadoEsperado($objResulesperado);
 
