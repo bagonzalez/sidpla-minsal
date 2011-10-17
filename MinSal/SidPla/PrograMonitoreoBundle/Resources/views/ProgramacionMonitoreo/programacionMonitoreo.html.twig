@@ -149,9 +149,9 @@
                                                                                             </td>
                                                                                             <td align="center">
                                                                                                 {% if trimestre == resultadoAct.resulActTrimestre  %}
-                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}"  ></input>
+                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}"  ></input>
                                                                                                 {% else %}
-                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}" readonly="readonly"  ></input>
+                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}" readonly="readonly"  ></input>
                                                                                                 {% endif %}
                                                                                             </td>
                                                                                         {%  endif%}                                                                                    
