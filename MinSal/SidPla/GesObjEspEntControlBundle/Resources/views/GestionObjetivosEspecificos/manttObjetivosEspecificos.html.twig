@@ -1,0 +1,26 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script type="text/javascript">
+ $(document).ready(function(){
+   
+      
+});
+    </script>
+    <form action="{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperados') }}" method="post">        
+        <table align="center">
+            <tr><td align="center"><h1>Gestion de Objetivos Especificos Para SIBASI y Regiones de Salud</h1>
+                </td>
+            </tr>           
+            <tr>
+                <td align="center">
+                    <br></br>                
+                {% include 'MinSalSidPlaGesObjEspEntControlBundle:GestionObjetivosEspecificos:showObjEspecUnidadControl.html.twig' %} 
+                </td>
+            </tr>        
+        </table>        
+    </form>
+    <br></br>
+    <br></br>
+
+
+{% endblock %}

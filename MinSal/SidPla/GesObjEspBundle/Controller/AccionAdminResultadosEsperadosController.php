@@ -56,6 +56,21 @@ class AccionAdminResultadosEsperadosController extends Controller {
         return $paoElaboracion;
         
     }
+    
+     public function obtenerUnidadOrg(){
+        
+        $user=new User();
+        $empleado=new Empleado();        
+        $user = $this->get('security.context')->getToken()->getUser();        
+        $empleado=$user->getEmpleado();        
+        $idUnidad=$empleado->getUnidadOrganizativa()->getIdUnidadOrg();        
+        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad=new UnidadOrganizativa();              
+        $unidad=$unidaDao->getUnidadOrg($idUnidad);
+        
+        return $unidad;
+        
+    }
 
     public function consultarResultadosEsperadosAction()
     {
@@ -81,33 +96,46 @@ class AccionAdminResultadosEsperadosController extends Controller {
         $request=$this->getRequest();        
         $idobjetivo=$request->get('idfila');
         
+        $objUniControl=$request->get('objUniControl');        
+        
+        
         $objetivoAux=new ObjetivoEspecifico();
         $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
         $objetivoAux=$objetivoDao->getObjetEspecif($idobjetivo);         
         
         $objetivosEspec=$objetivoAux->getResultadoEsperado();
         
+        if($objUniControl){
+            $uniControl=new UnidadOrganizativa();            
+            $uniControl=$this->obtenerUnidadOrg();
+            $objetivosEspec=$uniControl->getResultadosEsperados();
+        }
+        
         $numfilas=count($objetivosEspec);  
             
         $objetivoEspec=new ResultadoEsperado();
         $i=0;
 
-        foreach ($objetivosEspec as $objetivoEspec) { 
-            $rows[$i]['id']= $objetivoEspec->getIdResEsp();
-            $rows[$i]['cell']= array($objetivoEspec->getIdResEsp(),
-                                     $objetivoEspec->getIdObjEsp(),
-                                     $objetivoEspec->getIdResTempl(),
-                                     $objetivoEspec->getIdTipoMeta(),
-                                     $objetivoEspec->getResEspeDesc(),
-                                     $objetivoEspec->getResEspNomencl(),
-                                     $objetivoEspec->getResEspCondi(),
-                                     $objetivoEspec->getResEspMetAnual(),
-                                     $objetivoEspec->getResEspDescMetAnual(),
-                                     $objetivoEspec->getResEspResponsable(),
-                                     $objetivoEspec->getResEspEntidadControl(),
-                                     $objetivoEspec->getResEspIndicador()
-                                     );    
-            $i++;
+        foreach ($objetivosEspec as $objetivoEspec) {
+            if($objetivoEspec->getIdObjEsp()->getIdObjEspec()==$idobjetivo){
+                 $rows[$i]['id']= $objetivoEspec->getIdResEsp();
+                    $rows[$i]['cell']= array($objetivoEspec->getIdResEsp(),
+                                             $objetivoEspec->getIdObjEsp(),
+                                             $objetivoEspec->getIdResTempl(),
+                                             $objetivoEspec->getIdTipoMeta(),
+                                             $objetivoEspec->getResEspeDesc(),
+                                             $objetivoEspec->getResEspNomencl(),
+                                             $objetivoEspec->getResEspCondi(),
+                                             $objetivoEspec->getResEspMetAnual(),
+                                             $objetivoEspec->getResEspDescMetAnual(),
+                                             $objetivoEspec->getResEspResponsable(),
+                                             $objetivoEspec->getResEspEntidadControl(),
+                                             $objetivoEspec->getResEspIndicador()
+                                             );    
+                    $i++;
+                
+            }
+           
         }
             
             $datos=json_encode($rows);            
@@ -169,7 +197,9 @@ class AccionAdminResultadosEsperadosController extends Controller {
         }
 
         if($operacion=='add'){
-            $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
+            $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine()); 
+             $unidad=new UnidadOrganizativa();            
+            $unidad=$this->obtenerUnidadOrg();
             $objetivoDao->agregarResulEsperado($idResTempl,
                                         $idTipoMeta,
                                         $resEspeDesc,
@@ -180,7 +210,7 @@ class AccionAdminResultadosEsperadosController extends Controller {
                                         $resEspResponsable,
                                         $resEspEntidadControl,
                                         $resEspIndicador,
-                                        $idobjetivo);           
+                                        $idobjetivo, $unidad);           
         }
 
         return new Response("{sc:true,msg:''}"); 
@@ -225,25 +255,28 @@ class AccionAdminResultadosEsperadosController extends Controller {
           $resEspMetAnual=$request->get('metaAnual');
           $tipometa=$request->get('selectipometa');
           $resEspDescMetAnual=$request->get('descripMetaAnual');
+          $entControl=$request->get('entControl');
           
               
               //estos tres valores son fusilados porque no se bien como  funcionan
           //asi que solo los asigno y los mando
               $resEspNomencl="pruebanomenc";
                $restmpcodigo=1;
-              $resEspEntidadControl=true;
+               if($entControl)
+                    $resEspEntidadControl=true;
+               else
+                   $resEspEntidadControl=false;
               
               
-              $trimUno=$request->get('trimUno');
-               $trimDos=$request->get('trimDos');
-               $trimTres=$request->get('trimTres');
-               $trimCuatro=$request->get('trimCuatro');
+           $trimUno=$request->get('trimUno');
+           $trimDos=$request->get('trimDos');
+           $trimTres=$request->get('trimTres');
+           $trimCuatro=$request->get('trimCuatro');
            
-                                             
-               
-          
+           $unidad=new UnidadOrganizativa();            
+           $unidad=$this->obtenerUnidadOrg();
            
-               $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
+          $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
           $idResultadoEsp= $objetivoDao->agregarResulEsperado($restmpcodigo,
                                        $tipometa,
                                         $resEspeDesc,
@@ -255,7 +288,7 @@ class AccionAdminResultadosEsperadosController extends Controller {
                                         $resEspEntidadControl,
                                         $resEspIndicador,
                                         $idobjetivo,
-                                        $medioverificacion ); 
+                                        $medioverificacion, $unidad ); 
                
            
            $trimesuno=1;

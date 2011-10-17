@@ -34,6 +34,7 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
 
         $numfilas = 0;
         $objTmpAux = new ObjTemplate();
+        $rows='';
         foreach ($objTmp as $objTmpAux) {
             $i = 0;
             $objEspTmps = $objTmpAux->getEspecificoObjTmp();
@@ -50,19 +51,14 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
             }
         }
 
-        if ($numfilas != 0) {
-            array_multisort($rows, SORT_ASC);
-        } else {
-            $rows[0]['id'] = 0;
-            $rows[0]['cell'] = array(' ', ' ');
-        }
+       
 
         $datos = json_encode($rows);
         $pages = floor($numfilas / 10) + 1;
 
         $jsonresponse = '{
                "page":"1",
-               "total":"' . $pages . '",
+               "total":"1",
                "records":"' . $numfilas . '", 
                "rows":' . $datos . '}';
 

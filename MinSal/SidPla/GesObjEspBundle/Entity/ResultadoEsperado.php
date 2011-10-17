@@ -119,6 +119,12 @@ class ResultadoEsperado
      * @ORM\OneToMany(targetEntity="Resultadore", mappedBy="idResEsp", cascade={"persist", "remove"})
      */
     protected $Resultadore;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa", inversedBy="resultadosEsperados")
+     * @ORM\JoinColumn(name="uniorg_codigo", referencedColumnName="uniorg_codigo")
+     */
+    private $unidadOrganizativa;
 
     /**
      * Set idResEsp
@@ -438,5 +444,25 @@ class ResultadoEsperado
     public function addActividad(\MinSal\SidPla\GesObjEspBundle\Entity\Actividad $actividades)
     {
         $this->actividades[] = $actividades;
+    }
+
+    /**
+     * Set unidadOrganizativa
+     *
+     * @param MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $unidadOrganizativa
+     */
+    public function setUnidadOrganizativa(\MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa $unidadOrganizativa)
+    {
+        $this->unidadOrganizativa = $unidadOrganizativa;
+    }
+
+    /**
+     * Get unidadOrganizativa
+     *
+     * @return MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa 
+     */
+    public function getUnidadOrganizativa()
+    {
+        return $this->unidadOrganizativa;
     }
 }

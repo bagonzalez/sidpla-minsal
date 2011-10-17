@@ -102,14 +102,21 @@ class ProgramacionMonitoreoDao {
                                       sidpla_programacionmonitoreo.promon_codigo = sidpla_resultadoactvidad.promon_codigo AND
                                       sidpla_actividad.actividad_codigo = sidpla_resultadoactvidad.actividad_codigo AND
                                       sidpla_programacionmonitoreo.promon_codigo=?  AND 
-                                      sidpla_actividad.actividad_codigo=?' , $rsm);   
+                                      sidpla_actividad.actividad_codigo=?
+                                    ORDER BY sidpla_resultadoactvidad.resact_trimestre ', $rsm);   
              $query->setParameter(1, $idProgramon);
              $query->setParameter(2, $idActividad);
-             $resultadoActividades = $query->getResult();             
+             $resultadoActividades = $query->getResult(); 
+             
+            
              
              return $resultadoActividades;
     }
     
+    
+
+   
+
 }
 
 ?>

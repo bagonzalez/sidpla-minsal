@@ -49,7 +49,8 @@
                                 <td>                            
                                     <div   class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{ obj.idObjEspec }}Div">
                                         <table>
-                                            {% for res in obj.getResultadoEsperado %}   
+                                            {% for res in obj.getResultadoEsperado %}                                               
+                                               {% if( (res.unidadOrganizativa.getIdUnidadOrg == idUnidad) or (res.unidadOrganizativa is null ) ) %}                                                                                                
                                                     <tr>
                                                         <td>
                                                             <h4> <a  id="mostratRes{{ res.idResEsp }}" href="#">{{ res.resEspeDesc }}</a></h4>
@@ -128,7 +129,7 @@
                                                                                         {{  actividad.actDescMetaAnu }}
                                                                                     </td>
                                                                                     <td align="center">
-                                                                                        {{ "$ "  ~ actividad.costo }}
+                                                                                        {{ "$ "  ~ actividad.getCosto}}
                                                                                     </td>
                                                                                     {% for resultadoAct in actividad.getResulAct %}
                                                                                         {% if trimestre >= resultadoAct.resulActTrimestre  %}
@@ -147,10 +148,10 @@
                                                                                                  {{ "$ " ~ resultadoAct.costoProgramado }}
                                                                                             </td>
                                                                                             <td align="center">
-                                                                                                {% if resultadoAct.resulActTrimestre == trimestre   %}
-                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}"  ></input>
+                                                                                                {% if trimestre == resultadoAct.resulActTrimestre  %}
+                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}"  ></input>
                                                                                                 {% else %}
-                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}" readonly="readonly"  ></input>
+                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}" readonly="readonly"  ></input>
                                                                                                 {% endif %}
                                                                                             </td>
                                                                                         {%  endif%}                                                                                    
@@ -164,6 +165,7 @@
                                                             </div>
                                                         </td>
                                                     </tr>
+                                                {% endif %}
                                             {% endfor %}
                                         </table>                                        
                                     </div>
