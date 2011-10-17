@@ -129,7 +129,7 @@
                                                                                         {{  actividad.actDescMetaAnu }}
                                                                                     </td>
                                                                                     <td align="center">
-                                                                                        {{ "$ "  ~ actividad.costo }}
+                                                                                        {{ "$ "  ~ actividad.getCosto}}
                                                                                     </td>
                                                                                     {% for resultadoAct in actividad.getResulAct %}
                                                                                         {% if trimestre >= resultadoAct.resulActTrimestre  %}

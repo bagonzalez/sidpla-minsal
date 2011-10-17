@@ -294,7 +294,7 @@ class Actividad
      */
     public function setCosto($costo)
     {
-        $this->costo = $costo;
+        $this->costo = round($costo,2);
     }
     
        /**
@@ -304,7 +304,7 @@ class Actividad
      */
     public function getCosto()
     {
-        return $this->costo;
+        return round($this->costo, 2);
     }
     
      

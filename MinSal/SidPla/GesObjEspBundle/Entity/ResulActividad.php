@@ -278,7 +278,7 @@ class ResulActividad
     }
     
     public function getCostoProgramado() {
-        return $this->costoProgramado;
+        return round($this->costoProgramado, 2);
     }
     public function setCostoProgramado($costoProgramado) {
         $this->costoProgramado = $costoProgramado;
