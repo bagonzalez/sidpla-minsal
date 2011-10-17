@@ -1,0 +1,52 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script type="text/javascript">
+ $(document).ready(function(){
+     
+     $('#agregar').button();
+     $('#agregar').click(function() {
+        $('#anio').attr('value', $('#selanio').val());
+        $('#idArea').attr('value', $('#selarea').val());
+        this.form.action='{{ path('MinSalSidPlaTemplateUnisalBundle_ingresarResEspeUnisal') }}';
+     });
+
+});
+    </script>
+    <form action="" method="post">
+        <table align="center">
+            <tr>
+                <td align="center"><h1>Gestion de Plantilla de Actividades Trazadoras para Unidad de Salud</h1>
+                </td>
+            </tr>
+             <tr>
+                 <td align="center">
+                     <a href="mostrarObjEspeUnisal" style="font-size: 12px" ><strong>Objetivos >></strong></a>
+                     <br></br>
+                 </td>
+            </tr>
+           <tr>
+                <td align="center" style=" font-size: 12px">
+                   <textarea readonly="readonly"  rows="4" cols="100" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{descObj}}</textarea>
+                </td>
+            </tr>
+            <tr colspan="2">
+                <td align="center">
+                    <br></br>
+                    <input type="submit" name="agregar" id="agregar" value="Agregar Resultado Esperado" />
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <br></br>                
+                {% include 'MinSalSidPlaTemplateUnisalBundle:ResultadoEspeUnisal:showResultadoEspeUnisal.html.twig' %} 
+                </td>
+            </tr>        
+        </table>
+        <input type='hidden' name='idResEsp' id="idResEsp" value='' />
+        <input type='hidden' name='idObj' id="idObj" value='{{idObj}}' /> 
+    </form>
+    <br></br>
+    <br></br>
+
+
+{% endblock %}

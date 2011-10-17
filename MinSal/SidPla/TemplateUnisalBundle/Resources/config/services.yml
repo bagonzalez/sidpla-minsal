@@ -1,0 +1,7 @@
+parameters:
+#    min_sal_sid_pla_template_unisal.example.class: MinSal\SidPla\TemplateUnisalBundle\Example
+
+services:
+#    min_sal_sid_pla_template_unisal.example:
+#        class: %min_sal_sid_pla_template_unisal.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

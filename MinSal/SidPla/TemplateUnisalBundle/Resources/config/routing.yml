@@ -1,0 +1,69 @@
+#ROUTING DEL PAQUETE MinSalSidPlaTemplateUnisalBundle
+MinSalSidPlaTemplateUnisalBundle_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:Default:index }
+    
+#AREACLASIFICACION
+MinSalSidPlaTemplateUnisalBundle_mantenimientoAreasClasificacion:
+    pattern:  /mantenimientoAreasClasificacion
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionAreaClasificacion:mantenimientoAreasClasificacion }
+
+MinSalSidPlaTemplateUnisalBundle_consultarAreaClasificacionJSON:
+    pattern:  /consultarAreaClasificacionJSON
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionAreaClasificacion:consultarAreaClasificacionJSON }
+    
+MinSalSidPlaTemplateUnisalBundle_manttAreaClasificacion:
+    pattern:  /manttAreaClasificacion
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionAreaClasificacion:manttAreaClasificacion }
+
+#OBJETIVOESPECIFICOUNISAL   
+MinSalSidPlaTemplateUnisalBundle_mostrarObjEspeUnisal:
+    pattern:  /mostrarObjEspeUnisal
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionObjetivoEspeUnisal:mostrarObjEspeUnisal }
+
+MinSalSidPlaTemplateUnisalBundle_ingresarObjetivoEspeUnisal:
+    pattern:  /ingresarObjetivoEspeUnisal
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionObjetivoEspeUnisal:ingresarObjetivoEspeUnisal}
+    
+MinSalSidPlaTemplateUnisalBundle_editarObjetivoEspeUnisal:
+    pattern:  /editarObjetivoEspeUnisal
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionObjetivoEspeUnisal:editarObjetivoEspeUnisal}
+    
+MinSalSidPlaTemplateUnisalBundle_manttObjetivoEspeUnisal:
+    pattern:  /manttObjetivoEspeUnisal
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionObjetivoEspeUnisal:manttObjetivoEspeUnisal}    
+
+#RESULTADOESPEUNISAL
+MinSalSidPlaTemplateUnisalBundle_mostrarResEspeUnisal:
+    pattern:  /mostrarResEspeUnisal
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionResultadoEspeUnisal:mostrarResEspeUnisal }
+
+MinSalSidPlaTemplateUnisalBundle_ingresarResEspeUnisal:
+    pattern:  /ingresarResEspeUnisal
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionResultadoEspeUnisal:ingresarResEspeUnisal}
+    
+MinSalSidPlaTemplateUnisalBundle_editarResEspeUnisal:
+    pattern:  /editarResEspeUnisal
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionResultadoEspeUnisal:editarResEspeUnisal}
+    
+MinSalSidPlaTemplateUnisalBundle_manttResEspeUnisal:
+    pattern:  /manttResEspeUnisal
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionResultadoEspeUnisal:manttResEspeUnisal}
+    
+
+#ActUnisalTemplate
+MinSalSidPlaTemplateUnisalBundle_mostrarActUnisalTemplate:
+    pattern:  /mostrarActUnisalTemplate
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionActividadUnisalTemplate:mostrarActUnisalTemplate }
+
+MinSalSidPlaTemplateUnisalBundle_ingresarActUnisalTemplate:
+    pattern:  /ingresarActUnisalTemplate
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionActividadUnisalTemplate:ingresarActUnisalTemplate}
+    
+MinSalSidPlaTemplateUnisalBundle_editarActUnisalTemplate:
+    pattern:  /editarActUnisalTemplate
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionActividadUnisalTemplate:editarActUnisalTemplate}
+    
+MinSalSidPlaTemplateUnisalBundle_manttActUnisalTemplate:
+    pattern:  /manttActUnisalTemplate
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionActividadUnisalTemplate:manttActUnisalTemplate}  

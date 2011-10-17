@@ -1,0 +1,93 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#guardarResEsp').button();
+    $('#limpiarResEsp').button();
+    $('#regresarResEsp').button();
+    
+    $('#guardarResEsp').click(function(evento) {
+          this.form.action='{{ path('MinSalSidPlaTemplateUnisalBundle_manttResEspeUnisal') }}';
+    });
+    
+   $("#regresarResEsp").click(function(){
+       window.location='mostrarResEspeUnisal?idObj={{idObj}}';
+   });
+    
+//  $("#forResEsp").validate();   
+    
+});
+</script>
+<style type="text/css">
+form.cmxform label.error, label.error {
+	/* remove the next line when you have trouble in IE6 with labels in list */
+	color: red;
+	font-style: italic
+}
+input.error { border: 1px dotted red; }
+textarea.error { border: 1px dotted red; }
+ </style>  
+
+<form id="forResEsp" name="forResEsp" method="post" >
+{% if idResEsp is defined %}
+           <table colspan="4"  align="center"><!-- id="datos"  -->
+         <tr>
+            <td colspan='2'>
+                <h1 style=" text-align: center">Modifique el Resultado Esperado para Unidades de Salud</h1>
+                <br></br>
+            </td>
+        </tr>
+        <tr>
+            <td style=" font-size: 12px" >Objetivo:</td>   
+            <td align="center" style=" font-size: 12px">
+                   <textarea readonly="readonly"  rows="4" cols="100" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{descObj}}</textarea>
+                </td>
+            </tr>
+        <tr>
+            <td style=" font-size: 12px" >Resultado Esperado(*):</td>
+            <td><textarea class="required" rows="4" cols="83" name= 'descResEsp'  size="83%" id="descResEsp" >{{descResEsp}}</textarea></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button type="submmit" id="guardarResEsp"  >Guardar</button>
+                <button type="reset" id="limpiarResEsp"  >Limpiar</button>
+                <button type="button" id="regresarResEsp"  >Regresar</button>
+            </td>
+        </tr>
+
+    </table>
+<input type='hidden' name='idObj' id="idObj" value='{{idObj}}' />  
+<input type='hidden' name='idResEsp' id="idResEsp" value='{{idResEsp}}' />  
+<input type='hidden' name='oper' id="oper" value='edit' /> 
+{% else%}
+    <table colspan="4"  align="center"><!-- id="datos"  -->
+        <tr>
+            <td colspan='2'>
+                <h1 style=" text-align: center">Ingrese el Resultado Esperado para Unidades de Salud</h1>
+                <br></br>
+            </td>
+        </tr>
+        <tr>
+            <td style=" font-size: 12px" >Objetivo:</td>   
+            <td align="center" style=" font-size: 12px">
+                   <textarea readonly="readonly"  rows="4" cols="100" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{descObj}}</textarea>
+                </td>
+            </tr>
+        <tr>
+            <td style=" font-size: 12px" >Resultado Esperado(*):</td>
+            <td><textarea class="required" rows="4" cols="83" name= 'descResEsp'  size="83%" id="descResEsp" ></textarea></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button type="submmit" id="guardarResEsp"  >Guardar</button>
+                <button type="reset" id="limpiarResEsp"  >Limpiar</button>
+                <button type="button" id="regresarResEsp"  >Regresar</button>
+            </td>
+        </tr>
+
+    </table>
+<input type='hidden' name='idObj' id="idObj" value='{{idObj}}' />  
+<input type='hidden' name='oper' id="oper" value='add' />
+{% endif%}
+</form>
+{% endblock %}

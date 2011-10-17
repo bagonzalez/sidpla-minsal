@@ -1,0 +1,25 @@
+<table border="1" WIDTH='85%'>
+    <thead>
+        <tr  style=" font-size: 14px;">
+            <th><strong>  Resultado Esperado </strong>
+            </th>
+            <th><strong>  Acciones </strong>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+{% if resultadosUnisal is defined %}   
+    {% for  resultado in  resultadosUnisal%}
+    <tr>
+        <td style=" font-size: 12px;">{{ resultado.getDescResEspUni}}
+        </td>
+        <td WIDTH='35%' style=" text-align: center" >
+            <input type="submit" id="editar" value="Editar" onclick="$('#idResEsp').attr('value',{{resultado.getCodResEspUni}});this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarResEspeUnisal')}}';" />
+            <input type="submit" value="Eliminar" onclick="" />
+            <input type="submit" value="Actividades" onclick="$('#idResEsp').attr('value',{{resultado.getCodResEspUni}});this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_mostrarActUnisalTemplate')}}';" />
+        </td>
+    </tr>
+    {% endfor %}
+ {% endif %}
+    </tbody>
+</table>

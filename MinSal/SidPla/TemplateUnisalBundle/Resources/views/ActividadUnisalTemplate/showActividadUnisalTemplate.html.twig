@@ -1,0 +1,24 @@
+<table border="1" WIDTH='85%'>
+    <thead>
+        <tr  style=" font-size: 14px;">
+            <th><strong> Actividades </strong>
+            </th>
+            <th><strong>  Acciones </strong>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+{% if actUnisal is defined %}   
+    {% for  actividad in  actUnisal%}
+    <tr>
+        <td style=" font-size: 12px;">{{actividad.descActUniTemp}}
+        </td>
+        <td WIDTH='35%' style=" text-align: center" >
+            <input type="submit" id="editar" value="Editar" onclick="$('#idAct').attr('value',{{actividad.codActUniTemp}});this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarActUnisalTemplate')}}';" />
+            <input type="submit" value="Eliminar" onclick="" />
+        </td>
+    </tr>
+    {% endfor %}
+ {% endif %}
+    </tbody>
+</table>

@@ -11,18 +11,16 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="sidpla_programacionmonitoreo")
  * @ORM\Entity
  */
-class ProgramacionMonitoreo
-{
+class ProgramacionMonitoreo {
+
     /**
      * @var integer $idPrograMon
      *
      * @ORM\Column(name="promon_codigo", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
-     */    
+     */
     private $idPrograMon;
-
-   
 
     /**
      * @var integer $idPao
@@ -36,41 +34,34 @@ class ProgramacionMonitoreo
      * @ORM\JoinColumn(name="pao_codigo", referencedColumnName="pao_codigo")
      */
     private $pao;
-    
-    
-    
+
     /**
      * @ORM\OneToMany(targetEntity="MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico", mappedBy="programacionMonitoreo")
      */
     protected $objetivosEspec;
-    
-       /**
+
+    /**
      * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\Resultadore", mappedBy="programacionMonitoreo")
      */
     protected $resultadores;
-    
-       /**
+
+    /**
      * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad", mappedBy="programacionMonitoreo")
      */
     protected $resultadoact;
-    
-    
-    
-    
-    public function __construct()
-    {
+
+    public function __construct() {
         $this->objetivosEspec = new ArrayCollection();
-         $this->resultadores = new ArrayCollection();
-         $this->resultadoact =new ArrayCollection();
+        $this->resultadores = new ArrayCollection();
+        $this->resultadoact = new ArrayCollection();
     }
-    
-      /**
+
+    /**
      * Add resultadoact
      *
      * @param MinSal\SidPla\AdminBundle\Entity\Municipio $resultadoact
      */
-    public function addResultadoact(\MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad $resultadoact)
-    {
+    public function addResultadoact(\MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad $resultadoact) {
         $this->resultadoact[] = $resultadoact;
     }
 
@@ -79,19 +70,16 @@ class ProgramacionMonitoreo
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getResultadoact()
-    {
+    public function getResultadoact() {
         return $this->resultadoact;
     }
-    
-    
+
     /**
      * Add objetivosEspec
      *
      * @param MinSal\SidPla\AdminBundle\Entity\Municipio $objetivosEspec
      */
-    public function addObjetivosEspec(\MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico $objetivosEspec)
-    {
+    public function addObjetivosEspec(\MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico $objetivosEspec) {
         $this->objetivosEspec[] = $objetivosEspec;
     }
 
@@ -100,19 +88,16 @@ class ProgramacionMonitoreo
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getObjetivosEspec()
-    {
+    public function getObjetivosEspec() {
         return $this->objetivosEspec;
     }
-    
-    
+
     /**
      * Add resultadores
      *
      * @param MinSal\SidPla\AdminBundle\Entity\Municipio $municipios
      */
-    public function addResultadores(\MinSal\SidPla\GesObjEspBundle\Entity\Resultadore $resultadores)
-    {
+    public function addResultadores(\MinSal\SidPla\GesObjEspBundle\Entity\Resultadore $resultadores) {
         $this->resultadores[] = $resultadores;
     }
 
@@ -121,19 +106,16 @@ class ProgramacionMonitoreo
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getResultadores()
-    {
+    public function getResultadores() {
         return $this->resultadores;
     }
-   
 
     /**
      * Set idPrograMon
      *
      * @param integer $idPrograMon
      */
-    public function setIdPrograMon($idPrograMon)
-    {
+    public function setIdPrograMon($idPrograMon) {
         $this->idPrograMon = $idPrograMon;
     }
 
@@ -142,8 +124,7 @@ class ProgramacionMonitoreo
      *
      * @return integer 
      */
-    public function getIdPrograMon()
-    {
+    public function getIdPrograMon() {
         return $this->idPrograMon;
     }
 
@@ -152,8 +133,7 @@ class ProgramacionMonitoreo
      *
      * @param integer $idPao
      */
-    public function setIdPao($idPao)
-    {
+    public function setIdPao($idPao) {
         $this->idPao = $idPao;
     }
 
@@ -162,8 +142,7 @@ class ProgramacionMonitoreo
      *
      * @return integer 
      */
-    public function getIdPao()
-    {
+    public function getIdPao() {
         return $this->idPao;
     }
 
@@ -172,8 +151,7 @@ class ProgramacionMonitoreo
      *
      * @param MinSal\SidPla\PaoBundle\Entity\Pao $pao
      */
-    public function setPao(\MinSal\SidPla\PaoBundle\Entity\Pao $pao)
-    {
+    public function setPao(\MinSal\SidPla\PaoBundle\Entity\Pao $pao) {
         $this->pao = $pao;
     }
 
@@ -182,8 +160,8 @@ class ProgramacionMonitoreo
      *
      * @return MinSal\SidPla\PaoBundle\Entity\Pao 
      */
-    public function getPao()
-    {
+    public function getPao() {
         return $this->pao;
     }
+
 }

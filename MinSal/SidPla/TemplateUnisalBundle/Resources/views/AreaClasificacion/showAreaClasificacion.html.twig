@@ -1,0 +1,104 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %}Areas de Clasificacion de Objetivos {% endblock %}
+
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+        $('#agregarAreaClasButton').button();
+        $('#editarAreaClasButton').button();
+        $('#eliminarAreaClasButton').button();
+        $('#regresar').button();
+        
+        var myGrid = $('#tabAreaClas');        
+        myGrid.jqGrid({ 
+          url: 'consultarAreaClasificacionJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Codigo','Nombre'],
+          colModel:[
+            { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}  },
+            { name:'nombre', index: 'nombre',width:250,editable:true,editoptions:{size:25,maxlength:100}, formoptions:{ rowpos:1, label: "Nombre",elmprefix:"(*)"},editrules:{required:true}}],            
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          loadonce:true,
+          pager: jQuery('#pager'),
+          viewrecords: true,          
+          caption: 'Areas de Clasificacion de Objetivos',
+          height: "100%",
+          editurl:'manttAreaClasificacion'
+           
+        });
+        
+         myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,refresh:false,search:false,
+             beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}).hideCol('codigo');
+         
+      /* Funcion para regargar los JQGRID luego de agregar y editar*/
+      function despuesAgregarEditar() {
+        myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+        return[true,'']; //no error
+      }         
+  //agregar
+  $("#agregarAreaClasButton").click(function(){
+        jQuery('#tabAreaClas').jqGrid('editGridRow',"new",
+        {closeAfterAdd:true,addCaption: "Agregar Area de Clasificacion de Objetivos",
+         height:200,align:'center',reloadAfterSubmit:true,width:550,
+         processData: "Cargando...",afterSubmit:despuesAgregarEditar,
+         bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+                alert("datos guardados con exito!");}
+        });
+        });
+
+   //editar
+    $("#editarAreaClasButton").click(function(){
+          var gr = jQuery('#tabAreaClas').jqGrid('getGridParam','selrow');
+          if( gr != null )
+             jQuery("#tabAreaClas").jqGrid('editGridRow',gr,
+            {closeAfterEdit:true,editCaption: "Editando Area de Clasificacion de Objetivos",
+             height:200,align:'center',reloadAfterSubmit:true,width:550,
+             processData: "Cargando...",afterSubmit:despuesAgregarEditar,
+             bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+                    alert("Area de Clasificacion editada con exito!");
+                ;}
+        });
+          else alert("Por favor seleccione una fila para editar!"); 
+          });
+    
+        //eliminar
+    $("#eliminarAreaClasButton").click(function(){
+         var grs = jQuery('#tabAreaClas').jqGrid('getGridParam','selrow');
+         if( grs != null ) jQuery('#tabAreaClas').jqGrid('delGridRow',grs,
+            {msg: "Desea Eliminar esta Area de Clasificacion del Sistema?",caption:"Eliminando Area de Clasificacion del Sistema",
+             height:100,align:'center',reloadAfterSubmit:true,width:550,
+             processData: "Cargando...",onclickSubmit: function(rp_ge, postdata) {
+                alert("Area de Clasificacion eliminado con exito!");
+            }}); 
+         else alert("Por favor seleccione una fila para borrar!"); }); 
+ 
+  $("#regresar").click(function(){
+       window.location='mostrarObjEspeUnisal';
+   });
+    
+    
+      });
+    </script>
+    <h1 style='text-align: center;'>Areas de Clasificacion de Objetivos </h1>
+    <table align="center">
+        <tr>
+            <td align="center">
+                <br></br>  
+                <table id="tabAreaClas" class="scroll" align="center"></table>
+                <div id="pager" class="scroll"></div>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <input type="button" id="agregarAreaClasButton" value="  Agregar  " />
+                <input type="button" id="editarAreaClasButton" value="   Editar   " />
+                <input type="button" id="eliminarAreaClasButton" value="  Eliminar  " />
+                <input type="button" id="regresar" value="  Regresar  " />
+                
+            </td>
+        </tr>        
+    </table>    
+{% endblock %}

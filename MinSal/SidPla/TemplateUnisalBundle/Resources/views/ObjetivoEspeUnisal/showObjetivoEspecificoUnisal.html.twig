@@ -1,0 +1,25 @@
+<table border="1" WIDTH='85%'>
+    <thead>
+        <tr  style=" font-size: 14px;">
+            <th><strong>  Objetivo </strong>
+            </th>
+            <th><strong>  Acciones </strong>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+{% if ObjetivosEspecificos is defined %}   
+    {% for  objetivo in  ObjetivosEspecificos%}
+    <tr>
+        <td style=" font-size: 12px;">{{ objetivo.getDescObjEspUni}}
+        </td>
+        <td WIDTH='35%' style=" text-align: center" >
+            <input type="submit" id="editar" value="Editar" onclick="$('#idObj').attr('value',{{objetivo.getcodObjEspUni}});$('#anio').attr('value', $('#selanio').val());$('#idArea').attr('value', $('#selarea').val());this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarObjetivoEspeUnisal')}}';" />
+            <input type="submit" value="Eliminar" onclick="{{objetivo.getcodObjEspUni}}" />
+            <input type="submit" value="Resultados Esperados" onclick="$('#idObj').attr('value',{{objetivo.getcodObjEspUni}});this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_mostrarResEspeUnisal')}}';" />
+        </td>
+    </tr>
+    {% endfor %}
+ {% endif %}
+    </tbody>
+</table>
