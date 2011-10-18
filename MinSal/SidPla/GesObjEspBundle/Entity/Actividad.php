@@ -425,4 +425,23 @@ class Actividad
     {
         return $this->actdestinos;
     }
+    
+    public function getPorcentajeCumplimiento()
+    {
+        $resultado=new ResulActividad();
+        $metaAnual=$this->getActMetaAnual();
+        $porcentaje=0;
+        $porcentajeResul=0;
+        
+        foreach ($this->resulAct as $resultado){
+            if($resultado->getResulActProgramado() > 0){
+                     $porcentajeResul=($resultado->getResulActRealizado() / $resultado->getResulActProgramado());
+                     $porcentaje=$porcentajeResul*0.25+$porcentaje;
+                
+            }
+                
+        }
+            
+        return round($porcentaje*100,2);
+    }
 }
