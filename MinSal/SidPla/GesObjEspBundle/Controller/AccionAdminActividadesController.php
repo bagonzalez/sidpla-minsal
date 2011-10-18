@@ -153,7 +153,7 @@ class AccionAdminActividadesController extends Controller{
         
         $periodoPaoDao=new PeriodoPaoDao($this->getDoctrine());
         
-        $fechasMin=$periodoPaoDao->getMinFechaPao($idPao);        
+        $fechasMin=$periodoPaoDao->getMinFechaSeguimientoPao($idPao);        
         $fechasMax=$periodoPaoDao->getMaxFechaPao($idPao);
                
         
