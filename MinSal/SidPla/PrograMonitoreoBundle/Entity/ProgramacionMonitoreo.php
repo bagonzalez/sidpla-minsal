@@ -95,7 +95,7 @@ class ProgramacionMonitoreo {
     /**
      * Add resultadores
      *
-     * @param MinSal\SidPla\AdminBundle\Entity\Municipio $municipios
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\Resultadore $resultadores
      */
     public function addResultadores(\MinSal\SidPla\GesObjEspBundle\Entity\Resultadore $resultadores) {
         $this->resultadores[] = $resultadores;

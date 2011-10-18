@@ -1,0 +1,53 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+          
+          
+         
+          $('#regresar').click(function() {
+            
+            
+           // this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_ingresoResultadosEsperadosTemplate') }}';
+           });
+          
+          $('#editar').click(function() {
+            
+            // document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados') }}';
+          });
+          
+          $("submit[id$='Actividades']").click(function() {
+            //this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
+            
+          });
+      
+      });
+      </script> 
+    <form action= "" method="post">
+        <table align="center">
+            <tr><td align="center"><h1>Actividades en retraso para el trimestre X</h1>
+                </td>
+            </tr>
+                    
+                     
+            <tr>
+                <td align="center">
+                <br></br>                
+                {% include 'MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:showAllActividadesAtrasadas.html.twig'%} 
+                </td>
+            </tr>        
+            <tr>
+                <td align="center">
+                    <input type="submit" value="regresar" id="regresar"</input>                    
+                    
+                    
+                </td>
+            </tr>
+        
+        </table>        
+    </form>
+    <br></br>
+    <br></br>
+    
+    
+{% endblock %}

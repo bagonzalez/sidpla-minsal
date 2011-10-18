@@ -15,3 +15,10 @@ MinSalSidPlaPrograMonitoreoBundle_guardarSegumiento:
     pattern:  /guardarSegumiento
     defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionSeguimientoProgramacion:guardarSegumiento }
 
+MinSalSidPlaPrograMonitoreoBundle_showActividadesEnRetraso:
+    pattern:  /showActividadesEnRetraso
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionCompromisoCumplimiento:showActividadesEnRetraso }
+    
+MinSalSidPlaPrograMonitoreoBundle_ActividadesEnRetrasoJSON:
+    pattern:  /ActividadesEnRetrasoJSON
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionCompromisoCumplimiento:ActividadesEnRetrasoJSON }

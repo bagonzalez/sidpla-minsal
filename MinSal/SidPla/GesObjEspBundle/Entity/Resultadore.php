@@ -3,7 +3,7 @@
 namespace MinSal\SidPla\GesObjEspBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * MinSal\SidPla\GesObjEspBundle\Entity\Resultadore
  *
@@ -63,7 +63,10 @@ class Resultadore
      */
     protected $programacionMonitoreo;
 
-
+    /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento", mappedBy="idResultadore")
+     */
+    protected $compromisocumplimiento;
 
     /**
      * Set idResultadore
@@ -185,7 +188,7 @@ class Resultadore
         return $this->resultadoreRealizado;
     }
     
-         /**
+    /**
      * Set programacionMonitoreo
      *
      * @param integer $programacionMonitoreo
@@ -203,5 +206,28 @@ class Resultadore
     public function getProgramacionMonitoreo()
     {
         return $this->programacionMonitoreo;
+    }
+    
+    public function __construct() {
+        $this->compromisocumplimiento = new ArrayCollection();
+       
+    }
+    
+    /**
+     * Add compromisocumplimiento
+     *
+     * @param MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento $compromisocumplimiento
+     */
+    public function addCompromisoCumplimiento(\MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento $compromisocumplimiento) {
+        $this->compromisocumplimiento[] = $compromisocumplimiento;
+    }
+
+    /**
+     * Get compromisocumplimiento
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getCompromisoCumplimiento() {
+        return $this->compromisocumplimiento;
     }
 }

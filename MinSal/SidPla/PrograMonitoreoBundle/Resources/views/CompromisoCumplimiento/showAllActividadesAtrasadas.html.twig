@@ -1,0 +1,70 @@
+ {# Muestra todos las opciones #}
+{% block body %}
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var myGrid = $('#theGridObj');        
+        myGrid.jqGrid({    
+          url: 'ActividadesEnRetrasoJSON',
+          datatype:'json',
+          altRows:true,          
+          colNames:['id','Actividad','Programado', 'Realizado', 'FechaFinalizacion'],
+          colModel:[ 
+            { name:'id', index: 'id', width:200,editable:false, editoptions:{size:10}},
+            { name:'Actividad', index: 'Actividad', width:200,editable:true,editoptions:{size:100}},
+            { name:'Programado', index: 'Programado', width:20,editable:true,editoptions:{size:20}},
+            { name:'Realizado', index: 'Realizado', width:20,editable:true,editoptions:{size:20}},
+            { name:'FechaFinalizacion', index: 'FechaFinalizacion', width:20,editable:true,editoptions:{size:20}},
+            { name:'act',index:'act', width:200,sortable:false}],
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          sortname: 'id',
+          sortorder: "asc",
+          gridComplete: function(){
+              var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
+              for(var i=0;i < ids.length;i++){ var cl = ids[i];
+                  be = "<input style='height:22px;width:75px;' type='submit' id='editar' value='Editar' onclick=\" $('#idfilaResultado').attr('value', '"+cl+"');this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_editarResultadosEsperadosTemplate') }}'; \" />";
+                //  se = "<input style='height:22px;width:75px;' type='button' id='eliminar' value='Eliminar' onclick=\"// jQuery('#theGridObj').jqGrid('delGridRow','"+cl+"',{msg: 'Desea eliminar este resultado esperado?'}); \" />";
+                  
+                  jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be}); } },
+          pager: jQuery('#pagerObj'),
+          viewrecords: true,  
+          rownumbers: true,
+          caption: 'Actividades Atrasadas',
+          height: "100%",
+          editCaption: "Editar Registro",
+          addCaption: "Nuevo Registro",
+          editurl:'manttResultadosEsperadosTemplate'         
+            
+        });
+        myGrid.jqGrid('navGrid','#pagerObj',
+        {edit:false,add:false,del:true},
+        {width:450,height:200, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos editados con exito!");},closeAfterEdit:true },//edit
+        {width:450,height:1000,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+        alert("datos guardados con exito!");},closeAfterAdd:true },//add
+        {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
+        alert("resultado eliminado!");
+          } },//del
+        {},//search
+        {} //view
+        );
+       
+      });
+      
+       //define handler for 'editSubmit' event
+    
+
+    
+   
+    
+    </script>
+    <input type='hidden' name='idfila' id="idfila" value='' />  
+     <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='' /> 
+    <div id="grid_wrapper" class="ui-corner-all floatLeft">
+        <table id="theGridObj" class="scroll" ></table> 
+        <div id="pagerObj"  class="scroll" style="text-align:center;"></div> 
+      </div>
+       
+    
+{% endblock %}
