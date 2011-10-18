@@ -17,9 +17,11 @@ class AccionPaoPeriodoOficialController extends Controller {
         $periodoOficial = new PeriodoOficial();
         $anio=$this->getRequest()->get('anio');
         
-        if($anio==0)
-            $anio=date("Y");
+        if ($periodoOficialDao->existePeriodoOfi($anio)==0)
+            $periodoOficialDao->crearPeriodoOficial ($anio);
+            
         $periodoOficial = $periodoOficialDao->getPeriodoOficial($anio);
+        
 
         $numfilas = count($periodoOficial);
 
@@ -30,14 +32,26 @@ class AccionPaoPeriodoOficialController extends Controller {
             $rows[$i]['id'] = $aux->getIdPerOfi();
             $rows[$i]['cell'] = array($aux->getIdPerOfi(),
                 $aux->gettipPerioPerOfi()->getNomTipPer(),
-                DATE_FORMAT($aux->getFechIniPerOfi(), 'd/m/Y'),
-                DATE_FORMAT($aux->getFechFinPerOfi(), 'd/m/Y'),
+                $aux->getFechIniPerOfi(),
+                $aux->getFechFinPerOfi(),
                 $aux->getActivoPerOfi()
             );
             if ($aux->getActivoPerOfi())
                 $rows[$i]['cell'][4] = 'SI';
             else
                 $rows[$i]['cell'][4] = 'NO';
+            
+            if ($aux->getFechFinPerOfi()!=null)
+                $rows[$i]['cell'][3]=DATE_FORMAT($aux->getFechFinPerOfi(), 'd/m/Y');
+                        
+            if ($aux->getFechIniPerOfi()!=null)
+                $rows[$i]['cell'][2]=DATE_FORMAT($aux->getFechIniPerOfi(), 'd/m/Y');
+            
+            if ($aux->getFechIniPerOfi()==null or $aux->getFechFinPerOfi()==null)
+                $rows[$i]['cell'][5]=1;
+            else
+                $rows[$i]['cell'][5]=2;
+            
             $i++;
         }
 
@@ -46,7 +60,7 @@ class AccionPaoPeriodoOficialController extends Controller {
         }
         else{
             $rows[0]['id']=0;
-            $rows[0]['cell']=array(' ',' ',' ',' ');
+            $rows[0]['cell']=array(' ',' ',' ',' ',' ');
         }
 
         $datos = json_encode($rows);
@@ -60,7 +74,16 @@ class AccionPaoPeriodoOficialController extends Controller {
         $response = new Response($jsonresponse);
         return $response;
     }
-
+    
+    public function crearPaoAction() {
+        $anio=$this->getRequest()->get('anio');
+        $periodoOficialDao = new PeriodoOficialDao($this->getDoctrine());
+        $periodoOficialDao->crearPao($anio);
+        
+        return $this->consultarPeriodoOficialJSONAction();
+        
+    }
+    
     public function manttPeriodoOficialAction() {
         $request = $this->getRequest();
 

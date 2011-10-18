@@ -24,29 +24,30 @@ class PeriodoOficialDao {
     public function getPeriodoOficial($anio) {
         $PeriodosOficiales = $this->em->createQuery("SELECT po
                                                  FROM MinSalSidPlaPaoBundle:PeriodoOficial po
-                                                 WHERE po.anioPerOfi=".$anio." 
+                                                 WHERE po.anioPerOfi=" . $anio . " 
                                                  ORDER BY po.idPerOfi ASC");
         return $PeriodosOficiales->getResult();
     }
 
-    
     public function getPeriodoOficialEspecifico($codigo) {
         $periodoOficial = $this->repositorio->find($codigo);
         return $periodoOficial;
     }
-    
-    public function agregarPeriodoOficial($tipPerioPerOfi,$fechIniPerOfi,$fechFinPerOfi,$anioPerOfi,$activoPerOfi) {
 
-        $periodoOficial= new PeriodoOficial();
-        
+    public function agregarPeriodoOficial($tipPerioPerOfi, $fechIniPerOfi, $fechFinPerOfi, $anioPerOfi, $activoPerOfi) {
+
+        $periodoOficial = new PeriodoOficial();
+
         $periodoOficial->setActivoPerOfi($activoPerOfi);
         $periodoOficial->setAnioPerOfi($anioPerOfi);
-        $periodoOficial->setFechFinPerOfi($fechFinPerOfi);
-        $periodoOficial->setFechIniPerOfi($fechIniPerOfi);
-        $idTipoPeriodo=(int) $tipPerioPerOfi;
-        
+        if ($fechFinPerOfi != 0)
+            $periodoOficial->setFechFinPerOfi($fechFinPerOfi);
+        if ($fechIniPerOfi != 0)
+            $periodoOficial->setFechIniPerOfi($fechIniPerOfi);
+        $idTipoPeriodo = (int) $tipPerioPerOfi;
+
         $tipoPeriodoDao = new TipoPeriodoDao($this->doctrine);
-               
+
         $tipoPeriodo = $tipoPeriodoDao->getTipoPeriodoEspecifico($idTipoPeriodo);
         $periodoOficial->settipPerioPerOfi($tipoPeriodo);
 
@@ -56,19 +57,19 @@ class PeriodoOficialDao {
 
         return $matrizMensajes;
     }
-    
-        public function editarPeriodoOficial($codPerOfi,$tipPerioPerOfi,$fechIniPerOfi,$fechFinPerOfi,$anioPerOfi,$activoPerOfi) {
 
-        $periodoOficial= $this->getPeriodoOficialEspecifico($codPerOfi);
-        
+    public function editarPeriodoOficial($codPerOfi, $tipPerioPerOfi, $fechIniPerOfi, $fechFinPerOfi, $anioPerOfi, $activoPerOfi) {
+
+        $periodoOficial = $this->getPeriodoOficialEspecifico($codPerOfi);
+
         $periodoOficial->setActivoPerOfi($activoPerOfi);
         $periodoOficial->setAnioPerOfi($anioPerOfi);
         $periodoOficial->setFechFinPerOfi($fechFinPerOfi);
         $periodoOficial->setFechIniPerOfi($fechIniPerOfi);
-        $idTipoPeriodo=(int) $tipPerioPerOfi;
-        
+        $idTipoPeriodo = (int) $tipPerioPerOfi;
+
         $tipoPeriodoDao = new TipoPeriodoDao($this->doctrine);
-               
+
         $tipoPeriodo = $tipoPeriodoDao->getTipoPeriodoEspecifico($idTipoPeriodo);
         $periodoOficial->settipPerioPerOfi($tipoPeriodo);
 
@@ -78,10 +79,10 @@ class PeriodoOficialDao {
 
         return $matrizMensajes;
     }
-    
-        public function eliminarPeriodoOficial($codPerOfi) {
 
-        $periodoOficial= $this->getPeriodoOficialEspecifico($codPerOfi);
+    public function eliminarPeriodoOficial($codPerOfi) {
+
+        $periodoOficial = $this->getPeriodoOficialEspecifico($codPerOfi);
 
         $this->em->remove($periodoOficial);
         $this->em->flush();
@@ -90,7 +91,34 @@ class PeriodoOficialDao {
 
         return $matrizMensajes;
     }
+
+    public function existePeriodoOfi($anio) {
+        $periodoOfic = $this->em->createQuery("SELECT count(po)
+                                                FROM MinSalSidPlaPaoBundle:PeriodoOficial po
+                                                WHERE po.anioPerOfi='" . $anio . "'");
+        return $periodoOfic->getSingleScalarResult();
+    }
+
+    public function crearPeriodoOficial($anio) {
+
+        $tipoPeriodoDao = new TipoPeriodoDao($this->doctrine);
+        $aux = new TipoPeriodo();
+        $tiposExistentes = $tipoPeriodoDao->getTipoPeriodo();
+
+        foreach ($tiposExistentes as $aux) {
+            $this->agregarPeriodoOficial($aux->getIdTipPer(), 0, 0, $anio, TRUE);
+        }
+    }
     
+        public function crearPao($anio) {
+
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('resp', 'resp');
+        $query = $this->em->createNativeQuery('SELECT "PRC_CREAR_PAO"(?) resp', $rsm);
+        $query->setParameter(1, $anio);
+
+        $x = $query->getResult();
+    }
 
 }
 
