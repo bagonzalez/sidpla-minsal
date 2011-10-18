@@ -5,15 +5,27 @@
         $('#agregarPerOfiButton').button();
         $('#editarPerOfiButton').button();
         $('#eliminarPerOfiButton').button();
+        $('#crearPao').button();
         $('#selanio').change(cargarAnio);
+        $('#crearPao').hide();
 
         function cargarAnio(){
-            $('#tabperiodooficial').setGridParam({
+           $('#tabperiodooficial').setGridParam({
                url:'consultarPeriodoOficialJSON?anio='+$('#selanio').val(),
                editurl:'manttPeriodoOficial?anio='+$('#selanio').val(),
                datatype:'json'
-           }).trigger("reloadGrid"); 
+           }).trigger("reloadGrid");
+       
         }
+        
+       $("#crearPao").click(function(){
+           $('#tabperiodooficial').setGridParam({
+               url:'crearPao?anio='+$('#selanio').val(),
+               editurl:'manttPeriodoOficial?anio='+$('#selanio').val(),
+               datatype:'json'
+           }).trigger("reloadGrid");
+       
+        });
         
         function validaTipoPeriodo(value, colname) {
         if (value == 0 ) 
@@ -24,16 +36,16 @@
     
     var myGrid = $('#tabperiodooficial');        
     myGrid.jqGrid({ 
-      url: 'consultarPeriodoOficialJSON',
+      url: 'consultarPeriodoOficialJSON?anio='+$('#selanio').val(),
       datatype:'json',
       altRows:true,
-      colNames:['Codigo','Nombre','Fecha Inicio','Fecha Fin','Activo'],
+      colNames:['Codigo','Nombre','Fecha Inicio','Fecha Fin','Activo','Verifica'],
       colModel:[
         { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}},
         { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:30},edittype:"select",
                         editoptions: {value:"0:Seleccione un Tipo de Periodo;{{ combotipoperiodos }}"},editrules:{custom:true, custom_func:validaTipoPeriodo}
         },//Fin del nombre
-        { name:'fechini', index: 'fechini', width:150,editable:true,
+        { name:'fechini', index: 'fechini', width:150,editable:true,align:'center',
                 formoptions:{label: "Fecha de Inicio",elmprefix:"(*)"},editrules:{required:true},
                 editoptions: {size: 10, maxlengh: 10,
                             dataInit: function(element) {
@@ -46,7 +58,7 @@
                             }
                           }
         },//Fin del fechini
-        { name:'fechfin', index: 'fechfin', width:150,editable:true,
+        { name:'fechfin', index: 'fechfin', width:150,editable:true,align:'center',
                 formoptions:{label: "Fecha de Finalizacion",elmprefix:"(*)"},editrules:{required:true},
                 editoptions: {size: 10, maxlengh: 10,
                             dataInit: function(element) {
@@ -59,7 +71,8 @@
                             }
                 }
         },//Fin del fechfin
-        { name:'activo', index: 'activo',width:40,editable:true,edittype:"checkbox",editoptions: {value:"SI:NO"}}
+        { name:'activo', index: 'activo',width:40,editable:true,edittype:"checkbox",editoptions: {value:"SI:NO"},align:'center'},
+        { name:'verifica', index: 'verifica',width:40,editable:false}
       ],//Fin del colModel
       rowNum:10,
       rowList:[10,20,30],
@@ -69,7 +82,19 @@
       viewrecords: true,          
       caption: 'Periodo Oficial',
       height: "100%",
-      editurl:'manttPeriodoOficial'
+      editurl:'manttPeriodoOficial',
+      gridComplete: 
+      function(){ 
+          var ids = myGrid.jqGrid('getDataIDs');
+          j=0;
+          for(var i=0;i < ids.length;i++){
+             var cl = ids[i]; 
+                if(myGrid.getCell(cl, 'verifica')==1)
+                    j++;
+         }
+         if(j==0 && $('#selanio').val()=={{ "now" | date("Y")+1 }})
+             $('#crearPao').show();
+       }
                      
     });
     myGrid.jqGrid('navGrid','#pagerPer',{edit:false,add:false,del:false,
@@ -129,4 +154,5 @@
        <input type="button" id="agregarPerOfiButton" value="  Agregar  " />
        <input type="button" id="editarPerOfiButton" value="   Editar   " />
        <input type="button" id="eliminarPerOfiButton" value="  Eliminar  " />
+       <input type="button" id="crearPao" name="crearPao" value="  Crear PAO   "/>
 {% endblock %}
