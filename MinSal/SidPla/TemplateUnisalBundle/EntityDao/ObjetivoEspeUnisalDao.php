@@ -26,6 +26,13 @@ class ObjetivoEspeUnisalDao {
         return $objEspeUnisal;
     }
 
+    public function existePeriodoOfi($anio) {
+        $periodoOfic = $this->em->createQuery("SELECT count(po)
+                                                FROM MinSalSidPlaPaoBundle:PeriodoOficial po
+                                                WHERE po.anioPerOfi='" . $anio . "'");
+        return $periodoOfic->getSingleScalarResult();
+    }
+
     public function obtenerPorArea($codArea, $objetivosEspecificos) {
 
         $objEspe = new ObjetivoEspeUnisal();
@@ -72,8 +79,8 @@ class ObjetivoEspeUnisalDao {
     }
 
     public function editarObjTmp($idObj, $desObjEsp) {
-        
-        $objEspecUnisal=  $this->getObjetivoEspeUnisalEspecifico($idObj);
+
+        $objEspecUnisal = $this->getObjetivoEspeUnisalEspecifico($idObj);
         $objEspecUnisal->setDescObjEspUni($desObjEsp);
 
         $this->em->persist($objEspecUnisal);

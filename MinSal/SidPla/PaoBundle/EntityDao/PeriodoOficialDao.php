@@ -109,8 +109,8 @@ class PeriodoOficialDao {
             $this->agregarPeriodoOficial($aux->getIdTipPer(), 0, 0, $anio, TRUE);
         }
     }
-    
-        public function crearPao($anio) {
+
+    public function crearPao($anio) {
 
         $rsm = new ResultSetMapping;
         $rsm->addScalarResult('resp', 'resp');

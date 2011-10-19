@@ -10,6 +10,7 @@
         $('#crearPao').hide();
 
         function cargarAnio(){
+           $('#crearPao').hide();
            $('#tabperiodooficial').setGridParam({
                url:'consultarPeriodoOficialJSON?anio='+$('#selanio').val(),
                editurl:'manttPeriodoOficial?anio='+$('#selanio').val(),
@@ -19,7 +20,7 @@
         }
         
        $("#crearPao").click(function(){
-           $('#tabperiodooficial').setGridParam({
+              $('#tabperiodooficial').setGridParam({
                url:'crearPao?anio='+$('#selanio').val(),
                editurl:'manttPeriodoOficial?anio='+$('#selanio').val(),
                datatype:'json'
@@ -99,7 +100,7 @@
     });
     myGrid.jqGrid('navGrid','#pagerPer',{edit:false,add:false,del:false,
              beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}
-    ).hideCol('codigo');
+    ).hideCol('codigo').hideCol('verifica');
     
     /* Funcion para regargar los JQGRID luego de agregar y editar*/
     function despuesAgregarEditar() {
