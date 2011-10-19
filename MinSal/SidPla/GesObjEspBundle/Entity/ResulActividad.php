@@ -3,7 +3,7 @@
 namespace MinSal\SidPla\GesObjEspBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Doctrine\Common\Collections\ArrayCollection;
 /**
  * MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad
  *
@@ -93,7 +93,11 @@ class ResulActividad
      */
     protected $programacionMonitoreo;
 
-     
+    /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento", mappedBy="idResActividad")
+     */
+    protected $compromisocumplimiento;
+    
     /**
      * Set idResulAct
      *
@@ -292,6 +296,39 @@ class ResulActividad
         return $this->costoReal;
     }
    
+    public function __construct() {
+        $this->compromisocumplimiento = new ArrayCollection();
+       
+    }
+    
+    /**
+     * Add compromisocumplimiento
+     *
+     * @param MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento $compromisocumplimiento
+     */
+    public function addCompromisoCumplimiento(\MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento $compromisocumplimiento) {
+        $this->compromisocumplimiento[] = $compromisocumplimiento;
+    }
+
+    /**
+     * Get compromisocumplimiento
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getCompromisoCumplimiento() {
+        return $this->compromisocumplimiento;
+    }
+    
+      public function getPorcentajeCumplimiento()
+    {
+        $porcentaje=0;
+        
+        if($this->getResulActProgramado() > 0){
+                     $porcentaje=($this->getResulActRealizado() / $this->getResulActProgramado());
+        }
+            
+        return round($porcentaje*100,2);
+    }
     
     
 }

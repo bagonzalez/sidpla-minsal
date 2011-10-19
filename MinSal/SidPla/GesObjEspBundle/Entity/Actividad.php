@@ -425,4 +425,34 @@ class Actividad
     {
         return $this->actdestinos;
     }
+    
+    public function getPorcentajeCumplimiento()
+    {
+        $resultado=new ResulActividad();
+        $metaAnual=$this->getActMetaAnual();
+        $porcentaje=0;
+        $porcentajeResul=0;
+        
+        foreach ($this->resulAct as $resultado){            
+                 $porcentajeResul=$resultado->getResulActRealizado()+$porcentajeResul;
+                 
+        }
+        if($metaAnual>0)
+            $porcentaje=$porcentajeResul/$metaAnual;
+            
+        return round($porcentaje*100,2);
+    }
+    
+    public function getCostoTotalReal()
+    {
+        $resultado=new ResulActividad();
+        $metaAnual=$this->getActMetaAnual();
+        $costoReal=0;
+        
+        foreach ($this->resulAct as $resultado){            
+                 $costoReal=$resultado->getCostoReal()+$costoReal;
+        }
+        
+        return round($costoReal,2);
+    }
 }

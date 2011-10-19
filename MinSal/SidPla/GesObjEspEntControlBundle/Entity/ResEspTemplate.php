@@ -50,7 +50,7 @@ class ResEspTemplate
      */
     private $resEspTemplNomencla;
 
-
+    
     
     /**
      * Set idResEspTempl

@@ -465,4 +465,34 @@ class ResultadoEsperado
     {
         return $this->unidadOrganizativa;
     }
+    
+    public function getPorcentajeCumplimiento()
+    {
+        $actividad=new Actividad();        
+        $porcentajeResul=0;        
+        $numAct=count($this->actividades );
+        
+        if($numAct>0)
+            $razon=1/$numAct;
+        
+        foreach ($this->actividades as $actividad){
+               $porcentajeResul= $actividad->getPorcentajeCumplimiento()*$razon+$porcentajeResul;                                                 
+        }
+            
+        return round($porcentajeResul,2);
+    }
+    
+     public function getCostoTotalReal()
+    {
+        $actividad=new Actividad();        
+        $costo=0;        
+        $numAct=count($this->actividades );
+        
+        foreach ($this->actividades as $actividad){
+               $costo= $actividad->getCostoTotalReal()+$costo;                                              
+        }
+            
+        return round($costo,2);
+    }
+    
 }

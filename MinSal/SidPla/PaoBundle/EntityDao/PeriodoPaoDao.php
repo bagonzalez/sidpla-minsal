@@ -72,7 +72,7 @@ class PeriodoPaoDao {
      public function getMaxFechaPao($idPao) {         
       
          $qb = $this->em->createQueryBuilder();
-         $qb->select($qb->expr()->max('p.fechIniPerPao'))
+         $qb->select($qb->expr()->max('p.fechFinPerPao'))
             ->from('MinSalSidPlaPaoBundle:PeriodoPao', 'p')
             ->join('p.paoPerPao','pao')
             ->where('pao.idPao = ?1')            

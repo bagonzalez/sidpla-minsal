@@ -15,25 +15,37 @@
           var dateInicio = $.datepicker.parseDate("yy-mm-dd", '{{fechaInicio}}');
           var dateFin = $.datepicker.parseDate("yy-mm-dd", '{{fechaFin}}');
 
-          var finPrimerTri = dateInicio;
+          var finPrimerTri = $.datepicker.parseDate("yy-mm-dd", '{{fechaInicio}}');
           finPrimerTri.setMonth(finPrimerTri.getMonth()+3);
-          
-          var dateInicio = $.datepicker.parseDate("yy-mm-dd", '{{fechaInicio}}');
           
           $( "#datepickerInicioPrimer" ).datepicker({defaultDate:dateInicio , minDate: dateInicio, maxDate: finPrimerTri });
           $( "#datepickerFinPrimer" ).datepicker({ minDate: dateInicio, maxDate: finPrimerTri });
           
-                    
+
+          var dateInicioSegundoTri = $.datepicker.parseDate("yy-mm-dd", '{{fechaInicio}}');
+          dateInicioSegundoTri.setMonth(dateInicio.getMonth()+3);
+          
+          var dateFinSegundoTri = $.datepicker.parseDate("yy-mm-dd", '{{fechaInicio}}');
+          dateFinSegundoTri.setMonth(dateInicio.getMonth()+6);
+          
+          $( "#datepickerInicioSegundo" ).datepicker({ minDate: dateInicioSegundoTri, maxDate: dateFinSegundoTri });
+          $( "#datepickerFinSegundo" ).datepicker({ minDate: dateInicioSegundoTri, maxDate: dateFinSegundoTri });
+          
+          var dateInicioTercerTri = $.datepicker.parseDate("yy-mm-dd", '{{fechaInicio}}');
+          dateInicioTercerTri.setMonth(dateInicio.getMonth()+6);
+          
+           var dateFinTercerTri = $.datepicker.parseDate("yy-mm-dd", '{{fechaInicio}}');
+          dateFinTercerTri.setMonth(dateInicio.getMonth()+9);
           
           
-          $( "#datepickerInicioSegundo" ).datepicker({ minDate: finPrimerTri, maxDate: dateFin });
-          $( "#datepickerFinSegundo" ).datepicker({ minDate: finPrimerTri, maxDate: dateFin });
+          $( "#datepickerInicioTercer" ).datepicker({ minDate: dateInicioTercerTri, maxDate: dateFinTercerTri });
+          $( "#datepickerFinTercer" ).datepicker({ minDate: dateInicioTercerTri, maxDate: dateFinTercerTri });
           
-          $( "#datepickerInicioTercer" ).datepicker({ minDate: dateInicio, maxDate: dateFin });
-          $( "#datepickerFinTercer" ).datepicker({ minDate: dateInicio, maxDate: dateFin });
+          var dateInicioCuatroTri = $.datepicker.parseDate("yy-mm-dd", '{{fechaInicio}}');
+          dateInicioCuatroTri.setMonth(dateInicio.getMonth()+9);
           
-          $( "#datepickerInicioCuarto" ).datepicker({ minDate: dateInicio, maxDate: dateFin });
-          $( "#datepickerFinCuarto" ).datepicker({ minDate: dateInicio, maxDate: dateFin });
+          $( "#datepickerInicioCuarto" ).datepicker({ minDate: dateInicioCuatroTri, maxDate: dateFin });
+          $( "#datepickerFinCuarto" ).datepicker({ minDate: dateInicioCuatroTri, maxDate: dateFin });
           
           $('#regresar').click(function() {
             this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
