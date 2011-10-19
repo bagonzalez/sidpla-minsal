@@ -1,3 +1,21 @@
+{# SIDPLA - MINSAL
+   Copyright (C) 2011  Bruno González   e-mail: bagonzalez.sv EN gmail.com
+   Copyright (C) 2011  Universidad de El Salvador
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>. #}
+
+ 
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
 <script type="text/javascript">
@@ -31,10 +49,10 @@
                                                  plotShadow: false            
                                               },
                                               title: {
-                                                 text: 'Resultado de Actividades'
+                                                 text: 'Resultado Global de Actividades'
                                               },
                                               subtitle: {
-                                                 text: 'Segun Trimestres'
+                                                 text: 'Segun Trimestre'
                                               },
                                               tooltip: {
                                                  formatter: function() {
@@ -46,7 +64,7 @@
                                                    [{
                                                          type: 'pie',
                                                          name: 'Trimestre {{trimestre}}',
-                                                         size: '30%',
+                                                         size: '40%',
                                                          innerSize: '20%',
                                                          data: [                                                   
                                                             {% for actividadAux in res.actividades %}                                                                            
@@ -109,7 +127,7 @@
                         <tr>
                                 <td colspan="2" align="center" size="100%" >                            
                                     <div   class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{ obj.idObjEspec }}Div">
-                                        <table >
+                                        <table border="1" >
                                             {% for res in obj.getResultadoEsperado %}                                               
                                                {% if( (res.unidadOrganizativa.getIdUnidadOrg == idUnidad) or (res.unidadOrganizativa is null ) ) %}                                                                                                
                                                     <tr>
@@ -118,16 +136,30 @@
                                                         </td>
                                                         <td>
                                                             <h4> <a  id="mostratRes{{ res.idResEsp }}" href="#">{{ res.resEspeDesc }}</a></h4>
+                                                            <h4> Realizado : {{ res.getPorcentajeCumplimiento }} % </h4>
+                                                            <h4> Costo Real de Resultado Esperado: $ {{ res.getCostoTotalReal }} </h4>
                                                         </td>
-                                                        <td> <div id="container{{ res.idResEsp }}" class="highcharts-container" style="height:410px; margin: 0 2em; clear:both; min-width: 600px">
-                                                            </div></td>
-                                                    </tr> 
+                                                    </tr>                                                                                                        
                                                     <tr>
                                                         <td colspan="3" >
                                                             <div align="center"  class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{ res.idResEsp }}ResDiv">
                                                                 <table border="1">
                                                                 <thead>
                                                                     <tr>
+                                                                        {% if trimestre == 1 %} 
+                                                                            <th align="center" colspan="9" ><h3>Actividades</h3> </th>
+                                                                        {% endif %}     
+                                                                        {% if trimestre == 2 %} 
+                                                                         <th align="center" colspan="14" ><h3>Actividades</h3> </th>
+                                                                        {% endif %}
+                                                                        {% if trimestre == 3 %} 
+                                                                         <th align="center" colspan="19" ><h3>Actividades</h3> </th>
+                                                                        {% endif %}
+                                                                        {% if trimestre == 4 %} 
+                                                                         <th align="center" colspan="24" ><h3>Actividades</h3> </th>
+                                                                        {% endif %}
+                                                                    </tr>
+                                                                    <tr>                                                                        
                                                                         <th rowspan="2" >Descripcion</th>
                                                                         <th rowspan="2">Meta Anual</th>
                                                                         <th rowspan="2">Desc. Meta</th>
@@ -183,6 +215,25 @@
                                                                     </tr>
                                                                     
                                                                 </thead> 
+                                                                <tfoot>
+                                                                    <tr>
+                                                                        {% if trimestre == 1 %} 
+                                                                         <td align="center" colspan="9" > 
+                                                                        {% endif %}     
+                                                                        {% if trimestre == 2 %} 
+                                                                         <td align="center" colspan="14" > 
+                                                                        {% endif %}
+                                                                        {% if trimestre == 3 %} 
+                                                                         <td align="center" colspan="19" > 
+                                                                        {% endif %}
+                                                                        {% if trimestre == 4 %} 
+                                                                         <td align="center" colspan="24" > 
+                                                                        {% endif %}
+                                                                                 
+                                                                             <div id="container{{ res.idResEsp }}" class="highcharts-container" style="height:210px; margin: 0 2em; clear:both; min-width: 1000px"></div>
+                                                                         </td>
+                                                                    </tr> 
+                                                                </tfoot>
                                                                 <tbody>
                                                                 {% for actividadAux in res.actividades %}                                                                       
                                                                     {% for actividad in actividades %}                                                                     
@@ -232,12 +283,12 @@
                                                                                 </tr>                                                                            
                                                                        {% endif %}
                                                                     {% endfor %}
-                                                                {% endfor %}
+                                                                {% endfor %}                                                                                
                                                                 </tbody>
                                                                 </table>                                                                
                                                             </div>
                                                         </td>
-                                                    </tr>
+                                                    </tr>                                                    
                                                 {% endif %}
                                             {% endfor %}
                                         </table>                                        

@@ -433,15 +433,26 @@ class Actividad
         $porcentaje=0;
         $porcentajeResul=0;
         
-        foreach ($this->resulAct as $resultado){
-            if($resultado->getResulActProgramado() > 0){
-                     $porcentajeResul=($resultado->getResulActRealizado() / $resultado->getResulActProgramado());
-                     $porcentaje=$porcentajeResul*0.25+$porcentaje;
-                
-            }
-                
+        foreach ($this->resulAct as $resultado){            
+                 $porcentajeResul=$resultado->getResulActRealizado()+$porcentajeResul;
+                 
         }
+        if($metaAnual>0)
+            $porcentaje=$porcentajeResul/$metaAnual;
             
         return round($porcentaje*100,2);
+    }
+    
+    public function getCostoTotalReal()
+    {
+        $resultado=new ResulActividad();
+        $metaAnual=$this->getActMetaAnual();
+        $costoReal=0;
+        
+        foreach ($this->resulAct as $resultado){            
+                 $costoReal=$resultado->getCostoReal()+$costoReal;
+        }
+        
+        return round($costoReal,2);
     }
 }
