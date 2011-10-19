@@ -14,6 +14,7 @@
 namespace MinSal\SidPla\GesObjEspBundle\EntityDao;
 
 use MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad;
+use MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento;
 class ResulActividadDao {
     //put your code here
 
@@ -68,6 +69,30 @@ class ResulActividadDao {
          return $matrizMensajes;
     }
     
+    
+    public function addCompromisoCumplimiento($hallazgos, $medidasadoptar,$fechacumplimiento,$responsable,$idResultActividad) {
+        
+       $resultProMon= new ResulActividad();
+        $resultProMon=$this->getResulActividad($idResultActividad); 
+       
+        
+        
+        $comprocumpl= new CompromisoCumplimiento();
+        $comprocumpl->setComproCumpliHallazgozEncontrados($hallazgos);
+        $comprocumpl->setComproCumpliMedidaAdoptar($medidasadoptar);
+        $comprocumpl->setComproCumpliResponsable($responsable);
+        $comprocumpl->setComproCumpliFecha($fechacumplimiento);
+        $comprocumpl->setIdResActividad($resultProMon);
+        
+        $resultProMon->addCompromisoCumplimiento($comprocumpl);
+	    
+        $this->em->persist($comprocumpl);
+        $this->em->persist($resultProMon);
+        $this->em->flush();	    
+        $matrizMensajes = array('El proceso de almacenar terminoexito', 'compro'.$comprocumpl->getIdComproCumpl());
+
+        return $matrizMensajes;
+    }
 }
 
 ?>

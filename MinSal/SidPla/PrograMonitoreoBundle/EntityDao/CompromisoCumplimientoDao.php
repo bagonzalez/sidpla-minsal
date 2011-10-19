@@ -13,13 +13,16 @@
 
 namespace MinSal\SidPla\PrograMonitoreoBundle\EntityDao;
 use Doctrine\ORM\Query\ResultSetMapping;
+use MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento;
 
+use MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad;
+use MinSal\SidPla\GesObjEspBundle\EntityDao\ResulActividadDao;
 /**
  * Description of ProgramacionMonitoreoDao
  *
  * @author bagonzalez
  */
-class ProgramacionMonitoreoDao {
+class CompromisoCumplimientoDao {
     
     var $doctrine;
     var $repositorio;
@@ -28,7 +31,7 @@ class ProgramacionMonitoreoDao {
     function __construct($doctrine){ 
         $this->doctrine=$doctrine;      	
         $this->em=$this->doctrine->getEntityManager();
-        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaPrograMonitoreoBundle:ProgramacionMonitoreo');
+        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento');
     }
     
     
@@ -109,8 +112,8 @@ class ProgramacionMonitoreoDao {
     
     
 
-   
-
+  
+    
 }
 
 ?>
