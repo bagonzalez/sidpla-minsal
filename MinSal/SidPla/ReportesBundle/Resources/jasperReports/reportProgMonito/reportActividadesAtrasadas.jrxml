@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report2" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="idPrograMonit" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString language="plsql">
+		<![CDATA[SELECT
+                      DISTINCT sidpla_actividad.actividad_descripcion,
+                      sidpla_actividad.actividad_metanual,
+                      sidpla_actividad.activiadad_responsable,
+                      sidpla_resultadoactvidad.resact_real,
+                      sidpla_resultadoactvidad.resact_programado,
+                      uorg.uniorg_nombre
+
+
+                    FROM
+                      public.sidpla_programacionmonitoreo,
+                      public.sidpla_resultadoactvidad,
+                      public.sidpla_actividad ,
+                     sidpla_unidadorganizativa uorg,
+                      sidpla_caracteristicaorganizaci caractorg,
+                      sidpla_objetivoespecifico objes,
+                      sidpla_resultadoesperado resesp
+                    WHERE
+                      sidpla_programacionmonitoreo.promon_codigo = sidpla_resultadoactvidad.promon_codigo AND sidpla_actividad.actividad_codigo = sidpla_resultadoactvidad.actividad_codigo
+ AND  sidpla_resultadoactvidad.resact_real < sidpla_resultadoactvidad.resact_programado  AND
+uorg.uniorg_codigo=caractorg.uniorg_codigo  AND caractorg.carorg_codigo=objes.carorg_codigo AND objes.objesp_codigo= resesp.objesp_codigo AND   resesp.resesp_codigo=sidpla_actividad.resesp_codigo AND sidpla_resultadoactvidad.actividad_codigo=sidpla_actividad.actividad_codigo AND
+
+                      sidpla_programacionmonitoreo.promon_codigo=$P{idPrograMonit}]]>
+	</queryString>
+	<field name="actividad_descripcion" class="java.lang.String"/>
+	<field name="actividad_metanual" class="java.math.BigDecimal"/>
+	<field name="activiadad_responsable" class="java.lang.String"/>
+	<field name="resact_real" class="java.math.BigDecimal"/>
+	<field name="resact_programado" class="java.math.BigDecimal"/>
+	<field name="uniorg_nombre" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="25" splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band height="115" splitType="Stretch">
+			<image>
+				<reportElement x="10" y="16" width="80" height="45"/>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/escudo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="78" y="34" width="346" height="24"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PLANIFICACIÓN ANUAL OPERATIVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="78" y="10" width="346" height="24"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MINISTERIO DE SALUD]]></text>
+			</staticText>
+			<image>
+				<reportElement x="440" y="16" width="79" height="47"/>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/minsalud.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="78" y="63" width="346" height="16"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Actividades  Atrasadas]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="79" width="302" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{uniorg_nombre}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="24" splitType="Stretch">
+			<staticText>
+				<reportElement x="0" y="2" width="133" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Actividad]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="135" y="2" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Meta Anual]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="336" y="2" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Realizado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="235" y="2" width="100" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Programado]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="435" y="2" width="137" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Responsable]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="45" splitType="Stretch">
+			<textField>
+				<reportElement x="134" y="11" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{actividad_metanual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="335" y="11" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{resact_real}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="235" y="11" width="100" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{resact_programado}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="435" y="11" width="137" height="20"/>
+				<textElement textAlignment="Center"/>
+				<textFieldExpression><![CDATA[$F{activiadad_responsable}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="133" height="43"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{actividad_descripcion}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="45" splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="473" y="34" width="59" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag. "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="532" y="34" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

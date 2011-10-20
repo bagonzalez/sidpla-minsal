@@ -3,5 +3,8 @@ MinSalSidPlaReportesBundle_homepage:
     defaults: { _controller: MinSalSidPlaReportesBundle:Default:index }
 MinSalSidPlaReportesBundle_reporteJustificacion:
     pattern:  /reportjustificacion
-    defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteJustificacion }   
+    defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteJustificacion }  
     
+MinSalSidPlaReportesBundle_reporteActividadesAtrasadas:
+    pattern:  /reporteActividadesAtrasadas
+    defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteActividadesAtrasadas }     

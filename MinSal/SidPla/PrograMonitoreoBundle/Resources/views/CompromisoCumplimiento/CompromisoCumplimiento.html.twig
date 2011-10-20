@@ -21,7 +21,12 @@
 <script type="text/javascript">
 	Highcharts.theme = { colors: ['#4572A7'] };// prevent errors in default theme
 	var highchartsOptions = Highcharts.getOptions(); 
-</script>
+
+$('#reporte').click(function() {
+              $('#formulario').get(0).setAttribute('action', '{{ path('MinSalSidPlaReportesBundle_reporteActividadesAtrasadas')}}');
+              
+          });
+    </script>
 <script>
     
     
@@ -103,7 +108,7 @@
 </script>
 
     <br></br>               
-    <form id = "formulario"  action=" " method="post">
+    <form id = "formulario"  action="{{ path('MinSalSidPlaReportesBundle_reporteActividadesAtrasadas')}}" method="post">
         <table align="center"  >
             <tr><td colspan="2" align="center"><h1>Forma Seguimiento Plan</h1>                    
                 </td>
@@ -265,7 +270,7 @@
                                                                                             </td>
                                                                                              <td align="center">
                                                                                                  {% if resultadoAct.getResulActRealizado < resultadoAct.getResulActProgramado  %}
-                                                                                                    <input type="submit" id="compromiso" value="Compromiso" onclick="$('#idresact').attr('value',{{resultadoAct.idResulAct}});this.form.action='{{path('MinSalSidPlaPrograMonitoreoBundle_ingresoActividadesEnRetraso')}}';" />
+                                                                                                    <input type="submit" id="compromiso" value="Compromiso" onclick="$('#idfila').attr('value',{{obj.idObjEspec}});$('#idfilaResultado').attr('value',{{res.idResEsp}});$('#idfilaActividad').attr('value',{{actividad.idAct}});$('#idresact').attr('value',{{resultadoAct.idResulAct}});this.form.action='{{path('MinSalSidPlaPrograMonitoreoBundle_ingresoActividadesEnRetraso')}}';" />
                                                                                                  {% else %}
                                                                                                     CUMPLIDA
                                                                                                 {%  endif%}
@@ -297,8 +302,13 @@
             </tr>        
             <tr>
                 <td colspan="2" align="center">
-                     <input type='hidden' name='idresact' id="idresact" value='' />
-                    <input type="submit" value="Guardar" name= "agregar" id="agregar"</input>                    
+                     <input type='hidden' name='idfila' id="idfila" value='' /> 
+                     <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='' /> 
+                     <input type='hidden' name='idfilaActividad' id="idfilaActividad" value='' />
+                    <input type='hidden' name='id' id="id" value='{{id}}' />
+                    <input type='hidden' name='idresact' id="idresact" value='' />
+                    <input type="submit" value="Guardar" name= "agregar" id="agregar"</input>    
+                    <input type="submit" value="Reporte de Actividades Atrasadas" name= "reporte" id="reporte"</input>
                 </td>
             </tr>        
         </table>   
