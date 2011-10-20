@@ -45,6 +45,10 @@ use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjTemplate;
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate;
 
 use MinSal\SidPla\PrograMonitoreoBundle\EntityDao\ProgramacionMonitoreoDao;
+use MinSal\SidPla\PrograMonitoreoBundle\EntityDao\CompromisoCumplimientoDao;
+
+use MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento;
+
 
 /**
  * Description of AccionCompromisoCumplimientoController
@@ -242,14 +246,83 @@ class AccionCompromisoCumplimientoController extends Controller {
     public function showActividadesEnRetrasoAction()
     {
          $opciones=$this->getRequest()->getSession()->get('opciones');   
+         $objetivos=$this->obtenerUnidadOrgObjEspec();
          
+         $paoElaboracion=$this->obtenerPaoSeguimiento();
+         $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+         $idProgramon=$programacionMonitoreo->getIdPrograMon();
+        
+         $trimestre=1;
+         $promMonDao=new CompromisoCumplimientoDao($this->getDoctrine());
+         $actividadesProgramon=$promMonDao->getActividades($idProgramon,$trimestre);
+         $trimestre=1;
          
-         return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:manttActividadesAtrasadas.html.twig', 
-                array( 'opciones' => $opciones));
-    }
+         $uniControl=new UnidadOrganizativa();            
+         $uniControl=$this->obtenerUnidadOrg();
+         $idUnidad=$uniControl->getIdUnidadOrg();
+         
+         return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:CompromisoCumplimiento.html.twig', 
+                array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 'trimestre' => $trimestre, 'idUnidad' => $idUnidad ));
+     }
     
+     public function ingresoActividadesEnRetrasoAction()
+    {
+         $opciones=$this->getRequest()->getSession()->get('opciones');   
+       //  $objetivos=$this->obtenerUnidadOrgObjEspec();
+         $request = $this->getRequest();
+         
+         $idResultActividad=$request->get('idresact');
+        // $idResultActividad="88";
+       $resultadoDao=new ResulActividadDao($this->getDoctrine());
+        $resAct=new ResulActividad();              
+        $resAct=$resultadoDao->getResulActividad($idResultActividad);
+        $descrObjetivo=$resAct->getIdActividad()->getIdResEsp()->getIdObjEsp()->getDescripcion();
+        $descrResultado=$resAct->getIdActividad()->getIdResEsp()->getResEspeDesc(); 
+        $descrActividad=$resAct->getIdActividad()->getActDescripcion(); 
+        $fechaOrigal=$resAct->getResulActFechaFin();
+       
+        
+         return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:IngresoCompromisoCumplimiento.html.twig', 
+                array( 'opciones' => $opciones, 'objetivo' => $descrObjetivo, 'actividad' => $descrActividad, 'resultado' => $descrResultado, 'idresact' => $idResultActividad));
+     }
     
         
+     
+      public function guardarActividadesEnRetrasoAction()
+    {
+         $opciones=$this->getRequest()->getSession()->get('opciones');   
+         $request = $this->getRequest();
+         
+         $idResultActividad=$request->get('idresact');
+         $hallazgos=$request->get('hallazgosAct');
+         $medidasadoptar=$request->get('medidasAct');
+         $fechacumplimiento=$request->get('newdateend');
+         $responsable=$request->get('responsable');
+        
+        
+        $rDao=new ResulActividadDao($this->getDoctrine());
+        $rDao->addCompromisoCumplimiento($hallazgos, $medidasadoptar, $fechacumplimiento, $responsable, $idResultActividad);
+       
+        
+         
+         
+         $objetivos=$this->obtenerUnidadOrgObjEspec();
+         $paoElaboracion=$this->obtenerPaoSeguimiento();
+         $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+         $idProgramon=$programacionMonitoreo->getIdPrograMon();
+        
+         $trimestre=1;
+         $promMonDao=new CompromisoCumplimientoDao($this->getDoctrine());
+         $actividadesProgramon=$promMonDao->getActividades($idProgramon,$trimestre);
+         $trimestre=1;
+         
+         $uniControl=new UnidadOrganizativa();            
+         $uniControl=$this->obtenerUnidadOrg();
+         $idUnidad=$uniControl->getIdUnidadOrg();
+        
+         return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:CompromisoCumplimiento.html.twig', 
+                array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 'trimestre' => $trimestre, 'idUnidad' => $idUnidad ));
+     }
       
 }
 

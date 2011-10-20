@@ -103,15 +103,15 @@
 </script>
 
     <br></br>               
-    <form id = "formulario"  action="{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarSegumiento') }}" method="post">
+    <form id = "formulario"  action=" " method="post">
         <table align="center"  >
-            <tr><td colspan="2" align="center"><h1>Ingreso de Resultados de Actividades - Programaci&oacute;n Monitoreo</h1>                    
+            <tr><td colspan="2" align="center"><h1>Forma Seguimiento Plan</h1>                    
                 </td>
             </tr>
             <tr>
                 <td colspan="2" align="center">
-                    Seleccione un objetivo especifico y resultado esperado para ingresar sus resultados de actividades. <br>
-                    Cuando ingrese los resultados, seran notificados los responsables de la dependencias, asi como las Unidades que dependen de sus actividades.
+                    Seleccione un objetivo especifico y resultado esperado para ingresar la justificacion del atraso de actividades. <br>
+                    De clic en el boton  Compromiso para registrar los hallazgos,medidas adoptar etc.
                 </td>
             </tr>            
             {% if objetivos is defined %}                                                                          
@@ -137,8 +137,7 @@
                                                         <td>
                                                             <h4> <a  id="mostratRes{{ res.idResEsp }}" href="#">{{ res.resEspeDesc }}</a></h4>
                                                             <h4> Realizado : {{ res.getPorcentajeCumplimiento }} % </h4>
-                                                            <h4> Costo Real : $ {{ res.getCostoTotalReal }} </h4>
-                                                            <h4> Costo Programado : $ {{ res.getCostoTotalProgramado }} </h4>                                                            
+                                                            <h4> Costo Real de Resultado Esperado: $ {{ res.getCostoTotalReal }} </h4>
                                                         </td>
                                                     </tr>                                                                                                        
                                                     <tr>
@@ -148,23 +147,21 @@
                                                                 <thead>
                                                                     <tr>
                                                                         {% if trimestre == 1 %} 
-                                                                            <th align="center" colspan="9" ><h3>Actividades</h3> </th>
+                                                                            <th align="center" colspan="9" ><h3>Actividades Atrasadas</h3> </th>
                                                                         {% endif %}     
                                                                         {% if trimestre == 2 %} 
-                                                                         <th align="center" colspan="14" ><h3>Actividades</h3> </th>
+                                                                         <th align="center" colspan="14" ><h3>Actividades  Atrasadas</h3> </th>
                                                                         {% endif %}
                                                                         {% if trimestre == 3 %} 
-                                                                         <th align="center" colspan="19" ><h3>Actividades</h3> </th>
+                                                                         <th align="center" colspan="19" ><h3>Actividades  Atrasadas</h3> </th>
                                                                         {% endif %}
                                                                         {% if trimestre == 4 %} 
-                                                                         <th align="center" colspan="24" ><h3>Actividades</h3> </th>
+                                                                         <th align="center" colspan="24" ><h3>Actividades  Atrasadas</h3> </th>
                                                                         {% endif %}
                                                                     </tr>
                                                                     <tr>                                                                        
                                                                         <th rowspan="2" >Descripcion</th>
-                                                                        <th rowspan="2">Meta Anual</th>
-                                                                        <th rowspan="2">Desc. Meta</th>
-                                                                        <th rowspan="2">Costo</th>
+                                                                        
                                                                         {% if trimestre >= 1 %} 
                                                                             <th colspan="5" >Primer Trimestre</th>
                                                                         {% endif %}
@@ -181,34 +178,34 @@
                                                                        {% if trimestre >= 1 %} 
                                                                             <th>Program.</th>
                                                                             <th>Realizado</th>
-                                                                            <th>Costo<br>Programado</th>
-                                                                            <th>Costo<br>Real</th>
+                                                                            <th>Fecha de finalizacion</th>
                                                                             <th>%</th>
+                                                                            <th>Accion</th>
                                                                        {% endif %}
                                                                             
                                                                        {% if trimestre >= 2 %} 
                                                                         
-                                                                            <th>Program.</th>
+                                                                           <th>Program.</th>
                                                                             <th>Realizado</th>
-                                                                            <th>Costo<br>Programado</th>
-                                                                            <th>Costo<br>Real</th>
-                                                                            <th>%</th>                                                                        
+                                                                            <th>Fecha de finalizacion</th>
+                                                                            <th>%</th>
+                                                                            <th>Accion</th>
                                                                        {% endif %} 
                                                                         
                                                                        {% if trimestre >= 3 %} 
-                                                                            <th>Program.</th>
+                                                                           <th>Program.</th>
                                                                             <th>Realizado</th>
-                                                                            <th>Costo<br>Programado</th>
-                                                                            <th>Costo<br>Real</th> 
+                                                                            <th>Fecha de finalizacion</th>
                                                                             <th>%</th>
+                                                                            <th>Accion</th>
                                                                        {% endif %} 
                                                                         
                                                                        {% if trimestre >= 4 %}  
-                                                                            <th>Program.</th>
+                                                                           <th>Program.</th>
                                                                             <th>Realizado</th>
-                                                                            <th>Costo<br>Programado</th>
-                                                                            <th>Costo<br>Real</th>
+                                                                            <th>Fecha de finalizacion</th>
                                                                             <th>%</th>
+                                                                            <th>Accion</th>
                                                                        {% endif %}  
                                                                        
                                                                     </tr>
@@ -243,42 +240,36 @@
                                                                                     <td>
                                                                                         {{ actividad.getActDescripcion }}
                                                                                     </td>
-                                                                                    <td align="center">
-                                                                                        {{ actividad.actMetaAnual }}
-                                                                                    </td>
-                                                                                    <td >
-                                                                                        {{  actividad.actDescMetaAnu }}
-                                                                                    </td>
-                                                                                    <td align="center">
-                                                                                        {{ "$ "  ~ actividad.getCosto}}
-                                                                                    </td>
+                                                                                    
                                                                                     {% for resultadoAct in actividad.getResulAct %}
                                                                                         {% if trimestre >= resultadoAct.resulActTrimestre  %}
                                                                                             <td align="center">
                                                                                                 {{ resultadoAct.getResulActProgramado }}
                                                                                             </td>
                                                                                             <td align="center">
-                                                                                                {% if resultadoAct.resulActTrimestre == trimestre   %}
-                                                                                                    <input name="resultadoRealizado_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}"  ></input>
-                                                                                                {% else %}
-                                                                                                    <input name="resultadoRealizado_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}" readonly="readonly"  ></input>
-                                                                                                {% endif %}  
+                                                                                                
+                                                                                                    {{ resultadoAct.getResulActRealizado }}
+                                                                                                
+                                                                                                    
+                                                                                                
                                                                                                 
                                                                                             </td> 
+                                                                                           
                                                                                             <td align="center">
-                                                                                                 {{ "$ " ~ resultadoAct.costoProgramado }}
-                                                                                            </td>
-                                                                                            <td align="center">
-                                                                                                {% if trimestre == resultadoAct.resulActTrimestre  %}
-                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}"  ></input>
-                                                                                                {% else %}
-                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}" readonly="readonly"  ></input>
-                                                                                                {% endif %}
+                                                                                                                                                                                                                                                                              
+                                                                                                    
+                                                                                                
                                                                                             </td>
                                                                                             <td align="center">
                                                                                                     {{  resultadoAct.getPorcentajeCumplimiento ~ "%"  }}
                                                                                             </td>
-                                                                                            
+                                                                                             <td align="center">
+                                                                                                 {% if resultadoAct.getResulActRealizado < resultadoAct.getResulActProgramado  %}
+                                                                                                    <input type="submit" id="compromiso" value="Compromiso" onclick="$('#idresact').attr('value',{{resultadoAct.idResulAct}});this.form.action='{{path('MinSalSidPlaPrograMonitoreoBundle_ingresoActividadesEnRetraso')}}';" />
+                                                                                                 {% else %}
+                                                                                                    CUMPLIDA
+                                                                                                {%  endif%}
+                                                                                                 </td>
                                                                                         {%  endif%}                                                                                    
                                                                                     {% endfor %}
                                                                                 </tr>                                                                            
@@ -306,6 +297,7 @@
             </tr>        
             <tr>
                 <td colspan="2" align="center">
+                     <input type='hidden' name='idresact' id="idresact" value='' />
                     <input type="submit" value="Guardar" name= "agregar" id="agregar"</input>                    
                 </td>
             </tr>        

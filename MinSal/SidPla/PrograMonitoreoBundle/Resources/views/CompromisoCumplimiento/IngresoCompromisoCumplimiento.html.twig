@@ -1,0 +1,136 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#guardarResEsp').button();
+    $('#limpiarResEsp').button();
+    $('#regresarResEsp').button();
+    
+    $('#guardarResEsp').click(function(evento) {
+          this.form.action='{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarActividadesEnRetraso') }}';
+    });
+    
+   $("#regresarResEsp").click(function(){
+      
+   });
+    
+//  $("#forResEsp").validate();   
+    
+});
+    </script>
+    <style type="text/css">
+            form.cmxform label.error, label.error {
+                /* remove the next line when you have trouble in IE6 with labels in list */
+                color: red;
+                font-style: italic
+            }
+            input.error { border: 1px dotted red; }
+            textarea.error { border: 1px dotted red; }
+        </style>  
+
+        <form id="forResEsp" name="forResEsp" method="post" >
+{% if idAct is defined %}
+             <table colspan="4"  align="center"><!-- id="datos"  -->
+                    <tr>
+                        <td colspan='2'>
+                            <h1 style=" text-align: center">Ingrese </h1>
+                          
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Objetivo:</td>   
+                        <td align="center" style=" font-size: 12px">
+                            <textarea readonly="readonly"  rows="4" cols="83" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{descObj}}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Resultado Esperado:</td>   
+                        <td align="center" style=" font-size: 12px">
+                            <textarea readonly="readonly"  rows="2" cols="83" name= 'descResEsp'  size="83%" id="descResEsp" >{{descResEsp}}</textarea>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td style=" font-size: 12px" >Actividad(*):</td>
+                        <td><textarea class="required" rows="4" cols="83" name= 'descAct'  size="83%" id="descAct" >{{descAct}}</textarea></td>
+                    </tr>
+                    
+                    <tr>
+                        <td colspan="2" align="center">
+                            <button type="submmit" id="guardarResEsp"  >Guardar</button>
+                            <button type="reset" id="limpiarResEsp"  >Limpiar</button>
+                            <button type="button" id="regresarResEsp"  >Regresar</button>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type='hidden' name='idObj' id="idObj" value='{{idObj}}' />
+                <input type='hidden' name='idResEsp' id="idResEsp" value='{{idResEsp}}' />  
+                <input type='hidden' name='idAct' id="idAct" value='{{idAct}}' />  
+                <input type='hidden' name='oper' id="oper" value='edit' /> 
+{% else%}
+                <table colspan="4"  align="center"><!-- id="datos"  -->
+                    <tr>
+                        <td colspan='2'>
+                            <h1 style=" text-align: center">Ingreso de Compromisos para el Cumplimiento de Actividades</h1>
+                          
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Objetivo:</td>   
+                        <td align="center" style=" font-size: 12px">
+                            <textarea readonly="readonly"  rows="4" cols="83" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{objetivo}}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Resultado Esperado:</td>   
+                        <td align="center" style=" font-size: 12px">
+                            <textarea readonly="readonly"  rows="2" cols="83" name= 'descResEsp'  size="83%" id="descResEsp" >{{resultado}}</textarea>
+                        </td>
+                    </tr>
+                     <tr>
+                        <td style=" font-size: 12px" >Actividad:</td>
+                        <td><textarea class="required" rows="4" cols="83" name= 'descAct'  size="83%" id="descAct" >{{actividad}}</textarea></td>
+                    </tr>
+                    
+                    <tr>
+                        <td style=" font-size: 12px" >Hallazgos Encontrados(*):</td>
+                        <td><textarea class="required" rows="4" cols="83" name= 'hallazgosAct'  size="83%" id="hallazgosAct" ></textarea></td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Medidas a Adoptar(*):</td>
+                        <td><textarea class="required" rows="4" cols="83" name= 'medidasAct'  size="83%" id="medidasAct" ></textarea></td>
+                    </tr>
+                     
+                    <tr>
+                        <td style=" font-size: 12px" >Nueva Fecha de cumplimiento de lo atrasado:(*):</td>
+                        <td><input name="newdateend" id="newdateend" type="text" size="60" maxlength="80" /></td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Responsable(*):</td>
+                        <td><input name="responsable" id="responsable" type="text" size="60" maxlength="60" /></td>
+                    </tr>
+                     <tr>
+                        <td style=" font-size: 12px" >fecha orignal cumplimiento trimestral:</td>
+                        <td><input name="cobAct" id="cobAct" type="text" size="20" value="" /></td>
+                    </tr>
+                    
+                      <tr>
+                          <td style=" font-size: 12px" ><br></br></td>
+                        <td></td>
+                    </tr>
+                     
+                    <tr>
+                        <td colspan="2" align="center">
+                            <button type="submmit" id="guardarResEsp"  >Guardar</button>
+                            <button type="reset" id="limpiarResEsp"  >Limpiar</button>
+                            <button type="button" id="regresarResEsp"  >Regresar</button>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type='hidden' name='idObj' id="idObj" value='' />
+                <input type='hidden' name='idresact' id="idresact" value='{{idresact}}' />  
+                <input type='hidden' name='oper' id="oper" value='add' />
+{% endif%}
+            </form>
+{% endblock %}

@@ -34,13 +34,7 @@ class CompromisoCumplimiento
      */
     private $idResultadore;
 
-    /**
-     * @var integer $idUnidadOrganizativa
-     *
-     * @ORM\Column(name="uniorg_codigo", type="integer")
-     */
-    private $idUnidadOrganizativa;
-
+    
     /**
      * @var string $comproCumpliHallazgozEncontrados
      *
@@ -90,25 +84,7 @@ class CompromisoCumplimiento
         return $this->idComproCumpl;
     }
     
-    /**
-     * Set idUnidadOrganizativa
-     *
-     * @param integer $idUnidadOrganizativa
-     */
-    public function setIdUnidadOrganizativa($idUnidadOrganizativa)
-    {
-        $this->idUnidadOrganizativa = $idUnidadOrganizativa;
-    }
-
-    /**
-     * Get idUnidadOrganizativa
-     *
-     * @return integer 
-     */
-    public function getIdUnidadOrganizativa()
-    {
-        return $this->idUnidadOrganizativa;
-    }
+    
 
     /**
      * Set comproCumpliHallazgozEncontrados
@@ -176,8 +152,9 @@ class CompromisoCumplimiento
      * @param date $comproCumpliFecha
      */
     public function setComproCumpliFecha($comproCumpliFecha)
-    {
-        $this->comproCumpliFecha = $comproCumpliFecha;
+    { $date = new \DateTime($comproCumpliFecha);
+        $this->comproCumpliFecha = $date;
+        
     }
 
     /**
