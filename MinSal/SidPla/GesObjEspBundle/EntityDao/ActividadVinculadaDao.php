@@ -79,7 +79,6 @@ class ActividadVinculadaDao {
         
     }
     
-    
     public function removeActividadVinculada($idActividadOriginal, $idActividadDest){
         $actividadDao=new ActividadDao($this->doctrine);
         

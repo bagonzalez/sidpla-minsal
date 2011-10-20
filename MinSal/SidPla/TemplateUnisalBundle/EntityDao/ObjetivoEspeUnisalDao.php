@@ -72,8 +72,8 @@ class ObjetivoEspeUnisalDao {
     }
 
     public function editarObjTmp($idObj, $desObjEsp) {
-        
-        $objEspecUnisal=  $this->getObjetivoEspeUnisalEspecifico($idObj);
+
+        $objEspecUnisal = $this->getObjetivoEspeUnisalEspecifico($idObj);
         $objEspecUnisal->setDescObjEspUni($desObjEsp);
 
         $this->em->persist($objEspecUnisal);

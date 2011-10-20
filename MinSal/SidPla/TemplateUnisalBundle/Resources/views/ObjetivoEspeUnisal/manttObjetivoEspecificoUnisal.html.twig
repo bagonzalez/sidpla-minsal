@@ -2,13 +2,37 @@
 {% block body %}
 <script type="text/javascript">
  $(document).ready(function(){
-     
+ {% for  area in  areas%}
+     $("#{{"now" | date("Y")}}{{area.getCodArea}}Div").hide();
+     $("#{{"now" | date("Y")+1}}{{area.getCodArea}}Div").hide();      
+{% endfor%}
+    
+     $("#20111Div").show();
      $('#agregar').button();
      $('#agregar').click(function() {
         $('#anio').attr('value', $('#selanio').val());
         $('#idArea').attr('value', $('#selarea').val());
         this.form.action='{{ path('MinSalSidPlaTemplateUnisalBundle_ingresarObjetivoEspeUnisal') }}';
      });
+              
+  $('#selanio').change(function(){
+{% for  area in  areas%}
+     $("#{{"now" | date("Y")}}{{area.getCodArea}}Div").hide();
+     $("#{{"now" | date("Y")+1}}{{area.getCodArea}}Div").hide();      
+{% endfor%}
+      $("#"+$('#selanio').val()+$('#selarea').val()+"Div").show();
+  });
+  
+  $('#selarea').change(function(){
+     {% for  area in  areas%}
+     $("#{{"now" | date("Y")}}{{area.getCodArea}}Div").hide();
+     $("#{{"now" | date("Y")+1}}{{area.getCodArea}}Div").hide();      
+{% endfor%}
+     $("#"+$('#selanio').val()+$('#selarea').val()+"Div").show();
+  });
+ 
+
+     
 
 });
     </script>

@@ -495,4 +495,17 @@ class ResultadoEsperado
         return round($costo,2);
     }
     
+    public function getCostoTotalProgramado()
+    {
+        $actividad=new Actividad();        
+        $costo=0;        
+        $numAct=count($this->actividades );
+        
+        foreach ($this->actividades as $actividad){
+               $costo= $actividad->getCosto()+$costo;                                              
+        }
+        
+        return round($costo,2);
+    }
+    
 }
