@@ -23,6 +23,26 @@ class ProUnisalTemplateDao {
                                           WHERE pu.anioProUniTem = '" . $anio . "'");
         return $objTmp->getResult();
     }
+    
+    public function existePlantilla($anio) {
+        $periodoOfic = $this->em->createQuery("SELECT count(pu)
+                                               FROM MinSalSidPlaTemplateUnisalBundle:ProUnisalTemplate pu
+                                               WHERE pu.anioProUniTem = '" . $anio . "'");
+        return $periodoOfic->getSingleScalarResult();
+    }
+    
+    public function agregarPlantilla($anio) {
+       
+        $proUnisal = new ProUnisalTemplate();
+        $proUnisal->setAnioProUniTem($anio);
+        $this->em->persist($proUnisal);
+        $this->em->flush();
+       
+
+        $matrizMensajes = array('El proceso de ingresar termino con exito ');
+
+        return $matrizMensajes;
+    }
 
 }
 

@@ -18,26 +18,24 @@ class AccionObjetivoEspeUnisalController extends Controller {
         $opciones = $this->getRequest()->getSession()->get('opciones');
 
         $proUnisalDao = new ProUnisalTemplateDao($this->getDoctrine());
-        $proUnisalRes = $proUnisalDao->obtenerObjTempAnio(2011);
-
-        $proUnisal = new ProUnisalTemplate();
-
-        $objTemplateDao = new ObjetivoEspeUnisalDao($this->getDoctrine());
-        $areaClasificaDao = new AreaClasificacionDao($this->getDoctrine());
-
-
-        foreach ($proUnisalRes as $proUnisal) {
-
-            $objTemplaAnio = $proUnisal->getObjeEspeProgra();
-            $objTempla = $objTemplateDao->obtenerPorArea(1, $objTemplaAnio);
-        }
         
-        if (is_array($objTempla))
-            return $this->render('MinSalSidPlaTemplateUnisalBundle:ObjetivoEspeUnisal:manttObjetivoEspecificoUnisal.html.twig', 
-                    array('opciones' => $opciones, 'ObjetivosEspecificos' => $objTempla, 'areas' => $areaClasificaDao->getAreaClasificacions()));
-        else
-            return $this->render('MinSalSidPlaTemplateUnisalBundle:ObjetivoEspeUnisal:manttObjetivoEspecificoUnisal.html.twig', 
-                    array('opciones' => $opciones, 'areas' => $areaClasificaDao->getAreaClasificacions()));
+        if ($proUnisalDao->existePlantilla(date('Y'))==0)
+            $proUnisalDao->agregarPlantilla (date('Y'));
+        $proUnisalResActual = $proUnisalDao->obtenerObjTempAnio(date('Y'));
+
+        if ($proUnisalDao->existePlantilla(date('Y')+1)==0)
+            $proUnisalDao->agregarPlantilla (date('Y')+1);
+        $proUnisalResSiguiente = $proUnisalDao->obtenerObjTempAnio(date('Y')+1);
+        
+        $areaClasificaDao = new AreaClasificacionDao($this->getDoctrine());
+        $areas=$areaClasificaDao->getAreaClasificacions();
+        array_multisort($areas, SORT_ASC);
+        $objTemplateDao = new ObjetivoEspeUnisalDao($this->getDoctrine());
+        
+        return $this->render('MinSalSidPlaTemplateUnisalBundle:ObjetivoEspeUnisal:manttObjetivoEspecificoUnisal.html.twig', 
+                    array('opciones' => $opciones, 'proUnisalActual' => $proUnisalResActual, 'objTemplateDao'=>$objTemplateDao,
+                        'proUnisalSiguiente' => $proUnisalResSiguiente,'areas' => $areas));
+        
     }
 
     public function ingresarObjetivoEspeUnisalAction() {
