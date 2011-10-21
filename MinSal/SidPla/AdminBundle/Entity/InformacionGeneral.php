@@ -132,7 +132,9 @@ class InformacionGeneral
      */
     public function setFechaActualizacion($fechaActualizacion)
     {
-        $this->fechaActualizacion = $fechaActualizacion;
+        $date = new \DateTime($fechaActualizacion);
+        $this->fechaActualizacion = $date;
+       
     }
 
     /**

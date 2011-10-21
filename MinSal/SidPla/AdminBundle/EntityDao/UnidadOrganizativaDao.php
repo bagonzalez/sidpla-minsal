@@ -27,6 +27,9 @@ use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 use MinSal\SidPla\AdminBundle\Entity\InformacionGeneral;
 use MinSal\SidPla\AdminBundle\EntityDao\MunicipioDao;
 use MinSal\SidPla\PaoBundle\Entity\Pao;
+use MinSal\SidPla\AdminBundle\EntityDao\InformacionGeneralDao;
+use MinSal\SidPla\AdminBundle\EntityDao\EmpleadoDao;
+use MinSal\SidPla\AdminBundle\Entity\Empleado;
 
 /**
  * Description of UnidadOrganizativaDao
@@ -153,6 +156,91 @@ class UnidadOrganizativaDao {
 
         return new Pao();
     }
+    
+    
+    
+
+    public function editarUnidadOrg($nombreUnidad, $direccion, $responsable, $telefono, $fax, $tipoUnidad, $unidadPadre, $departameto, $municipio, $descripcion,$id,$idinfogeneral ) {
+
+
+
+
+        $municipioDao = new MunicipioDao($this->doctrine);
+        $muncipioObj = $municipioDao->getMunicipio($municipio);
+
+        
+        
+        $infogenDao= new InformacionGeneralDao($this->doctrine);
+         $informacionGeneral = new InformacionGeneral();
+        $informacionGeneral=$infogenDao->getInfoGeneral($idinfogeneral);
+        
+       
+        $informacionGeneral->setDireccion($direccion);
+        $informacionGeneral->setTelefono($telefono);
+        $informacionGeneral->setFax($fax);
+
+       
+        
+        $unidadDao= new UnidadOrganizativaDao($this->doctrine);
+        $unidadOrg = new UnidadOrganizativa();
+        $unidadOrg=$unidadDao->getUnidadOrg($id);
+        $unidadOrg->setNombreUnidad($nombreUnidad);
+        $unidadOrg->setTipoUnidad($tipoUnidad);
+        $unidadOrg->setResponsable($responsable);
+        if ($unidadPadre != 0) {
+            $unidadParent = $this->repositorio->find($unidadPadre);
+            $unidadOrg->setParent($unidadParent);
+        }
+
+        $unidadOrg->setIdMunicipio($municipio);
+      //  $unidadOrg->setInformacionGeneral($informacionGeneral);
+        $unidadOrg->setDescripcionUnidad($descripcion);
+
+        //$informacionGeneral->setUnidadOrganizativa($unidadOrg);
+
+        $this->em->persist($unidadOrg);
+        $this->em->persist($informacionGeneral);
+        $this->em->flush();
+        $matrizMensajes = array('El proceso de almacenar Unidad Organizativa termino con exito', 'Unidad ' . $unidadOrg->getIdUnidadOrg());
+
+        return $matrizMensajes;
+    }
+    
+    
+    public function guardarInfogeneralOrg($infoGeneralcod,$unidadorgcod,$responsable,$mail,$telefono,$fax,$direccion ) {
+
+
+
+        
+        
+        $infogenDao= new InformacionGeneralDao($this->doctrine);
+         $informacionGeneral = new InformacionGeneral();
+        $informacionGeneral=$infogenDao->getInfoGeneral($infoGeneralcod);
+        
+       
+        $informacionGeneral->setDireccion($direccion);
+        $informacionGeneral->setTelefono($telefono);
+        $informacionGeneral->setFax($fax);
+        $informacionGeneral->setEmail($mail);
+       
+        $informacionGeneral->setFechaActualizacion(date("Y-m-d"));
+            
+        
+       // $unidadDao= new UnidadOrganizativaDao($this->doctrine);
+        //$unidadOrg = new UnidadOrganizativa();
+       // $unidadOrg=$unidadDao->getUnidadOrg($unidadorgcod);
+       // $unidadOrg->setResponsable($responsable);
+        
+    
+        //  $this->em->persist($unidadOrg);
+        $this->em->persist($informacionGeneral);
+      
+        $this->em->flush();
+        $matrizMensajes = array('El proceso de almacenar Unidad Organizativa termino con exito');
+
+        return $matrizMensajes;
+    }  
+    
 
 }
 

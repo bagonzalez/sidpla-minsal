@@ -62,6 +62,18 @@ class DepartametoPaisDao {
              
              return $municipios;
      }
+     
+     
+     
+      /*
+     *  Obtiene todos los departamento del sistema.
+     */    
+
+    public function getDepartameto($iddep) {	    
+        return $this->repositorio->find($iddep);   
+       
+    }
+    
         
 }
 

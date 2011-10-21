@@ -3,23 +3,30 @@
 <script type="text/javascript">
       $(document).ready(function(){
         
-        var myGrid = $('#theGrid');        
+        var myGrid = $('#theGridObj');        
         myGrid.jqGrid({ 
           url: 'consultarUnidadesOrgJSON',
           datatype:'json',
           altRows:true,
-          colNames:['Id','Unidad', 'Descripcion', 'Responsable', 'Direccion', 'Telefono' ],
+          colNames:['Id','Unidad', 'Descripcion', 'Responsable', 'Direccion', 'Telefono','Accion' ],
           colModel:[
             { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}  },
             { name:'nombre', index: 'nombre', width:150,editable:true,editoptions:{size:25}  },
             { name:'descripcion', index: 'descripcion',width:300,editable:true,editoptions:{size:50}},
             { name:'responable', index: 'responable',width:150,editable:true,editoptions:{size:50}},
             { name:'direccion', index: 'direccion',width:60,editable:true,editoptions:{size:50}},
-            { name:'telefono', index: 'telefono',width:60,editable:true,editoptions:{size:50}} ],            
+            { name:'telefono', index: 'telefono',width:60,editable:true,editoptions:{size:50}},
+             {name:'act',index:'act', width:120,sortable:false}],            
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
           loadonce:true,
+          gridComplete: function(){
+              var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
+              for(var i=0;i < ids.length;i++){ var cl = ids[i];                  
+                  ce = "<input style='height:22px;width:120px;' type='submit' value='Editar' onclick=\" $('#idfila').attr('value', '"+cl+"'); this.form.action='{{ path('MinSalSidPlaAdminBundle_editarUnidadesOrg')}}' \" />";
+                  jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:ce}); } 
+          },
           pager: jQuery('#pager'),
           viewrecords: true,          
           caption: 'Unidades Organizativas',
@@ -36,8 +43,8 @@
           
       });
 </script>
-
-<table id="theGrid" class="scroll"></table> 
+<input type='hidden' name='idfila' id="idfila" value='' /> 
+<table id="theGridObj" class="scroll"></table> 
 <div id="pager" class="scroll" style="text-align:center;"></div>
 
 {% endblock %}

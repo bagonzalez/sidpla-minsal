@@ -6,7 +6,7 @@
 	<parameter name="idPrograMonit" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<queryString language="plsql">
+	<queryString>
 		<![CDATA[SELECT
                       DISTINCT sidpla_actividad.actividad_descripcion,
                       sidpla_actividad.actividad_metanual,

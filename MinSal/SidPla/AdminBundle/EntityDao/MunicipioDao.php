@@ -36,7 +36,7 @@ class MunicipioDao {
     function __construct($doctrine){ 
         $this->doctrine=$doctrine;      	
         $this->em=$this->doctrine->getEntityManager();
-        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaAdminBundle:DepartamentoPais');
+        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaAdminBundle:Municipio');
     } 
     
     
