@@ -166,4 +166,14 @@ class ObjetivoEspeUnisal {
     {
         return $this->resultEspObjT;
     }
+
+    /**
+     * Add resultEspObjT
+     *
+     * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resultEspObjT
+     */
+    public function addResultadoEspeUnisal(\MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resultEspObjT)
+    {
+        $this->resultEspObjT[] = $resultEspObjT;
+    }
 }

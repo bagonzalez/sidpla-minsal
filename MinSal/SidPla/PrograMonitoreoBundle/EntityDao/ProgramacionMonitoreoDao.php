@@ -72,6 +72,37 @@ class ProgramacionMonitoreoDao {
              return $actividades;
     }
     
+    public function getActividadesUniSal($idProgramon){
+        
+             $rsm=new ResultSetMapping;             
+             $rsm->addEntityResult('MinSalSidPlaGesObjEspBundle:Actividad', 'a');
+             $rsm->addFieldResult('a', 'actividad_codigo', 'idAct');
+             $rsm->addFieldResult('a', 'actividad_descripcion', 'actDescripcion');
+             $rsm->addFieldResult('a', 'activiadad_responsable', 'actResponsable');
+             $rsm->addFieldResult('a', 'actividad_costo', 'costo');
+             $rsm->addFieldResult('a', 'actividad_metanual', 'actMetaAnual');
+             $rsm->addFieldResult('a', 'actividad_descripmetanual', 'actDescMetaAnu');
+             $query = $this->em->createNativeQuery('SELECT 
+                      DISTINCT sidpla_actividad.actividad_codigo, 
+                      sidpla_actividad.actividad_descripcion,   
+                      sidpla_actividad.activiadad_responsable,
+                      sidpla_actividad.actividad_costo,
+                      sidpla_actividad.actividad_metanual,
+                      sidpla_actividad.actividad_descripmetanual
+                    FROM 
+                      public.sidpla_programacionmonitoreo, 
+                      public.sidpla_resultadoactvidad, 
+                      public.sidpla_actividad
+                    WHERE 
+                      sidpla_programacionmonitoreo.promon_codigo = sidpla_resultadoactvidad.promon_codigo AND
+                      sidpla_actividad.actividad_codigo = sidpla_resultadoactvidad.actividad_codigo AND
+                      sidpla_programacionmonitoreo.promon_codigo=?' , $rsm);   
+             $query->setParameter(1, $idProgramon);
+             $actividades = $query->getResult();             
+             
+             return $actividades;
+    }
+    
     
     public function getProgramacionActividad($idProgramon, $idActividad){
         
