@@ -9,7 +9,7 @@
            $('#tabs').tabs(); 
            $('#guardarInfoGen').button();
            $('#guardarCarac').button();
-           
+           $('#dialog').jqm();
            
       });
       
@@ -21,7 +21,7 @@
                 <li><a href="#tabs-2">Caracteristicas Organizaci&oacute;n</a></li>                
         </ul>
         <div id="tabs-1" align="center">
-            <form action="{{ path('MinSalSidPlaCensoBundle_addCategoria') }}" method="post" {{ form_enctype(form) }}>              
+            <form action="{{ path('MinSalSidPlaUnidadOrgBundle_guardarInfoGeneral') }}" method="post" {{ form_enctype(form) }}>              
                     <table size="100%" >
                         <tr>
                             <td size="30%" colspan="2" >Nombre Unidad:</td>
@@ -33,23 +33,23 @@
                         </tr>
                         <tr>
                             <td colspan="2">Direcci&oacute;n:</td>
-                            <td colspan="2">{{ form_widget(form.direccion) }}</td>
+                            <td colspan="2"><input size="60%" name="direccion" id="direccion" value="{{infoGeneralcoddireccion }} "></input></td>
                         </tr>
                         <tr>
-                            <td colspan="2">Telefono: {{ form_widget(form.telefono) }}</td>
-                            <td colspan="2">Fax {{ form_widget(form.fax) }}</td>
+                            <td colspan="2">Telefono: <td colspan="1" ><input size="20%" name="telefono" id="telefono" value="{{infoGeneralcodtelefono }} "></input></td>
+                            <td colspan="1">Fax:<input size="20%" name="fax" id="fax" value="{{infoGeneralcodfax}} "></input></td>
                         </tr> 
                         <tr>
                             <td colspan="2">Email:</td>
-                            <td colspan="2">{{ form_widget(form.email) }}</td>
+                            <td colspan="3" ><input size="30%" name="mail" id="mail" value="{{infoGeneralcodmail}} "></input>
                         </tr>
                         <tr>
-                            <td colspan="2">Responsable:</td>
-                            <td colspan="2">{{ form_widget(form.email) }}</td>
+                        <td >Responsable: </td>
+                        <td colspan="3" >{{ nombreempleado}} {{segundonombre}} {{apellidoempleado}} {{ segundoapellido}}<input type='hidden' size="60%" name="responsable" readonly="readonly" id="responsable" value="{{ nombreempleado}} {{segundonombre}} {{apellidoempleado}} {{ segundoapellido}}"></input><input type='hidden' class="jqModal" value="..." id="buscar"></input></td>
                         </tr>
                         <tr>
                             <td colspan="2">Actualizado:</td>
-                            <td colspan="2">{{ form_widget(form.fechaActualizacion) }}</td>
+                            <td colspan="2" readonly="readonly">{{ form_widget(form.fechaActualizacion) }}</td>
                         </tr>
                         <tr>
                             <td colspan="4">Departamentos, Unidades, Secciones, ó Disciplinas que componen la dependencia y número de empleados. 
@@ -60,14 +60,23 @@
                         </tr>
                         <tr>
                             <td colspan="4" align="center">
+                              <input type='hidden' name='idempleado' id="idempleado" value='{{responsable}}'> </input>
+                               <input type='hidden' name='unidadorgcod' id="unidadorgcod" value='{{unidadorgcod}}'> </input>
+                                <input type='hidden' name='infoGeneralcod' id="infoGeneralcod" value='{{infoGeneralcod}}'> </input>
                                 <button type="submmit" id="guardarInfoGen"  >Guardar</button>                                
                             </td>                            
                         </tr>
                     </table>     
 
-{{ form_rest(form) }} 
+
             </form>
+        <div class="jqmWindow" id="dialog">
+            <a href="#" class="jqmClose">Cerrar</a>
+            <hr>
+            {% include 'MinSalSidPlaAdminBundle:Empleado:showAllEmpleadosforUnitOrg.html.twig'%}
         </div>
+            </div>
+        
         <div id="tabs-2" align="center"   >
             <form action="{{ path('MinSalSidPlaUnidadOrgBundle_guardarCaracteristicas') }}" method="post" {{ form_enctype(formOrg) }}>
                 <input type="hidden" id="totalFunciones" name="totalFunciones" value="" />
@@ -106,12 +115,14 @@
                    
                     <tr>
                        <td colspan="4" align="center">
+                           
                                 <button type="submmit" id="guardarCarac"  >Guardar</button>                                
                             </td>                            
                     </tr>
                 </table>   
                     
                 {{ form_rest(formOrg) }} 
+            
             </form>               
         </div>
 

@@ -10,6 +10,10 @@ use MinSal\SidPla\AdminBundle\EntityDao\DepartametoPaisDao;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 use MinSal\SidPla\AdminBundle\Entity\Municipio;
 use MinSal\SidPla\AdminBundle\Entity\InformacionGeneral;
+use MinSal\SidPla\AdminBundle\Entity\DepartamentoPais;
+use MinSal\SidPla\AdminBundle\EntityDao\MunicipioDao;
+use MinSal\SidPla\AdminBundle\EntityDao\EmpleadoDao;
+use MinSal\SidPla\AdminBundle\Entity\Empleado;
 
 /**
  * Description of AccionAdminUnidadOrgController
@@ -180,6 +184,103 @@ class AccionAdminUnidadOrgController extends Controller {
         return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:manttUnidadesOrganizativas.html.twig', array('opciones' => $opciones,));
     }
 
+  public function editarUnidadesOrgAction() {
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+        $request = $this->getRequest();
+        $idfila = $request->get('idfila');
+        
+       $unidadOrgDao = new UnidadOrganizativaDao($this->getDoctrine());
+       $uni = new UnidadOrganizativa();
+       $uni = $unidadOrgDao->getUnidadOrg($idfila);
+       
+       $nombreUnidad= $uni->getNombreUnidad();
+       $descripcion= $uni->getDescripcionUnidad();
+       $direccion= $uni->getInformacionGeneral()->getDireccion();
+       $responsable=$uni->getResponsable();
+       $telefono=$uni->getInformacionGeneral()->getTelefono();
+       $tipounidad=$uni->getTipoUnidad();
+       $unidadpadre=$uni->getParent();
+       $idmunicipio=$uni->getIdMunicipio();
+       $fax=$uni->getInformacionGeneral()->getFax();
+       $idinfogeneral=$uni->getInformacionGeneral()->getIdInformacionGeneral();
+       $municipioDao = new MunicipioDao($this->getDoctrine());
+       $muni = new Municipio();
+       $muni = $municipioDao->getMunicipio($idmunicipio);
+       
+       $muncipio= $muni->getNombreMunicipio();
+       $iddepartamento=$muni->getIdDepto();
+       
+       $responsableDao = new EmpleadoDao($this->getDoctrine());
+       $empleado = new Empleado();
+       $empleado = $responsableDao->getEmpleado($responsable);
+       $nombreempleado=$empleado->getPrimerNombre();
+       $segundonombre=$empleado->getSegundoNombre();
+       $apellidoempleado=$empleado->getPrimerApellido();
+       $segundoapellido=$empleado->getSegundoApellido();
+       
+       
+       
+      // $departamento= $depa->getNombreDepto();
+     
+       
+       
+       
+        
+        $departamDao = new DepartametoPaisDao($this->getDoctrine());
+        $departamentos = $departamDao->getDepartametos();
+
+        return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:EditarUnidadOrganizativa.html.twig', 
+                array('opciones' => $opciones
+                     ,'deptos' => $departamentos
+                    ,'nombreUnidad' => $nombreUnidad
+                    ,'descripcion' => $descripcion
+                    ,'direccion' => $direccion
+                    ,'telefono' => $telefono
+                    ,'tipounidad' => $tipounidad
+                    ,'unidadpadre' => $unidadpadre
+                    ,'$idmunicipio' => $idmunicipio
+                    ,'iddepartamento' => $iddepartamento 
+                    ,'responsable' => $responsable 
+                     ,'fax' => $fax  
+                     ,'nombreempleado' => $nombreempleado
+                     ,'segundonombre' => $segundonombre
+                     ,'apellidoempleado' => $apellidoempleado
+                     ,'segundoapellido' => $segundoapellido
+                      ,'idfila' =>$idfila
+                    ,'idinfogeneral' => $idinfogeneral
+                    ));
+    }
+    
+    public function editandoUnidadesOrgAction() {
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+        $request = $this->getRequest();
+        $idfila = $request->get('idfila');
+         $idinfogeneral = $request->get('idinfogeneral');        
+         
+        $request = $this->getRequest();
+
+        $nombreUnidad = $request->get('nombreUnidad');
+        $direccion = $request->get('direccion');
+        $responsable = $request->get('idempleado');
+        $telefono = $request->get('telefono');
+        $fax = $request->get('fax');
+        $tipoUnidad = $request->get('tipoUnidad');
+        $unidadPadre = $request->get('unidadPadre');
+        $departameto = $request->get('departamento');
+        $municipio = $request->get('municipio');
+        $descripcion = $request->get('descripcion');
+        
+          $unidadOrgDao = new UnidadOrganizativaDao($this->getDoctrine());
+          $unidadOrgDao->editarUnidadOrg($nombreUnidad, $direccion, $responsable, $telefono, $fax, $tipoUnidad, $unidadPadre, $departameto, $municipio, $descripcion,$idfila,$idinfogeneral );
+
+      
+        
+        $departamDao = new DepartametoPaisDao($this->getDoctrine());
+        $departamentos = $departamDao->getDepartametos();
+
+       return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:manttUnidadesOrganizativas.html.twig', array('opciones' => $opciones,));
+    }
+    
 }
 
 ?>

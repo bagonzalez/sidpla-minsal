@@ -4,12 +4,12 @@
       $(document).ready(function(){
           $('#ingresar').button();
           $('#ingresar').click(function() {
-              document.location.href='{{ path('MinSalSidPlaAdminBundle_ingresoNuevaUnidadesOrg') }}'
+              //this.form.action='{{ path('MinSalSidPlaAdminBundle_ingresoNuevaUnidadesOrg') }}'
           });
       });
     </script>
     
-    <form>
+    <form action="{{ path('MinSalSidPlaAdminBundle_editarUnidadesOrg') }}" method="post">
         <table align="center">
             <tr><td align="center">
                     <h1>Mantenimiento de Unidades del Sistema</h1>

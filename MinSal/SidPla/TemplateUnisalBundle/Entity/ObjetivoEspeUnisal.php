@@ -162,21 +162,12 @@ class ObjetivoEspeUnisal {
     }
 
     /**
-     * Add indicadoresSalud
+     * Add resultEspObjT
      *
-     * @param MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresSalud
+     * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resultEspObjT
      */
-    public function addIndicadoresSalud(\MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresSalud) {
-        $this->indicadoresSalud[] = $indicadoresSalud;
+    public function addResultadoEspeUnisal(\MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resultEspObjT)
+    {
+        $this->resultEspObjT[] = $resultEspObjT;
     }
-
-    /**
-     * Get indicadoresSalud
-     *
-     * @return Doctrine\Common\Collections\Collection 
-     */
-    public function getIndicadoresSalud() {
-        return $this->indicadoresSalud;
-    }
-
 }

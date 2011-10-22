@@ -41,6 +41,8 @@ use MinSal\SidPla\UnidadOrgBundle\EntityDao\CaractOrgDao;
 use MinSal\SidPla\UnidadOrgBundle\EntityDao\ObjetivoEspecificoDao;
 use MinSal\SidPla\UnidadOrgBundle\EntityDao\FuncionEspecificaDao;
 
+use MinSal\SidPla\AdminBundle\EntityDao\EmpleadoDao;
+
 /**
  * Description of AccionInfoCaractOrganizacionController
  *
@@ -66,13 +68,31 @@ class AccionInfoCaractOrganizacionController extends Controller {
         $infoGeneral = new InformacionGeneral();
 
         $unidad = $unidaDao->getUnidadOrg($idUnidad);
-
+        
         $nombreUnidad = $unidad->getNombreUnidad();
         $nombreUnidadPadre = $unidad->getParent()->getNombreUnidad();
 
         $infoGeneral = $unidad->getInformacionGeneral();
         $caractOrg = $unidad->getCaractOrg();
-
+        $responsable=$unidad->getResponsable();
+        
+       $responsableDao = new EmpleadoDao($this->getDoctrine());
+       $empleado = new Empleado();
+       $empleado = $responsableDao->getEmpleado($responsable);
+       $nombreempleado=$empleado->getPrimerNombre();
+       $segundonombre=$empleado->getSegundoNombre();
+       $apellidoempleado=$empleado->getPrimerApellido();
+       $segundoapellido=$empleado->getSegundoApellido();
+        $infoGeneralcod = $unidad->getInformacionGeneral()->getIdInformacionGeneral();
+       
+        $infoGeneralcoddireccion = $unidad->getInformacionGeneral()->getDireccion();
+        $infoGeneralcodtelefono = $unidad->getInformacionGeneral()->getTelefono();
+        $infoGeneralcodfax = $unidad->getInformacionGeneral()->getFax();
+        $infoGeneralcodmail = $unidad->getInformacionGeneral()->getEmail();
+        $unidadorgcod=$unidad->getIdUnidadOrg();
+        
+        
+        
 
         $form = $this->createForm(new InfoCaractOrgType(), $infoGeneral);
         $formCaract = $this->createForm(new CaractOrgType(), $caractOrg);
@@ -83,9 +103,55 @@ class AccionInfoCaractOrganizacionController extends Controller {
                     'unidadOrg' => $nombreUnidad,
                     'unidadPadre' => $nombreUnidadPadre,
                     'idCaractOrg' => $caractOrg->getIdCaractOrg(),
+                    'nombreempleado' => $nombreempleado
+                     ,'segundonombre' => $segundonombre
+                     ,'apellidoempleado' => $apellidoempleado
+                     ,'segundoapellido' => $segundoapellido
+                     ,'responsable' => $responsable 
+                     ,'infoGeneralcod' => $infoGeneralcod
+                     ,'infoGeneralcoddireccion' => $infoGeneralcoddireccion
+                     ,'infoGeneralcodtelefono' => $infoGeneralcodtelefono
+                     ,'infoGeneralcodfax' => $infoGeneralcodfax 
+                     ,'infoGeneralcodmail' =>  $infoGeneralcodmail
+                      ,'unidadorgcod' =>  $unidadorgcod                           
                 ));
     }
 
+    
+    public function guardarInfoGeneralAction(Request $peticion) {
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+        $request = $this->getRequest();
+        
+        $infoGeneralcod=$request->get('infoGeneralcod');
+        $unidadorgcod = $request->get('unidadorgcod');
+        $responsable=$request->get('idempleado');
+        $mail=$request->get('mail');
+        $telefono=$request->get('telefono');
+        $fax=$request->get('fax');
+        $direccion=$request->get('direccion');
+        
+        
+        $unidadOrgDao = new UnidadOrganizativaDao($this->getDoctrine());
+        $unidadOrgDao->guardarInfogeneralOrg($infoGeneralcod, $unidadorgcod, $responsable, $mail, $telefono, $fax, $direccion);
+
+        
+        
+        
+        
+        
+        
+        return $this->ingresarInfoCaractAction();
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     public function guardarCaracteristicasAction(Request $peticion) {
         $opciones = $this->getRequest()->getSession()->get('opciones');
         $request = $this->getRequest();
@@ -263,6 +329,59 @@ class AccionInfoCaractOrganizacionController extends Controller {
         return new Response("{sc:true,msg:'ff'}");
     }
 
+public function consultarEmpleadosJSONAction() {
+        $request = $this->getRequest();
+        $empleadoDao = new EmpleadoDao($this->getDoctrine());
+        $empleados = $empleadoDao->getEmpleados();
+
+        $numfilas = count($empleados);
+
+        $emple = new Empleado();
+        $i = 0;
+
+        foreach ($empleados as $emple) {
+
+            $unidad = $emple->getUnidadOrganizativa();
+            if ($unidad == null)
+                $unidad = new UnidadOrganizativa();
+
+
+            $rows[$i]['id'] = $emple->getIdEmpleado();
+            $rows[$i]['cell'] = array($emple->getIdEmpleado(),
+                $emple->getPrimerNombre(),
+                $emple->getSegundoNombre(),
+                $emple->getPrimerApellido(),
+                $emple->getSegundoApellido(),
+                $emple->getDui(),
+                $emple->getEmail(),
+                $unidad->getNombreUnidad());
+            $i++;
+        }
+
+        if ($numfilas != 0) {
+            array_multisort($rows, SORT_ASC);
+        } else {
+            $rows[0]['id'] = 0;
+            $rows[0]['cell'] = array(' ', ' ',' ', ' ', ' ', ' ', ' ', ' ');
+        }
+
+        $datos = json_encode($rows);
+        $pages = floor($numfilas / 10) + 1;
+
+        $jsonresponse = '{
+               "page":"1",
+               "total":"' . $pages . '",
+               "records":"' . $numfilas . '", 
+               "rows":' . $datos . '}';
+
+
+        $response = new Response($jsonresponse);
+        return $response;
+    }
+    
+    
 }
+
+
 
 ?>

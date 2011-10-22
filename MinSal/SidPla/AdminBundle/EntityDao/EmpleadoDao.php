@@ -55,7 +55,10 @@ class EmpleadoDao {
         return $empleados;
     }
     
-    
+    public function getEmpleado($idempleado) {	    
+        return $this->repositorio->find($idempleado);   
+       
+    }
     
     public function addEmpleado($dui,
                                 $primerNombre,

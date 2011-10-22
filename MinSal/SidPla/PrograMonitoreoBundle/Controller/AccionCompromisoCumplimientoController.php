@@ -49,6 +49,8 @@ use MinSal\SidPla\PrograMonitoreoBundle\EntityDao\CompromisoCumplimientoDao;
 
 use MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento;
 
+use MinSal\SidPla\UnidadOrgBundle\EntityDao\ObjetivoEspecificoDao;
+use MinSal\SidPla\GesObjEspBundle\EntityDao\ResultadoEsperadoDao;
 
 /**
  * Description of AccionCompromisoCumplimientoController
@@ -262,7 +264,7 @@ class AccionCompromisoCumplimientoController extends Controller {
          $idUnidad=$uniControl->getIdUnidadOrg();
          
          return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:CompromisoCumplimiento.html.twig', 
-                array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 'trimestre' => $trimestre, 'idUnidad' => $idUnidad ));
+                array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 'trimestre' => $trimestre, 'idUnidad' => $idUnidad, 'id'=>$idProgramon));
      }
     
      public function ingresoActividadesEnRetrasoAction()
@@ -280,10 +282,12 @@ class AccionCompromisoCumplimientoController extends Controller {
         $descrResultado=$resAct->getIdActividad()->getIdResEsp()->getResEspeDesc(); 
         $descrActividad=$resAct->getIdActividad()->getActDescripcion(); 
         $fechaOrigal=$resAct->getResulActFechaFin();
-       
+        $idfila=$request->get('idfila');  
+          $idfilaResultado=$request->get('idfilaResultado'); 
+          $idfilaActividad=$request->get('idfilaActividad');
         
          return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:IngresoCompromisoCumplimiento.html.twig', 
-                array( 'opciones' => $opciones, 'objetivo' => $descrObjetivo, 'actividad' => $descrActividad, 'resultado' => $descrResultado, 'idresact' => $idResultActividad));
+                array( 'opciones' => $opciones, 'objetivo' => $descrObjetivo, 'actividad' => $descrActividad, 'resultado' => $descrResultado, 'idresact' => $idResultActividad,'idfilaResultado'=>$idfilaResultado,'idfila' => $idfila,'idfilaActividad' =>$idfilaActividad));
      }
     
         
@@ -299,14 +303,227 @@ class AccionCompromisoCumplimientoController extends Controller {
          $fechacumplimiento=$request->get('newdateend');
          $responsable=$request->get('responsable');
         
+          $idfila=$request->get('idfila');  
+          $idfilaResultado=$request->get('idfilaResultado'); 
+          $idfilaActividad=$request->get('idfilaActividad');
         
         $rDao=new ResulActividadDao($this->getDoctrine());
         $rDao->addCompromisoCumplimiento($hallazgos, $medidasadoptar, $fechacumplimiento, $responsable, $idResultActividad);
        
-        
+              
+                 
+              
+          
          
+        //obteniendo el objetivo para mandarlo a la plantilla  
+        $objetivoAux=new ObjetivoEspecifico();
+        $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());                      
+        $objetivoAux=$objetivoDao->getObjetEspecif($idfila);         
+        $objetivosEspec=$objetivoAux->getDescripcion();
+        
+        //obteniendo el resultado para mandarlo a la plantilla
+        $resultadoAux=new ResultadoEsperado();
+        $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());                      
+        $resultadoAux=$resultadoDao->getResulEspera($idfilaResultado);         
+        $resultadoesperado=$resultadoAux->getResEspeDesc();
+          
+          $actividadAux=new Actividad();
+          $actividadDao = new ActividadDao($this->getDoctrine());                      
+          $actividadAux=$actividadDao->getActividad($idfilaActividad);         
+        
+           $actividad=$actividadAux->getActDescripcion();
+           $indicador=$actividadAux->getActIndicador();
+           $medioverifi=$actividadAux->getIdTipoMedVeri();
+           $responsable=$actividadAux->getActResponsable();
+           $supuestos=$actividadAux->getSupuestosFactores();
+           $metaanual=$actividadAux->getActMetaAnual();
+           $descmetaanual=$actividadAux->getActDescMetaAnu();
+           $tipometa=$actividadAux->getIdTipoMeta();
+           
+           
+           
+           //inicia el proceso  de recuperar los atos de la tabla resultadore
+           $resultAux=new Actividad();
+           $resultDao = new ActividadDao($this->getDoctrine());                      
+           $resultAux=$resultDao->getActividad($idfilaActividad);         
+           $resultaEspe=$resultAux->getResulAct();
+           $numfilas=count($resultaEspe);  
+           $resultadoreEspec=new ResulActividad();
+           $i=0;
+           $programadoPrimerTrimestre=0;
+           $programadoSegundoTrimestre=0;
+           $programadoTercerTrimestre=0;
+           $programadoCuartoTrimestre=0;
+           $iduno=0;
+           $iddos=0;
+           $idtres=0;
+           $idcuatro=0;
+           $fechainiciotrimuno=0;
+           $fechainiciotrimdos=0;
+           $fechainiciotrimtres=0;
+           $fechainiciotrimcuatro=0;
+           $fechafintrimuno=0;
+           $fechafintrimdos=0;
+           $fechafintrimtres=0;
+           $fechafintrimcuatro=0;
+           
+           
+        foreach ($resultaEspe as $resultadoreEspec) { 
+            
+            $trimestre=$resultadoreEspec->getResulActTrimestre();
+            if($trimestre==1){
+                $programadoPrimerTrimestre=$resultadoreEspec->getResulActProgramado();
+                $fechainiciotrimuno=$resultadoreEspec->getResulActFechaInicio();
+                $fechafintrimuno=$resultadoreEspec->getResulActFechaFin();
+                                                
+                $iduno=$resultadoreEspec->getIdResulAct();
+                
+            } 
+            
+             if($trimestre==2){
+                $programadoSegundoTrimestre=$resultadoreEspec->getResulActProgramado();
+                //$fechainiciotrimdos=$resultadoreEspec->getResulActFechaInicio();
+                //$fechafintrimdos=$resultadoreEspec->getResulActFechaFin();
+                $iddos=$resultadoreEspec->getIdResulAct();
+            } 
+            
+             if($trimestre==3){
+                $programadoTercerTrimestre=$resultadoreEspec->getResulActProgramado();
+                // $fechainiciotrimtres=$resultadoreEspec->getResulActFechaInicio();
+                // $fechafintrimtres=$resultadoreEspec->getResulActFechaFin();
+                $idtres=$resultadoreEspec->getIdResulAct();
+            } 
+            
+             if($trimestre==4){
+                $programadoCuartoTrimestre=$resultadoreEspec->getResulActProgramado();
+               // $fechainiciotrimcuatro=$resultadoreEspec->getResulActFechaInicio();
+               // $fechafintrimcuatro=$resultadoreEspec->getResulActFechaFin();
+                $idcuatro=$resultadoreEspec->getIdResulAct();
+            } 
+            
+        }
+           
+           
+           
+        
+        
+               
+        return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:ReprogramacionDeActividades.html.twig', 
+                array( 'opciones' => $opciones,
+                    'idfilaResultado'=>$idfilaResultado,
+                    'idfila' => $idfila,
+                    'descripcion' => $objetivosEspec,
+                    'actividad'=>$actividad,
+                    'indicador'=>$indicador,
+                    'medioverifi'=>$medioverifi,
+                    'responsable'=>$responsable,
+                    'supuestos'=>$supuestos,
+                    'metaanual'=>$metaanual,
+                    'descmetaanual'=>$descmetaanual,
+                    'tipometa'=>$tipometa,
+                    'descripcionResultado'=>$resultadoesperado,
+                    'idfilaActividad'=>$idfilaActividad
+                    ,'trim1' => $programadoPrimerTrimestre
+                    ,'trim2' => $programadoSegundoTrimestre
+                    ,'trim3' => $programadoTercerTrimestre
+                    ,'trim4' => $programadoCuartoTrimestre
+                    ,'iduno' => $iduno
+                    ,'iddos' => $iddos
+                    ,'idtres' => $idtres
+                    ,'idcuatro' => $idcuatro
+                    
+                    ));
+         
+         
+         }
+     
+         
+         
+         
+         
+         
+         
+         public function editandoActividadesEnRetrasoAction()
+    {
+        $opciones=$this->getRequest()->getSession()->get('opciones');
+        
+          $request=$this->getRequest();        
+          $idfila=$request->get('idfila');  
+          $idfilaResultado=$request->get('idfilaResultado');//representa en este caso el codigo de objetivo
+         
+          
+          $id=$request->get('idfilaActividad');
+          
+          $actividad=$request->get('actividad');
+          $indicador=$request->get('indicador');
+          $medioverifindicador=$request->get('medioverifindicador');
+          $responsable=$request->get('responsable');
+          $supuestosfactores=$request->get('supuestosfactores');
+          $metaAnual=$request->get('metaAnual');
+          $tipometa=$request->get('selectipometa');
+          $descripMetaAnual=$request->get('descripMetaAnual');
+          
+          
+          
+              
+              //este  valor es  fusilados porque no se bien como  funcionan
+          //asi que solo los asigno y lo mando
+              $resEspNomencl="pruebanomenc";
+             
+                  //valores que representan lo programado         
+               $trimUno=$request->get('trimUno');
+               $trimDos=$request->get('trimDos');
+               $trimTres=$request->get('trimTres');
+               $trimCuatro=$request->get('trimCuatro');
+           
+               $iduno=$request->get('iduno');
+               $iddos=$request->get('iddos');
+               $idtres=$request->get('idtres');
+               $idcuatro=$request->get('idcuatro');
+               $fechainicio=$request->get('fechainicio');                              
+               $fechafin=$request->get('fechafin');
+            // $selectipometa=1;  
+             
+               $fechaInicioPrimer = $request->get('datepickerInicioPrimer');
+               $fechaFinPrimer = $request->get('datepickerFinPrimer');
+               
+               $fechaInicioSegundo = $request->get('datepickerInicioSegundo');
+               $fechaFinSegundo = $request->get('datepickerFinSegundo');
+               
+               $fechaInicioTercero = $request->get('datepickerInicioTercer');
+               $fechaFinTercero = $request->get('datepickerFinTercer');
+               
+               $fechaInicioCuarto = $request->get('datepickerInicioCuarto');
+               $fechaFinCuarto = $request->get('datepickerFinCuarto');
+               
+               
+               
+           
+               $resultadoDao = new ActividadDao($this->getDoctrine());                      
+          $idActividad= $resultadoDao->editActividad($idfilaResultado,
+                                       $tipometa,
+                                        $actividad,
+                                        $resEspNomencl,
+                                        $supuestosfactores,
+                                        $metaAnual,
+                                        $descripMetaAnual,
+                                        $responsable,
+                                        $indicador,
+                                        $medioverifindicador,
+                                        $id); 
+            
+          
+          
+         //inicia proceso de guardar el valor de lo programado en sidpla_resultadore
+           $resultadoDao = new ResulActividadDao($this->getDoctrine());                      
+           $resultadoDao->editResulActividad($trimUno,$iduno, $fechaInicioPrimer,$fechaFinPrimer, $id);            
+           $resultadoDao->editResulActividad($trimDos,$iddos,$fechaInicioSegundo, $fechaFinSegundo,$id);
+           $resultadoDao->editResulActividad($trimTres,$idtres,$fechaInicioTercero, $fechaFinTercero, $id); 
+           $resultadoDao->editResulActividad($trimCuatro, $idcuatro, $fechaInicioCuarto, $fechaFinCuarto, $id); 
+          
          
          $objetivos=$this->obtenerUnidadOrgObjEspec();
+         
          $paoElaboracion=$this->obtenerPaoSeguimiento();
          $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
          $idProgramon=$programacionMonitoreo->getIdPrograMon();
@@ -319,11 +536,50 @@ class AccionCompromisoCumplimientoController extends Controller {
          $uniControl=new UnidadOrganizativa();            
          $uniControl=$this->obtenerUnidadOrg();
          $idUnidad=$uniControl->getIdUnidadOrg();
-        
+         
          return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:CompromisoCumplimiento.html.twig', 
                 array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 'trimestre' => $trimestre, 'idUnidad' => $idUnidad ));
      }
-      
+    
+         
+         
+    public function consultarTipoMetaAction()
+	{
+            $opciones=$this->getRequest()->getSession()->get('opciones'); 
+            
+            $tipometaDao=new TipoMetaDao($this->getDoctrine());
+            $tiposmeta=$tipometaDao->getTiposMeta();           
+            
+            $numfilas=count($tiposmeta);  
+            
+            $tipo=new TipoMeta();
+            $i=0;
+            
+            foreach ($tiposmeta as $tipo) {
+                $rows[$i]['id']= $tipo->getIdTipoMeta();
+                $rows[$i]['cell']= array($tipo->getIdTipoMeta(),
+                                         $tipo->getTipoMetaNombre());    
+                $i++;
+            }
+            
+            $datos=json_encode($rows);            
+            
+            
+            $jsonresponse='{
+               "page":"1",
+               "total":"1",
+               "records":"'.$numfilas.'", 
+               "rows":'.$datos.'}';
+            
+            
+            $response=new Response($jsonresponse);              
+            return $response;
+    
+}     
+         
+         
+         
+         
 }
 
 ?>

@@ -25,5 +25,11 @@ MinSalSidPlaUnidadOrgBundle_manttObjEspec:
 MinSalSidPlaUnidadOrgBundle_manttFuncEspec:
     pattern:  /manttFuncEspec
     defaults: { _controller: MinSalSidPlaUnidadOrgBundle:AccionInfoCaractOrganizacion:manttFuncEspec }
+   
+MinSalSidPlaUnidadOrgBundle_consultarEmpleadosJSON:
+    pattern:  /consultarEmpleadosJSON
+    defaults: { _controller: MinSalSidPlaUnidadOrgBundle:AccionInfoCaractOrganizacion:consultarEmpleadosJSON}
     
-    
+MinSalSidPlaUnidadOrgBundle_guardarInfoGeneral:
+    pattern:  /guardarInfoGeneral
+    defaults: { _controller: MinSalSidPlaUnidadOrgBundle:AccionInfoCaractOrganizacion:guardarInfoGeneral}

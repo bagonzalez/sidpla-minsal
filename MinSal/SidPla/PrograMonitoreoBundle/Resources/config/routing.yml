@@ -30,3 +30,16 @@ MinSalSidPlaPrograMonitoreoBundle_ingresoActividadesEnRetraso:
 MinSalSidPlaPrograMonitoreoBundle_guardarActividadesEnRetraso:
     pattern:  /guardarActividadesEnRetraso
     defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionCompromisoCumplimiento:guardarActividadesEnRetraso }
+    
+MinSalSidPlaPrograMonitoreoBundle_editandoActividadesEnRetraso:
+    pattern:  /editandoActividadesEnRetraso
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionCompromisoCumplimiento:editandoActividadesEnRetraso }
+    
+MinSalSidPlaPrograMonitoreoBundle_consultarTipoMeta:
+    pattern:  /consultarTipoMeta
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionCompromisoCumplimiento:consultarTipoMeta }
+MinSalSidPlaPrograMonitoreoBundle_showProgramacionMonitoreoUNISAL:
+    pattern:  /showProgramacionMonitoreoUNISAL
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionPrograMonUNISAL:showProgramacionMonitoreoUNISAL }   
+    
+    

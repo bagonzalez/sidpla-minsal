@@ -8,11 +8,11 @@
           
           
            $('#regresar').click(function() {
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
+            this.form.action='{{ path('MinSalSidPlaPrograMonitoreoBundle_showActividadesEnRetraso') }}';
            
           });
            $('#guardar').click(function() {
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editandoActividades') }}';
+            this.form.action='{{ path('MinSalSidPlaPrograMonitoreoBundle_editandoActividadesEnRetraso') }}';
             });
            
           
@@ -26,7 +26,7 @@
                             $('#selectipometa').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
                         });                    
                       }
-                  });                  
+                  });
           });
     
 
@@ -37,10 +37,10 @@
 <br></br>
 <br></br>
 <br></br>
-<h2 class="demoHeaders">Edicion de Actividades</h2>
+<h2 class="demoHeaders">Reprogramacion de Actividades</h2>
 <div id="tabs">
         <ul>
-                <li><a href="#tabs-1">Actividad</a></li>
+                <li><a href="#tabs-1">Actividad Reprogramada</a></li>
                 
         </ul>
         <div id="tabs-1" >
@@ -82,7 +82,7 @@
                     </tr>
                      <tr>
                         <td >Meta anual:</td>
-                        <td colspan="3" ><input size="20%" name="metaAnual" id="metaAnual"value="{{metaanual}}" ></input><select name="selectipometa"  id='selectipometa'><option value='0'>Seleccione el tipo de meta</option></select></td>
+                        <td colspan="3" ><input size="20%" name="metaAnual" id="metaAnual"value="{{metaanual}}" ></input><select name="selectipometa"  id='selectipometa'><option value='0'>Seleccione el tipo de meta</option><option value='1'>Valor Absoluto</option><option value='2'>Porcentaje</option></select></td>
                     </tr>
                     <tr>
                         <td >Descripcion Meta anual:</td>

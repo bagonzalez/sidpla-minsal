@@ -131,5 +131,11 @@ MinSalSidPlaAdminBundle_consultarUnidadesOrgJSONSelect:
     defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:consultarUnidadesOrgJSONSelect } 
     
     
+MinSalSidPlaAdminBundle_editarUnidadesOrg:
+    pattern:  /admin/editarUnidadesOrg    
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:editarUnidadesOrg }  
     
+MinSalSidPlaAdminBundle_editandoUnidadesOrg:
+    pattern:  /admin/editandoUnidadesOrg    
+    defaults: { _controller: MinSalSidPlaAdminBundle:AccionAdminUnidadOrg:editandoUnidadesOrg }  
     

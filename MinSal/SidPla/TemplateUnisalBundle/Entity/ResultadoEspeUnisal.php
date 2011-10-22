@@ -140,4 +140,14 @@ class ResultadoEspeUnisal {
     {
         return $this->actividadesTemplate;
     }
+
+    /**
+     * Add actividadesTemplate
+     *
+     * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUnisalTemplate $actividadesTemplate
+     */
+    public function addActividadUnisalTemplate(\MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUnisalTemplate $actividadesTemplate)
+    {
+        $this->actividadesTemplate[] = $actividadesTemplate;
+    }
 }
