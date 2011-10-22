@@ -170,4 +170,22 @@ class ObjetivoEspeUnisal {
     {
         $this->resultEspObjT[] = $resultEspObjT;
     }
+        /**
+     * Get indicadoresSalud
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getIndicadoresSalud() {
+        return $this->indicadoresSalud;
+    }
+
+    /**
+     * Add indicadoresSalud
+     *
+     * @param M MinSal\SidPla\IndicadoresTemplateBundle\Entity $indicadoresSalud
+     */
+    public function addIndicadoresSaludl(\MinSal\SidPla\IndicadoresTemplateBundle\Entity $indicadoresSalud)
+    {
+        $this->indicadoresSalud[] = $indicadoresSalud;
+    }
 }
