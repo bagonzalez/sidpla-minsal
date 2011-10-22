@@ -1,0 +1,21 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %}Tipos de Indicadores de Salud {% endblock %}
+
+{% block body %}
+    <h1 style='text-align: center;'>Tipos de Indicadores de Salud</h1>
+    <table align="center">
+        <tr>
+            <td align="center">
+                <br></br>  
+               {% include 'MinSalSidPlaIndicadoresTemplateBundle:TipoIndicador:showTipoIndicador.html.twig'%}
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <input type="button" id="agregarIndSalButton" value="  Agregar  " />
+                <input type="button" id="editarIndSalButton" value="   Editar   " />
+                <input type="button" id="regresar" value="   Regresar   " />
+            </td>
+        </tr>        
+    </table>    
+{% endblock %}

@@ -52,18 +52,22 @@ class ObjetivoEspeUnisal {
      */
     private $resultEspObjT;
 
-    public function __construct()
-    {
+    /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud", mappedBy="objEspUnisal")
+     */
+    private $indicadoresSalud;
+
+    public function __construct() {
         $this->resultEspObjT = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->indicadoresSalud = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Get codObjEspUni
      *
      * @return integer 
      */
-    public function getCodObjEspUni()
-    {
+    public function getCodObjEspUni() {
         return $this->codObjEspUni;
     }
 
@@ -72,8 +76,7 @@ class ObjetivoEspeUnisal {
      *
      * @param string $descObjEspUni
      */
-    public function setDescObjEspUni($descObjEspUni)
-    {
+    public function setDescObjEspUni($descObjEspUni) {
         $this->descObjEspUni = $descObjEspUni;
     }
 
@@ -82,8 +85,7 @@ class ObjetivoEspeUnisal {
      *
      * @return string 
      */
-    public function getDescObjEspUni()
-    {
+    public function getDescObjEspUni() {
         return $this->descObjEspUni;
     }
 
@@ -92,8 +94,7 @@ class ObjetivoEspeUnisal {
      *
      * @param string $nomenObjEspUni
      */
-    public function setNomenObjEspUni($nomenObjEspUni)
-    {
+    public function setNomenObjEspUni($nomenObjEspUni) {
         $this->nomenObjEspUni = $nomenObjEspUni;
     }
 
@@ -102,8 +103,7 @@ class ObjetivoEspeUnisal {
      *
      * @return string 
      */
-    public function getNomenObjEspUni()
-    {
+    public function getNomenObjEspUni() {
         return $this->nomenObjEspUni;
     }
 
@@ -112,8 +112,7 @@ class ObjetivoEspeUnisal {
      *
      * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ProUnisalTemplate $prograMonObj
      */
-    public function setPrograMonObj(\MinSal\SidPla\TemplateUnisalBundle\Entity\ProUnisalTemplate $prograMonObj)
-    {
+    public function setPrograMonObj(\MinSal\SidPla\TemplateUnisalBundle\Entity\ProUnisalTemplate $prograMonObj) {
         $this->prograMonObj = $prograMonObj;
     }
 
@@ -122,8 +121,7 @@ class ObjetivoEspeUnisal {
      *
      * @return MinSal\SidPla\TemplateUnisalBundle\Entity\ProUnisalTemplate 
      */
-    public function getPrograMonObj()
-    {
+    public function getPrograMonObj() {
         return $this->prograMonObj;
     }
 
@@ -132,8 +130,7 @@ class ObjetivoEspeUnisal {
      *
      * @param MinSal\SidPla\TemplateUnisalBundle\Entity\AreaClasificacion $areaClaObj
      */
-    public function setAreaClaObj(\MinSal\SidPla\TemplateUnisalBundle\Entity\AreaClasificacion $areaClaObj)
-    {
+    public function setAreaClaObj(\MinSal\SidPla\TemplateUnisalBundle\Entity\AreaClasificacion $areaClaObj) {
         $this->areaClaObj = $areaClaObj;
     }
 
@@ -142,8 +139,7 @@ class ObjetivoEspeUnisal {
      *
      * @return MinSal\SidPla\TemplateUnisalBundle\Entity\AreaClasificacion 
      */
-    public function getAreaClaObj()
-    {
+    public function getAreaClaObj() {
         return $this->areaClaObj;
     }
 
@@ -152,8 +148,7 @@ class ObjetivoEspeUnisal {
      *
      * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resultEspObjT
      */
-    public function addResultEspObjT(\MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resultEspObjT)
-    {
+    public function addResultEspObjT(\MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resultEspObjT) {
         $this->resultEspObjT[] = $resultEspObjT;
     }
 
@@ -162,8 +157,26 @@ class ObjetivoEspeUnisal {
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getResultEspObjT()
-    {
+    public function getResultEspObjT() {
         return $this->resultEspObjT;
     }
+
+    /**
+     * Add indicadoresSalud
+     *
+     * @param MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresSalud
+     */
+    public function addIndicadoresSalud(\MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresSalud) {
+        $this->indicadoresSalud[] = $indicadoresSalud;
+    }
+
+    /**
+     * Get indicadoresSalud
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getIndicadoresSalud() {
+        return $this->indicadoresSalud;
+    }
+
 }

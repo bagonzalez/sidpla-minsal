@@ -1,63 +1,65 @@
 {% for proUniA in proUnisalActual %}
   {% for  area in  areas%}
 <div id="{{"now" | date("Y")}}{{area.getCodArea}}Div">
-  <table border="1" WIDTH='85%'>
-    <thead>
-        <tr  style=" font-size: 14px;">
-            <th><strong>  Objetivo </strong>
-            </th>
-            <th><strong>  Acciones </strong>
-            </th>
-        </tr>
-    </thead>
-     <tbody>
+    <table border="1" WIDTH='85%'>
+        <thead>
+            <tr  style=" font-size: 14px;">
+                <th><strong>  Objetivo </strong>
+                </th>
+                <th><strong>  Acciones </strong>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
     {%for obj in objTemplateDao.obtenerPorArea(area.getCodArea ,proUniA.getObjeEspeProgra)%}
-   
-    <tr>
-        <td style=" font-size: 12px;">{{ obj.getDescObjEspUni}}
-        </td>
-        <td WIDTH='35%' style=" text-align: center" >
-            <input type="submit" id="editar" value="Editar" onclick="$('#idObj').attr('value',{{obj.getcodObjEspUni}});$('#anio').attr('value', $('#selanio').val());$('#idArea').attr('value', $('#selarea').val());this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarObjetivoEspeUnisal')}}';" />
-            <input type="submit" value="Resultados Esperados" onclick="$('#idObj').attr('value',{{obj.getcodObjEspUni}});this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_mostrarResEspeUnisal')}}';" />
-        </td>
-    </tr>
-    
-  
+
+                <tr>
+                    <td style=" font-size: 12px;">{{ obj.getDescObjEspUni}}
+                    </td>
+                    <td WIDTH='45%' style=" text-align: center" >
+                        <input type="submit" id="editar" value="Editar" onclick="$('#idObj').attr('value',{{obj.getcodObjEspUni}});$('#anio').attr('value', $('#selanio').val());$('#idArea').attr('value', $('#selarea').val());this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarObjetivoEspeUnisal')}}';" />
+                        <input type="submit" value="Resultados Esperados" onclick="$('#idObj').attr('value',{{obj.getcodObjEspUni}});this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_mostrarResEspeUnisal')}}';" />
+                        <input type="submit" value="Indicadores de Salud" onclick="$('#idObj').attr('value',{{obj.getcodObjEspUni}});this.form.action='{{path('MinSalSidPlaIndicadoresTemplateBundle_mostrarIndicadoresSalud')}}';" />
+                    </td>
+                </tr>
+
+
     {% endfor%}
-     </tbody>
-     </table>
-</div> 
+            </tbody>
+        </table>
+    </div> 
   {% endfor%}
 {% endfor%}
 
 
 {% for proUniS in proUnisalSiguiente %}
   {% for  area in  areas%}
+    <div id="{{"now" | date("Y")+1}}{{area.getCodArea}}Div">
+        <table border="1" WIDTH='85%'>
+            <thead>
+                <tr  style=" font-size: 14px;">
+                    <th><strong>  Objetivo </strong>
+                    </th>
+                    <th><strong>  Acciones </strong>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
     {%for obj in objTemplateDao.obtenerPorArea(area.getCodArea ,proUniS.getObjeEspeProgra)%}
-<div id="{{"now" | date("Y")+1}}{{area.getCodArea}}Div">
-  <table border="1" WIDTH='85%'>
-    <thead>
-        <tr  style=" font-size: 14px;">
-            <th><strong>  Objetivo </strong>
-            </th>
-            <th><strong>  Acciones </strong>
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td style=" font-size: 12px;">{{ obj.getDescObjEspUni}}
-        </td>
-        <td WIDTH='35%' style=" text-align: center" >
-            <input type="submit" id="editar" value="Editar" onclick="$('#idObj').attr('value',{{obj.getcodObjEspUni}});$('#anio').attr('value', $('#selanio').val());$('#idArea').attr('value', $('#selarea').val());this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarObjetivoEspeUnisal')}}';" />
-            <input type="submit" value="Eliminar" onclick="{{obj.getcodObjEspUni}}" />
-            <input type="submit" value="Resultados Esperados" onclick="$('#idObj').attr('value',{{obj.getcodObjEspUni}});this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_mostrarResEspeUnisal')}}';" />
-        </td>
-    </tr>
-     </tbody>
-</table>
+                    <tr>
+                        <td style=" font-size: 12px;">{{ obj.getDescObjEspUni}}
+                        </td>
+                        <td WIDTH='45%' style=" text-align: center" >
+                            <input type="submit" id="editar" value="Editar" onclick="$('#idObj').attr('value',{{obj.getcodObjEspUni}});$('#anio').attr('value', $('#selanio').val());$('#idArea').attr('value', $('#selarea').val());this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarObjetivoEspeUnisal')}}';" />
+                            <input type="submit" value="Resultados Esperados" onclick="$('#idObj').attr('value',{{obj.getcodObjEspUni}});this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_mostrarResEspeUnisal')}}';" />
+                            <input type="submit" value="Indicadores de Salud" onclick="$('#idObj').attr('value',{{obj.getcodObjEspUni}});this.form.action='{{path('MinSalSidPlaIndicadoresTemplateBundle_mostrarIndicadoresSalud')}}';" />
+                        </td>
+                    </tr>
+        {% endfor%}
+                </tbody>
+            </table>
 
-</div>   
-    {% endfor%}
+        </div>   
+
   {% endfor%}
 {% endfor%}

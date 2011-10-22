@@ -1,0 +1,34 @@
+#ROUTING INDICADORESTEMPLATEBUNDLE
+MinSalSidPlaIndicadoresTemplateBundle_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: MinSalSidPlaIndicadoresTemplateBundle:Default:index }
+
+#INDICADORSALUD
+MinSalSidPlaIndicadoresTemplateBundle_mostrarIndicadoresSalud:
+    pattern:  /mostrarIndicadoresSalud
+    defaults: { _controller: MinSalSidPlaIndicadoresTemplateBundle:AccionIndicadorSalud:mostrarIndicadoresSalud }
+    
+MinSalSidPlaIndicadoresTemplateBundle_ingresarIndicadorSalud:
+    pattern:  /ingresarIndicadorSalud
+    defaults: { _controller: MinSalSidPlaIndicadoresTemplateBundle:AccionIndicadorSalud:ingresarIndicadorSalud }
+    
+MinSalSidPlaIndicadoresTemplateBundle_editarIndicadorSalud:
+    pattern:  /editarIndicadorSalud
+    defaults: { _controller: MinSalSidPlaIndicadoresTemplateBundle:AccionIndicadorSalud:editarIndicadorSalud }
+
+MinSalSidPlaIndicadoresTemplateBundle_manttIndicadorSalud:
+    pattern:  /manttIndicadorSalud
+    defaults: { _controller: MinSalSidPlaIndicadoresTemplateBundle:AccionIndicadorSalud:manttIndicadorSalud }
+    
+#TIPOINDICADOR
+MinSalSidPlaIndicadoresTemplateBundle_mostrarTipoIndicadores:
+    pattern:  /mostrarTipoIndicadores
+    defaults: { _controller: MinSalSidPlaIndicadoresTemplateBundle:AccionTipoIndicador:mostrarTipoIndicadores }
+
+MinSalSidPlaIndicadoresTemplateBundle_consultarTipoIndicadorJSON:
+    pattern:  /consultarTipoIndicadorJSON
+    defaults: { _controller: MinSalSidPlaIndicadoresTemplateBundle:AccionTipoIndicador:consultarTipoIndicadorJSON }
+    
+MinSalSidPlaIndicadoresTemplateBundle_manttTipoIndicadorEdicion:
+    pattern:  /manttTipoIndicadorEdicion
+    defaults: { _controller: MinSalSidPlaIndicadoresTemplateBundle:AccionTipoIndicador:manttTipoIndicadorEdicion }

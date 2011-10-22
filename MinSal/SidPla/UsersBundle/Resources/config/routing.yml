@@ -1,3 +1,7 @@
-MinSalSidPlaUsersBundle_homepage:
-    pattern:  /{name}
-    defaults: { _controller: MinSalSidPlaUsersBundle:Default:index }
+MinSalSidPlaUsersBundle_mostrarUsuariosSinRol:
+    pattern:  /mostrarUsuariosSinRol
+    defaults: { _controller: MinSalSidPlaUsersBundle:Default:mostrarUsuariosSinRol}
+    
+MinSalSidPlaUsersBundle_consultarUsuarioSinRolJSON:
+    pattern:  /consultarUsuarioSinRolJSON
+    defaults: { _controller: MinSalSidPlaUsersBundle:Default:consultarUsuarioSinRolJSON }
