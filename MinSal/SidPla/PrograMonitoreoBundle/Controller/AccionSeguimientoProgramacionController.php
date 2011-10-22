@@ -241,7 +241,7 @@ class AccionSeguimientoProgramacionController extends Controller {
         
          $promMonDao=new ProgramacionMonitoreoDao($this->getDoctrine());
          $actividadesProgramon=$promMonDao->getActividades($idProgramon);
-         $trimestre=4;
+         $trimestre=1;
          
          $uniControl=new UnidadOrganizativa();            
          $uniControl=$this->obtenerUnidadOrg();
