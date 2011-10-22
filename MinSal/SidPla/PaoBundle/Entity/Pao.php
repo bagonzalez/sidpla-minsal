@@ -61,12 +61,18 @@ class Pao {
      * @ORM\OneToMany(targetEntity="MinSal\SidPla\RRMedicoBundle\Entity\PrograRRMed", mappedBy="paoProRRMed")
      */
     private $programacionesRRMed;
-    
+
     /**
      * @ORM\OneToOne(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo", mappedBy="pao")
      * @ORM\JoinColumn(name="promon_codigo", referencedColumnName="promon_codigo")
      */
     private $programacionMonitoreo;
+
+    /**
+     * @ORM\OneToOne(targetEntity="MinSal\SidPla\IndicadoresTemplateBundle\Entity\EvaluacionResultado", mappedBy="paoEvaResul")
+     * @ORM\JoinColumn(name="evares_codigo", referencedColumnName="evares_codigo")
+     */
+    private $evaluacionResultado;
 
     /**
      * Set idPao
@@ -204,8 +210,7 @@ class Pao {
      *
      * @param MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada $infraEvaluadaPao
      */
-    public function setInfraEvaluadaPao(\MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada $infraEvaluadaPao)
-    {
+    public function setInfraEvaluadaPao(\MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada $infraEvaluadaPao) {
         $this->infraEvaluadaPao = $infraEvaluadaPao;
     }
 
@@ -214,8 +219,7 @@ class Pao {
      *
      * @return MinSal\SidPla\EstInfraBundle\Entity\InfraestructuraEvaluada 
      */
-    public function getInfraEvaluadaPao()
-    {
+    public function getInfraEvaluadaPao() {
         return $this->infraEvaluadaPao;
     }
 
@@ -224,8 +228,7 @@ class Pao {
      *
      * @param MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo $programacionMonitoreo
      */
-    public function setProgramacionMonitoreo(\MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo $programacionMonitoreo)
-    {
+    public function setProgramacionMonitoreo(\MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo $programacionMonitoreo) {
         $this->programacionMonitoreo = $programacionMonitoreo;
     }
 
@@ -234,8 +237,26 @@ class Pao {
      *
      * @return MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo 
      */
-    public function getProgramacionMonitoreo()
-    {
+    public function getProgramacionMonitoreo() {
         return $this->programacionMonitoreo;
     }
+
+    /**
+     * Set evaluacionResultado
+     *
+     * @param MinSal\SidPla\IndicadoresTemplateBundle\Entity\EvaluacionResultado $evaluacionResultado
+     */
+    public function setEvaluacionResultado(\MinSal\SidPla\IndicadoresTemplateBundle\Entity\EvaluacionResultado $evaluacionResultado) {
+        $this->evaluacionResultado = $evaluacionResultado;
+    }
+
+    /**
+     * Get evaluacionResultado
+     *
+     * @return MinSal\SidPla\IndicadoresTemplateBundle\Entity\EvaluacionResultado 
+     */
+    public function getEvaluacionResultado() {
+        return $this->evaluacionResultado;
+    }
+
 }

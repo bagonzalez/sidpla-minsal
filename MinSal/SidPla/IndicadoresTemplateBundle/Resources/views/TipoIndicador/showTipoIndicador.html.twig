@@ -1,0 +1,80 @@
+{% block body %}
+<script type="text/javascript">
+      $(document).ready(function(){
+        
+        $('#agregarIndSalButton').button();
+        $('#editarIndSalButton').button();
+        $('#regresar').button();
+       
+       $("#regresar").click(function(){
+          {% if idIndSal is defined %}
+               window.location='editarIndicadorSalud?idObj={{idObj}}&idIndSal={{idIndSal}}';  
+           {% else%}
+               window.location='ingresarIndicadorSalud?idObj={{idObj}}';     
+           {% endif%}
+        });
+
+        var myGrid = $('#tabIndSal');        
+        myGrid.jqGrid({ 
+          url: 'consultarTipoIndicadorJSON',
+          datatype:'json',
+          altRows:true,
+          colNames:['Codigo','Nombre'],
+          colModel:[
+            { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}  },
+            { name:'nombre', index: 'nombre',width:250,editable:true,editoptions:{size:25,maxlength:25}, formoptions:{ rowpos:1, label: "Nombre",elmprefix:"(*)"},editrules:{required:true} }
+           ],            
+          rowNum:10,
+          rowList:[10,20,30],
+          multiselect: false,
+          loadonce:true,
+          pager: jQuery('#pager'),
+          viewrecords: true,          
+          caption: 'Tipos de Indicadores de Salud',
+          height: "100%",
+          editurl:'manttTipoIndicadorEdicion'
+           
+        });
+        
+         myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,search:false,refresh:false,
+             beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}).hideCol('codigo');
+         
+      /* Funcion para regargar los JQGRID luego de agregar y editar*/
+      function despuesAgregarEditar() {
+        myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
+        return[true,'']; //no error
+      }         
+  //agregar
+  $("#agregarIndSalButton").click(function(){
+        jQuery('#tabIndSal').jqGrid('editGridRow',"new",
+        {closeAfterAdd:true,addCaption: "Agregar Tipo de Indicador de Salud",
+         height:200,align:'center',reloadAfterSubmit:true,width:550,
+         processData: "Cargando...",afterSubmit:despuesAgregarEditar,
+         bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+                alert("datos guardados con exito!");}
+        });
+        });
+
+   //editar
+    $("#editarIndSalButton").click(function(){
+          var gr = jQuery('#tabIndSal').jqGrid('getGridParam','selrow');
+          if( gr != null )
+             jQuery("#tabIndSal").jqGrid('editGridRow',gr,
+            {closeAfterEdit:true,editCaption: "Editando Tipo de Indicador de Salud",
+             height:200,align:'center',reloadAfterSubmit:true,width:550,
+             processData: "Cargando...",afterSubmit:despuesAgregarEditar,
+             bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
+                    alert("Tipo de Indicador de Salud editado con exito!");
+                ;}
+        });
+          else alert("Por favor seleccione una fila para editar!"); 
+          });
+ 
+  //fin          
+          
+      });
+    </script>
+                <table id="tabIndSal" class="scroll" align="center"></table>
+                <div id="pager" class="scroll"></div>
+  
+{% endblock %}

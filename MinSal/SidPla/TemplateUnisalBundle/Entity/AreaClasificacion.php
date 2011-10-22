@@ -87,4 +87,14 @@ class AreaClasificacion {
     {
         return $this->objetivosObjeArea;
     }
+
+    /**
+     * Add objetivosObjeArea
+     *
+     * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ObjetivoEspeUnisal $objetivosObjeArea
+     */
+    public function addObjetivoEspeUnisal(\MinSal\SidPla\TemplateUnisalBundle\Entity\ObjetivoEspeUnisal $objetivosObjeArea)
+    {
+        $this->objetivosObjeArea[] = $objetivosObjeArea;
+    }
 }

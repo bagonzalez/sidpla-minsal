@@ -1,0 +1,22 @@
+<table border="1" WIDTH='85%'>
+    <thead>
+        <tr  style=" font-size: 14px;">
+            <th><strong>  Indicador de Salud </strong></th>
+            <th><strong>  Tipo Indicador </strong></th>
+            <th><strong>  Acciones </strong></th>
+        </tr>
+    </thead>
+    <tbody>
+{% if indSalud is defined %}   
+    {% for  indicador in  indSalud%}
+    <tr>
+        <td style=" font-size: 12px;">{{ indicador.getNombreIndSalud}} </td>
+        <td style=" font-size: 12px; text-align: center" >{{ indicador.getTipoIndicador.getNombreTipIndi}} </td>
+        <td WIDTH='20%' style=" text-align: center" >
+            <input type="submit" id="editar" value="Editar" onclick="$('#idIndSal').attr('value',{{indicador.getCodIndSalud}});this.form.action='{{path('MinSalSidPlaIndicadoresTemplateBundle_editarIndicadorSalud')}}';" />
+        </td>
+    </tr>
+    {% endfor %}
+ {% endif %}
+    </tbody>
+</table>

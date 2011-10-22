@@ -49,20 +49,37 @@ class ProgramacionMonitoreo {
      * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad", mappedBy="programacionMonitoreo")
      */
     protected $resultadoact;
+    
+    /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\TemplateUnisalBundle\Entity\ResultActUniSal", mappedBy="programacionMonitoreo")
+     */
+    protected $resultadoactUniSal;
+    
+    
 
     public function __construct() {
         $this->objetivosEspec = new ArrayCollection();
         $this->resultadores = new ArrayCollection();
         $this->resultadoact = new ArrayCollection();
+        $this->resultadoactUniSal =new ArrayCollection();
     }
 
     /**
      * Add resultadoact
      *
-     * @param MinSal\SidPla\AdminBundle\Entity\Municipio $resultadoact
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad  $resultadoact
      */
     public function addResultadoact(\MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad $resultadoact) {
         $this->resultadoact[] = $resultadoact;
+    }
+    
+     /**
+     * Add resultadoactUniSal
+     *
+     * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ResultActUniSal resultadoactUniSal
+     */
+    public function addResultadoactUniSal(\MinSal\SidPla\TemplateUnisalBundle\Entity\ResultActUniSal $resultadoactUniSal) {
+        $this->resultadoactUniSal[] = resultadoactUniSal;
     }
 
     /**

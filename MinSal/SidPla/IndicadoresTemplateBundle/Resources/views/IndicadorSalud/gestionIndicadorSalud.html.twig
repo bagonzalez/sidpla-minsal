@@ -1,0 +1,144 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#guardarIndSal').button();
+    $('#limpiarIndSal').button();
+    $('#regresarIndSal').button();
+    
+    $('#guardarIndSal').click(function(evento) {
+          this.form.action='{{ path('MinSalSidPlaIndicadoresTemplateBundle_manttIndicadorSalud') }}';
+    });
+    
+   $("#regresarIndSal").click(function(){
+       window.location='mostrarIndicadoresSalud?idObj={{idObj}}';
+   });
+    
+   $("#forIndSal").validate();   
+    
+});
+    </script>
+    <style type="text/css">
+            form.cmxform label.error, label.error {
+                /* remove the next line when you have trouble in IE6 with labels in list */
+                color: red;
+                font-style: italic
+            }
+            input.error { border: 1px dotted red; }
+            textarea.error { border: 1px dotted red; }
+        </style>  
+
+        <form id="forIndSal" name="forIndSal" method="post" >
+{% if idIndSal is defined %}
+                <table colspan="4"  align="center"><!-- id="datos"  -->
+                                      <tr>
+                        <td colspan='2'>
+                            <h1 style=" text-align: center">Modificar el Indicador de Salud para Unidades de Salud</h1>
+                            <br></br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Objetivo:</td>   
+                        <td align="center" style=" font-size: 12px">
+                            <textarea readonly="readonly"  rows="4" cols="100" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{descObj}}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Nombre del Indicador(*):</td>
+                        <td><textarea class="required" rows="4" cols="83" name= 'descIndSal'  size="83%" id="descIndSal" >{{descIndSal}}</textarea></td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Tipo de Indicador(*):</td>
+                        <td><select id='tipInd' name='tipInd'>
+                                <option value='0'>Seleccione</option>
+                              {% for  tipo in  tipoIndicador%}  
+                                <option value='{{ tipo.getCodTipIndi }}' {% if tipo.getCodTipIndi==tipInd%} selected="selected" {% endif%} >{{ tipo.getNombreTipIndi }}</option>
+                               {% endfor%}
+                            </select>
+                                <p>Si el tipo de Indicador no se encuentra en la lista, <a href="mostrarTipoIndicadores?idObj={{idObj}}&idIndSal={{idIndSal}}" > Da clic aqui</a> </p>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Formula 1(*):</td>
+                        <td><input class="required" name="form1IndSal" id="form1IndSal" type="text" size="80" maxlength="250"value="{{form1IndSal}}"/></td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Formula 2(*):</td>
+                        <td><input class="required" name="form2IndSal" id="form2IndSal" type="text" size="80" maxlength="50" value="{{form2IndSal}}"/></td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px; text-align: right" valign="top"  >Resultado(*):</td>
+                        <td><input type="radio" name="resIndSal" value="1" {% if resIndSal==1%} checked="checked" {% endif%}  /> Digitado<br></br>
+                            <input type="radio" name="resIndSal" value="2" {% if resIndSal==2%} checked="checked" {% endif%}/> Calculado
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <button type="submmit" id="guardarIndSal"  >Guardar</button>
+                            <button type="reset" id="limpiarIndSal"  >Limpiar</button>
+                            <button type="button" id="regresarIndSal"  >Regresar</button>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type='hidden' name='idObj' id="idObj" value='{{idObj}}' />  
+                <input type='hidden' name='idIndSal' id="idIndSal" value='{{idIndSal}}' />  
+                <input type='hidden' name='oper' id="oper" value='edit' /> 
+{% else%}
+                <table colspan="4"  align="center">
+                    <tr>
+                        <td colspan='2'>
+                            <h1 style=" text-align: center">Ingrese el Indicador de Salud para Unidades de Salud</h1>
+                            <br></br>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Objetivo:</td>   
+                        <td align="center" style=" font-size: 12px">
+                            <textarea readonly="readonly"  rows="4" cols="100" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{descObj}}</textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Nombre del Indicador(*):</td>
+                        <td><textarea class="required" rows="4" cols="83" name= 'descIndSal'  size="83%" id="descIndSal" ></textarea></td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Tipo de Indicador(*):</td>
+                        <td><select id='tipInd' name='tipInd'>
+                                <option value='0'>Seleccione</option>
+                              {% for  tipo in  tipoIndicador%}  
+                                <option value='{{ tipo.getCodTipIndi }}'>{{ tipo.getNombreTipIndi }}</option>
+                               {% endfor%}
+                            </select>
+                                <p>Si el tipo de Indicador no se encuentra en la lista, <a href="mostrarTipoIndicadores?idObj={{idObj}}"  > Da clic aqui</a> </p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Formula 1(*):</td>
+                        <td><input class="required" name="form1IndSal" id="form1IndSal" type="text" size="80" maxlength="250"/></td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Formula 2(*):</td>
+                        <td><input class="required" name="form2IndSal" id="form2IndSal" type="text" size="80" maxlength="50"/></td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px; text-align: right" valign="top"  >Resultado(*):</td>
+                        <td><input type="radio" name="resIndSal" value="1"/> Digitado<br></br>
+                            <input type="radio" name="resIndSal" value="2" /> Calculado
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" align="center">
+                            <button type="submmit" id="guardarIndSal"  >Guardar</button>
+                            <button type="reset" id="limpiarIndSal"  >Limpiar</button>
+                            <button type="button" id="regresarIndSal"  >Regresar</button>
+                        </td>
+                    </tr>
+
+                </table>
+                <input type='hidden' name='idObj' id="idObj" value='{{idObj}}' />  
+                <input type='hidden' name='oper' id="oper" value='add' />
+{% endif%}
+            </form>
+{% endblock %}

@@ -37,6 +37,9 @@ MinSalSidPlaPrograMonitoreoBundle_editandoActividadesEnRetraso:
     
 MinSalSidPlaPrograMonitoreoBundle_consultarTipoMeta:
     pattern:  /consultarTipoMeta
-    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionCompromisoCumplimiento:consultarTipoMeta }   
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionCompromisoCumplimiento:consultarTipoMeta }
+MinSalSidPlaPrograMonitoreoBundle_showProgramacionMonitoreoUNISAL:
+    pattern:  /showProgramacionMonitoreoUNISAL
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionPrograMonUNISAL:showProgramacionMonitoreoUNISAL }   
     
     

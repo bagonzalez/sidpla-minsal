@@ -281,4 +281,14 @@ class ActividadUnisalTemplate {
         return $this->formulasAct;
     }
 
+
+    /**
+     * Add formulasAct
+     *
+     * @param MinSal\SidPla\TemplateUnisalBundle\Entity\FormulaActividad $formulasAct
+     */
+    public function addFormulaActividad(\MinSal\SidPla\TemplateUnisalBundle\Entity\FormulaActividad $formulasAct)
+    {
+        $this->formulasAct[] = $formulasAct;
+    }
 }

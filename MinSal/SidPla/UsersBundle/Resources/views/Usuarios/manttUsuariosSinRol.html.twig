@@ -1,0 +1,19 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %}Usuarios sin Rol {% endblock %}
+
+{% block body %}
+    <h1 style='text-align: center;'>Usuarios sin Rol</h1>
+    <table align="center">
+        <tr>
+            <td align="center">
+                <br></br>  
+               {% include 'MinSalSidPlaUsersBundle:Usuarios:showUsuariosSinRol.html.twig'%}
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <input type="button" id="editarUsuarioButton" value="   Editar   " />
+            </td>
+        </tr>        
+    </table>    
+{% endblock %}

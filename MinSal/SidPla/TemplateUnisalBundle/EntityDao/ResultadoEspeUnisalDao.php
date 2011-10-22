@@ -3,8 +3,8 @@
 namespace MinSal\SidPla\TemplateUnisalBundle\EntityDao;
 
 use MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal;
-use \MinSal\SidPla\TemplateUnisalBundle\Entity\ObjetivoEspeUnisal;
-use \MinSal\SidPla\TemplateUnisalBundle\EntityDao\ObjetivoEspeUnisalDao;
+use MinSal\SidPla\TemplateUnisalBundle\Entity\ObjetivoEspeUnisal;
+use MinSal\SidPla\TemplateUnisalBundle\EntityDao\ObjetivoEspeUnisalDao;
 
 class ResultadoEspeUnisalDao {
 

@@ -89,4 +89,14 @@ class ProUnisalTemplate {
     {
         return $this->objeEspeProgra;
     }
+
+    /**
+     * Add objeEspeProgra
+     *
+     * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ObjetivoEspeUnisal $objeEspeProgra
+     */
+    public function addObjetivoEspeUnisal(\MinSal\SidPla\TemplateUnisalBundle\Entity\ObjetivoEspeUnisal $objeEspeProgra)
+    {
+        $this->objeEspeProgra[] = $objeEspeProgra;
+    }
 }
