@@ -3,7 +3,6 @@
 namespace MinSal\SidPla\UsersBundle\EntityDao;
 
 use MinSal\SidPla\UsersBundle\Entity\User;
-
 use MinSal\SidPla\AdminBundle\EntityDao\RolDao;
 use MinSal\SidPla\AdminBundle\Entity\RolSistema;
 
@@ -21,7 +20,7 @@ class UserDao {
     }
 
     public function getUser() {
-        $User = $this->em->createQuery("SELECT U
+        $User = $this->em->createQuery("SELECT FROM MinSalSidPlaUsersBundle:User U
                                         FROM MinSalSidPlaUsersBundle:User U
                                         WHERE U.rol IS NULL
                                         ");
@@ -35,18 +34,25 @@ class UserDao {
     }
 
     public function editUserSinRol($codigoUser, $idRol) {
-        
-        $user=  $this->getUserEspecifico($codigoUser);
-        
-        $rolDao=new RolDao($this->doctrine);
-        $rol=$rolDao->getRolEspecifico($idRol);
-        
+
+        $user = $this->getUserEspecifico($codigoUser);
+
+        $rolDao = new RolDao($this->doctrine);
+        $rol = $rolDao->getRolEspecifico($idRol);
+
         $user->setRol($rol);
         $this->em->persist($user);
         $this->em->flush();
         $matrizMensajes = $codigoUser;
 
         return $matrizMensajes;
+    }
+
+    public function existeEmpleado($idEmpleado) {
+        $result = $this->em->createQuery("SELECT count(U)
+                                          FROM MinSalSidPlaUsersBundle:User U
+                                          WHERE U.empleado.idEmpleado =" . $idEmpleado);
+        return $result->getSingleScalarResult();
     }
 
 }
