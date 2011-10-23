@@ -103,6 +103,13 @@ class ActividadUniSal {
      * @ORM\OneToMany(targetEntity="MinSal\SidPla\TemplateUnisalBundle\Entity\ResultActUniSal", mappedBy="programacionMonitoreo")
      */
     protected $resultadoactUniSal;
+    
+       
+    /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo", inversedBy="actividadesUniSal")
+     * @ORM\JoinColumn(name="promon_codigo", referencedColumnName="promon_codigo")
+     */
+    protected $programacionMonitoreo;
 
     public function __construct() {
         $this->resultadoactUniSal =new ArrayCollection();        
@@ -340,5 +347,25 @@ class ActividadUniSal {
     public function getResultadoactUniSal()
     {
         return $this->resultadoactUniSal;
+    }
+    
+     /**
+     * Set programacionMonitoreo
+     *
+     * @param MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo $programacionMonitoreo
+     */
+    public function setProgramacionMonitoreo(\MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo $programacionMonitoreo)
+    {
+        $this->programacionMonitoreo = $programacionMonitoreo;
+    }
+
+    /**
+     * Get programacionMonitoreo
+     *
+     * @return MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo 
+     */
+    public function getProgramacionMonitoreo()
+    {
+        return $this->programacionMonitoreo;
     }
 }

@@ -55,6 +55,13 @@ class ProgramacionMonitoreo {
      */
     protected $resultadoactUniSal;
     
+    /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUniSal", mappedBy="programacionMonitoreo")
+     */
+    protected $actividadesUniSal;
+    
+    
+    
     
 
     public function __construct() {
@@ -62,6 +69,7 @@ class ProgramacionMonitoreo {
         $this->resultadores = new ArrayCollection();
         $this->resultadoact = new ArrayCollection();
         $this->resultadoactUniSal =new ArrayCollection();
+        $this->actividadesUniSal =new ArrayCollection();
     }
 
     /**
@@ -181,4 +189,74 @@ class ProgramacionMonitoreo {
         return $this->pao;
     }
 
+
+    /**
+     * Add objetivosEspec
+     *
+     * @param MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico $objetivosEspec
+     */
+    public function addObjetivoEspecifico(\MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico $objetivosEspec)
+    {
+        $this->objetivosEspec[] = $objetivosEspec;
+    }
+
+    /**
+     * Add resultadores
+     *
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\Resultadore $resultadores
+     */
+    public function addResultadore(\MinSal\SidPla\GesObjEspBundle\Entity\Resultadore $resultadores)
+    {
+        $this->resultadores[] = $resultadores;
+    }
+
+    /**
+     * Add resultadoact
+     *
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad $resultadoact
+     */
+    public function addResulActividad(\MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad $resultadoact)
+    {
+        $this->resultadoact[] = $resultadoact;
+    }
+
+    /**
+     * Add resultadoactUniSal
+     *
+     * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ResultActUniSal $resultadoactUniSal
+     */
+    public function addResultActUniSal(\MinSal\SidPla\TemplateUnisalBundle\Entity\ResultActUniSal $resultadoactUniSal)
+    {
+        $this->resultadoactUniSal[] = $resultadoactUniSal;
+    }
+
+    /**
+     * Get resultadoactUniSal
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getResultadoactUniSal()
+    {
+        return $this->resultadoactUniSal;
+    }
+
+    /**
+     * Add actividadesUniSal
+     *
+     * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUniSal $actividadesUniSal
+     */
+    public function addActividadUniSal(\MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUniSal $actividadesUniSal)
+    {
+        $this->actividadesUniSal[] = $actividadesUniSal;
+    }
+
+    /**
+     * Get actividadesUniSal
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getActividadesUniSal()
+    {
+        return $this->actividadesUniSal;
+    }
 }

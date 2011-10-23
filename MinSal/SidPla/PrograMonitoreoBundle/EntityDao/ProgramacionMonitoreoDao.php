@@ -75,28 +75,30 @@ class ProgramacionMonitoreoDao {
     public function getActividadesUniSal($idProgramon){
         
              $rsm=new ResultSetMapping;             
-             $rsm->addEntityResult('MinSalSidPlaGesObjEspBundle:Actividad', 'a');
-             $rsm->addFieldResult('a', 'actividad_codigo', 'idAct');
-             $rsm->addFieldResult('a', 'actividad_descripcion', 'actDescripcion');
-             $rsm->addFieldResult('a', 'activiadad_responsable', 'actResponsable');
-             $rsm->addFieldResult('a', 'actividad_costo', 'costo');
-             $rsm->addFieldResult('a', 'actividad_metanual', 'actMetaAnual');
-             $rsm->addFieldResult('a', 'actividad_descripmetanual', 'actDescMetaAnu');
+             $rsm->addEntityResult('MinSalSidPlaTemplateUnisalBundle:ActividadUniSal', 'a');
+             $rsm->addFieldResult('a', 'actuni_metaanual', 'metaAnualActUni');
+             $rsm->addFieldResult('a', 'actuni_cobertura', 'coberActUni');
+             $rsm->addFieldResult('a', 'actuni_beneficiario', 'beneActUni');
+             $rsm->addFieldResult('a', 'actuni_responsable', 'responsableActUni');
+             $rsm->addFieldResult('a', 'actuni_codigo', 'codActUni');
+             $rsm->addFieldResult('a', 'actuni_fechafin', 'fechaFinAct');
+             $rsm->addFieldResult('a', 'actuni_fechainicio', 'fechaInicioAct');
              $query = $this->em->createNativeQuery('SELECT 
-                      DISTINCT sidpla_actividad.actividad_codigo, 
-                      sidpla_actividad.actividad_descripcion,   
-                      sidpla_actividad.activiadad_responsable,
-                      sidpla_actividad.actividad_costo,
-                      sidpla_actividad.actividad_metanual,
-                      sidpla_actividad.actividad_descripmetanual
-                    FROM 
-                      public.sidpla_programacionmonitoreo, 
-                      public.sidpla_resultadoactvidad, 
-                      public.sidpla_actividad
-                    WHERE 
-                      sidpla_programacionmonitoreo.promon_codigo = sidpla_resultadoactvidad.promon_codigo AND
-                      sidpla_actividad.actividad_codigo = sidpla_resultadoactvidad.actividad_codigo AND
-                      sidpla_programacionmonitoreo.promon_codigo=?' , $rsm);   
+                          sidpla_actividadunisal.actuni_metaanual, 
+                          sidpla_actividadunisal.actuni_cobertura, 
+                          sidpla_actividadunisal.actuni_beneficiario, 
+                          sidpla_actividadunisal.actuni_responsable, 
+                          sidpla_actividadunisal.actuni_codigo, 
+                          sidpla_actividadunisal.actuni_fechafin, 
+                          sidpla_actividadunisal.actuni_fechainicio
+                        FROM 
+                          public.sidpla_actividadunisal, 
+                          public.sidpla_actividadunisaltemplate, 
+                          public.sidpla_programacionmonitoreo
+                        WHERE 
+                          sidpla_actividadunisaltemplate.actunitem_codigo = sidpla_actividadunisal.actunitem_codigo AND
+                          sidpla_programacionmonitoreo.promon_codigo = sidpla_actividadunisal.promon_codigo AND
+                          sidpla_programacionmonitoreo.promon_codigo=?' , $rsm);   
              $query->setParameter(1, $idProgramon);
              $actividades = $query->getResult();             
              
