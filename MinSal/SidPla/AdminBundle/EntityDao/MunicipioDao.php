@@ -47,6 +47,10 @@ class MunicipioDao {
      public function getMunicipio($idMunicipio){                           
              return $this->repositorio->find($idMunicipio);             
      }
+     public function getMunicipios() {	    
+        $municipios=$this->repositorio->findAll();
+        return $municipios;
+    }
      
 }
 
