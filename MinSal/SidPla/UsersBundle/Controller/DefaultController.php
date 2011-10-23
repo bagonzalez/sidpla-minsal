@@ -9,16 +9,32 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use MinSal\SidPla\UsersBundle\Entity\User;
 use MinSal\SidPla\UsersBundle\EntityDao\UserDao;
+
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
+
+use MinSal\SidPla\AdminBundle\EntityDao\RolDao;
+use MinSal\SidPla\AdminBundle\Entity\RolSistema;
 
 class DefaultController extends Controller {
 
- 
-
     public function mostrarUsuariosSinRolAction() {
         $opciones = $this->getRequest()->getSession()->get('opciones');
+        
+        $rolDao= new RolDao($this->getDoctrine());
+        $roles=$rolDao->getRoles();
+        $aux= new RolSistema();
+        $cadena='';
+        $i=1;
+        $n=count($roles);
+        foreach ($roles as $aux) {
+            if($i!=$n)
+                $cadena.=$aux->getIdRol().':'.$aux->getNombreRol().';';
+            else
+                $cadena.=$aux->getIdRol().':'.$aux->getNombreRol();
+            $i++;
+        }
 
-        return $this->render('MinSalSidPlaUsersBundle:Usuarios:manttUsuariosSinRol.html.twig', array('opciones' => $opciones));
+        return $this->render('MinSalSidPlaUsersBundle:Usuarios:manttUsuariosSinRol.html.twig', array('opciones' => $opciones,'roles'=>$cadena));
     }
     
     public function consultarUsuarioSinRolJSONAction() {
@@ -35,7 +51,8 @@ class DefaultController extends Controller {
             $rows[$i]['id'] = $aux->getIdUsuario();
             $rows[$i]['cell'] = array($aux->getIdUsuario(),
                 $aux->getIdUsuario(),
-                $aux->getEmpleado()->getPrimerNombre()
+                $aux->getEmpleado()->getPrimerNombre().' '.$aux->getEmpleado()->getPrimerApellido(),
+                $aux->getEmpleado()->getUnidadOrganizativa()->getNombreUnidad()
             );
             $i++;
         }
@@ -44,7 +61,7 @@ class DefaultController extends Controller {
             array_multisort($rows, SORT_ASC);
         } else {
             $rows[0]['id'] = 0;
-            $rows[0]['cell'] = array(' ', ' ');
+            $rows[0]['cell'] = array(' ', ' ',' ',' ');
         }
 
         $datos = json_encode($rows);
@@ -59,6 +76,17 @@ class DefaultController extends Controller {
 
         $response = new Response($jsonresponse);
         return $response;
+    }
+    
+    public function editarUsuarioSinRolAction() {
+        $request = $this->getRequest();
+        $codigoUsuario = $request->get('id');
+        $numRol=$request->get('rol');
+        
+        $userDao=new UserDao($this->getDoctrine());
+        $userDao->editUserSinRol($codigoUsuario, $numRol);
+
+        return new Response("{sc:true,msg:''}");
     }
 
 }

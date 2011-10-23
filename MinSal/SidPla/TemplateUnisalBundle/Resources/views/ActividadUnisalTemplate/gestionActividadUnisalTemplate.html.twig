@@ -13,6 +13,27 @@ $(document).ready(function(){
    $("#regresarResEsp").click(function(){
        window.location='mostrarActUnisalTemplate?idObj={{idObj}}&idResEsp={{idResEsp}}';
    });
+   
+   $.getJSON('{{ path('MinSalSidPlaCensoBundle_consultarCategoriaCensoJSON')}}', function(data) {
+      var i=0;
+      $.each(data, function(key, val) {
+        if(key=='rows'){
+          $.each(val, function(id, registro){
+           {% if universo is defined %}
+               if(registro['cell'][0]=={{universo}}){
+                 $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'" selected="selected">'+registro['cell'][1]+'</option>');
+               }else
+                   $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+           {% else %}
+               $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');                                
+           {% endif %}
+           
+          });                    
+        }
+      });
+   });
+   $("#categoriaCenso").combobox();
+   $('#categoriaCenso').css("width", '150px');
     
 //  $("#forResEsp").validate();   
     
@@ -61,7 +82,20 @@ $(document).ready(function(){
                         <td style=" font-size: 12px" >Beneficiarios(*):</td>
                         <td><input name="benAct" id="benAct" type="text" size="60" maxlength="80" value="{{benAct}}" /></td>
                     </tr>
-                     <tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Universo:</td>
+                          <td>                           
+                            <select  id="categoriaCenso" name="categoriaCenso">
+                            </select>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px; text-align: right" valign="top" >Total a utilizar para el Universo:</td>
+                        <td><input type="radio" name="tipTotAct" value="1"{% if tipoTotAct is defined %}{% if tipoTotAct==1%}  checked="checked" {% endif%} {% endif%}/> Total General<br></br>
+                            <input type="radio" name="tipTotAct" value="2" {% if tipoTotAct is defined %}{% if tipoTotAct==2%}  checked="checked" {% endif%} {% endif%} /> Poblacion Promotores de Salud
+                        </td>
+                    </tr>
+                    <tr>
                         <td style=" font-size: 12px" >Cobertura:</td>
                         <td><input name="cobAct" id="cobAct" type="text" size="20" value="{{cobAct}}" /></td>
                     </tr>
@@ -129,7 +163,20 @@ $(document).ready(function(){
                         <td style=" font-size: 12px" >Beneficiarios(*):</td>
                         <td><input name="benAct" id="benAct" type="text" size="60" maxlength="80" /></td>
                     </tr>
-                     <tr>
+                                        <tr>
+                        <td style=" font-size: 12px" >Universo:</td>
+                          <td>                           
+                            <select  id="categoriaCenso" name="categoriaCenso">
+                            </select>
+                        </td> 
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px; text-align: right" valign="top" >Total a utilizar para el Universo:</td>
+                        <td><input type="radio" name="tipTotAct" value="1"/> Total General<br></br>
+                            <input type="radio" name="tipTotAct" value="2"/> Poblacion Promotores de Salud
+                        </td>
+                    </tr>
+                    <tr>
                         <td style=" font-size: 12px" >Cobertura:</td>
                         <td><input name="cobAct" id="cobAct" type="text" size="20" value="0" /></td>
                     </tr>

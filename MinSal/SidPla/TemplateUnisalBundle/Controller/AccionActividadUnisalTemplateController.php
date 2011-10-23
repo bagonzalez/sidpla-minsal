@@ -75,9 +75,17 @@ class AccionActividadUnisalTemplateController extends Controller {
         $conAct = $actUnisal->getConcenActUniTemp();
         $supAct = $actUnisal->getCondActUniTemp();
         $metAnuAct = $actUnisal->getMetaAnualActUniTemp();
+        $universo=$actUnisal->getUniverso();
+        $tipoTotAct=$actUnisal->getTipoTotalUni();
         
-
-        return $this->render('MinSalSidPlaTemplateUnisalBundle:ActividadUnisalTemplate:gestionActividadUnisalTemplate.html.twig', 
+        if ($universo!=NULL)
+          return $this->render('MinSalSidPlaTemplateUnisalBundle:ActividadUnisalTemplate:gestionActividadUnisalTemplate.html.twig', 
+                array('opciones' => $opciones, 'idObj'=>$idObj,'descObj'=>$descObj,'idResEsp'=>$idResEsp,'descResEsp'=>$descResEsp,
+                      'idAct'=>$idAct,'descAct'=> $descAct,'benAct'=> $benAct,'cobAct'=> $cobAct,'conAct'=> $conAct,'supAct'=> $supAct, 
+                      'resAct'=>$resAct, 'metAnuAct'=>$metAnuAct,'universo'=>$universo,'tipoTotAct'=>$tipoTotAct
+                    ));
+        else
+            return $this->render('MinSalSidPlaTemplateUnisalBundle:ActividadUnisalTemplate:gestionActividadUnisalTemplate.html.twig', 
                 array('opciones' => $opciones, 'idObj'=>$idObj,'descObj'=>$descObj,'idResEsp'=>$idResEsp,'descResEsp'=>$descResEsp,
                       'idAct'=>$idAct,'descAct'=> $descAct,'benAct'=> $benAct,'cobAct'=> $cobAct,'conAct'=> $conAct,'supAct'=> $supAct, 'resAct'=>$resAct, 'metAnuAct'=>$metAnuAct
                     ));
@@ -98,16 +106,18 @@ class AccionActividadUnisalTemplateController extends Controller {
         $conAct = $request->get('conAct');
         $supAct = $request->get('supAct');
         $metAnuAct = $request->get('metAnuAct');
+        $tipTotAct = $request->get('tipTotAct');
+        $categoriaCenso = $request->get('categoriaCenso');
 
         $ActUnisalTemplateDao = new ActividadUnisalTemplateDao($this->getDoctrine());
 
 
         switch ($operacion) {
             case 'add':
-                $ActUnisalTemplateDao->agregarActividadUnisalTemplate($idResEsp, $descAct, $benAct, $cobAct, $conAct, $supAct, $resAct, $metAnuAct);
+                $ActUnisalTemplateDao->agregarActividadUnisalTemplate($idResEsp, $descAct, $benAct, $cobAct, $conAct, $supAct, $resAct, $metAnuAct,$categoriaCenso,$tipTotAct);
                 break;
             case 'edit':
-                $ActUnisalTemplateDao->editarActividadUnisalTemplate($idAct, $descAct, $benAct, $cobAct, $conAct, $supAct, $resAct, $metAnuAct);
+                $ActUnisalTemplateDao->editarActividadUnisalTemplate($idAct, $descAct, $benAct, $cobAct, $conAct, $supAct, $resAct, $metAnuAct,$categoriaCenso,$tipTotAct);
                 break;
         }
 
