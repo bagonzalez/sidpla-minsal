@@ -41,14 +41,14 @@ class RegistrationFormType  extends BaseType
         parent::buildForm($builder, $options);
 
         // add your custom field
-        $builder->add('empleado', 'entity',
+        /*$builder->add('empleado', 'entity',
                 array( 'class' => 'MinSal\\SidPla\\AdminBundle\\Entity\\Empleado',
                'query_builder' => function(EntityRepository $er) {
                         return $er->createQueryBuilder('u')
                                     ->orderBy('u.primerNombre', 'ASC');
                 },
-        ));
-                
+        ));*/
+        $builder->add('empleado','text');
        /* $builder->add('rol', 'entity',
                 array( 'class' => 'MinSal\\SidPla\\AdminBundle\\Entity\\RolSistema',
                'query_builder' => function(EntityRepository $er) {

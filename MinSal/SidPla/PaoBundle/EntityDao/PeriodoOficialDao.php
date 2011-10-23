@@ -126,6 +126,8 @@ class PeriodoOficialDao {
         $query->setParameter(1, $anio);
 
         $x = $query->getSingleScalarResult();
+        
+        return 'SE CREO CORRECTAMENTE';
     }
 
 }

@@ -14,6 +14,7 @@ use MinSal\SidPla\PaoBundle\EntityDao\TipoPeriodoDao;
 use MinSal\SidPla\TemplateUnisalBundle\EntityDao\ActividadUnisalTemplateDao;
 
 use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\ResEspTemplateDao;
+use MinSal\SidPla\PaoBundle\EntityDao\PaoDao;
 
 class AccionPaoPeriodoOficialController extends Controller {
 
@@ -88,30 +89,9 @@ class AccionPaoPeriodoOficialController extends Controller {
         
         $opciones = $this->getRequest()->getSession()->get('opciones');
         
-        //Para saber Si ya esta definido el Cronograma de la PAO en elaboracion
-        $cronogramaDao= new PeriodoOficialDao($this->getDoctrine());
-        $bc=$cronogramaDao->cuantasFechasNoDefinidas($anio);
+        $mostrarboton=FALSE;
         
-        //Para saber si ya se definieron actividades en la Plantilla de Actividades para Unidades de Salud
-        $actividadTemplateDao= new ActividadUnisalTemplateDao($this->getDoctrine());
-        $ba=$actividadTemplateDao->cuantasActDefinidas($anio);
-        
-        //Para saber si ya se definieron resultados esperados de la Plantilla para SIBASI y Regiones de Salud
-        $resulTemplateDao = new ResEspTemplateDao($this->getDoctrine());
-        $bec=$resulTemplateDao->cuantosResulDefinidas((string) ($anio));
-        
-        if($bc!=0)
-            $mostrarboton=FALSE;
-        else
-            if($ba==0)
-                $mostrarboton=FALSE;
-            else
-                if($bec==0)
-                    $mostrarboton=FALSE;
-                else
-                    $mostrarboton=TRUE;
-
-        return $this->render('MinSalSidPlaPaoBundle:CrearPao:manttCrearPao.html.twig'
+       return $this->render('MinSalSidPlaPaoBundle:CrearPao:manttCrearPao.html.twig'
                         , array('opciones' => $opciones,'mostrarboton'=>$mostrarboton,'msj'=>$msj));
 
     }
@@ -174,6 +154,9 @@ class AccionPaoPeriodoOficialController extends Controller {
         $resulTemplateDao = new ResEspTemplateDao($this->getDoctrine());
         $bec=$resulTemplateDao->cuantosResulDefinidas((string) ($anio));
         
+        $paoDao=new PaoDao($this->getDoctrine());
+        $bp=$paoDao->existenPaos($anio);
+        
         if($bc!=0)
             $mostrarboton=FALSE;
         else
@@ -183,7 +166,11 @@ class AccionPaoPeriodoOficialController extends Controller {
                 if($bec==0)
                     $mostrarboton=FALSE;
                 else
-                    $mostrarboton=TRUE;
+                    if($bp!=0)
+                        $mostrarboton=FALSE;
+                    else
+                        $mostrarboton=TRUE;
+                    
             
         
         

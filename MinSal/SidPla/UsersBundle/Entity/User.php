@@ -87,4 +87,14 @@ class User extends BaseUser
     {
         return $this->rol;
     }
+    
+     /**
+     * Get username
+     *
+     * @return string 
+     */
+    public function getUsername()
+    {
+        return $this->username;
+    }
 }
