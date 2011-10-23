@@ -61,7 +61,7 @@ class AccionAdminMenCorreTempController extends Controller {
             $rows[0]['cell'] = array(' ', ' ', ' ', ' ', ' ');
         }
         $datos = json_encode($rows);
-        $pages = floor($numfilas / 10)+1;
+        $pages = floor($numfilas / 4)+1;
 
         $jsonresponse = '{
                "page":"1",

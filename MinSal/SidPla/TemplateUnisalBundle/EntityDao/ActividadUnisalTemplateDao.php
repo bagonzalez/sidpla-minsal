@@ -24,7 +24,7 @@ class ActividadUnisalTemplateDao {
         return $actividadUnisal;
     }
     
-    public function agregarActividadUnisalTemplate($idResEspe, $descActUnisal,$beneActUniTemp,$coberActUniTemp,$concenActUniTemp,$condActUniTemp,$responsableActUniTemp,$metaAnualActUniTemp) {
+    public function agregarActividadUnisalTemplate($idResEspe, $descActUnisal,$beneActUniTemp,$coberActUniTemp,$concenActUniTemp,$condActUniTemp,$responsableActUniTemp,$metaAnualActUniTemp,$universo,$tipoTot) {
 
         $resEspeDao = new ResultadoEspeUnisalDao($this->doctrine);
         $resEspe = $resEspeDao->getResultadoEspeUnisalEspecifico($idResEspe);
@@ -38,6 +38,8 @@ class ActividadUnisalTemplateDao {
         $actividadUnisalTemplate->setResulEspeTemAct($resEspe);
         $actividadUnisalTemplate->setDescActUniTemp($descActUnisal);
         $actividadUnisalTemplate->setMetaAnualActUniTemp($metaAnualActUniTemp);
+        $actividadUnisalTemplate->setUniverso($universo);
+        $actividadUnisalTemplate->setTipoTotalUni($tipoTot);
         
         $this->em->persist($actividadUnisalTemplate);
         $resEspe->addActividadesTemplate($actividadUnisalTemplate);
@@ -49,7 +51,7 @@ class ActividadUnisalTemplateDao {
         return $matrizMensajes;
     }
 
-    public function editarActividadUnisalTemplate($idAct, $descActUnisal,$beneActUniTemp,$coberActUniTemp,$concenActUniTemp,$condActUniTemp,$responsableActUniTemp,$metaAnualActUniTemp) {
+    public function editarActividadUnisalTemplate($idAct, $descActUnisal,$beneActUniTemp,$coberActUniTemp,$concenActUniTemp,$condActUniTemp,$responsableActUniTemp,$metaAnualActUniTemp,$universo,$tipoTot) {
 
         $actividadUnisalTemplate = $this->getActividadUnisalEspecifico($idAct);
         
@@ -60,6 +62,8 @@ class ActividadUnisalTemplateDao {
         $actividadUnisalTemplate->setResponsableActUniTemp($responsableActUniTemp);
         $actividadUnisalTemplate->setDescActUniTemp($descActUnisal);
         $actividadUnisalTemplate->setMetaAnualActUniTemp($metaAnualActUniTemp);
+        $actividadUnisalTemplate->setUniverso($universo);
+        $actividadUnisalTemplate->setTipoTotalUni($tipoTot);
         
         $this->em->persist($actividadUnisalTemplate);
         $this->em->flush();

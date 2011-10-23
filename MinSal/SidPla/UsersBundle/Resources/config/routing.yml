@@ -5,3 +5,7 @@ MinSalSidPlaUsersBundle_mostrarUsuariosSinRol:
 MinSalSidPlaUsersBundle_consultarUsuarioSinRolJSON:
     pattern:  /consultarUsuarioSinRolJSON
     defaults: { _controller: MinSalSidPlaUsersBundle:Default:consultarUsuarioSinRolJSON }
+    
+MinSalSidPlaUsersBundle_editarUsuarioSinRol:
+    pattern:  /editarUsuarioSinRol
+    defaults: { _controller: MinSalSidPlaUsersBundle:Default:editarUsuarioSinRol }

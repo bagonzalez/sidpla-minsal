@@ -9,11 +9,13 @@
           url: 'consultarUsuarioSinRolJSON',
           datatype:'json',
           altRows:true,
-          colNames:['Codigo','ID Usuario','Nombre'],
+          colNames:['Codigo','ID Usuario','Nombre','Unidad','Rol'],
           colModel:[
             { name:'codigo', index: 'codigo', width:40,editable:false,editoptions:{size:15}  },
-            { name:'idusuario', index: 'idusuario',width:250,editable:false},
-            { name:'nombre', index: 'nombre',width:250,editable:true,editoptions:{size:25,maxlength:25}, formoptions:{ rowpos:1, label: "Nombre",elmprefix:"(*)"},editrules:{required:true} }
+            { name:'idusuario', index: 'idusuario',width:50,editable:false},
+            { name:'nombre', index: 'nombre',width:100,editable:true,edittype:"text",editoptions: {readonly:"readonly"}},
+            { name:'unidad', index: 'unidad',width:300,editable:true,edittype:"text",editoptions: {readonly:"readonly",size:50}},
+            { name:'rol', index: 'rol', width:50,editable:true,editoptions:{size:30},edittype:"select",align:"center",editoptions: {value:"{{roles}}"}}
            ],            
           rowNum:10,
           rowList:[10,20,30],
@@ -22,13 +24,14 @@
           pager: jQuery('#pager'),
           viewrecords: true,          
           caption: 'Usuarios sin Rol',
-          height: "100%"/*,
-          editurl:'manttUsuarioEdicion'*/
+          height: "100%",
+          editurl:'editarUsuarioSinRol'
            
         });
         
          myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,search:false,refresh:false,
-             beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}).hideCol('codigo');
+             beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}
+         ).hideCol('codigo');
          
       /* Funcion para regargar los JQGRID luego de agregar y editar*/
       function despuesAgregarEditar() {

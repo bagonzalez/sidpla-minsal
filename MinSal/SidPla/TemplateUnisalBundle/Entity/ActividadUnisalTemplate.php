@@ -78,6 +78,20 @@ class ActividadUnisalTemplate {
     private $metaAnualActUniTemp;
 
     /**
+     * @var integer $universo
+     *
+     * @ORM\Column(name="actunitem_universo", type="integer")
+     */
+    private $universo;
+
+    /**
+     * @var integer $tipoTotalUni
+     *
+     * @ORM\Column(name="actunitem_unitipotot", type="integer")
+     */
+    private $tipoTotalUni;
+
+    /**
      * @ORM\ManyToOne(targetEntity="ResultadoEspeUnisal", inversedBy="actividadesTemplate")
      * @ORM\JoinColumn(name="resulespuni_codigo", referencedColumnName="resulespuni_codigo")
      */
@@ -246,6 +260,42 @@ class ActividadUnisalTemplate {
     }
 
     /**
+     * Set universo
+     *
+     * @param integer $universo
+     */
+    public function setUniverso($universo) {
+        $this->universo= $universo;
+    }
+
+    /**
+     * Get universo
+     *
+     * @return integer 
+     */
+    public function getUniverso() {
+        return $this->universo;
+    }
+
+    /**
+     * Set tipoTotalUni
+     *
+     * @param integer $tipoTotalUni
+     */
+    public function setTipoTotalUni($tipoTotalUni) {
+        $this->tipoTotalUni = $tipoTotalUni;
+    }
+
+    /**
+     * Get tipoTotalUni
+     *
+     * @return integer 
+     */
+    public function getTipoTotalUni() {
+        return $this->tipoTotalUni;
+    }
+
+    /**
      * Set resulEspeTemAct
      *
      * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resulEspeTemAct
@@ -281,14 +331,13 @@ class ActividadUnisalTemplate {
         return $this->formulasAct;
     }
 
-
     /**
      * Add formulasAct
      *
      * @param MinSal\SidPla\TemplateUnisalBundle\Entity\FormulaActividad $formulasAct
      */
-    public function addFormulaActividad(\MinSal\SidPla\TemplateUnisalBundle\Entity\FormulaActividad $formulasAct)
-    {
+    public function addFormulaActividad(\MinSal\SidPla\TemplateUnisalBundle\Entity\FormulaActividad $formulasAct) {
         $this->formulasAct[] = $formulasAct;
     }
+
 }

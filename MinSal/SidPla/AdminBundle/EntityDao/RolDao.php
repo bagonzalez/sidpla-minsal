@@ -72,6 +72,11 @@ class RolDao {
         return $roles;
     }
     
+     public function getRolEspecifico($id) {	    
+        $rol=$this->repositorio->find($id);
+        return $rol;
+    }
+    
     
         /*
          * Actualizar rol

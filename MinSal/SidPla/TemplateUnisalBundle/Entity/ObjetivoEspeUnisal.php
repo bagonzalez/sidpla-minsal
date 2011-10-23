@@ -166,11 +166,11 @@ class ObjetivoEspeUnisal {
      *
      * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resultEspObjT
      */
-    public function addResultadoEspeUnisal(\MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resultEspObjT)
-    {
+    public function addResultadoEspeUnisal(\MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resultEspObjT) {
         $this->resultEspObjT[] = $resultEspObjT;
     }
-        /**
+
+    /**
      * Get indicadoresSalud
      *
      * @return Doctrine\Common\Collections\Collection 
@@ -182,10 +182,10 @@ class ObjetivoEspeUnisal {
     /**
      * Add indicadoresSalud
      *
-     * @param M MinSal\SidPla\IndicadoresTemplateBundle\Entity $indicadoresSalud
+     * @param MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresSalud
      */
-    public function addIndicadoresSaludl(\MinSal\SidPla\IndicadoresTemplateBundle\Entity $indicadoresSalud)
-    {
+    public function addIndicadoresSaludl(\MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresSalud) {
         $this->indicadoresSalud[] = $indicadoresSalud;
     }
+
 }
