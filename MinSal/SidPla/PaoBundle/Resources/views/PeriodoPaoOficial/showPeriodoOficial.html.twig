@@ -5,11 +5,11 @@
         $('#agregarPerOfiButton').button();
         $('#editarPerOfiButton').button();
         $('#eliminarPerOfiButton').button();
-        $('#crearPao').button();
+      //  $('#crearPao').button();
         $('#selanio').change(cargarAnio);
         $('#crearPao').hide();
 
-        function cargarAnio(){
+       function cargarAnio(){
            $('#crearPao').hide();
            $('#tabperiodooficial').setGridParam({
                url:'consultarPeriodoOficialJSON?anio='+$('#selanio').val(),
@@ -19,14 +19,14 @@
        
         }
         
-       $("#crearPao").click(function(){
+      /* $("#crearPao").click(function(){
               $('#tabperiodooficial').setGridParam({
                url:'crearPao?anio='+$('#selanio').val(),
                editurl:'manttPeriodoOficial?anio='+$('#selanio').val(),
                datatype:'json'
            }).trigger("reloadGrid");
        
-        });
+        });*/
         
         function validaTipoPeriodo(value, colname) {
         if (value == 0 ) 
@@ -155,5 +155,5 @@
        <input type="button" id="agregarPerOfiButton" value="  Agregar  " />
        <input type="button" id="editarPerOfiButton" value="   Editar   " />
        <input type="button" id="eliminarPerOfiButton" value="  Eliminar  " />
-       <input type="button" id="crearPao" name="crearPao" value="  Crear PAO   "/>
+       <!-- <input type="button" id="crearPao" name="crearPao" value="  Crear PAO   "/>-->
 {% endblock %}

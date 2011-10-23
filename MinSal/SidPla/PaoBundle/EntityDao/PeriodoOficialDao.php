@@ -28,6 +28,14 @@ class PeriodoOficialDao {
                                                  ORDER BY po.idPerOfi ASC");
         return $PeriodosOficiales->getResult();
     }
+    
+     public function cuantasFechasNoDefinidas($anio) {
+        $PeriodosOficiales = $this->em->createQuery("SELECT count(po)
+                                                     FROM  MinSalSidPlaPaoBundle:PeriodoOficial po
+                                                     WHERE po.fechIniPerOfi IS NULL  OR po.fechFinPerOfi IS NULL 
+                                                     AND po.anioPerOfi=" . $anio);
+        return $PeriodosOficiales->getSingleScalarResult();
+    }
 
     public function getPeriodoOficialEspecifico($codigo) {
         $periodoOficial = $this->repositorio->find($codigo);
@@ -117,7 +125,7 @@ class PeriodoOficialDao {
         $query = $this->em->createNativeQuery('SELECT "PRC_CREAR_PAO"(?) resp', $rsm);
         $query->setParameter(1, $anio);
 
-        $x = $query->getResult();
+        $x = $query->getSingleScalarResult();
     }
 
 }
