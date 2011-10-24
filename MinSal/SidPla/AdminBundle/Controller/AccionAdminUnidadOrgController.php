@@ -14,6 +14,7 @@ use MinSal\SidPla\AdminBundle\Entity\DepartamentoPais;
 use MinSal\SidPla\AdminBundle\EntityDao\MunicipioDao;
 use MinSal\SidPla\AdminBundle\EntityDao\EmpleadoDao;
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
+use MinSal\SidPla\AdminBundle\EntityDao\InformacionGeneralDao;
 
 /**
  * Description of AccionAdminUnidadOrgController
@@ -185,6 +186,12 @@ class AccionAdminUnidadOrgController extends Controller {
     }
 
   public function editarUnidadesOrgAction() {
+        $nombreempleado="";
+        $segundonombre="";
+        $apellidoempleado="";
+        $segundoapellido="";
+      
+      
         $opciones = $this->getRequest()->getSession()->get('opciones');
         $request = $this->getRequest();
         $idfila = $request->get('idfila');
@@ -213,24 +220,26 @@ class AccionAdminUnidadOrgController extends Controller {
        $responsableDao = new EmpleadoDao($this->getDoctrine());
        $empleado = new Empleado();
        $empleado = $responsableDao->getEmpleado($responsable);
+       
+       
+       if( $empleado!=NULL){
        $nombreempleado=$empleado->getPrimerNombre();
        $segundonombre=$empleado->getSegundoNombre();
        $apellidoempleado=$empleado->getPrimerApellido();
        $segundoapellido=$empleado->getSegundoApellido();
+       }
+      
+       if($unidadpadre==NULL){
+          
+           $unidadOrgpadreextraDao = new UnidadOrganizativaDao($this->getDoctrine());
+           $uniextra = new UnidadOrganizativa();
+          $unidadpadre = $unidadOrgpadreextraDao->getUnidadOrg(44);
+       ;
+       }
        
-      // $iddepartamento=3;
        
-      $departamento= $muni->getIdDepto()->getNombreDepto();
+        $departamento= $muni->getIdDepto()->getNombreDepto();
      
-       
-       
-     //  $decimals = 0;
-     //  $dec_point = '.';
-     //  $thousands_sep = ',';
-     // $iddepartamento1 = number_format($iddepartamento, $decimals, $dec_point, $thousands_sep);
-    //$iddepartamento1= settype($iddepartamento, "integer");
-       
-        
         $departamDao = new DepartametoPaisDao($this->getDoctrine());
         $departamentos = $departamDao->getDepartametos();
         
@@ -286,8 +295,12 @@ class AccionAdminUnidadOrgController extends Controller {
         
           $unidadOrgDao = new UnidadOrganizativaDao($this->getDoctrine());
           $unidadOrgDao->editarUnidadOrg($nombreUnidad, $direccion, $responsable, $telefono, $fax, $tipoUnidad, $unidadPadre, $departameto, $municipio, $descripcion,$idfila,$idinfogeneral );
-
+          
       
+          $infogenDao = new InformacionGeneralDao($this->getDoctrine());
+          $infogenDao->editarInfoGeneral($direccion,$telefono,$fax,$idinfogeneral);
+          
+          
         
         $departamDao = new DepartametoPaisDao($this->getDoctrine());
         $departamentos = $departamDao->getDepartametos();

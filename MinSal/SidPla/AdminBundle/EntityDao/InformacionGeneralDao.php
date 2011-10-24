@@ -31,7 +31,23 @@ class InformacionGeneralDao {
     }
     
     
-    
+    public function editarInfoGeneral($direccion,$telefono, $fax,$id) {
+
+
+
+        $objinfogeneral=new InformacionGeneral();
+         $objinfogeneral=$this->repositorio->find($id);
+        $objinfogeneral->setDireccion($direccion);
+        $objinfogeneral->setTelefono($telefono);
+        $objinfogeneral->setFax($fax);
+         
+                 
+        $this->em->flush();            
+         $matrizMensajes = array('El proceso de editar termino con exito');
+ 
+         return $matrizMensajes;
+   }
+   
 }
 
 ?>

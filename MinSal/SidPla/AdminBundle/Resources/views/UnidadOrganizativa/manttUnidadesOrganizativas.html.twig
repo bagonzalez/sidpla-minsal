@@ -4,12 +4,12 @@
       $(document).ready(function(){
           $('#ingresar').button();
           $('#ingresar').click(function() {
-              //this.form.action='{{ path('MinSalSidPlaAdminBundle_ingresoNuevaUnidadesOrg') }}'
+              this.form.action='{{ path('MinSalSidPlaAdminBundle_ingresoNuevaUnidadesOrg') }}'
           });
       });
     </script>
     
-    <form action="{{ path('MinSalSidPlaAdminBundle_editarUnidadesOrg') }}" method="post">
+    <form action="" method="post">
         <table align="center">
             <tr><td align="center">
                     <h1>Mantenimiento de Unidades del Sistema</h1>
@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <td align="center">
-                    <input type="button" value="Ingresar Nuevas Unidades" id="ingresar" ></input>                    
+                    <input type="submit" value="Ingresar Nuevas Unidades" id="ingresar" ></input>                    
                 </td>
             </tr>
             <tr>

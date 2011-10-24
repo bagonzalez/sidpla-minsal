@@ -3,13 +3,14 @@
 {% block body %}
 <script type="text/javascript">        
       $(document).ready(function(){
-          
+          $("#formulario").validate();
           $('#limpiar').button();
           $('#guardar').button();
           $('#buscar').button();
           $('#dialog').jqm();
           $('#tabs').tabs(); 
-         
+         $("#telefono").mask("9999-9999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}});
+         $("#fax").mask("9999-9999",{placeholder:" ",completed:function(){alert("You typed the following: "+this.val());}})
           
           $.getJSON('consultarUnidadesOrgJSON', function(data) {
                   var i=0;
@@ -39,9 +40,22 @@
               });              
           });
       });
-      
+   
 </script>
       
+<style type="text/css">
+
+
+
+form.cmxform label.error, label.error {
+	/* remove the next line when you have trouble in IE6 with labels in list */
+	color: red;
+	font-style: italic
+            
+}
+input.error { border: 1px dotted red; }
+textarea.error { border: 1px dotted red; }
+      </style>
 <h2 class="demoHeaders">Ingreso de Unidades Organizativas</h2>
 <div id="tabs">
         <ul>
@@ -49,14 +63,14 @@
                 
         </ul>
         <div id="tabs-1" >
-            <form action="{{ path('MinSalSidPlaAdminBundle_ingresarUnidadOrg')}}" method="post" >
+            <form id="formulario" action="{{ path('MinSalSidPlaAdminBundle_ingresarUnidadOrg')}}" method="post" >
                 <table align="center" id="datosgeneralesTabla"  >
                     <tr>
                         <td colspan="4" align="center" >Datos Generales Nueva Unidad<br><br></td>
                     </tr>
                     <tr>
                         <td >Nombre unidad:</td>
-                        <td colspan="3" ><input size="60%" name="nombreUnidad" id="nombreUnidad" ></input></td>
+                        <td colspan="3" ><input size="60%" class="required" name="nombreUnidad" id="nombreUnidad" ></input></td>
                     </tr>
                     <tr>
                         <td >Descripcion:</td>
@@ -79,7 +93,8 @@
                     <tr>
                         <td  >Tipo Unidad:</td>
                         <td colspan="3">
-                            <select id="tipoUnidad" name="tipoUnidad">
+                            <select id="tipoUnidad" class="required" name="tipoUnidad">
+                                 <option value=''>Seleccione el tipo de unidad</option>
                                  <option value="1" >Dependencia</option>    
                                  <option value="2" >Unidad de Salud</option>    
                                  <option value="3" >Entidad de Control</option>    
@@ -97,15 +112,17 @@
                     </tr> 
                     <tr>
                         <td>Departamento:</td>
-                        <td><select id="departamento" name="departamento">
-                                <option value="0" >--Seleccione un Departamento--</option>    
+                        <td><select id="departamento" class="required" name="departamento">
+                                <option value=''>--Seleccione un Departamento--</option>
+                                  
                                 {% for dpto in deptos %} 
                                         <option value="{{ dpto.idDepto}}" >{{ dpto.nombreDepto }}</option>                                        
                                 {% endfor %}
                             </select></td>
                         <td>Municipio:</td>
-                        <td><select id="municipio" name="municipio">
-                                 <option value="0" >--Seleccione un Municipio--</option>    
+                        <td><select id="municipio" class="required" name="municipio">
+                                  <option value=''>--Seleccione un Municipio--</option>
+                                    
                             </select></td>
                     </tr> 
                     <tr>

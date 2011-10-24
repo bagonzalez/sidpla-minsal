@@ -10,8 +10,9 @@
           $('#dialog').jqm();
           $('#tabs').tabs(); 
          
-          
-        
+          $("#formulario").validate();
+         $("#telefono").mask("9999-9999",{placeholder:" "});
+         $("#fax").mask("9999-9999",{placeholder:" "})
          
           
           $('#departamento').change(function(){   
@@ -40,6 +41,20 @@
       
     
 </script>
+
+<style type="text/css">
+
+
+
+form.cmxform label.error, label.error {
+	/* remove the next line when you have trouble in IE6 with labels in list */
+	color: red;
+	font-style: italic
+            
+}
+input.error { border: 1px dotted red; }
+textarea.error { border: 1px dotted red; }
+      </style>
       
 <h2 class="demoHeaders">Edici&oacute;n  de Unidad Organizativa</h2>
 <div id="tabs">
@@ -48,14 +63,14 @@
                 
         </ul>
         <div id="tabs-1" >
-            <form id="form1" action="{{ path('MinSalSidPlaAdminBundle_editandoUnidadesOrg')}}" method="post" >
+            <form id="formulario" action="{{ path('MinSalSidPlaAdminBundle_editandoUnidadesOrg')}}" method="post" >
                 <table align="center" id="datosgeneralesTabla"  >
                     <tr>
                         <td colspan="4" align="center" >Datos Generales de la Unidad<br><br></td>
                     </tr>
                     <tr>
                         <td >Nombre unidad:</td>
-                        <td colspan="3" ><input size="60%" name="nombreUnidad" id="nombreUnidad" value="{{nombreUnidad}}" ></input></td>
+                        <td colspan="3" ><input size="60%" class="required" name="nombreUnidad" id="nombreUnidad" value="{{nombreUnidad}}" ></input></td>
                     </tr>
                     <tr>
                         <td >Descripcion:</td>
@@ -78,7 +93,7 @@
                     <tr>
                         <td  >Tipo Unidad:</td>
                         <td colspan="3">
-                            <select id="tipoUnidad" name="tipoUnidad">
+                            <select id="tipoUnidad" class="required" name="tipoUnidad">
                                  <option value="1" {% if "1"==tipounidad%} selected="selected" {% endif%}>Dependencia</option>    
                                  <option value="2"{% if "2"==tipounidad%} selected="selected" {% endif%} >Unidad de Salud</option>    
                                  <option value="3" {% if "3" ==tipounidad%} selected="selected" {% endif%}>Entidad de Control</option>    
@@ -92,21 +107,26 @@
                         <td colspan="3"  >
                             <select id="unidadPadre" name="unidadPadre">
                                  <option value="0" >--Seleccione Unidad Padre--</option>    
-                           {% for uniorg in unidadPadre %} 
-                                        <option value="{{ uniorg.idUnidadOrg}}" {% if uniorg.idUnidadOrg==unidadpadre.getIdUnidadOrg%} selected="selected" {% endif%} >{{ uniorg.descripcionUnidad }}</option>                                        
-                                {% endfor %}
+                          
+                                        {% for uniorg in unidadPadre %} 
+                                        
+                                           <option value="{{ uniorg.idUnidadOrg}}" {% if uniorg.idUnidadOrg==unidadpadre.getIdUnidadOrg%} selected="selected" {% endif%} >{{ uniorg.descripcionUnidad }}</option>                                        
+                                
+                                   {% endfor %}
+                                        
+                           
                             </select></td>                            
                     </tr> 
                     <tr>
                         <td>Departamento:</td>
-                        <td><select id="departamento" name="departamento">
+                        <td><select id="departamento"class="required" name="departamento">
                                 <option value="0" >--Seleccione un Departamento--</option>    
                                 {% for dpto in deptos %} 
                                         <option value="{{ dpto.idDepto}}" {% if dpto.idDepto==iddepartamento.getIdDepto%} selected="selected" {% endif%} >{{ dpto.nombreDepto }}</option>                                        
                                 {% endfor %}
                             </select></td>
                         <td>Municipio:</td>
-                        <td><select id="municipio" name="municipio">
+                        <td><select id="municipio"class="required" name="municipio">
                                  <option value="0" >--Seleccione un Municipio--</option>    
                             </select></td>
                     </tr> 
@@ -130,9 +150,7 @@
             
            $("#municipio").find("option[value='{{idmunicipio}}']").remove();
             $('#municipio').append('<option value="{{idmunicipio}}"Selected >'+"{{nombremunicipio}}"+'</option>');                   
-           // $("#municipio").find("option[value='{{idmunicipio}}']").remove();
-            // document.getElementById('municipio').options[{{idmunicipio}}].selected = true;  
-              //   if("'+registro['cell'][0]+'"=='{{iddepartamento.getIdDepto}}'){selected="selected"}
+           
               </script>      
                     
                     
@@ -157,8 +175,6 @@
         </div>
 </div>
 <script type="text/javascript">
- //var id= parseInt('+""+');
- //id=10;
-//document.getElementById('departamento').options[id].selected = true;
+
 </script>
 {% endblock %}

@@ -79,7 +79,13 @@ class UnidadOrganizativaDao {
         $unidadOrg = new UnidadOrganizativa();
         $unidadOrg->setNombreUnidad($nombreUnidad);
         $unidadOrg->setTipoUnidad($tipoUnidad);
-        $unidadOrg->setResponsable($responsable);
+        
+        
+        
+        if($responsable!=0){
+          $unidadOrg->setResponsable($responsable); 
+        }
+        
         if ($unidadPadre != 0) {
             $unidadParent = $this->repositorio->find($unidadPadre);
             $unidadOrg->setParent($unidadParent);
@@ -109,8 +115,8 @@ class UnidadOrganizativaDao {
         $unidadOrg = $this->repositorio->find($id);
         $paos = $unidadOrg->getPaos();
 
-        $anio = date('Y');
-        $anioProximo = $anio + 1;
+        $anio = date('Y')+1;
+        $anioProximo = $anio;
 
         $pao = new Pao();
 
@@ -165,19 +171,19 @@ class UnidadOrganizativaDao {
 
 
 
-        $municipioDao = new MunicipioDao($this->doctrine);
-        $muncipioObj = $municipioDao->getMunicipio($municipio);
+       // $municipioDao = new MunicipioDao($this->doctrine);
+        //$muncipioObj = $municipioDao->getMunicipio($municipio);
 
         
-        
-        $infogenDao= new InformacionGeneralDao($this->doctrine);
-         $informacionGeneral = new InformacionGeneral();
-        $informacionGeneral=$infogenDao->getInfoGeneral($idinfogeneral);
+       
+       // $infogenDao= new InformacionGeneralDao($this->doctrine);
+        // $informacionGeneral = new InformacionGeneral();
+        //$informacionGeneral=$infogenDao->getInfoGeneral($idinfogeneral);
         
        
-        $informacionGeneral->setDireccion($direccion);
-        $informacionGeneral->setTelefono($telefono);
-        $informacionGeneral->setFax($fax);
+        //$informacionGeneral->setDireccion($direccion);
+        //$informacionGeneral->setTelefono($telefono);
+       // $informacionGeneral->setFax($fax);
 
        
         
@@ -186,7 +192,13 @@ class UnidadOrganizativaDao {
         $unidadOrg=$unidadDao->getUnidadOrg($id);
         $unidadOrg->setNombreUnidad($nombreUnidad);
         $unidadOrg->setTipoUnidad($tipoUnidad);
-        $unidadOrg->setResponsable($responsable);
+        
+        if($responsable!=0){
+          $unidadOrg->setResponsable($responsable);  
+        }
+        
+        
+        
         if ($unidadPadre != 0) {
             $unidadParent = $this->repositorio->find($unidadPadre);
             $unidadOrg->setParent($unidadParent);
@@ -197,9 +209,9 @@ class UnidadOrganizativaDao {
         $unidadOrg->setDescripcionUnidad($descripcion);
 
         //$informacionGeneral->setUnidadOrganizativa($unidadOrg);
-
+      //  $this->em->persist($informacionGeneral);
         $this->em->persist($unidadOrg);
-        $this->em->persist($informacionGeneral);
+       
         $this->em->flush();
         $matrizMensajes = array('El proceso de almacenar Unidad Organizativa termino con exito', 'Unidad ' . $unidadOrg->getIdUnidadOrg());
 
@@ -224,15 +236,7 @@ class UnidadOrganizativaDao {
         $informacionGeneral->setEmail($mail);
        
         $informacionGeneral->setFechaActualizacion(date("Y-m-d"));
-            
-        
-       // $unidadDao= new UnidadOrganizativaDao($this->doctrine);
-        //$unidadOrg = new UnidadOrganizativa();
-       // $unidadOrg=$unidadDao->getUnidadOrg($unidadorgcod);
-       // $unidadOrg->setResponsable($responsable);
-        
-    
-        //  $this->em->persist($unidadOrg);
+      
         $this->em->persist($informacionGeneral);
       
         $this->em->flush();
