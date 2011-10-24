@@ -22,7 +22,10 @@
 
 namespace MinSal\SidPla\PrograMonitoreoBundle\EntityDao;
 use Doctrine\ORM\Query\ResultSetMapping;
+use Doctrine\Common\Collections\ArrayCollection;
 
+use MinSal\SidPla\TemplateUnisalBundle\EntityDao\ActividadUniSalDao;
+use MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUniSal;
 /**
  * Description of ProgramacionMonitoreoDao
  *
@@ -74,23 +77,16 @@ class ProgramacionMonitoreoDao {
     
     public function getActividadesUniSal($idProgramon){
         
+             
+             $actividadesUniSal=new ArrayCollection(); 
+             
              $rsm=new ResultSetMapping;             
-             $rsm->addEntityResult('MinSalSidPlaTemplateUnisalBundle:ActividadUniSal', 'a');
-             $rsm->addFieldResult('a', 'actuni_metaanual', 'metaAnualActUni');
-             $rsm->addFieldResult('a', 'actuni_cobertura', 'coberActUni');
-             $rsm->addFieldResult('a', 'actuni_beneficiario', 'beneActUni');
-             $rsm->addFieldResult('a', 'actuni_responsable', 'responsableActUni');
+             $rsm->addEntityResult('MinSalSidPlaTemplateUnisalBundle:ActividadUniSal', 'a');             
              $rsm->addFieldResult('a', 'actuni_codigo', 'codActUni');
-             $rsm->addFieldResult('a', 'actuni_fechafin', 'fechaFinAct');
-             $rsm->addFieldResult('a', 'actuni_fechainicio', 'fechaInicioAct');
+             $rsm->addFieldResult('a', 'actuni_responsable', 'responsableActUni');
              $query = $this->em->createNativeQuery('SELECT 
-                          sidpla_actividadunisal.actuni_metaanual, 
-                          sidpla_actividadunisal.actuni_cobertura, 
-                          sidpla_actividadunisal.actuni_beneficiario, 
-                          sidpla_actividadunisal.actuni_responsable, 
-                          sidpla_actividadunisal.actuni_codigo, 
-                          sidpla_actividadunisal.actuni_fechafin, 
-                          sidpla_actividadunisal.actuni_fechainicio
+                          sidpla_actividadunisal.actuni_codigo,
+                          sidpla_actividadunisal.actuni_responsable
                         FROM 
                           public.sidpla_actividadunisal, 
                           public.sidpla_actividadunisaltemplate, 
@@ -100,9 +96,17 @@ class ProgramacionMonitoreoDao {
                           sidpla_programacionmonitoreo.promon_codigo = sidpla_actividadunisal.promon_codigo AND
                           sidpla_programacionmonitoreo.promon_codigo=?' , $rsm);   
              $query->setParameter(1, $idProgramon);
-             $actividades = $query->getResult();             
+             $actividades = $query->getResult();  
              
-             return $actividades;
+             $actDao=new ActividadUniSalDao($this->doctrine);
+             
+             foreach ($actividades as $actividad){                
+                 $actividadesUniSal[]=$actDao->getActividadUniSal($actividad->getCodActUni()); 
+                 $actividadUnisalotra=$actDao->getActividadUniSal($actividad->getCodActUni());
+                  $temp=$actividadUnisalotra->getActTemp();
+             }
+             
+             return $actividadesUniSal;
     }
     
     

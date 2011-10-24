@@ -188,4 +188,14 @@ class ObjetivoEspeUnisal {
         $this->indicadoresSalud[] = $indicadoresSalud;
     }
 
+
+    /**
+     * Add indicadoresSalud
+     *
+     * @param MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresSalud
+     */
+    public function addIndicadorSalud(\MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresSalud)
+    {
+        $this->indicadoresSalud[] = $indicadoresSalud;
+    }
 }

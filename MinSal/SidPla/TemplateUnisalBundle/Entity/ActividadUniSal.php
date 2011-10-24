@@ -44,18 +44,6 @@ class ActividadUniSal {
      */
     private $responsableActUni;
     
-    
-    
-    
-
-
-    /**
-     * @var string $nomenActUniTemp
-     *
-     * @ORM\Column(name="actunitem_nomenclatura", type="string", length=15)
-     */
-    private $nomenActUniTemp;
-
    
 
     /**
@@ -72,19 +60,6 @@ class ActividadUniSal {
      */
     private $coberActUni;
 
-    /**
-     * @var float $concenActUniTemp
-     *
-     * @ORM\Column(name="actunitem_concentracion", type="float")
-     */
-    private $concenActUniTemp;
-
-    /**
-     * @var string $condActUniTemp
-     *
-     * @ORM\Column(name="actunitem_condicionante", type="string", length=255)
-     */
-    private $condActUniTemp;
 
     /**
      * @var integer $metaAnualActUni
@@ -93,16 +68,18 @@ class ActividadUniSal {
      */
     private $metaAnualActUni;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="ResultadoEspeUnisal", inversedBy="actividadesTemplate")
-     * @ORM\JoinColumn(name="resulespuni_codigo", referencedColumnName="resulespuni_codigo")
-     */
-    private $resulEspeTemAct;
+   
     
      /**
-     * @ORM\OneToMany(targetEntity="MinSal\SidPla\TemplateUnisalBundle\Entity\ResultActUniSal", mappedBy="programacionMonitoreo")
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\TemplateUnisalBundle\Entity\ResultActUniSal", mappedBy="actividadUniSal")
      */
     protected $resultadoactUniSal;
+    
+     /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUnisalTemplate", inversedBy="actividadesUniSal")
+     * @ORM\JoinColumn(name="actunitem_codigo", referencedColumnName="actunitem_codigo")
+     */
+    protected $actTemp;
     
        
     /**
@@ -161,24 +138,6 @@ class ActividadUniSal {
     }
 
     /**
-     * Set nomenActUniTemp
-     *
-     * @param string $nomenActUniTemp
-     */
-    public function setNomenActUniTemp($nomenActUniTemp) {
-        $this->nomenActUniTemp = $nomenActUniTemp;
-    }
-
-    /**
-     * Get nomenActUniTemp
-     *
-     * @return string 
-     */
-    public function getNomenActUniTemp() {
-        return $this->nomenActUniTemp;
-    }
-
-    /**
      * Set responsableActUni
      *
      * @param string $responsableActUni
@@ -232,61 +191,6 @@ class ActividadUniSal {
         return $this->coberActUni;
     }
 
-    /**
-     * Set concenActUniTemp
-     *
-     * @param float $concenActUniTemp
-     */
-    public function setConcenActUniTemp($concenActUniTemp) {
-        $this->concenActUniTemp = $concenActUniTemp;
-    }
-
-    /**
-     * Get concenActUniTemp
-     *
-     * @return float 
-     */
-    public function getConcenActUniTemp() {
-        return $this->concenActUniTemp;
-    }
-
-    /**
-     * Set condActUniTemp
-     *
-     * @param string $condActUniTemp
-     */
-    public function setCondActUniTemp($condActUniTemp) {
-        $this->condActUniTemp = $condActUniTemp;
-    }
-
-    /**
-     * Get condActUniTemp
-     *
-     * @return string 
-     */
-    public function getCondActUniTemp() {
-        return $this->condActUniTemp;
-    }
-
-    /**
-     * Set resulEspeTemAct
-     *
-     * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resulEspeTemAct
-     */
-    public function setResulEspeTemAct(\MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal $resulEspeTemAct) {
-        $this->resulEspeTemAct = $resulEspeTemAct;
-    }
-
-    /**
-     * Get resulEspeTemAct
-     *
-     * @return MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal 
-     */
-    public function getResulEspeTemAct() {
-        return $this->resulEspeTemAct;
-    }
-
- 
 
 
     /**
@@ -368,4 +272,44 @@ class ActividadUniSal {
     {
         return $this->programacionMonitoreo;
     }
+    
+    
+    /**
+     * Set actTemp
+     *
+     * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUnisalTemplate $actTemp
+     */
+    public function setActTemp(\MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUnisalTemplate $actTemp)
+    {
+        $this->actTemp = $actTemp;
+    }
+
+    /**
+     * Get actTemp
+     *
+     * @return MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUnisalTemplate 
+     */
+    public function getActTemp()
+    {
+        return $this->actTemp;
+    }
+    
+    
+     public function getPorcentajeCumplimiento()
+    {
+        $resultado=new ResultActUniSal();
+        $metaAnual=$this->getMetaAnualActUni();
+        $porcentaje=0;
+        $porcentajeResul=0;
+        
+        foreach ($this->resultadoactUniSal as $resultado){            
+                 $porcentajeResul=$resultado->getResulActRealizado()+$porcentajeResul;
+                 
+        }
+        if($metaAnual>0)
+            $porcentaje=$porcentajeResul/$metaAnual;
+            
+        return round($porcentaje*100,2);
+    }
+
 }

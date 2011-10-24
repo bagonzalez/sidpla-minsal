@@ -101,9 +101,16 @@ class ActividadUnisalTemplate {
      * @ORM\OneToMany(targetEntity="FormulaActividad", mappedBy="actUnisalForm")
      */
     private $formulasAct;
+    
+    
+     /**
+     * @ORM\OneToMany(targetEntity="ActividadUniSal", mappedBy="actTemp")
+     */
+    protected $actividadesUniSal;
 
     public function __construct() {
         $this->formulasAct = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->actividadesUniSal =new \Doctrine\Common\Collections\ArrayCollection();
     }
 
     /**
@@ -338,6 +345,26 @@ class ActividadUnisalTemplate {
      */
     public function addFormulaActividad(\MinSal\SidPla\TemplateUnisalBundle\Entity\FormulaActividad $formulasAct) {
         $this->formulasAct[] = $formulasAct;
+    }
+    
+        /**
+     * Add actividadesUniSal
+     *
+     * @param MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUniSal $actividadesUniSal
+     */
+    public function addActividadUniSal(\MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUniSal $actividadesUniSal)
+    {
+        $this->actividadesUniSal[] = $actividadesUniSal;
+    }
+
+    /**
+     * Get actividadesUniSal
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getActividadesUniSal()
+    {
+        return $this->actividadesUniSal;
     }
 
 }

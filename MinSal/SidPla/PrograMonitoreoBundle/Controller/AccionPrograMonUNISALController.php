@@ -97,18 +97,19 @@ class AccionPrograMonUNISALController extends Controller {
          
          $paoElaboracion=$this->obtenerPaoSeguimiento();
          $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+         $actividadesProgramon=$programacionMonitoreo->getActividadesUniSal();
          $idProgramon=$programacionMonitoreo->getIdPrograMon();
         
          $promMonDao=new ProgramacionMonitoreoDao($this->getDoctrine());
-         $actividadesProgramon=$promMonDao->getActividadesUniSal($idProgramon);
-         $trimestre=4;
+         //$actividadesProgramon=$promMonDao->getActividadesUniSal($idProgramon);
+         $mes=5;
          
          $uniControl=new UnidadOrganizativa();            
          $uniControl=$this->obtenerUnidadOrg();
          $idUnidad=$uniControl->getIdUnidadOrg();
          
          return $this->render('MinSalSidPlaPrograMonitoreoBundle:ProgramacionMonitoreo:programacionMonitoreoUNISAL.html.twig', 
-                array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 'trimestre' => $trimestre, 'idUnidad' => $idUnidad ));
+                array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 'mes' => $mes, 'idUnidad' => $idUnidad ));
     }
     
     

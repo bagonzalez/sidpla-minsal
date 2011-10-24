@@ -222,4 +222,15 @@ class ResultActUniSal {
     {
         return $this->actividadUniSal;
     }
+    
+    public function getPorcentajeCumplimiento()
+    {
+        $porcentaje=0;
+        
+        if($this->getResulActProgramado() > 0){
+                     $porcentaje=($this->getResulActRealizado() / $this->getResulActProgramado());
+        }
+            
+        return round($porcentaje*100,2);
+    }
 }
