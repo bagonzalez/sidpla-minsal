@@ -72,6 +72,7 @@ class ActividadUniSal {
     
      /**
      * @ORM\OneToMany(targetEntity="MinSal\SidPla\TemplateUnisalBundle\Entity\ResultActUniSal", mappedBy="actividadUniSal")
+     * @ORM\OrderBy({"mes" = "ASC"})
      */
     protected $resultadoactUniSal;
     
