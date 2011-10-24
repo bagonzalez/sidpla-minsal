@@ -11,24 +11,13 @@
           $('#tabs').tabs(); 
          
           
-          $.getJSON('consultarUnidadesOrgJSON', function(data) {
-                  var i=0;
-                  $.each(data, function(key, val) {
-                      if(key=='rows'){
-                        $.each(val, function(id, registro){
-                            $('#unidadPadre').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
-                        });                    
-                      }
-                  });
-                 
-                
-          });
+        
          
           
           $('#departamento').change(function(){   
               $('#municipio').children().remove();
              
-
+            
               $.getJSON('consultarMunicipiosJSON?departamento='+$('#departamento').val(), function(data) {
                   var i=0;
                   $.each(data, function(key, val) {
@@ -42,6 +31,12 @@
               });              
           });
       });
+      
+      
+                     
+            
+     
+      
       
     
 </script>
@@ -84,11 +79,11 @@
                         <td  >Tipo Unidad:</td>
                         <td colspan="3">
                             <select id="tipoUnidad" name="tipoUnidad">
-                                 <option value="1" >Dependencia</option>    
-                                 <option value="2" >Unidad de Salud</option>    
-                                 <option value="3" >Entidad de Control</option>    
-                                 <option value="4" >Ministerio</option>    
-                                 <option value="5" >Departamento</option>    
+                                 <option value="1" {% if "1"==tipounidad%} selected="selected" {% endif%}>Dependencia</option>    
+                                 <option value="2"{% if "2"==tipounidad%} selected="selected" {% endif%} >Unidad de Salud</option>    
+                                 <option value="3" {% if "3" ==tipounidad%} selected="selected" {% endif%}>Entidad de Control</option>    
+                                 <option value="4"{% if "4"==tipounidad%} selected="selected" {% endif%} >Ministerio</option>    
+                                 <option value="5"{% if "5"==tipounidad%} selected="selected" {% endif%} >Departamento</option>    
                             </select>
                         </td>
                     </tr> 
@@ -97,6 +92,9 @@
                         <td colspan="3"  >
                             <select id="unidadPadre" name="unidadPadre">
                                  <option value="0" >--Seleccione Unidad Padre--</option>    
+                           {% for uniorg in unidadPadre %} 
+                                        <option value="{{ uniorg.idUnidadOrg}}" {% if uniorg.idUnidadOrg==unidadpadre.getIdUnidadOrg%} selected="selected" {% endif%} >{{ uniorg.descripcionUnidad }}</option>                                        
+                                {% endfor %}
                             </select></td>                            
                     </tr> 
                     <tr>
@@ -104,7 +102,7 @@
                         <td><select id="departamento" name="departamento">
                                 <option value="0" >--Seleccione un Departamento--</option>    
                                 {% for dpto in deptos %} 
-                                        <option value="{{ dpto.idDepto}}" >{{ dpto.nombreDepto }}</option>                                        
+                                        <option value="{{ dpto.idDepto}}" {% if dpto.idDepto==iddepartamento.getIdDepto%} selected="selected" {% endif%} >{{ dpto.nombreDepto }}</option>                                        
                                 {% endfor %}
                             </select></td>
                         <td>Municipio:</td>
@@ -112,6 +110,34 @@
                                  <option value="0" >--Seleccione un Municipio--</option>    
                             </select></td>
                     </tr> 
+                    
+            <script type="text/javascript">   
+                var idmun={{idmunicipio}};
+      $.getJSON('consultarMunicipiosJSON?departamento={{iddepartamento.getIdDepto}}',function(data) {
+                  var i=0;
+                  $.each(data, function(key, val) {
+                      if(key=='rows'){
+                        $.each(val, function(id, registro){
+                          
+                          $('#municipio').append('<option value="'+registro['cell'][0]+'" >'+registro['cell'][1]+'</option>');
+                          
+                     });                    
+                      }
+                  });
+                  
+              });   
+           // $('#municipio').append('<option value="{{idmunicipio}}"Selected ></option>'); 
+            
+           $("#municipio").find("option[value='{{idmunicipio}}']").remove();
+            $('#municipio').append('<option value="{{idmunicipio}}"Selected >'+"{{nombremunicipio}}"+'</option>');                   
+           // $("#municipio").find("option[value='{{idmunicipio}}']").remove();
+            // document.getElementById('municipio').options[{{idmunicipio}}].selected = true;  
+              //   if("'+registro['cell'][0]+'"=='{{iddepartamento.getIdDepto}}'){selected="selected"}
+              </script>      
+                    
+                    
+                    
+                    
                     <tr>
                         <td colspan="4" align="center" ><button type="submmit" id="guardar"  >Guardar</button>
                             <button type="reset" id='limpiar'  >Limpiar</button>

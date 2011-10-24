@@ -1,6 +1,24 @@
 {% form_theme form theme %}
-
-<form action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+<script type="text/javascript">
+ $(document).ready(function(){
+   $('#verificaEmpleado').button();
+   $('#verificaEmpleado').click(function(evento) {
+       $.getJSON('{{ path('MinSalSidPlaUsersBundle_verificaCreacion') }}?idEmpleado='+$("#fos_user_registration_form_empleado").get(0).value, function(data) {
+         $.each(data, function(key, val) {
+           if(key=='msj'){
+                $.each(val, function(id, registro){
+                   $("#mensaje").attr('value', registro);
+                                  
+                //this.form.action='{#{ path('fos_user_registration_register') }#}';
+             });                    
+           }
+          });
+      });
+          
+   });//FIn del clic
+});
+ </script>
+<form action="" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
     {{ form_errors(form) }}
         <table align='center' >
             <tr>
@@ -24,16 +42,17 @@
             </tr>  
             
              <tr>
-                <td><label id="empleado" >Empleado:</label></td>
+                <td><label id="empleado" >Digite su codigo de empleado:</label></td>
                 <td>{{ form_widget(form.empleado) }}</td>                
             </tr> 
-            
-            
-            
-            <tr><br>
-                <br>
+           <tr>
                 <td align='center' colspan=2 >
-                    <input type="submit" value="{{ 'Registrar'|trans({}, 'FOSUserBundle') }}" />
+                   <input type="button" value="  Registrar Usuario  " id="verificaEmpleado"/>
+                   <br>
+                   <input type="text" size="50" value="" id="mensaje"  />
+                    <br>
+                    
+                    <input style=" visibility: hidden" type="submit" value="{{ 'Registrar'|trans({}, 'FOSUserBundle') }}" />
                 </td>
             </tr>
         </table>    

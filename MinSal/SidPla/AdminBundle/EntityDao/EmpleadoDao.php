@@ -1,6 +1,5 @@
 <?php
 
-
 /*
   SIDPLA - MINSAL
   Copyright (C) 2011  Bruno González   e-mail: bagonzalez.sv EN gmail.com
@@ -18,8 +17,8 @@
 
   You should have received a copy of the GNU General Public License
   along with this program.  If not, see <http://www.gnu.org/licenses/>.
- 
-  
+
+
  */
 
 
@@ -35,113 +34,105 @@ use MinSal\SidPla\AdminBundle\Entity\Empleado;
 use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
 
 class EmpleadoDao {
-    
+
     var $doctrine;
     var $repositorio;
-    var $em;    
-	
-    function __construct($doctrine){ 
-        $this->doctrine=$doctrine;      	
-        $this->em=$this->doctrine->getEntityManager();
-        $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaAdminBundle:Empleado');
-    } 
-    
+    var $em;
+
+    function __construct($doctrine) {
+        $this->doctrine = $doctrine;
+        $this->em = $this->doctrine->getEntityManager();
+        $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaAdminBundle:Empleado');
+    }
+
     /*
      *  Obtiene todos los empleados.
-     */    
-    
-    public function getEmpleados() {	    
-        $empleados=$this->repositorio->findAll();
+     */
+
+    public function getEmpleados() {
+        $empleados = $this->repositorio->findAll();
         return $empleados;
     }
-    
-    public function getEmpleado($idempleado) {	    
-        return $this->repositorio->find($idempleado);   
-       
+
+    public function getEmpleado($idempleado) {
+        return $this->repositorio->find($idempleado);
     }
-    
-    public function addEmpleado($dui,
-                                $primerNombre,
-                                $segundoNombre,
-                                $primerApellido,
-                                $segundoApellido,
-                                $unidadAsignada,
-                                $email) {
-        
-        $empleado=new Empleado();
-        
+
+    public function addEmpleado($dui, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $unidadAsignada, $email) {
+
+        $empleado = new Empleado();
+
         $empleado->setDui($dui);
         $empleado->setPrimerNombre($primerNombre);
         $empleado->setSegundoNombre($segundoNombre);
         $empleado->setPrimerApellido($primerApellido);
         $empleado->setSegundoApellido($segundoApellido);
         $empleado->setEmail($email);
-        
-        
-        $unidadDao=new UnidadOrganizativaDao($this->doctrine);        
-        $unidad=$unidadDao->getUnidadOrg($unidadAsignada);
-        
+
+
+        $unidadDao = new UnidadOrganizativaDao($this->doctrine);
+        $unidad = $unidadDao->getUnidadOrg($unidadAsignada);
+
         $empleado->setUnidadOrganizativa($unidad);
-	    
+
         $this->em->persist($empleado);
-        $this->em->flush();	    
-        $matrizMensajes = array('El proceso de almacenar rol termino con exito', 'Empleado '.$empleado->getIdEmpleado());
+        $this->em->flush();
+        $matrizMensajes = array('El proceso de almacenar rol termino con exito', 'Empleado ' . $empleado->getIdEmpleado());
 
         return $matrizMensajes;
     }
-    
-    public function delEmpleado($id){            
-            
-            $empleado=$this->repositorio->find($id);
-            
-            if(!$empleado){
-                throw $this->createNotFoundException('No se encontro empleado con ese id '.$id);
-            }
-            
-            $this->em->remove($empleado);
-            $this->em->flush();
-            
-            $matrizMensajes = array('El proceso de eliminar termino con exito', 'Empleado '.$empleado->getIdEmpleado() );
- 
-            return $matrizMensajes;
-    }
-    
-     public function editEmpleado($dui,
-                                $primerNombre,
-                                $segundoNombre,
-                                $primerApellido,
-                                $segundoApellido,
-                                $id, 
-                                $unidadAsignada,
-                                $email){
-            
-            $empleado=new Empleado();            
-            $empleado=$this->repositorio->find($id);
-            
-            if(!$empleado){
-                throw $this->createNotFoundException('No se encontro empleado con ese id '.$id);
-            }
-            
-            $empleado->setDui($dui);
-            $empleado->setPrimerNombre($primerNombre);
-            $empleado->setSegundoNombre($segundoNombre);
-            $empleado->setPrimerApellido($primerApellido);
-            $empleado->setSegundoApellido($segundoApellido);
-            $empleado->setEmail($email);
-            
-            $unidadDao=new UnidadOrganizativaDao($this->doctrine);        
-            $unidad=$unidadDao->getUnidadOrg($unidadAsignada);
 
-            $empleado->setUnidadOrganizativa($unidad);
-            
-            $this->em->persist($empleado);
-            $this->em->flush();            
-            $matrizMensajes = array('El proceso de almacenar rol termino con exito', 'Empleado '.$empleado->getIdEmpleado());
- 
-            return $matrizMensajes;
+    public function delEmpleado($id) {
+
+        $empleado = $this->repositorio->find($id);
+
+        if (!$empleado) {
+            throw $this->createNotFoundException('No se encontro empleado con ese id ' . $id);
         }
-        
-        
+
+        $this->em->remove($empleado);
+        $this->em->flush();
+
+        $matrizMensajes = array('El proceso de eliminar termino con exito', 'Empleado ' . $empleado->getIdEmpleado());
+
+        return $matrizMensajes;
+    }
+
+    public function editEmpleado($dui, $primerNombre, $segundoNombre, $primerApellido, $segundoApellido, $id, $unidadAsignada, $email) {
+
+        $empleado = new Empleado();
+        $empleado = $this->repositorio->find($id);
+
+        if (!$empleado) {
+            throw $this->createNotFoundException('No se encontro empleado con ese id ' . $id);
+        }
+
+        $empleado->setDui($dui);
+        $empleado->setPrimerNombre($primerNombre);
+        $empleado->setSegundoNombre($segundoNombre);
+        $empleado->setPrimerApellido($primerApellido);
+        $empleado->setSegundoApellido($segundoApellido);
+        $empleado->setEmail($email);
+
+        $unidadDao = new UnidadOrganizativaDao($this->doctrine);
+        $unidad = $unidadDao->getUnidadOrg($unidadAsignada);
+
+        $empleado->setUnidadOrganizativa($unidad);
+
+        $this->em->persist($empleado);
+        $this->em->flush();
+        $matrizMensajes = array('El proceso de almacenar rol termino con exito', 'Empleado ' . $empleado->getIdEmpleado());
+
+        return $matrizMensajes;
+    }
+
+    public function existeEmpleado($idEmpleado) {
+        $result = $this->em->createQuery("SELECT count(e) 
+                                          FROM MinSalSidPlaAdminBundle:Empleado e
+                                          WHERE e.idEmpleado = " . $idEmpleado);
+        return $result->getSingleScalarResult();
+    }
+
 }
 
 ?>

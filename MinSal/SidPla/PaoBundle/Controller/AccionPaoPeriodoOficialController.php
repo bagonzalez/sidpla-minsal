@@ -5,9 +5,16 @@ namespace MinSal\SidPla\PaoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+
 use MinSal\SidPla\PaoBundle\EntityDao\PeriodoOficialDao;
 use MinSal\SidPla\PaoBundle\Entity\PeriodoOficial;
+
 use MinSal\SidPla\PaoBundle\EntityDao\TipoPeriodoDao;
+
+use MinSal\SidPla\TemplateUnisalBundle\EntityDao\ActividadUnisalTemplateDao;
+
+use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\ResEspTemplateDao;
+use MinSal\SidPla\PaoBundle\EntityDao\PaoDao;
 
 class AccionPaoPeriodoOficialController extends Controller {
 
@@ -78,10 +85,15 @@ class AccionPaoPeriodoOficialController extends Controller {
     public function crearPaoAction() {
         $anio=$this->getRequest()->get('anio');
         $periodoOficialDao = new PeriodoOficialDao($this->getDoctrine());
-        $periodoOficialDao->crearPao($anio);
+        $msj=$periodoOficialDao->crearPao($anio);
         
-        return $this->consultarPeriodoOficialJSONAction();
+        $opciones = $this->getRequest()->getSession()->get('opciones');
         
+        $mostrarboton=FALSE;
+        
+       return $this->render('MinSalSidPlaPaoBundle:CrearPao:manttCrearPao.html.twig'
+                        , array('opciones' => $opciones,'mostrarboton'=>$mostrarboton,'msj'=>$msj));
+
     }
     
     public function manttPeriodoOficialAction() {
@@ -123,6 +135,47 @@ class AccionPaoPeriodoOficialController extends Controller {
         }
 
         return new Response("{sc:true,msg:''}");
+    }
+    
+     public function manttCrearPaosAction() {
+
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+        $anio=date('Y')+1;
+        
+        //Para saber Si ya esta definido el Cronograma de la PAO en elaboracion
+        $cronogramaDao= new PeriodoOficialDao($this->getDoctrine());
+        $bc=$cronogramaDao->cuantasFechasNoDefinidas($anio);
+        
+        //Para saber si ya se definieron actividades en la Plantilla de Actividades para Unidades de Salud
+        $actividadTemplateDao= new ActividadUnisalTemplateDao($this->getDoctrine());
+        $ba=$actividadTemplateDao->cuantasActDefinidas($anio);
+        
+        //Para saber si ya se definieron resultados esperados de la Plantilla para SIBASI y Regiones de Salud
+        $resulTemplateDao = new ResEspTemplateDao($this->getDoctrine());
+        $bec=$resulTemplateDao->cuantosResulDefinidas((string) ($anio));
+        
+        $paoDao=new PaoDao($this->getDoctrine());
+        $bp=$paoDao->existenPaos($anio);
+        
+        if($bc!=0)
+            $mostrarboton=FALSE;
+        else
+            if($ba==0)
+                $mostrarboton=FALSE;
+            else
+                if($bec==0)
+                    $mostrarboton=FALSE;
+                else
+                    if($bp!=0)
+                        $mostrarboton=FALSE;
+                    else
+                        $mostrarboton=TRUE;
+                    
+            
+        
+        
+        return $this->render('MinSalSidPlaPaoBundle:CrearPao:manttCrearPao.html.twig'
+                        , array('opciones' => $opciones,'mostrarboton'=>$mostrarboton));
     }
 
 }

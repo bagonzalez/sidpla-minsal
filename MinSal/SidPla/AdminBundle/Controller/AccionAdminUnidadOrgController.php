@@ -209,7 +209,7 @@ class AccionAdminUnidadOrgController extends Controller {
        
        $muncipio= $muni->getNombreMunicipio();
        $iddepartamento=$muni->getIdDepto();
-       
+       $nombremunicipio=$muni->getNombreMunicipio();
        $responsableDao = new EmpleadoDao($this->getDoctrine());
        $empleado = new Empleado();
        $empleado = $responsableDao->getEmpleado($responsable);
@@ -218,17 +218,28 @@ class AccionAdminUnidadOrgController extends Controller {
        $apellidoempleado=$empleado->getPrimerApellido();
        $segundoapellido=$empleado->getSegundoApellido();
        
+      // $iddepartamento=3;
        
-       
-      // $departamento= $depa->getNombreDepto();
+      $departamento= $muni->getIdDepto()->getNombreDepto();
      
        
        
+     //  $decimals = 0;
+     //  $dec_point = '.';
+     //  $thousands_sep = ',';
+     // $iddepartamento1 = number_format($iddepartamento, $decimals, $dec_point, $thousands_sep);
+    //$iddepartamento1= settype($iddepartamento, "integer");
        
         
         $departamDao = new DepartametoPaisDao($this->getDoctrine());
         $departamentos = $departamDao->getDepartametos();
-
+        
+        $municipiosDao = new MunicipioDao($this->getDoctrine());
+        $municipis  = $municipiosDao->getMunicipios();
+        
+        $unidadpadreDao = new UnidadOrganizativaDao($this->getDoctrine());
+        $unidadsPadre = $unidadpadreDao->getUnidadesOrg();
+        
         return $this->render('MinSalSidPlaAdminBundle:UnidadOrganizativa:EditarUnidadOrganizativa.html.twig', 
                 array('opciones' => $opciones
                      ,'deptos' => $departamentos
@@ -238,7 +249,7 @@ class AccionAdminUnidadOrgController extends Controller {
                     ,'telefono' => $telefono
                     ,'tipounidad' => $tipounidad
                     ,'unidadpadre' => $unidadpadre
-                    ,'$idmunicipio' => $idmunicipio
+                    ,'idmunicipio' => $idmunicipio
                     ,'iddepartamento' => $iddepartamento 
                     ,'responsable' => $responsable 
                      ,'fax' => $fax  
@@ -248,6 +259,9 @@ class AccionAdminUnidadOrgController extends Controller {
                      ,'segundoapellido' => $segundoapellido
                       ,'idfila' =>$idfila
                     ,'idinfogeneral' => $idinfogeneral
+                    ,'departamento'=>$departamento
+                     ,'nombremunicipio'=>$nombremunicipio 
+                     ,'unidadPadre'=>$unidadsPadre
                     ));
     }
     

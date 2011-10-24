@@ -20,6 +20,13 @@ class PaoDao {
         $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaPaoBundle:Pao');
     }
     
+    public function existenPaos($anio) {
+        $paos = $this->em->createQuery("SELECT count (P)
+                                               FROM MinSalSidPlaPaoBundle:Pao P
+                                               WHERE P.anio = " . $anio );
+        return $paos->getSingleScalarResult();
+    }
+    
     
 }
 

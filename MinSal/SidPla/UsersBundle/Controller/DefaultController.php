@@ -11,6 +11,7 @@ use MinSal\SidPla\UsersBundle\Entity\User;
 use MinSal\SidPla\UsersBundle\EntityDao\UserDao;
 
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
+use MinSal\SidPla\AdminBundle\EntityDao\EmpleadoDao;
 
 use MinSal\SidPla\AdminBundle\EntityDao\RolDao;
 use MinSal\SidPla\AdminBundle\Entity\RolSistema;
@@ -50,7 +51,7 @@ class DefaultController extends Controller {
         foreach ($usuarios as $aux) {
             $rows[$i]['id'] = $aux->getIdUsuario();
             $rows[$i]['cell'] = array($aux->getIdUsuario(),
-                $aux->getIdUsuario(),
+                $aux->getUsername(),
                 $aux->getEmpleado()->getPrimerNombre().' '.$aux->getEmpleado()->getPrimerApellido(),
                 $aux->getEmpleado()->getUnidadOrganizativa()->getNombreUnidad()
             );
@@ -88,5 +89,33 @@ class DefaultController extends Controller {
 
         return new Response("{sc:true,msg:''}");
     }
+    
+     public function verificaCreacionAction() {
+        $request = $this->getRequest();
+        $idEmpleado = $request->get('idEmpleado');
+        
+        $empleadoDao = new EmpleadoDao($this->getDoctrine());
+        $n= $empleadoDao->existeEmpleado($idEmpleado);
+
+        if($n==0)
+            $msj[0]='No existe el Empleado';
+        else
+            $msj[0]='SI EXISTE';
+        
+        $datos = json_encode($msj);
+        $numfilas=1;
+        $pages = floor($numfilas / 10) + 1;
+
+        $jsonresponse = '{
+               "page":"1",
+               "total":"' . $pages . '",
+               "records":"' . $numfilas . '", 
+               "msj":' . $datos . '}';
+
+
+        $response = new Response($jsonresponse);
+        return $response;
+    }
+    
 
 }

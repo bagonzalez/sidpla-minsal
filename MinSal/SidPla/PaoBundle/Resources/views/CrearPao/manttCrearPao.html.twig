@@ -1,0 +1,59 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block titulo %}Creaci&oacute;n de la PAO {{ "now" | date("Y")+1 }}  {% endblock %}
+
+{% block body %}
+<script type="text/javascript">
+ $(document).ready(function(){
+        $('#crearPao').button();
+        $('#crearPao').click(function(evento) {
+          this.form.action='{{ path('MinSalSidPlaPaoBundle_crearPao') }}';
+        });
+});
+ </script>
+<h1 style='text-align: center;'>Creaci&oacute;n de la PAO {{ "now" | date("Y")+1 }}</h1>
+<form>
+    <table align="center">
+        <tr>
+            <td>
+                <h5 style='font-size: 12px; font-weight: normal;font-family: arial, Helvetica,sans-serif'>
+                    Esta opción permite crear una Plantilla para cada Unidad Organizativa perteneciente al MINSAL. Según los siguientes casos:
+                </h5>
+                <ul>
+                    <li style=" font-size: 12px; font-family: arial, Helvetica,sans-serif">Unidades de Salud: para esta unidad organizativa se le creara una Plantilla de Actividades Trazadoras para Unidades de Salud para 
+                        que la Unidad pueda registrar el censo población y lo programado para cada actividad. </li>
+                    <li style=" font-size: 12px; font-family: arial, Helvetica,sans-serif">SIBASI y Región de Salud: Para esta Unidad Organizativa se le creara la Plantilla de Actividades y Resultados Esperados para SIBASI 
+                        y Regiones de Salud para que estas puedan agregar sus resultados esperados y actividades a su programación. También le aparecerán 
+                        los consolidados de las Plantillas de Actividades Trazadoras para Unidades de Salud. </li>
+                    <li style=" font-size: 12px; font-family: arial, Helvetica,sans-serif">Demás dependencias: las demás unidades organizativa se les creara una copia de la PAO del año anterior para que ellos trabajen en 
+                        base a esa PAO y puedan definirla con mayor facilidad.</li>
+                </ul>
+                <h5 style='font-size: 12px; font-weight: normal;font-family: arial, Helvetica,sans-serif'>
+                    El boton CREAR PAO  solo aparecera cuando:
+                </h5>
+                <ul>
+                    <li style=" font-size: 12px; font-family: arial, Helvetica,sans-serif">Se haya definido por lo menos una actividad en la Plantilla de Actividades Trazadoras para Unidades de Salud.</li>
+                    <li style=" font-size: 12px; font-family: arial, Helvetica,sans-serif">Se haya definido por lo menos un resultado Esperado para la Plantilla de Resultados y Actividades de SIBASI y Regiones de salud.</li>
+                    <li style=" font-size: 12px; font-family: arial, Helvetica,sans-serif">Se haya definido completamente el Cronograma para el Año de la Planificación Anual Operativa.</li>
+                    <li style=" font-size: 12px; font-family: arial, Helvetica,sans-serif">No se haya creado la PAO {{ "now" | date("Y")+1 }} para las Unidades Organizativas </li>
+                </ul>
+            </td>
+        </tr>
+        {% if msj is defined %}
+        <tr>
+            <td>
+                <p style='font-size: 12px; font-weight: normal;font-family: arial, Helvetica,sans-serif; color: red'>{{msj}}</p>
+            </td>
+        </tr>
+        {% endif %}
+        <tr>
+            <td colspan="2" align="center">
+                <br></br>  
+                {% if mostrarboton %}
+                    <input type='submit' name='crearPao' id="crearPao" value="  Crear Pao  "/>
+                {% endif %}
+            </td>
+        </tr>        
+    </table>
+        <input type='hidden' name='anio' id="anio" value='{{ "now" | date("Y")+1 }}' />
+</form>
+{% endblock %}
