@@ -22,11 +22,11 @@
 namespace MinSal\SidPla\TemplateUnisalBundle\EntityDao;
 
 /**
- * Description of ActividadUniSalDao
+ * Description of ResultActUniSalDao
  *
- * @author bagonzalez
+ * @author bgonzalez
  */
-class ActividadUniSalDao {
+class ResultActUniSalDao {
     var $doctrine;
     var $repositorio;
     var $em;
@@ -35,19 +35,19 @@ class ActividadUniSalDao {
     function __construct($doctrine) {
         $this->doctrine = $doctrine;
         $this->em = $this->doctrine->getEntityManager();
-        $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaTemplateUnisalBundle:ActividadUniSal');
+        $this->repositorio = $this->doctrine->getRepository('MinSalSidPlaTemplateUnisalBundle:ResultActUniSal');
     }
     
-    public function getActividadUniSal($codigo) {
-        $actividadUnisal = $this->repositorio->find($codigo);
-        return $actividadUnisal;
+    
+    public function getResultActUnisal($codigo) {
+        $resultActUnisal = $this->repositorio->find($codigo);
+        return $resultActUnisal;
     }
     
-     public function guardarActividad($actividad) {
-        $this->em->persist($actividad);
+     public function guardarResulAct($resulAct) {
+        $this->em->persist($resulAct);
         $this->em->flush();
     }
-
 }
 
 ?>

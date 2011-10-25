@@ -32,11 +32,17 @@ use MinSal\SidPla\AdminBundle\Entity\Empleado;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 use MinSal\SidPla\PaoBundle\Entity\Pao;
 use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
+use MinSal\SidPla\TemplateUnisalBundle\Entity\ResultActUniSal;
 
 use MinSal\SidPla\TemplateUnisalBundle\EntityDao\ProUnisalTemplateDao;
 use MinSal\SidPla\TemplateUnisalBundle\Entity\ProUnisalTemplate;
 use MinSal\SidPla\TemplateUnisalBundle\Entity\ObjetivoEspeUnisal;
 use MinSal\SidPla\PrograMonitoreoBundle\EntityDao\ProgramacionMonitoreoDao;
+use MinSal\SidPla\TemplateUnisalBundle\EntityDao\ResultActUniSalDao;
+use MinSal\SidPla\TemplateUnisalBundle\EntityDao\ActividadUniSalDao;
+use MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUniSal;
+use MinSal\SidPla\TemplateUnisalBundle\EntityDao\AreaClasificacionDao;
+
 
 /**
  * Description of AccionPrograMonUNISALController
@@ -99,17 +105,149 @@ class AccionPrograMonUNISALController extends Controller {
          $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
          $actividadesProgramon=$programacionMonitoreo->getActividadesUniSal();
          $idProgramon=$programacionMonitoreo->getIdPrograMon();
+         $areaClasificacionDao=new AreaClasificacionDao($this->getDoctrine());
+         $areasClasif=$areaClasificacionDao->getAreaClasificacions();
         
          $promMonDao=new ProgramacionMonitoreoDao($this->getDoctrine());
          //$actividadesProgramon=$promMonDao->getActividadesUniSal($idProgramon);
-         $mes=5;
+         $mes=3;
          
          $uniControl=new UnidadOrganizativa();            
          $uniControl=$this->obtenerUnidadOrg();
          $idUnidad=$uniControl->getIdUnidadOrg();
          
          return $this->render('MinSalSidPlaPrograMonitoreoBundle:ProgramacionMonitoreo:programacionMonitoreoUNISAL.html.twig', 
-                array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 'mes' => $mes, 'idUnidad' => $idUnidad ));
+                array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon,
+                    'mes' => $mes, 'idUnidad' => $idUnidad, 'areasClasif' => $areasClasif  ));
+    }
+    
+    
+    public function construccionProgramacionMonitoreoUNISALAction()
+    {
+         $opciones=$this->getRequest()->getSession()->get('opciones');   
+         $objetivos=$this->obtenerObjEspec();
+         
+         $paoElaboracion=$this->obtenerPaoSeguimiento();
+         $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+         $actividadesProgramon=$programacionMonitoreo->getActividadesUniSal();
+         $idProgramon=$programacionMonitoreo->getIdPrograMon();
+         $areaClasificacionDao=new AreaClasificacionDao($this->getDoctrine());
+         $areasClasif=$areaClasificacionDao->getAreaClasificacions();
+        
+         $promMonDao=new ProgramacionMonitoreoDao($this->getDoctrine());         
+         $mes=12;
+         
+         $uniControl=new UnidadOrganizativa();            
+         $uniControl=$this->obtenerUnidadOrg();
+         $idUnidad=$uniControl->getIdUnidadOrg();
+         
+         return $this->render('MinSalSidPlaPrograMonitoreoBundle:ProgramacionMonitoreo:construccionProgramacionMonitoreoUNISAL.html.twig', 
+                array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 
+                       'mes' => $mes, 'idUnidad' => $idUnidad, 'areasClasif' => $areasClasif ));
+    }
+    
+    
+    public function guardarProgramacioUniSalAction()
+    {
+         $opciones=$this->getRequest()->getSession()->get('opciones');   
+         $request = $this->getRequest();
+          //$query = $this->getQuery();
+          
+          //$idActividad = $request->get('actividadesCombo');
+          //$justificacion=$request->get('justificacion');
+          //$vinculacionEntreDepen=$request->get('vinculacionDepen');
+          
+            $numero = count($_POST);
+            $tags = array_keys($_POST);// obtiene los nombres de las varibles
+            $valores = array_values($_POST);// obtiene los valores de las varibles
+
+            //$actividadVinDao=new ActividadVinculadaDao($this->getDoctrine());
+            // crea las variables y les asigna el valor
+            
+            $resultadoActDao=new ResultActUniSalDao($this->getDoctrine());
+            $resultadoAct=new ResultActUniSal ();
+            
+            $actividadUnisalDao=new ActividadUniSalDao($this->getDoctrine());
+            $actividadUnisal=new ActividadUniSal();
+            
+            
+            for($i=0;$i<$numero;$i++){                
+                $cadena=$tags[$i];
+               
+                if((preg_match('/resultadoProgramado_/',$cadena))==1){
+                    $idResultadoRealizado=substr($tags[$i], 20);
+                    $valorRealizado=$valores[$i];
+                    
+                    if($valorRealizado>0){
+                        $resultadoAct=$resultadoActDao->getResultActUnisal($idResultadoRealizado);
+                        $resultadoAct->setResulActProgramado($valorRealizado);                    
+                        $resultadoActDao->guardarResulAct($resultadoAct);                        
+                    }
+                }
+                
+                if((preg_match('/metaAnualActividadUniSal_/',$cadena))==1){
+                    $idActividadUniSal=substr($tags[$i], 25);
+                    $valorRealizado=$valores[$i];
+                    
+                    $actividadUnisal=$actividadUnisalDao->getActividadUniSal($idActividadUniSal);
+                    $actividadUnisal->setMetaAnualActUni($valorRealizado);         
+                    $actividadUnisalDao->guardarActividad($actividadUnisal);       
+                }                
+                 
+                if((preg_match('/responsableActividadUniSal_/',$cadena))==1){
+                    $idActividadUniSal=substr($tags[$i], 27);
+                    $responsableActUni=$valores[$i];                    
+                    
+                    $actividadUnisal=$actividadUnisalDao->getActividadUniSal($idActividadUniSal);
+                    $actividadUnisal->setResponsableActUni($responsableActUni);         
+                    $actividadUnisalDao->guardarActividad($actividadUnisal);                     
+                }
+            }
+         
+         return $this->construccionProgramacionMonitoreoUNISALAction();
+    }
+    
+    
+    public function guardarSeguimientoProgramacioUniSalAction()
+    {
+         $opciones=$this->getRequest()->getSession()->get('opciones');   
+         $request = $this->getRequest();
+          //$query = $this->getQuery();
+          
+          //$idActividad = $request->get('actividadesCombo');
+          //$justificacion=$request->get('justificacion');
+          //$vinculacionEntreDepen=$request->get('vinculacionDepen');
+          
+            $numero = count($_POST);
+            $tags = array_keys($_POST);// obtiene los nombres de las varibles
+            $valores = array_values($_POST);// obtiene los valores de las varibles
+
+            //$actividadVinDao=new ActividadVinculadaDao($this->getDoctrine());
+            // crea las variables y les asigna el valor
+            
+            $resultadoActDao=new ResultActUniSalDao($this->getDoctrine());
+            $resultadoAct=new ResultActUniSal ();
+            
+            $actividadUnisalDao=new ActividadUniSalDao($this->getDoctrine());
+            $actividadUnisal=new ActividadUniSal();
+            
+            
+            for($i=0;$i<$numero;$i++){                
+                $cadena=$tags[$i];
+               
+                if((preg_match('/resultadoRealizado_/',$cadena))==1){
+                    $idResultadoRealizado=substr($tags[$i], 19);
+                    $valorRealizado=$valores[$i];
+                    
+                    if($valorRealizado>0){
+                        $resultadoAct=$resultadoActDao->getResultActUnisal($idResultadoRealizado);
+                        $resultadoAct->setResulActRealizado($valorRealizado);                    
+                        $resultadoActDao->guardarResulAct($resultadoAct);                        
+                    }
+                }
+            }
+         
+         return $this->showProgramacionMonitoreoUNISALAction();
     }
     
     

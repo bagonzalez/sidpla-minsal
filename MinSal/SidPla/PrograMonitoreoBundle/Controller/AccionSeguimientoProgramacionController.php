@@ -111,8 +111,6 @@ class AccionSeguimientoProgramacionController extends Controller {
             }
         }
         
-        
-
         return $obEspecificos;
     }
     

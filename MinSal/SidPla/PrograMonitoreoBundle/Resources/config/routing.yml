@@ -41,5 +41,16 @@ MinSalSidPlaPrograMonitoreoBundle_consultarTipoMeta:
 MinSalSidPlaPrograMonitoreoBundle_showProgramacionMonitoreoUNISAL:
     pattern:  /showProgramacionMonitoreoUNISAL
     defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionPrograMonUNISAL:showProgramacionMonitoreoUNISAL }   
-    
-    
+
+MinSalSidPlaPrograMonitoreoBundle_construccionProgramacionMonitoreoUNISAL:
+    pattern:  /construccionProgramacionMonitoreoUNISAL
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionPrograMonUNISAL:construccionProgramacionMonitoreoUNISAL }   
+
+MinSalSidPlaPrograMonitoreoBundle_guardarProgramacioUniSal:
+    pattern:  /guardarProgramacioUniSal
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionPrograMonUNISAL:guardarProgramacioUniSal }   
+
+MinSalSidPlaPrograMonitoreoBundle_guardarSeguimientoProgramacioUniSal:
+    pattern:  /guardarSeguimientoProgramacioUniSal
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionPrograMonUNISAL:guardarSeguimientoProgramacioUniSal }   
+

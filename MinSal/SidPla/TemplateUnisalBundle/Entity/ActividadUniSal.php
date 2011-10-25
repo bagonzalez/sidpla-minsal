@@ -3,6 +3,7 @@
 namespace MinSal\SidPla\TemplateUnisalBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUniSal
