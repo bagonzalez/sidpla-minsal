@@ -73,7 +73,7 @@ class AccionSeguimientoProgramacionController extends Controller {
     
     public function consultarObjetivosEspecificosEntControl() {
         $request = $this->getRequest();
-        $anio = date('Y')+1;        
+        $anio = date('Y');        
 
         $objTmpDao = new ObjTemplateDao($this->getDoctrine());
          if($objTmpDao->existeObjTmp($anio)==0)

@@ -38,7 +38,7 @@
                          )
                              
                           {% for res in obj.getResultadoEsperado %}
-                           
+                            {% if( (res.unidadOrganizativa.getIdUnidadOrg == idUnidad) or (res.unidadOrganizativa is null ) ) %} 
                                
                                            var chart{{ res.idResEsp }};
                                            var colores=['#4572A7','#AA4643','#89A54E','#80699B','#3D96AE','#DB843D' ];
@@ -94,6 +94,7 @@
                                         $("#{{ res.idResEsp }}ResDiv").toggle(400);
                                     }                            
                                  )
+                                 {% endif %}
                           {% endfor %}
                     {% endfor %} 
         {% endif %}  
