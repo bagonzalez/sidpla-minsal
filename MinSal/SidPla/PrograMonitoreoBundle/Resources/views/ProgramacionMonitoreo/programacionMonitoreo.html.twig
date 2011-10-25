@@ -38,6 +38,8 @@
                          )
                              
                           {% for res in obj.getResultadoEsperado %}
+                           
+                               
                                            var chart{{ res.idResEsp }};
                                            var colores=['#4572A7','#AA4643','#89A54E','#80699B','#3D96AE','#DB843D' ];
                                            chart = new Highcharts.Chart({
@@ -85,7 +87,7 @@
                                                 }]
                                          });
                           
-                          
+                               
                                 $("#{{ res.idResEsp }}ResDiv").hide();  
                                 
                                 $("#mostratRes{{ res.idResEsp }}").click(function(){ 
