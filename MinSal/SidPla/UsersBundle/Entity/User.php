@@ -9,31 +9,35 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="sidpla_usuario")
  */
-class User extends BaseUser
-{
+class User extends BaseUser {
+
     /**
      * @ORM\Id
      * @ORM\Column(name="usuario_codigo", type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $idUsuario;
-    
-    
+
     /**
      * @ORM\OneToOne(targetEntity="MinSal\SidPla\AdminBundle\Entity\Empleado", mappedBy="usuario")
      * @ORM\JoinColumn(name="empleado_codigo", referencedColumnName="empleado_codigo")
      */
     private $empleado;
-    
-     /**
+
+    /**
      * @ORM\ManyToOne(targetEntity="MinSal\SidPla\AdminBundle\Entity\RolSistema", inversedBy="usuarios")
      * @ORM\JoinColumn(name="rol_codigo", referencedColumnName="rol_codigo")
      */
     protected $rol;
-    
 
-    public function __construct()
-    {
+    /**
+     * @var integer $idEmpleado
+     *
+     * @ORM\Column(name="empleado_codigo", type="integer")
+     */
+    private $idEmpleado;
+
+    public function __construct() {
         parent::__construct();
         // your own logic
     }
@@ -43,9 +47,26 @@ class User extends BaseUser
      *
      * @return integer 
      */
-    public function getIdUsuario()
-    {
+    public function getIdUsuario() {
         return $this->idUsuario;
+    }
+
+    /**
+     * Set idEmpleado
+     *
+     * @param integer $idEmpleado
+     */
+    public function setIdEmpleado($idEmpleado) {
+        $this->idEmpleado = $idEmpleado;
+    }
+
+    /**
+     * Get idEmpleado
+     *
+     * @return integer
+     */
+    public function getidEmpleado() {
+        return $this->idEmpleado;
     }
 
     /**
@@ -53,8 +74,7 @@ class User extends BaseUser
      *
      * @param MinSal\SidPla\UsersBundle\Entity\Empleado $empleado
      */
-    public function setEmpleado(\MinSal\SidPla\AdminBundle\Entity\Empleado $empleado)
-    {
+    public function setEmpleado(\MinSal\SidPla\AdminBundle\Entity\Empleado $empleado) {
         $this->empleado = $empleado;
     }
 
@@ -63,8 +83,7 @@ class User extends BaseUser
      *
      * @return MinSal\SidPla\UsersBundle\Entity\Empleado 
      */
-    public function getEmpleado()
-    {
+    public function getEmpleado() {
         return $this->empleado;
     }
 
@@ -73,8 +92,7 @@ class User extends BaseUser
      *
      * @param MinSal\SidPla\AdminBundle\Entity\RolSistema $rol
      */
-    public function setRol(\MinSal\SidPla\AdminBundle\Entity\RolSistema $rol)
-    {
+    public function setRol(\MinSal\SidPla\AdminBundle\Entity\RolSistema $rol) {
         $this->rol = $rol;
     }
 
@@ -83,18 +101,17 @@ class User extends BaseUser
      *
      * @return MinSal\SidPla\AdminBundle\Entity\RolSistema 
      */
-    public function getRol()
-    {
+    public function getRol() {
         return $this->rol;
     }
-    
-     /**
+
+    /**
      * Get username
      *
      * @return string 
      */
-    public function getUsername()
-    {
+    public function getUsername() {
         return $this->username;
     }
+
 }

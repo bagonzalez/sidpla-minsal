@@ -13,9 +13,9 @@
     <tr>
         <td style=" font-size: 12px;">{{actividad.descActUniTemp}}
         </td>
-        <td WIDTH='35%' style=" text-align: center" >
-            <input type="submit" id="editar" value="Editar" onclick="$('#idAct').attr('value',{{actividad.codActUniTemp}});this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarActUnisalTemplate')}}';" />
-            
+        <td class="tdBotonesIconos" WIDTH='60' >
+            <input width="50" height="50" type="image" src="{{ asset('/images/iconos/editar.png')}}" id="editar" value="Editar" onclick="$('#idAct').attr('value',{{actividad.codActUniTemp}});this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarActUnisalTemplate')}}';" />
+            <br/>Editar
         </td>
     </tr>
     {% endfor %}

@@ -26,6 +26,8 @@ use MinSal\SidPla\UsersBundle\Entity\User;
 use MinSal\SidPla\AdminBundle\Entity\Empleado;
 use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
 
+use MinSal\SidPla\CensoBundle\EntityDao\BloqueCensoDao;
+
 use \PHPExcel_IOFactory; 
 use \PHPExcel_Cell;
 
@@ -64,8 +66,17 @@ class AccionAdminCensoUsuarioController extends Controller{
         
         $opciones=$this->getRequest()->getSession()->get('opciones');
         
+        $bloqueDao=new BloqueCensoDao($this->getDoctrine());
+        $bloquesCensoPoblacion=$bloqueDao->getBloqueCen();
+        
+        $censoPoblacion=new CensoPoblacion();       
+        $paoElaboracion=$this->obtenerPaoElaboracionAction();       
+        $censoPoblacion=$paoElaboracion->getCesopoblacion();
+        
+        
         return $this->render('MinSalSidPlaCensoBundle:CensoUsuario:manttCensoUsuario.html.twig'
-                , array('opciones' => $opciones,));              
+                , array('opciones' => $opciones, 'bloques' => $bloquesCensoPoblacion,
+                        'censoPoblacion' => $censoPoblacion));              
     } 
     
     

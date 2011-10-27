@@ -12,8 +12,9 @@
     <tr>
         <td style=" font-size: 12px;">{{ indicador.getNombreIndSalud}} </td>
         <td style=" font-size: 12px; text-align: center" >{{ indicador.getTipoIndicador.getNombreTipIndi}} </td>
-        <td WIDTH='20%' style=" text-align: center" >
-            <input type="submit" id="editar" value="Editar" onclick="$('#idIndSal').attr('value',{{indicador.getCodIndSalud}});this.form.action='{{path('MinSalSidPlaIndicadoresTemplateBundle_editarIndicadorSalud')}}';" />
+         <td class="tdBotonesIconos" WIDTH='60' >
+            <input width="50" height="50" type="image" src="{{ asset('/images/iconos/gestion.png')}}" id="editar" onclick="$('#idIndSal').attr('value',{{indicador.getCodIndSalud}});this.form.action='{{path('MinSalSidPlaIndicadoresTemplateBundle_editarIndicadorSalud')}}';" />
+            <br/>Editar
         </td>
     </tr>
     {% endfor %}

@@ -24,7 +24,7 @@ class ActividadUnisalTemplate {
     /**
      * @var string $descActUniTemp
      *
-     * @ORM\Column(name="actunitem_descripcion", type="string", length=200)
+     * @ORM\Column(name="actunitem_descripcion", type="string", length=300)
      */
     private $descActUniTemp;
 

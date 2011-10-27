@@ -3,13 +3,14 @@
  $(document).ready(function(){
    $('#verificaEmpleado').button();
    $('#verificaEmpleado').click(function(evento) {
-       $.getJSON('{{ path('MinSalSidPlaUsersBundle_verificaCreacion') }}?idEmpleado='+$("#fos_user_registration_form_empleado").get(0).value, function(data) {
+       $.getJSON('{{ path('MinSalSidPlaUsersBundle_verificaCreacion') }}?idEmpleado='+$("#fos_user_registration_form_idEmpleado").get(0).value+'&username='+$("#fos_user_registration_form_username").get(0).value, function(data) {
          $.each(data, function(key, val) {
            if(key=='msj'){
                 $.each(val, function(id, registro){
-                   $("#mensaje").attr('value', registro);
-                                  
-                //this.form.action='{#{ path('fos_user_registration_register') }#}';
+                  if(!registro[1]) 
+                    $("#mensaje").attr('value', registro[0]);
+                else
+                      $('#formUsuario').submit();
              });                    
            }
           });
@@ -17,45 +18,45 @@
           
    });//FIn del clic
 });
- </script>
-<form action="" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
+    </script>
+    <form id="formUsuario" action="{{ path('fos_user_registration_register') }}" {{ form_enctype(form) }} method="POST" class="fos_user_registration_register">
     {{ form_errors(form) }}
-        <table align='center' >
-            <tr>
-                <td align='center' colspan="2"><h3>Registro de Nuevos Usuarios</h3></td>
-            </tr>
-            <tr>
-                <td><label id="username" >Nombre de Usuario:</label></td>
-                <td>{{ form_widget(form.username) }}</td>
-            </tr>
-            <tr>
-                <td><label id="email" >Email:</label></td>
-                <td>{{ form_widget(form.email) }}</td>
-            </tr>            
-            <tr>
-                <td><label id="plainPasswordfirst" >Password:</label></td>
-                <td>{{ form_widget(form.plainPassword.first) }}</td>
-            </tr>   
-            <tr>
-                <td><label id="plainPasswordsecond" >Re-Password:</label></td>
-                <td>{{ form_widget(form.plainPassword.second) }}</td>                
-            </tr>  
-            
-             <tr>
-                <td><label id="empleado" >Digite su codigo de empleado:</label></td>
-                <td>{{ form_widget(form.empleado) }}</td>                
-            </tr> 
-           <tr>
-                <td align='center' colspan=2 >
-                   <input type="button" value="  Registrar Usuario  " id="verificaEmpleado"/>
-                   <br>
-                   <input type="text" size="50" value="" id="mensaje"  />
-                    <br>
-                    
-                    <input style=" visibility: hidden" type="submit" value="{{ 'Registrar'|trans({}, 'FOSUserBundle') }}" />
-                </td>
-            </tr>
-        </table>    
-    
+            <table align='center' >
+                <tr>
+                    <td align='center' colspan="2"><h3>Registro de Nuevos Usuarios</h3></td>
+                </tr>
+                <tr>
+                    <td><label id="username" >Nombre de Usuario:</label></td>
+                    <td>{{ form_widget(form.username) }}</td>
+                </tr>
+                <tr>
+                    <td><label id="email" >Email:</label></td>
+                    <td>{{ form_widget(form.email) }}</td>
+                </tr>            
+                <tr>
+                    <td><label id="plainPasswordfirst" >Password:</label></td>
+                    <td>{{ form_widget(form.plainPassword.first) }}</td>
+                </tr>   
+                <tr>
+                    <td><label id="plainPasswordsecond" >Re-Password:</label></td>
+                    <td>{{ form_widget(form.plainPassword.second) }}</td>                
+                </tr>  
+
+                <tr>
+                    <td><label id="idEmpleado" >Digite su codigo de empleado:</label></td>
+                    <td>{{ form_widget(form.idEmpleado) }}</td>                
+                </tr> 
+                <tr>
+                    <td align='center' colspan=2 >
+                        <input type="button" value="  Registrar Usuario  " id="verificaEmpleado"/>
+                        <br>
+                        <textarea readonly="readonly" rows="2" cols="50" id="mensaje" style="font-family: Verdana, Geneva, sans-serif; color: red; border: none; background-color: white; font-weight: bolder; font-size: 10px" ></textarea>
+                        <br>
+
+                        <input style=" visibility: hidden" type="submit" value="{{ 'Registrar'|trans({}, 'FOSUserBundle') }}" />
+                    </td>
+                </tr>
+            </table>    
+
     {{ form_rest(form) }}
-</form>
+        </form>

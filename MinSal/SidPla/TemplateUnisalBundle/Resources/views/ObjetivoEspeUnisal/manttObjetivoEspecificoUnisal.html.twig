@@ -7,8 +7,7 @@
      $("#{{"now" | date("Y")+1}}{{area.getCodArea}}Div").hide();      
 {% endfor%}
     
-     $("#20111Div").show();
-     $('#agregar').button();
+     $("#"+$('#selanio').val()+$('#selarea').val()+"Div").show();
      $('#agregar').click(function() {
         $('#anio').attr('value', $('#selanio').val());
         $('#idArea').attr('value', $('#selarea').val());
@@ -55,31 +54,33 @@
                         {% for  area in  areas%}
                             <option value='{{ area.getCodArea }}'>{{ area.getNombreArea }}</option>
                         {%endfor%}
-                    </select>
-                </td>
-            </tr>
-            <tr>
-                <td align="center"><p>Si desea agregar más Áreas para objetivos <a href="mantenimientoAreasClasificacion" >De clic aqui</a> </p></td>
-            </tr>
-            <tr colspan="2">
-                <td align="center">
-                    <br></br>
-                    <input type="submit" name="agregar" id="agregar" value="Agregar Objetivo" />
-                </td>
-            </tr>
-            <tr>
-                <td align="center">
-                    <br></br>                
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center"><p>Si desea agregar más Áreas para objetivos <a href="mantenimientoAreasClasificacion" >De clic aqui</a> </p></td>
+                </tr>
+                <tr colspan="2">
+                    <td align="center" class="tdBotonesIconos" >
+                         
+                        <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}" name="agregar" id="agregar"/>
+                        <br/>Agregar Objetivo
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td align="center">
+                        <br></br>                
                 {% include 'MinSalSidPlaTemplateUnisalBundle:ObjetivoEspeUnisal:showObjetivoEspecificoUnisal.html.twig' %} 
-                </td>
-            </tr>        
-        </table>
-        <input type='hidden' name='anio' id="anio" value='' />
-        <input type='hidden' name='idArea' id="idArea" value='' />
-        <input type='hidden' name='idObj' id="idObj" value='' /> 
-    </form>
-    <br></br>
-    <br></br>
+                    </td>
+                </tr>        
+            </table>
+            <input type='hidden' name='anio' id="anio" value='' />
+            <input type='hidden' name='idArea' id="idArea" value='' />
+            <input type='hidden' name='idObj' id="idObj" value='' /> 
+        </form>
+        <br></br>
+        <br></br>
 
 
 {% endblock %}
