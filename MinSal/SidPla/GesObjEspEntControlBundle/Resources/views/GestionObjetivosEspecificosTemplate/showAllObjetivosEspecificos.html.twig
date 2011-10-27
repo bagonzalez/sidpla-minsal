@@ -2,70 +2,15 @@
 {% block body %}
 <script type="text/javascript">
   $(document).ready(function(){
-          
-    $('#agregarObjTempButton').button();
     $('#agregarObjTempButton').click(function() {
+ 
         $('#anio').attr('value', $('#selanio').val());
         this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_ingresarObjEspTemplate') }}';
     });
-        
-    var myGrid = $('#theGridObj');        
-    myGrid.jqGrid({    
-      url: 'consultarObjetivosEspecificosTemplateJSON?anio={{ "now" | date("Y") }}',
-      datatype:'json',
-      altRows:true,          
-      colNames:['Id','Objetivo','IDBJTTEMPLATE','Acciones'],
-      colModel:[ 
-        { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
-        { name:'objetivo', index: 'objetivo', width:580,editable:true,edittype:"textarea", editoptions:{rows:"5",cols:"50",maxlength: 300},formoptions:{ rowpos:1, label: "Objetivo Especifico", elmprefix:"(*)"},editrules:{required:true}  },
-        { name:'idobjtmp', index: 'idobjtmp', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
-        {name:'act',index:'act', width:280,sortable:false}],
-      rowNum:10,
-      rowList:[10,20,30],
-      multiselect: false,
-      loadonce:true,
-      sortname: 'id',
-      sortorder: "asc",
-      gridComplete: function(){
-          var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
-          for(var i=0;i < ids.length;i++){ var cl = ids[i];
-              be = "<input style='height:22px;width:70px;' type='submit' value='Editar' onclick=\"$('#idfilaobj').attr('value', '"+cl+"'); $('#anio').attr('value', $('#selanio').val());this.form.action='{{path('MinSalSidPlaGesObjEspEntControlBundle_editarObjEspTemplate')}}';\" />";
-              se = "<input style='height:22px;width:70px;' type='button' value='Eliminar' onclick=\"//jQuery('#theGridObj').jqGrid('delGridRow','"+cl+"',{msg: 'Desea eliminar este objetivo especifico?'}); \" />"; 
-              ce = "<input style='height:22px;width:120px;' type='submit' value='Resultados Esperados' onclick=\" $('#idfila').attr('value',$('#theGridObj').getCell("+cl+", 'idobjtmp')); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
-              jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+"   "+se+"   "+ce}); } 
-      },
-      pager: jQuery('#pagerObj'),
-      viewrecords: true,          
-      caption: 'Objetivos Especificos',
-      height: "100%",
-      editCaption: "Editar Registro",
-      addCaption: "Nuevo Registro",         
-      editurl:'manttObjEspTemplatedos'      
-    });
-    myGrid.jqGrid('navGrid','#pagerObj',{edit:false,add:false,del:false,search:false,view:false,refresh:false,
-     beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}
-    }
-     //view
-    ).hideCol('id').hideCol('idobjtmp');
-       
-         /* Funcion para regargar los JQGRID luego de agregar y editar*/
-  function despuesAgregarEditar() {
-    myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
-    return[true,'']; //no error
-  }      
-});
-      
-   //define handler for 'editSubmit' event
-var fn_editSubmit=function(response,postdata){
- var json=response.responseText; //in my case response text form server is "{sc:true,msg:''}"
- var result=eval("("+json+")"); //create js object from server reponse
- return [result.sc,result.msg,null]; 
-}  
 
-    
-   
-    
-    </script>
+  
+});
+</script>
     <form action= "" method="post">
         <input type='hidden' name='idfilaobj' id="idfilaobj" value='' />
         <input type='hidden' name='anio' id="anio" value='' />
@@ -74,9 +19,42 @@ var fn_editSubmit=function(response,postdata){
             <table id="theGridObj" class="scroll" ></table> 
             <div id="pagerObj"  class="scroll"></div> 
         </div>
+{% if objTemplates is defined %}
+    {%set i = 0 %}
+    {%for objEspecificoTemplate in objTemplates%}
+        <div {% if i==0 %} id='{{ "now" | date("Y") }}Div' {% else %}  id='{{ "now" | date("Y")+1 }}Div' {% endif %}>
+            <table border="1" WIDTH='85%'>
+                <thead>
+                    <tr  style=" font-size: 14px;">
+                        <th><strong>  Objetivo </strong>
+                        </th>
+                        <th colspan="2"><strong>  Acciones </strong>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+       {%for obj in objEspecificoTemplate%}
+                        <tr>
+                            <td style=" font-size: 12px;">{{ obj.getIdObjEspec.getDescripcion}}
+                            </td>
+                            <td class="tdBotonesIconos" WIDTH='60' >
+                                <input width="50" height="50" type="image" src="{{ asset('/images/iconos/editar.png')}}"  id="editar" onclick="$('#idfilaobj').attr('value',{{obj.getIdObjEspec.getIdObjEspec}});$('#anio').attr('value', $('#selanio').val());this.form.action='{{path('MinSalSidPlaGesObjEspEntControlBundle_editarObjEspTemplate')}}';" />
+                                <br/>Editar
+                            </td>
+                            <td class="tdBotonesIconos" WIDTH='60' >
+                                <input width="50" height="50" type="image" src="{{ asset('/images/iconos/gestion.png')}}"  id="resultadoEsperado" onclick="$('#idfila').attr('value',{{obj.getIdObjEspTempl}});document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}';" />
+                                <br/>Resultados Esperados
+                            </td>
+                        </tr>
+       {%endfor%}
 
-        <br></br>
-        <input type="submit" id="agregarObjTempButton" value="  Agregar  " />
-    </form>  
+                    </tbody>
+                </table>
+            </div>
+   {%set i = i+1 %}
+   {%endfor%}
+   
+{% endif %}
+        </form>  
 
 {% endblock %}

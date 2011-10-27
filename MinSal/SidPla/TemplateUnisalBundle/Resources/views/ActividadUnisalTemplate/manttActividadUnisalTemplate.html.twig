@@ -2,8 +2,6 @@
 {% block body %}
 <script type="text/javascript">
  $(document).ready(function(){
-     
-     $('#agregar').button();
      $('#agregar').click(function() {
         $('#anio').attr('value', $('#selanio').val());
         $('#idArea').attr('value', $('#selarea').val());
@@ -31,9 +29,9 @@
                 </td>
             </tr>
             <tr colspan="2">
-                <td align="center">
-                    <br></br>
-                    <input type="submit" name="agregar" id="agregar" value="Agregar Actividades" />
+                <td align="center" class="tdBotonesIconos" >
+                   <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}" name="agregar" id="agregar" />
+                   <br/>Agregar Actividad
                 </td>
             </tr>
             <tr>

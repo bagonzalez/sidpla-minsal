@@ -48,7 +48,7 @@ class RegistrationFormType  extends BaseType
                                     ->orderBy('u.primerNombre', 'ASC');
                 },
         ));*/
-        $builder->add('empleado','text');
+        $builder->add('idEmpleado','integer');
        /* $builder->add('rol', 'entity',
                 array( 'class' => 'MinSal\\SidPla\\AdminBundle\\Entity\\RolSistema',
                'query_builder' => function(EntityRepository $er) {

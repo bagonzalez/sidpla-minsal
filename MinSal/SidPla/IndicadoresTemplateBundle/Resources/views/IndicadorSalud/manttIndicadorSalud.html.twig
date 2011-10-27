@@ -2,9 +2,7 @@
 {% block body %}
 <script type="text/javascript">
  $(document).ready(function(){
-     
-     $('#agregar').button();
-     $('#agregar').click(function() {
+      $('#agregar').click(function() {
         this.form.action='{{path('MinSalSidPlaIndicadoresTemplateBundle_ingresarIndicadorSalud')}}';
         
      });
@@ -29,9 +27,9 @@
                 </td>
             </tr>
             <tr colspan="2">
-                <td align="center">
-                    <br></br>
-                    <input type="submit" name="agregar" id="agregar" value="Agregar Indicador de Salud" />
+                 <td align="center" class="tdBotonesIconos" >
+                   <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}"  name="agregar" id="agregar"/>
+                   <br/>Agregar Indicador de Salud
                 </td>
             </tr>
             <tr>

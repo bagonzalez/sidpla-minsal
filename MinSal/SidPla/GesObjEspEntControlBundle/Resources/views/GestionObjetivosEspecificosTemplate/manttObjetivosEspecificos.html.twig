@@ -3,12 +3,28 @@
 <script type="text/javascript">
  $(document).ready(function(){
    function cargarAnio(){
+        $("#{{ "now" | date("Y") }}Div").hide(); 
+        $("#{{ "now" | date("Y")+1 }}Div").hide(); 
+        
+      $("#"+$('#selanio').val()+"Div").show();
       $('#theGridObj').setGridParam({
           url:'consultarObjetivosEspecificosTemplateJSON?anio='+$('#selanio').val(),
           datatype:'json'
          }).trigger("reloadGrid"); 
    }
    $('#selanio').change(cargarAnio);
+       
+    {% if objTemplates is defined %}
+    {%set i = 0 %}
+    {%for objEspecificoTemplate in objTemplates%}
+        {% if i==0 %}
+           $("#{{ "now" | date("Y") }}Div").show(); 
+         {% else %}
+           $("#{{ "now" | date("Y")+1 }}Div").hide();
+        {% endif %}
+        {%set i = i+1 %}
+    {% endfor%}
+    {% endif %}
       
 });
     </script>
@@ -23,6 +39,13 @@
                         <option value='{{ "now" | date("Y") }}'>{{ "now" | date("Y") }}</option>
                         <option value='{{ "now" | date("Y")+1 }}'>{{ "now" | date("Y")+1 }}</option>
                     </select>
+                </td>
+            </tr>
+            <tr colspan=>
+                <td align="center" class="tdBotonesIconos" >
+                    <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}" id="agregarObjTempButton"/>
+                    <br/>Agregar Objetivo
+
                 </td>
             </tr>
             <tr>
