@@ -1,62 +1,102 @@
-{# empty Twig template #}
+{# SIDPLA - MINSAL
+   Copyright (C) 2011  Bruno González   e-mail: bagonzalez.sv EN gmail.com
+   Copyright (C) 2011  Universidad de El Salvador
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>. #}
 
 {% block body %}
-<script type="text/javascript">
+ <script type="text/javascript">
       $(document).ready(function(){
-        
-        var myGrid = $('#theGrid1');        
-        myGrid.jqGrid({ 
-          url: 'consultarInformacionComplementariaJSON',
-     scrolling: true,
-          datatype:'json',
-          altRows:true,
-          colNames:['Categoria','Area', 'Cantidad'],
-          colModel:[
-            { name:'categoria', index: 'categoria', width:400,editable:false,editoptions:{size:15}, searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}  },            
-            { name:'area', index: 'area',width:300, sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:2, label: "Codigo Censo", elmprefix:"(*)"},editrules:{required:true} } ,                        
-            { name:'Cantidad', index: 'Cantidad',width:300, summaryType:'sum', sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:4, label: "Cantidad", elmprefix:"(*)"},editrules:{required:true} } ],            
-            
-          rowNum:10,
-          rownumbers: true,
-          rowTotal: 10,
-          rowList:[10,20,30],         
-          rownumWidth: 40,
-          multiselect: false,
-          pager: jQuery('#pager1'),
-          viewrecords: true, 
-          loadonce:true,
-          sortname: 'categoria', grouping:true, 
-          groupingView : { 
-              groupField : ['categoria'], 
-              groupColumnShow : [false], 
-              groupCollapse : true, 
-              groupOrder: ['desc'],
-              groupSummary : [true]
-          },
-            sortorder: "asc",
-            caption: 'Total de Viviendas',
-            height: 'auto',
-            editCaption: "Editar Censo",
-            addCaption: "Nuevo Censo",
-            editurl: 'manttInformacionComplementariaEdicion'
-        });
-         myGrid.jqGrid('navGrid','#pager',
-        {edit:false,add:false,del:false,view:true},
-        {},//edit
-        {},//add
-        {},//del
-        {}, //search
-        {}//view
-        );
-        
-       
-      }
+          {% if bloques is defined %}
+            {% for bloque in bloques %}
+                {% for categoria in bloque.getCategoriasCenso %}
+                    $("input[name^='idURBANA{{categoria.idCategoriaCenso}}']").sum("keyup", "#{{categoria.idCategoriaCenso}}URBANATOTAL");                              
+                    $("input[name^='idRURAL{{categoria.idCategoriaCenso}}']").sum("keyup", "#{{categoria.idCategoriaCenso}}RURALTOTAL");                                                  
+                    $("input[name^='id{{categoria.idCategoriaCenso}}PROMOTOR']").sum("keyup", "#{{categoria.idCategoriaCenso}}PROMOTORTOTAL");                                                  
+                    $("input[name$='{{categoria.idCategoriaCenso}}H']").sum("keyup", "#{{categoria.idCategoriaCenso}}TOTALHOMBRES");                                                  
+                    $("input[name$='{{categoria.idCategoriaCenso}}M']").sum("keyup", "#{{categoria.idCategoriaCenso}}TOTALMUJERES");                                                                      
+                    $("input[name^='total{{categoria.idCategoriaCenso}}']").sum("keyup", "#{{categoria.idCategoriaCenso}}TOTALGENERAL");                                                                      
+                    
+                {% endfor %}
+            {% endfor %}
+           {% endif %}   
+      });     
+ </script>
  
-);
-</script>
+{% if bloques is defined %}
+    {% for bloque in bloques %}
+        {% if bloque.ordenBloque == 1%}
+            <h3>{{ bloque.nombreBloque }}</h3>
+            <table border="1">
+                <thead>                    
+                    <tr>
+                         <td rowspan="2" colspan="1" >  </td>
+                         <th colspan="1" >AREA URBANA</th>
+                         <th colspan="1">AREA RURAL</th>                         
+                         <th colspan="1">PROMOTORES</th>
+                    </tr>
+                    <tr>
+                        <th>Cantidad</th>                                                
+                        <th>Cantidad</th>                                                
+                        <th>Cantidad</th>                                                                                                                 
+                    </tr>
+                </thead>
+                <tbody>
+            {% for categoria in bloque.getCategoriasCenso %} 
+                 {% if censoPoblacion is defined %}                    
+                    <tr>
+                        <td colspan="1" >{{ categoria.descripcionCategoria }} </td>                             
+                    {% for infComplement in censoPoblacion.getInformacionComplementaria %}                     
+                        {% if infComplement.categoriaCenso.idCategoriaCenso == categoria.idCategoriaCenso  %}
+                            {% if infComplement.getAreaInfoComp == 'URBANA' %}
+                                <td align="center" >  
+                                        <input size="2" readonly="readonly" name="idInfoComURBANA{{categoria.idCategoriaCenso}}" value="{{ infComplement.getCantidadInfoComp }}"></input>
+                                </td>                        
+                            {% endif %}                            
+                        {% endif %}   
+                    {% endfor %}
+                                
+                   {% for infComplement in censoPoblacion.getInformacionComplementaria %}                     
+                        {% if infComplement.categoriaCenso.idCategoriaCenso == categoria.idCategoriaCenso  %}
+                            {% if infComplement.getAreaInfoComp == 'RURAL' %}
+                                <td align="center" >  
+                                        <input size="2" readonly="readonly" name="idInfoComURBANA{{categoria.idCategoriaCenso}}" value="{{ infComplement.getCantidadInfoComp }}"></input>
+                                </td>                        
+                            {% endif %}                            
+                        {% endif %}   
+                    {% endfor %}
+                               
+                                
+                   {% for infComplement in censoPoblacion.getInformacionComplementaria %}                     
+                        {% if infComplement.categoriaCenso.idCategoriaCenso == categoria.idCategoriaCenso  %}
+                            {% if infComplement.getAreaInfoComp == 'PROMOTOR' %}
+                                <td align="center" >  
+                                        <input size="2" readonly="readonly" name="idInfoComURBANA{{categoria.idCategoriaCenso}}" value="{{ infComplement.getCantidadInfoComp }}"></input>
+                                </td>                        
+                            {% endif %}                            
+                        {% endif %}   
+                    {% endfor %}
+                                
+                    </tr>
+                  {% endif %}
+            {% endfor%}
+                </tbody>
+            </table>                    
+        {% endif %}
+    {% endfor %}
+{% endif %}
+                       
 
-
-<table id="theGrid1" class="scroll"></table> 
-<div id="pager1" class="scroll" style="text-align:center;"></div>
 
 {% endblock %}

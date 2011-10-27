@@ -1,56 +1,59 @@
-{# empty Twig template #}
+{# SIDPLA - MINSAL
+   Copyright (C) 2011  Bruno González   e-mail: bagonzalez.sv EN gmail.com
+   Copyright (C) 2011  Universidad de El Salvador
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>. #}
 
 {% block body %}
-<script type="text/javascript">
+ <script type="text/javascript">
       $(document).ready(function(){
-        
-        var myGrid = $('#theGrid4');        
-        myGrid.jqGrid({ 
-          url: 'consultarInformacionRelevanteJSON',
-     scrolling: true,
-          datatype:'json',
-          altRows:true,
-          colNames:['Categoria','Cantidad'],
-          colModel:[
-            { name:'categoria', index: 'categoria', width:450,editable:false,editoptions:{size:15}, searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}  },            
-            { name:'cantidad', index: 'cantidad',width:100, sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:3, label: "Codigo categoria", elmprefix:"(*)"},editrules:{required:true} }] ,            
-                        
-            
-          rowNum:10,
-          rownumbers: true,
-         rowTotal: 10,
-         loadonce:true,
-          rowList:[10,20,30],
-         
-          rownumWidth: 40,
-          multiselect: false,
-          pager: jQuery('#pager4'),
-          viewrecords: true,                   
-           sortname: 'categoria',
-            sortorder: "asc",
-            caption: 'Informacion Relevante',
-            height: "auto",
-            editCaption: "Editar ",
-            addCaption: "Nuevo ",
-            editurl: 'manttInformacionComplementariaEdicion'
-        });
-         myGrid.jqGrid('navGrid','#pager',
-        {edit:false,add:false,del:false,view:true},
-        {},//edit
-        {},//add
-        {},//del
-        {}, //search
-        {}//view
-        );
-        
-       
-      }
+          
+      });     
+ </script>
  
-);
-</script>
+{% if bloques is defined %}
+    {% for bloque in bloques %}
+        {% if bloque.ordenBloque == 4%}
+            <h3>{{ bloque.nombreBloque }}</h3>
+            <table border="1">
+                <thead>                    
+                    <tr>
+                         <td rowspan="2" colspan="1" >  </td>
+                         <th colspan="2" >Total</th>                        
+                    </tr>                   
+                </thead>
+                <tbody>
+            {% for categoria in bloque.getCategoriasCenso %} 
+                 {% if censoPoblacion is defined %}                    
+                    <tr>
+                        <td colspan="1" >{{ categoria.descripcionCategoria }} </td>                             
+                    {% for infRelvante in censoPoblacion.getInformacionRelevante %}                     
+                        {% if infRelvante.categoriaCenso.idCategoriaCenso == categoria.idCategoriaCenso  %}                           
+                                <td align="center" >  
+                                        <input size="2" readonly="readonly" name="idInfoComURBANA{{categoria.idCategoriaCenso}}" value="{{ infRelvante.getInfRelCant }}"></input>
+                                </td>                                                   
+                        {% endif %}   
+                    {% endfor %}                                      
+                    </tr>
+                  {% endif %}
+            {% endfor%}
+                </tbody>
+            </table>                    
+        {% endif %}
+    {% endfor %}
+{% endif %}
+                       
 
-
-<table id="theGrid4" class="scroll"></table> 
-<div id="pager4" class="scroll" style="text-align:center;"></div>
 
 {% endblock %}

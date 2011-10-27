@@ -1,61 +1,122 @@
-{# empty Twig template #}
+{# SIDPLA - MINSAL
+   Copyright (C) 2011  Bruno González   e-mail: bagonzalez.sv EN gmail.com
+   Copyright (C) 2011  Universidad de El Salvador
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>. #}
 
 {% block body %}
-<script type="text/javascript">
+ <script type="text/javascript">
       $(document).ready(function(){
-        
-        var myGrid = $('#theGrid');        
-        myGrid.jqGrid({ 
-          url: 'consultarPoblacionHumanaJSON',
-     scrolling: true,
-          datatype:'json',
-          altRows:true,
-          colNames:['Categoria','Area','Sexo','Cantidad'],
-          colModel:[
-            { name:'categoria', index: 'categoria', width:400,editable:false,editoptions:{size:15}, searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}  },
-            { name:'area', index: 'area', width:200,editable:true,editoptions:{size:100},formoptions:{ rowpos:1, label: "Codigo Censo", elmprefix:"(*)"},editrules:{required:true}},
-            { name:'sexo', index: 'sexo',width:150, sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:2, label: "Codigo categoria", elmprefix:"(*)"},editrules:{required:true}},            
-            { name:'cantidad', index: 'cantidad',width:150,summaryType:'sum', sortable:false,editable:true,editoptions:{size:100},formoptions:{ rowpos:3, label: "Clasificacion", elmprefix:"(*)"},editrules:{required:true}}            
-           ],            
-            
-          rowNum:20,
-          rownumbers: true,                                      
-          multiselect: false,
-          pager: jQuery('#pager5'),
-          viewrecords: true,
-          sortname: 'categoria', grouping:true, 
-          loadonce:true,
-          groupingView : { 
-              groupField : ['categoria'], 
-              groupColumnShow : [false],
-              groupCollapse : true, 
-              groupOrder: ['desc'],
-              groupSummary : [true]
-          },         
-            sortorder: "asc",       
-            caption: 'Poblacion Humana',
-            height: "auto",            
-            editCaption: "Editar poblacion humana",
-            addCaption: "Nuevo poblacion humana",
-            editurl: 'manttPoblacionHumanaEdicion'
-        });
-         myGrid.jqGrid('navGrid','#pager',
-        {edit:false,add:false,del:false,view:true},
-        {},//edit
-        {},//add
-        {},//del
-        {}, //search
-        {}//view
-        );
-        
-       
-      }
+          {% if bloques is defined %}
+            {% for bloque in bloques %}
+                {% for categoria in bloque.getCategoriasCenso %}
+                    $("input[name^='idURBANA{{categoria.idCategoriaCenso}}']").sum("keyup", "#{{categoria.idCategoriaCenso}}URBANATOTAL");                              
+                    $("input[name^='idRURAL{{categoria.idCategoriaCenso}}']").sum("keyup", "#{{categoria.idCategoriaCenso}}RURALTOTAL");                                                  
+                    $("input[name^='id{{categoria.idCategoriaCenso}}PROMOTOR']").sum("keyup", "#{{categoria.idCategoriaCenso}}PROMOTORTOTAL");                                                  
+                    $("input[name$='{{categoria.idCategoriaCenso}}H']").sum("keyup", "#{{categoria.idCategoriaCenso}}TOTALHOMBRES");                                                  
+                    $("input[name$='{{categoria.idCategoriaCenso}}M']").sum("keyup", "#{{categoria.idCategoriaCenso}}TOTALMUJERES");                                                                      
+                    $("input[name^='total{{categoria.idCategoriaCenso}}']").sum("keyup", "#{{categoria.idCategoriaCenso}}TOTALGENERAL");                                                                      
+                    
+                {% endfor %}
+            {% endfor %}
+           {% endif %}   
+      });     
+ </script>
  
-);
-</script>
+{% if bloques is defined %}
+    {% for bloque in bloques %}
+        {% if bloque.ordenBloque == 2%}
+            <h3>{{ bloque.nombreBloque }}</h3>
+            <table border="1">
+                <thead>                    
+                    <tr>
+                         <td rowspan="2" colspan="1" >  </td>
+                         <th colspan="3" >AREA URBANA</th>
+                         <th colspan="3">AREA RURAL</th>
+                         <th colspan="3">TOTAL GENERAL</th>
+                         <th colspan="3">PROMOTORES</th>
+                    </tr>
+                    <tr>
+                        <th>Hombres</th>
+                        <th>Mujeres</th>
+                        <th>Total</th>
+                        <th>Hombres</th>
+                        <th>Mujeres</th>
+                        <th>Total</th>
+                        <th>Hombres</th>
+                        <th>Mujeres</th>
+                        <th>Total</th>
+                        <th>Hombres</th>
+                        <th>Mujeres</th>
+                        <th>Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+            {% for categoria in bloque.getCategoriasCenso %} 
+                 {% if censoPoblacion is defined %}                    
+                    <tr>
+                        {% if categoria.bloque.ordenBloque == 2 %}                        
+                                <td colspan="1" >{{ categoria.descripcionCategoria }} </td>                             
+                            {% for poblacionHumana in censoPoblacion.getPoblacionHumana %}                     
+                                {% if poblacionHumana.categoriaCenso.idCategoriaCenso == categoria.idCategoriaCenso  %}
+                                    {% if poblacionHumana.getPobHumArea == 'URBANA' %}
+                                        <td align="center" >  
+                                                <input size="2" readonly="readonly" name="idURBANA{{categoria.idCategoriaCenso}}{{ poblacionHumana.getPobhumsexo }}" value="{{ poblacionHumana.getPobHumCant }}"></input>
+                                        </td>                        
+                                    {% endif %}                            
+                                {% endif %}   
+                            {% endfor %}
+                                        <td  align="center" id="{{categoria.idCategoriaCenso}}URBANATOTAL">                                    
+                                        </td>
+                            {% for poblacionHumana in censoPoblacion.getPoblacionHumana %}                     
+                                {% if poblacionHumana.categoriaCenso.idCategoriaCenso == categoria.idCategoriaCenso  %}
+                                    {% if poblacionHumana.getPobHumArea == 'RURAL' %}
+                                        <td  align="center">                                    
 
+                                            <input size="2" readonly="readonly"  name="idRURAL{{categoria.idCategoriaCenso}}{{ poblacionHumana.getPobhumsexo }}" value="{{ poblacionHumana.getPobHumCant }}"></input>
+                                        </td>                        
+                                    {% endif %}                            
+                                {% endif %}   
+                            {% endfor %}
+                                        <td  align="center" id="{{categoria.idCategoriaCenso}}RURALTOTAL">
+                                        </td>
 
-<table id="theGrid" class="scroll"></table> 
-<div id="pager5" class="scroll" style="text-align:center;"></div>
+                                        <td  align="center"><input readonly="readonly"  name="total{{categoria.idCategoriaCenso}}TOTALHOMBRES" size="2" id="{{categoria.idCategoriaCenso}}TOTALHOMBRES" ></input></td>
+                                        <td  align="center"><input readonly="readonly"  name="total{{categoria.idCategoriaCenso}}TOTALMUJERES" size="2"  id="{{categoria.idCategoriaCenso}}TOTALMUJERES"></input></td>
+                                        <td  align="center" name="{{categoria.idCategoriaCenso}}TOTALGENERAL"  id="{{categoria.idCategoriaCenso}}TOTALGENERAL"></td>
+
+                           {% for poblacionHumana in censoPoblacion.getPoblacionHumana %}                     
+                                {% if poblacionHumana.categoriaCenso.idCategoriaCenso == categoria.idCategoriaCenso  %}
+                                    {% if poblacionHumana.getPobHumArea == 'PROMOTOR' %}
+                                        <td  align="center">  
+                                            <input size="2" readonly="readonly"  name="id{{categoria.idCategoriaCenso}}PROMOTOR" value="{{ poblacionHumana.getPobHumCant }}"></input>  
+                                        </td>                        
+                                    {% endif %}                            
+                                {% endif %}   
+                            {% endfor %}
+                                        <td  align="center" id="{{categoria.idCategoriaCenso}}PROMOTORTOTAL">
+                                        </td>
+                    </tr> 
+                    {% endif %}                    
+                  {% endif %}
+            {% endfor%}
+                </tbody>
+            </table>                    
+        {% endif %}
+    {% endfor %}
+{% endif %}
+                       
+
 
 {% endblock %}
