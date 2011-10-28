@@ -32,9 +32,10 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
             $numfilas = count($objEspTmps);
 
             foreach ($objEspTmps as $aux) {
-                $objTemplates[0][$i] =$aux;   
+                $objTemplates[0][$i] =$aux;
+                $i++;
             }
-            $i++;
+            
         }
         
         //DEL ANIO SIGUIENTE
@@ -50,8 +51,9 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
 
             foreach ($objEspTmps as $aux) {
                 $objTemplates[1][$i] =$aux;   
+                $i++;
             }
-            $i++;
+            
         }
 
         
