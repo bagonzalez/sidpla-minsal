@@ -68,6 +68,24 @@ class AccionPrograMonUNISALController extends Controller {
         
     }
     
+    
+     public function obtenerPaoElaboracion(){
+        
+        $user=new User();
+        $empleado=new Empleado();        
+        $user = $this->get('security.context')->getToken()->getUser();        
+        $empleado=$user->getEmpleado();        
+        $idUnidad=$empleado->getUnidadOrganizativa()->getIdUnidadOrg();        
+        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());        
+       
+        
+        $paoElaboracion=new Pao();        
+        $paoElaboracion=$unidaDao->getPaoElaboracion($idUnidad);
+        
+        return $paoElaboracion;
+        
+    }
+    
     public function obtenerUnidadOrg(){
         $user=new User();
         $empleado=new Empleado();        
@@ -87,6 +105,20 @@ class AccionPrograMonUNISALController extends Controller {
         $proUnisalTmp=new ProUnisalTemplate(); 
         $proUnisalTmpDao= new ProUnisalTemplateDao($this->getDoctrine());
         $anio = date('Y');       
+        
+        $proTemplate=$proUnisalTmpDao->obtenerObjTempAnio($anio);
+        foreach ($proTemplate as $proUnisalTmp){
+            $objetivos=$proUnisalTmp->getObjeEspeProgra();            
+        }
+        
+        return $objetivos;        
+    }
+    
+    
+    public function obtenerObjEspecElaboracion(){        
+        $proUnisalTmp=new ProUnisalTemplate(); 
+        $proUnisalTmpDao= new ProUnisalTemplateDao($this->getDoctrine());
+        $anio = date('Y')+1;       
         
         $proTemplate=$proUnisalTmpDao->obtenerObjTempAnio($anio);
         foreach ($proTemplate as $proUnisalTmp){
@@ -125,9 +157,9 @@ class AccionPrograMonUNISALController extends Controller {
     public function construccionProgramacionMonitoreoUNISALAction()
     {
          $opciones=$this->getRequest()->getSession()->get('opciones');   
-         $objetivos=$this->obtenerObjEspec();
+         $objetivos=$this->obtenerObjEspecElaboracion();
          
-         $paoElaboracion=$this->obtenerPaoSeguimiento();
+         $paoElaboracion=$this->obtenerPaoElaboracion();
          $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
          $actividadesProgramon=$programacionMonitoreo->getActividadesUniSal();
          $idProgramon=$programacionMonitoreo->getIdPrograMon();
