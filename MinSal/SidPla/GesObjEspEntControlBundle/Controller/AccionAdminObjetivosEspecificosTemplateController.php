@@ -24,6 +24,7 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
         if ($objTmpDao->existeObjTmp(date('Y')) == 0)
             $objTmpDao->agregarObjetivoTemplate(date('Y'));
         $objTmp = $objTmpDao->obtenerObjTempAnio(date('Y'));
+        $objTemplates=0;
 
         foreach ($objTmp as $objTmpAux) {
             $objEspTmps = $objTmpAux->getEspecificoObjTmp();
