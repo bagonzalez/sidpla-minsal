@@ -157,9 +157,9 @@ class AccionPrograMonUNISALController extends Controller {
     public function construccionProgramacionMonitoreoUNISALAction()
     {
          $opciones=$this->getRequest()->getSession()->get('opciones');   
-         $objetivos=$this->obtenerObjEspecElaboracion();
+         $objetivos=$this->obtenerObjEspec();
          
-         $paoElaboracion=$this->obtenerPaoElaboracion();
+         $paoElaboracion=$this->obtenerPaoSeguimiento();
          $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
          $actividadesProgramon=$programacionMonitoreo->getActividadesUniSal();
          $idProgramon=$programacionMonitoreo->getIdPrograMon();

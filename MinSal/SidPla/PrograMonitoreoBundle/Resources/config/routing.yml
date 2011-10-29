@@ -52,5 +52,10 @@ MinSalSidPlaPrograMonitoreoBundle_guardarProgramacioUniSal:
 
 MinSalSidPlaPrograMonitoreoBundle_guardarSeguimientoProgramacioUniSal:
     pattern:  /guardarSeguimientoProgramacioUniSal
-    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionPrograMonUNISAL:guardarSeguimientoProgramacioUniSal }   
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionPrograMonUNISAL:guardarSeguimientoProgramacioUniSal }
+
+MinSalSidPlaPrograMonitoreoBundle_supervisarProgramonUnidades:
+    pattern:  /supervisarProgramonUnidades
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionUnidadesSupervisadas:supervisarProgramonUnidades }   
+   
 
