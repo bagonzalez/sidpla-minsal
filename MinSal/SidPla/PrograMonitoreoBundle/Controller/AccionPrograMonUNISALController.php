@@ -234,6 +234,17 @@ class AccionPrograMonUNISALController extends Controller {
                     $actividadUnisal->setResponsableActUni($responsableActUni);         
                     $actividadUnisalDao->guardarActividad($actividadUnisal);                     
                 }
+                
+                if((preg_match('/costoProgramon_/',$cadena))==1){
+                    $idActividadUniSal=substr($tags[$i], 15);
+                    $costo=$valores[$i];
+                    if($costo>0){                    
+                        $actividadUnisal=$actividadUnisalDao->getActividadUniSal($idActividadUniSal);
+                        $actividadUnisal->setCosto($costo);         
+                        $actividadUnisalDao->guardarActividad($actividadUnisal);                     
+                    }
+                }
+                
             }
          
          return $this->construccionProgramacionMonitoreoUNISALAction();

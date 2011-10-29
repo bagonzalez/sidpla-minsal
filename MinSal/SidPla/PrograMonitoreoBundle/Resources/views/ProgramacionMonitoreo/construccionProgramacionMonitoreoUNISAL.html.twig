@@ -140,6 +140,7 @@
                                                                                                                 <th rowspan="2">Meta Anual</th>
                                                                                                                 <th rowspan="2">Responsable</th>
                                                                                                                 <th rowspan="2">Beneficiarios</th>
+                                                                                                                <th rowspan="2">Costo Programado</th>
                                                                                                                 {% if mes >= 1 %} 
                                                                                                                     <th colspan="1" >Enero</th>
                                                                                                                 {% endif %}
@@ -221,6 +222,9 @@
                                                                                                                             </td>
                                                                                                                             <td align="center">
                                                                                                                                 <input name="actividadUniSal_{{actividad.codActUni }}"  value="{{ actividad.getBeneActUni }}"  ></input>
+                                                                                                                            </td>
+                                                                                                                            <td align="center">
+                                                                                                                                <input name="costoProgramon_{{actividad.codActUni }}" size="2" value="{{ actividad.getCosto }}"  ></input>
                                                                                                                             </td>
                                                                                                                             {% for resultadoAct in actividad.getResultadoactUniSal %}
                                                                                                                                 {% if mes >= resultadoAct.mes  %}

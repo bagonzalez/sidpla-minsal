@@ -68,6 +68,13 @@ class ActividadUniSal {
      * @ORM\Column(name="actuni_metaanual", type="integer")
      */
     private $metaAnualActUni;
+    
+     /**
+     * @var float $costo
+     *
+     * @ORM\Column(name="actuni_costo", type="float")
+     */
+    private $costo;
 
    
     
@@ -234,6 +241,27 @@ class ActividadUniSal {
     {
         return $this->fechaFinAct;
     }
+    
+    /**
+     * Set costo
+     *
+     * @param float $costo
+     */
+    public function setCosto($costo)
+    {
+        $this->costo = round($costo,2);
+    }
+    
+       /**
+     * Get costo
+     *
+     * @return float 
+     */
+    public function getCosto()
+    {
+        return round($this->costo, 2);
+    }
+    
 
     /**
      * Add resultadoactUniSal
