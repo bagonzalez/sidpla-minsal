@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report1" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/edwin/Escritorio/Reportes backup/reportCaracteristicasOrg/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="anio" class="java.lang.Integer"/>
+	<parameter name="idUorg" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT
+     caracorg."carorg_mision",
+     caracorg."carorg_vision",
+     caracorg."carorg_funcionprincipal",
+     caracorg."carorg_objetivogeneral",
+     org."uniorg_codigo" AS org_uniorg_codigo,
+     caracorg."carorg_codigo" AS caracorg_carorg_codigo
+FROM
+     "sidpla_caracteristicaorganizaci" caracorg INNER JOIN "sidpla_unidadorganizativa" org ON caracorg."uniorg_codigo" = org."uniorg_codigo"
+WHERE
+     org."uniorg_codigo" = $P{idUorg}]]>
+	</queryString>
+	<field name="carorg_mision" class="java.lang.String"/>
+	<field name="carorg_vision" class="java.lang.String"/>
+	<field name="carorg_funcionprincipal" class="java.lang.String"/>
+	<field name="carorg_objetivogeneral" class="java.lang.String"/>
+	<field name="org_uniorg_codigo" class="java.lang.Integer"/>
+	<field name="caracorg_carorg_codigo" class="java.lang.Integer"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="252" splitType="Stretch">
+			<image>
+				<reportElement x="23" y="1" width="80" height="45"/>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/escudo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="106" y="2" width="372" height="24"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MINISTERIO DE SALUD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="103" y="26" width="327" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[           PLAN ANUAL OPERATIVO]]></text>
+			</staticText>
+			<image>
+				<reportElement x="478" y="2" width="79" height="47"/>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/minsalud.jpg"]]></imageExpression>
+			</image>
+			<textField>
+				<reportElement x="0" y="210" width="571" height="42"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{carorg_vision}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="3" y="140" width="548" height="48"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{carorg_mision}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="3" y="120" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Mision:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="190" width="100" height="20"/>
+				<textElement>
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[Vision:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="236" y="50" width="32" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Año:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="76" y="83" width="402" height="20"/>
+				<textElement>
+					<font size="10" isBold="false"/>
+				</textElement>
+				<text><![CDATA[Formulario 2: Características de organización y funcionamiento de la dependencia.]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="280" y="50" width="100" height="20"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{anio}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="12" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="10" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band splitType="Stretch">
+			<subreport>
+				<reportElement x="0" y="0" width="126" height="0"/>
+				<subreportParameter name="idUorg">
+					<subreportParameterExpression><![CDATA[$F{org_uniorg_codigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reportCaractOrgSubReportOne.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+		<band>
+			<subreport>
+				<reportElement x="0" y="0" width="200" height="0"/>
+				<subreportParameter name="idUorg">
+					<subreportParameterExpression><![CDATA[$F{org_uniorg_codigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA["reportCaractOrgSubReportTwo.jasper"]]></subreportExpression>
+			</subreport>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="25" splitType="Stretch">
+			<textField>
+				<reportElement x="461" y="0" width="57" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pag. "+$V{PAGE_NUMBER}+"de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="520" y="0" width="53" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
