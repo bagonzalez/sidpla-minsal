@@ -59,6 +59,21 @@ class ResultActUniSal {
      */
     private $resulActFechaFin;
     
+    
+       /**
+     * @var float $costo
+     *
+     * @ORM\Column(name="resactu_costoprogramado", type="float")
+     */
+    private $costoProgramado;
+    
+     /**
+     * @var float $costo
+     *
+     * @ORM\Column(name="resactu_costoreal", type="float")
+     */
+    private $costoReal;
+    
     /**
      * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo", inversedBy="resultadoactUniSal")
      * @ORM\JoinColumn(name="promon_codigo", referencedColumnName="promon_codigo")
@@ -221,6 +236,21 @@ class ResultActUniSal {
     public function getActividadUniSal()
     {
         return $this->actividadUniSal;
+    }
+    
+     public function getCostoProgramado() {
+        return round($this->costoProgramado, 2);
+    }
+    public function setCostoProgramado($costoProgramado) {
+        $this->costoProgramado = $costoProgramado;
+    }
+
+    public function setCostoReal($costoReal) {
+        $this->costoReal = $costoReal;
+    }
+
+        public function getCostoReal() {
+        return $this->costoReal;
     }
     
     public function getPorcentajeCumplimiento()

@@ -279,7 +279,7 @@
                                                                                                                                 {{ actividad.getResponsableActUni }}
                                                                                                                             </td>
                                                                                                                             <td align="center">
-                                                                                                                                {# "$ "  ~ actividad.getCosto#}
+                                                                                                                                {{ "$ "  ~ actividad.getCosto }}
                                                                                                                             </td>
                                                                                                                             {% for resultadoAct in actividad.getResultadoactUniSal %}
                                                                                                                                 {% if mes >= resultadoAct.mes  %}
@@ -295,13 +295,13 @@
 
                                                                                                                                     </td> 
                                                                                                                                     <td align="center">
-                                                                                                                                         {# "$ " ~ resultadoAct.costoProgramado #}
+                                                                                                                                         {{ "$ " ~ resultadoAct.getCostoProgramado }}
                                                                                                                                     </td>
                                                                                                                                     <td align="center">
                                                                                                                                         {% if mes == resultadoAct.mes  %}
-                                                                                                                                            <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{# resultadoAct.getCostoReal #}"  ></input>
+                                                                                                                                            <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}"  ></input>
                                                                                                                                         {% else %}
-                                                                                                                                            <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{# resultadoAct.getCostoReal #}" readonly="readonly"  ></input>
+                                                                                                                                            <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}" readonly="readonly"  ></input>
                                                                                                                                         {% endif %}
                                                                                                                                     </td>
                                                                                                                                     <td align="center">

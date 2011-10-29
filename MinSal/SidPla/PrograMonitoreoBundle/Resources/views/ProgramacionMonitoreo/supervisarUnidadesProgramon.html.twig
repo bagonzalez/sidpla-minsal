@@ -17,6 +17,10 @@
 
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
+<script type="text/javascript">
+	Highcharts.theme = { colors: ['#4572A7'] };// prevent errors in default theme
+	var highchartsOptions = Highcharts.getOptions(); 
+</script>
 <script>
     $(document).ready(function(){
          {% if subUnidades is defined %} 
@@ -29,6 +33,91 @@
 
             {% endfor %}
          {% endif %}
+             
+          var chart;
+        
+           chart = new Highcharts.Chart({
+              chart: {
+                 renderTo: 'container',
+                 defaultSeriesType: 'bar'
+              },
+              title: {
+                 text: 'Supervision de Cumplimiento de Objetivos por Unidades'
+              },
+              subtitle: {
+                 text: 'Fuente: SidPla'
+              },
+              xAxis: {
+                 categories: [
+                      {% if objetivos is defined %}                                                                          
+                                  {% for obj in objetivos %}
+                                      '{{ obj.descObjEspUni }}',
+                                  {% endfor %}        
+                      {% endif %}                     
+                 ],
+                 title: {
+                    text: null
+                 }
+              },
+              yAxis: {
+                 min: 0,
+                 title: {
+                    text: 'Porcentaje Cumplimiento',
+                    align: 'high'
+                 }
+              },
+              tooltip: {
+                 formatter: function() {
+                    return ''+
+                        this.series.name +': '+ this.y +' %';
+                 }
+              },
+              plotOptions: {
+                 bar: {
+                    dataLabels: {
+                       enabled: true
+                    }
+                 }
+              },
+              legend: {
+                 layout: 'vertical',
+                 align: 'right',
+                 verticalAlign: 'top',
+                 x: -100,
+                 y: 100,
+                 floating: true,
+                 borderWidth: 1,
+                 backgroundColor: Highcharts.theme.legendBackgroundColor || '#FFFFFF',
+                 shadow: true
+              },
+              credits: {
+                 enabled: false
+              },
+                   series: [
+                    {% if subUnidades is defined %} 
+                        {% for unidad in  subUnidades  %}
+                             {% for pao in paosSeguimiento %}
+                                {% if unidad.idUnidadOrg == pao.unidadOrganizativa.idUnidadOrg %}      
+                                    {
+                                        name: '{{unidad.nombreUnidad}}',
+                                         {% if objetivos is defined %} 
+                                        data: [     
+                                          {% for obj in objetivos %}
+                                              {{ obj.getPorcentajeCumplimiento(pao.programacionMonitoreo.idPrograMon) }},                                      
+                                          {% endfor %}        
+                                         ]
+                                         {% endif %} 
+                                    },
+                                {% endif %} 
+                            {% endfor %}
+                        {% endfor %}
+                    {% endif %}
+                    ]
+           });
+
+
+      
+            
    });
 </script>    
 
@@ -77,6 +166,11 @@
             {% endif %}
         {% endfor %}
     {% endfor  %}
+            <tr>
+                <td>
+                    <div id="container" class="highcharts-container" style="height:610px; margin: 0 2em; clear:both; min-width: 1000px"></div>
+                </td>                
+            </tr>
   {% endif %}
 </table>          
 {% endblock %}
