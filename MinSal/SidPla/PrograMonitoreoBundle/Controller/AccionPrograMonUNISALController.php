@@ -150,7 +150,7 @@ class AccionPrograMonUNISALController extends Controller {
          
          return $this->render('MinSalSidPlaPrograMonitoreoBundle:ProgramacionMonitoreo:programacionMonitoreoUNISAL.html.twig', 
                 array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon,
-                    'mes' => $mes, 'idUnidad' => $idUnidad, 'areasClasif' => $areasClasif  ));
+                    'mes' => $mes, 'idUnidad' => $idUnidad, 'areasClasif' => $areasClasif , 'idProgramon' =>$idProgramon ));
     }
     
     

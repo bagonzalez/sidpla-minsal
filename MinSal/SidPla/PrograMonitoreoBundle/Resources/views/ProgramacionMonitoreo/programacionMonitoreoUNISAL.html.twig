@@ -148,6 +148,7 @@
                                                                     </td>
                                                                     <td>
                                                                          <h3>&RightTriangle;<a  id="mostratObj{{ obj.codObjEspUni }}" href="#">{{ obj.descObjEspUni }}</a></h3>                                
+                                                                         <h3> Realizado: {{ obj.getPorcentajeCumplimiento(idProgramon) }} % </h3>
                                                                     </td>
                                                                 </tr>                        
                                                                 <tr>
@@ -162,6 +163,7 @@
                                                                                                 </td>
                                                                                                 <td>
                                                                                                     <h4> <a  id="mostratRes{{ res.codResEspUni }}" href="#">{{ res.descResEspUni }}</a></h4>
+                                                                                                    <h4> Programado: {{ res.getPorcentajeCumplimiento(idProgramon) }} %</h4>
                                                                                                     {#<h4> Realizado : {{ res.getPorcentajeCumplimiento }} % </h4>
                                                                                                     <h4> Costo Real : $ {{ res.getCostoTotalReal }} </h4>
                                                                                                     <h4> Costo Programado : $ {{ res.getCostoTotalProgramado }} </h4>#}                                                            

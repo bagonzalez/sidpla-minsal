@@ -198,4 +198,22 @@ class ObjetivoEspeUnisal {
     {
         $this->indicadoresSalud[] = $indicadoresSalud;
     }
+    
+    
+    public function getPorcentajeCumplimiento( $idPromonUniSal)
+    {        
+        $resultTmp=new ResultadoEspeUnisal();
+        $porcentajeResul=0;  
+        
+        $numAct=count($this->resultEspObjT);
+        
+        if($numAct>0)
+            $razon=1/$numAct;
+               
+        foreach ($this->resultEspObjT as  $resultTmp ){                       
+            $porcentajeResul=  $resultTmp->getPorcentajeCumplimiento($idPromonUniSal)*$razon+$porcentajeResul;            
+        }
+        
+        return round($porcentajeResul,2);
+    }   
 }

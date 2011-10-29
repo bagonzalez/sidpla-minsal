@@ -150,4 +150,41 @@ class ResultadoEspeUnisal {
     {
         $this->actividadesTemplate[] = $actividadesTemplate;
     }
+    
+    
+    public function getPorcentajeCumplimiento( $idPromonUniSal)
+    {
+        
+        $actividadTmp=new ActividadUnisalTemplate();
+        $porcentajeResul=0; 
+        
+        
+        $actividadUniSal=new ActividadUniSal();
+        
+        $actvidadesProgramon=new \Doctrine\Common\Collections\ArrayCollection();
+        
+               
+        foreach ($this->actividadesTemplate as  $actividadTmp ){            
+            $actividadesUnisal=$actividadTmp->getActividadesUniSal();           
+            
+            foreach($actividadesUnisal as $actividadUniSal   ){
+                if($actividadUniSal->getProgramacionMonitoreo()->getIdPrograMon()==$idPromonUniSal){
+                    $actvidadesProgramon[]=$actividadUniSal;                    
+                }
+            }
+        }
+        
+        $numAct=count($actvidadesProgramon);
+        
+        if($numAct>0)
+            $razon=1/$numAct;
+        
+        foreach ($actvidadesProgramon as $actividadUniSal){
+             $porcentajeResul= $actividadUniSal->getPorcentajeCumplimiento()*$razon+$porcentajeResul;
+        }        
+            
+        return round($porcentajeResul,2);
+    }   
+    
+    
 }
