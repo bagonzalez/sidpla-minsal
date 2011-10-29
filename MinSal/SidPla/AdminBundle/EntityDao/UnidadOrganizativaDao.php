@@ -166,7 +166,7 @@ class UnidadOrganizativaDao {
     
     
 
-    public function editarUnidadOrg($nombreUnidad, $direccion, $responsable, $telefono, $fax, $tipoUnidad, $unidadPadre, $departameto, $municipio, $descripcion,$id,$idinfogeneral ) {
+    public function editarUnidadOrg($nombreUnidad, $direccion, $responsable, $telefono, $fax, $tipoUnidad, $unidadPadre, $departameto, $municipio, $descripcion,$id,$idinfogeneral,$respon ) {
 
 
 
@@ -193,8 +193,10 @@ class UnidadOrganizativaDao {
         $unidadOrg->setNombreUnidad($nombreUnidad);
         $unidadOrg->setTipoUnidad($tipoUnidad);
         
-        if($responsable!=0){
+        if($responsable!=0 && $respon!=NULL){
           $unidadOrg->setResponsable($responsable);  
+        }else{
+            $unidadOrg->setResponsable(null);
         }
         
         

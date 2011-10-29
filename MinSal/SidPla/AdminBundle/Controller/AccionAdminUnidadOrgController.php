@@ -281,7 +281,7 @@ class AccionAdminUnidadOrgController extends Controller {
          $idinfogeneral = $request->get('idinfogeneral');        
          
         $request = $this->getRequest();
-
+        $respon = $request->get('responsable');
         $nombreUnidad = $request->get('nombreUnidad');
         $direccion = $request->get('direccion');
         $responsable = $request->get('idempleado');
@@ -294,7 +294,7 @@ class AccionAdminUnidadOrgController extends Controller {
         $descripcion = $request->get('descripcion');
         
           $unidadOrgDao = new UnidadOrganizativaDao($this->getDoctrine());
-          $unidadOrgDao->editarUnidadOrg($nombreUnidad, $direccion, $responsable, $telefono, $fax, $tipoUnidad, $unidadPadre, $departameto, $municipio, $descripcion,$idfila,$idinfogeneral );
+          $unidadOrgDao->editarUnidadOrg($nombreUnidad, $direccion, $responsable, $telefono, $fax, $tipoUnidad, $unidadPadre, $departameto, $municipio, $descripcion,$idfila,$idinfogeneral,$respon );
           
       
           $infogenDao = new InformacionGeneralDao($this->getDoctrine());
