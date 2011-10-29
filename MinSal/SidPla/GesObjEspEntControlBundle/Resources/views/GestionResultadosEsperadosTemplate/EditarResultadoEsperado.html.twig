@@ -3,94 +3,75 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
 <script type="text/javascript">        
-      $(document).ready(function(){
-          
-          
-           $('#regresar').click(function() {
-            this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate') }}';
-           
-          });
-           
-           $('#agregar').click(function(evento) {
-            
-           
-           
-            this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_editandoResultadosEsperadosTemplate') }}';
-             
-             
-          });
-          $('#tabs').tabs();
-      
-         
-                 
-$("#formulario").validate();
+ $(document).ready(function(){
+      $('#regresar').click(function() {
+           this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate') }}';
+      });
+      $('#agregar').click(function(evento) {
+        this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_editandoResultadosEsperadosTemplate') }}';
+       });
+       $('#tabs').tabs();
+       $("#formulario").validate();
     
         
 });
       
-</script>
+    </script>
 
 
-<style type="text/css">
-form.cmxform label.error, label.error {
-	/* remove the next line when you have trouble in IE6 with labels in list */
-	color: red;
-	font-style: italic
-            
-}
-input.error { border: 1px dotted red; }
-textarea.error { border: 1px dotted red; }
-      </style>
+    <style type="text/css">
+            form.cmxform label.error, label.error {
+                /* remove the next line when you have trouble in IE6 with labels in list */
+                color: red;
+                font-style: italic
 
-<h2 class="demoHeaders">Edicion del Resultado Esperado</h2>
-<div id="tabs">
-        <ul>
-                <li><a href="#tabs-1">Nuevo Resultado</a></li>
-                
-        </ul>
-        <div id="tabs-1" >
-            <form id="formulario" action="{{ path('MinSalSidPlaGesObjEspEntControlBundle_editandoResultadosEsperadosTemplate')}}" method="post" >
-                <table align="center" id="datos"  >
-                    <tr>
-                        <td colspan="4" align="center" >Datos de Resultado Esperado <br><br></td>
-                    </tr>
-                    
-                    <tr>
-                        <td >Objetivo:</td>
-                        <td colspan="3" ><textarea rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
-                    </tr>
-                    <tr>
-                        <td >Resultado Esperado(*):</td>
-                        <td colspan="3" ><textarea rows="4" class="required" cols="100" name= 'resultadoEsperado'  size="60%" id="resultadoEsperado"  >{{resultadoEsperadoDescrp}}</textarea></td>
-                    </tr>
-                    <tr>
-                        <td >Indicador(*):</td>
-                        <td colspan="3" ><input size="100%" class="required" name="Indicador" id="Indicador" value="{{resultadoEsperadoIndicador}}" ></input></td>
-                    </tr>
-                    
-                          
-                      
-                       
-                       <tr>  
-                           <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
-                           <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
-                           
-                    <td colspan="3" align="center" ><br><br><button type="submmit" id="agregar"  >Guardar</button>
-                           
-                        </td> 
-                         </td> 
-                        <td colspan="1" align="center" ><br><br><button type="submmit" class="cancel" id="regresar"  >Regresar</button>
-                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="left"><br>Campos marcados con (*) son Obligatorios</td>
+            }
+            input.error { border: 1px dotted red; }
+            textarea.error { border: 1px dotted red; }
+        </style>
+
+        <h2 class="demoHeaders">Edicion del Resultado Esperado</h2>
+        <div id="tabs">
+            <ul>
+                <li><a href="#tabs-1">Editar Resultado</a></li>
+
+            </ul>
+            <div id="tabs-1" >
+                <form id="formulario" action="{{ path('MinSalSidPlaGesObjEspEntControlBundle_editandoResultadosEsperadosTemplate')}}" method="post" >
+                    <table align="center" id="datos"  >
+                        <tr>
+                            <td colspan="4" align="center" >Datos de Resultado Esperado <br><br></td>
                         </tr>
-                </table>
-            </form>            
+
+                        <tr>
+                            <td >Objetivo:</td>
+                            <td colspan="3" ><textarea rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
+                        </tr>
+                        <tr>
+                            <td >Resultado Esperado(*):</td>
+                            <td colspan="3" ><textarea rows="4" class="required" cols="100" name= 'resultadoEsperado'  size="60%" id="resultadoEsperado"  >{{resultadoEsperadoDescrp}}</textarea></td>
+                        </tr>
+                        <tr>
+                            <td >Indicador:</td>
+                            <td colspan="3" ><input size="100%" name="Indicador" id="Indicador" value="{{resultadoEsperadoIndicador}}" /></input></td>
+                        </tr>
+                        <tr>  
+                        <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
+                        <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
+
+                        <td colspan="4" align="center" >
+                            <button type="submmit" id="agregar"  >Guardar</button>
+                            <button type="submmit" class="cancel" id="regresar"  >Regresar</button>       
+                        </td>
+                        </tr>
+                        <tr>
+                            <td align="left"><br>Campos marcados con (*) son Obligatorios</td>
+                        </tr>
+                    </table>
+                </form>            
+            </div>
+
         </div>
-      
-</div>
 
 
 {% endblock %}{# empty Twig template #}

@@ -3,26 +3,27 @@ MinSalSidPlaGesObjEspBundle_homepage:
     pattern:  /
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:Default:index }
 
+#OBJETIVOESPECIFIGO
 MinSalSidPlaGesObjEspBundle_consultarObjetivosEspecificos:
     pattern:  /consultarObjetivosEspecificos
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminObjetivosEspecificos:consultarObjetivosEspecificos }
-
-
-MinSalSidPlaGesObjEspBundle_consultarObjetivosEspecificosJSON:
-    pattern:  /consultarObjetivosEspecificosJSON
-    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminObjetivosEspecificos:consultarObjetivosEspecificosJSON}
 
 MinSalSidPlaGesObjEspBundle_manttObjetivosEspecificos:
     pattern:  /manttObjetivosEspecificos
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminObjetivosEspecificos:manttObjetivosEspecificos}
 
+MinSalSidPlaGesObjEspBundle_ingresarObjetivoEspecifico:
+    pattern:  /ingresarObjetivoEspecifico
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminObjetivosEspecificos:ingresarObjetivoEspecifico}
+
+MinSalSidPlaGesObjEspBundle_editarObjetivoEspecifico:
+    pattern:  /editarObjetivoEspecifico
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminObjetivosEspecificos:editarObjetivoEspecifico}
+
+#RESULTADOESPERADO
 MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados:
     pattern:  /consultarResultadosEsperados
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminResultadosEsperados:consultarResultadosEsperados}
-
-MinSalSidPlaGesObjEspBundle_consultarResultadosEsperadosJSON:
-    pattern:  /consultarResultadosEsperadosJSON
-    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminResultadosEsperados:consultarResultadosEsperadosJSON}
 
 MinSalSidPlaGesObjEspBundle_manttResultadosEsperados:
     pattern:  /manttResultadosEsperados
@@ -48,13 +49,10 @@ MinSalSidPlaGesObjEspBundle_editandoResultadosEsperados:
     pattern:  /editandoResultadosEsperados
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminResultadosEsperados:editandoResultadosEsperados}
 
+#ACTIVIDADES
 MinSalSidPlaGesObjEspBundle_consultarActividades:
     pattern:  /consultarActividades
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminActividades:consultarActividades}
-
-MinSalSidPlaGesObjEspBundle_consultarActividadesJSON:
-    pattern:  /consultarActividadesJSON
-    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminActividades:consultarActividadesJSON}
 
 MinSalSidPlaGesObjEspBundle_ingresoActividades:
     pattern:  /ingresoActividades
@@ -72,6 +70,7 @@ MinSalSidPlaGesObjEspBundle_editandoActividades:
     pattern:  /editandoActividades
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminActividades:editandoActividades}
 
+#ACTIVIDADVINCULADA
 MinSalSidPlaGesObjEspBundle_gestionVinculacion:
     pattern:  /gestionarVinculacion
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:gestionVinculacion}

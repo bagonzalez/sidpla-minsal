@@ -1,0 +1,81 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#guardarObj').button();
+    $('#limpiarObj').button();
+    $('#regresarObj').button();
+    
+    $('#guardarObj').click(function(evento) {
+          this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_manttObjetivosEspecificos') }}';
+    });
+    
+    $("#regresarObj").click(function(){
+       window.location='consultarObjetivosEspecificos';
+    });
+    
+    $("#forObjEspTmp").validate();   
+    
+});
+</script>
+<style type="text/css">
+form.cmxform label.error, label.error {
+	/* remove the next line when you have trouble in IE6 with labels in list */
+	color: red;
+	font-style: italic
+}
+input.error { border: 1px dotted red; }
+textarea.error { border: 1px dotted red; }
+ </style>  
+
+<form id="forObjEspTmp" name="forObjEspTmp" method="post" >
+{% if id is defined %}
+           <table colspan="4"  align="center"><!-- id="datos"  -->
+        <tr>
+            <td colspan='2'>
+                <h1 style=" text-align: center">Modificar el Objetivo Especifico</h1>
+                <br></br>
+            </td>
+        </tr>
+        <tr>
+            <td style=" font-size: 12px" >Objetivo(*):</td>
+            <td><textarea class="required" rows="4" cols="83" name= 'objetivo'  size="83%" id="objetivo" >{{objetivo}}</textarea></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button type="submmit" id="guardarObj"  >Guardar</button>
+                <button type="reset" id="limpiarObj"  >Limpiar</button>
+                <button type="button" id="regresarObj"  >Regresar</button>
+            </td>
+        </tr>
+
+    </table>
+<input type='hidden' name='idCaractOrg' id="idCaractOrg" value='{{idCaractOrg}}' />
+<input type='hidden' name='id' id="id" value='{{id}}' /> 
+<input type='hidden' name='oper' id="oper" value='edit' /> 
+{% else%}
+    <table colspan="4"  align="center"><!-- id="datos"  -->
+        <tr>
+            <td colspan='2'>
+                <h1 style=" text-align: center">Ingrese el Objetivo Especifico</h1>
+                <br></br>
+            </td>
+        </tr>
+        <tr>
+            <td style=" font-size: 12px" >Objetivo(*):</td>
+            <td><textarea class="required" rows="4" cols="83" name= 'objetivo'  size="83%" id="objetivo" ></textarea></td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <button type="submmit" id="guardarObj"  >Guardar</button>
+                <button type="reset" id="limpiarObj"  >Limpiar</button>
+                <button type="button" id="regresarObj"  >Regresar</button>
+            </td>
+        </tr>
+
+    </table>
+<input type='hidden' name='idCaractOrg' id="idCaractOrg" value='{{idCaractOrg}}' />
+<input type='hidden' name='oper' id="oper" value='add' />
+{% endif%}
+</form>
+{% endblock %}

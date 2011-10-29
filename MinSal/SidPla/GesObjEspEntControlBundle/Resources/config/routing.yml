@@ -7,9 +7,6 @@ MinSalSidPlaGesObjEspEntControlBundle_homepage:
 MinSalSidPlaGesObjEspEntControlBundle_consultarObjetivosEspecificosTemplate:
     pattern:  /consultarObjetivosEspecificosTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:consultarObjetivosEspecificosTemplate }
-MinSalSidPlaGesObjEspEntControlBundle_consultarObjetivosEspecificosTemplateJSON:
-    pattern:  /consultarObjetivosEspecificosTemplateJSON
-    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:consultarObjetivosEspecificosTemplateJSON }    
 MinSalSidPlaGesObjEspEntControlBundle_ingresarObjEspTemplate:
     pattern:  /ingresarObjEspTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:ingresarObjEspTemplate } 
@@ -28,9 +25,6 @@ MinSalSidPlaGesObjEspEntControlBundle_manttObjEspTemplatedos:
 MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate:
     pattern:  /consultarResultadosEsperadosTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:consultarResultadosEsperadosTemplate }
-MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplateJSON:
-    pattern:  /consultarResultadosEsperadosTemplateJSON
-    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:consultarResultadosEsperadosTemplateJSON }
 MinSalSidPlaGesObjEspEntControlBundle_ingresoResultadosEsperadosTemplate:
     pattern:  /ingresoResultadosEsperadosTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:ingresoResultadosEsperadosTemplate }
@@ -51,9 +45,11 @@ MinSalSidPlaGesObjEspEntControlBundle_manttResultadosEsperadosTemplate:
     pattern:  /manttResultadosEsperadosTemplate
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminResultadosEsperadosTemplate:manttResultadosEsperadosTemplate }
 
+#DE ENTIDADES DE CONTROL
 MinSalSidPlaGesObjEspEntControlBundle_consultarObjetivosEspecificos:
     pattern:  /consultarObjetivosEspecificos
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionObjetivosUnidadControl:consultarObjetivosEspecificos }
+
 MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperados:
     pattern:  /consultarResultadosEsperados
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionResultEspeEntControl:consultarResultadosEsperados }

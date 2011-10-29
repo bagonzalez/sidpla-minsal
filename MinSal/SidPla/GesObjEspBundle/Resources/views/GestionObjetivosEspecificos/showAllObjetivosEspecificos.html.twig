@@ -1,75 +1,32 @@
 {# Muestra todos las opciones #}
 {% block body %}
-    <script type="text/javascript">
-      $(document).ready(function(){
 
-        var myGrid = $('#theGridObj');        
-        myGrid.jqGrid({    
-          url: 'consultarObjetivosEspecificosJSON?idCaractOrg={{idCaractOrg}}',
-          datatype:'json',
-          altRows:true,          
-          colNames:['Id','Objetivo','Actions'],
-          colModel:[ 
-            { name:'id', index: 'id', width:15,editable:false,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
-            { name:'objetivo', index: 'objetivo', edittype:"textarea",width:700,editable:true,editoptions:{rows:"8",cols:"40",maxlength: 300},formoptions:{ rowpos:1, label: "Objetivos Especificos", elmprefix:"(*)"},editrules:{required:true}  },             
-            {name:'act',index:'act', width:120,sortable:false}],
-          rowNum:10,
-          rowList:[10,20,30],
-          multiselect: false,
-          loadonce:true,
-          sortname: 'id',
-          sortorder: "asc",
-          gridComplete: function(){
-              var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
-              for(var i=0;i < ids.length;i++){ var cl = ids[i];                  
-                  ce = "<input style='height:22px;width:120px;' type='submit' value='Resultados Esperados' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
-                  jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:ce}); } 
-          },
-          pager: jQuery('#pagerObj'),
-          viewrecords: true,          
-          caption: 'Objetivos Especificos',
-          height: "100%",
-          editCaption: "Editar Registro",
-          addCaption: "Nuevo Registro",
-          editurl:'manttObjetivosEspecificos?idCaractOrg={{idCaractOrg}}'         
-            
-        });
-        myGrid.jqGrid('navGrid','#pagerObj',{edit:true,add:true,del:false,
-         beforeRefresh: function() {myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}
-        },
-        {width:450,height:200, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos editados con exito!");},closeAfterEdit:true,afterSubmit:despuesAgregarEditar },//edit
-        {width:450,height:200,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");},closeAfterAdd:true,afterSubmit:despuesAgregarEditar },//add
-        
-        {},//search
-        {} //view
-        ).hideCol('id');
-       
-             /* Funcion para regargar los JQGRID luego de agregar y editar*/
-      function despuesAgregarEditar() {
-        myGrid.jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
-        return[true,'']; //no error
-      }
-       
-      });
-      
-       //define handler for 'editSubmit' event
-    var fn_editSubmit=function(response,postdata){
-     var json=response.responseText; //in my case response text form server is "{sc:true,msg:''}"
-     var result=eval("("+json+")"); //create js object from server reponse
-     return [result.sc,result.msg,null]; 
-    }  
-
-    
-   
-    
-    </script>
-    <input type='hidden' name='idfila' id="idfila" value='' />  
-    <div id="grid_wrapper" class="ui-corner-all floatLeft">
-        <table id="theGridObj" class="scroll" ></table> 
-        <div id="pagerObj"  class="scroll" style="text-align:center;"></div> 
-      </div>
-       
-    
+    <table border="1" WIDTH='85%'>
+        <thead>
+            <tr  style=" font-size: 14px;">
+                <th><strong>  Objetivo </strong>
+                </th>
+                <th colspan="2"><strong>  Acciones </strong>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+        {% if objetivos is defined %}
+            {%for obj in objetivos%}
+               <tr>
+                 <td style=" font-size: 12px;">{{ obj.getDescripcion}}
+                 </td>
+                 <td class="tdBotonesIconos" WIDTH='60' >
+                      <input width="50" height="50" type="image" src="{{ asset('/images/iconos/editar.png')}}"  id="editar" onclick="$('#id').attr('value',{{obj.getIdObjEspec}});$('#idCaractOrg').attr('value', {{idCaractOrg}});this.form.action='{{path('MinSalSidPlaGesObjEspBundle_editarObjetivoEspecifico')}}';" />
+                      <br/>Editar
+                 </td>
+                 <td class="tdBotonesIconos" WIDTH='60' >
+                    <input width="50" height="50" type="image" src="{{ asset('/images/iconos/gestion.png')}}"  id="resultadoEsperado" onclick="$('#idfila').attr('value', {{obj.getIdObjEspec}}); this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}';" />
+                    <br/>Resultados Esperados
+                 </td>
+               </tr>
+            {%endfor%}
+        {% endif %}
+        </tbody>
+    </table>
 {% endblock %}

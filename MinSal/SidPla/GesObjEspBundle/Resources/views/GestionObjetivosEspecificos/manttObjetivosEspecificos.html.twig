@@ -1,23 +1,37 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
-<br></br>
-<br></br>
-    <form action="{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}" method="post">
+<script type="text/javascript">
+$(document).ready(function(){
+    
+    $('#agregar').click(function(evento) {
+          this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_ingresarObjetivoEspecifico') }}';
+    });
+    
+});
+</script>
+    <form action="" method="post">
         <table align="center">
-            <tr><td align="center"><h1>Gestion de Objetivos Especificos</h1>
+            <tr>
+                <td align="center"><h1>Gestion de Objetivos Especificos</h1>
                 </td>
             </tr>
-           
             <tr>
-                <td align="center">
-                <br></br>                
+                <td align="center" class="tdBotonesIconos" >
+                    <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}" id="agregar"/>
+                    <br/>Agregar Objetivo
+
+                </td>
+            </tr>
+            <tr>
+                <td align="center">               
                 {% include 'MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:showAllObjetivosEspecificos.html.twig'  with {'idCaractOrg': idCaractOrg} %} 
                 </td>
             </tr>        
-        </table>        
+        </table>
+         <input type='hidden' name='idfila' id="idfila" value='' />
+         <input type='hidden' name='id' id="id" value='' />  
+         <input type='hidden' name='idCaractOrg' id="idCaractOrg" value='{{idCaractOrg}}' />
     </form>
-    <br></br>
-    <br></br>
-    
-    
+    <br/><br/>
+  
 {% endblock %}

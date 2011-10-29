@@ -139,117 +139,108 @@ event.preventDefault();
          
 });
       
-</script>
+    </script>
 
 
-<style type="text/css">
-form.cmxform label.error, label.error {
-	/* remove the next line when you have trouble in IE6 with labels in list */
-	color: red;
-	font-style: italic
-            
-}
-input.error { border: 1px dotted red; }
-textarea.error { border: 1px dotted red; }
-      </style>
-      
-<br></br>
-<br></br>
-<br></br>
-<h2 class="demoHeaders">Edicion del Resultado Esperado</h2>
-<div id="tabs">
-        <ul>
-                <li><a href="#tabs-1">Nuevo Resultado</a></li>
-                
-        </ul>
-        <div id="tabs-1" >
-            <form id="formulario" action="{{ path('MinSalSidPlaGesObjEspBundle_editandoResultadosEsperados')}}" method="post" >
-                <table align="center" id="datos"  >
-                    <tr>
-                        <td colspan="4" align="center" >Datos de Resultado Esperado <br><br></td>
-                    </tr>
-                    
-                    <tr>
-                        <td >Objetivo:</td>
-                        <td colspan="3" ><textarea rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
-                    </tr>
-                    <tr>
-                        <td >Resultado Esperado(*):</td>
-                        <td colspan="3" ><textarea rows="4" class="required" cols="100" name= 'resultadoEsperado'  size="60%" id="resultadoEsperado"  >{{resultadoEsperadoDescrp}}</textarea></td>
-                    </tr>
-                    <tr>
-                        <td >Indicador(*):</td>
-                        <td colspan="3" ><input size="100%" class="required" name="Indicador" id="Indicador" value="{{resultadoEsperadoIndicador}}" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Medio de Verificacion(*):</td>
-                        <td colspan="3" ><input size="100%" class="required" name="medioverificacion" id="medioverificacion"  value="{{resultadoEsperadoMedioVerificacion}}" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Responsables(*):</td>
-                        <td colspan="3" ><input size="100%" class="required" name="responsable" id="responsable" value="{{resultadoEsperadoResponsable}}"></input></td>
-                    </tr>
-                    <tr>
-                        <td >Supuestos Factores(*):</td>
-                        <td colspan="3" ><input size="100%" class="required" name="supuestosfactores" id="supuestosfactores" value="{{resultadoEsperadoSupuestos}}" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Meta anual(*):</td>
-                        <td colspan="3" ><input size="20%" class="required" name="metaAnual" id="metaAnual" value="{{resultadoEsperadoMetaAnual}}" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Tipo de Meta(*):</td>
-                        <td  ><select name="selectipometa"  class="required" id='selectipometa'><option value=''>Seleccione el tipo de meta</option><option value='1'>Valor absoluto</option><option value='2'>Porcentaje</option></select></td>
-                    </tr>
-                    
-                    
-                    <tr>
-                        <td >Descripcion Meta anual(*):</td>
-                        <td colspan="3" ><input size="100%" class="required" name="descripMetaAnual" id="descripMetaAnual" value="{{resultadoEsperadoDescripcionMetaAnual}}" ></input></td>
-                    </tr>
-                   
+    <style type="text/css">
+            form.cmxform label.error, label.error {
+                /* remove the next line when you have trouble in IE6 with labels in list */
+                color: red;
+                font-style: italic
+
+            }
+            input.error { border: 1px dotted red; }
+            textarea.error { border: 1px dotted red; }
+        </style>
+        <h2 class="demoHeaders">Editar el Resultado Esperado</h2>
+        <div id="tabs">
+            <ul>
+                <li><a href="#tabs-1">Editar Resultado</a></li>
+
+            </ul>
+            <div id="tabs-1" >
+                <form id="formulario" action="{{ path('MinSalSidPlaGesObjEspBundle_editandoResultadosEsperados')}}" method="post" >
+                    <table align="center" id="datos"  >
                         <tr>
-                        <td>Programado:</td>
+                            <td >Objetivo:</td>
+                            <td colspan="3" ><textarea rows="4" cols="100" name= 'objetivo' id='objetivo'readonly="readonly">{{descripcion}}</textarea></td>
                         </tr>
-                       
-                        
                         <tr>
-                         <TD WIDTH="25%"align="center">1er Trimestre</TD>
-                        <TD WIDTH="25%" align="center">2do trimestre</TD>
-                        <TD WIDTH="25%" align="center">3er Trimestre</TD>
-                        <TD WIDTH="25%" align="center">4to Trimestre</TD>
-                         </tr>
+                            <td >Resultado Esperado(*):</td>
+                            <td colspan="3" ><textarea rows="4" class="required" cols="100" name= 'resultadoEsperado'  size="60%" id="resultadoEsperado"  >{{resultadoEsperadoDescrp}}</textarea></td>
+                        </tr>
                         <tr>
-                        <TD WIDTH="25%"align="center"> <input size="25%" name="trimUno" id="trimUno" value='{{trim1}}' ></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimDos" id="trimDos"  value='{{trim2}}'></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimTres" id="trimTres" value='{{trim3}}' ></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimCuatro" id="trimCuatro" value='{{trim4}}' ></input></TD>
+                            <td >Indicador(*):</td>
+                            <td colspan="3" ><input size="100%" class="required" name="Indicador" id="Indicador" value="{{resultadoEsperadoIndicador}}" ></input></td>
+                        </tr>
+                        <tr>
+                            <td >Medio de Verificacion(*):</td>
+                            <td colspan="3" ><input size="100%" class="required" name="medioverificacion" id="medioverificacion"  value="{{resultadoEsperadoMedioVerificacion}}" ></input></td>
+                        </tr>
+                        <tr>
+                            <td >Responsables(*):</td>
+                            <td colspan="3" ><input size="100%" class="required" name="responsable" id="responsable" value="{{resultadoEsperadoResponsable}}"></input></td>
+                        </tr>
+                        <tr>
+                            <td >Supuestos Factores(*):</td>
+                            <td colspan="3" ><input size="100%" class="required" name="supuestosfactores" id="supuestosfactores" value="{{resultadoEsperadoSupuestos}}" ></input></td>
+                        </tr>
+                        <tr>
+                            <td >Meta anual(*):</td>
+                            <td colspan="3" ><input size="20%" class="required" name="metaAnual" id="metaAnual" value="{{resultadoEsperadoMetaAnual}}" ></input></td>
+                        </tr>
+                        <tr>
+                            <td >Tipo de Meta(*):</td>
+                            <td  ><select name="selectipometa"  class="required" id='selectipometa'><option value=''>Seleccione el tipo de meta</option><option value='1'>Valor absoluto</option><option value='2'>Porcentaje</option></select></td>
+                        </tr>
+
+
+                        <tr>
+                            <td >Descripcion Meta anual(*):</td>
+                            <td colspan="3" ><input size="100%" class="required" name="descripMetaAnual" id="descripMetaAnual" value="{{resultadoEsperadoDescripcionMetaAnual}}" ></input></td>
+                        </tr>
+
+                        <tr>
+                            <td>Programado:</td>
+                        </tr>
+
+
+                        <tr>
+                            <TD WIDTH="25%"align="center">1er Trimestre</TD>
+                            <TD WIDTH="25%" align="center">2do trimestre</TD>
+                            <TD WIDTH="25%" align="center">3er Trimestre</TD>
+                            <TD WIDTH="25%" align="center">4to Trimestre</TD>
+                        </tr>
+                        <tr>
+                            <TD WIDTH="25%"align="center"> <input size="25%" name="trimUno" id="trimUno" value='{{trim1}}' ></input></TD>
+                            <TD WIDTH="25%"align="center"><input size="25%" name="trimDos" id="trimDos"  value='{{trim2}}'></input></TD>
+                            <TD WIDTH="25%"align="center"><input size="25%" name="trimTres" id="trimTres" value='{{trim3}}' ></input></TD>
+                            <TD WIDTH="25%"align="center"><input size="25%" name="trimCuatro" id="trimCuatro" value='{{trim4}}' ></input></TD>
                         </tr>   
-                      
-                       
-                       <tr>  
-                           <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
-                           <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
-                           <input type='hidden' name='iduno' id="iduno" value='{{iduno}}' />  
-                           <input type='hidden' name='iddos' id="iddos" value='{{iddos}}' /> 
-                           <input type='hidden' name='idtres' id="idtres" value='{{idtres}}' /> 
-                           <input type='hidden' name='idcuatro' id="idcuatro" value='{{idcuatro}}' /> 
-                    <td colspan="3" align="center" ><br><br><button type="submmit" id="agregar"  >Guardar</button>
-                           
-                        </td> 
-                         </td> 
-                        <td colspan="1" align="center" ><br><br><button type="submmit" class="cancel" id="regresar"  >Regresar</button>
-                            
-                        </td>
-                    </tr>
-                    <tr>
-                        <td align="left"><br>Campos marcados con (*) son Obligatorios</td>
+
+
+                        <tr>  
+                        <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
+                        <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
+                        <input type='hidden' name='iduno' id="iduno" value='{{iduno}}' />  
+                        <input type='hidden' name='iddos' id="iddos" value='{{iddos}}' /> 
+                        <input type='hidden' name='idtres' id="idtres" value='{{idtres}}' /> 
+                        <input type='hidden' name='idcuatro' id="idcuatro" value='{{idcuatro}}' />
+                        <input type='hidden' name='oper' id="oper" value='edit' /> 
+                        <tr>
+                            <td colspan="4" align="center" >
+                                <button type="submmit" id="agregar"  >Guardar</button>
+                                <button type="submmit" class="cancel" id="regresar"  >Regresar</button> 
+                            </td> 
                         </tr>
-                </table>
-            </form>            
+                        <tr>
+                            <td align="left"><br>Campos marcados con (*) son Obligatorios</td>
+                        </tr>
+                    </table>
+                </form>            
+            </div>
+
         </div>
-      
-</div>
 
 
 {% endblock %}{# empty Twig template #}

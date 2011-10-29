@@ -3,28 +3,16 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
 <script type="text/javascript">        
-      $(document).ready(function(){
-          
-          
-          $('#regresar').click(function() {
+$(document).ready(function(){
+    $('#regresar').click(function() {
              
                        this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate') }}';                    
-                
-          });
-           $('#guardar').click(function(evento) {
-                    
-           
-           
-            this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_guardarResultadosEsperadosTemplate') }}';
-             
-          });
-          
-          $('#tabs').tabs();
-      
-        
-          
-          //validando el formulario
-          $("#formulario").validate();
+     });
+    $('#guardar').click(function(evento) {
+        this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_guardarResultadosEsperadosTemplate') }}';
+    });
+    $('#tabs').tabs();
+    $("#formulario").validate();
   
 });
       
@@ -42,9 +30,6 @@ form.cmxform label.error, label.error {
 input.error { border: 1px dotted red; }
 textarea.error { border: 1px dotted red; }
       </style>   
-<br></br>
-<br></br>
-<br></br>
 <h2 class="demoHeaders">Ingreso de Resultados Esperados Para SIBASI y Regiones de Salud</h2>
 <div id="tabs">
         <ul>
@@ -67,21 +52,16 @@ textarea.error { border: 1px dotted red; }
                         <td  ><textarea class="required" rows="4" cols="83" name= 'resultadoEsperado'  size="83%" id="resultadoEsperado" ></textarea></td>
                     </tr>
                     <tr>
-                        <td >Indicador(*):</td>
-                        <td  ><input size="90%" class="required" name="Indicador" id="Indicador" ></input></td>
+                        <td >Indicador:</td>
+                        <td  ><input size="90%" name="Indicador" id="Indicador" ></input></td>
                     </tr>
-                    
-                    
-                       
-                       <tr>  
+                    <tr>  
                            <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
                            
-                    <td colspan="2" align="center" ><br><br><button type="submmit" id="guardar"  >Guardar</button>
+                    <td colspan="3" align="center" >
+                            <button type="submmit" id="guardar"  >Guardar</button>
                             <button type="reset"  >Limpiar</button>
-                        </td> 
-                         </td> 
-                        <td colspan="1" align="center" ><br><br><button type="submmit" class="cancel"  id="regresar"  >Regresar</button>
-                            
+                            <button type="submmit" class="cancel"  id="regresar"  >Regresar</button>
                         </td>
                     </tr>                    
                 <tr>

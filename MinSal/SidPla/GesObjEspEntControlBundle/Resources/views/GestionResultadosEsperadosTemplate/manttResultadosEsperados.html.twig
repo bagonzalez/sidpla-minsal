@@ -1,56 +1,46 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
 <script type="text/javascript">
-      $(document).ready(function(){
-          
-          
-         
-          $('#agregar').click(function() {
-            
-            
-            this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_ingresoResultadosEsperadosTemplate') }}';
-           });
-          
-          $('#editar').click(function() {
-            
-            // document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados') }}';
-          });
-          
-          $("submit[id$='Actividades']").click(function() {
-            //this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
-            
-          });
-      
-      });
-      </script> 
-    <form action= "" method="post">
-        <table align="center">
-            <tr><td align="center"><h1>Gestion de Resultados Esperados Para SIBASI y Regiones de Salud</h1>
-                </td>
-            </tr>
-                    <tr>
-                        
-                        <td >Objetivo:<br><textarea readonly="readonly" rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
-                    </tr>
-                     
-            <tr>
-                <td align="center">
+$(document).ready(function(){
+  $('#agregar').click(function() {
+        this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_ingresoResultadosEsperadosTemplate') }}';
+   });
+
+});
+ </script> 
+<form action= "" method="post">
+    <table align="center">
+        <tr>
+            <td align="center"><h1>Gestion de Resultados Esperados Para SIBASI y Regiones de Salud</h1>
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
+                <a href="consultarObjetivosEspecificosTemplate" style="font-size: 12px" ><strong>Objetivos >></strong></a>
+                <br></br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <textarea readonly="readonly" rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td align="center" class="tdBotonesIconos" >
+                <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}" id="agregar"</input>                    
+                <br/>Resultado Esperado
+            </td>
+        </tr>
+        <tr>
+            <td align="center">
                 <br></br>                
                 {% include 'MinSalSidPlaGesObjEspEntControlBundle:GestionResultadosEsperadosTemplate:showAllResultadosEsperados.html.twig'  with {'idfila': idfila} %} 
-                </td>
-            </tr>        
-            <tr>
-                <td align="center">
-                    <input type="submit" value="Agregar Resultado Esperado" id="agregar"</input>                    
-                    
-                    
-                </td>
-            </tr>
-        
-        </table>        
-    </form>
-    <br></br>
-    <br></br>
-    
-    
+            </td>
+        </tr>        
+    </table>        
+</form>
+<br></br>
+<br></br>
+
+
 {% endblock %}

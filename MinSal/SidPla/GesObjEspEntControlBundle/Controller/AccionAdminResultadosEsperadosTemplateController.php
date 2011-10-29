@@ -20,53 +20,18 @@ class AccionAdminResultadosEsperadosTemplateController extends Controller {
 
         $request = $this->getRequest();
         $idfila = $request->get('idfila');
-        $objetivoAux = new ObjespTemplate();
+        
         $objetivoDao = new ObjespTemplateDao($this->getDoctrine());
         $objetivoAux = $objetivoDao->getObjetivoTemplate($idfila);
         $objetivosEspec = $objetivoAux->getIdObjEspec()->getDescripcion();
+        $resultadosEsperados = $objetivoAux->getResultadostemplate();
 
-
-        return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionResultadosEsperadosTemplate:manttResultadosEsperados.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec));
-    }
-
-    public function consultarResultadosEsperadosTemplateJSONAction() {
-
-        $request = $this->getRequest();
-        $idobjetivo = $request->get('idfila');
-
-        $objetivoAux = new ObjespTemplate();
-        $objetivoDao = new ObjespTemplateDao($this->getDoctrine());
-        $objetivoAux = $objetivoDao->getObjetivoTemplate($idobjetivo);
-
-        $objetivosEspec = $objetivoAux->getResultadostemplate();
-
-        $numfilas = count($objetivosEspec);
-
-        $objetivoEspec = new ResEspTemplate();
-        $i = 0;
-
-        foreach ($objetivosEspec as $objetivoEspec) {
-            $rows[$i]['id'] = $objetivoEspec->getIdResEspTempl();
-            $rows[$i]['cell'] = array($objetivoEspec->getIdResEspTempl(),
-                $objetivoEspec->getIdObjEspecTempl(),
-                $objetivoEspec->getResEspTemplDescripcion(),
-                $objetivoEspec->getResEspTemplIndicador()
-            );
-            $i++;
-        }
-
-        $datos = json_encode($rows);
-
-
-        $jsonresponse = '{
-               "page":"1",
-               "total":"' . ($numfilas / 10) . '",
-               "records":"' . $numfilas . '", 
-               "rows":' . $datos . '}';
-
-
-        $response = new Response($jsonresponse);
-        return $response;
+        if (count($resultadosEsperados) == 0)
+            return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionResultadosEsperadosTemplate:manttResultadosEsperados.html.twig', 
+                    array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec));
+        else
+            return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionResultadosEsperadosTemplate:manttResultadosEsperados.html.twig', 
+                    array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec, 'resultadosEsperados' => $resultadosEsperados));
     }
 
     public function manttResultadosEsperadosTemplateAction() {
@@ -75,14 +40,14 @@ class AccionAdminResultadosEsperadosTemplateController extends Controller {
         $id = $request->get('id');
         $idobjetivo = $request->get('idfila'); //id objetivo
         $idResTempl = $request->get('idResTempl');
-       
+
         $operacion = $request->get('oper');
 
         $objDao = new ResEspTemplateDao($this->getDoctrine());
 
-        
-            $objDao->delResultadoEsperadotemplate($id);
-        
+
+        $objDao->delResultadoEsperadotemplate($id);
+
         return new Response("{sc:true,msg:''}");
     }
 
@@ -101,24 +66,24 @@ class AccionAdminResultadosEsperadosTemplateController extends Controller {
     }
 
     public function guardarResultadosEsperadosTemplateAction() {
-        $opciones=$this->getRequest()->getSession()->get('opciones');
-        
-          $request=$this->getRequest();        
-         $idfila=$request->get('idfila');
-          $idobjetivo=$request->get('idfila');  //representa en este caso el codigo de objetivo
-          $resEspeDesc=$request->get('resultadoEsperado');
-          $resEspIndicador=$request->get('Indicador');
-          
-          $resEspNomencl="prueba";
-          $objetivoDao = new ObjespTemplateDao($this->getDoctrine());                      
-          $idResultadoEsp= $objetivoDao->agregarResulEsperadoTemplate($resEspeDesc,$resEspNomencl,$resEspIndicador,$idobjetivo); 
-          
-        $objetivoAux=new ObjespTemplate();
-        $objetivoDao = new ObjespTemplateDao($this->getDoctrine());                      
-        $objetivoAux=$objetivoDao->getObjetivoTemplate($idfila);         
-        $objetivosEspec=$objetivoAux->getIdObjEspec()->getDescripcion();
-           return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionResultadosEsperadosTemplate:manttResultadosEsperados.html.twig', 
-                array( 'opciones' => $opciones,'idfila' => $idfila,'descripcion' => $objetivosEspec));}
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+
+        $request = $this->getRequest();
+        $idfila = $request->get('idfila');
+        $idobjetivo = $request->get('idfila');  //representa en este caso el codigo de objetivo
+        $resEspeDesc = $request->get('resultadoEsperado');
+        $resEspIndicador = $request->get('Indicador');
+
+        $resEspNomencl = "prueba";
+        $objetivoDao = new ObjespTemplateDao($this->getDoctrine());
+        $idResultadoEsp = $objetivoDao->agregarResulEsperadoTemplate($resEspeDesc, $resEspNomencl, $resEspIndicador, $idobjetivo);
+
+        $objetivoAux = new ObjespTemplate();
+        $objetivoDao = new ObjespTemplateDao($this->getDoctrine());
+        $objetivoAux = $objetivoDao->getObjetivoTemplate($idfila);
+        $objetivosEspec = $objetivoAux->getIdObjEspec()->getDescripcion();
+        return $this->consultarResultadosEsperadosTemplateAction();
+    }
 
     public function consultarTipoMetaAction() {
         $opciones = $this->getRequest()->getSession()->get('opciones');
@@ -175,11 +140,11 @@ class AccionAdminResultadosEsperadosTemplateController extends Controller {
 
         $resultadoEsperadoDescrp = $resultadoAux->getResEspTemplDescripcion();
         $resultadoEsperadoIndicador = $resultadoAux->getResEspTemplIndicador();
-       
+
         return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionResultadosEsperadosTemplate:EditarResultadoEsperado.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec, 'idfilaResultado' => $id,
                     'resultadoEsperadoDescrp' => $resultadoEsperadoDescrp
                     , 'resultadoEsperadoIndicador' => $resultadoEsperadoIndicador
-                     ));
+                ));
     }
 
     public function editandoResultadosEsperadosTemplateAction() {
@@ -192,25 +157,19 @@ class AccionAdminResultadosEsperadosTemplateController extends Controller {
         $id = $request->get('idfilaResultado');
         $resEspeDesc = $request->get('resultadoEsperado');
         $resEspIndicador = $request->get('Indicador');
-      
-
-
 
         $resEspNomencl = "pruebanomenc";
-       $objDao = new ResEspTemplateDao($this->getDoctrine());
-        $objDao->editResulEspTemplate($resEspeDesc, $resEspNomencl,$resEspIndicador, $idobjetivo, $id);
+        $objDao = new ResEspTemplateDao($this->getDoctrine());
+        $objDao->editResulEspTemplate($resEspeDesc, $resEspNomencl, $resEspIndicador, $idobjetivo, $id);
 
-        
-        
-       //obteniendo el objetivo especifico
-        $objetivoAux = new ObjespTemplate();
+        //obteniendo el objetivo especifico
+        //$objetivoAux = new ObjespTemplate();
         $objetivoDao = new ObjespTemplateDao($this->getDoctrine());
         $objetivoAux = $objetivoDao->getObjetivoTemplate($idfila);
         $objetivosEspec = $objetivoAux->getIdObjEspec()->getDescripcion();
 
-
-
-        return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionResultadosEsperadosTemplate:manttResultadosEsperados.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec));
+        //return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionResultadosEsperadosTemplate:manttResultadosEsperados.html.twig', array('opciones' => $opciones, 'idfila' => $idfila,               'descripcion' => $objetivosEspec));
+        return $this->consultarResultadosEsperadosTemplateAction();
     }
 
 }

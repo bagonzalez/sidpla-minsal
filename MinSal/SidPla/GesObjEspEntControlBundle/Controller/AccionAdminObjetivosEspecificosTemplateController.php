@@ -65,52 +65,7 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
                 array('opciones' => $opciones,'objTemplates'=>$objTemplates));
     }
 
-     public function consultarObjetivosEspecificosTemplateJSONAction() {
-      $request = $this->getRequest();
-      $anio = $request->get('anio');
-
-      $objTmpDao = new ObjTemplateDao($this->getDoctrine());
-      if($objTmpDao->existeObjTmp($anio)==0)
-      $objTmpDao->agregarObjetivoTemplate ($anio);
-      $objTmp = $objTmpDao->obtenerObjTempAnio($anio);
-
-      $numfilas = 0;
-      $objTmpAux = new ObjTemplate();
-      $rows='';
-      foreach ($objTmp as $objTmpAux) {
-      $i = 0;
-      $objEspTmps = $objTmpAux->getEspecificoObjTmp();
-      $aux = new ObjespTemplate();
-      $numfilas = count($objEspTmps);
-
-      foreach ($objEspTmps as $aux) {
-      $rows[$i]['id'] = $aux->getIdObjEspec()->getIdObjEspec();
-      $rows[$i]['cell'] = array($aux->getIdObjEspec()->getIdObjEspec(),
-      $aux->getIdObjEspec()->getDescripcion(),
-      $aux->getIdObjEspTempl()
-      );
-      $i++;
-      }
-      }
-
-
-
-      $datos = json_encode($rows);
-      $pages = floor($numfilas / 10) + 1;
-
-      $jsonresponse = '{
-      "page":"1",
-      "total":"1",
-      "records":"' . $numfilas . '",
-      "rows":' . $datos . '}';
-
-
-      $response = new Response($jsonresponse);
-      return $response;
-      }
-     
-
-    public function ingresarObjEspTemplateAction() {
+     public function ingresarObjEspTemplateAction() {
         $opciones = $this->getRequest()->getSession()->get('opciones');
         $request = $this->getRequest();
         $anio = $request->get('anio');

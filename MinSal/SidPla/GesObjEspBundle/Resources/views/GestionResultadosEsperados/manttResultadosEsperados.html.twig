@@ -1,62 +1,45 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
 <script type="text/javascript">
-      $(document).ready(function(){
-          
-          
-         
-          $('#agregar').click(function() {
-            
-             //document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}';
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}';
-           });
-          
-          $('#editar').click(function() {
-            
-             document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_editarResultadosEsperados') }}';
-          });
-          
-          $("submit[id$='Actividades']").click(function() {
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
-            // document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
-          });
-      
-      });
-      </script>
-<br></br>
-    <br></br>         
-    <br></br>    
-    <form action= "" method="post">
+$(document).ready(function(){
+    $('#agregar').click(function() {
+        this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}';
+     });
+});
+ </script>
+   <form action= "" method="post">
         <table align="center">
             <tr><td align="center"><h1>Gestion de Resultados Esperados</h1>
                 </td>
             </tr>
             <tr>
-                <td align="center"><h3><a href="{{ path('MinSalSidPlaGesObjEspBundle_consultarObjetivosEspecificos') }}">Objetivos</a></h3> </td>
+                <td align="center">
+                    <strong>
+                 {% if objUniControl is defined %}
+                     <a  style="font-size: 12px"  href="{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarObjetivosEspecificos') }}">Objetivos>></a>
+                 {% else %}
+                    <a  style="font-size: 12px"  href="{{ path('MinSalSidPlaGesObjEspBundle_consultarObjetivosEspecificos') }}">Objetivos>></a>
+                 {% endif %}
+                    </strong>
+                </td>
             </tr>
             <tr>
-
-                <td >Objetivo:<br><textarea readonly="readonly" rows="1" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
+                <td><textarea readonly="readonly" rows="4" cols="100" name= 'objetivo' id='objetivo' >{{descripcion}}</textarea>
+                </td>
             </tr>
-                     
+            <tr colspan="2">
+                <td align="center" class="tdBotonesIconos" >
+                   <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}" name="agregar" id="agregar"/>
+                   <br/>Agregar Resultado Esperado
+                </td>
+            </tr>
             <tr>
                 <td align="center">
-                <br></br>                
+                <br/>                
                 {% include 'MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:showAllResultadosEsperados.html.twig'  with {'idfila': idfila} %} 
                 </td>
             </tr>        
-            <tr>
-                <td align="center">
-                    <input type="submit" value="Agregar Resultado Esperado" id="agregar"</input>                    
-                    
-                    
-                </td>
-            </tr>
-        
         </table>        
     </form>
-    <br></br>
-    <br></br>
-    
-    
+    <br/><br/>
 {% endblock %}

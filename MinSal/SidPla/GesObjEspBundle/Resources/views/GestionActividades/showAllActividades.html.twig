@@ -1,74 +1,40 @@
 {# Muestra todos las opciones #}
 {% block body %}
-    <script type="text/javascript">
-      $(document).ready(function(){
-        var myGrid = $('#theGridObj');        
-        myGrid.jqGrid({    
-          url: 'consultarActividadesJSON?idfilaResultado={{idfilaResultado}}',
-          datatype:'json',
-          altRows:true,          
-          colNames:['Id','Actividad','Actions'],
-          colModel:[ 
-            { name:'id', index: 'id', width:15,editable:false,formatter: 'integer',hidden: true,editoptions:{size:10},sorttype:'int',searchtype:"integer", searchrules:{"required":true, "number":true, "maxValue":2000000}   },
-            { name:'actividad', index: 'actividad', width:400,editable:true,editoptions:{size:10}},
-            {name:'act',index:'act', width:200,sortable:false}],
-          rowNum:10,
-          rowList:[10,20,30],
-          multiselect: false,
-          sortname: 'id',
-          sortorder: "asc",
-          gridComplete: function(){
-              var ids = jQuery("#theGridObj").jqGrid('getDataIDs');
-              for(var i=0;i < ids.length;i++){ var cl = ids[i];
-                  be = "<input style='height:22px;width:100px;' type='submit' id='Editar' value='Editar' onclick=\" $('#idfilaActividad').attr('value', '"+cl+"');this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editarActividad') }}' \" />";
-                  se = "<input style='height:22px;width:100px;' type='button' value='Eliminar'\" />"; 
-                  //ce = "<input style='height:22px;width:100px;' type='submit' value='Actividades' onclick=\" $('#idfila').attr('value', '"+cl+"'); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}' \" />";
-                  jQuery("#theGridObj").jqGrid('setRowData',ids[i],{act:be+se}); } },
-          pager: jQuery('#pagerObj'),
-          viewrecords: true,  
-          rownumbers: true,
-          caption: 'Actividades',
-          height: "100%",
-          editCaption: "Editar Registro",
-          addCaption: "Nuevo Registro",
-          editurl:''         
-            
-        });
-        myGrid.jqGrid('navGrid','#pagerObj',
-        {edit:true,add:true,del:true},
-        {width:450,height:200, afterSubmit: fn_editSubmit, closeOnEscape: true,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos editados con exito!");},closeAfterEdit:true },//edit
-        {width:450,height:1000,bottominfo:"Campos marcados con (*) son obligatorios", onclickSubmit: function(rp_ge, postdata) {
-        alert("datos guardados con exito!");},closeAfterAdd:true },//add
-        {width:550,height:160,onclickSubmit: function(rp_ge, postdata) {
-        alert("Mensaje eliminado con exito!");
-          } },//del
-        {},//search
-        {} //view
-        );
-       
-      });
-      
-       //define handler for 'editSubmit' event
-    var fn_editSubmit=function(response,postdata){
-     var json=response.responseText; //in my case response text form server is "{sc:true,msg:''}"
-     var result=eval("("+json+")"); //create js object from server reponse
-     return [result.sc,result.msg,null]; 
-    }  
-
-    
-   
-    
-    </script>
     <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
     <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
-     <input type='hidden' name='idfilaActividad' id="idfilaActividad" value='' /> 
-    <div id="grid_wrapper" class="ui-corner-all floatLeft">
-        <table id="theGridObj" class="scroll" ></table> 
-        <div id="pagerObj"  class="scroll" style="text-align:center;"></div> 
-      </div>
-       
-    
+    <input type='hidden' name='idfilaActividad' id="idfilaActividad" value='' /> 
+    <table border="1" WIDTH='85%'>
+        <thead>
+            <tr  style=" font-size: 14px;">
+                <th><strong> Actividades </strong>
+                </th>
+                <th><strong>  Acciones </strong>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+    {% if actividades is defined %}   
+        {% for  actividad in  actividades%}
+                <tr>
+                    <td style=" font-size: 12px;">{{actividad.getActDescripcion}}
+                    </td>
+                    <td class="tdBotonesIconos" WIDTH='60' >
+                        <input width="50" height="50" type="image" src="{{ asset('/images/iconos/editar.png')}}" id="editar" value="Editar" onclick="$('#idfilaActividad').attr('value',{{actividad.getIdAct}});this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editarActividad') }}';" />
+                        <br/>Editar
+                    </td>
+                </tr>
+        {% endfor %}
+    {% endif %}
+        </tbody>
+    </table>
+
+
+        <div id="grid_wrapper" class="ui-corner-all floatLeft">
+            <table id="theGridObj" class="scroll" ></table> 
+            <div id="pagerObj"  class="scroll" style="text-align:center;"></div> 
+        </div>
+
+
 {% endblock %}
 
 
