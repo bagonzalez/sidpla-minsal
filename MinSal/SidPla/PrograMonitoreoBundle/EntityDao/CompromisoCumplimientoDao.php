@@ -1,27 +1,11 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of ProgramacionMonitoreoDao
- *
- * @author edwin
- */
-
 namespace MinSal\SidPla\PrograMonitoreoBundle\EntityDao;
 use Doctrine\ORM\Query\ResultSetMapping;
 use MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento;
 
 use MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad;
 use MinSal\SidPla\GesObjEspBundle\EntityDao\ResulActividadDao;
-/**
- * Description of ProgramacionMonitoreoDao
- *
- * @author bagonzalez
- */
+
 class CompromisoCumplimientoDao {
     
     var $doctrine;
@@ -110,10 +94,23 @@ class CompromisoCumplimientoDao {
              return $resultadoActividades;
     }
     
-    
+    public function existeCompromisoCumplimiento($idResulAct) {
 
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('cuanto', 'cuanto');
+        $query = $this->em->createNativeQuery('SELECT count(*) cuanto 
+                                               FROM sidpla_compromisocumplimiento
+                                               WHERE resact_codigo = ?', $rsm);
+        $query->setParameter(1, $idResulAct);
+
+        $x = $query->getResult();
+        
+        if($x[0]['cuanto']==0)
+            return false;
+        else
+            return true;
+    }
   
-    
 }
 
 ?>

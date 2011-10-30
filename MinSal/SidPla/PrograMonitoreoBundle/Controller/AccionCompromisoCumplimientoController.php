@@ -21,10 +21,14 @@ use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\ObjTemplateDao;
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjTemplate;
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate;
 use MinSal\SidPla\PrograMonitoreoBundle\EntityDao\ProgramacionMonitoreoDao;
+//COMPROMISO CUMPLIMIENTO
 use MinSal\SidPla\PrograMonitoreoBundle\EntityDao\CompromisoCumplimientoDao;
 use MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento;
 use MinSal\SidPla\UnidadOrgBundle\EntityDao\ObjetivoEspecificoDao;
 use MinSal\SidPla\GesObjEspBundle\EntityDao\ResultadoEsperadoDao;
+//PARA REPROGRAMACION
+use MinSal\SidPla\PrograMonitoreoBundle\Entity\Reprogramacion;
+use MinSal\SidPla\PrograMonitoreoBundle\EntityDao\ReprogramacionDao;
 
 class AccionCompromisoCumplimientoController extends Controller {
 
@@ -214,14 +218,15 @@ class AccionCompromisoCumplimientoController extends Controller {
         $trimestre = 1;
         $promMonDao = new CompromisoCumplimientoDao($this->getDoctrine());
         $actividadesProgramon = $promMonDao->getActividades($idProgramon, $trimestre);
-        //  $trimestre=1;
-
+        
         $uniControl = new UnidadOrganizativa();
         $uniControl = $this->obtenerUnidadOrg();
         $idUnidad = $uniControl->getIdUnidadOrg();
+        
+        $compromisoDao=new CompromisoCumplimientoDao($this->getDoctrine());
 
         return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:CompromisoCumplimiento.html.twig', array('opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon,
-                    'trimestre' => $trimestre, 'idUnidad' => $idUnidad, 'id' => $idProgramon));
+                    'trimestre' => $trimestre, 'idUnidad' => $idUnidad, 'id' => $idProgramon,'compromisoDao'=>$compromisoDao));
     }
 
     public function ingresoActividadesEnRetrasoAction() {
@@ -234,7 +239,6 @@ class AccionCompromisoCumplimientoController extends Controller {
         $trimestre = $request->get('trimestre');
         
         $resultadoDao = new ResulActividadDao($this->getDoctrine());
-        //$resAct = new ResulActividad();
         $resAct = $resultadoDao->getResulActividad($idResultActividad);
         $descrObjetivo = $resAct->getIdActividad()->getIdResEsp()->getIdObjEsp()->getDescripcion();
         $descrResultado = $resAct->getIdActividad()->getIdResEsp()->getResEspeDesc();
@@ -309,16 +313,92 @@ class AccionCompromisoCumplimientoController extends Controller {
         $idResultActividad = $request->get('idresact');
         $hallazgos = $request->get('hallazgosAct');
         $medidasadoptar = $request->get('medidasAct');
-        $fechacumplimiento = $request->get('newdateend');
         $responsable = $request->get('responsable');
 
         $idfila = $request->get('idfila');
         $idfilaResultado = $request->get('idfilaResultado');
         $idfilaActividad = $request->get('idfilaActividad');
+        
+        //OBTIENE LOS VALORES DE REPROGRAMACION
+        //segundo trimestre
+        $dia = substr($request->get('fechIni2'), 0, 2);
+        $mes = substr($request->get('fechIni2'), 3, 2);
+        $anio = substr($request->get('fechIni2'), 6, 4);
+        $fechIniOrSeg = $anio . '-' . $mes . '-' . $dia;
+        $dia = substr($request->get('fechFin2'), 0, 2);
+        $mes = substr($request->get('fechFin2'), 3, 2);
+        $anio = substr($request->get('fechFin2'), 6, 4);
+        $fechFinOrSeg = $anio . '-' . $mes . '-' . $dia;
+        $prograOrSeg= $request->get('progra2');
+         $dia = substr($request->get('nfechIni2'), 0, 2);
+        $mes = substr($request->get('nfechIni2'), 3, 2);
+        $anio = substr($request->get('nfechIni2'), 6, 4);
+        $fechIniNuSeg = $anio . '-' . $mes . '-' . $dia;
+        $dia = substr($request->get('nfechFin2'), 0, 2);
+        $mes = substr($request->get('nfechFin2'), 3, 2);
+        $anio = substr($request->get('nfechFin2'), 6, 4);
+        $fechFinNuSeg = $anio . '-' . $mes . '-' . $dia;
+        $prograNuSeg= $request->get('nprogra2');
+        
+        //tercer trimestre
+        $dia = substr($request->get('fechIni3'), 0, 2);
+        $mes = substr($request->get('fechIni3'), 3, 2);
+        $anio = substr($request->get('fechIni3'), 6, 4);
+        $fechIniOrTer = $anio . '-' . $mes . '-' . $dia;
+        $dia = substr($request->get('fechFin3'), 0, 2);
+        $mes = substr($request->get('fechFin3'), 3, 2);
+        $anio = substr($request->get('fechFin3'), 6, 4);
+        $fechFinOrTer = $anio . '-' . $mes . '-' . $dia;
+        $prograOrTer= $request->get('progra3');
+        $dia = substr($request->get('nfechIni3'), 0, 2);
+        $mes = substr($request->get('nfechIni3'), 3, 2);
+        $anio = substr($request->get('nfechIni3'), 6, 4);
+        $fechIniNuTer = $anio . '-' . $mes . '-' . $dia;
+        $dia = substr($request->get('nfechFin3'), 0, 2);
+        $mes = substr($request->get('nfechFin3'), 3, 2);
+        $anio = substr($request->get('nfechFin3'), 6, 4);
+        $fechFinNuTer = $anio . '-' . $mes . '-' . $dia;
+        $prograNuTer= $request->get('nprogra3');
 
+        //cuarto trimestre
+	$dia = substr($request->get('fechIni4'), 0, 2);
+        $mes = substr($request->get('fechIni4'), 3, 2);
+        $anio = substr($request->get('fechIni4'), 6, 4);
+        $fechIniOrCua = $anio . '-' . $mes . '-' . $dia;
+        $dia = substr($request->get('fechFin4'), 0, 2);
+        $mes = substr($request->get('fechFin4'), 3, 2);
+        $anio = substr($request->get('fechFin4'), 6, 4);
+        $fechFinOrCua = $anio . '-' . $mes . '-' . $dia;
+        $prograOrCua= $request->get('progra4');
+        $dia = substr($request->get('nfechIni4'), 0, 2);
+        $mes = substr($request->get('nfechIni4'), 3, 2);
+        $anio = substr($request->get('nfechIni4'), 6, 4);
+        $fechIniNuCua = $anio . '-' . $mes . '-' . $dia;
+        $dia = substr($request->get('nfechFin4'), 0, 2);
+        $mes = substr($request->get('nfechFin4'), 3, 2);
+        $anio = substr($request->get('nfechFin4'), 6, 4);
+        $fechFinNuCua = $anio . '-' . $mes . '-' . $dia;
+        $prograNuCua= $request->get('nprogra4');
+        //SE OBTUVIERON LOS VALORES DE REPROGRAMACION
+        
+        if($prograNuCua!=0)
+            $fechacumplimiento=$fechFinNuCua;
+        else
+            if($prograNuTer!=0)
+                $fechacumplimiento=$fechFinNuTer;
+            else
+                $fechacumplimiento=$fechFinNuSeg;
+        
         $rDao = new ResulActividadDao($this->getDoctrine());
-        $rDao->addCompromisoCumplimiento($hallazgos, $medidasadoptar, $fechacumplimiento, $responsable, $idResultActividad);
-
+        //$compromisoGenerado=new CompromisoCumplimiento();
+        $compromisoGenerado=$rDao->addCompromisoCumplimiento($hallazgos, $medidasadoptar, $fechacumplimiento, $responsable, $idResultActividad,$idfilaResultado);
+        
+        $reprogramacionDao=new ReprogramacionDao($this->getDoctrine());
+        $reprogramacionDao->agregarReprogramacion($fechIniOrSeg, $fechFinOrSeg, $prograOrSeg, $fechIniNuSeg, $fechFinNuSeg, $prograNuSeg, 
+                $fechIniOrTer, $fechFinOrTer, $prograOrTer, $fechIniNuTer, $fechFinNuTer, $prograNuTer, 
+                $fechIniOrCua, $fechFinOrCua, $prograOrCua, $fechIniNuCua, $fechFinNuCua, $prograNuCua, $compromisoGenerado);
+        
+        /*prograNuTer
         //obteniendo el objetivo para mandarlo a la plantilla  
         //$objetivoAux = new ObjetivoEspecifico();
         $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());
@@ -353,6 +433,7 @@ class AccionCompromisoCumplimientoController extends Controller {
         $resultaEspe = $resultAux->getResulAct();
         $numfilas = count($resultaEspe);
         //$resultadoreEspec = new ResulActividad();
+        //INICIAR LOS VALORES A 0 PARA QUE NO DE ERROR
         $i = 0;
         $programadoPrimerTrimestre = 0;
         $programadoSegundoTrimestre = 0;
@@ -404,13 +485,9 @@ class AccionCompromisoCumplimientoController extends Controller {
                 $idcuatro = $resultadoreEspec->getIdResulAct();
             }
         }
-
-
-
-
-
-
-        return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:ReprogramacionDeActividades.html.twig', array('opciones' => $opciones,
+ */       
+        return $this->showActividadesEnRetrasoAction();
+        /*return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:ReprogramacionDeActividades.html.twig', array('opciones' => $opciones,
                     'idfilaResultado' => $idfilaResultado,
                     'idfila' => $idfila,
                     'descripcion' => $objetivosEspec,
@@ -432,7 +509,7 @@ class AccionCompromisoCumplimientoController extends Controller {
                     , 'iddos' => $iddos
                     , 'idtres' => $idtres
                     , 'idcuatro' => $idcuatro
-                ));
+                ));*/
     }
 
     public function editandoActividadesEnRetrasoAction() {

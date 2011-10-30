@@ -4,6 +4,11 @@ namespace MinSal\SidPla\GesObjEspBundle\EntityDao;
 use Doctrine\ORM\Query\ResultSetMapping;
 use MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad;
 use MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento;
+use MinSal\SidPla\PrograMonitoreoBundle\EntityDao\CompromisoCumplimientoDao;
+use MinSal\SidPla\GesObjEspBundle\Entity\Resultadore;
+use MinSal\SidPla\GesObjEspBundle\EntityDao\ResultadoreDao;
+use MinSal\SidPla\GesObjEspBundle\Entity\ResultadoEsperado;
+use MinSal\SidPla\GesObjEspBundle\EntityDao\ResultadoEsperadoDao;
 
 class ResulActividadDao {
 
@@ -56,12 +61,10 @@ class ResulActividadDao {
         return $matrizMensajes;
     }
 
-    public function addCompromisoCumplimiento($hallazgos, $medidasadoptar, $fechacumplimiento, $responsable, $idResultActividad) {
+    public function addCompromisoCumplimiento($hallazgos, $medidasadoptar, $fechacumplimiento, $responsable, $idResultActividad,$idResultadoRe) {
 
-        $resultProMon = new ResulActividad();
+       // $resultProMon = new ResulActividad();
         $resultProMon = $this->getResulActividad($idResultActividad);
-
-
 
         $comprocumpl = new CompromisoCumplimiento();
         $comprocumpl->setComproCumpliHallazgozEncontrados($hallazgos);
@@ -69,15 +72,31 @@ class ResulActividadDao {
         $comprocumpl->setComproCumpliResponsable($responsable);
         $comprocumpl->setComproCumpliFecha($fechacumplimiento);
         $comprocumpl->setIdResActividad($resultProMon);
-
-        $resultProMon->addCompromisoCumplimiento($comprocumpl);
-
+       
+        //ENCONTRAR EL RESULTADORE ASOCIADO
+        $resultadoEspe=new ResultadoEsperado();
+        $resultadoEspeDao= new ResultadoEsperadoDao($this->doctrine);
+        $resultadoEspe=$resultadoEspeDao->getResulEspera($idResultadoRe);
+        $resultadosRe=$resultadoEspe->getResultadore();
+        $aux=new \MinSal\SidPla\GesObjEspBundle\Entity\Resultadore();
+        
+        foreach ($resultadosRe as $aux){
+           if($aux->getResultadoreTrimestre()==$resultProMon->getResulActTrimestre()){
+                $resultadoReDao= new ResultadoreDao($this->doctrine);
+                $resultadoRe=$aux;
+                $comprocumpl->setIdResultadore($resultadoRe);
+           }
+        }
+        
+      
         $this->em->persist($comprocumpl);
+        $resultProMon->addCompromisoCumplimiento($comprocumpl);
+        $resultadoRe->addCompromisoCumplimiento($comprocumpl);
         $this->em->persist($resultProMon);
+        $this->em->persist($resultadoRe);
         $this->em->flush();
-        $matrizMensajes = array('El proceso de almacenar terminoexito', 'compro' . $comprocumpl->getIdComproCumpl());
-
-        return $matrizMensajes;
+        //LE DEVUELVO EL OBJETO PORQUE NECESITO OCUPARLO PARA LA REPROGRAMACION
+        return $comprocumpl;
     }
 
     public function consultarResulActPorTrim($trimestre,$idAct) {
@@ -97,6 +116,8 @@ class ResulActividadDao {
 
         return $resultadoAct[0];
     }
+    
+    
 
 }
 

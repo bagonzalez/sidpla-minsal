@@ -2,14 +2,11 @@
 {% block body %}
 <script type="text/javascript">
 $(document).ready(function(){
-    $('#guardarResEsp').button();
-    $('#limpiarResEsp').button();
+    $('#guardar').button();
+    $('#limpiar').button();
     $('#regresar').button();
     
-    $('#guardarResEsp').click(function(evento) {
-          this.form.action='{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarActividadesEnRetraso') }}';
-    });
-    
+   
    $("#regresar").click(function(){
       window.location='{{path ('MinSalSidPlaPrograMonitoreoBundle_showActividadesEnRetraso')}}';
    });
@@ -32,22 +29,75 @@ $(document).ready(function(){
   $( "#nfechFin2" ).datepicker({showOn: 'both',buttonImage: '{{asset('/images/iconos/calendario.png')}}',buttonImageOnly: true, dateFormat: 'dd/mm/yy', dateFormat: 'dd/mm/yy',minDate: dateInicioSegundoTri, maxDate: dateFinSegundoTri });
   //TERCER TRIMESTRE
  var dateInicioTercerTri = $.datepicker.parseDate("dd/mm/yy", '{{fechIniTrm3|date('d/m/Y')}}');
-  dateInicioTercerTri.setMonth(dateInicio.getMonth());
+  dateInicioTercerTri.setMonth(dateInicio.getMonth()+3);
           
   var dateFinTercerTri = $.datepicker.parseDate("dd/mm/yy", '{{fechIniTrm3|date('d/m/Y')}}');
-  dateFinTercerTri.setMonth(dateInicio.getMonth()+3);
+  dateFinTercerTri.setMonth(dateInicio.getMonth()+6);
   
   $( "#nfechIni3" ).datepicker({showOn: 'both',buttonImage: '{{asset('/images/iconos/calendario.png')}}',buttonImageOnly: true, dateFormat: 'dd/mm/yy', minDate: dateInicioTercerTri, maxDate: dateFinTercerTri });
   $( "#nfechFin3" ).datepicker({showOn: 'both',buttonImage: '{{asset('/images/iconos/calendario.png')}}',buttonImageOnly: true, dateFormat: 'dd/mm/yy', minDate: dateInicioTercerTri, maxDate: dateFinTercerTri });
   
   //CUARTRO TRIMESTRE
   var dateInicioCuatroTri = $.datepicker.parseDate("dd/mm/yy", '{{fechIniTrm4|date('d/m/Y')}}');
-  dateInicioCuatroTri.setMonth(dateInicio.getMonth()+3);
+  dateInicioCuatroTri.setMonth(dateInicio.getMonth()+6);
           
   $( "#nfechIni4" ).datepicker({showOn: 'both',buttonImage: '{{asset('/images/iconos/calendario.png')}}',buttonImageOnly: true, dateFormat: 'dd/mm/yy', minDate: dateInicioCuatroTri, maxDate: dateFin });
   $( "#nfechFin4" ).datepicker({showOn: 'both',buttonImage: '{{asset('/images/iconos/calendario.png')}}',buttonImageOnly: true, dateFormat: 'dd/mm/yy', minDate: dateInicioCuatroTri, maxDate: dateFin });
 
 /*FIN DE LOS DATEPICKER*/
+  $('#guardar').click(function(evento) {
+    var suma = 0;
+    reprogra= Number($("input[id='reprogra']").val());
+    suma = Number($("input[id='nprogra2']").val());
+    suma += Number($("input[id='nprogra3']").val());
+    suma += Number($("input[id='nprogra4']").val());
+    
+    if(reprogra==suma){
+        var enviar=0;
+        if(Number($("input[id='nprogra2']").val())!=0){
+            if($("input[id='nfechIni2']").val()=="" | $("input[id='nfechFin2']").val()==""){
+                 alert("Debe de Ingresar la Fecha de Inicio y de Finalizacion del Segundo Trimestre de la Reprogramar\nPara Continuar");
+                 evento.preventDefault();
+            }
+            else
+                enviar++;
+        }//FIN DEL SEGUNDO
+        else
+                enviar++;
+        if(Number($("input[id='nprogra3']").val())!=0){
+                if($("input[id='nfechIni3']").val()=="" | $("input[id='nfechFin3']").val()==""){
+                    alert("Debe de Ingresar la Fecha de Inicio y de Finalizacion del Tercer Trimestre de la Reprogramar\nPara Continuar");
+                    evento.preventDefault();
+                }
+                else
+                    enviar++;
+        }//FIN DEL TERCERO
+        else
+                enviar++;
+            
+        if(Number($("input[id='nprogra4']").val())!=0){
+           if($("input[id='nfechIni4']").val()=="" | $("input[id='nfechFin4']").val()==""){
+                 alert("Debe de Ingresar la Fecha de Inicio y de Finalizacion del Tercer Trimestre de la Reprogramar\nPara Continuar");
+                 evento.preventDefault();
+                }
+            else
+                enviar++;
+        }//FIN DEL CUARTO
+        else
+           enviar++;
+         if(enviar==3){
+             this.form.action='{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarActividadesEnRetraso') }}';
+         }
+            
+        
+            
+    }else{
+        alert("No coincide la suma de las reprogramaciones de los trimestres con el total a Reprogramar!!!!");
+        evento.preventDefault();    
+    }
+  });/*FIN DE GUARDAR*/
+  
+
 });
     </script>
 <style type="text/css">
@@ -88,8 +138,8 @@ textarea.error { border: 1px dotted red; }
 
                     <tr>
                         <td colspan="2" align="center">
-                            <button type="submmit" id="guardarResEsp"  >Guardar</button>
-                            <button type="reset" id="limpiarResEsp"  >Limpiar</button>
+                            <button type="submmit" id="guardar"  >Guardar</button>
+                            <button type="reset" id="limpiar"  >Limpiar</button>
                             <button type="button" id="regresarResEsp"  >Regresar</button>
                         </td>
                     </tr>
@@ -134,7 +184,7 @@ textarea.error { border: 1px dotted red; }
                     </tr>
                     <tr>
                         <td style=" font-size: 12px" >Responsable(*):</td>
-                        <td><input name="responsable" id="responsable" type="text" size="60" maxlength="60" /></td>
+                        <td><input class="required"  name="responsable" id="responsable" type="text" size="60" maxlength="60" /></td>
                     </tr>
                     <tr>
                         <td style=" font-size: 12px" >Fecha original del cumplimiento para el trimestre:</td>
@@ -167,7 +217,7 @@ textarea.error { border: 1px dotted red; }
                                     <td>Nueva Fecha Inicial:</td><td><input name="nfechIni3" id="nfechIni3" type="text" size="7" value="" /></td>
                                 {%endif%}
                                 {% if trimestre4 is defined %}          
-                                        <td>Fecha Inicial:</td><td><input readonly="readonly" name="fechIni4" id="fechIni2" type="text" size="7" value="{{trimestre4.getResulActFechaInicio|date('d/m/Y')}}" /></td>
+                                        <td>Fecha Inicial:</td><td><input readonly="readonly" name="fechIni4" id="fechIni4" type="text" size="7" value="{{trimestre4.getResulActFechaInicio|date('d/m/Y')}}" /></td>
                                         <td>Nueva Fecha Inicial:</td>
                                         <td><input name="nfechIni4" id="nfechIni4" type="text" size="7" value="" />                         
                                         </td>
@@ -176,7 +226,7 @@ textarea.error { border: 1px dotted red; }
                         <tr>
                                 {% if trimestre2 is defined %}         
                                                 <td>Fecha Final:</td><td><input readonly="readonly" name="fechFin2" id="fechFin2" type="text" size="7" value="{{trimestre2.getResulActFechaFin|date('d/m/Y')}}" /></td>
-                                                <td>Nueva Fecha Final:</td><td><input name="nfechIni2" id="nfechFin2" type="text" size="7" value="" /></td>
+                                                <td>Nueva Fecha Final:</td><td><input name="nfechFin2" id="nfechFin2" type="text" size="7" value="" /></td>
                                 {%endif%}
                                 {% if trimestre3 is defined %}         
                                                     <td>Fecha Final:</td><td><input readonly="readonly" name="fechFin3" id="fechFin3" type="text" size="7" value="{{trimestre3.getResulActFechaFin|date('d/m/Y')}}" /></td>
@@ -190,21 +240,21 @@ textarea.error { border: 1px dotted red; }
                        <tr>
                                 {% if trimestre2 is defined %}        
                                                                 <td>Programado:</td><td><input readonly="readonly" name="progra2" id="progra2" type="text" size="7" value="{{trimestre2.getResulActProgramado}}" /></td>
-                                                                <td>Reprogramado:</td><td><input name="nprogra2" id="nprogra2" type="text" size="7" value="" /></td>
+                                                                <td>Reprogramado:</td><td><input name="nprogra2" id="nprogra2" type="text" size="7" value="{{reprogramar}}" /></td>
                                 {%endif%}
                                  {% if trimestre3 is defined %}        
                                                                     <td>Programado:</td><td><input readonly="readonly" name="progra3" id="progra3" type="text" size="7" value="{{trimestre3.getResulActProgramado}}" /></td>
-                                                                    <td>Reprogramado:</td><td><input name="nprogra3" id="nprogra3" type="text" size="7" value="" /></td>
+                                                                    <td>Reprogramado:</td><td><input name="nprogra3" id="nprogra3" type="text" size="7" value="0" /></td>
                                 {%endif%}
                                  {% if trimestre4 is defined %}        
                                                                         <td>Programado:</td><td><input readonly="readonly" name="progra4" id="progra4" type="text" size="7" value="{{trimestre4.getResulActProgramado}}" /></td>
-                                                                        <td>Reprogramado:</td><td><input name="nprogra4" id="nprogra4" type="text" size="7" value="" /></td>
+                                                                        <td>Reprogramado:</td><td><input name="nprogra4" id="nprogra4" type="text" size="7" value="0" /></td>
                                 {%endif%}
                       </tr>
                       <td colspan="12" align="center">
                             <br/><br/>
-                            <button type="submmit" id="guardarResEsp"  >Guardar</button>
-                            <button type="reset" id="limpiarResEsp"  >Limpiar</button>
+                            <button type="submmit" id="guardar"  >Guardar</button>
+                            <button type="reset" id="limpiar"  >Limpiar</button>
                             <button type="button" id="regresar"  >Regresar</button>
                         </td>
            </table>   
@@ -213,6 +263,6 @@ textarea.error { border: 1px dotted red; }
 <input type='hidden' name='idfilaActividad' id="idfilaActividad" value='{{idfilaActividad}}' />
 <input type='hidden' name='idresact' id="idresact" value='{{idresact}}' />  
 <input type='hidden' name='oper' id="oper" value='add' />
-{% endif%}
+{%endif%}
 </form>
 {% endblock %}

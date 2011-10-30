@@ -9,7 +9,7 @@
           });
         
           $('#reporte').click(function() {
-          $('#formulario').get(0).setAttribute('action', '{{ path('MinSalSidPlaReportesBundle_reporteInfoGeneral')}}');
+            this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteGeneralUnidades') }}'
          });
       });
     </script>

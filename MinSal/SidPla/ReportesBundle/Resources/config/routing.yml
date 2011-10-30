@@ -1,10 +1,22 @@
 MinSalSidPlaReportesBundle_homepage:
     pattern:  /
     defaults: { _controller: MinSalSidPlaReportesBundle:Default:index }
+
+#PAOCONTROLLER
 MinSalSidPlaReportesBundle_reporteJustificacion:
     pattern:  /reportjustificacion
-    defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteJustificacion }  
+    defaults: { _controller: MinSalSidPlaReportesBundle:Pao:reporteJustificacion }
     
+#ESTADOINFRAESTRUCTURACONTROLLER
+MinSalSidPlaReportesBundle_reporteInfraEvaluada:
+    pattern:  /reporteInfraEvaluada
+    defaults: { _controller: MinSalSidPlaReportesBundle:EstadoInfraestructura:reporteInfraEvaluada }
+    
+MinSalSidPlaReportesBundle_reporteElementoInfra:
+    pattern:  /reporteElementoInfra
+    defaults: { _controller: MinSalSidPlaReportesBundle:EstadoInfraestructura:reporteElementoInfra }
+
+#DEFAULTCONTROLLER
 MinSalSidPlaReportesBundle_reporteActividadesAtrasadas:
     pattern:  /reporteActividadesAtrasadas
     defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteActividadesAtrasadas }    
@@ -12,15 +24,12 @@ MinSalSidPlaReportesBundle_reporteActividadesAtrasadas:
 MinSalSidPlaReportesBundle_reporteInfoGeneral:
     pattern:  /reporteInfoGeneral
     defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteInfoGeneral } 
-    
-MinSalSidPlaReportesBundle_reporteInfraEvaluada:
-    pattern:  /reporteInfraEvaluada
-    defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteInfraEvaluada } 
-    
+     
 MinSalSidPlaReportesBundle_reporteConsolidadoNivelCentral:
     pattern:  /reporteConsolidadoNivelCentral
     defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteConsolidadoNivelCentral } 
-    
+
+#ACCIONCONSOLIDADOSNIVELCENTRAL
 MinSalSidPlaReportesBundle_showConsolidadosNivelCentral:
     pattern:  /showConsolidadosNivelCentral
     defaults: { _controller: MinSalSidPlaReportesBundle:AccionConsolidadosNivelCentral:showConsolidadosNivelCentral } 

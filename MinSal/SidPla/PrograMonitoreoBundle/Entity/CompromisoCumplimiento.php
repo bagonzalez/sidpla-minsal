@@ -66,11 +66,10 @@ class CompromisoCumplimiento {
      */
     private $reprogramaciones;
 
-    public function __construct()
-    {
+    public function __construct() {
         $this->reprogramaciones = new \Doctrine\Common\Collections\ArrayCollection();
     }
-    
+
     /**
      * Set idComproCumpl
      *
@@ -197,14 +196,13 @@ class CompromisoCumplimiento {
     public function getIdResultadore() {
         return $this->idResultadore;
     }
-    
-       /**
+
+    /**
      * Add reprogramaciones
      *
      * @param MinSal\SidPla\PrograMonitoreoBundle\Entity\Reprogramacion $reprogramaciones
      */
-    public function addENTIDADHIJA(\MinSal\SidPla\PrograMonitoreoBundle\Entity\Reprogramacion $reprogramaciones)
-    {
+    public function addReprogramaciones(\MinSal\SidPla\PrograMonitoreoBundle\Entity\Reprogramacion $reprogramaciones) {
         $this->reprogramaciones[] = $reprogramaciones;
     }
 
@@ -213,8 +211,7 @@ class CompromisoCumplimiento {
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getreprogramaciones()
-    {
+    public function getReprogramaciones() {
         return $this->reprogramaciones;
     }
 

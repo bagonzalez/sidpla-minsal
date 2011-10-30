@@ -5,6 +5,7 @@
         $('#editarElementoButton').button();
         $('#eliminarElementoButton').button();
         $('#reporte').button();
+        
         function validaUnidad(value, colname) {
         if (value == -1 ) 
             return [false,"Seleccione una Unidad de Medida"];
@@ -83,11 +84,21 @@ $("#eliminarElementoButton").click(function(){
           }}); 
     else 
         alert("Por favor seleccione una fila para borrar!"); 
- }); 
+ });
+
+$("#reporte").click(function(){
+  var gr = jQuery('#tabElemInfra').jqGrid('getGridParam','selrow');
+  if( gr != null ){
+   var info = $("#tabElemInfra").getRowData(gr);//UNA LISTA CON TODOS LOS VALORES DE LA FILA
+   $("#idInfra").attr('value', info['codigo']);
+   $('#formInfraEstructura').submit();
+   
+ }
+  else 
+      alert("Por favor seleccione una fila para generar el reporte!"); 
+});
  
- $('#reporte').click(function() {
-    $('#formulario').get(0).setAttribute('action', '{{ path('MinSalSidPlaReportesBundle_reporteInfraEvaluada')}}');
-    });
+ 
   //fin
 });//Fin del JQuery
       
@@ -96,9 +107,12 @@ $("#eliminarElementoButton").click(function(){
    <div id="pager1" class="scroll"></div>  
    </table> 
     <br></br>
+    <form id="formInfraEstructura" action="{{ path('MinSalSidPlaReportesBundle_reporteElementoInfra') }}" method="post" >
        <input type="button" id="agregarElementoButton" value="  Agregar  " />
        <input type="button" id="editarElementoButton" value="   Editar   " />
        <input type="button" id="eliminarElementoButton" value="  Eliminar  " />
-       <input type="submit" value="Reporte" id="reporte"/>
-
+       <input type="button" value="Reporte" id="reporte"/>
+       <input type="hidden" name="idInfra" id="idInfra" value="" />
+       
+   </form>
 {% endblock %}
