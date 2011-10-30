@@ -58,6 +58,20 @@ class ActividadVinculada
      */
     private $estado;
     
+           
+     /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo", inversedBy="actvinculadasOrigen")
+     * @ORM\JoinColumn(name="promon_codigoorigen", referencedColumnName="promon_codigo")
+     */
+    protected $programacionMonitoreoOrigen;
+    
+             
+     /**
+     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\PrograMonitoreoBundle\Entity\ProgramacionMonitoreo", inversedBy="actvinculadasDestino")
+     * @ORM\JoinColumn(name="promon_codigodestino", referencedColumnName="promon_codigo")
+     */
+    protected $programacionMonitoreoDestino;
+    
       
     /**
      * Set idActVincu
@@ -199,4 +213,45 @@ class ActividadVinculada
     {
         return $this->idActDest;
     }
+    
+    /**
+     * Set programacionMonitoreo
+     *
+     * @param integer $programacionMonitoreo
+     */
+    public function setProgramacionMonitoreoOrigen($programacionMonitoreo)
+    {
+        $this->programacionMonitoreoOrigen = $programacionMonitoreo;
+    }
+
+    /**
+     * Get programacionMonitoreo
+     *
+     * @return integer 
+     */
+    public function getProgramacionMonitoreoOrigen()
+    {
+        return $this->programacionMonitoreoOrigen;
+    }
+    
+        /**
+     * Set programacionMonitoreo
+     *
+     * @param integer $programacionMonitoreo
+     */
+    public function setProgramacionMonitoreoDestino($programacionMonitoreo)
+    {
+        $this->programacionMonitoreoDestino = $programacionMonitoreo;
+    }
+
+    /**
+     * Get programacionMonitoreo
+     *
+     * @return integer 
+     */
+    public function getProgramacionMonitoreoDestino()
+    {
+        return $this->programacionMonitoreoDestino;
+    }
+    
 }

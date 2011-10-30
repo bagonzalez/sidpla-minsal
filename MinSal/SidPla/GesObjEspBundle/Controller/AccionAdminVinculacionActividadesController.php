@@ -124,6 +124,9 @@ class AccionAdminVinculacionActividadesController extends Controller {
     {
          $opciones=$this->getRequest()->getSession()->get('opciones');
           $request = $this->getRequest();
+          
+          $paoElaboracion=$this->obtenerPaoElaboracionAction();
+          $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
           //$query = $this->getQuery();
           
           $idActividad = $request->get('actividadesCombo');
@@ -139,7 +142,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
             for($i=0;$i<$numero;$i++){
                 $idActividadAVincular = substr($tags[$i], 17);
                 if($idActividadAVincular!=$idActividad && $idActividadAVincular>0)
-                    $actividadVinDao->guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion, $vinculacionEntreDepen);
+                    $actividadVinDao->guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion, $vinculacionEntreDepen, $programacionMonitoreo);
                 
             }
           

@@ -319,6 +319,7 @@ class ResulActividad
         return $this->compromisocumplimiento;
     }
     
+     
       public function getPorcentajeCumplimiento()
     {
         $porcentaje=0;
@@ -331,4 +332,6 @@ class ResulActividad
     }
     
     
+
+  
 }

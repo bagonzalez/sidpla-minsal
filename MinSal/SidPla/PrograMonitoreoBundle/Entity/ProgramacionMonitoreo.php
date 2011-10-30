@@ -60,8 +60,15 @@ class ProgramacionMonitoreo {
      */
     protected $actividadesUniSal;
     
+      /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ActividadVinculada", mappedBy="programacionMonitoreoOrigen")
+     */
+    protected $actvinculadasOrigen;
     
-    
+    /**
+     * @ORM\OneToMany(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ActividadVinculada", mappedBy="programacionMonitoreoDestino")
+     */
+    protected $actvinculadasDestino;
     
 
     public function __construct() {
@@ -258,5 +265,45 @@ class ProgramacionMonitoreo {
     public function getActividadesUniSal()
     {
         return $this->actividadesUniSal;
+    }
+
+    /**
+     * Add actvinculadas
+     *
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\ActividadVinculada $actvinculadas
+     */
+    public function addActividadVinculadaOrigen(\MinSal\SidPla\GesObjEspBundle\Entity\ActividadVinculada $actvinculadas)
+    {
+        $this->actvinculadasOrigen[] = $actvinculadas;
+    }
+
+    /**
+     * Get actvinculadas
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getActvinculadasOrigen()
+    {
+        return $this->actvinculadasOrigen;
+    }
+
+    /**
+     * Add actvinculadasOrigen
+     *
+     * @param MinSal\SidPla\GesObjEspBundle\Entity\ActividadVinculada $actvinculadasOrigen
+     */
+    public function addActividadVinculadaDestino(\MinSal\SidPla\GesObjEspBundle\Entity\ActividadVinculada $actvinculadasOrigen)
+    {
+        $this->actvinculadasDestino[] = $actvinculadasOrigen;
+    }
+
+    /**
+     * Get actvinculadasDestino
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getActvinculadasDestino()
+    {
+        return $this->actvinculadasDestino;
     }
 }
