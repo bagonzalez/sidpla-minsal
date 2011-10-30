@@ -10,8 +10,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="sidpla_compromisocumplimiento")
  * @ORM\Entity
  */
-class CompromisoCumplimiento
-{
+class CompromisoCumplimiento {
+
     /**
      * @var integer $idComproCumpl
      *
@@ -21,20 +21,18 @@ class CompromisoCumplimiento
      */
     private $idComproCumpl;
 
-   
-     /**
+    /**
      * @ORM\ManyToOne(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad", inversedBy="compromisocumplimiento")
      * @ORM\JoinColumn(name="resact_codigo", referencedColumnName="resact_codigo")
      */
     private $idResActividad;
-    
+
     /**
      * @ORM\ManyToOne(targetEntity="MinSal\SidPla\GesObjEspBundle\Entity\Resultadore", inversedBy="compromisocumplimiento")
      * @ORM\JoinColumn(name="resultadore_codigo", referencedColumnName="resultadore_codigo")
      */
     private $idResultadore;
 
-    
     /**
      * @var string $comproCumpliHallazgozEncontrados
      *
@@ -62,15 +60,23 @@ class CompromisoCumplimiento
      * @ORM\Column(name="comcum_fecha", type="date")
      */
     private $comproCumpliFecha;
-    
+
+    /**
+     * @ORM\OneToMany(targetEntity="Reprogramacion", mappedBy="compromisoCumplimiento")
+     */
+    private $reprogramaciones;
+
+    public function __construct()
+    {
+        $this->reprogramaciones = new \Doctrine\Common\Collections\ArrayCollection();
+    }
     
     /**
      * Set idComproCumpl
      *
      * @param integer $idComproCumpl
      */
-    public function setIdComproCumpl($idComproCumpl)
-    {
+    public function setIdComproCumpl($idComproCumpl) {
         $this->idComproCumpl = $idComproCumpl;
     }
 
@@ -79,20 +85,16 @@ class CompromisoCumplimiento
      *
      * @return integer 
      */
-    public function getIdComproCumpl()
-    {
+    public function getIdComproCumpl() {
         return $this->idComproCumpl;
     }
-    
-    
 
     /**
      * Set comproCumpliHallazgozEncontrados
      *
      * @param string $comproCumpliHallazgozEncontrados
      */
-    public function setComproCumpliHallazgozEncontrados($comproCumpliHallazgozEncontrados)
-    {
+    public function setComproCumpliHallazgozEncontrados($comproCumpliHallazgozEncontrados) {
         $this->comproCumpliHallazgozEncontrados = $comproCumpliHallazgozEncontrados;
     }
 
@@ -101,8 +103,7 @@ class CompromisoCumplimiento
      *
      * @return string 
      */
-    public function getComproCumpliHallazgozEncontrados()
-    {
+    public function getComproCumpliHallazgozEncontrados() {
         return $this->comproCumpliHallazgozEncontrados;
     }
 
@@ -111,8 +112,7 @@ class CompromisoCumplimiento
      *
      * @param string $comproCumpliResponsable
      */
-    public function setComproCumpliResponsable($comproCumpliResponsable)
-    {
+    public function setComproCumpliResponsable($comproCumpliResponsable) {
         $this->comproCumpliResponsable = $comproCumpliResponsable;
     }
 
@@ -121,8 +121,7 @@ class CompromisoCumplimiento
      *
      * @return string 
      */
-    public function getComproCumpliResponsable()
-    {
+    public function getComproCumpliResponsable() {
         return $this->comproCumpliResponsable;
     }
 
@@ -131,8 +130,7 @@ class CompromisoCumplimiento
      *
      * @param string $comproCumpliMedidaAdoptar
      */
-    public function setComproCumpliMedidaAdoptar($comproCumpliMedidaAdoptar)
-    {
+    public function setComproCumpliMedidaAdoptar($comproCumpliMedidaAdoptar) {
         $this->comproCumpliMedidaAdoptar = $comproCumpliMedidaAdoptar;
     }
 
@@ -141,8 +139,7 @@ class CompromisoCumplimiento
      *
      * @return string 
      */
-    public function getComproCumpliMedidaAdoptar()
-    {
+    public function getComproCumpliMedidaAdoptar() {
         return $this->comproCumpliMedidaAdoptar;
     }
 
@@ -151,10 +148,9 @@ class CompromisoCumplimiento
      *
      * @param date $comproCumpliFecha
      */
-    public function setComproCumpliFecha($comproCumpliFecha)
-    { $date = new \DateTime($comproCumpliFecha);
+    public function setComproCumpliFecha($comproCumpliFecha) {
+        $date = new \DateTime($comproCumpliFecha);
         $this->comproCumpliFecha = $date;
-        
     }
 
     /**
@@ -162,19 +158,16 @@ class CompromisoCumplimiento
      *
      * @return date 
      */
-    public function getComproCumpliFecha()
-    {
+    public function getComproCumpliFecha() {
         return $this->comproCumpliFecha;
     }
-    
-    
+
     /**
      * Set idResActividad
      *
      * @param integer $idResActividad
      */
-    public function setIdResActividad($idResActividad)
-    {
+    public function setIdResActividad($idResActividad) {
         $this->idResActividad = $idResActividad;
     }
 
@@ -183,18 +176,16 @@ class CompromisoCumplimiento
      *
      * @return integer 
      */
-    public function getIdResActividad()
-    {
+    public function getIdResActividad() {
         return $this->idResActividad;
     }
-    
-     /**
+
+    /**
      * Set idResultadore
      *
      * @param integer $idResultadore
      */
-    public function setIdResultadore($idResultadore)
-    {
+    public function setIdResultadore($idResultadore) {
         $this->idResultadore = $idResultadore;
     }
 
@@ -203,10 +194,28 @@ class CompromisoCumplimiento
      *
      * @return integer 
      */
-    public function getIdResultadore()
-    {
+    public function getIdResultadore() {
         return $this->idResultadore;
     }
     
-    
+       /**
+     * Add reprogramaciones
+     *
+     * @param MinSal\SidPla\PrograMonitoreoBundle\Entity\Reprogramacion $reprogramaciones
+     */
+    public function addENTIDADHIJA(\MinSal\SidPla\PrograMonitoreoBundle\Entity\Reprogramacion $reprogramaciones)
+    {
+        $this->reprogramaciones[] = $reprogramaciones;
+    }
+
+    /**
+     * Get reprogramaciones
+     *
+     * @return Doctrine\Common\Collections\Collection 
+     */
+    public function getreprogramaciones()
+    {
+        return $this->reprogramaciones;
+    }
+
 }
