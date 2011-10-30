@@ -5,7 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="promonID" class="java.lang.Integer"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/home/edwin/Escritorio/reportes/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/jasperReports/reportConsolidadosDep/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="obj" class="java.lang.Integer"/>
 	<queryString>
