@@ -1,73 +1,120 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
 <script>
-
+    $(document).ready(function(){
+        
+        {% if actividadesVinculadasDestino is defined %}
+            {% for actVin in actividadesVinculadasDestino  %}
+                $('#aprobarVinDepen{{ actVin.idActVincu }}').click(function() {                    
+                                $('#apruebaForm{{ actVin.idActVincu }}').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_guardaEvaluacionVincula') }}');                    
+                                $('#apruebaForm{{ actVin.idActVincu }}').submit();                        
+                }); 
+                
+                $("#{{ actVin.idActVincu }}Div").hide();                        
+                        
+                $("#mostratVincula{{ actVin.idActVincu }}").click(function(){ 
+                        $("#{{ actVin.idActVincu}}Div").toggle(400);
+                    }                            
+                 )
+            {% endfor %}
+        {% endif%}    
+        
+    });      
 </script>
 <br></br>
-<center><h1>Aprobar/Desaprobar Vinculaci&oacute;n</h1></center>
-<form>
-<table align="center">
-    <tbody>
-        <tr>
-            <td>
-                <label>La dependencia:</label>
-            </td>
-            <td>
-                <input size="30" id="nombreDependencia" ></input>                
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label>Con la actividad:</label>
-            </td>
-            <td>
-                <textarea id="actividadDestino" cols="40" rows="3" ></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label>Solicita vincularse con su actividad:</label>
-            </td>
-            <td>
-                <textarea id="actividadOrigen" cols="40" rows="3" ></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label>Presenta la Justificacion:</label>
-            </td>
-            <td>
-                <textarea id="justificacion" cols="40" rows="3" ></textarea>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <label>Estado:</label>
-            </td>
-            <td>
-                <input type="radio" name="estado" value="aprobado" >Aprobado</input>
-                <input type="radio" name="estado" value="revision" >Revision</input>
-                <input type="radio" name="estado" value="denegado" >Denegado</input>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <hr></hr>
-                <br></br>
-                <label>Justificaci&oacute;n:</label>
-            </td>            
-        </tr>   
+    
+{% if actividadesVinculadasDestino is defined %}
+    {% for actVin in actividadesVinculadasDestino  %}
+
+    <center><a  id="mostratVincula{{ actVin.idActVincu }}" href="#"><h1>Aprobar/Desaprobar Vinculaci&oacute;n {{ actVin.idActVincu }}</h1></a></center>
+            
+    
+    <form id="apruebaForm{{ actVin.idActVincu }}">        
+        <input type="hidden" name="ActVinID" value="{{ actVin.idActVincu }}" id="ActVinID{{ actVin.idActVincu }}"/>
+        <div class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{ actVin.idActVincu }}Div">
+        <table align="center">
+        <tbody>
+           
             <tr>
-            <td colspan="2">
-                <textarea name="justificacionDependencia" cols="70" rows="3" ></textarea>
-            </td>            
-        </tr> 
-        <tr>
-            <td align="center" colspan="2">
-                <input type="button" id="guardarVinDepen" value="Guardar"></input>
-            </td>
-        </tr>
-    </tbody>    
-</table>    
-</form>
+                <td>
+                    <label>La dependencia:</label>
+                </td>
+                <td>
+                    <input size="45" id="nombreDependencia" readonly="readonly" value="{{ actVin.programacionMonitoreoOrigen.pao.unidadOrganizativa.nombreUnidad }}" ></input>                
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Con la actividad:</label>
+                </td>
+                <td>
+                    <textarea id="actividadOrigen" readonly="readonly" cols="50" rows="3"  >{{ actVin.actOrigen.actDescripcion }}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Solicita vincularse con su actividad:</label>
+                </td>
+                <td>
+                    <textarea id="actividadDestino" readonly="readonly" cols="50" rows="3" >{{ actVin.actDest.actDescripcion }}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Presenta la Justificacion:</label>
+                </td>
+                <td>
+                    <textarea id="justificacion" readonly="readonly" cols="50" rows="3" >{{ actVin.justificacion }}</textarea>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label>Estado:</label>
+                </td>
+                <td>
+                    {% if actVin.estado=='revision'  %}
+                        <input type="radio" name="estado" checked="true" value="revision" >Revision</input>
+                    {% else %}   
+                        <input type="radio" name="estado"  value="revision" >Revision</input>
+                    {% endif %}
+                        
+                    {% if actVin.estado=='aprobado'  %}
+                        <input type="radio" name="estado" checked="true"  value="aprobado" >Aprobado</input>
+                    {% else %}
+                        <input type="radio" name="estado"  value="aprobado" >Aprobado</input>
+                    {% endif %}  
+                    
+                    {% if actVin.estado=='denegado'  %}
+                        <input type="radio" name="estado" checked="true" value="denegado" >Denegado</input>
+                    {% else %}
+                        <input type="radio" name="estado"  value="denegado" >Denegado</input>
+                    {% endif %}  
+                    
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <hr></hr>
+                    <br></br>
+                    <label>Justificaci&oacute;n:</label>
+                </td>            
+            </tr>   
+                <tr>
+                <td colspan="2">
+                    <textarea name="justificacionDependencia" cols="70" rows="3" >{{ actVin.justificacionEstado }}</textarea>
+                </td>            
+            </tr> 
+            <tr>
+                <td align="center" colspan="2">
+                    <input type="button" id="aprobarVinDepen{{ actVin.idActVincu }}" value="Guardar"></input>
+                </td>
+            </tr>
+        </tbody>    
+    </table>
+    </div>
+    </form>
+    {% endfor %}
+{% endif%}    
+    
+
 {% endblock %}

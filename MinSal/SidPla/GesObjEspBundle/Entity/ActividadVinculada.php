@@ -50,6 +50,14 @@ class ActividadVinculada
      * @ORM\Column(name="actvin_justificacion", type="text")
      */
     private $justificacion;
+    
+    
+       /**
+     * @var text $justificacion
+     *
+     * @ORM\Column(name="actvin_justificacionestado", type="text")
+     */
+    private $justificacionEstado;
 
     /**
      * @var string $estado
@@ -112,6 +120,27 @@ class ActividadVinculada
     public function getJustificacion()
     {
         return $this->justificacion;
+    }
+    
+    
+    /**
+     * Set justificacion
+     *
+     * @param text $justificacion
+     */
+    public function setJustificacionEstado($justificacion)
+    {
+        $this->justificacionEstado = $justificacion;
+    }
+
+    /**
+     * Get justificacion
+     *
+     * @return text 
+     */
+    public function getJustificacionEstado()
+    {
+        return $this->justificacionEstado;
     }
 
     /**
