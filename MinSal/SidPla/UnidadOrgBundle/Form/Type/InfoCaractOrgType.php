@@ -24,10 +24,7 @@ class InfoCaractOrgType extends AbstractType {
         $builder->add('telefono', 'text');
         $builder->add('fax', 'text');
         $builder->add('direccion', 'text');
-        $builder->add('email', 'email'); 
-        $builder->add('fechaActualizacion', 'date', array(            
-            'widget' => 'single_text',
-        ));  
+        $builder->add('email', 'email');          
         
     }
 

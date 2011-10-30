@@ -48,13 +48,9 @@
                         <tr>
                         <td >Responsable: </td>
                         <td colspan="3" >{{ nombreempleado}} {{segundonombre}} {{apellidoempleado}} {{ segundoapellido}}<input type='hidden' size="60%" name="responsable" readonly="readonly" id="responsable" value="{{ nombreempleado}} {{segundonombre}} {{apellidoempleado}} {{ segundoapellido}}"></input><input type='hidden' class="jqModal" value="..." id="buscar"></input></td>
-                        </tr>
+                        </tr>                        
                         <tr>
-                            <td colspan="2">Actualizado:</td>
-                            <td colspan="2" readonly="readonly" style="border:none" >{{ form_widget(form.fechaActualizacion) }}</td>
-                        </tr>
-                        <tr>
-                            <td colspan="4">Departamentos, Unidades, Secciones, ó Disciplinas que componen la dependencia y número de empleados. 
+                            <td colspan="4"><br></br>Departamentos, Unidades, Secciones, ó Disciplinas que componen la dependencia y número de empleados. 
                                 <br></br>
                             {%include 'MinSalSidPlaDepUniBundle:DepartamentoUni:gridDeptoUni.html.twig' %}
                                 <p>Si desea cambiar la cantidad de personas asignadas a su departamento de <a href="{{ path('MinSalSidPlaDepUniBundle_principal') }}">De clic aqui</a> </p>
