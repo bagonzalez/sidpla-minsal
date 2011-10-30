@@ -6,13 +6,20 @@
 <script type="text/javascript">  
 $(document).ready(function(){
    $('#btnagregar').button();
+   $('#reporte').button();
    $("#btnagregar").click(function(){
        document.location.href='seleccionaElementos?idInfra={{ idInfra }}';
    });
+   
+   $("#reporte").click(function(){
+      this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteInfraEvaluada') }}';
+   });
+    
   
  });          
 </script>
 <h1 style='text-align: center;'>Evaluacion Infraestructura</h1>
+<form id="formInfraEstructura">
 <table align="center">
    <tr>
       <td>
@@ -24,6 +31,7 @@ $(document).ready(function(){
    <tr align="center">
       <td>
           <input type="button" id="btnagregar" value="Gestionar Elementos" />
+          <button type="submmit" id="reporte"  >Reporte</button>
       </td>
    </tr>
    <tr>
@@ -31,6 +39,8 @@ $(document).ready(function(){
        {%include 'MinSalSidPlaEstInfraBundle:EvaluacionElementoInfraestructura:showEvaluacionElementoInfraestructura.html.twig' %}
      </td>
    </tr>
-</table>   
-
+</table> 
+  <input type="hidden" name="idInfra" id="idInfra" value="{{idInfra}}" />
+        
+</form>
 {% endblock %}
