@@ -41,8 +41,18 @@ class ActividadVinculadaDao {
         $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaGesObjEspBundle:ActividadVinculada');
     } 
     
+    public function getActividadVinculada($id) {	    
+        $actividad=$this->repositorio->find($id);
+        return $actividad;
+    }
     
-    public function guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion, $vinculacionEntreDepen, $programacionMonitoreoOrigen){
+     public function guardarActividadVinculadaObj($actVincula) {
+        $this->em->persist($actVincula);
+        $this->em->flush();
+    }
+    
+    
+    public function guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion, $vinculacionEntreDepen, $programacionMonitoreoOrigen, $programacionMonitoreoDestino){
         
         $this->em->getConnection()->beginTransaction();
         
@@ -56,6 +66,7 @@ class ActividadVinculadaDao {
             $actividaVinculada->setActOrigen($actividadOrigen);
             $actividaVinculada->setIdActOrigen($idActividad);
             $actividaVinculada->setProgramacionMonitoreoOrigen($programacionMonitoreoOrigen);
+            $actividaVinculada->setProgramacionMonitoreoDestino($programacionMonitoreoDestino);
 
             $actividaVinculada->setActDest($actividadDestino);
             $actividaVinculada->setIdActDest($idActividadAVincular);

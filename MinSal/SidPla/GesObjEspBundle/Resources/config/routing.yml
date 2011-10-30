@@ -115,5 +115,9 @@ MinSalSidPlaGesObjEspBundle_mostrarActDependendientes:
     pattern:  /mostrarActDependendientes
     defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:mostrarActDependendientes}
 
+MinSalSidPlaGesObjEspBundle_guardaEvaluacionVincula:
+    pattern:  /guardaEvaluacionVincula
+    defaults: { _controller: MinSalSidPlaGesObjEspBundle:AccionAdminVinculacionActividades:guardaEvaluacionVincula}
+
 
 
