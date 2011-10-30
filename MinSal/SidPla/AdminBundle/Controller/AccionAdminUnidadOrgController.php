@@ -222,7 +222,7 @@ class AccionAdminUnidadOrgController extends Controller {
        $empleado = $responsableDao->getEmpleado($responsable);
        
        
-       if( $empleado!=NULL){
+       if($empleado!=NULL){
        $nombreempleado=$empleado->getPrimerNombre();
        $segundonombre=$empleado->getSegundoNombre();
        $apellidoempleado=$empleado->getPrimerApellido();
@@ -234,7 +234,7 @@ class AccionAdminUnidadOrgController extends Controller {
            $unidadOrgpadreextraDao = new UnidadOrganizativaDao($this->getDoctrine());
            $uniextra = new UnidadOrganizativa();
           $unidadpadre = $unidadOrgpadreextraDao->getUnidadOrg(44);
-       ;
+       
        }
        
        

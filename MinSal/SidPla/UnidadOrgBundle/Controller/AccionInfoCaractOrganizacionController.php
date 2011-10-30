@@ -51,6 +51,10 @@ use MinSal\SidPla\AdminBundle\EntityDao\EmpleadoDao;
 class AccionInfoCaractOrganizacionController extends Controller {
 
     public function ingresarInfoCaractAction() {
+        $nombreempleado="";
+        $segundonombre="";
+        $apellidoempleado="";
+        $segundoapellido="";
         $opciones = $this->getRequest()->getSession()->get('opciones');
 
         $user = new User();
@@ -79,10 +83,14 @@ class AccionInfoCaractOrganizacionController extends Controller {
        $responsableDao = new EmpleadoDao($this->getDoctrine());
        $empleado = new Empleado();
        $empleado = $responsableDao->getEmpleado($responsable);
+      
+       if( $empleado!=NULL){
        $nombreempleado=$empleado->getPrimerNombre();
        $segundonombre=$empleado->getSegundoNombre();
        $apellidoempleado=$empleado->getPrimerApellido();
        $segundoapellido=$empleado->getSegundoApellido();
+       }
+       
         $infoGeneralcod = $unidad->getInformacionGeneral()->getIdInformacionGeneral();
        
         $infoGeneralcoddireccion = $unidad->getInformacionGeneral()->getDireccion();
