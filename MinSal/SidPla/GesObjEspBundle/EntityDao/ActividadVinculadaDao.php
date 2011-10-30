@@ -42,7 +42,7 @@ class ActividadVinculadaDao {
     } 
     
     
-    public function guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion, $vinculacionEntreDepen){
+    public function guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion, $vinculacionEntreDepen, $programacionMonitoreoOrigen){
         
         $this->em->getConnection()->beginTransaction();
         
@@ -55,6 +55,7 @@ class ActividadVinculadaDao {
             $actividaVinculada=new ActividadVinculada();
             $actividaVinculada->setActOrigen($actividadOrigen);
             $actividaVinculada->setIdActOrigen($idActividad);
+            $actividaVinculada->setProgramacionMonitoreoOrigen($programacionMonitoreoOrigen);
 
             $actividaVinculada->setActDest($actividadDestino);
             $actividaVinculada->setIdActDest($idActividadAVincular);

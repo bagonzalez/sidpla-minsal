@@ -222,12 +222,13 @@ class Resultadore
         $this->compromisocumplimiento[] = $compromisocumplimiento;
     }
 
-    /**
+      /**
      * Get compromisocumplimiento
      *
      * @return Doctrine\Common\Collections\Collection 
      */
-    public function getCompromisoCumplimiento() {
+    public function getCompromisocumplimiento()
+    {
         return $this->compromisocumplimiento;
     }
 }
