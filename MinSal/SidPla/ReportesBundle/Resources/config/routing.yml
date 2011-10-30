@@ -16,3 +16,11 @@ MinSalSidPlaReportesBundle_reporteInfoGeneral:
 MinSalSidPlaReportesBundle_reporteInfraEvaluada:
     pattern:  /reporteInfraEvaluada
     defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteInfraEvaluada } 
+    
+MinSalSidPlaReportesBundle_reporteConsolidadoNivelCentral:
+    pattern:  /reporteConsolidadoNivelCentral
+    defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteConsolidadoNivelCentral } 
+    
+MinSalSidPlaReportesBundle_showConsolidadosNivelCentral:
+    pattern:  /showConsolidadosNivelCentral
+    defaults: { _controller: MinSalSidPlaReportesBundle:AccionConsolidadosNivelCentral:showConsolidadosNivelCentral } 

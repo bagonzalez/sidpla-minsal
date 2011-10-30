@@ -1,0 +1,89 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+
+
+{% block body %}
+<script type="text/javascript">
+	$("#formulario").validate();
+
+
+    </script>
+
+
+    <br></br>               
+    <form id = "formulario"  action="{{ path('MinSalSidPlaReportesBundle_reporteConsolidadoNivelCentral')}}" method="post">
+        <table align="center"  >
+            <tr><td colspan="10" align="center"><h1>Reportes Consolidados</h1>                    
+                </td>
+            </tr>
+            <tr>
+                <td colspan="10" align="center">
+                    Seleccione los parametros correspondientes para la elaboracion de Reporte . <br>
+                    De clic en el boton  generar reporte.<br><br>
+                </td>
+            </tr>            
+           
+            <tr>
+               
+                        <td  >Consolidado de Nivel Central y Entidad de Control:<br></td>
+                        <td colspan="3">
+                            <select id="tipoUnidad" class="required" name="tipoUnidad">
+                                 <option value=''selected="selected" >Seleccione el tipo de unidad</option>
+                                 <option value="1" >Dependencia</option>    
+                                 <option value="3" >Entidad de Control</option>    
+                                   
+                            </select>
+                        </td>
+                     <td colspan="3">
+                            <select id="anio" class="required" name="anio">
+                                 <option value=''selected="selected" >Seleccione el año</option>
+                                 <option value="2011">2011</option>    
+                                 <option value="2012">2012</option>    
+                                   
+                            </select>
+                        </td>
+                        
+                        
+                        <td>
+                        <input type="submit" value="Generar Reporte" name= "reporte" id="reporte"</input>
+                        </td>
+                        </tr> 
+                        
+                        
+                         <tr>
+               
+                        <td  >Matriz de Objetivos y Resultados Dependecias y Entidad de Control:<br></td>
+                        <td colspan="3">
+                            <select id="tipoUnidadec" class="required" name="tipoUnidadec">
+                                 <option value=''selected="selected" >Seleccione el tipo de unidad</option>
+                                 <option value="1" >Dependencia</option>    
+                                 <option value="3" >Entidad de Control</option>    
+                                   
+                            </select>
+                        </td>
+                     <td colspan="3">
+                            <select id="anioec" class="required" name="anioec">
+                                 <option value=''selected="selected" >Seleccione el año</option>
+                                 <option value="2011">2011</option>    
+                                 <option value="2012">2012</option>    
+                                   
+                            </select>
+                        </td>
+                        
+                        
+                        <td>
+                        <input type="submit" value="Generar Reporte" name= "reporte2" id="reporte2"</input>
+                        </td>
+                        </tr> 
+            
+            <tr>           
+                <td colspan="2" align="center">
+                <br></br>                                    
+                </td>
+            </tr>        
+                  
+        </table>   
+    </form>
+    <br></br>
+    <br></br>
+
+{% endblock %}

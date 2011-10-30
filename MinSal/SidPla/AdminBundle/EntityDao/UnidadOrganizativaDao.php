@@ -115,7 +115,7 @@ class UnidadOrganizativaDao {
         $unidadOrg = $this->repositorio->find($id);
         $paos = $unidadOrg->getPaos();
 
-        $anio = date('Y');
+        $anio = date('Y')+1;
         $anioProximo = $anio;
 
         $pao = new Pao();

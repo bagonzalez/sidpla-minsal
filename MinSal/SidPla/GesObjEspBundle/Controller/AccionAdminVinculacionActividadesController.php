@@ -98,8 +98,13 @@ class AccionAdminVinculacionActividadesController extends Controller {
     {
          $opciones=$this->getRequest()->getSession()->get('opciones');
          
+         $paoElaboracion=$this->obtenerPaoElaboracionAction();
+         $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+         
+         $actividadesVinculadasDestino=$programacionMonitoreo->getActvinculadasDestino();
+         
          return $this->render('MinSalSidPlaGesObjEspBundle:GestionVinculaConDependencias:aprobarVinculacion.html.twig', 
-                array( 'opciones' => $opciones,));
+                array( 'opciones' => $opciones, 'actividadesVinculadasDestino' => $actividadesVinculadasDestino  ));
     }
     
     public function agregarVinculacionAction()
@@ -125,6 +130,14 @@ class AccionAdminVinculacionActividadesController extends Controller {
          $opciones=$this->getRequest()->getSession()->get('opciones');
           $request = $this->getRequest();
           
+          $dependencia = $request->get('dependenciasCombo');
+          $programacionMonitoreoDestino=null;
+          
+          if($dependencia){
+                $paoElaboracionDestino=$this->obtenerPaoElaboracionDependenciaAction($dependencia);
+                $programacionMonitoreoDestino=$paoElaboracionDestino->getProgramacionMonitoreo();                
+          }
+          
           $paoElaboracion=$this->obtenerPaoElaboracionAction();
           $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
           //$query = $this->getQuery();
@@ -142,7 +155,7 @@ class AccionAdminVinculacionActividadesController extends Controller {
             for($i=0;$i<$numero;$i++){
                 $idActividadAVincular = substr($tags[$i], 17);
                 if($idActividadAVincular!=$idActividad && $idActividadAVincular>0)
-                    $actividadVinDao->guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion, $vinculacionEntreDepen, $programacionMonitoreo);
+                    $actividadVinDao->guardarActividadVinculada($idActividad, $idActividadAVincular, $justificacion, $vinculacionEntreDepen, $programacionMonitoreo, $programacionMonitoreoDestino);
                 
             }
           
@@ -370,6 +383,28 @@ class AccionAdminVinculacionActividadesController extends Controller {
 
         $response = new Response($jsonresponse);
         return $response;
+    }
+    
+    
+    public function guardaEvaluacionVinculaAction(){
+        
+         $request=$this->getRequest();
+         
+         $idVinculacion = $request->get('ActVinID');
+         $justificacionDepen=$request->get('justificacionDependencia');
+         $estado=$request->get('estado');
+         
+         $actVincula=new ActividadVinculada();
+         
+         $actVinculaDao=new ActividadVinculadaDao($this->getDoctrine());
+         $actVincula=$actVinculaDao->getActividadVinculada($idVinculacion);
+         
+         $actVincula->setJustificacionEstado($justificacionDepen);
+         $actVincula->setEstado($estado);
+         
+         $actVinculaDao->guardarActividadVinculadaObj($actVincula);
+          
+         return $this->aprobarVinculacionAction();        
     }
     
     

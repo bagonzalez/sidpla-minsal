@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consolidadocentralSubreporte1SubR1" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="54"/>
+	<property name="ireport.y" value="0"/>
+	<parameter name="promonID" class="java.lang.Integer"/>
+	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["/home/edwin/Escritorio/reportes/"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="obj" class="java.lang.Integer"/>
+	<queryString>
+		<![CDATA[SELECT DISTINCT resesp.resesp_codigo,resesp.reses_descripcion,promon.promon_codigo,resesp.resesp_indicador,resesp.resesp_medioverificacion,
+                    resesp.resesp_responsable,resesp.tipometa_codigo, resesp.resesp_metanual,
+                   resesp.resesp_condicionante,
+                     res1.resultadore_programado as prog1,res2.resultadore_programado as prog2,res3.resultadore_programado as prog3,res4.resultadore_programado as prog4
+                    fROM sidpla_resultadore res1,sidpla_resultadore res2,sidpla_resultadore res3,sidpla_resultadore res4,
+                    sidpla_resultadore resultadore,sidpla_resultadoesperado resesp,sidpla_programacionmonitoreo promon,sidpla_objetivoespecifico obj
+                    WHERE
+                  promon.promon_codigo=res4.promon_codigo AND promon.promon_codigo=res3.promon_codigo AND
+                  promon.promon_codigo=res1.promon_codigo AND  promon.promon_codigo=res2.promon_codigo AND
+                  promon.promon_codigo=res1.promon_codigo AND res1.resesp_codigo= resesp.resesp_codigo  AND
+                  res2.resesp_codigo= resesp.resesp_codigo AND res2.resesp_codigo= resesp.resesp_codigo AND
+                  res3.resesp_codigo= resesp.resesp_codigo AND  res4.resesp_codigo= resesp.resesp_codigo AND
+                 res1.resultadore_trimestre=1 AND res2.resultadore_trimestre=2 AND res3.resultadore_trimestre=3  AND res4.resultadore_trimestre=4
+                 AND resesp.objesp_codigo= obj.objesp_codigo AND  promon.promon_codigo=$P{promonID} AND   obj.objesp_codigo=$P{obj}  order by resesp.resesp_codigo;]]>
+	</queryString>
+	<field name="resesp_codigo" class="java.lang.Integer"/>
+	<field name="reses_descripcion" class="java.lang.String"/>
+	<field name="promon_codigo" class="java.lang.Integer"/>
+	<field name="resesp_indicador" class="java.lang.String"/>
+	<field name="resesp_medioverificacion" class="java.lang.String"/>
+	<field name="resesp_responsable" class="java.lang.String"/>
+	<field name="tipometa_codigo" class="java.lang.Integer"/>
+	<field name="resesp_metanual" class="java.math.BigDecimal"/>
+	<field name="resesp_condicionante" class="java.lang.String"/>
+	<field name="prog1" class="java.math.BigDecimal"/>
+	<field name="prog2" class="java.math.BigDecimal"/>
+	<field name="prog3" class="java.math.BigDecimal"/>
+	<field name="prog4" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band splitType="Stretch"/>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="48" splitType="Stretch">
+			<textField>
+				<reportElement mode="Opaque" x="551" y="0" width="251" height="48" backcolor="#EFC7A2"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement verticalAlignment="Top">
+					<font size="8"/>
+					<paragraph leftIndent="1" rightIndent="1"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resesp_medioverificacion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="349" y="0" width="101" height="48" backcolor="#EFC7A2"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{resesp_metanual}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement isPrintRepeatedValues="false" mode="Opaque" x="0" y="0" width="349" height="48" backcolor="#EFC7A2"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Top">
+					<font size="8" isItalic="false"/>
+					<paragraph lineSpacing="Single" leftIndent="1" rightIndent="1"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{reses_descripcion}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement mode="Opaque" x="450" y="0" width="101" height="48" backcolor="#EFC7A2"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[(($F{prog4})>0)?"4to Trimestre":(($F{prog3})>0)?"3er Trimestre":(($F{prog2})>0)?"2do Trimestre":(($F{prog1})>0)?"1er Trimestre":"Sepa"]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>
