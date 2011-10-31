@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consolidadocentralSubreporte1SubR1" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="54"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="promonID" class="java.lang.Integer"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
@@ -11,7 +11,7 @@
 	<queryString>
 		<![CDATA[SELECT DISTINCT resesp.resesp_codigo,resesp.reses_descripcion,promon.promon_codigo,resesp.resesp_indicador,resesp.resesp_medioverificacion,
                     resesp.resesp_responsable,resesp.tipometa_codigo, resesp.resesp_metanual,
-                   resesp.resesp_condicionante,
+                   resesp.resesp_condicionante,resesp.resesp_descripmetanual,
                      res1.resultadore_programado as prog1,res2.resultadore_programado as prog2,res3.resultadore_programado as prog3,res4.resultadore_programado as prog4
                     fROM sidpla_resultadore res1,sidpla_resultadore res2,sidpla_resultadore res3,sidpla_resultadore res4,
                     sidpla_resultadore resultadore,sidpla_resultadoesperado resesp,sidpla_programacionmonitoreo promon,sidpla_objetivoespecifico obj
@@ -33,6 +33,7 @@
 	<field name="tipometa_codigo" class="java.lang.Integer"/>
 	<field name="resesp_metanual" class="java.math.BigDecimal"/>
 	<field name="resesp_condicionante" class="java.lang.String"/>
+	<field name="resesp_descripmetanual" class="java.lang.String"/>
 	<field name="prog1" class="java.math.BigDecimal"/>
 	<field name="prog2" class="java.math.BigDecimal"/>
 	<field name="prog3" class="java.math.BigDecimal"/>
@@ -78,7 +79,7 @@
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="8"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{resesp_metanual}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{resesp_metanual} +"  " + $F{resesp_descripmetanual}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement isPrintRepeatedValues="false" mode="Opaque" x="0" y="0" width="349" height="48" backcolor="#EFC7A2"/>
