@@ -48,7 +48,11 @@
                         <tr>
                         <td >Responsable: </td>
                         <td colspan="3" >{{ nombreempleado}} {{segundonombre}} {{apellidoempleado}} {{ segundoapellido}}<input type='hidden' size="60%" name="responsable" readonly="readonly" id="responsable" value="{{ nombreempleado}} {{segundonombre}} {{apellidoempleado}} {{ segundoapellido}}"></input><input type='hidden' class="jqModal" value="..." id="buscar"></input></td>
-                        </tr>                        
+                        </tr> 
+                        <tr>
+                        <td colspan="2">Actualizado:</td>
+                        <td colspan="2" readonly="readonly" style="border:none" >{{ infoGeneralfecha|date('d/m/Y') }}</td>
+                        </tr> 
                         <tr>
                             <td colspan="4"><br></br>Departamentos, Unidades, Secciones, ó Disciplinas que componen la dependencia y número de empleados. 
                                 <br></br>

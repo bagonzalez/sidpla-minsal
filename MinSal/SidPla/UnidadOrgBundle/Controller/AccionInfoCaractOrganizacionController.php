@@ -97,6 +97,7 @@ class AccionInfoCaractOrganizacionController extends Controller {
         $infoGeneralcodtelefono = $unidad->getInformacionGeneral()->getTelefono();
         $infoGeneralcodfax = $unidad->getInformacionGeneral()->getFax();
         $infoGeneralcodmail = $unidad->getInformacionGeneral()->getEmail();
+        $infoGeneralfecha = $unidad->getInformacionGeneral()->getFechaActualizacion();
         $unidadorgcod=$unidad->getIdUnidadOrg();
         
         
@@ -121,7 +122,8 @@ class AccionInfoCaractOrganizacionController extends Controller {
                      ,'infoGeneralcodtelefono' => $infoGeneralcodtelefono
                      ,'infoGeneralcodfax' => $infoGeneralcodfax 
                      ,'infoGeneralcodmail' =>  $infoGeneralcodmail
-                      ,'unidadorgcod' =>  $unidadorgcod                           
+                      ,'unidadorgcod' =>  $unidadorgcod   
+                      ,'infoGeneralfecha' =>  $infoGeneralfecha
                 ));
     }
 
