@@ -306,7 +306,7 @@ class AccionAdminCensoUsuarioController extends Controller{
 
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
 
-        
+        $poblacionHumanaDao=new PoblacionHumanaDao($this->getDoctrine());
         
         foreach ($poblacionHumana as $regPobHumana) { 
            $regPobHumana->getIdPobHum();
@@ -337,42 +337,91 @@ class AccionAdminCensoUsuarioController extends Controller{
            $sexo=$regPobHumana->getPobhumsexo();
            $resultado=$regPobHumana->getPobHumCant();
            
-           
-           if($area=='URBANA'){               
-               if($sexo=='H'){
-                   if($resultado>0)
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $fila, $resultado);
+           if($regPobHumana->getCategoriaCenso()->getEsCalculada()){
+               
+                   if($area=='URBANA'){               
+                       if($sexo=='H'){ 
+                            $valor=$objPHPExcel->getActiveSheet()->getCell("D".$fila)->getCalculatedValue();   
+                            $regPobHumana->setPobHumCant($valor);
+                            $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
+                       }
+
+                       if($sexo=='M'){                           
+                            $valor=$objPHPExcel->getActiveSheet()->getCell("F".$fila)->getCalculatedValue();   
+                            $regPobHumana->setPobHumCant($valor);
+                            $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
+                       }
+                   }
+
+                   if($area=='RURAL'){               
+                       if($sexo=='H'){                           
+                            $valor=$objPHPExcel->getActiveSheet()->getCell("J".$fila)->getCalculatedValue();   
+                            $regPobHumana->setPobHumCant($valor);
+                            $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
+                       }
+
+                       if($sexo=='M'){                           
+                            $valor=$objPHPExcel->getActiveSheet()->getCell("L".$fila)->getCalculatedValue();   
+                            $regPobHumana->setPobHumCant($valor);
+                            $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
+                       }
+                   }
+
+                   if($area=='PROMOTOR'){               
+                       if($sexo=='H'){                           
+                            $valor=$objPHPExcel->getActiveSheet()->getCell("X".$fila)->getCalculatedValue();   
+                            $regPobHumana->setPobHumCant($valor);
+                            $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
+                       }
+
+                       if($sexo=='M'){
+                           $valor=$objPHPExcel->getActiveSheet()->getCell("Z".$fila)->getCalculatedValue();   
+                            $regPobHumana->setPobHumCant($valor);
+                            $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
+                       }
+                   }
+                
+           }else{
+               if($area=='URBANA'){               
+                   if($sexo=='H'){
+                       if($resultado>0)
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $fila, $resultado);
+                   }
+
+                   if($sexo=='M'){
+                       if($resultado>0)
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $fila, $resultado);
+                   }
+               }
+
+               if($area=='RURAL'){               
+                   if($sexo=='H'){
+                       if($resultado>0)
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(9, $fila, $resultado);
+                   }
+
+                   if($sexo=='M'){
+                       if($resultado>0)
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $fila, $resultado);
+                   }
+               }
+
+               if($area=='PROMOTOR'){               
+                   if($sexo=='H'){
+                       if($resultado>0)
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(23, $fila, $resultado);
+                   }
+
+                   if($sexo=='M'){
+                       if($resultado>0)
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(25, $fila, $resultado);
+                   }
                }
                
-               if($sexo=='M'){
-                   if($resultado>0)
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $fila, $resultado);
-               }
            }
            
-           if($area=='RURAL'){               
-               if($sexo=='H'){
-                   if($resultado>0)
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(9, $fila, $resultado);
-               }
-               
-               if($sexo=='M'){
-                   if($resultado>0)
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $fila, $resultado);
-               }
-           }
            
-           if($area=='PROMOTOR'){               
-               if($sexo=='H'){
-                   if($resultado>0)
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(23, $fila, $resultado);
-               }
-               
-               if($sexo=='M'){
-                   if($resultado>0)
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(25, $fila, $resultado);
-               }
-           }
+           
 
         }
         
@@ -388,8 +437,7 @@ class AccionAdminCensoUsuarioController extends Controller{
         //$callEndTime = microtime(true);
         //$callTime = $callEndTime - $callStartTime;
          
-        return $this->render('MinSalSidPlaCensoBundle:CensoUsuario:manttCensoUsuario.html.twig'
-        , array('opciones' => $opciones,));      
+        return $this->consultarInformacionComplementariaAction();        
      }
      
       public function procesarInfRelevanteAction(){
@@ -438,8 +486,8 @@ class AccionAdminCensoUsuarioController extends Controller{
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
-         return $this->render('MinSalSidPlaCensoBundle:CensoUsuario:manttCensoUsuario.html.twig'
-        , array('opciones' => $opciones,));    
+        
+        return $this->consultarInformacionComplementariaAction();            
   }
   
    public function procesarInfComplementariaAction(){
@@ -462,6 +510,7 @@ class AccionAdminCensoUsuarioController extends Controller{
 
         $fila=0;
         
+        $infComDao=new InformacionComplementariaDAO($this->getDoctrine());
         
         foreach ($infComplementaria as $regInfComple) {
             $nombreCatego=$regInfComple->getCategoriaCenso()->getDescripcionCategoria();
@@ -478,28 +527,55 @@ class AccionAdminCensoUsuarioController extends Controller{
                }
                
                ++$row;
-           }
-           
-           $resultado=$regInfComple->getCantidadInfoComp();
-           $area=$regInfComple->getAreaInfoComp();
-           
-            if($area=='URBANA'){               
-                if($resultado>0)
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $fila, $resultado);
+            }
+            $area=$regInfComple->getAreaInfoComp();
+            
+            if($regInfComple->getCategoriaCenso()->getEsCalculada()){
+                
+                if($area=='URBANA'){                                   
+                        $valor=$objPHPExcel->getActiveSheet()->getCell("D".$fila)->getCalculatedValue();   
+                        $regInfComple->setCantidadInfoComp($valor);
+                        $infComDao->guardarInfComple($regInfComple);                                                
+               }
                
-           }
+               if($area=='RURAL'){                                                  
+                        $valor=$objPHPExcel->getActiveSheet()->getCell("J".$fila)->getCalculatedValue();                        
+                        $regInfComple->setCantidadInfoComp($valor);
+                        $infComDao->guardarInfComple($regInfComple);
+               }
+               
+                if($area=='PROMOTOR'){                                                  
+                        $valor=$objPHPExcel->getActiveSheet()->getCell("X".$fila)->getCalculatedValue();                        
+                        $regInfComple->setCantidadInfoComp($valor);
+                        $infComDao->guardarInfComple($regInfComple);
+               }
+               
+                
+            }else{
+               $resultado=$regInfComple->getCantidadInfoComp();              
+
+                if($area=='URBANA'){               
+                    if($resultado>0)
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $fila, $resultado);
+
+               }
+
+               if($area=='RURAL'){                              
+                    if($resultado>0)
+                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $fila, $resultado);               
+               }
+                
+            }
+            
            
-           if($area=='RURAL'){                              
-                if($resultado>0)
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $fila, $resultado);               
-           }
+              
 
         }
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
-         return $this->render('MinSalSidPlaCensoBundle:CensoUsuario:manttCensoUsuario.html.twig'
-        , array('opciones' => $opciones,));    
+        
+        return $this->consultarInformacionComplementariaAction();           
   }
     
     
@@ -730,6 +806,7 @@ class AccionAdminCensoUsuarioController extends Controller{
             
         $cantUrbana=$request->get('_urbanaComple');
         $cantRural=$request->get('_ruralComple');
+        $cantPromotor=$request->get('_promotorComple');
             
         $infComplementaDao=new InformacionComplementariaDao($this->getDoctrine()); 
         
@@ -741,7 +818,13 @@ class AccionAdminCensoUsuarioController extends Controller{
         $this->getDoctrine()->getEntityManager()->flush(); 
         
         $regInfComple=$infComplementaDao->getInfoComplementaria($idAreaRural);
-        $regInfComple->setCantidadInfoComp($cantRural);      
+        $regInfComple->setCantidadInfoComp($cantRural);  
+        
+        $this->getDoctrine()->getEntityManager()->persist($regInfComple);
+        $this->getDoctrine()->getEntityManager()->flush();
+        
+        $regInfComple=$infComplementaDao->getInfoComplementaria($idAreaPromotor);
+        $regInfComple->setCantidadInfoComp($cantPromotor);  
         
         $this->getDoctrine()->getEntityManager()->persist($regInfComple);
         $this->getDoctrine()->getEntityManager()->flush();

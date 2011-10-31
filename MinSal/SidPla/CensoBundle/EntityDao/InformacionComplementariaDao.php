@@ -27,6 +27,11 @@ class InformacionComplementariaDAO {
         $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaCensoBundle:InformacionComplementaria');
     }
     
+     public function guardarInfComple($inf) {
+        $this->em->persist($inf);
+        $this->em->flush();
+    }
+    
     public function getInfoComple() {	    
         $mensajes=$this->repositorio->findAll();
         return $mensajes;
