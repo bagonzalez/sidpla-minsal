@@ -740,13 +740,29 @@ class AccionAdminCensoUsuarioController extends Controller{
             $poblacionPromotorMujeres= $poblacionUrbanaDao->getPoblacionHumana($idPromotorMujeres);
             
             $poblacionUrbanaHombres->setPobHumCant($cantUrbanaHombres);
+            $poblacionUrbanaHombres->setPobHumArea('URBANA');
+            $poblacionUrbanaHombres->setPobhumsexo('H');
+            
             $poblacionUrbanaMujeres->setPobHumCant($cantUrbanaMujeres);
+            $poblacionUrbanaMujeres->setPobHumArea('URBANA');
+            $poblacionUrbanaMujeres->setPobhumsexo('M');
             
             $poblacionRuralHombres->setPobHumCant($cantRuralHombres);
+            $poblacionRuralHombres->setPobHumArea('RURAL');
+            $poblacionRuralHombres->setPobhumsexo('H');
+            
             $poblacionRuralMujeres->setPobHumCant($cantRuralMujeres);
+            $poblacionRuralMujeres->setPobHumArea('RURAL');
+            $poblacionRuralMujeres->setPobhumsexo('M');
+            
             
             $poblacionPromotorHombres->setPobHumCant($cantPromotorHombres);
+            $poblacionPromotorHombres->setPobHumArea('PROMOTOR');
+            $poblacionPromotorHombres->setPobhumsexo('H');
+            
             $poblacionPromotorMujeres->setPobHumCant($cantPromotorMujeres);
+            $poblacionPromotorMujeres->setPobHumArea('PROMOTOR');
+            $poblacionPromotorMujeres->setPobhumsexo('M');
             
             $this->getDoctrine()->getEntityManager()->persist($poblacionUrbanaHombres);
             $this->getDoctrine()->getEntityManager()->persist($poblacionUrbanaMujeres);

@@ -168,19 +168,16 @@
             <form action="" method="post" >
                 <table align="center" id="datosviviendaypoblacion"  >
                      <tr>
-                        <td colspan="4" align="center" >Total de viviendas</td>
+                         <td align="center">
+                        {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllViviendas.html.twig'%}                          
+                        </td>                                             
                     </tr>
-                    <td align="center">
-                     {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllViviendas.html.twig'%} 
-                   <br></br>
-                    </td>  
-                    <tr>
-                        <td colspan="4" align="center" >Poblacion Humana</td>
-                    </tr>
+                    <tr>                    
                     <td align="center">
                        {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllPoblacionHumana.html.twig'%} 
                    <br></br>
                     </td> 
+                    </tr>
                </table>
             </form>            
         </div>
@@ -190,18 +187,18 @@
                    <tr>
                         <td colspan="4" align="center" >Informacion complementaria</td>
                     </tr>
+                    <tr>
                     <td align="center">
                     {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllInformacionComplementaria.html.twig'%}
                    <br></br>
-                    </td> 
+                    </td>
+                    </tr>                   
                     <tr>
-                        <td colspan="4" align="center" >Informacion Relevante</td>
-                    </tr>
                     <td align="center">
                      {% include 'MinSalSidPlaCensoBundle:CensoUsuario:showAllInformacionRelevante.html.twig'%} 
                    <br></br>
                     </td>  
-                    <tr>                    
+                    </tr>                    
                </table>
             </form> 
     </div>
