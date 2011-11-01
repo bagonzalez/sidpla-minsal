@@ -1,5 +1,28 @@
 <?php
 
+
+
+/*
+  SIDPLA - MINSAL
+  Copyright (C) 2011  Bruno González   e-mail: bagonzalez.sv EN gmail.com
+  Copyright (C) 2011  Universidad de El Salvador
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * 
+ */
+
 namespace MinSal\SidPla\CensoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -285,7 +308,7 @@ class AccionAdminCensoUsuarioController extends Controller{
     
      public function procesarPoblacionHumanaAction(){
          
-        $opciones=$this->getRequest()->getSession()->get('opciones');
+        
          
         $paoElaboracion=$this->obtenerPaoElaboracionAction();       
         $censoPoblacion=$paoElaboracion->getCesopoblacion();
@@ -296,9 +319,9 @@ class AccionAdminCensoUsuarioController extends Controller{
         $i=0;
         $numfilas=count($poblacionHumana);         
         
-        /**	Load the quadratic equation solver worksheet into memory			**/
-	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
-        $objPHPExcel->setActiveSheetIndex(3);
+        
+	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        $objPHPExcel->setActiveSheetIndex(0);
         $objWorksheet = $objPHPExcel->getActiveSheet();
         
         $highestRow = $objWorksheet->getHighestRow(); // e.g. 10
@@ -427,9 +450,10 @@ class AccionAdminCensoUsuarioController extends Controller{
         
                 
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
-
-		
+        $objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        
+       
+       
         //$callStartTime = microtime(true);
 
         //echo $objPHPExcel->getActiveSheet()->getCell('B5')->getCalculatedValue().'<br />';
@@ -437,36 +461,36 @@ class AccionAdminCensoUsuarioController extends Controller{
         //$callEndTime = microtime(true);
         //$callTime = $callEndTime - $callStartTime;
          
-        return $this->consultarInformacionComplementariaAction();        
+        
      }
      
       public function procesarInfRelevanteAction(){
-        $opciones=$this->getRequest()->getSession()->get('opciones');         
+        
         $paoElaboracion=$this->obtenerPaoElaboracionAction();       
         $censoPoblacion=$paoElaboracion->getCesopoblacion();
         
         $infRelevante=$censoPoblacion->getInformacionRelevante();
         $regInfRel=new InformacionRelevante();
         
-        /**	Load the quadratic equation solver worksheet into memory			**/
-	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
-        $objPHPExcel->setActiveSheetIndex(3);
+        
+	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        $objPHPExcel->setActiveSheetIndex(0);
         $objWorksheet = $objPHPExcel->getActiveSheet();
         
-        $highestRow = $objWorksheet->getHighestRow(); // e.g. 10
-        $highestColumn = $objWorksheet->getHighestColumn(); // e.g 'F'
+        $highestRow = $objWorksheet->getHighestRow(); 
+        $highestColumn = $objWorksheet->getHighestColumn();
 
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
 
-        $fila=0;
         
+             
         
         foreach ($infRelevante as $regInfRel) {
             $nombreCatego=$regInfRel->getCategoriaCenso()->getDescripcionCategoria();
             
-             $col = 0;
-             $row=1;
-             $fila=0;
+            $fila=0;
+            $col = 0;
+            $row=1;
             
             while ($row <= $highestRow && $fila==0 ) {             
                $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;
@@ -476,7 +500,7 @@ class AccionAdminCensoUsuarioController extends Controller{
                }
                
                ++$row;
-           }
+            }
            
            $resultado=$regInfRel->getInfRelCant();
            if($resultado>0)
@@ -485,39 +509,40 @@ class AccionAdminCensoUsuarioController extends Controller{
         }
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
+        $objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
         
-        return $this->consultarInformacionComplementariaAction();            
+       
   }
   
    public function procesarInfComplementariaAction(){
-        $opciones=$this->getRequest()->getSession()->get('opciones');         
+        
         $paoElaboracion=$this->obtenerPaoElaboracionAction();       
         $censoPoblacion=$paoElaboracion->getCesopoblacion();
         
         $infComplementaria=$censoPoblacion->getInformacionComplementaria();
         $regInfComple=new InformacionComplementaria();
         
-        /**	Load the quadratic equation solver worksheet into memory			**/
-	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
-        $objPHPExcel->setActiveSheetIndex(3);
+        
+	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        $objPHPExcel->setActiveSheetIndex(0);
         $objWorksheet = $objPHPExcel->getActiveSheet();
         
-        $highestRow = $objWorksheet->getHighestRow(); // e.g. 10
-        $highestColumn = $objWorksheet->getHighestColumn(); // e.g 'F'
+        $highestRow = $objWorksheet->getHighestRow(); 
+        $highestColumn = $objWorksheet->getHighestColumn(); 
 
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
 
-        $fila=0;
+       
+             
         
         $infComDao=new InformacionComplementariaDAO($this->getDoctrine());
         
         foreach ($infComplementaria as $regInfComple) {
             $nombreCatego=$regInfComple->getCategoriaCenso()->getDescripcionCategoria();
             
-             $col = 0;
-             $row=1;
              $fila=0;
+            $col = 0;
+            $row=62;
             
             while ($row <= $highestRow && $fila==0 ) {             
                $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;
@@ -529,25 +554,33 @@ class AccionAdminCensoUsuarioController extends Controller{
                ++$row;
             }
             $area=$regInfComple->getAreaInfoComp();
+            $resultado=0;
             
             if($regInfComple->getCategoriaCenso()->getEsCalculada()){
                 
                 if($area=='URBANA'){                                   
                         $valor=$objPHPExcel->getActiveSheet()->getCell("D".$fila)->getCalculatedValue();   
-                        $regInfComple->setCantidadInfoComp($valor);
-                        $infComDao->guardarInfComple($regInfComple);                                                
+                        if($valor>0){
+                            $regInfComple->setCantidadInfoComp($valor);
+                            $infComDao->guardarInfComple($regInfComple);                                                
+                        }
                }
                
                if($area=='RURAL'){                                                  
                         $valor=$objPHPExcel->getActiveSheet()->getCell("J".$fila)->getCalculatedValue();                        
-                        $regInfComple->setCantidadInfoComp($valor);
-                        $infComDao->guardarInfComple($regInfComple);
+                         if($valor>0){
+                            $regInfComple->setCantidadInfoComp($valor);
+                            $infComDao->guardarInfComple($regInfComple);
+                         }
+                            
                }
                
                 if($area=='PROMOTOR'){                                                  
                         $valor=$objPHPExcel->getActiveSheet()->getCell("X".$fila)->getCalculatedValue();                        
-                        $regInfComple->setCantidadInfoComp($valor);
-                        $infComDao->guardarInfComple($regInfComple);
+                         if($valor>0){
+                            $regInfComple->setCantidadInfoComp($valor);
+                            $infComDao->guardarInfComple($regInfComple);
+                         }
                }
                
                 
@@ -566,16 +599,14 @@ class AccionAdminCensoUsuarioController extends Controller{
                }
                 
             }
-            
-           
-              
 
         }
         
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
+        $objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
         
-        return $this->consultarInformacionComplementariaAction();           
+        return $this->consultarInformacionComplementariaAction();      
+        
   }
     
     
@@ -846,7 +877,30 @@ class AccionAdminCensoUsuarioController extends Controller{
         $this->getDoctrine()->getEntityManager()->flush();
                                  
         return $this->consultarInformacionComplementariaAction();                  
-    }     
+    }  
+    
+    
+    
+    public function generarCensoUsuarioAction(){
+        
+       $this->procesarPoblacionHumanaAction();
+       //$this->procesarInfRelevanteAction();
+       //$this->procesarInfComplementariaAction();
+       
+
+       
+       /**	Load the quadratic equation solver worksheet into memory			**/
+	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        // Redirect output to a client’s web browser (Excel5)
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="censopoblacion.xls"');
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+                                 
+        return $this->consultarInformacionComplementariaAction();                  
+    }  
     
 }
 
