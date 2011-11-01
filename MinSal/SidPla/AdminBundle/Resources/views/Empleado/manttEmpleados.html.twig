@@ -5,11 +5,15 @@
           $('#agregarEmpleado').button();
           $('#eliminarEmpleado').button();
           $('#editarEmpleado').button();
-        
+          $('#reporte').button();
+          
+          $('#reporte').click(function() {
+            this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteEmpleadosOrg') }}'
+        });
       });
     </script>
       
-    <form>
+    <form action="" method="post">
         <table align="center">
             <tr><td align="center">
                     <h1>Mantenimiento de Empleados</h1>
@@ -25,6 +29,7 @@
                     <input type="button" value="Agregar" id="agregarEmpleado" />
                     <input type="button" value="Editar" id="editarEmpleado" />
                     <input type="button" value="Eliminar" id="eliminarEmpleado"/>
+                    <input type="submit" value="Reporte" id="reporte"></input>
                 </td>
             </tr>
         </table>        

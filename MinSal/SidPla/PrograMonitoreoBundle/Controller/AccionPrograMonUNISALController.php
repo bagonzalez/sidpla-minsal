@@ -288,6 +288,19 @@ class AccionPrograMonUNISALController extends Controller {
                         $resultadoActDao->guardarResulAct($resultadoAct);                        
                     }
                 }
+                
+                if((preg_match('/costoReal_/',$cadena))==1){
+                    $idResultadoRealizado=substr($tags[$i], 10);
+                    $valorRealizado=$valores[$i];
+                    
+                    if($valorRealizado>0){
+                        $resultadoAct=$resultadoActDao->getResultActUnisal($idResultadoRealizado);
+                        $resultadoAct->setCostoReal($valorRealizado);                    
+                        $resultadoActDao->guardarResulAct($resultadoAct);                        
+                    }
+                }
+                
+                
             }
          
          return $this->showProgramacionMonitoreoUNISALAction();

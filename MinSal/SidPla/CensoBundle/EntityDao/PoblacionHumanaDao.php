@@ -26,6 +26,11 @@ class PoblacionHumanaDao {
         $this->repositorio=$this->doctrine->getRepository('MinSalSidPlaCensoBundle:PoblacionHumana');
     }
     
+    public function guardarPoblacionHumana($inf) {
+        $this->em->persist($inf);
+        $this->em->flush();
+    }
+    
     public function getInfoPobHum() {	    
         $mensajes=$this->repositorio->findAll();
         return $mensajes;

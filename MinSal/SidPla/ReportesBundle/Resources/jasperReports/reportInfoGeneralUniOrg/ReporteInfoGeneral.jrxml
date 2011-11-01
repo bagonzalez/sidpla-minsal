@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportprueba1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="46"/>
+	<property name="ireport.y" value="30"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -13,7 +13,6 @@
 			<style backcolor="#E6DAC3"/>
 		</conditionalStyle>
 	</style>
-	<parameter name="parameter1" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select
 d.numero_unidadesdeptos,
@@ -72,6 +71,9 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 				<rectangle>
 					<reportElement x="0" y="139" width="555" height="20" forecolor="#6B7277" backcolor="#6B7277"/>
 				</rectangle>
+				<rectangle>
+					<reportElement x="0" y="159" width="555" height="15" forecolor="#A39999" backcolor="#A39999"/>
+				</rectangle>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="4" y="27" width="543" height="20"/>
 					<textElement>
@@ -79,9 +81,6 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nom_padre}]]></textFieldExpression>
 				</textField>
-				<rectangle>
-					<reportElement x="0" y="159" width="555" height="15" forecolor="#A39999" backcolor="#A39999"/>
-				</rectangle>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement x="132" y="53" width="416" height="15"/>
 					<textElement/>
@@ -207,11 +206,6 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 				<reportElement x="5" y="17" width="105" height="50"/>
 				<imageExpression><![CDATA["/var/www/images/sidpla1.png"]]></imageExpression>
 			</image>
-			<textField>
-				<reportElement x="450" y="78" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$P{parameter1}]]></textFieldExpression>
-			</textField>
 		</band>
 	</title>
 	<pageHeader>

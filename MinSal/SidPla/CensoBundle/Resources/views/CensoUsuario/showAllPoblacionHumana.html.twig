@@ -72,7 +72,7 @@
                                 {% if poblacionHumana.categoriaCenso.idCategoriaCenso == categoria.idCategoriaCenso  %}
                                     {% if poblacionHumana.getPobHumArea == 'URBANA' %}
                                         <td align="center" >  
-                                                <input size="2" readonly="readonly" name="idURBANA{{categoria.idCategoriaCenso}}{{ poblacionHumana.getPobhumsexo }}" value="{{ poblacionHumana.getPobHumCant }}"></input>
+                                                <input size="4" readonly="readonly" name="idURBANA{{categoria.idCategoriaCenso}}{{ poblacionHumana.getPobhumsexo }}" value="{{ poblacionHumana.getPobHumCant }}"></input>
                                         </td>                        
                                     {% endif %}                            
                                 {% endif %}   
@@ -84,7 +84,7 @@
                                     {% if poblacionHumana.getPobHumArea == 'RURAL' %}
                                         <td  align="center">                                    
 
-                                            <input size="2" readonly="readonly"  name="idRURAL{{categoria.idCategoriaCenso}}{{ poblacionHumana.getPobhumsexo }}" value="{{ poblacionHumana.getPobHumCant }}"></input>
+                                            <input size="4" readonly="readonly"  name="idRURAL{{categoria.idCategoriaCenso}}{{ poblacionHumana.getPobhumsexo }}" value="{{ poblacionHumana.getPobHumCant }}"></input>
                                         </td>                        
                                     {% endif %}                            
                                 {% endif %}   
@@ -92,15 +92,15 @@
                                         <td  align="center" id="{{categoria.idCategoriaCenso}}RURALTOTAL">
                                         </td>
 
-                                        <td  align="center"><input readonly="readonly"  name="total{{categoria.idCategoriaCenso}}TOTALHOMBRES" size="2" id="{{categoria.idCategoriaCenso}}TOTALHOMBRES" ></input></td>
-                                        <td  align="center"><input readonly="readonly"  name="total{{categoria.idCategoriaCenso}}TOTALMUJERES" size="2"  id="{{categoria.idCategoriaCenso}}TOTALMUJERES"></input></td>
+                                        <td  align="center"><input readonly="readonly"  name="total{{categoria.idCategoriaCenso}}TOTALHOMBRES" size="4" id="{{categoria.idCategoriaCenso}}TOTALHOMBRES" ></input></td>
+                                        <td  align="center"><input readonly="readonly"  name="total{{categoria.idCategoriaCenso}}TOTALMUJERES" size="4"  id="{{categoria.idCategoriaCenso}}TOTALMUJERES"></input></td>
                                         <td  align="center" name="{{categoria.idCategoriaCenso}}TOTALGENERAL"  id="{{categoria.idCategoriaCenso}}TOTALGENERAL"></td>
 
                            {% for poblacionHumana in censoPoblacion.getPoblacionHumana %}                     
                                 {% if poblacionHumana.categoriaCenso.idCategoriaCenso == categoria.idCategoriaCenso  %}
                                     {% if poblacionHumana.getPobHumArea == 'PROMOTOR' %}
                                         <td  align="center">  
-                                            <input size="2" readonly="readonly"  name="id{{categoria.idCategoriaCenso}}PROMOTOR" value="{{ poblacionHumana.getPobHumCant }}"></input>  
+                                            <input size="4" readonly="readonly"  name="id{{categoria.idCategoriaCenso}}PROMOTOR" value="{{ poblacionHumana.getPobHumCant }}"></input>  
                                         </td>                        
                                     {% endif %}                            
                                 {% endif %}   

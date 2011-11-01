@@ -44,6 +44,16 @@ class CategoriaCenso
     private $divTabla;
     
     
+    /**
+     * @var boolean $esCalculada
+     *
+     * @ORM\Column(name="catcen_calculada", type="boolean")
+     */
+    private $esCalculada;
+    
+    
+    
+    
      /**
      * @ORM\ManyToOne(targetEntity="BloqueCenso", inversedBy="categoriasCenso")
      * @ORM\JoinColumn(name="bloquecenso_codigo", referencedColumnName="bloquecenso_codigo")
@@ -149,5 +159,25 @@ class CategoriaCenso
     public function getBloque()
     {
         return $this->bloque;
+    }
+
+    /**
+     * Set esCalculada
+     *
+     * @param boolean $esCalculada
+     */
+    public function setEsCalculada($esCalculada)
+    {
+        $this->esCalculada = $esCalculada;
+    }
+
+    /**
+     * Get esCalculada
+     *
+     * @return boolean 
+     */
+    public function getEsCalculada()
+    {
+        return $this->esCalculada;
     }
 }
