@@ -441,13 +441,6 @@ class AccionAdminCensoUsuarioController extends Controller{
                 
                 
             }
-          
-           
-          
-         
-           
-           
-           
 
         }
         
@@ -456,14 +449,6 @@ class AccionAdminCensoUsuarioController extends Controller{
         //$objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
         
         return $objPHPExcel;
-       
-        //$callStartTime = microtime(true);
-
-        //echo $objPHPExcel->getActiveSheet()->getCell('B5')->getCalculatedValue().'<br />';
-        //echo $objPHPExcel->getActiveSheet()->getCell('B6')->getCalculatedValue().'<br />';
-        //$callEndTime = microtime(true);
-        //$callTime = $callEndTime - $callStartTime;
-         
         
      }
      
@@ -514,9 +499,6 @@ class AccionAdminCensoUsuarioController extends Controller{
                 
             }
         }
-        
-        //$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        //$objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
         
         return $objPHPExcel;
         
@@ -619,9 +601,6 @@ class AccionAdminCensoUsuarioController extends Controller{
 
         }
         
-        //$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        //$objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
-        
         //return $this->consultarInformacionComplementariaAction();      
         
         return $objPHPExcel;
@@ -710,10 +689,10 @@ class AccionAdminCensoUsuarioController extends Controller{
        $request=$this->getRequest();       
        $rows='';
        
-       $page = $request->get('page'); // get the requested page 
-       $limit = $request->get('rows'); // get how many rows we want to have into the grid 
-       $sidx = $request->get('sidx'); // get index row - i.e. user click to sort 
-       $sord = $request->get('sord'); // get the direction
+       $page = $request->get('page'); 
+       $limit = $request->get('rows'); 
+       $sidx = $request->get('sidx'); 
+       $sord = $request->get('sord'); 
        if(!$sidx) $sidx =1;
        
        $paoElaboracion=$this->obtenerPaoElaboracionAction();       
