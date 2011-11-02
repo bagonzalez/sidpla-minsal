@@ -608,7 +608,7 @@ class AccionAdminCensoUsuarioController extends Controller{
                    }
                    
                     if($area=='PROMOTOR'){                                                      
-                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(25, $fila, $resultado);               
+                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(27, $fila, $resultado);               
                    }
 
                 }
