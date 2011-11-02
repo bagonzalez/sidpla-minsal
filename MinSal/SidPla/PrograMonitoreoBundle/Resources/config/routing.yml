@@ -22,7 +22,7 @@ MinSalSidPlaPrograMonitoreoBundle_showActividadesEnRetraso:
 MinSalSidPlaPrograMonitoreoBundle_ActividadesEnRetrasoJSON:
     pattern:  /ActividadesEnRetrasoJSON
     defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionCompromisoCumplimiento:ActividadesEnRetrasoJSON }
-    
+#COMPROMISO CUMPLIMIENTO    
 MinSalSidPlaPrograMonitoreoBundle_ingresoActividadesEnRetraso:
     pattern:  /ingresoActividadesEnRetraso
     defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionCompromisoCumplimiento:ingresoActividadesEnRetraso }

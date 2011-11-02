@@ -1,6 +1,7 @@
 <?php
 
 namespace MinSal\SidPla\GesObjEspBundle\EntityDao;
+
 use Doctrine\ORM\Query\ResultSetMapping;
 use MinSal\SidPla\GesObjEspBundle\Entity\ResulActividad;
 use MinSal\SidPla\PrograMonitoreoBundle\Entity\CompromisoCumplimiento;
@@ -61,9 +62,9 @@ class ResulActividadDao {
         return $matrizMensajes;
     }
 
-    public function addCompromisoCumplimiento($hallazgos, $medidasadoptar, $fechacumplimiento, $responsable, $idResultActividad,$idResultadoRe) {
+    public function addCompromisoCumplimiento($hallazgos, $medidasadoptar, $fechacumplimiento, $responsable, $idResultActividad, $idResultadoRe) {
 
-       // $resultProMon = new ResulActividad();
+        // $resultProMon = new ResulActividad();
         $resultProMon = $this->getResulActividad($idResultActividad);
 
         $comprocumpl = new CompromisoCumplimiento();
@@ -72,23 +73,23 @@ class ResulActividadDao {
         $comprocumpl->setComproCumpliResponsable($responsable);
         $comprocumpl->setComproCumpliFecha($fechacumplimiento);
         $comprocumpl->setIdResActividad($resultProMon);
-       
+
         //ENCONTRAR EL RESULTADORE ASOCIADO
-        $resultadoEspe=new ResultadoEsperado();
-        $resultadoEspeDao= new ResultadoEsperadoDao($this->doctrine);
-        $resultadoEspe=$resultadoEspeDao->getResulEspera($idResultadoRe);
-        $resultadosRe=$resultadoEspe->getResultadore();
-        $aux=new \MinSal\SidPla\GesObjEspBundle\Entity\Resultadore();
-        
-        foreach ($resultadosRe as $aux){
-           if($aux->getResultadoreTrimestre()==$resultProMon->getResulActTrimestre()){
-                $resultadoReDao= new ResultadoreDao($this->doctrine);
-                $resultadoRe=$aux;
+        $resultadoEspe = new ResultadoEsperado();
+        $resultadoEspeDao = new ResultadoEsperadoDao($this->doctrine);
+        $resultadoEspe = $resultadoEspeDao->getResulEspera($idResultadoRe);
+        $resultadosRe = $resultadoEspe->getResultadore();
+        $aux = new \MinSal\SidPla\GesObjEspBundle\Entity\Resultadore();
+
+        foreach ($resultadosRe as $aux) {
+            if ($aux->getResultadoreTrimestre() == $resultProMon->getResulActTrimestre()) {
+                $resultadoReDao = new ResultadoreDao($this->doctrine);
+                $resultadoRe = $aux;
                 $comprocumpl->setIdResultadore($resultadoRe);
-           }
+            }
         }
-        
-      
+
+
         $this->em->persist($comprocumpl);
         $resultProMon->addCompromisoCumplimiento($comprocumpl);
         $resultadoRe->addCompromisoCumplimiento($comprocumpl);
@@ -99,7 +100,7 @@ class ResulActividadDao {
         return $comprocumpl;
     }
 
-    public function consultarResulActPorTrim($trimestre,$idAct) {
+    public function consultarResulActPorTrim($trimestre, $idAct) {
         $rsm = new ResultSetMapping;
         $rsm->addEntityResult('MinSalSidPlaGesObjEspBundle:ResulActividad', 're');
         $rsm->addFieldResult('re', 'resact_codigo', 'idResulAct');
@@ -116,8 +117,6 @@ class ResulActividadDao {
 
         return $resultadoAct[0];
     }
-    
-    
 
 }
 

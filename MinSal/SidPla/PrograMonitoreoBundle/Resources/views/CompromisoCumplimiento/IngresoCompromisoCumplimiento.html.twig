@@ -61,9 +61,11 @@ $(document).ready(function(){
             }
             else
                 enviar++;
+           
         }//FIN DEL SEGUNDO
-        else
-                enviar++;
+        else{ 
+            enviar++;
+        }
         if(Number($("input[id='nprogra3']").val())!=0){
                 if($("input[id='nfechIni3']").val()=="" | $("input[id='nfechFin3']").val()==""){
                     alert("Debe de Ingresar la Fecha de Inicio y de Finalizacion del Tercer Trimestre de la Reprogramar\nPara Continuar");
@@ -72,9 +74,9 @@ $(document).ready(function(){
                 else
                     enviar++;
         }//FIN DEL TERCERO
-        else
-                enviar++;
-            
+        else{
+            enviar++;
+        }
         if(Number($("input[id='nprogra4']").val())!=0){
            if($("input[id='nfechIni4']").val()=="" | $("input[id='nfechFin4']").val()==""){
                  alert("Debe de Ingresar la Fecha de Inicio y de Finalizacion del Tercer Trimestre de la Reprogramar\nPara Continuar");
@@ -83,8 +85,9 @@ $(document).ready(function(){
             else
                 enviar++;
         }//FIN DEL CUARTO
-        else
+        else{
            enviar++;
+        }
          if(enviar==3){
              this.form.action='{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarActividadesEnRetraso') }}';
          }
@@ -111,44 +114,127 @@ textarea.error { border: 1px dotted red; }
 </style>  
 
         <form id="forResEsp" name="forResEsp" method="post" >
-{% if idAct is defined %}
-                <table colspan="4"  align="center"><!-- id="datos"  -->
+{% if compromisoCumplimiento is defined %}
+  <table colspan="4"  align="center"><!-- id="datos"  -->
                     <tr>
                         <td colspan='2'>
-                            <h1 style=" text-align: center">Ingrese </h1>
+                            <h1 style=" text-align: center">Ingreso de Compromisos para el Cumplimiento de Actividades</h1>
 
                         </td>
                     </tr>
                     <tr>
                         <td style=" font-size: 12px" >Objetivo:</td>   
                         <td align="center" style=" font-size: 12px">
-                            <textarea readonly="readonly"  rows="4" cols="83" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{descObj}}</textarea>
+                            <textarea readonly="readonly"  rows="4" cols="83" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{objetivo}}</textarea>
                         </td>
                     </tr>
                     <tr>
                         <td style=" font-size: 12px" >Resultado Esperado:</td>   
                         <td align="center" style=" font-size: 12px">
-                            <textarea readonly="readonly"  rows="2" cols="83" name= 'descResEsp'  size="83%" id="descResEsp" >{{descResEsp}}</textarea>
+                            <textarea readonly="readonly"  rows="2" cols="83" name= 'descResEsp'  size="83%" id="descResEsp" >{{resultado}}</textarea>
                         </td>
                     </tr>
                     <tr>
-                        <td style=" font-size: 12px" >Actividad(*):</td>
-                        <td><textarea readonly="readonly" rows="4" cols="83" name= 'descAct'  size="83%" id="descAct" >{{descAct}}</textarea></td>
+                        <td style=" font-size: 12px" >Actividad:</td>
+                        <td><textarea readonly="readonly" rows="4" cols="83" name= 'descAct'  size="83%" id="descAct" >{{actividad}}</textarea></td>
                     </tr>
 
                     <tr>
-                        <td colspan="2" align="center">
+                        <td style=" font-size: 12px" >Hallazgos Encontrados(*):</td>
+                        <td><textarea class="required" rows="4" cols="83" name= 'hallazgosAct'  size="83%" id="hallazgosAct"  >{{compromisoCumplimiento.getComproCumpliHallazgozEncontrados}}</textarea></td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Medidas a Adoptar(*):</td>
+                        <td><textarea class="required" rows="4" cols="83" name= 'medidasAct'  size="83%" id="medidasAct" >{{compromisoCumplimiento.getComproCumpliMedidaAdoptar}}</textarea></td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Responsable(*):</td>
+                        <td><input class="required"  name="responsable" id="responsable" type="text" size="60" maxlength="60" value="{{compromisoCumplimiento.getComproCumpliResponsable}}" /></td>
+                    </tr>
+                    <tr>
+                        <td style=" font-size: 12px" >Fecha original del cumplimiento para el trimestre:</td>
+                        <td><input name="cobAct" id="cobAct" type="text" size="20" value="{{fechaOriginal}}" /></td>
+                    </tr>
+                    <!-- ESTO ES PARA LA REPROGRAMACION-->
+                    <tr>
+                        <td style=" font-size: 12px" >Total a Reprogramar:</td>
+                        <td><input name="reprogra" readonly="readonly" id="reprogra" type="text" size="20" value="{{reprogramar}}" /></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style=" font-size: 16px; font-weight: bolder" align="center"  >Reprogramacion</td>
+                    </tr>
+                    <!-- FIN DE LA REPROGRAMACION-->
+                </table>
+                <table align="center">
+                    <tr>
+                          {% if trimestre2 is defined %}<td style=" font-weight: bolder; text-align: center" colspan="4" >Segundo Trimestre</td>{%endif%}
+                          {% if trimestre3 is defined %}<td style=" font-weight: bolder; text-align: center" colspan="4" >Tercer Trimestre</td>{%endif%}
+                          {% if trimestre4 is defined %}<td style=" font-weight: bolder; text-align: center" colspan="4" >Cuarto Trimestre</td>{%endif%}
+                        </tr>
+                         {% for reprograma in compromisoCumplimiento.getReprogramaciones %} 
+                        <tr>
+                                  
+                                {% if trimestre2 is defined %}          
+                                <td>Fecha Inicial:</td><td><input readonly="readonly" name="fechIni2" id="fechIni2" type="text" size="7" value="{% if reprograma.getIniFechOrSeg is not null %}{{reprograma.getIniFechOrSeg|date('d/m/Y')}}{%else%}  {%endif%}" /></td>
+                                <td>Nueva Fecha Inicial:</td><td><input name="nfechIni2" id="nfechIni2" type="text" size="7" value="{% if reprograma.getIniFechNuSeg is not null and reprograma.prograNuSeg !=0%}{{reprograma.getIniFechNuSeg|date('d/m/Y')}}{%else%}  {%endif%}" />                                
+                                </td>
+                                {%endif%}
+                                {% if trimestre3 is defined %}          
+                                    <td>Fecha Inicial:</td><td><input readonly="readonly" name="fechIni3" id="fechIni3" type="text" size="7" value="{% if reprograma.getIniFechOrTer is not null %}{{reprograma.getIniFechOrTer|date('d/m/Y')}}{%else%}  {%endif%}" /></td>
+                                    <td>Nueva Fecha Inicial:</td><td><input name="nfechIni3" id="nfechIni3" type="text" size="7" value="{% if reprograma.getIniFechNuTer is not null and reprograma.prograNuTer !=0 %}{{reprograma.getIniFechNuTer|date('d/m/Y')}}{%else%}  {%endif%}" /></td>
+                                {%endif%}
+                                {% if trimestre4 is defined %}          
+                                        <td>Fecha Inicial:</td><td><input readonly="readonly" name="fechIni4" id="fechIni4" type="text" size="7" value="{% if reprograma.getIniFechOrCua is not null %}{{reprograma.getIniFechOrCua|date('d/m/Y')}}{%else%}  {%endif%}" /></td>
+                                        <td>Nueva Fecha Inicial:</td>
+                                        <td><input name="nfechIni4" id="nfechIni4" type="text" size="7" value="{% if reprograma.getIniFechNuCua is not null and reprograma.prograNuCua !=0%}{{reprograma.getIniFechNuCua|date('d/m/Y')}}{%else%}  {%endif%}" />                         
+                                        </td>
+                                {%endif%}
+                        </tr>
+                        <tr>
+                                {% if trimestre2 is defined %}         
+                                                <td>Fecha Final:</td><td><input readonly="readonly" name="fechFin2" id="fechFin2" type="text" size="7" value="{% if reprograma.getFinFechOrSeg is not null %}{{reprograma.getFinFechOrSeg|date('d/m/Y')}}{%else%}  {%endif%}" /></td>
+                                                <td>Nueva Fecha Final:</td><td><input name="nfechFin2" id="nfechFin2" type="text" size="7" value="{% if reprograma.getFinFechNuSeg is not null and reprograma.prograNuSeg !=0 %}{{reprograma.getFinFechNuSeg|date('d/m/Y')}}{%else%}  {%endif%}" /></td>
+                                {%endif%}
+                                {% if trimestre3 is defined %}         
+                                                    <td>Fecha Final:</td><td><input readonly="readonly" name="fechFin3" id="fechFin3" type="text" size="7" value="{% if reprograma.getFinFechOrTer is not null %}{{reprograma.getFinFechOrTer|date('d/m/Y')}}{%else%}  {%endif%}" /></td>
+                                                    <td>Nueva Fecha Final:</td><td><input name="nfechFin3" id="nfechFin3" type="text" size="7" value="{% if reprograma.getFinFechNuTer is not null and reprograma.prograNuTer !=0%}{{reprograma.getFinFechNuTer|date('d/m/Y')}}{%else%}  {%endif%}" /></td>
+                                {%endif%}
+                                {% if trimestre4 is defined %}         
+                                                        <td>Fecha Final:</td><td><input readonly="readonly" name="fechFin4" id="fechIni4" type="text" size="7" value="{% if reprograma.getFinFechOrCua is not null %}{{reprograma.getFinFechOrCua|date('d/m/Y')}}{%else%}  {%endif%}" /></td>
+                                                        <td>Nueva Fecha Final:</td><td><input name="nfechFin4" id="nfechFin4" type="text" size="7" value="{% if reprograma.getFinFechNuCua is not null and reprograma.prograNuCua !=0 %}{{reprograma.getFinFechNuCua|date('d/m/Y')}}{%else%}  {%endif%} " /></td>
+                                {%endif%}
+                       </tr>
+                       <tr>
+                                {% if trimestre2 is defined %}        
+                                                                <td>Programado:</td><td><input readonly="readonly" name="progra2" id="progra2" type="text" size="7" value="{{reprograma.prograOrSeg}}" /></td>
+                                                                <td>Reprogramado:</td><td><input name="nprogra2" id="nprogra2" type="text" size="7" value="{{reprograma.prograNuSeg}}" /></td>
+                                {%endif%}
+                                 {% if trimestre3 is defined %}        
+                                                                    <td>Programado:</td><td><input readonly="readonly" name="progra3" id="progra3" type="text" size="7" value="{{reprograma.prograOrTer}}" /></td>
+                                                                    <td>Reprogramado:</td><td><input name="nprogra3" id="nprogra3" type="text" size="7" value="{{reprograma.prograNuTer}}" /></td>
+                                {%endif%}
+                                 {% if trimestre4 is defined %}        
+                                                                        <td>Programado:</td><td><input readonly="readonly" name="progra4" id="progra4" type="text" size="7" value="{{reprograma.prograOrCua}}" /></td>
+                                                                        <td>Reprogramado:</td><td><input name="nprogra4" id="nprogra4" type="text" size="7" value="{{reprograma.prograNuCua}}" /></td>
+                                {%endif%}
+                                                                            
+                      </tr>
+                      <input type='hidden' name='idReprogramacion' id="idReprogramacion" value='{{reprograma.codReprogra}}' />
+                      {%endfor%}
+                      <td colspan="12" align="center">
+                            <br/><br/>
                             <button type="submmit" id="guardar"  >Guardar</button>
                             <button type="reset" id="limpiar"  >Limpiar</button>
-                            <button type="button" id="regresarResEsp"  >Regresar</button>
+                            <button type="button" id="regresar"  >Regresar</button>
                         </td>
-                    </tr>
+           </table>   
+<input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
+<input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
+<input type='hidden' name='idfilaActividad' id="idfilaActividad" value='{{idfilaActividad}}' />
+<input type='hidden' name='idresact' id="idresact" value='{{idresact}}' />
+<input type='hidden' name='idcompromiso' id="idcompromiso" value='{{compromisoCumplimiento.idComproCumpl}}' />
 
-                </table>
-                <input type='hidden' name='idObj' id="idObj" value='{{idObj}}' />
-                <input type='hidden' name='idResEsp' id="idResEsp" value='{{idResEsp}}' />  
-                <input type='hidden' name='idAct' id="idAct" value='{{idAct}}' />  
-                <input type='hidden' name='oper' id="oper" value='edit' /> 
+<input type='hidden' name='oper' id="oper" value='edit' />
 {% else%}
                 <table colspan="4"  align="center"><!-- id="datos"  -->
                     <tr>

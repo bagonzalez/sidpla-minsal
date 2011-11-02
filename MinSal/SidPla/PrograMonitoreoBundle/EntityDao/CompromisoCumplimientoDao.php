@@ -110,7 +110,25 @@ class CompromisoCumplimientoDao {
         else
             return true;
     }
-  
+    
+    
+    public function getCompromisoCumplimientoEspecifico($codigo) {
+        $compromisoCum = $this->repositorio->find($codigo);
+        return $compromisoCum;
+    }
+     public function editCompromisoCumplimiento($idCompromiso, $hallazgos, $medidasadoptar, $fechacumplimiento, $responsable) {
+
+        $comprocumpl=  $this->getCompromisoCumplimientoEspecifico($idCompromiso);
+        $comprocumpl->setComproCumpliHallazgozEncontrados($hallazgos);
+        $comprocumpl->setComproCumpliMedidaAdoptar($medidasadoptar);
+        $comprocumpl->setComproCumpliResponsable($responsable);
+        $comprocumpl->setComproCumpliFecha($fechacumplimiento);
+       
+        $this->em->persist($comprocumpl);
+        $this->em->flush();
+        //LE DEVUELVO EL OBJETO PORQUE NECESITO OCUPARLO PARA LA REPROGRAMACION
+        return $comprocumpl;
+    }
 }
 
 ?>

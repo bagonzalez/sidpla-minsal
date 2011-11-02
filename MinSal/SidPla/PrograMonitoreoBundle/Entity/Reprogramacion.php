@@ -147,7 +147,6 @@ class Reprogramacion {
      */
     private $prograNuCua;
 
-
     /**
      * @ORM\ManyToOne(targetEntity="CompromisoCumplimiento", inversedBy="reprogramaciones")
      * @ORM\JoinColumn(name="comcum_codigo", referencedColumnName="comcum_codigo")
@@ -168,8 +167,7 @@ class Reprogramacion {
      *
      * @param date $iniFechOrSeg
      */
-    public function setIniFechOrSeg($iniFechOrSeg)
-    {
+    public function setIniFechOrSeg($iniFechOrSeg) {
         $date = new \DateTime($iniFechOrSeg);
         $this->iniFechOrSeg = $date;
     }
@@ -179,8 +177,7 @@ class Reprogramacion {
      *
      * @return date 
      */
-    public function getIniFechOrSeg()
-    {
+    public function getIniFechOrSeg() {
         return $this->iniFechOrSeg;
     }
 
@@ -189,8 +186,7 @@ class Reprogramacion {
      *
      * @param date $finFechOrSeg
      */
-    public function setFinFechOrSeg($finFechOrSeg)
-    {
+    public function setFinFechOrSeg($finFechOrSeg) {
         $date = new \DateTime($finFechOrSeg);
         $this->finFechOrSeg = $date;
     }
@@ -200,8 +196,7 @@ class Reprogramacion {
      *
      * @return date 
      */
-    public function getFinFechOrSeg()
-    {
+    public function getFinFechOrSeg() {
         return $this->finFechOrSeg;
     }
 
@@ -210,10 +205,14 @@ class Reprogramacion {
      *
      * @param date $iniFechNuSeg
      */
-    public function setIniFechNuSeg($iniFechNuSeg)
-    {
+    public function setIniFechNuSeg($iniFechNuSeg) {
+        if ($iniFechNuSeg==NULL)
+            $iniFechNuSeg=NULL;
+        else{
         $date = new \DateTime($iniFechNuSeg);
         $this->iniFechNuSeg = $date;
+        
+        }
     }
 
     /**
@@ -221,8 +220,7 @@ class Reprogramacion {
      *
      * @return date 
      */
-    public function getIniFechNuSeg()
-    {
+    public function getIniFechNuSeg() {
         return $this->iniFechNuSeg;
     }
 
@@ -231,10 +229,14 @@ class Reprogramacion {
      *
      * @param date $finFechNuSeg
      */
-    public function setFinFechNuSeg($finFechNuSeg)
-    {
+    public function setFinFechNuSeg($finFechNuSeg) {
+       if($finFechNuSeg==NULL)
+           $finFechNuSeg=NULL;
+       else{
         $date = new \DateTime($finFechNuSeg);
         $this->finFechNuSeg = $date;
+        
+        }
     }
 
     /**
@@ -242,8 +244,7 @@ class Reprogramacion {
      *
      * @return date 
      */
-    public function getFinFechNuSeg()
-    {
+    public function getFinFechNuSeg() {
         return $this->finFechNuSeg;
     }
 
@@ -252,8 +253,7 @@ class Reprogramacion {
      *
      * @param float $prograOrSeg
      */
-    public function setPrograOrSeg($prograOrSeg)
-    {
+    public function setPrograOrSeg($prograOrSeg) {
         $this->prograOrSeg = $prograOrSeg;
     }
 
@@ -262,8 +262,7 @@ class Reprogramacion {
      *
      * @return float 
      */
-    public function getPrograOrSeg()
-    {
+    public function getPrograOrSeg() {
         return $this->prograOrSeg;
     }
 
@@ -272,8 +271,7 @@ class Reprogramacion {
      *
      * @param float $prograNuSeg
      */
-    public function setPrograNuSeg($prograNuSeg)
-    {
+    public function setPrograNuSeg($prograNuSeg) {
         $this->prograNuSeg = $prograNuSeg;
     }
 
@@ -282,8 +280,7 @@ class Reprogramacion {
      *
      * @return float 
      */
-    public function getPrograNuSeg()
-    {
+    public function getPrograNuSeg() {
         return $this->prograNuSeg;
     }
 
@@ -292,8 +289,7 @@ class Reprogramacion {
      *
      * @param date $iniFechOrTer
      */
-    public function setIniFechOrTer($iniFechOrTer)
-    {
+    public function setIniFechOrTer($iniFechOrTer) {
         $date = new \DateTime($iniFechOrTer);
         $this->iniFechOrTer = $date;
     }
@@ -303,8 +299,7 @@ class Reprogramacion {
      *
      * @return date 
      */
-    public function getIniFechOrTer()
-    {
+    public function getIniFechOrTer() {
         return $this->iniFechOrTer;
     }
 
@@ -313,10 +308,10 @@ class Reprogramacion {
      *
      * @param date $finFechOrTer
      */
-    public function setFinFechOrTer($finFechOrTer)
-    {
-        $date = new \DateTime($finFechOrTer);
-        $this->finFechOrTer = $date;
+    public function setFinFechOrTer($finFechOrTer) {
+       $date = new \DateTime($finFechOrTer);
+       $this->finFechOrTer = $date;
+        
     }
 
     /**
@@ -324,8 +319,7 @@ class Reprogramacion {
      *
      * @return date 
      */
-    public function getFinFechOrTer()
-    {
+    public function getFinFechOrTer() {
         return $this->finFechOrTer;
     }
 
@@ -334,10 +328,13 @@ class Reprogramacion {
      *
      * @param date $iniFechNuTer
      */
-    public function setIniFechNuTer($iniFechNuTer)
-    {
-        $date = new \DateTime($iniFechNuTer);
-        $this->iniFechNuTer = $date;
+    public function setIniFechNuTer($iniFechNuTer) {
+        if ($iniFechNuTer == null)
+            $this->iniFechNuTer = null;
+        else {
+            $date = new \DateTime($iniFechNuTer);
+            $this->iniFechNuTer = $date;
+        }
     }
 
     /**
@@ -345,8 +342,7 @@ class Reprogramacion {
      *
      * @return date 
      */
-    public function getIniFechNuTer()
-    {
+    public function getIniFechNuTer() {
         return $this->iniFechNuTer;
     }
 
@@ -355,10 +351,13 @@ class Reprogramacion {
      *
      * @param date $finFechNuTer
      */
-    public function setFinFechNuTer($finFechNuTer)
-    {
-        $date = new \DateTime($finFechNuTer);
-        $this->finFechNuTer = $date;
+    public function setFinFechNuTer($finFechNuTer) {
+        if ($finFechNuTer == NULL)
+            $finFechNuTer = null;
+        else {
+            $date = new \DateTime($finFechNuTer);
+            $this->finFechNuTer = $date;
+        }
     }
 
     /**
@@ -366,8 +365,7 @@ class Reprogramacion {
      *
      * @return date 
      */
-    public function getFinFechNuTer()
-    {
+    public function getFinFechNuTer() {
         return $this->finFechNuTer;
     }
 
@@ -376,8 +374,7 @@ class Reprogramacion {
      *
      * @param float $prograOrTer
      */
-    public function setPrograOrTer($prograOrTer)
-    {
+    public function setPrograOrTer($prograOrTer) {
         $this->prograOrTer = $prograOrTer;
     }
 
@@ -386,8 +383,7 @@ class Reprogramacion {
      *
      * @return float 
      */
-    public function getPrograOrTer()
-    {
+    public function getPrograOrTer() {
         return $this->prograOrTer;
     }
 
@@ -396,8 +392,7 @@ class Reprogramacion {
      *
      * @param float $prograNuTer
      */
-    public function setPrograNuTer($prograNuTer)
-    {
+    public function setPrograNuTer($prograNuTer) {
         $this->prograNuTer = $prograNuTer;
     }
 
@@ -406,8 +401,7 @@ class Reprogramacion {
      *
      * @return float 
      */
-    public function getPrograNuTer()
-    {
+    public function getPrograNuTer() {
         return $this->prograNuTer;
     }
 
@@ -416,8 +410,7 @@ class Reprogramacion {
      *
      * @param date $iniFechOrCua
      */
-    public function setIniFechOrCua($iniFechOrCua)
-    {
+    public function setIniFechOrCua($iniFechOrCua) {
         $date = new \DateTime($iniFechOrCua);
         $this->iniFechOrCua = $date;
     }
@@ -427,8 +420,7 @@ class Reprogramacion {
      *
      * @return date 
      */
-    public function getIniFechOrCua()
-    {
+    public function getIniFechOrCua() {
         return $this->iniFechOrCua;
     }
 
@@ -437,8 +429,7 @@ class Reprogramacion {
      *
      * @param date $finFechOrCua
      */
-    public function setFinFechOrCua($finFechOrCua)
-    {
+    public function setFinFechOrCua($finFechOrCua) {
         $date = new \DateTime($finFechOrCua);
         $this->finFechOrCua = $date;
     }
@@ -448,8 +439,7 @@ class Reprogramacion {
      *
      * @return date 
      */
-    public function getFinFechOrCua()
-    {
+    public function getFinFechOrCua() {
         return $this->finFechOrCua;
     }
 
@@ -458,10 +448,13 @@ class Reprogramacion {
      *
      * @param date $iniFechNuCua
      */
-    public function setIniFechNuCua($iniFechNuCua)
-    {
+    public function setIniFechNuCua($iniFechNuCua) {
+        if($iniFechNuCua==NULL)
+            $iniFechNuCua=null;
+        else{
         $date = new \DateTime($iniFechNuCua);
         $this->iniFechNuCua = $date;
+        }
     }
 
     /**
@@ -469,8 +462,7 @@ class Reprogramacion {
      *
      * @return date 
      */
-    public function getIniFechNuCua()
-    {
+    public function getIniFechNuCua() {
         return $this->iniFechNuCua;
     }
 
@@ -479,10 +471,13 @@ class Reprogramacion {
      *
      * @param date $finFechNuCua
      */
-    public function setFinFechNuCua($finFechNuCua)
-    {
+    public function setFinFechNuCua($finFechNuCua) {
+        if ($finFechNuCua==NULL)
+            $finFechNuCua=NULL;
+        else{
         $date = new \DateTime($finFechNuCua);
         $this->finFechNuCua = $date;
+        }
     }
 
     /**
@@ -490,8 +485,7 @@ class Reprogramacion {
      *
      * @return date 
      */
-    public function getFinFechNuCua()
-    {
+    public function getFinFechNuCua() {
         return $this->finFechNuCua;
     }
 
@@ -500,8 +494,7 @@ class Reprogramacion {
      *
      * @param float $prograOrCua
      */
-    public function setPrograOrCua($prograOrCua)
-    {
+    public function setPrograOrCua($prograOrCua) {
         $this->prograOrCua = $prograOrCua;
     }
 
@@ -510,8 +503,7 @@ class Reprogramacion {
      *
      * @return float 
      */
-    public function getPrograOrCua()
-    {
+    public function getPrograOrCua() {
         return $this->prograOrCua;
     }
 
@@ -520,8 +512,7 @@ class Reprogramacion {
      *
      * @param float $prograNuCua
      */
-    public function setPrograNuCua($prograNuCua)
-    {
+    public function setPrograNuCua($prograNuCua) {
         $this->prograNuCua = $prograNuCua;
     }
 
@@ -530,11 +521,10 @@ class Reprogramacion {
      *
      * @return float 
      */
-    public function getPrograNuCua()
-    {
+    public function getPrograNuCua() {
         return $this->prograNuCua;
     }
-    
+
     /**
      * Set compromisoCumplimiento
      *
@@ -552,4 +542,5 @@ class Reprogramacion {
     public function getCompromisoCumplimiento() {
         return $this->compromisoCumplimiento;
     }
+
 }

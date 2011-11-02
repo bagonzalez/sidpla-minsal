@@ -1,5 +1,28 @@
 <?php
 
+
+
+/*
+  SIDPLA - MINSAL
+  Copyright (C) 2011  Bruno González   e-mail: bagonzalez.sv EN gmail.com
+  Copyright (C) 2011  Universidad de El Salvador
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * 
+ */
+
 namespace MinSal\SidPla\CensoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -283,9 +306,9 @@ class AccionAdminCensoUsuarioController extends Controller{
         
     }
     
-     public function procesarPoblacionHumanaAction(){
+     public function procesarPoblacionHumanaAction($objPHPExcel){
          
-        $opciones=$this->getRequest()->getSession()->get('opciones');
+        
          
         $paoElaboracion=$this->obtenerPaoElaboracionAction();       
         $censoPoblacion=$paoElaboracion->getCesopoblacion();
@@ -296,286 +319,292 @@ class AccionAdminCensoUsuarioController extends Controller{
         $i=0;
         $numfilas=count($poblacionHumana);         
         
-        /**	Load the quadratic equation solver worksheet into memory			**/
-	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
-        $objPHPExcel->setActiveSheetIndex(3);
+        
+	//$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        $objPHPExcel->setActiveSheetIndex(0);
         $objWorksheet = $objPHPExcel->getActiveSheet();
         
-        $highestRow = $objWorksheet->getHighestRow(); // e.g. 10
+        $highestRow = 160;//$objWorksheet->getHighestRow(); // e.g. 10
         $highestColumn = $objWorksheet->getHighestColumn(); // e.g 'F'
 
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
 
         $poblacionHumanaDao=new PoblacionHumanaDao($this->getDoctrine());
         
+         $col = 0;
+           
+           
+        $row=1;
+        $fila=0;
+           
+        $categoriasXLS=array();
+        
+        while ($row <= $highestRow) {             
+               $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;               
+               if($nombreMax)
+                $categoriasXLS[$nombreMax]=$row;               
+               ++$row;
+        }
+        
         foreach ($poblacionHumana as $regPobHumana) { 
            $regPobHumana->getIdPobHum();
            $nombreCatego=$regPobHumana->getCategoriaCenso()->getDescripcionCategoria();
+          
+            $fila=$categoriasXLS[$nombreCatego];
             
-           $col = 0;
-           
-           /*for ($row = 1; $row <= $highestRow; ++$row) {             
-               $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;
-               if($nombreCatego==$nombreMax){
-                   $fila=$row;                   
-               }
-           }*/
-           $row=1;
-           $fila=0;
-           
-           while ($row <= $highestRow && $fila==0 ) {             
-               $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;
-               
-               if($nombreCatego==$nombreMax){
-                   $fila=$row;                   
-               }
-               
-               ++$row;
-           }
-           
-           $area=$regPobHumana->getPobHumArea();
-           $sexo=$regPobHumana->getPobhumsexo();
-           $resultado=$regPobHumana->getPobHumCant();
-           
-           if($regPobHumana->getCategoriaCenso()->getEsCalculada()){
-               
-                   if($area=='URBANA'){               
-                       if($sexo=='H'){ 
-                            $valor=$objPHPExcel->getActiveSheet()->getCell("D".$fila)->getCalculatedValue();   
-                            $regPobHumana->setPobHumCant($valor);
-                            $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
-                       }
-
-                       if($sexo=='M'){                           
-                            $valor=$objPHPExcel->getActiveSheet()->getCell("F".$fila)->getCalculatedValue();   
-                            $regPobHumana->setPobHumCant($valor);
-                            $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
-                       }
-                   }
-
-                   if($area=='RURAL'){               
-                       if($sexo=='H'){                           
-                            $valor=$objPHPExcel->getActiveSheet()->getCell("J".$fila)->getCalculatedValue();   
-                            $regPobHumana->setPobHumCant($valor);
-                            $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
-                       }
-
-                       if($sexo=='M'){                           
-                            $valor=$objPHPExcel->getActiveSheet()->getCell("L".$fila)->getCalculatedValue();   
-                            $regPobHumana->setPobHumCant($valor);
-                            $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
-                       }
-                   }
-
-                   if($area=='PROMOTOR'){               
-                       if($sexo=='H'){                           
-                            $valor=$objPHPExcel->getActiveSheet()->getCell("X".$fila)->getCalculatedValue();   
-                            $regPobHumana->setPobHumCant($valor);
-                            $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
-                       }
-
-                       if($sexo=='M'){
-                           $valor=$objPHPExcel->getActiveSheet()->getCell("Z".$fila)->getCalculatedValue();   
-                            $regPobHumana->setPobHumCant($valor);
-                            $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
-                       }
-                   }
+            if($fila>0){
                 
-           }else{
-               if($area=='URBANA'){               
-                   if($sexo=='H'){
-                       if($resultado>0)
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $fila, $resultado);
-                   }
+                  $area=$regPobHumana->getPobHumArea();
+                   $sexo=$regPobHumana->getPobhumsexo();
+                   $resultado=$regPobHumana->getPobHumCant();
+                    if(!($resultado>0))
+                        $resultado=0;
+                        
 
-                   if($sexo=='M'){
-                       if($resultado>0)
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $fila, $resultado);
-                   }
+                   if($regPobHumana->getCategoriaCenso()->getEsCalculada()){
+
+                               if($area=='URBANA'){               
+                                   if($sexo=='H'){ 
+                                        $valor=$objPHPExcel->getActiveSheet()->getCell("D".$fila)->getCalculatedValue();   
+                                        $regPobHumana->setPobHumCant($valor);
+                                        $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
+                                   }
+
+                                   if($sexo=='M'){                           
+                                        $valor=$objPHPExcel->getActiveSheet()->getCell("F".$fila)->getCalculatedValue();   
+                                        $regPobHumana->setPobHumCant($valor);
+                                        $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
+                                   }
+                               }
+
+                               if($area=='RURAL'){               
+                                   if($sexo=='H'){                           
+                                        $valor=$objPHPExcel->getActiveSheet()->getCell("J".$fila)->getCalculatedValue();   
+                                        $regPobHumana->setPobHumCant($valor);
+                                        $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
+                                   }
+
+                                   if($sexo=='M'){                           
+                                        $valor=$objPHPExcel->getActiveSheet()->getCell("L".$fila)->getCalculatedValue();   
+                                        $regPobHumana->setPobHumCant($valor);
+                                        $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
+                                   }
+                               }
+
+                               if($area=='PROMOTOR'){               
+                                   if($sexo=='H'){                           
+                                        $valor=$objPHPExcel->getActiveSheet()->getCell("X".$fila)->getCalculatedValue();   
+                                        $regPobHumana->setPobHumCant($valor);
+                                        $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
+                                   }
+
+                                   if($sexo=='M'){
+                                       $valor=$objPHPExcel->getActiveSheet()->getCell("Z".$fila)->getCalculatedValue();   
+                                        $regPobHumana->setPobHumCant($valor);
+                                        $poblacionHumanaDao->guardarPoblacionHumana($regPobHumana);
+                                   }
+                               }
+
+                       }else{
+                           if($area=='URBANA'){               
+                               if($sexo=='H'){                                   
+                                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $fila, $resultado);                                  
+                               }
+
+                               if($sexo=='M'){                                   
+                                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $fila, $resultado);
+                                   
+                               }
+                           }
+
+                           if($area=='RURAL'){               
+                               if($sexo=='H'){                               
+                                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(9, $fila, $resultado);
+                               }
+
+                               if($sexo=='M'){                                   
+                                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $fila, $resultado);
+                               }
+                           }
+
+                           if($area=='PROMOTOR'){               
+                               if($sexo=='H'){                                   
+                                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(23, $fila, $resultado);
+                               }
+
+                               if($sexo=='M'){                                   
+                                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(25, $fila, $resultado);
+                               }
+                           }
+
                }
-
-               if($area=='RURAL'){               
-                   if($sexo=='H'){
-                       if($resultado>0)
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(9, $fila, $resultado);
-                   }
-
-                   if($sexo=='M'){
-                       if($resultado>0)
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(11, $fila, $resultado);
-                   }
-               }
-
-               if($area=='PROMOTOR'){               
-                   if($sexo=='H'){
-                       if($resultado>0)
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(23, $fila, $resultado);
-                   }
-
-                   if($sexo=='M'){
-                       if($resultado>0)
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(25, $fila, $resultado);
-                   }
-               }
-               
-           }
-           
-           
-           
+                
+                
+            }
 
         }
         
                 
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
-
-		
-        //$callStartTime = microtime(true);
-
-        //echo $objPHPExcel->getActiveSheet()->getCell('B5')->getCalculatedValue().'<br />';
-        //echo $objPHPExcel->getActiveSheet()->getCell('B6')->getCalculatedValue().'<br />';
-        //$callEndTime = microtime(true);
-        //$callTime = $callEndTime - $callStartTime;
-         
-        return $this->consultarInformacionComplementariaAction();        
+        //$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        //$objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        
+        return $objPHPExcel;
+        
      }
      
-      public function procesarInfRelevanteAction(){
-        $opciones=$this->getRequest()->getSession()->get('opciones');         
+      public function procesarInfRelevanteAction($objPHPExcel){
+        
         $paoElaboracion=$this->obtenerPaoElaboracionAction();       
         $censoPoblacion=$paoElaboracion->getCesopoblacion();
         
         $infRelevante=$censoPoblacion->getInformacionRelevante();
         $regInfRel=new InformacionRelevante();
         
-        /**	Load the quadratic equation solver worksheet into memory			**/
-	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
-        $objPHPExcel->setActiveSheetIndex(3);
+        
+	//$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        $objPHPExcel->setActiveSheetIndex(0);
         $objWorksheet = $objPHPExcel->getActiveSheet();
         
-        $highestRow = $objWorksheet->getHighestRow(); // e.g. 10
-        $highestColumn = $objWorksheet->getHighestColumn(); // e.g 'F'
+        $highestRow = 160;//$objWorksheet->getHighestRow(); 
+        $highestColumn = $objWorksheet->getHighestColumn();
 
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
 
-        $fila=0;
+        $categoriasXLS=array();
         
+        $fila=0;
+        $col = 0;
+        $row=1;
+        
+        while ($row <= $highestRow) {             
+               $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;               
+               if($nombreMax)
+                $categoriasXLS[$nombreMax]=$row;               
+               ++$row;
+        }
+             
         
         foreach ($infRelevante as $regInfRel) {
             $nombreCatego=$regInfRel->getCategoriaCenso()->getDescripcionCategoria();
             
-             $col = 0;
-             $row=1;
-             $fila=0;
+            $fila=$categoriasXLS[$nombreCatego];
             
-            while ($row <= $highestRow && $fila==0 ) {             
-               $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;
-               
-               if($nombreCatego==$nombreMax){
-                   $fila=$row;                   
-               }
-               
-               ++$row;
-           }
-           
-           $resultado=$regInfRel->getInfRelCant();
-           if($resultado>0)
-                    $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(7, $fila, $resultado);
-
+            if($fila>0){
+               $resultado=$regInfRel->getInfRelCant();
+               if(!($resultado>0))
+                   $resultado=0;
+                   
+                   
+                $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(7, $fila, $resultado);
+                
+            }
         }
         
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
+        return $objPHPExcel;
         
-        return $this->consultarInformacionComplementariaAction();            
+       
   }
   
-   public function procesarInfComplementariaAction(){
-        $opciones=$this->getRequest()->getSession()->get('opciones');         
+   public function procesarInfComplementariaAction($objPHPExcel){
+        
         $paoElaboracion=$this->obtenerPaoElaboracionAction();       
         $censoPoblacion=$paoElaboracion->getCesopoblacion();
         
         $infComplementaria=$censoPoblacion->getInformacionComplementaria();
         $regInfComple=new InformacionComplementaria();
         
-        /**	Load the quadratic equation solver worksheet into memory			**/
-	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
-        $objPHPExcel->setActiveSheetIndex(3);
+        
+	//$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        $objPHPExcel->setActiveSheetIndex(0);
         $objWorksheet = $objPHPExcel->getActiveSheet();
         
-        $highestRow = $objWorksheet->getHighestRow(); // e.g. 10
-        $highestColumn = $objWorksheet->getHighestColumn(); // e.g 'F'
+        $highestRow = 160;//$objWorksheet->getHighestRow(); 
+        $highestColumn = $objWorksheet->getHighestColumn(); 
 
         $highestColumnIndex = PHPExcel_Cell::columnIndexFromString($highestColumn); // e.g. 5
 
+        $categoriasXLS=array();
+        
         $fila=0;
+        $col = 0;
+        $row=1;
+        
+        while ($row <= $highestRow) {             
+               $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;               
+               if($nombreMax)
+                    $categoriasXLS[$nombreMax]=$row;               
+               ++$row;
+        }
+             
         
         $infComDao=new InformacionComplementariaDAO($this->getDoctrine());
         
         foreach ($infComplementaria as $regInfComple) {
             $nombreCatego=$regInfComple->getCategoriaCenso()->getDescripcionCategoria();
             
-             $col = 0;
-             $row=1;
-             $fila=0;
+             $fila=$categoriasXLS[$nombreCatego];
             
-            while ($row <= $highestRow && $fila==0 ) {             
-               $nombreMax=$objWorksheet->getCellByColumnAndRow($col, $row)->getValue() ;
-               
-               if($nombreCatego==$nombreMax){
-                   $fila=$row;                   
-               }
-               
-               ++$row;
+            if($fila>0){
+                $area=$regInfComple->getAreaInfoComp();
+                $resultado=0;
+
+                if($regInfComple->getCategoriaCenso()->getEsCalculada()){
+
+                    if($area=='URBANA'){                                   
+                            $valor=$objPHPExcel->getActiveSheet()->getCell("D".$fila)->getCalculatedValue();   
+                            if($valor>0){
+                                $regInfComple->setCantidadInfoComp($valor);
+                                $infComDao->guardarInfComple($regInfComple);                                                
+                            }
+                   }
+
+                   if($area=='RURAL'){                                                  
+                            $valor=$objPHPExcel->getActiveSheet()->getCell("J".$fila)->getCalculatedValue();                        
+                             if($valor>0){
+                                $regInfComple->setCantidadInfoComp($valor);
+                                $infComDao->guardarInfComple($regInfComple);
+                             }
+
+                   }
+
+                    if($area=='PROMOTOR'){                                                  
+                            $valor=$objPHPExcel->getActiveSheet()->getCell("X".$fila)->getCalculatedValue();                        
+                             if($valor>0){
+                                $regInfComple->setCantidadInfoComp($valor);
+                                $infComDao->guardarInfComple($regInfComple);
+                             }
+                   }
+
+
+                }else{
+                   $resultado=$regInfComple->getCantidadInfoComp();              
+                    if(!($resultado>0))
+                        $resultado=0;
+                    
+                    if($area=='URBANA'){               
+                        
+                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $fila, $resultado);
+
+                   }
+
+                   if($area=='RURAL'){                                                      
+                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(9, $fila, $resultado);               
+                   }
+                   
+                    if($area=='PROMOTOR'){                                                      
+                            $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(27, $fila, $resultado);               
+                   }
+
+                }
+                
             }
-            $area=$regInfComple->getAreaInfoComp();
-            
-            if($regInfComple->getCategoriaCenso()->getEsCalculada()){
-                
-                if($area=='URBANA'){                                   
-                        $valor=$objPHPExcel->getActiveSheet()->getCell("D".$fila)->getCalculatedValue();   
-                        $regInfComple->setCantidadInfoComp($valor);
-                        $infComDao->guardarInfComple($regInfComple);                                                
-               }
-               
-               if($area=='RURAL'){                                                  
-                        $valor=$objPHPExcel->getActiveSheet()->getCell("J".$fila)->getCalculatedValue();                        
-                        $regInfComple->setCantidadInfoComp($valor);
-                        $infComDao->guardarInfComple($regInfComple);
-               }
-               
-                if($area=='PROMOTOR'){                                                  
-                        $valor=$objPHPExcel->getActiveSheet()->getCell("X".$fila)->getCalculatedValue();                        
-                        $regInfComple->setCantidadInfoComp($valor);
-                        $infComDao->guardarInfComple($regInfComple);
-               }
-               
-                
-            }else{
-               $resultado=$regInfComple->getCantidadInfoComp();              
-
-                if($area=='URBANA'){               
-                    if($resultado>0)
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(3, $fila, $resultado);
-
-               }
-
-               if($area=='RURAL'){                              
-                    if($resultado>0)
-                        $objPHPExcel->getActiveSheet()->setCellValueByColumnAndRow(5, $fila, $resultado);               
-               }
-                
-            }
-            
-           
-              
 
         }
         
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save(dirname(__FILE__).'/PAO2011_N1Especializado.final2.xls');
+        //return $this->consultarInformacionComplementariaAction();      
         
-        return $this->consultarInformacionComplementariaAction();           
+        return $objPHPExcel;
+        
   }
     
     
@@ -660,10 +689,10 @@ class AccionAdminCensoUsuarioController extends Controller{
        $request=$this->getRequest();       
        $rows='';
        
-       $page = $request->get('page'); // get the requested page 
-       $limit = $request->get('rows'); // get how many rows we want to have into the grid 
-       $sidx = $request->get('sidx'); // get index row - i.e. user click to sort 
-       $sord = $request->get('sord'); // get the direction
+       $page = $request->get('page'); 
+       $limit = $request->get('rows'); 
+       $sidx = $request->get('sidx'); 
+       $sord = $request->get('sord'); 
        if(!$sidx) $sidx =1;
        
        $paoElaboracion=$this->obtenerPaoElaboracionAction();       
@@ -846,7 +875,28 @@ class AccionAdminCensoUsuarioController extends Controller{
         $this->getDoctrine()->getEntityManager()->flush();
                                  
         return $this->consultarInformacionComplementariaAction();                  
-    }     
+    }  
+    
+    
+    
+    public function generarCensoUsuarioAction(){
+        
+       $objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+       
+       $objPHPExcel=$this->procesarPoblacionHumanaAction($objPHPExcel);
+       $objPHPExcel=$this->procesarInfRelevanteAction($objPHPExcel);
+       $objPHPExcel=$this->procesarInfComplementariaAction($objPHPExcel);       
+
+       
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="censopoblacion.xls"');
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+                                 
+        return $this->consultarInformacionComplementariaAction();                  
+    }  
     
 }
 

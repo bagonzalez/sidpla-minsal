@@ -89,5 +89,8 @@ MinSalSidPlaCensoBundle_procesarInfComplementaria:
     pattern:  /procesarInfComplementaria
     defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:procesarInfComplementaria }
 
-    
+MinSalSidPlaCensoBundle_generarCensoUsuario:
+    pattern:  /generarCensoUsuario
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:generarCensoUsuario }
+ 
     
