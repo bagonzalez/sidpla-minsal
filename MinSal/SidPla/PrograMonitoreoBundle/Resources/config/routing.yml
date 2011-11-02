@@ -59,3 +59,11 @@ MinSalSidPlaPrograMonitoreoBundle_supervisarProgramonUnidades:
     defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionUnidadesSupervisadas:supervisarProgramonUnidades }   
    
 
+MinSalSidPlaPrograMonitoreoBundle_showEvaluaciondeResultadosUNISAL:
+    pattern:  /showEvaluaciondeResultadosUNISAL
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionEvaluaciondeResultadosUnisal:showEvaluaciondeResultadosUNISAL }   
+
+MinSalSidPlaPrograMonitoreoBundle_guardarEvaluaciondeResultadosUNISAL:
+    pattern:  /guardarEvaluaciondeResultadosUNISAL
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionEvaluaciondeResultadosUnisal:guardarEvaluaciondeResultadosUNISAL }   
+

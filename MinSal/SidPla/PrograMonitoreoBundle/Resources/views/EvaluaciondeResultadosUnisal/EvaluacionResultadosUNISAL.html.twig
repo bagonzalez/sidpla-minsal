@@ -1,0 +1,233 @@
+ 
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script type="text/javascript">
+	Highcharts.theme = { colors: ['#4572A7'] };// prevent errors in default theme
+	var highchartsOptions = Highcharts.getOptions(); 
+</script>
+<script>
+    
+    
+    $(document).ready(function(){
+        {% if areasClasif is defined %} 
+                {% for area in areasClasif %}
+                     $("#{{  area.codArea }}AreaDiv").hide();
+                      $("#mostratArea{{area.codArea  }}").click(function(){ 
+                                $("#{{area.codArea  }}AreaDiv").toggle(400);
+                            }                            
+                         )
+                {% endfor %} 
+        {% endif %} 
+
+        {% if objetivos is defined %}
+                    
+                    
+                    {% for obj in objetivos %}
+                        $("#{{ obj.codObjEspUni }}Div").hide();                        
+                        
+                        $("#mostratObj{{ obj.codObjEspUni }}").click(function(){ 
+                                $("#{{ obj.codObjEspUni }}Div").toggle(400);
+                            }                            
+                         )
+                             
+                          
+                    {% endfor %} 
+        {% endif %}  
+            
+         
+                        
+            
+    });
+</script>
+    <br></br>               
+    <form id = "formulario"  action="{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarEvaluaciondeResultadosUNISAL') }}" method="post">
+        <table align="center"  >
+            <tr><td colspan="2" align="center"><h1>Evaluaci&oacute;n de Resultados - Unidad de Salud</h1>                    
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+               Los indicadores de resultados  se llenará automáticamente para algunos de dichos indicadores, pero manualmente para
+               otros. Su importancia radica en que todos estos indicadores tienen relación con algún compromiso ya sea de carácter nacional o internacional.
+           </td>
+            </tr> 
+            
+             {% if areasClasif is defined %} 
+                {% for area in areasClasif %}
+                        <tr>
+                            <td>
+                                <h3>Area:</h3>
+                            </td>
+                            <td>
+                                 <h3>&RightTriangle;<a  id="mostratArea{{ area.codArea }}" href="#">{{ area.getNombreArea }}</a></h3>                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" align="center" size="100%" >
+                                <div align="center"  class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{  area.codArea }}AreaDiv">
+                                <table align="center"  >
+                                    {% if objetivos is defined %}                                                                          
+                                            {% for obj in objetivos %}
+                                                    {% if obj.areaClaObj.codArea == area.codArea  %}
+                                                                <tr>
+                                                                    <td>
+                                                                        <h3>Objetivo Especifico:</h3>
+                                                                    </td>
+                                                                    <td>
+                                                                         <h3>&RightTriangle;<a  id="mostratObj{{ obj.codObjEspUni }}" href="#">{{ obj.descObjEspUni }}</a></h3>                                
+                                                                         <h3> Realizado: {{ obj.getPorcentajeCumplimiento(idProgramon) }} % </h3>
+                                                                    </td>
+                                                                </tr>                        
+                                                                <tr>
+                                                                        <td colspan="3" align="center" size="100%" >                            
+                                                                            <div   class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{ obj.codObjEspUni }}Div">
+                                                                                <table border="1" >
+                                                                                    <thead>
+                                                                                                           <tr>
+                                                                                                            {% if trimestre == 1 %} 
+                                                                                                              <th align="center" colspan="9" ><h3>Indicadores</h3> </th>
+                                                                                                               {% endif %}     
+                                                                                                                {% if trimestre == 2 %} 
+                                                                                                                 <th align="center" colspan="14" ><h3>Indicadores</h3> </th>
+                                                                                                                {% endif %}
+                                                                                                                {% if trimestre == 3 %} 
+                                                                                                                 <th align="center" colspan="19" ><h3>Indicadores</h3> </th>
+                                                                                                                {% endif %}
+                                                                                                                {% if trimestre == 4 %} 
+                                                                                                                 <th align="center" colspan="24" ><h3>Indicadores</h3> </th>
+                                                                                                                {% endif %}
+                                                                                                            </tr>
+                                                                                                            <tr>                                                                        
+                                                                                                                <th rowspan="3" >Indicador</th>
+                                                                                                                <th rowspan="2">Carácter del indicador</th>
+                                                                                                                <th rowspan="2">Formula 1</th>
+                                                                                                                <th rowspan="2">Formula 2</th>
+                                                                                                                {% if trimestre >= 1 %} 
+                                                                                                                    <th colspan="15" >Resultados</th>
+                                                                                                                {% endif %}
+                                                                                                                
+                                                                                                            <tr>
+                                                                                                               {% if trimestre >= 1 %} 
+                                                                                                                    <th>AL TRIM 1.</th>
+                                                                                                                    
+                                                                                                               {% endif %}
+
+                                                                                                               {% if trimestre >= 2 %} 
+
+                                                                                                                    <th>AL TRIM 2.</th>
+                                                                                                                                                                                          
+                                                                                                               {% endif %} 
+
+                                                                                                               {% if trimestre >= 3 %} 
+                                                                                                                    <th>AL TRIM 3.</th>
+                                                                                                                  
+                                                                                                               {% endif %} 
+
+                                                                                                               {% if trimestre >= 4 %}  
+                                                                                                                    <th>AL TRIM 4.</th>
+                                                                                                                    <th>AL final.</th>
+                                                                                                               {% endif %}  
+
+                                                                                                            </tr>
+
+                                                                                                            </tr>
+
+                                                                                                        </thead> 
+                                                                                                        <tfoot>
+                                                                                                            <tr>
+                                                                                                                {% if trimestre == 1 %} 
+                                                                                                                 <td align="center" colspan="9" > 
+                                                                                                                {% endif %}     
+                                                                                                                {% if trimestre == 2 %} 
+                                                                                                                 <td align="center" colspan="14" > 
+                                                                                                                {% endif %}
+                                                                                                                {% if trimestre == 3 %} 
+                                                                                                                 <td align="center" colspan="19" > 
+                                                                                                                {% endif %}
+                                                                                                                {% if trimestre == 4 %} 
+                                                                                                                 <td align="center" colspan="24" > 
+                                                                                                                {% endif %}                                                         
+                                                                                              
+                                                                                                                     <div id="container{{ obj.codObjEspUni }}" class="highcharts-container" style="height:1px; margin: 0 2em; clear:both; min-width: 1000px"></div>
+                                                                                                                 </td>
+                                                                                                            </tr> 
+                                                                                                        </tfoot>
+                                                                                                        
+                                                                                                            <tbody>
+                                                                                     {% for indi in obj.getIndicadoresSalud %}     
+                                                                                                                
+                                                                                      <tr>                       
+                                                                                    <td>
+                                                                                        {{ indi.nombreIndSalud}}
+                                                                                    </td>
+                                                                                    <td align="center">
+                                                                                        {{ indi.tipoIndicador.getNombreTipIndi }}
+                                                                                    </td>
+                                                                                    <td >
+                                                                                        {{  indi.form1IndSalud }}
+                                                                                    </td>
+                                                                                    <td align="center">
+                                                                                        {{ indi.form2IndSalud}}
+                                                                                    </td>
+                                                                                
+                                                                                      
+                                                                                    {% set suma =0 %}
+                                                                                    
+                                                                                    
+                                                                                    {% for resulEvaIndicador in indi.getEvaluacionesIndicador %} 
+                                                                                      {% if resulEvaIndicador.getEvaResul.getCodEvaRes == evalIndicador %} 
+                                                                                     {%set suma = suma + resulEvaIndicador.getResEvaInd %}
+                                                                                    <td  align="center">                                                                                    
+                                                                                       {% if resulEvaIndicador.trimEvaInd == trimestre   %}    
+                                                                                        <input name="resultadoEvaIndicador_{{ resulEvaIndicador.codEvaInd }}" size="2" value="{{ resulEvaIndicador.getResEvaInd }}"  ></input>
+                                                                                        {% else %}
+                                                                                        <input name="resultadoEvaIndicador_{{ resulEvaIndicador.codEvaInd }}" size="2" value="{{ resulEvaIndicador.getResEvaInd }}" readonly="readonly"  ></input>
+                                                                                            {% endif %} 
+                                                                                           </td> 
+                                                                                     {% if resulEvaIndicador.trimEvaInd == 4   %}
+                                                                                                   <td  align="center">  
+                                                                                              <input name="suma" size="2" value="{{ suma/4 }}"  ></input>
+                                                                                        {% else %}
+                                                                                        {% endif %}
+
+                                                                                           {% endif %}
+                                                                                          {% endfor %}
+                                                                                    
+                                                                                    </tr> 
+                                                                              
+                                                                                    </tbody>
+                                                                                   
+                                                                                   {%endfor%}
+                                                                                </table>                                        
+                                                                            </div>
+                                                                        </td>                            
+                                                                </tr>
+                                                    {%endif%}                                              
+                                            {%endfor%}                                                                                           
+                                    {%endif%}  
+                                    
+                                </table>
+                                </div>
+                            </td>                           
+                        </tr>
+                {%endfor%}
+            {%endif%}
+            
+            
+            
+            <tr>           
+                <td colspan="2" align="center">
+                <br></br>                                    
+                </td>
+            </tr>        
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Guardar" name= "agregar" id="agregar"</input>                    
+                </td>
+            </tr>        
+        </table>   
+    </form>
+    <br></br>
+    <br></br>
+
+{% endblock %}

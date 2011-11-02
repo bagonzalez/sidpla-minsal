@@ -112,7 +112,8 @@ class EvaluacionIndicador {
      */
     public function setFechEvaInd($fechEvaInd)
     {
-        $this->fechEvaInd = $fechEvaInd;
+        $date = new \DateTime($fechEvaInd);
+        $this->fechEvaInd = $date;        
     }
 
     /**
