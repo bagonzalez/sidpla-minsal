@@ -306,7 +306,7 @@ class AccionAdminCensoUsuarioController extends Controller{
         
     }
     
-     public function procesarPoblacionHumanaAction(){
+     public function procesarPoblacionHumanaAction($objPHPExcel){
          
         
          
@@ -320,7 +320,7 @@ class AccionAdminCensoUsuarioController extends Controller{
         $numfilas=count($poblacionHumana);         
         
         
-	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+	//$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
         $objPHPExcel->setActiveSheetIndex(0);
         $objWorksheet = $objPHPExcel->getActiveSheet();
         
@@ -452,10 +452,10 @@ class AccionAdminCensoUsuarioController extends Controller{
         }
         
                 
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        //$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        //$objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
         
-       
+        return $objPHPExcel;
        
         //$callStartTime = microtime(true);
 
@@ -467,7 +467,7 @@ class AccionAdminCensoUsuarioController extends Controller{
         
      }
      
-      public function procesarInfRelevanteAction(){
+      public function procesarInfRelevanteAction($objPHPExcel){
         
         $paoElaboracion=$this->obtenerPaoElaboracionAction();       
         $censoPoblacion=$paoElaboracion->getCesopoblacion();
@@ -476,7 +476,7 @@ class AccionAdminCensoUsuarioController extends Controller{
         $regInfRel=new InformacionRelevante();
         
         
-	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+	//$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
         $objPHPExcel->setActiveSheetIndex(0);
         $objWorksheet = $objPHPExcel->getActiveSheet();
         
@@ -515,13 +515,15 @@ class AccionAdminCensoUsuarioController extends Controller{
             }
         }
         
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        //$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        //$objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        
+        return $objPHPExcel;
         
        
   }
   
-   public function procesarInfComplementariaAction(){
+   public function procesarInfComplementariaAction($objPHPExcel){
         
         $paoElaboracion=$this->obtenerPaoElaboracionAction();       
         $censoPoblacion=$paoElaboracion->getCesopoblacion();
@@ -530,7 +532,7 @@ class AccionAdminCensoUsuarioController extends Controller{
         $regInfComple=new InformacionComplementaria();
         
         
-	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+	//$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
         $objPHPExcel->setActiveSheetIndex(0);
         $objWorksheet = $objPHPExcel->getActiveSheet();
         
@@ -617,10 +619,12 @@ class AccionAdminCensoUsuarioController extends Controller{
 
         }
         
-        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        $objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+        //$objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        //$objWriter->save(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
         
-        return $this->consultarInformacionComplementariaAction();      
+        //return $this->consultarInformacionComplementariaAction();      
+        
+        return $objPHPExcel;
         
   }
     
@@ -898,15 +902,13 @@ class AccionAdminCensoUsuarioController extends Controller{
     
     public function generarCensoUsuarioAction(){
         
-       $this->procesarPoblacionHumanaAction();
-       $this->procesarInfRelevanteAction();
-       $this->procesarInfComplementariaAction();
+       $objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
        
+       $objPHPExcel=$this->procesarPoblacionHumanaAction($objPHPExcel);
+       $objPHPExcel=$this->procesarInfRelevanteAction($objPHPExcel);
+       $objPHPExcel=$this->procesarInfComplementariaAction($objPHPExcel);       
 
        
-       /**	Load the quadratic equation solver worksheet into memory			**/
-	$objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
-        // Redirect output to a client’s web browser (Excel5)
         header('Content-Type: application/vnd.ms-excel');
         header('Content-Disposition: attachment;filename="censopoblacion.xls"');
         header('Cache-Control: max-age=0');
