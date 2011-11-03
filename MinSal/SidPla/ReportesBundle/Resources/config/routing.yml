@@ -37,4 +37,9 @@ MinSalSidPlaReportesBundle_showConsolidadosNivelCentral:
 #REPORTE EMPLEADOS DE UNIDADES ORG  
 MinSalSidPlaReportesBundle_reporteEmpleadosOrg:
     pattern:  /reporteEmpleadosOrg
-    defaults: { _controller: MinSalSidPlaReportesBundle:Admin:reporteEmpleadosOrg} 
+    defaults: { _controller: MinSalSidPlaReportesBundle:Admin:reporteEmpleadosOrg}
+
+#COMPROMISO CUMPLIMIENTO
+MinSalSidPlaReportesBundle_reporteCompromisoCumplimiento:
+    pattern:  /reporteCompromisoCumplimiento
+    defaults: { _controller: MinSalSidPlaReportesBundle:ProgramacionMonitoreo:reporteCompromisoCumplimiento}

@@ -218,18 +218,19 @@ class AccionCompromisoCumplimientoController extends Controller {
         $trimestre = 1;
         $promMonDao = new CompromisoCumplimientoDao($this->getDoctrine());
         $actividadesProgramon = $promMonDao->getActividades($idProgramon, $trimestre);
-
+        $anio=$paoElaboracion->getAnio();
+        $idUniOrg=$paoElaboracion->getUnidadOrganizativa()->getIdUnidadOrg();
         $uniControl = new UnidadOrganizativa();
         $uniControl = $this->obtenerUnidadOrg();
         $idUnidad = $uniControl->getIdUnidadOrg();
 
         $compromisoDao = new CompromisoCumplimientoDao($this->getDoctrine());
-        
         $resultadoActividadDao=new ResulActividadDao($this->getDoctrine());
         
 
         return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:CompromisoCumplimiento.html.twig', array('opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon,
-                    'trimestre' => $trimestre, 'idUnidad' => $idUnidad, 'id' => $idProgramon, 'compromisoDao' => $compromisoDao));
+                    'trimestre' => $trimestre, 'idUnidad' => $idUnidad, 'id' => $idProgramon, 'compromisoDao' => $compromisoDao,
+                    'anio'=>$anio,'idUniOrg'=>$idUniOrg));
     }
 
     public function ingresoActividadesEnRetrasoAction() {

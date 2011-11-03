@@ -3,9 +3,8 @@
 {% block body %}
     <script type="text/javascript">
       $(document).ready(function(){
-          
-         
-
+       
+       $('#ingresar').button();
         var myGrid = $('#theGrid');        
         myGrid.jqGrid({ 
           url: 'consultarCategoriaCensoJSON',
@@ -14,26 +13,21 @@
           colNames:['Id','Descripcion', 'Activo', 'Tabla', 'Bloque'],
           colModel:[
             { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}  },
-            { name:'descripcion', index: 'descripcion', width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:1, label: "Descripcion",elmprefix:"(*)"},editrules:{required:true}  },
-            { name:'activo', index: 'activo',width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:2, label: "Activo",elmprefix:"(*)"},editrules:{required:true} },
+            { name:'descripcion', index: 'descripcion', width:450,editable:true,editoptions:{size:25}, formoptions:{ rowpos:1, label: "Descripcion",elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'activo', index: 'activo',align:"center",width:75,editable:true,editoptions:{size:25}, formoptions:{ rowpos:2, label: "Activo",elmprefix:"(*)"},editrules:{required:true} },
             { name:'divtabla', index: 'divtabla', width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:3, label: "Tabla",elmprefix:"(*)"},editrules:{required:true}},  
-            { name:'bloque', index: 'bloque', width:150,editable:true,editoptions:{size:25}, formoptions:{ rowpos:4, label: "Bloque",elmprefix:"(*)"},editrules:{required:true} }],            
+            { name:'bloque', index: 'bloque', width:275,editable:true,editoptions:{size:25}, formoptions:{ rowpos:4, label: "Bloque",elmprefix:"(*)"},editrules:{required:true} }],            
           rowNum:10,
           rowList:[10,20,30],
           multiselect: false,
+          loadonce:true,
           pager: jQuery('#pager'),
           viewrecords: true,          
-            caption: 'Categoria Censo',
-            height: "100%",
-            editurl: 'manttEmpleadoEdicion'
+          caption: 'Categoria Censo',
+          height: "100%"
         });
-        myGrid.jqGrid('navGrid','#pager',
-        {edit:false,add:false,del:true},
-        {},
-        {},
-        {},
-        {}
-        );        
+        myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,refresh:false,search:false}
+        ).hideCol('id').hideCol('divtabla');        
          
         
        

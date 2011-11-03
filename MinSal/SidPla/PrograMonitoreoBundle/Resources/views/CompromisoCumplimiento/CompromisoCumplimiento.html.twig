@@ -4,16 +4,20 @@
 	Highcharts.theme = { colors: ['#4572A7'] };// prevent errors in default theme
 	var highchartsOptions = Highcharts.getOptions(); 
 
+    </script>
+<script>
+$(document).ready(function(){
+         $('#reporte').button();
+         $('#reportCC').button();
+         
           $('#reporte').click(function() {
               $('#formulario').get(0).setAttribute('action', '{{ path('MinSalSidPlaReportesBundle_reporteActividadesAtrasadas')}}');
               
           });
-    </script>
-<script>
-    
-    
-    $(document).ready(function(){
-         $('#reporte').button();
+          $('#reportCC').click(function() {
+             this.form.action= '{{ path('MinSalSidPlaReportesBundle_reporteCompromisoCumplimiento')}}';
+              
+          });
          {% if objetivos is defined %}
                     
                     
@@ -99,7 +103,13 @@
                     Seleccione un objetivo especifico y resultado esperado para ingresar la justificacion del atraso de actividades. <br>
                     De clic en el boton  Compromiso para registrar los hallazgos,medidas adoptar etc.
                 </td>
-            </tr>            
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                  <input type="submit" value="Reporte de Actividades Atrasadas" name= "reporte" id="reporte"/>
+                  <input type="submit" value="Hoja Compromiso Cumplimiento" name= "reportCC" id="reportCC"/>
+                </td>
+            </tr>
             {% if objetivos is defined %}                                                                          
                     {% for obj in objetivos %}
                         <tr>
@@ -293,10 +303,9 @@
                     <input type='hidden' name='trimestre' id="trimestre" value='{{trimestre}}' />
                     <input type='hidden' name='id' id="id" value='{{id}}' />
                     <input type='hidden' name='idresact' id="idresact" value='' />
-                    
-                  <!--  <input type="submit" value="Guardar" name= "agregar" id="agregar"</input>    -->
-                    <input type="submit" value="Reporte de Actividades Atrasadas" name= "reporte" id="reporte"</input>
-                </td>
+                    <input type='hidden' name='idUniOrg' id="idUniOrg" value='{{idUniOrg}}' />
+                    <input type='hidden' name='anio' id="anio" value='{{anio}}' />
+                 </td>
             </tr>        
         </table>   
     </form>

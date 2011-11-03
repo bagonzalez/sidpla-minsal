@@ -1,12 +1,11 @@
 <?php
-
 namespace MinSal\SidPla\ReportesBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use \Java;
 use \JavaClass;
 
-class PaoController extends Controller {
+class ProgramacionMonitoreoController extends Controller {
 
     public function crearConexion() {
         $memo = new Java('org.postgresql.Driver');
@@ -21,20 +20,24 @@ class PaoController extends Controller {
         $Conn = $drm->getConnection("jdbc:postgresql://" . $host . ":" . $port . "/" . $db, $userdb, $password);
         return $Conn;
     }
-
-    public function reporteJustificacionAction() {
+    
+    //HOJA DE COMPROMISO CUMPLIMIENTO
+    public function reporteCompromisoCumplimientoAction() {
         $request = $this->getRequest();
-        $JustiPao = $request->get('justificacion');
-        $id = $request->get('id');
+        $anio = $request->get('anio');
+        $trimestre= $request->get('trimestre');
+        $uniOrg = $request->get('idUniOrg');
 
         try {
 
             $compileManager = new JavaClass("net.sf.jasperreports.engine.JasperCompileManager");
-            $report = $compileManager->compileReport(__DIR__ . "/../Resources/jasperReports/reportJustificacion/reporteJustificacion.jrxml");
+            $report = $compileManager->compileReport(__DIR__ . "/../Resources/jasperReports/reportCompromisoCumplimiento/CompromisoCumplimiento.jrxml");
             $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
 
             $params = new Java("java.util.HashMap");
-            $params->put("idJustificacion", new java("java.lang.Integer", $id));
+            $params->put("ve_anio", new java("java.lang.Integer", $anio));
+            $params->put("ve_trimestre", new java("java.lang.Integer", $trimestre));
+            $params->put("ve_uniorg", new java("java.lang.Integer", $uniOrg));
 
             $Conn = $this->crearConexion();
 
