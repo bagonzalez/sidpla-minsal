@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consolidadocentralSubreporte1SubR1" language="groovy" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consolidadocentralSubreporte1SubR1" pageWidth="802" pageHeight="555" orientation="Landscape" columnWidth="802" leftMargin="0" rightMargin="0" topMargin="0" bottomMargin="0">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="promonID" class="java.lang.Integer"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/home/edwin/Escritorio/reportes/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/jasperReports/reportConsolidadosDep/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="obj" class="java.lang.Integer"/>
 	<queryString>
@@ -53,14 +53,14 @@
 		<band height="48" splitType="Stretch">
 			<subreport>
 				<reportElement x="0" y="48" width="200" height="0"/>
-				<subreportParameter name="resultadoID">
-					<subreportParameterExpression><![CDATA[$F{resesp_codigo}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="promonID">
 					<subreportParameterExpression><![CDATA[$F{promon_codigo}]]></subreportParameterExpression>
 				</subreportParameter>
+				<subreportParameter name="resultadoID">
+					<subreportParameterExpression><![CDATA[$F{resesp_codigo}]]></subreportParameterExpression>
+				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["consolidadocentralSubreporte1SubR1_subreport1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"consolidadocentralSubreporte1SubR1_subreport1.jasper"]]></subreportExpression>
 			</subreport>
 			<textField>
 				<reportElement mode="Opaque" x="401" y="0" width="29" height="48" backcolor="#D9CBDC"/>

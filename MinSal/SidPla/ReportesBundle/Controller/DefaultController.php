@@ -117,10 +117,14 @@ class DefaultController extends Controller {
          $compileManager = new JavaClass("net.sf.jasperreports.engine.JasperCompileManager");
          $report = $compileManager->compileReport(__DIR__ . "/../Resources/jasperReports/reportConsolidadosDep/consolidadocentral.jrxml");
          $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
+         
          $params = new Java("java.util.HashMap");
-         $params->put("tipoUnidad", new java("java.lang.String", $tipoUnidad)); //asignando valor al parametro
+         $params->put("anioPao", new java("java.lang.Integer", $anio)); //asignando valor al parametro
+         
          $Conn = $this->crearConexion();
+         
          $jasperPrint = $fillManager->fillReport($report, $params, $Conn);
+         
          $outputPath = realpath(".") . "/" . "output.pdf"; //mostrar el reporte en pdf
          $exportManager = new JavaClass("net.sf.jasperreports.engine.JasperExportManager");
          $exportManager->exportReportToPdfFile($jasperPrint, $outputPath);
