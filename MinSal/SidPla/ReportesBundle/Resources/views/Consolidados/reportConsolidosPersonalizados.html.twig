@@ -3,14 +3,21 @@
 
 {% block body %}
 <script type="text/javascript">
-	$("#formulario").validate();
+$(document).ready(function(){
+    $('#reporteConsolidado').click(function() {
+            this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteConsolidadoNivelCentral')}}';
+    });
+    
+    $('#reporteMatrix').click(function() {
+            this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteMatrizdeObjetivosyResultados')}}';
+    });
+});	
 
-
-    </script>
+ </script>
 
 
     <br></br>               
-    <form id = "formulario"  action="{{ path('MinSalSidPlaReportesBundle_reporteConsolidadoNivelCentral')}}" method="post">
+    <form id = "formulario"  action="" method="post">
         <table align="center"  >
             <tr><td colspan="10" align="center"><h1>Reportes Consolidados</h1>                    
                 </td>
@@ -44,7 +51,7 @@
                         
                         
                         <td>
-                        <input type="submit" value="Generar Reporte" name= "reporte" id="reporte"</input>
+                        <input type="submit" value="Generar Reporte" name= "reporte" id="reporteConsolidado"</input>
                         </td>
                         </tr> 
                         
@@ -71,7 +78,7 @@
                         
                         
                         <td>
-                        <input type="submit" value="Generar Reporte" name= "reporte2" id="reporte2"</input>
+                        <input type="submit" value="Generar Reporte" name= "reporte2" id="reporteMatrix"</input>
                         </td>
                         </tr> 
             

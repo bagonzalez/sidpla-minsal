@@ -1,0 +1,278 @@
+{# SIDPLA - MINSAL
+   Copyright (C) 2011  Bruno González   e-mail: bagonzalez.sv EN gmail.com
+   Copyright (C) 2011  Universidad de El Salvador
+
+  This program is free software: you can redistribute it and/or modify
+  it under the terms of the GNU General Public License as published by
+  the Free Software Foundation, either version 3 of the License, or
+  (at your option) any later version.
+
+  This program is distributed in the hope that it will be useful,
+  but WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU General Public License for more details.
+
+  You should have received a copy of the GNU General Public License
+  along with this program.  If not, see <http://www.gnu.org/licenses/>. #}
+
+ 
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+{% block body %}
+<script>
+    
+    
+    $(document).ready(function(){
+
+        {% if areasClasif is defined %} 
+                {% for area in areasClasif %}
+                     $("#{{  area.codArea }}AreaDiv").hide();
+                      $("#mostratArea{{area.codArea  }}").click(function(){ 
+                                $("#{{area.codArea  }}AreaDiv").toggle(400);
+                            }                            
+                         )
+                {% endfor %} 
+        {% endif %} 
+        {% if objetivos is defined %}
+                    
+                    
+                    {% for obj in objetivos %}
+                        $("#{{ obj.codObjEspUni }}Div").hide();                        
+                        
+                        $("#mostratObj{{ obj.codObjEspUni }}").click(function(){ 
+                                $("#{{ obj.codObjEspUni }}Div").toggle(400);
+                            }                            
+                         )
+                             
+                          {% for res in obj.getResultEspObjT %}                                         
+                          
+                          
+                                $("#{{ res.codResEspUni }}ResDiv").hide();  
+                                
+                                $("#mostratRes{{ res.codResEspUni }}").click(function(){ 
+                                        $("#{{ res.codResEspUni }}ResDiv").toggle(400);
+                                    }                            
+                                 )
+                          {% endfor %}
+                    {% endfor %} 
+        {% endif %}  
+            
+         
+                        
+            
+    });
+</script>
+
+    <br></br>               
+    <form id = "formulario"  action="{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarProgramacioUniSal') }}" method="post">
+        <table align="center"  >
+            <tr><td colspan="2" align="center"><h1>Ingreso de Programacion de Actividades - Programaci&oacute;n Monitoreo</h1>                    
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2" align="center">
+                    Seleccione un objetivo especifico y resultado esperado para ingresar sus resultados de actividades. <br>
+                    Cuando ingrese los resultados, seran notificados los responsables de la dependencias, asi como las Unidades que dependen de sus actividades.
+                </td>
+            </tr>            
+            {% if areasClasif is defined %} 
+                {% for area in areasClasif %}
+                        <tr>
+                            <td>
+                                <h3>Clasificaci&oacute;n:</h3>
+                            </td>
+                            <td>
+                                 <h3>&RightTriangle;<a  id="mostratArea{{ area.codArea }}" href="#">{{ area.getNombreArea }}</a></h3>                                
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" >
+                                <div align="center"  class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{  area.codArea }}AreaDiv">
+                                <table align="center"  >
+                                        {% if objetivos is defined %}                                                                          
+                                            {% for obj in objetivos %}
+                                                {% if obj.areaClaObj.codArea == area.codArea  %}
+                                                                <tr>
+                                                                    <td>
+                                                                        <h3>Objetivo Especifico:</h3>
+                                                                    </td>
+                                                                    <td>
+                                                                         <h3>&RightTriangle;<a  id="mostratObj{{ obj.codObjEspUni }}" href="#">{{ obj.descObjEspUni }}</a></h3>                                
+                                                                    </td>
+                                                                </tr>                        
+                                                                <tr>
+                                                                        <td colspan="2" align="center" size="100%" >                            
+                                                                            <div   class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{ obj.codObjEspUni }}Div">
+                                                                                <table border="1" >
+                                                                                    {% for res in obj.getResultEspObjT %}                                               
+                                                                                       {# if( (res.unidadOrganizativa.getIdUnidadOrg == idUnidad) or (res.unidadOrganizativa is null ) ) #}                                                                                                
+                                                                                            <tr>
+                                                                                                <td>
+                                                                                                    <h4>Resultado Esperado:</h4>
+                                                                                                </td>
+                                                                                                <td>
+                                                                                                    <h4> <a  id="mostratRes{{ res.codResEspUni }}" href="#">{{ res.descResEspUni }}</a></h4>
+                                                                                                    {#<h4> Realizado : {{ res.getPorcentajeCumplimiento }} % </h4>
+                                                                                                    <h4> Costo Real : $ {{ res.getCostoTotalReal }} </h4>
+                                                                                                    <h4> Costo Programado : $ {{ res.getCostoTotalProgramado }} </h4>#}                                                            
+                                                                                                </td>
+                                                                                            </tr>                                                                                                        
+                                                                                            <tr>
+                                                                                                <td colspan="3" >
+                                                                                                    <div align="center"  class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{ res.codResEspUni }}ResDiv">
+                                                                                                        <table border="1">
+                                                                                                        <thead>
+                                                                                                            <tr>
+                                                                                                                {% if mes == 1 %} 
+                                                                                                                    <th align="center" colspan="9" ><h3>Actividades</h3> </th>
+                                                                                                                {% endif %}     
+                                                                                                                {% if mes == 2 %} 
+                                                                                                                 <th align="center" colspan="14" ><h3>Actividades</h3> </th>
+                                                                                                                {% endif %}
+                                                                                                                {% if mes == 3 %} 
+                                                                                                                 <th align="center" colspan="19" ><h3>Actividades</h3> </th>
+                                                                                                                {% endif %}
+                                                                                                                {% if mes == 4 %} 
+                                                                                                                 <th align="center" colspan="24" ><h3>Actividades</h3> </th>
+                                                                                                                {% endif %}
+                                                                                                            </tr>
+                                                                                                            <tr>                                                                        
+                                                                                                                <th rowspan="2" >Descripcion</th>
+                                                                                                                <th rowspan="2">Meta Anual</th>
+                                                                                                                <th rowspan="2">Responsable</th>
+                                                                                                                <th rowspan="2">Beneficiarios</th>
+                                                                                                                <th rowspan="2">Costo Programado</th>
+                                                                                                                {% if mes >= 1 %} 
+                                                                                                                    <th colspan="1" >Enero</th>
+                                                                                                                {% endif %}
+                                                                                                                {% if mes >= 2 %} 
+                                                                                                                    <th colspan="1" >Febrero</th>
+                                                                                                                {% endif %}
+                                                                                                                {% if mes >= 3 %} 
+                                                                                                                    <th colspan="1" >Marzo</th>
+                                                                                                                {% endif %}
+                                                                                                                {% if mes >= 4 %} 
+                                                                                                                    <th colspan="1" >Abril</th>
+                                                                                                                {% endif %}
+                                                                                                                {% if mes >= 5 %} 
+                                                                                                                    <th colspan="1" >Mayo</th>
+                                                                                                                {% endif %}
+                                                                                                                {% if mes >= 6 %} 
+                                                                                                                    <th colspan="1" >Junio</th>
+                                                                                                                {% endif %}
+                                                                                                                {% if mes >= 7 %} 
+                                                                                                                    <th colspan="1" >Julio</th>
+                                                                                                                {% endif %}
+                                                                                                                {% if mes >= 8 %} 
+                                                                                                                    <th colspan="1" >Agosto</th>
+                                                                                                                {% endif %}  
+                                                                                                                {% if mes >= 9 %} 
+                                                                                                                    <th colspan="1" >Septiembre</th>
+                                                                                                                {% endif %}  
+                                                                                                                {% if mes >= 10 %} 
+                                                                                                                    <th colspan="1" >Octubre</th>
+                                                                                                                {% endif %}  
+                                                                                                                {% if mes >= 11 %} 
+                                                                                                                    <th colspan="1" >Noviembre</th>
+                                                                                                                {% endif %}  
+                                                                                                                {% if mes >= 12 %} 
+                                                                                                                    <th colspan="1" >Diciembre</th>
+                                                                                                                {% endif %}  
+
+                                                                                                            <tr>
+                                                                                                               {% for i in range(1, mes) %} 
+                                                                                                                    <th>Program.</th>
+                                                                                                               {% endfor %} 
+
+                                                                                                            </tr>
+
+                                                                                                            </tr>
+
+                                                                                                        </thead> 
+                                                                                                        <tfoot>
+                                                                                                            <tr>
+                                                                                                                {% if mes == 1 %} 
+                                                                                                                 <td align="center" colspan="9" > 
+                                                                                                                {% endif %}     
+                                                                                                                {% if mes == 2 %} 
+                                                                                                                 <td align="center" colspan="14" > 
+                                                                                                                {% endif %}
+                                                                                                                {% if mes == 3 %} 
+                                                                                                                 <td align="center" colspan="19" > 
+                                                                                                                {% endif %}
+                                                                                                                {% if mes == 4 %} 
+                                                                                                                 <td align="center" colspan="24" > 
+                                                                                                                {% endif %}                                                                                 
+
+                                                                                                                 </td>
+                                                                                                            </tr> 
+                                                                                                        </tfoot>
+                                                                                                        <tbody>
+                                                                                                        {% for actividadAux in res.actividadesTemplate %}                                                                       
+                                                                                                            {% for actividad in actividades %}                                                                     
+                                                                                                               {% if actividadAux.codActUniTemp == actividad.actTemp.codActUniTemp %}                                                                            
+                                                                                                                        <tr>
+                                                                                                                            <td>
+                                                                                                                                {{ actividadAux.descActUniTemp }}
+                                                                                                                            </td>
+                                                                                                                            <td align="center">
+                                                                                                                                <input name="metaAnualActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividad.metaAnualActUni }}"  ></input>
+                                                                                                                            </td>
+                                                                                                                            <td>
+                                                                                                                                <input name="responsableActividadUniSal_{{actividad.codActUni }}"  value="{{ actividad.getResponsableActUni }}"  ></input>                                                                                       
+                                                                                                                            </td>
+                                                                                                                            <td align="center">
+                                                                                                                                <input name="actividadUniSal_{{actividad.codActUni }}"  value="{{ actividad.getBeneActUni }}"  ></input>
+                                                                                                                            </td>
+                                                                                                                            <td align="center">
+                                                                                                                                <input name="costoProgramon_{{actividad.codActUni }}" size="2" value="{{ actividad.getCosto }}"  ></input>
+                                                                                                                            </td>
+                                                                                                                            {% for resultadoAct in actividad.getResultadoactUniSal %}
+                                                                                                                                {% if mes >= resultadoAct.mes  %}
+                                                                                                                                    <td align="center">
+                                                                                                                                        <input name="resultadoProgramado_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActProgramado }}"  ></input>
+                                                                                                                                    </td>
+
+                                                                                                                                {%  endif%}                                                                                    
+                                                                                                                            {% endfor %}
+                                                                                                                        </tr>                                                                            
+                                                                                                               {% endif %}
+                                                                                                            {% endfor %}
+                                                                                                        {% endfor %}                                                                                
+                                                                                                        </tbody>
+                                                                                                        </table>                                                                
+                                                                                                    </div>
+                                                                                                </td>
+                                                                                            </tr>                                                    
+                                                                                        {# endif #}
+                                                                                    {% endfor %}
+                                                                                </table>                                        
+                                                                            </div>
+                                                                        </td>                            
+                                                                </tr>
+                                                {% endif %}                                               
+                                            {% endfor %}                                                                                           
+                                    {% endif %}  
+                                </table>
+                                </div>
+                            </td>                           
+                        </tr>
+                {% endfor %}
+            {% endif %}
+            
+          
+            <tr>           
+                <td colspan="2" align="center">
+                <br></br>                                    
+                </td>
+            </tr>        
+            <tr>
+                <td colspan="2" align="center">
+                    <input type="submit" value="Guardar" name= "agregar" id="agregar"</input>                    
+                </td>
+            </tr>        
+        </table>   
+    </form>
+    <br></br>
+    <br></br>
+
+{% endblock %}

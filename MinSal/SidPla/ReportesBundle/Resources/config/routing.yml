@@ -28,6 +28,11 @@ MinSalSidPlaReportesBundle_reporteInfoGeneral:
 MinSalSidPlaReportesBundle_reporteConsolidadoNivelCentral:
     pattern:  /reporteConsolidadoNivelCentral
     defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteConsolidadoNivelCentral } 
+    
+MinSalSidPlaReportesBundle_reporteMatrizdeObjetivosyResultados:
+    pattern:  /reporteMatrizdeObjetivosyResultados
+    defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteMatrizdeObjetivosyResultados } 
+
 
 #ACCIONCONSOLIDADOSNIVELCENTRAL
 MinSalSidPlaReportesBundle_showConsolidadosNivelCentral:

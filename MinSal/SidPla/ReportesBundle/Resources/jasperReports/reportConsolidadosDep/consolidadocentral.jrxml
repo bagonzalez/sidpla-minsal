@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consolidadocentral" language="groovy" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consolidadocentral" pageWidth="842" pageHeight="595" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/home/edwin/Escritorio/reportes/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/jasperReports/reportConsolidadosDep/"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="tipoUnidad" class="java.lang.String"/>
+	<parameter name="anioPao" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      uorg.uniorg_codigo,uorg.uniorg_nombre,pao.pao_anio,promon.promon_codigo
@@ -16,12 +18,12 @@ FROM
 WHERE
      pao.pao_codigo =promon.pao_codigo AND  uorg.uniorg_codigo = pao.uniorg_codigo AND
      caractorg.uniorg_codigo=uorg.uniorg_codigo AND pao.carorg_codigo=caractorg.carorg_codigo AND
-     uorg.uniorg_tipounidad = $P{tipoUnidad} AND pao.pao_anio=2011 ORDER BY
+     uorg.uniorg_tipounidad = '1' AND pao.pao_anio=$P{anioPao} ORDER BY
      uniorg_codigo ASC]]>
 	</queryString>
 	<field name="uniorg_codigo" class="java.lang.Integer"/>
 	<field name="uniorg_nombre" class="java.lang.String"/>
-	<field name="pao_anio" class="java.math.BigDecimal"/>
+	<field name="pao_anio" class="java.lang.Integer"/>
 	<field name="promon_codigo" class="java.lang.Integer"/>
 	<variable name="uniorg_nombre_1" class="java.lang.Integer" resetType="Column" calculation="DistinctCount">
 		<variableExpression><![CDATA[$F{uniorg_nombre}]]></variableExpression>
@@ -79,6 +81,11 @@ WHERE
 				</textElement>
 				<text><![CDATA[Año:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="408" y="80" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pao_anio}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -105,11 +112,14 @@ WHERE
 			</textField>
 			<subreport>
 				<reportElement mode="Opaque" x="0" y="46" width="274" height="1" backcolor="#DEE8F1"/>
-				<subreportParameter name="promonID">
-					<subreportParameterExpression><![CDATA[$F{promon_codigo}]]></subreportParameterExpression>
+				<subreportParameter name="anioPao">
+					<subreportParameterExpression><![CDATA[$F{pao_anio}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="idUnidad">
+					<subreportParameterExpression><![CDATA[$F{uniorg_codigo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["consolidadocentralSubreporte1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"consolidadocentralSubreporte1.jasper"]]></subreportExpression>
 			</subreport>
 			<staticText>
 				<reportElement mode="Opaque" x="0" y="25" width="192" height="22" backcolor="#DEE8F1"/>

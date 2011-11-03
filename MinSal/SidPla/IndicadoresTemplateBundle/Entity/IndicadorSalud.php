@@ -24,7 +24,7 @@ class IndicadorSalud {
     /**
      * @var string $nombreIndSalud
      *
-     * @ORM\Column(name="indsalu_nombre", type="string", length=100)
+     * @ORM\Column(name="indsalu_nombre", type="string", length=300)
      */
     private $nombreIndSalud;
 
@@ -38,7 +38,7 @@ class IndicadorSalud {
     /**
      * @var string $form2IndSalud
      *
-     * @ORM\Column(name="indsalu_formula2", type="string", length=50)
+     * @ORM\Column(name="indsalu_formula2", type="string", length=250)
      */
     private $form2IndSalud;
 

@@ -33,6 +33,12 @@
          $('#categoriaCenso').css("width", '150px');
           
        
+       $('#generarRepor').click(function() {
+           
+              $('#censoform').get(0).setAttribute('action', '{{ path('MinSalSidPlaCensoBundle_generarCensoUsuario') }}');                    
+              $('#censoform').submit();
+           
+       });
                              
           $('#btnVerValorCategoria').click(function() {
                 
@@ -140,12 +146,17 @@
      
  </script>
 <br></br>
+
 <h1 align="center" class="demoHeaders">CENSO GENERAL DEL AREA GEO-POBLACIONAL</h1>
  <table align="center" id="datosviviendaypoblacion"  >
                     <tr>
                         <td width="100%" colspan="10" align="center" >CLASIFICACION DEL AREA GEO-POBLACIONAL<br></td>
                     </tr>
-
+                    <tr>
+                        <form id="censoform">
+                        <td colspan="10" align="center"><button  id="generarRepor">Generar Censo Poblacion</button></td>
+                        </form>
+                    </tr>
                     <tr>
                         <td width="90%" colspan="9"   >                           
                             <select  id="categoriaCenso" name="categoriaCenso">
@@ -155,6 +166,7 @@
                         <td><button size="10%" id="btnVerValorCategoria" >...</button></td>
                     </tr>
  </table>
+
 
 <div id="tabs">
         <ul>
