@@ -70,7 +70,8 @@ class DefaultController extends Controller {
 
     public function reporteMatrizdeObjetivosyResultadosAction() {
         $request = $this->getRequest();
-        $tipoUnidad = $request->get('tipoUnidad');
+        $tipoUnidad = $request->get('tipoUnidadec');
+        $anio = $request->get('anioec');
 
         try {
             //compilado reporte y cargando en memoria
@@ -79,8 +80,8 @@ class DefaultController extends Controller {
             $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
             //pasando parametros al reporte
             $params = new Java("java.util.HashMap");
-            $params->put("tipoUnidad", new java("java.lang.Integer", $tipoUnidad)); //asignando valor al parametro
-
+            $params->put("tipoUnidad", new java("java.lang.String", $tipoUnidad)); //asignando valor al parametro
+            $params->put("anio", new java("java.lang.Integer", $anio));
             $Conn = $this->crearConexion();
             //se llena el reporte con la informacion y parametros 
             $jasperPrint = $fillManager->fillReport($report, $params, $Conn);
