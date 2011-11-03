@@ -7,19 +7,32 @@
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
 		<defaultValueExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/jasperReports/reportMatrizdeObjetivosyResultados/"]]></defaultValueExpression>
 	</parameter>
+	<parameter name="anioPao" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="idUnidad" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
-     sidpla_objetivoespecifico."objesp_codigo" AS sidpla_objetivoespecifico_objesp_codigo,
-     sidpla_objetivoespecifico."objesp_descripcion" AS sidpla_objetivoespecifico_objesp_descripcion,
-     sidpla_objetivoespecifico."promon_codigo" AS sidpla_objetivoespecifico_promon_codigo,
-     sidpla_programacionmonitoreo."promon_codigo" AS sidpla_programacionmonitoreo_promon_codigo
+  sidpla_objetivoespecifico.objesp_codigo,
+  sidpla_objetivoespecifico.objesp_descripcion,
+  sidpla_programacionmonitoreo.promon_codigo
 FROM
-     "public"."sidpla_programacionmonitoreo" sidpla_programacionmonitoreo INNER JOIN "public"."sidpla_objetivoespecifico" sidpla_objetivoespecifico ON sidpla_programacionmonitoreo."promon_codigo" = sidpla_objetivoespecifico."promon_codigo" AND sidpla_programacionmonitoreo."promon_codigo"= $P{promonID}]]>
+  public.sidpla_caracteristicaorganizaci,
+  public.sidpla_objetivoespecifico,
+  public.sidpla_pao,
+  public.sidpla_programacionmonitoreo
+WHERE
+  sidpla_caracteristicaorganizaci.carorg_codigo = sidpla_objetivoespecifico.carorg_codigo AND
+  sidpla_pao.carorg_codigo = sidpla_caracteristicaorganizaci.carorg_codigo AND
+  sidpla_programacionmonitoreo.pao_codigo = sidpla_pao.pao_codigo AND
+  sidpla_pao.pao_anio=$P{anioPao} AND
+  sidpla_caracteristicaorganizaci.uniorg_codigo=$P{idUnidad};]]>
 	</queryString>
-	<field name="sidpla_objetivoespecifico_objesp_codigo" class="java.lang.Integer"/>
-	<field name="sidpla_objetivoespecifico_objesp_descripcion" class="java.lang.String"/>
-	<field name="sidpla_objetivoespecifico_promon_codigo" class="java.lang.Integer"/>
-	<field name="sidpla_programacionmonitoreo_promon_codigo" class="java.lang.Integer"/>
+	<field name="objesp_codigo" class="java.lang.Integer"/>
+	<field name="objesp_descripcion" class="java.lang.String"/>
+	<field name="promon_codigo" class="java.lang.Integer"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -47,15 +60,15 @@ FROM
 					<font size="8" isBold="true" isItalic="false"/>
 					<paragraph leftIndent="1" rightIndent="1"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{sidpla_objetivoespecifico_objesp_descripcion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{objesp_descripcion}]]></textFieldExpression>
 			</textField>
 			<subreport>
 				<reportElement x="0" y="20" width="466" height="0"/>
 				<subreportParameter name="promonID">
-					<subreportParameterExpression><![CDATA[$F{sidpla_programacionmonitoreo_promon_codigo}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{promon_codigo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="obj">
-					<subreportParameterExpression><![CDATA[$F{sidpla_objetivoespecifico_objesp_codigo}]]></subreportParameterExpression>
+					<subreportParameterExpression><![CDATA[$F{objesp_codigo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"reportMatrizdeObjetivosSubreportTwo.jasper"]]></subreportExpression>

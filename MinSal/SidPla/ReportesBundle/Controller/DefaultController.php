@@ -81,7 +81,7 @@ class DefaultController extends Controller {
             //pasando parametros al reporte
             $params = new Java("java.util.HashMap");
             $params->put("tipoUnidad", new java("java.lang.String", $tipoUnidad)); //asignando valor al parametro
-            $params->put("anio", new java("java.lang.Integer", $anio));
+            $params->put("anioPao", new java("java.lang.Integer", $anio));
             $Conn = $this->crearConexion();
             //se llena el reporte con la informacion y parametros 
             $jasperPrint = $fillManager->fillReport($report, $params, $Conn);

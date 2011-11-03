@@ -81,6 +81,11 @@ WHERE
 				</textElement>
 				<text><![CDATA[Año:]]></text>
 			</staticText>
+			<textField>
+				<reportElement x="408" y="80" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{pao_anio}]]></textFieldExpression>
+			</textField>
 		</band>
 	</title>
 	<pageHeader>
