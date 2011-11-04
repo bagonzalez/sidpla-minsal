@@ -87,4 +87,14 @@ class TipoIndicador {
     {
         return $this->indicadoresAsoc;
     }
+
+    /**
+     * Add indicadoresAsoc
+     *
+     * @param MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresAsoc
+     */
+    public function addIndicadorSalud(\MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresAsoc)
+    {
+        $this->indicadoresAsoc[] = $indicadoresAsoc;
+    }
 }

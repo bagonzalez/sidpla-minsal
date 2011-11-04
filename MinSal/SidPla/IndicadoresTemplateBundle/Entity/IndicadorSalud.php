@@ -65,15 +65,12 @@ class IndicadorSalud {
      */
     private $tipoIndicador;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="MinSal\SidPla\TemplateUnisalBundle\Entity\ObjetivoEspeUnisal", inversedBy="indicadoresSalud")
-     * @ORM\JoinColumn(name="objespuni_codigo", referencedColumnName="objespuni_codigo")
-     */
-    private $objEspUnisal;
+
 
     public function __construct() {
         $this->formulaIndicador = new \Doctrine\Common\Collections\ArrayCollection();
         $this->evaluacionesIndicador = new \Doctrine\Common\Collections\ArrayCollection();
+       
     }
 
     /**
@@ -229,4 +226,16 @@ class IndicadorSalud {
         return $this->objEspUnisal;
     }
 
+
+    /**
+     * Add evaluacionesIndicador
+     *
+     * @param MinSal\SidPla\IndicadoresTemplateBundle\Entity\EvaluacionIndicador $evaluacionesIndicador
+     */
+    public function addEvaluacionIndicador(\MinSal\SidPla\IndicadoresTemplateBundle\Entity\EvaluacionIndicador $evaluacionesIndicador)
+    {
+        $this->evaluacionesIndicador[] = $evaluacionesIndicador;
+    }
+
+  
 }
