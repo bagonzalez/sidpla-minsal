@@ -79,12 +79,12 @@
                                      {% endif %}  
                                  {% endif %}  
                                  $('#nav').append('<li class="top"><a  class="top_link" href="{{ path('fos_user_security_logout') }}"><span >{{ 'Salir'|trans({}, 'FOSUserBundle') }}</span></a></li>');                                
-                                 $('#nav').append('<li class="top"><a  class="top_link" href="{{ path('fos_user_profile_show') }}"><span >{{ 'Perfil'|trans({}, 'FOSUserBundle') }}</span></a></li>');
+                                 <!--$('#nav').append('<li class="top"><a  class="top_link" href="{{ path('fos_user_profile_show') }}"><span >{{ 'Perfil'|trans({}, 'FOSUserBundle') }}</span></a></li>');-->
                              {% else %}                                 
                                  $('#nav').append('<li  class="top"><a  class="top_link" href="{{ path('fos_user_security_login') }}"><span>{{ 'Iniciar'|trans({}, 'FOSUserBundle') }}</span></a></li>');
                                  $('#nav').append('<li class="top"><a  class="top_link" href="{{ path('fos_user_registration_register') }}"><span >{{ 'Registrarse'|trans({}, 'FOSUserBundle') }}</span></a></li>');                                 
                              {% endif %} 
-                             $('#nav').append('<li class="top"><a  class="top_link" href="#"><span >MinSal</span></a></li>');
+                             <!--$('#nav').append('<li class="top"><a  class="top_link" href="#"><span >MinSal</span></a></li>');-->
                              <!--$('#nav').append('<li class="top"><a  class="top_link" href="#"><span >Acerca de</span></a></li>');-->
                           });
                       });
