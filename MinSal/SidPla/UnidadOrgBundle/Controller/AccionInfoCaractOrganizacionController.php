@@ -124,6 +124,7 @@ class AccionInfoCaractOrganizacionController extends Controller {
                      ,'infoGeneralcodmail' =>  $infoGeneralcodmail
                       ,'unidadorgcod' =>  $unidadorgcod   
                       ,'infoGeneralfecha' =>  $infoGeneralfecha
+                      ,'idUnidad' => $idUnidad
                 ));
     }
 
