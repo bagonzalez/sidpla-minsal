@@ -4,10 +4,17 @@
      
         
       $(document).ready(function(){           
+                    
+        $('#reportCarac').click(function() {
+        $('#formulario').get(0).setAttribute('action', '{{ path('MinSalSidPlaReportesBundle_reporteCaracOrg') }}');            
+        
+        }); 
+        
+        $('#guardarCarac').click(function() {
+        $('#formulario').get(0).setAttribute('action', '{{ path('MinSalSidPlaUnidadOrgBundle_guardarCaracteristicas') }}');            
+        
+        }); 
            
-           $('#reportCarac').click(function(evento) {
-          this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteCaracOrg') }}';
-    });
            $('#reportCarac').button();
            $('#tabs').tabs(); 
            $('#guardarInfoGen').button();
@@ -80,7 +87,7 @@
             </div>
         
      <div id="tabs-2" align="center"   >
-            <form action="{{ path('MinSalSidPlaUnidadOrgBundle_guardarCaracteristicas') }}" method="post" {{ form_enctype(formOrg) }}>
+            <form id="formulario" action="{{ path('MinSalSidPlaUnidadOrgBundle_guardarCaracteristicas') }}" method="post" {{ form_enctype(formOrg) }}>
                 <input type="hidden" id="totalFunciones" name="totalFunciones" value="" />
                 <input type="hidden" id="totalObjetivos" name="totalObjetivos" value="" />
                 <table size="100%" border="0" >
