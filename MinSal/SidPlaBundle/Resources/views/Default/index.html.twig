@@ -75,16 +75,16 @@
                                             {% endif %}                                
                                         {% endfor %}
                                      {% else %}        
-                                            $('#nav').append('<li class="top"><a  class="top_link" href="{{ path('fos_user_security_logout') }}"><span >{{ 'Salir'|trans({}, 'FOSUserBundle') }}</span></a></li>');                                           
+                                            $('#nav').append('<li class="top"><a  class="top_link" href="{{ path('fos_user_security_logout') }}"><span >{{ 'Salir'|trans({}, 'FOSUserBundle') }} </span></a></li>');                                           
                                      {% endif %}  
                                  {% endif %}  
                                  $('#nav').append('<li class="top"><a  class="top_link" href="{{ path('fos_user_security_logout') }}"><span >{{ 'Salir'|trans({}, 'FOSUserBundle') }}</span></a></li>');                                
-                                 $('#nav').append('<li class="top"><a  class="top_link" href="{{ path('fos_user_profile_show') }}"><span >{{ 'Perfil'|trans({}, 'FOSUserBundle') }}</span></a></li>');
+                                 <!--$('#nav').append('<li class="top"><a  class="top_link" href="{{ path('fos_user_profile_show') }}"><span >{{ 'Perfil'|trans({}, 'FOSUserBundle') }}</span></a></li>');-->
                              {% else %}                                 
                                  $('#nav').append('<li  class="top"><a  class="top_link" href="{{ path('fos_user_security_login') }}"><span>{{ 'Iniciar'|trans({}, 'FOSUserBundle') }}</span></a></li>');
                                  $('#nav').append('<li class="top"><a  class="top_link" href="{{ path('fos_user_registration_register') }}"><span >{{ 'Registrarse'|trans({}, 'FOSUserBundle') }}</span></a></li>');                                 
                              {% endif %} 
-                             $('#nav').append('<li class="top"><a  class="top_link" href="#"><span >MinSal</span></a></li>');
+                             <!--$('#nav').append('<li class="top"><a  class="top_link" href="#"><span >MinSal</span></a></li>');-->
                              <!--$('#nav').append('<li class="top"><a  class="top_link" href="#"><span >Acerca de</span></a></li>');-->
                           });
                       });
@@ -102,8 +102,12 @@
                             <center><h1>SISTEMA DE PLANIFICACION <br> ANUAL OPERATIVA <br> PARA LA DIRECCION DE PLANIFICACION<br>MINISTERIO DE SALUD</h1></center>                
                 
                             <div class="disclaimer">Ministerio de Salud</div>
-                            <ul id="nav"></ul>                            
-                            </div>            
+                            <ul id="nav"></ul>
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                                <h3 align="right">Bienvenid@ {{ app.user.empleado.primerNombre }}&nbsp;{{ app.user.empleado.primerApellido }}!!</h3>                            
+                            {% endif %}    
+                        </div>
+                        
                             <div id="contenido">
                                 <br></br>
                 {% block body %}

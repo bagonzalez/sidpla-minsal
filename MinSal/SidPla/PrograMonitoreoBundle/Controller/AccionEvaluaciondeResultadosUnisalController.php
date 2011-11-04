@@ -55,6 +55,23 @@ class AccionEvaluaciondeResultadosUnisalController extends Controller{
     }
     
     
+    public function obtenerPaoAnioAnterior(){
+        
+        $user=new User();
+        $empleado=new Empleado();        
+        $user = $this->get('security.context')->getToken()->getUser();        
+        $empleado=$user->getEmpleado();        
+        $idUnidad=$empleado->getUnidadOrganizativa()->getIdUnidadOrg();        
+        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());  
+        
+        $pao=new Pao();        
+        $pao=$unidaDao->getPaoAnioAnterior($idUnidad);
+        
+        return $pao;
+        
+    }
+    
+    
      public function obtenerPaoElaboracion(){
         
         $user=new User();
@@ -120,7 +137,11 @@ class AccionEvaluaciondeResultadosUnisalController extends Controller{
          $objetivos=$this->obtenerObjEspec();
          
          $paoElaboracion=$this->obtenerPaoSeguimiento();
-         $evalIndicador=$paoElaboracion->getEvaluacionResultado();
+         $evalIndicadorResultado=$paoElaboracion->getEvaluacionResultado();
+         
+         $paoAnioAnterior=$this->obtenerPaoAnioAnterior();
+         $evalIndicadorResultadoAnioAnterior=$paoAnioAnterior->getEvaluacionResultado();
+         
          $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
          $actividadesProgramon=$programacionMonitoreo->getActividadesUniSal();
          $idProgramon=$programacionMonitoreo->getIdPrograMon();
@@ -130,15 +151,17 @@ class AccionEvaluaciondeResultadosUnisalController extends Controller{
          $promMonDao=new ProgramacionMonitoreoDao($this->getDoctrine());
        
          $trimestre=4;
-         $mes=1;
+         $mes=3;
          
          $uniControl=new UnidadOrganizativa();            
          $uniControl=$this->obtenerUnidadOrg();
          $idUnidad=$uniControl->getIdUnidadOrg();
-         $evalIndicador=1;
+         
          return $this->render('MinSalSidPlaPrograMonitoreoBundle:EvaluaciondeResultadosUnisal:EvaluacionResultadosUNISAL.html.twig', 
                 array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon,
-                   'mes' => $mes, 'trimestre' => $trimestre, 'idUnidad' => $idUnidad, 'areasClasif' => $areasClasif , 'idProgramon' =>$idProgramon,'evalIndicador' =>$evalIndicador ));
+                   'mes' => $mes, 'trimestre' => $trimestre, 'idUnidad' => $idUnidad, 'areasClasif' => $areasClasif ,
+                    'idProgramon' =>$idProgramon,'evalIndicadorResultado' =>$evalIndicadorResultado, 
+                    'evalIndicadorResultadoAnioAnterior' =>$evalIndicadorResultadoAnioAnterior ));
     }
     
      
