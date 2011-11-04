@@ -48,3 +48,8 @@ MinSalSidPlaReportesBundle_reporteEmpleadosOrg:
 MinSalSidPlaReportesBundle_reporteCompromisoCumplimiento:
     pattern:  /reporteCompromisoCumplimiento
     defaults: { _controller: MinSalSidPlaReportesBundle:ProgramacionMonitoreo:reporteCompromisoCumplimiento}
+
+MinSalSidPlaReportesBundle_reporteCaracOrg:
+    pattern:  /reporteCaracOrg
+    defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteCaracOrg } 
+    

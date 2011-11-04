@@ -4,10 +4,11 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/home/edwin/Escritorio/Reportes backup/reportCaracteristicasOrg/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/jasperReports/reportCaracteristicasOrg/"]]></defaultValueExpression>
 	</parameter>
-	<parameter name="anio" class="java.lang.Integer"/>
-	<parameter name="idUorg" class="java.lang.Integer"/>
+	<parameter name="idUorg" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
 		<![CDATA[SELECT
      caracorg."carorg_mision",
@@ -79,26 +80,12 @@ WHERE
 				<text><![CDATA[Vision:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="236" y="50" width="32" height="20"/>
-				<textElement>
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Año:]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="76" y="83" width="402" height="20"/>
+				<reportElement x="76" y="74" width="402" height="20"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[Formulario 2: Características de organización y funcionamiento de la dependencia.]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="280" y="50" width="100" height="20"/>
-				<textElement>
-					<font size="12" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{anio}]]></textFieldExpression>
-			</textField>
 		</band>
 	</title>
 	<pageHeader>
@@ -109,13 +96,13 @@ WHERE
 	</columnHeader>
 	<detail>
 		<band splitType="Stretch">
-			<subreport>
+			<subreport isUsingCache="true">
 				<reportElement x="0" y="0" width="126" height="0"/>
 				<subreportParameter name="idUorg">
 					<subreportParameterExpression><![CDATA[$F{org_uniorg_codigo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["reportCaractOrgSubReportOne.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"reportCaractOrgSubReportOne.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 		<band>
@@ -125,7 +112,7 @@ WHERE
 					<subreportParameterExpression><![CDATA[$F{org_uniorg_codigo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["reportCaractOrgSubReportTwo.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"reportCaractOrgSubReportTwo.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

@@ -171,4 +171,43 @@ class DefaultController extends Controller {
         return $this->getResponse();
     }
 
+    
+    public function reporteCaracOrgAction() {
+       $request = $this->getRequest();
+       $idUnidad = $request->get('idUnidad');
+      
+     try {
+         $compileManager = new JavaClass("net.sf.jasperreports.engine.JasperCompileManager");
+         $report = $compileManager->compileReport(__DIR__ . "/../Resources/jasperReports/reportCaracteristicasOrg/reportCaractOrgMaster.jrxml");
+         $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
+         
+         $params = new Java("java.util.HashMap");
+         $params->put("idUorg", new java("java.lang.Integer", $idUnidad)); //asignando valor al parametro
+         
+         $Conn = $this->crearConexion();
+         
+         $jasperPrint = $fillManager->fillReport($report, $params, $Conn);
+         
+         $outputPath = realpath(".") . "/" . "output.pdf"; //mostrar el reporte en pdf
+         $exportManager = new JavaClass("net.sf.jasperreports.engine.JasperExportManager");
+         $exportManager->exportReportToPdfFile($jasperPrint, $outputPath);
+         header("Content-type: application/pdf");
+         readfile($outputPath);
+         unlink($outputPath);
+         $Conn->close();
+         $this->getResponse()->clearHttpHeaders();
+         $this->getResponse()->setHttpHeader('Pragma: public', true);
+         $this->getResponse()->setContentType('application/pdf');
+         $this->getResponse()->sendHttpHeaders();
+        } 
+        catch (Exception $ex) {
+            print $ex->getCause();
+            if ($Conn != null) {
+                $Conn->close();
+            }
+        throw $ex;
+        }
+        return $this->getResponse();
+    }
+    
 }

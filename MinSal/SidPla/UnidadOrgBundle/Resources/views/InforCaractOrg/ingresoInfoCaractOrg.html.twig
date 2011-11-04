@@ -5,7 +5,10 @@
         
       $(document).ready(function(){           
            
-      
+           $('#reportCarac').click(function(evento) {
+          this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteCaracOrg') }}';
+    });
+           $('#reportCarac').button();
            $('#tabs').tabs(); 
            $('#guardarInfoGen').button();
            $('#guardarCarac').button();
@@ -114,7 +117,9 @@
                    
                     <tr>
                        <td colspan="4" align="center">
-                                <button type="submmit" id="guardarCarac"  >Guardar</button>                                
+                           <input type='hidden' name='idUnidad' id="idUnidad" value='{{idUnidad}}' />
+                                <button type="submmit" id="guardarCarac"  >Guardar</button>   
+                                 <button type="submmit" id="reportCarac"  >Reporte</button> 
                             </td>                            
                     </tr>
                 </table>   
