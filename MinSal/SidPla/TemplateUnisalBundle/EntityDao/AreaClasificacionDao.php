@@ -23,8 +23,10 @@ class AreaClasificacionDao {
     }
 
     public function getAreaClasificacions() {
-        $areaClasifica = $this->repositorio->findAll();
-        return $areaClasifica;
+         $area = $this->em->createQuery("SELECT ac
+                                         FROM MinSalSidPlaTemplateUnisalBundle:AreaClasificacion ac
+                                         ORDER BY ac.codArea");
+        return $area->getResult();
     }
 
     public function addAreaClas($nombreArea) {

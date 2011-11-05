@@ -29,7 +29,6 @@ class AccionObjetivoEspeUnisalController extends Controller {
         
         $areaClasificaDao = new AreaClasificacionDao($this->getDoctrine());
         $areas=$areaClasificaDao->getAreaClasificacions();
-        array_multisort($areas, SORT_ASC);
         $objTemplateDao = new ObjetivoEspeUnisalDao($this->getDoctrine());
         
         return $this->render('MinSalSidPlaTemplateUnisalBundle:ObjetivoEspeUnisal:manttObjetivoEspecificoUnisal.html.twig', 

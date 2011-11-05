@@ -1,6 +1,8 @@
 <table border="1" WIDTH='85%'>
     <thead>
         <tr  style=" font-size: 14px;">
+            <th><strong>  Cod </strong>
+                    </th>
             <th><strong>  Resultado Esperado </strong>
             </th>
             <th colspan="2"><strong>  Acciones </strong>
@@ -11,6 +13,8 @@
 {% if resultadosUnisal is defined %}   
     {% for  resultado in  resultadosUnisal%}
     <tr>
+        <td style=" font-size: 12px;">{{ resultado.nomenResEspUni}}
+                        </td>
         <td style=" font-size: 12px;">{{ resultado.getDescResEspUni}}
         </td>
          <td class="tdBotonesIconos" WIDTH='60' >

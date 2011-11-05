@@ -2,6 +2,7 @@
 
 namespace MinSal\SidPla\TemplateUnisalBundle\EntityDao;
 
+use Doctrine\ORM\Query\ResultSetMapping;
 use MinSal\SidPla\TemplateUnisalBundle\Entity\ObjetivoEspeUnisal;
 use MinSal\SidPla\TemplateUnisalBundle\EntityDao\ProUnisalTemplateDao;
 use MinSal\SidPla\TemplateUnisalBundle\Entity\ProUnisalTemplate;
@@ -27,7 +28,6 @@ class ObjetivoEspeUnisalDao {
     }
 
     public function obtenerPorArea($codArea, $objetivosEspecificos) {
-
         $objEspe = new ObjetivoEspeUnisal();
         $i = 0;
         foreach ($objetivosEspecificos as $objEspe) {
@@ -64,10 +64,11 @@ class ObjetivoEspeUnisalDao {
             $areaClasificacion->addObjetivosObjeArea($objEspecUnisal);
             $this->em->persist($areaClasificacion);
             $this->em->flush();
+            $this->actualizaNomenclatura($proUnisal->getCodProUniTem());
         }
 
         $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ');
-
+       
         return $matrizMensajes;
     }
 
@@ -83,6 +84,17 @@ class ObjetivoEspeUnisalDao {
 
         return $matrizMensajes;
     }
+
+    public function actualizaNomenclatura($idProUnisal) {
+
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('resp', 'resp');
+        $query = $this->em->createNativeQuery('SELECT "FN_ACTUALIZA_NOMENCLATURA"(?) resp', $rsm);
+        $query->setParameter(1, $idProUnisal);
+
+        $x = $query->getSingleScalarResult();
+
+     }
 
 }
 

@@ -26,7 +26,7 @@ class ResultadoEspeUnisalDao {
 
     public function agregarResultadoEsperado($idObj, $desRespEsp) {
 
-        $objEspUnidal = new ObjetivoEspeUnisal();
+       // $objEspUnidal = new ObjetivoEspeUnisal();
 
         $objEspUnidalDao = new ObjetivoEspeUnisalDao($this->doctrine);
         $objEspUnidal = $objEspUnidalDao->getObjetivoEspeUnisalEspecifico($idObj);
@@ -38,7 +38,7 @@ class ResultadoEspeUnisalDao {
         $objEspUnidal->addResultEspObjT($resultaEspeUnisal);
         $this->em->persist($objEspUnidal);
         $this->em->flush();
-
+        $objEspUnidalDao->actualizaNomenclatura($objEspUnidal->getPrograMonObj()->getCodProUniTem());
         $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ');
 
         return $matrizMensajes;
