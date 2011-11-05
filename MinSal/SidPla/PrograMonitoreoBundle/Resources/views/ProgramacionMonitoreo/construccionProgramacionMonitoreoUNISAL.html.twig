@@ -137,6 +137,10 @@
                                                                                                             </tr>
                                                                                                             <tr>                                                                        
                                                                                                                 <th rowspan="2" >Descripcion</th>
+                                                                                                                <th rowspan="2" >Universo</th>                                                                                                                
+                                                                                                                <th rowspan="2" >Cobertura</th>
+                                                                                                                <th rowspan="2" >Cantidad</th>
+                                                                                                                <th rowspan="2" >Concentraci&oacute;n</th>
                                                                                                                 <th rowspan="2">Meta Anual</th>
                                                                                                                 <th rowspan="2">Responsable</th>
                                                                                                                 <th rowspan="2">Beneficiarios</th>
@@ -213,6 +217,18 @@
                                                                                                                         <tr>
                                                                                                                             <td>
                                                                                                                                 {{ actividadAux.descActUniTemp }}
+                                                                                                                            </td>
+                                                                                                                            <td>
+                                                                                                                              
+                                                                                                                            </td>
+                                                                                                                             <td>
+                                                                                                                               <input name="coberturaActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividad.coberActUni }}"  ></input>                                                                                                                                
+                                                                                                                            </td>
+                                                                                                                             <td>
+                                                                                                                                
+                                                                                                                            </td>
+                                                                                                                             <td>
+                                                                                                                                {{ actividadAux.concenActUniTemp }}
                                                                                                                             </td>
                                                                                                                             <td align="center">
                                                                                                                                 <input name="metaAnualActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividad.metaAnualActUni }}"  ></input>
