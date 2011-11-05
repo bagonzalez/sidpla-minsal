@@ -23,11 +23,11 @@ class AccionResultadoEspeUnisalController extends Controller {
         $idObj = $request->get('idObj');
 
         $objEspUniDao = new ObjetivoEspeUnisalDao($this->getDoctrine());
-       
+        $resultaEspeDao=new ResultadoEspeUnisalDao($this->getDoctrine());
         $objEspUni = $objEspUniDao->getObjetivoEspeUnisalEspecifico($idObj);
         $decObjEsp=$objEspUni->getDescObjEspUni();
                 
-        $resulEspUnisal=$objEspUni->getResultEspObjT();
+        $resulEspUnisal=$resultaEspeDao->resultadosPorObjetivo($idObj);
         
         if (count($resulEspUnisal)!=0)
             return $this->render('MinSalSidPlaTemplateUnisalBundle:ResultadoEspeUnisal:manttResultadoEspeUnisal.html.twig', 

@@ -31,7 +31,11 @@ MinSalSidPlaTemplateUnisalBundle_editarObjetivoEspeUnisal:
     
 MinSalSidPlaTemplateUnisalBundle_manttObjetivoEspeUnisal:
     pattern:  /manttObjetivoEspeUnisal
-    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionObjetivoEspeUnisal:manttObjetivoEspeUnisal}    
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionObjetivoEspeUnisal:manttObjetivoEspeUnisal}
+    
+MinSalSidPlaTemplateUnisalBundle_crearPlantilla:
+    pattern:  /crearPlantilla
+    defaults: { _controller: MinSalSidPlaTemplateUnisalBundle:AccionObjetivoEspeUnisal:crearPlantilla} 
 
 #RESULTADOESPEUNISAL
 MinSalSidPlaTemplateUnisalBundle_mostrarResEspeUnisal:

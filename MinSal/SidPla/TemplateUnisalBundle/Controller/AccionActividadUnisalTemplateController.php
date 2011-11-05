@@ -24,9 +24,9 @@ class AccionActividadUnisalTemplateController extends Controller {
 
         $resulEspeDao = new ResultadoEspeUnisalDao($this->getDoctrine());
         $resulEspe = $resulEspeDao->getResultadoEspeUnisalEspecifico($idResEsp);
-
+        $actDao=new ActividadUnisalTemplateDao($this->getDoctrine());
         $descResEspe = $resulEspe->getDescResEspUni();
-        $actUnisalTemplate = $resulEspe->getActividadesTemplate();
+        $actUnisalTemplate = $actDao->actividadesPorResultado($idResEsp);
 
 
         if (count($actUnisalTemplate) != 0)
@@ -77,13 +77,18 @@ class AccionActividadUnisalTemplateController extends Controller {
         $metAnuAct = $actUnisal->getMetaAnualActUniTemp();
         $universo=$actUnisal->getUniverso();
         $tipoTotAct=$actUnisal->getTipoTotalUni();
-        
-        if ($universo!=NULL)
+        if ($universo!=0){
+            $categoriaCensoDao=new \MinSal\SidPla\CensoBundle\EntityDao\CategoriaCensoDao($this->getDoctrine());
+            $categoria=new \MinSal\SidPla\CensoBundle\Entity\CategoriaCenso();
+            $descUniverso=$categoriaCensoDao->getCategoriaCenso($universo)->getDescripcionCategoria();
+            
           return $this->render('MinSalSidPlaTemplateUnisalBundle:ActividadUnisalTemplate:gestionActividadUnisalTemplate.html.twig', 
                 array('opciones' => $opciones, 'idObj'=>$idObj,'descObj'=>$descObj,'idResEsp'=>$idResEsp,'descResEsp'=>$descResEsp,
                       'idAct'=>$idAct,'descAct'=> $descAct,'benAct'=> $benAct,'cobAct'=> $cobAct,'conAct'=> $conAct,'supAct'=> $supAct, 
-                      'resAct'=>$resAct, 'metAnuAct'=>$metAnuAct,'universo'=>$universo,'tipoTotAct'=>$tipoTotAct
+                      'resAct'=>$resAct, 'metAnuAct'=>$metAnuAct,'universo'=>$universo,'tipoTotAct'=>$tipoTotAct,'descuniverso'=>$descUniverso
                     ));
+          
+                    }
         else
             return $this->render('MinSalSidPlaTemplateUnisalBundle:ActividadUnisalTemplate:gestionActividadUnisalTemplate.html.twig', 
                 array('opciones' => $opciones, 'idObj'=>$idObj,'descObj'=>$descObj,'idResEsp'=>$idResEsp,'descResEsp'=>$descResEsp,

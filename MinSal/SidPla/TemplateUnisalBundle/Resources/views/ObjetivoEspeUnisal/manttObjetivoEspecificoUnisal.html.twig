@@ -2,6 +2,13 @@
 {% block body %}
 <script type="text/javascript">
  $(document).ready(function(){
+    $('#crearPlantilla').button();
+    $('#crearPlantilla').hide();
+    $('#crearPlantilla').click(function(evento) {
+          $('#anio').attr('value', $('#selanio').val());
+          this.form.action='{{ path('MinSalSidPlaTemplateUnisalBundle_crearPlantilla') }}';
+    });
+     
  {% for  area in  areas%}
      $("#{{"now" | date("Y")}}{{area.getCodArea}}Div").hide();
      $("#{{"now" | date("Y")+1}}{{area.getCodArea}}Div").hide();      
@@ -20,6 +27,14 @@
      $("#{{"now" | date("Y")+1}}{{area.getCodArea}}Div").hide();      
 {% endfor%}
       $("#"+$('#selanio').val()+$('#selarea').val()+"Div").show();
+      if($('#selanio').val()=={{"now" | date("Y")+1}}){
+          {% if muestra==1 %}
+            $('#crearPlantilla').show(); 
+          {% else%}
+            $('#crearPlantilla').hide(); 
+          {% endif%}
+      }else
+         $('#crearPlantilla').hide(); 
   });
   
   $('#selarea').change(function(){
@@ -29,10 +44,6 @@
 {% endfor%}
      $("#"+$('#selanio').val()+$('#selarea').val()+"Div").show();
   });
- 
-
-     
-
 });
     </script>
     <form action="" method="post">
@@ -58,7 +69,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <td align="center"><p>Si desea agregar más Áreas para objetivos <a href="mantenimientoAreasClasificacion" >De clic aqui</a> </p></td>
+                    <td align="center">
+                        <p  style=" font-size: 11px;font-family: Verdana, Geneva, sans-serif">Si desea agregar más Áreas para objetivos <a href="mantenimientoAreasClasificacion" >De clic aqui</a> </p>
+                        <input width="60" height="60" type="submit" name="crearPlantilla" id="crearPlantilla" value="Crear Plantilla"/>
+                    </td>
                 </tr>
                 <tr colspan="2">
                     <td align="center" class="tdBotonesIconos" >
@@ -67,8 +81,9 @@
                         <br/>Agregar Objetivo
                         
                     </td>
+                    
                 </tr>
-                <tr>
+             <tr>
                     <td align="center">
                         <br></br>                
                 {% include 'MinSalSidPlaTemplateUnisalBundle:ObjetivoEspeUnisal:showObjetivoEspecificoUnisal.html.twig' %} 

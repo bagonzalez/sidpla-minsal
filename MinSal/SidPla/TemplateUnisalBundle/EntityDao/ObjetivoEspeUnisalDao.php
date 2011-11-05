@@ -27,49 +27,56 @@ class ObjetivoEspeUnisalDao {
         return $objEspeUnisal;
     }
 
-    public function obtenerPorArea($codArea, $objetivosEspecificos) {
-        $objEspe = new ObjetivoEspeUnisal();
-        $i = 0;
-        foreach ($objetivosEspecificos as $objEspe) {
-            if ($objEspe->getAreaClaObj()->getCodArea() == $codArea) {
-                $aux[$i] = $objEspe;
-                $i++;
-            }
-        }
-        if (isset($aux))
-            return $aux;
-        else
-            return 0;
+    //SE OBTIENEN LOS OBJETIVOS EN UNA DETERMINADA AREA DE UN DETERMINADO ANIO
+    public function obtenerPorArea($codArea, $anio) {
+        $rsm = new ResultSetMapping;
+        $rsm->addEntityResult('MinSalSidPlaTemplateUnisalBundle:ObjetivoEspeUnisal', 'oeu');
+        $rsm->addFieldResult('oeu', 'objespuni_codigo', 'codObjEspUni');
+        $rsm->addFieldResult('oeu', 'objespuni_descripcion', 'descObjEspUni');
+        $rsm->addFieldResult('oeu', 'objespuni_nomenclatura', 'nomenObjEspUni');
+        $query = $this->em->createNativeQuery('SELECT 
+                                                        oeu.objespuni_codigo, 
+                                                        oeu.objespuni_descripcion, 
+                                                        oeu.objespuni_nomenclatura
+                                               FROM 
+                                                        sidpla_areaclasificacion ac, 
+                                                        sidpla_objetivoespeunisal oeu, 
+                                                        sidpla_prounisaltemplate pu
+                                               WHERE 
+                                                        ac.arecla_codigo = oeu.arecla_codigo AND
+                                                        pu.prounitem_codigo = oeu.prounitem_codigo AND
+                                                        ac.arecla_codigo = ? AND 
+                                                        pu.prounitem_anio = ?
+                                               ORDER BY
+                                                        oeu.objespuni_codigo ASC', $rsm);
+        $query->setParameter(1, $codArea);
+        $query->setParameter(2, $anio);
+        $objetivos = $query->getResult();
+
+        return $objetivos;
     }
 
     public function agregarObjTmp($idArea, $desObjEsp, $anio) {
+
         $proUnisalDao = new ProUnisalTemplateDao($this->doctrine);
-        $proUnisalRes = $proUnisalDao->obtenerObjTempAnio($anio);
+        $proUnisal = $proUnisalDao->obtenerObjTempAnio($anio);
 
-        $proUnisal = new ProUnisalTemplate();
+        $areaClasificaDao = new AreaClasificacionDao($this->doctrine);
+        $areaClasificacion = $areaClasificaDao->getAreaClasificacionEspecifico($idArea);
 
-        foreach ($proUnisalRes as $proUnisal) {
-            $areaClasificaDao = new AreaClasificacionDao($this->doctrine);
-            $areaClasificacion = $areaClasificaDao->getAreaClasificacionEspecifico($idArea);
+        $objEspecUnisal = new ObjetivoEspeUnisal();
 
-            $objEspecUnisal = new ObjetivoEspeUnisal();
+        $objEspecUnisal->setAreaClaObj($areaClasificacion);
+        $objEspecUnisal->setDescObjEspUni($desObjEsp);
+        $objEspecUnisal->setPrograMonObj($proUnisal);
 
-            $objEspecUnisal->setAreaClaObj($areaClasificacion);
-            $objEspecUnisal->setDescObjEspUni($desObjEsp);
-            $objEspecUnisal->setPrograMonObj($proUnisal);
-
-            $this->em->persist($objEspecUnisal);
-            $proUnisal->addObjeEspeProgra($objEspecUnisal);
-            $this->em->persist($proUnisal);
-            $areaClasificacion->addObjetivosObjeArea($objEspecUnisal);
-            $this->em->persist($areaClasificacion);
-            $this->em->flush();
-            $this->actualizaNomenclatura($proUnisal->getCodProUniTem());
-        }
-
-        $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ');
-       
-        return $matrizMensajes;
+        $this->em->persist($objEspecUnisal);
+        $proUnisal->addObjeEspeProgra($objEspecUnisal);
+        $this->em->persist($proUnisal);
+        $areaClasificacion->addObjetivosObjeArea($objEspecUnisal);
+        $this->em->persist($areaClasificacion);
+        $this->em->flush();
+        $this->actualizaNomenclatura($proUnisal->getCodProUniTem());
     }
 
     public function editarObjTmp($idObj, $desObjEsp) {
@@ -93,8 +100,7 @@ class ObjetivoEspeUnisalDao {
         $query->setParameter(1, $idProUnisal);
 
         $x = $query->getSingleScalarResult();
-
-     }
+    }
 
 }
 

@@ -1,18 +1,17 @@
 <table border="1" WIDTH='85%'>
     <thead>
         <tr  style=" font-size: 14px;">
-            <th><strong> Actividades </strong>
-            </th>
-            <th><strong>  Acciones </strong>
-            </th>
+            <th><strong>  Cod </strong></th>
+            <th><strong> Actividades </strong></th>
+            <th><strong>  Acciones </strong></th>
         </tr>
     </thead>
     <tbody>
 {% if actUnisal is defined %}   
     {% for  actividad in  actUnisal%}
     <tr>
-        <td style=" font-size: 12px;">{{actividad.descActUniTemp}}
-        </td>
+        <td style=" font-size: 12px;">{{actividad.nomenActUniTemp}}</td>
+        <td style=" font-size: 12px;">{{actividad.descActUniTemp}}</td>
         <td class="tdBotonesIconos" WIDTH='60' >
             <input width="50" height="50" type="image" src="{{ asset('/images/iconos/editar.png')}}" id="editar" value="Editar" onclick="$('#idAct').attr('value',{{actividad.codActUniTemp}});this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarActUnisalTemplate')}}';" />
             <br/>Editar

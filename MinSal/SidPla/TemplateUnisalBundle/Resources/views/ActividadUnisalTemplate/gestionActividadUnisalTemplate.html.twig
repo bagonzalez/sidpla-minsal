@@ -20,10 +20,8 @@ $(document).ready(function(){
         if(key=='rows'){
           $.each(val, function(id, registro){
            {% if universo is defined %}
-               if(registro['cell'][0]=={{universo}}){
-                 $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'" selected="selected">'+registro['cell'][1]+'</option>');
-               }else
-                   $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
+               if(registro['cell'][0]!={{universo}})
+                  $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');
            {% else %}
                $('#categoriaCenso').append('<option value="'+registro['cell'][0]+'">'+registro['cell'][1]+'</option>');                                
            {% endif %}
@@ -35,7 +33,7 @@ $(document).ready(function(){
    $("#categoriaCenso").combobox();
    $('#categoriaCenso').css("width", '150px');
     
-//  $("#forResEsp").validate();   
+    $("#forResEsp").validate();   
     
 });
     </script>
@@ -51,7 +49,7 @@ $(document).ready(function(){
 
         <form id="forResEsp" name="forResEsp" method="post" >
 {% if idAct is defined %}
-             <table colspan="4"  align="center"><!-- id="datos"  -->
+             <table colspan="4"  align="center">
                     <tr>
                         <td colspan='2'>
                             <h1 style=" text-align: center">Ingrese la Actividad para Unidades de Salud</h1>
@@ -76,7 +74,7 @@ $(document).ready(function(){
                     </tr>
                      <tr>
                         <td style=" font-size: 12px" >Responsable(*):</td>
-                        <td><input name="resAct" id="resAct" type="text" size="60" maxlength="60" value="{{resAct}}" /></td>
+                        <td><input name="resAct" id="resAct" type="text" size="60" maxlength="150" value="{{resAct}}" /></td>
                     </tr>
                     <tr>
                         <td style=" font-size: 12px" >Beneficiarios(*):</td>
@@ -86,6 +84,10 @@ $(document).ready(function(){
                         <td style=" font-size: 12px" >Universo:</td>
                           <td>                           
                             <select  id="categoriaCenso" name="categoriaCenso">
+                               <option value="0" >Seleccione una Categoria</option>
+                               {% if universo is defined %}
+                               <option value="{{universo}}" selected="selected" >{{descuniverso}}</option>
+                               {% endif %}
                             </select>
                         </td> 
                     </tr>
@@ -157,16 +159,17 @@ $(document).ready(function(){
                     </tr>
                      <tr>
                         <td style=" font-size: 12px" >Responsable(*):</td>
-                        <td><input name="resAct" id="resAct" type="text" size="60" maxlength="60" /></td>
+                        <td><input class="required" name="resAct" id="resAct" type="text" size="60" maxlength="150" /></td>
                     </tr>
                     <tr>
                         <td style=" font-size: 12px" >Beneficiarios(*):</td>
-                        <td><input name="benAct" id="benAct" type="text" size="60" maxlength="80" /></td>
+                        <td><input class="required" name="benAct" id="benAct" type="text" size="60" maxlength="80" /></td>
                     </tr>
                                         <tr>
                         <td style=" font-size: 12px" >Universo:</td>
                           <td>                           
                             <select  id="categoriaCenso" name="categoriaCenso">
+                                 <option value="0" >Seleccione una Categoria</option>
                             </select>
                         </td> 
                     </tr>
@@ -194,9 +197,9 @@ $(document).ready(function(){
                     </tr>
                      <tr>
                         <td style=" font-size: 12px; text-align: right" valign="top" >Meta Anual(*):</td>
-                        <td><input type="radio" name="metAnuAct" value="1"> Digitada<br></br>
-                            <input type="radio" name="metAnuAct" value="2"> Calculada por Cantidad *  Concentracion<br></br>
-                            <input type="radio" name="metAnuAct" value="3"> Formula
+                        <td><input class="required" type="radio" name="metAnuAct" value="1"> Digitada<br></br>
+                            <input class="required" type="radio" name="metAnuAct" value="2"> Calculada por Cantidad *  Concentracion<br></br>
+                            <input class="required" type="radio" name="metAnuAct" value="3"> Formula
                         </td>
                     </tr>
                     <tr>

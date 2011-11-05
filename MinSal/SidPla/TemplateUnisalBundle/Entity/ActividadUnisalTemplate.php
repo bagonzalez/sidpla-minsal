@@ -38,7 +38,7 @@ class ActividadUnisalTemplate {
     /**
      * @var string $responsableActUniTemp
      *
-     * @ORM\Column(name="actunitem_responsable", type="string", length=60)
+     * @ORM\Column(name="actunitem_responsable", type="string", length=150)
      */
     private $responsableActUniTemp;
 

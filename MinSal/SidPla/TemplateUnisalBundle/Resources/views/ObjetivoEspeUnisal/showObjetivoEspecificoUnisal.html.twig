@@ -1,4 +1,3 @@
-{% for proUniA in proUnisalActual %}
   {% for  area in  areas%}
 <div id="{{"now" | date("Y")}}{{area.getCodArea}}Div">
     <table border="1" WIDTH='85%'>
@@ -13,7 +12,7 @@
             </tr>
         </thead>
         <tbody>
-    {%for obj in objTemplateDao.obtenerPorArea(area.getCodArea ,proUniA.getObjeEspeProgra)%}
+    {%for obj in objTemplateDao.obtenerPorArea(area.getCodArea ,proUnisalActual.anioProUniTem)%}
                 <tr>
                     <td style=" font-size: 12px;">{{ obj.nomenObjEspUni}}
                     </td>
@@ -38,11 +37,10 @@
         </table>
     </div> 
   {% endfor%}
-{% endfor%}
 
 
-{% for proUniS in proUnisalSiguiente %}
-  {% for  area in  areas%}
+
+ {% for  area in  areas%}
     <div id="{{"now" | date("Y")+1}}{{area.getCodArea}}Div">
         <table border="1" WIDTH='85%'>
             <thead>
@@ -56,7 +54,7 @@
                 </tr>
             </thead>
             <tbody>
-    {%for obj in objTemplateDao.obtenerPorArea(area.getCodArea ,proUniS.getObjeEspeProgra)%}
+    {%for obj in objTemplateDao.obtenerPorArea(area.getCodArea ,proUnisalSiguiente.anioProUniTem)%}
                     <tr>
                         <td style=" font-size: 12px;">{{ obj.nomenObjEspUni}}
                         </td>
@@ -85,4 +83,4 @@
         </div>   
 
   {% endfor%}
-{% endfor%}
+

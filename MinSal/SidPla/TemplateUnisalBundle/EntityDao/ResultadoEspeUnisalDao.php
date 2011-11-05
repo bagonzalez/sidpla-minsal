@@ -5,6 +5,7 @@ namespace MinSal\SidPla\TemplateUnisalBundle\EntityDao;
 use MinSal\SidPla\TemplateUnisalBundle\Entity\ResultadoEspeUnisal;
 use MinSal\SidPla\TemplateUnisalBundle\Entity\ObjetivoEspeUnisal;
 use MinSal\SidPla\TemplateUnisalBundle\EntityDao\ObjetivoEspeUnisalDao;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 class ResultadoEspeUnisalDao {
 
@@ -24,9 +25,31 @@ class ResultadoEspeUnisalDao {
         return $resulEspeUnisal;
     }
 
-    public function agregarResultadoEsperado($idObj, $desRespEsp) {
+    public function resultadosPorObjetivo($idObjetivo) {
+        $rsm = new ResultSetMapping;
+        $rsm->addEntityResult('MinSalSidPlaTemplateUnisalBundle:ResultadoEspeUnisal', 'reu');
+        $rsm->addFieldResult('reu', 'resulespuni_codigo', 'codResEspUni');
+        $rsm->addFieldResult('reu', 'resulespuni_descripcion', 'descResEspUni');
+        $rsm->addFieldResult('reu', 'resulespuni_nomenclatura', 'nomenResEspUni');
+        $query = $this->em->createNativeQuery('SELECT 
+                                                        reu.resulespuni_codigo, 
+                                                        reu.resulespuni_descripcion, 
+                                                        reu.resulespuni_nomenclatura
+                                               FROM 
+                                                        sidpla_objetivoespeunisal oeu, 
+                                                        sidpla_resultadoespeunisal reu
+                                               WHERE 
+                                                        reu.objespuni_codigo = oeu.objespuni_codigo AND
+                                                        oeu.objespuni_codigo = ?
+                                               ORDER BY
+                                                        reu.resulespuni_codigo ASC', $rsm);
+        $query->setParameter(1, $idObjetivo);
+        $resultados = $query->getResult();
 
-       // $objEspUnidal = new ObjetivoEspeUnisal();
+        return $resultados;
+    }
+
+    public function agregarResultadoEsperado($idObj, $desRespEsp) {
 
         $objEspUnidalDao = new ObjetivoEspeUnisalDao($this->doctrine);
         $objEspUnidal = $objEspUnidalDao->getObjetivoEspeUnisalEspecifico($idObj);
