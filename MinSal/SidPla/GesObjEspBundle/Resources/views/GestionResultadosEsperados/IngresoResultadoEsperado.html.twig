@@ -4,6 +4,9 @@
 {% block body %}
 <script type="text/javascript">        
       $(document).ready(function(){
+          $('#guardar').button();
+          $('#limpiar').button();
+          $('#regresar').button();
           $('#regresar').click(function() {
              
                        this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}';                    
@@ -76,7 +79,15 @@
   }
 }
 );
-   
+  //PARA QUE REPARTA LA META ANUAL.
+$('#metaAnual').blur(function(event) {
+    metaAnual=Number($("input[id='metaAnual']").val());
+    alert(metaAnual/4);
+    $('#trimUno').attr('value',round(metaAnual/4));
+        
+});
+
+
 $('#metaAnual').keydown(function(event) {
 // Permitir borrar, suprimir, TAB, comas, izqda, derecha:
 if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
@@ -158,10 +169,10 @@ event.preventDefault();
             input.error { border: 1px dotted red; }
             textarea.error { border: 1px dotted red; }
         </style>   
-        <h2 class="demoHeaders">Ingreso del Resultado Esperado</h2>
+        <h1 style=" text-align: center">Ingresar Resultado Esperado</h1>
         <div id="tabs">
             <ul>
-                <li><a href="#tabs-1">Nuevo Resultado</a></li>
+                <li><a href="#tabs-1">Resultado Esperado</a></li>
 
             </ul>
             <div id="tabs-1" >
@@ -217,17 +228,17 @@ event.preventDefault();
                             <TD colspan="1" align="center">4to Trimestre</TD>
                         </tr>
                         <tr>
-                            <TD colspan="1"> <input  size="25%" name="trimUno" id="trimUno" ></input></TD>
-                            <TD colspan="1"><input   size="25%" name="trimDos" id="trimDos" ></input></TD>
-                            <TD colspan="1"><input   size="25%" name="trimTres" id="trimTres" ></input></TD>
-                            <TD colspan="1"><input   size="25%" name="trimCuatro" id="trimCuatro" ></input></TD>
+                            <TD colspan="1"> <input  size="25%" name="trimUno" id="trimUno" value="0" ></input></TD>
+                            <TD colspan="1"><input   size="25%" name="trimDos" id="trimDos" value="0"></input></TD>
+                            <TD colspan="1"><input   size="25%" name="trimTres" id="trimTres" value="0"></input></TD>
+                            <TD colspan="1"><input   size="25%" name="trimCuatro" id="trimCuatro" value="0"></input></TD>
                         </tr>   
                       <tr>  
                         <td colspan="4" align="center" >
                             <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
                             <input type='hidden' name='oper' id="oper" value='add' /> 
                             <button type="submmit" id="guardar"  >Guardar</button>
-                            <button type="reset"  >Limpiar</button>
+                            <button type="reset" id="limpiar"  >Limpiar</button>
                             <button type="submmit" class="cancel"  id="regresar"  >Regresar</button>
                         </td> 
                       </tr>                  

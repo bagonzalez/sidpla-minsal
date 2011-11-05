@@ -107,9 +107,8 @@ class AccionPrograMonUNISALController extends Controller {
         $anio = date('Y');       
         
         $proTemplate=$proUnisalTmpDao->obtenerObjTempAnio($anio);
-        foreach ($proTemplate as $proUnisalTmp){
-            $objetivos=$proUnisalTmp->getObjeEspeProgra();            
-        }
+        $objetivos=$proTemplate->getObjeEspeProgra();            
+        
         
         return $objetivos;        
     }

@@ -13,7 +13,7 @@ $(document).ready(function(){
     $("#regresarObj").click(function(){
        window.location='consultarObjetivosEspecificos';
     });
-    
+    $('#tabs').tabs();
     $("#forObjEspTmp").validate();   
     
 });
@@ -27,17 +27,15 @@ form.cmxform label.error, label.error {
 input.error { border: 1px dotted red; }
 textarea.error { border: 1px dotted red; }
  </style>  
-
+ 
 <form id="forObjEspTmp" name="forObjEspTmp" method="post" >
 {% if id is defined %}
-           <table colspan="4"  align="center"><!-- id="datos"  -->
-        <tr>
-            <td colspan='2'>
-                <h1 style=" text-align: center">Modificar el Objetivo Especifico</h1>
-                <br></br>
-            </td>
-        </tr>
-        <tr>
+    <h1 style=" text-align: center">Modificar Objetivo Especifico</h1>
+ <div id="tabs">
+    <ul><li><a href="#tabs-1">Objetivo Especifico</a></li></ul>
+    <div id="tabs-1" >
+        <table colspan="4"  align="center"><!-- id="datos"  -->
+         <tr>
             <td style=" font-size: 12px" >Objetivo(*):</td>
             <td><textarea class="required" rows="4" cols="83" name= 'objetivo'  size="83%" id="objetivo" >{{objetivo}}</textarea></td>
         </tr>
@@ -50,17 +48,18 @@ textarea.error { border: 1px dotted red; }
         </tr>
 
     </table>
+
 <input type='hidden' name='idCaractOrg' id="idCaractOrg" value='{{idCaractOrg}}' />
 <input type='hidden' name='id' id="id" value='{{id}}' /> 
 <input type='hidden' name='oper' id="oper" value='edit' /> 
+        </div>
+ </div>
 {% else%}
+ <div id="tabs">
+     <h1 style=" text-align: center">Ingresar el Objetivo Especifico</h1>
+   <ul><li><a href="#tabs-1">Objetivo Especifico</a></li></ul>
+    <div id="tabs-1" >
     <table colspan="4"  align="center"><!-- id="datos"  -->
-        <tr>
-            <td colspan='2'>
-                <h1 style=" text-align: center">Ingrese el Objetivo Especifico</h1>
-                <br></br>
-            </td>
-        </tr>
         <tr>
             <td style=" font-size: 12px" >Objetivo(*):</td>
             <td><textarea class="required" rows="4" cols="83" name= 'objetivo'  size="83%" id="objetivo" ></textarea></td>
@@ -76,6 +75,8 @@ textarea.error { border: 1px dotted red; }
     </table>
 <input type='hidden' name='idCaractOrg' id="idCaractOrg" value='{{idCaractOrg}}' />
 <input type='hidden' name='oper' id="oper" value='add' />
+        </div>
+ </div>
 {% endif%}
 </form>
 {% endblock %}
