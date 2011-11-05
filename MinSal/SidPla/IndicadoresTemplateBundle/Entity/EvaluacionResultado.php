@@ -86,4 +86,14 @@ class EvaluacionResultado {
     {
         return $this->paoEvaResul;
     }
+
+    /**
+     * Add evaIndi
+     *
+     * @param MinSal\SidPla\IndicadoresTemplateBundle\Entity\EvaluacionIndicador $evaIndi
+     */
+    public function addEvaluacionIndicador(\MinSal\SidPla\IndicadoresTemplateBundle\Entity\EvaluacionIndicador $evaIndi)
+    {
+        $this->evaIndi[] = $evaIndi;
+    }
 }

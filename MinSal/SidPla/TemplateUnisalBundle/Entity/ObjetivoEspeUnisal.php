@@ -51,10 +51,14 @@ class ObjetivoEspeUnisal {
      * @ORM\OneToMany(targetEntity="ResultadoEspeUnisal", mappedBy="objEspRET")
      */
     private $resultEspObjT;
-
+    
     /**
-     * @ORM\OneToMany(targetEntity="MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud", mappedBy="objEspUnisal")
-     */
+     * @ORM\ManyToMany(targetEntity="MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud")
+     * @ORM\JoinTable(name="sidpla_objespeunisal_indicadorsalud",
+     *      joinColumns={@ORM\JoinColumn(name="objespuni_codigo", referencedColumnName="objespuni_codigo")},
+     *      inverseJoinColumns={@ORM\JoinColumn(name="indsalu_codigo", referencedColumnName="indsalu_codigo")}
+     *      ) 
+     */   
     private $indicadoresSalud;
 
     public function __construct() {
@@ -184,7 +188,7 @@ class ObjetivoEspeUnisal {
      *
      * @param MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresSalud
      */
-    public function addIndicadoresSaludl(\MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresSalud) {
+    public function addIndicadoresSalud(\MinSal\SidPla\IndicadoresTemplateBundle\Entity\IndicadorSalud $indicadoresSalud) {
         $this->indicadoresSalud[] = $indicadoresSalud;
     }
 
