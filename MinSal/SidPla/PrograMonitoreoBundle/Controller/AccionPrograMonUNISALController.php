@@ -212,7 +212,7 @@ class AccionPrograMonUNISALController extends Controller {
                     $idResultadoRealizado=substr($tags[$i], 20);
                     $valorRealizado=$valores[$i];
                     
-                    if($valorRealizado>0){
+                    if($valorRealizado>=0){
                         $resultadoAct=$resultadoActDao->getResultActUnisal($idResultadoRealizado);
                         $resultadoAct->setResulActProgramado($valorRealizado);                    
                         $resultadoActDao->guardarResulAct($resultadoAct);                        

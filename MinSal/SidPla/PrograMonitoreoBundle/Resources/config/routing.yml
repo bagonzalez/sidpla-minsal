@@ -67,3 +67,8 @@ MinSalSidPlaPrograMonitoreoBundle_guardarEvaluaciondeResultadosUNISAL:
     pattern:  /guardarEvaluaciondeResultadosUNISAL
     defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionEvaluaciondeResultadosUnisal:guardarEvaluaciondeResultadosUNISAL }   
 
+
+MinSalSidPlaPrograMonitoreoBundle_supervisarResultadosEspec:
+    pattern:  /supervisarResultadosEspec
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionUnidadesSupervisadas:supervisarResultadosEspec }   
+
