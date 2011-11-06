@@ -22,6 +22,7 @@
             <table border="1" WIDTH='85%'>
                 <thead>
                     <tr  style=" font-size: 14px;">
+                        <th><strong>  Cod </strong></th>
                         <th><strong>  Objetivo </strong>
                         </th>
                         <th colspan="2"><strong>  Acciones </strong>
@@ -31,8 +32,8 @@
                 <tbody>
        {%for obj in objEspecificoTemplate%}
                         <tr>
-                            <td style=" font-size: 12px;">{{ obj.getIdObjEspec.getDescripcion}}
-                            </td>
+                            <td style=" font-size: 12px;">{{ obj.getIdObjEspec.nomenclatura}}</td>    
+                            <td style=" font-size: 12px;">{{ obj.getIdObjEspec.getDescripcion}}</td>
                             <td class="tdBotonesIconos" WIDTH='60' >
                                 <input width="50" height="50" type="image" src="{{ asset('/images/iconos/editar.png')}}"  id="editar" onclick="$('#idfilaobj').attr('value',{{obj.getIdObjEspec.getIdObjEspec}});$('#anio').attr('value', $('#selanio').val());this.form.action='{{path('MinSalSidPlaGesObjEspEntControlBundle_editarObjEspTemplate')}}';" />
                                 <br/>Editar

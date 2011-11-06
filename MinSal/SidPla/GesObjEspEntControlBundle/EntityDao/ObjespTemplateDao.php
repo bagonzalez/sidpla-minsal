@@ -22,10 +22,9 @@ class ObjespTemplateDao {
         return $objetivotemplate;
     }
 
-    public function agregarResulEsperadoTemplate($resEspeDesc, $resEspNomencl, $resEspIndicador, $idObjetivo) {
-
+    public function agregarResulEsperadoTemplate($resEspeDesc,$resEspIndicador,$idObjetivo) {
         $objetivoespecificoAux = $this->getObjetivoTemplate($idObjetivo);
-
+        
         $objResulesperado = new ResEspTemplate();
         $objResulesperado->setResEspTemplDescripcion($resEspeDesc);
         $objResulesperado->setResEspTemplIndicador($resEspIndicador);
@@ -36,6 +35,8 @@ class ObjespTemplateDao {
         $this->em->persist($objResulesperado);
         $this->em->persist($objetivoespecificoAux);
         $this->em->flush();
+        $objTemplateDao=new ObjTemplateDao($this->doctrine);
+        $objTemplateDao->actualizaNomenclatura($objetivoespecificoAux->getObjTmpEspe()->getAnioObjTemp());
 
         return $objResulesperado->getIdResEspTempl();
     }

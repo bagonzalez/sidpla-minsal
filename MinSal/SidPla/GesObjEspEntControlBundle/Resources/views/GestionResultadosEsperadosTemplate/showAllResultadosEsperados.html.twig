@@ -6,6 +6,7 @@
 <table border="1" WIDTH='85%'>
     <thead>
         <tr  style=" font-size: 14px;">
+            <th><strong>  Cod </strong></th>
             <th><strong>  Resultados Esperados </strong>
             </th>
             <th><strong>  Acciones </strong>
@@ -16,8 +17,8 @@
  {% if resultadosEsperados is defined %}
      {%for resultado in resultadosEsperados%}
             <tr>
-                <td style=" font-size: 12px;">{{ resultado.getResEspTemplDescripcion}}
-                </td>
+                <td style=" font-size: 12px;">{{ resultado.getResEspTemplNomencla}}</td>
+                <td style=" font-size: 12px;">{{ resultado.getResEspTemplDescripcion}}</td>
                 <td class="tdBotonesIconos" WIDTH='60' >
                     <input width="50" height="50" type="image" src="{{ asset('/images/iconos/editar.png')}}"  id="editar" onclick="$('#idfilaResultado').attr('value',{{resultado.getIdResEspTempl}});this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_editarResultadosEsperadosTemplate') }}';" />
                     <br/>Editar

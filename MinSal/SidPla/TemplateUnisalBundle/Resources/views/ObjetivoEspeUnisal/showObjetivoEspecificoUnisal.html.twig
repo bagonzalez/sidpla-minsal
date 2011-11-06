@@ -14,10 +14,8 @@
         <tbody>
     {%for obj in objTemplateDao.obtenerPorArea(area.getCodArea ,proUnisalActual.anioProUniTem)%}
                 <tr>
-                    <td style=" font-size: 12px;">{{ obj.nomenObjEspUni}}
-                    </td>
-                    <td style=" font-size: 12px;" >{{ obj.getDescObjEspUni}}
-                    </td>
+                    <td style=" font-size: 12px;">{{ obj.nomenObjEspUni}}</td>
+                    <td style=" font-size: 12px;" >{{ obj.getDescObjEspUni}}</td>
                     <td class="tdBotonesIconos" WIDTH='60' >
                         <input width="50" height="50" type="image" src="{{ asset('/images/iconos/editar.png')}}"  id="editar" value="Editar" onclick="$('#idObj').attr('value',{{obj.getcodObjEspUni}});$('#anio').attr('value', $('#selanio').val());$('#idArea').attr('value', $('#selarea').val());this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarObjetivoEspeUnisal')}}';" />
                         <br/>Editar

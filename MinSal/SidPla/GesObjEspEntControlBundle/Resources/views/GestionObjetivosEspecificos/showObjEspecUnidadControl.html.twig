@@ -1,13 +1,14 @@
 {# Muestra todos las opciones #}
 {% block body %}
 <form action= "" method="post">
-        <input type='hidden' name='idfilaobj' id="idfilaobj" value='' />
-        <input type='hidden' name='anio' id="anio" value='' />
-        <input type='hidden' name='idfila' id="idfila" value='' />
- 
-<table border="1" WIDTH='85%'>
+    <input type='hidden' name='idfilaobj' id="idfilaobj" value='' />
+    <input type='hidden' name='anio' id="anio" value='' />
+    <input type='hidden' name='idfila' id="idfila" value='' />
+
+    <table border="1" WIDTH='85%'>
         <thead>
             <tr  style=" font-size: 14px;">
+                <th><strong>  Cod </strong></th>
                 <th><strong>  Objetivo </strong>
                 </th>
                 <th colspan="2"><strong>  Acciones </strong>
@@ -17,18 +18,18 @@
         <tbody>
         {% if objetivos is defined %}
             {%for obj in objetivos%}
-               <tr>
-                 <td style=" font-size: 12px;">{{ obj.getIdObjEspec.getDescripcion}}
-                 </td>
-                 <td class="tdBotonesIconos" WIDTH='60' >
-                    <input width="50" height="50" type="image" src="{{ asset('/images/iconos/gestion.png')}}"  id="resultadoEsperado" onclick="$('#idfila').attr('value', {{obj.getIdObjEspec.getIdObjEspec}}); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}';" />
-                    <br/>Resultados Esperados
-                 </td>
-               </tr>
+                <tr>
+                    <td style=" font-size: 12px;">{{ obj.getIdObjEspec.nomenclatura}}</td>    
+                    <td style=" font-size: 12px;">{{ obj.getIdObjEspec.getDescripcion}}</td>
+                    <td class="tdBotonesIconos" WIDTH='60' >
+                        <input width="50" height="50" type="image" src="{{ asset('/images/iconos/gestion.png')}}"  id="resultadoEsperado" onclick="$('#idfila').attr('value', {{obj.getIdObjEspec.getIdObjEspec}}); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}';" />
+                        <br/>Resultados Esperados
+                    </td>
+                </tr>
             {%endfor%}
         {% endif %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
         <br></br>        
     </form>  
 

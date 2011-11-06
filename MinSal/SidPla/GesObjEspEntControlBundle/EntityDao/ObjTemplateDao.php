@@ -3,11 +3,10 @@
 namespace MinSal\SidPla\GesObjEspEntControlBundle\EntityDao;
 
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjTemplate;
-
 use MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico;
 use MinSal\SidPla\UnidadOrgBundle\EntityDao\ObjetivoEspecificoDao;
-
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate;
+use Doctrine\ORM\Query\ResultSetMapping;
 
 class ObjTemplateDao {
 
@@ -23,67 +22,75 @@ class ObjTemplateDao {
     }
 
     public function obtenerObjTempAnio($anio) {
-        
-        $objTmp= $this->em->createQuery("SELECT ot
+
+        $objTmp = $this->em->createQuery("SELECT ot
                                          FROM MinSalSidPlaGesObjEspEntControlBundle:ObjTemplate ot
-                                         WHERE ot.anioObjTemp = '".$anio."'");
+                                         WHERE ot.anioObjTemp = '" . $anio . "'");
         return $objTmp->getResult();
     }
-    
+
     public function existeObjTmp($anio) {
         $unidadmedida = $this->em->createQuery("SELECT count(ot)
                                                 FROM MinSalSidPlaGesObjEspEntControlBundle:ObjTemplate ot
-                                                WHERE ot.anioObjTemp = '".$anio."'");
+                                                WHERE ot.anioObjTemp = '" . $anio . "'");
         return $unidadmedida->getSingleScalarResult();
     }
-    
-    public function agregarObjetivoTemplate($anio){
-        $objTmp=new ObjTemplate;
+
+    public function agregarObjetivoTemplate($anio) {
+        $objTmp = new ObjTemplate;
         $objTmp->setAnioObjTemp($anio);
-        
+
         $this->em->persist($objTmp);
         $this->em->flush();
         $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ');
-        
+
         return $matrizMensajes;
-        
     }
-    public function agregarObjTmp($desObjEsp,$objTmp){
-        $objEspTmp=new ObjespTemplate();
+
+    public function agregarObjTmp($desObjEsp, \MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjTemplate $objTmp) {
+        $objEspTmp = new ObjespTemplate();
         $objEspTmp->setObjTmpEspe($objTmp);
-        
-        $objetivoEspecifico=new ObjetivoEspecifico();
+
+        $objetivoEspecifico = new ObjetivoEspecifico();
         $objetivoEspecifico->setDescripcion($desObjEsp);
         $objetivoEspecifico->setActivo(true);
         $this->em->persist($objetivoEspecifico);
         $objEspTmp->setIdObjEspec($objetivoEspecifico);
         $this->em->persist($objEspTmp);
-        
+
         $this->em->flush();
-        
-        
-        
+        $anioTemplate=$objTmp->getAnioObjTemp();
+        $this->actualizaNomenclatura($anioTemplate);
+
+
         $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ');
-        
+
         return $matrizMensajes;
-        
     }
-    
-    public function editarObjTmp($desObjEsp,$codObjEsp){
-        
+
+    public function editarObjTmp($desObjEsp, $codObjEsp) {
+
         $objEspDao = new ObjetivoEspecificoDao($this->doctrine);
-        $objetivoEspecifico=$objEspDao->getObjetEspecif($codObjEsp);
+        $objetivoEspecifico = $objEspDao->getObjetEspecif($codObjEsp);
         $objetivoEspecifico->setDescripcion($desObjEsp);
-        
+
         $this->em->persist($objetivoEspecifico);
         $this->em->flush();
-    
+
         $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ');
         return $matrizMensajes;
-        
     }
-    
-    
+
+    public function actualizaNomenclatura($anioTemplate) {
+
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('resp', 'resp');
+        $query = $this->em->createNativeQuery('SELECT "FN_ACTUALIZA_NOMENCLATURA_EC"(?) resp', $rsm);
+        $query->setParameter(1, $anioTemplate);
+
+        $x = $query->getSingleScalarResult();
     }
+
+}
 
 ?>

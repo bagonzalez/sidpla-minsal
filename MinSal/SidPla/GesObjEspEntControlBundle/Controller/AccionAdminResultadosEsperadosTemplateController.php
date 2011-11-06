@@ -74,9 +74,8 @@ class AccionAdminResultadosEsperadosTemplateController extends Controller {
         $resEspeDesc = $request->get('resultadoEsperado');
         $resEspIndicador = $request->get('Indicador');
 
-        $resEspNomencl = "prueba";
         $objetivoDao = new ObjespTemplateDao($this->getDoctrine());
-        $idResultadoEsp = $objetivoDao->agregarResulEsperadoTemplate($resEspeDesc, $resEspNomencl, $resEspIndicador, $idobjetivo);
+        $idResultadoEsp = $objetivoDao->agregarResulEsperadoTemplate($resEspeDesc, $resEspIndicador, $idobjetivo);
 
         $objetivoAux = new ObjespTemplate();
         $objetivoDao = new ObjespTemplateDao($this->getDoctrine());
