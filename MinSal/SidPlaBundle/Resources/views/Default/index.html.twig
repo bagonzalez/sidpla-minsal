@@ -105,11 +105,12 @@
                             <ul id="nav"></ul>
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
                                 <h3 align="right">Bienvenid@ {{ app.user.empleado.primerNombre }}&nbsp;{{ app.user.empleado.primerApellido }}!!</h3>                            
+                                <h3 align="right">{{ app.user.empleado.unidadOrganizativa.nombreUnidad }}</h3><br></br>                            
                             {% endif %}    
                         </div>
                         
                             <div id="contenido">
-                                <br></br>
+                               
                 {% block body %}
 
 
