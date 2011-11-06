@@ -80,18 +80,8 @@ class AccionCompromisoCumplimientoController extends Controller {
             foreach ($objEspTmps as $aux) {
                 $objEspec = $aux->getIdObjEspec();
                 $obEspecificos[] = $objEspec;
-                //$resultadosEspec = new  ArrayCollection();
-
-                /* foreach ($resultadosEsperados as $resulEspec) {
-                  if($resulEspec->getIdObjEsp()->getIdObjEspec()==$objEspec->getIdObjEspec()){
-                  $resultadosEspec[]=$resulEspec;
-                  $objEspec->addResultadoEsperado($resulEspec);
-                  }
-                  } */
             }
         }
-
-
 
         return $obEspecificos;
     }
@@ -168,11 +158,6 @@ class AccionCompromisoCumplimientoController extends Controller {
 
                             $actividad = $actividadDao->getActividad($actividad->getIdAct());
                             $resultadosActividad = $actividad->getResulAct();
-
-                            //   $arrayDatosResulAct=array($objEspec->getDescripcion(),
-                            //                           $resulEspec->getResEspeDesc(),
-                            //                         $actividad->getIdAct(),
-                            //                       $actividad->getActDescripcion()); 
 
                             foreach ($resultadosActividad as $resultadoActividad) {
                                 $rows[$i]['id'] = $resultadoActividad->getIdResulAct();

@@ -76,65 +76,6 @@ class AccionAdminResultadosEsperadosController extends Controller {
                 array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec,'resultadosEsperado'=>$resultadosEsperados));
     }
 
-   /* public function consultarResultadosEsperadosJSONAction() {
-
-        $request = $this->getRequest();
-        $idobjetivo = $request->get('idfila');
-
-        $objUniControl = $request->get('objUniControl');
-
-
-        $objetivoAux = new ObjetivoEspecifico();
-        $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());
-        $objetivoAux = $objetivoDao->getObjetEspecif($idobjetivo);
-
-        $objetivosEspec = $objetivoAux->getResultadoEsperado();
-
-        if ($objUniControl) {
-            $uniControl = new UnidadOrganizativa();
-            $uniControl = $this->obtenerUnidadOrg();
-            $objetivosEspec = $uniControl->getResultadosEsperados();
-        }
-
-        $numfilas = count($objetivosEspec);
-
-        $objetivoEspec = new ResultadoEsperado();
-        $i = 0;
-
-        foreach ($objetivosEspec as $objetivoEspec) {
-            if ($objetivoEspec->getIdObjEsp()->getIdObjEspec() == $idobjetivo) {
-                $rows[$i]['id'] = $objetivoEspec->getIdResEsp();
-                $rows[$i]['cell'] = array($objetivoEspec->getIdResEsp(),
-                    $objetivoEspec->getIdObjEsp(),
-                    $objetivoEspec->getIdResTempl(),
-                    $objetivoEspec->getIdTipoMeta(),
-                    $objetivoEspec->getResEspeDesc(),
-                    $objetivoEspec->getResEspNomencl(),
-                    $objetivoEspec->getResEspCondi(),
-                    $objetivoEspec->getResEspMetAnual(),
-                    $objetivoEspec->getResEspDescMetAnual(),
-                    $objetivoEspec->getResEspResponsable(),
-                    $objetivoEspec->getResEspEntidadControl(),
-                    $objetivoEspec->getResEspIndicador()
-                );
-                $i++;
-            }
-        }
-
-        $datos = json_encode($rows);
-
-
-        $jsonresponse = '{
-               "page":"1",
-               "total":"' . ($numfilas / 10) . '",
-               "records":"' . $numfilas . '", 
-               "rows":' . $datos . '}';
-
-
-        $response = new Response($jsonresponse);
-        return $response;
-    }*/
-
     public function manttResultadosEsperadosAction() {
 
         $request = $this->getRequest();
@@ -186,8 +127,6 @@ class AccionAdminResultadosEsperadosController extends Controller {
 
         $objetivosEspec = $objetivoAux->getDescripcion();
 
-
-
         return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:IngresoResultadoEsperado.html.twig', 
                 array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec));
     }
@@ -208,11 +147,7 @@ class AccionAdminResultadosEsperadosController extends Controller {
         $resEspDescMetAnual = $request->get('descripMetaAnual');
         $entControl = $request->get('entControl');
 
-
-        //estos tres valores son fusilados porque no se bien como  funcionan
-        //asi que solo los asigno y los mando
-        $resEspNomencl = "pruebanomenc";
-        $restmpcodigo = 1;
+        $restmpcodigo = null;
         if ($entControl)
             $resEspEntidadControl = true;
         else
@@ -228,14 +163,12 @@ class AccionAdminResultadosEsperadosController extends Controller {
         $unidad = $this->obtenerUnidadOrg();
 
         $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());
-        $idResultadoEsp = $objetivoDao->agregarResulEsperado($restmpcodigo, $tipometa, $resEspeDesc, $resEspNomencl, $resEspCondi, $resEspMetAnual, $resEspDescMetAnual, $resEspResponsable, $resEspEntidadControl, $resEspIndicador, $idobjetivo, $medioverificacion, $unidad);
-
+        $idResultadoEsp = $objetivoDao->agregarResulEsperado($restmpcodigo, $tipometa, $resEspeDesc, $resEspCondi, $resEspMetAnual, $resEspDescMetAnual, $resEspResponsable, $resEspEntidadControl, $resEspIndicador, $idobjetivo, $medioverificacion, $unidad);
 
         $trimesuno = 1;
         $trimesdos = 2;
         $trimestres = 3;
         $trimescuatro = 4;
-
 
         $paoElaboracion = $this->obtenerPaoElaboracionAction();
         $programacionMonitoreo = $paoElaboracion->getProgramacionMonitoreo();
@@ -310,7 +243,6 @@ class AccionAdminResultadosEsperadosController extends Controller {
         $objetivosEspec = $objetivoAux->getDescripcion();
 
         //obteniendo los datos del resultado esperado
-
         $resultadoAux = new ResultadoEsperado();
         $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());
         $resultadoAux = $resultadoDao->getResulEspera($id);
@@ -323,9 +255,6 @@ class AccionAdminResultadosEsperadosController extends Controller {
         $resultadoEsperadoMetaAnual = $resultadoAux->getResEspMetAnual();
         $resultadoEsperadoTipoMeta = $resultadoAux->getIdTipoMeta();
         $resultadoEsperadoDescripcionMetaAnual = $resultadoAux->getResEspDescMetAnual();
-
-
-
 
         //inicia el proceso  de recuperar los atos de la tabla resultadore
         $resultAux = new ResultadoEsperado();
@@ -368,10 +297,6 @@ class AccionAdminResultadosEsperadosController extends Controller {
                 $idcuatro = $resultadoreEspec->getIdResultadore();
             }
         }
-
-
-
-
 
 
         return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:EditarResultadoEsperado.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec, 'idfilaResultado' => $id,
@@ -421,15 +346,13 @@ class AccionAdminResultadosEsperadosController extends Controller {
         $idtres = $request->get('idtres');
         $idcuatro = $request->get('idcuatro');
 
-
-        $resEspNomencl = "pruebanomenc";
         //LO CAMBIE POR NULL PERO TENIA 1 Y ME DABA ERROR
         $restmpcodigo = null;
         //
         $resEspEntidadControl = true;
 
         $objDao = new ResultadoEsperadoDao($this->getDoctrine());
-        $objDao->editResulEsp($restmpcodigo, $tipometa, $resEspeDesc, $resEspNomencl, $resEspCondi, $resEspMetAnual, $resEspDescMetAnual, $resEspResponsable, $resEspEntidadControl, $resEspIndicador, $idobjetivo, $medioverificacion, $id);
+        $objDao->editResulEsp($restmpcodigo, $tipometa, $resEspeDesc, $resEspCondi, $resEspMetAnual, $resEspDescMetAnual, $resEspResponsable, $resEspEntidadControl, $resEspIndicador, $idobjetivo, $medioverificacion, $id);
 
         $objetivoAux = new ObjetivoEspecifico();
         $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());

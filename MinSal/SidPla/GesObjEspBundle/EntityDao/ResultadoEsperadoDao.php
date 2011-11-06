@@ -58,7 +58,6 @@ class ResultadoEsperadoDao {
     public function editResulEsp(       $idResTempl,
                                         $idTipoMeta,
                                         $resEspeDesc,
-                                        $resEspNomencl,
                                         $resEspCondi,
                                         $resEspMetAnual,
                                         $resEspDescMetAnual,
@@ -75,7 +74,6 @@ class ResultadoEsperadoDao {
          $objResulesperado->setIdResTempl($idResTempl);                         
          $objResulesperado->setIdTipoMeta($idTipoMeta);                         
          $objResulesperado->setResEspeDesc($resEspeDesc);                         
-         $objResulesperado->setResEspNomencl($resEspNomencl);                         
          $objResulesperado->setResEspCondi($resEspCondi);                         
          $objResulesperado->setResEspMetAnual($resEspMetAnual);                         
          $objResulesperado->setResEspDescMetAnual($resEspDescMetAnual);                         
@@ -94,7 +92,6 @@ class ResultadoEsperadoDao {
    public function agregarActividad($idfilaResultado,
                                        $tipometa,
                                         $actividad,
-                                        $resEspNomencl,
                                         $supuestosfactores,
                                         $metaAnual,
                                         $descripMetaAnual,
@@ -109,8 +106,7 @@ class ResultadoEsperadoDao {
      
          $objActividad=new Actividad();
          $objActividad->setIdTipoMeta($tipometa);                         
-         $objActividad->setActDescripcion($actividad);                         
-         $objActividad->setActNomenclatura($resEspNomencl);                         
+         $objActividad->setActDescripcion($actividad);                        
          $objActividad->setSupuestosFactores($supuestosfactores);                         
          $objActividad->setActMetaAnual($metaAnual);                         
          $objActividad->setActDescMetaAnu($descripMetaAnual);                         

@@ -1,26 +1,4 @@
 <?php
-
-/*
-  SIDPLA - MINSAL
-  Copyright (C) 2011  Bruno González   e-mail: bagonzalez.sv EN gmail.com
-  Copyright (C) 2011  Universidad de El Salvador
-
-  This program is free software: you can redistribute it and/or modify
-  it under the terms of the GNU General Public License as published by
-  the Free Software Foundation, either version 3 of the License, or
-  (at your option) any later version.
-
-  This program is distributed in the hope that it will be useful,
-  but WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU General Public License for more details.
-
-  You should have received a copy of the GNU General Public License
-  along with this program.  If not, see <http://www.gnu.org/licenses/>.
-  
-  
- */
-
 namespace MinSal\SidPla\UnidadOrgBundle\EntityDao;
 
 use MinSal\SidPla\UnidadOrgBundle\Entity\ObjetivoEspecifico;
@@ -81,7 +59,6 @@ class ObjetivoEspecificoDao {
    public function agregarResulEsperado($idResTempl,
                                         $tipometa,
                                         $resEspeDesc,
-                                        $resEspNomencl,
                                         $resEspCondi,
                                         $resEspMetAnual,
                                         $resEspDescMetAnual,
@@ -93,19 +70,13 @@ class ObjetivoEspecificoDao {
                                         $unidadOrganizativa) {
          
       
-           $objetivoespecificoAux=new ObjetivoEspecifico();
-           $objetivoespecificoAux=$this->getObjetEspecif($idObjetivo); 
-       // $tipometa=1;
-        
-     //  $resEspCondi="gfdsfsdf";
-       // $resEspMetAnual=100;
-       // $resEspDescMetAnual="ttttt";
-       // $resEspResponsable="neto";
+         $objetivoespecificoAux=new ObjetivoEspecifico();
+         $objetivoespecificoAux=$this->getObjetEspecif($idObjetivo); 
+
          $objResulesperado=new ResultadoEsperado();
-        // $objResulesperado->setIdResTempl($idResTempl);                         
+                            
          $objResulesperado->setIdTipoMeta($tipometa);                         
          $objResulesperado->setResEspeDesc($resEspeDesc);                         
-         $objResulesperado->setResEspNomencl($resEspNomencl);                         
          $objResulesperado->setResEspCondi($resEspCondi);                         
          $objResulesperado->setResEspMetAnual($resEspMetAnual);                         
          $objResulesperado->setResEspDescMetAnual($resEspDescMetAnual);                         
@@ -122,10 +93,7 @@ class ObjetivoEspecificoDao {
          $this->em->persist($objetivoespecificoAux);
          $this->em->flush();
         
-        
-       // $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ','Resultado'.$objResulesperado->getIdResEsp());
-
-        return $objResulesperado->getIdResEsp();
+       return $objResulesperado->getIdResEsp();
     }
  
 }

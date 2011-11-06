@@ -8,16 +8,12 @@
           $('#limpiar').button();
           $('#regresar').button();
           $('#regresar').click(function() {
-             
-                       this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}';                    
-                
+                       this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}';
           });
-           $('#guardar').click(function(evento) {
+          $('#guardar').click(function(evento) {
            
            var suma = 0;
-            
-            
-            metaAnual= Number($("input[id='metaAnual']").val());
+           metaAnual= Number($("input[id='metaAnual']").val());
             
             suma = Number($("input[id='trimUno']").val());
             suma += Number($("input[id='trimDos']").val());
@@ -82,93 +78,90 @@
   //PARA QUE REPARTA LA META ANUAL.
 $('#metaAnual').blur(function(event) {
     metaAnual=Number($("input[id='metaAnual']").val());
-    alert(metaAnual/4);
-    $('#trimUno').attr('value',round(metaAnual/4));
-        
+    $('#trimUno').attr('value',Math.round(metaAnual/4));
+    $('#trimDos').attr('value',Math.round(metaAnual/4));
+    $('#trimTres').attr('value',Math.round(metaAnual/4));
+    $('#trimCuatro').attr('value',metaAnual-(Number($("input[id='trimUno']").val())+Number($("input[id='trimDos']").val())+Number($("input[id='trimTres']").val())));
 });
 
 
 $('#metaAnual').keydown(function(event) {
-// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57 ) {
-event.preventDefault();
-}
-}
+    // Permitir borrar, suprimir, TAB, comas, izqda, derecha:
+    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
+    // ...No ocurre nada aqui.
+    }
+    else {
+        // Solo numeros:
+        if (event.keyCode < 48 || event.keyCode > 57 ) {
+        event.preventDefault();
+        }
+    }
 });
    
  $('#trimUno').keydown(function(event) {
 // Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57 ) {
-event.preventDefault();
-}
-}
+    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
+    // ...No ocurre nada aqui.
+    }
+    else {
+        // Solo numeros:
+        if (event.keyCode < 48 || event.keyCode > 57 ) {
+        event.preventDefault();
+        }
+    }
 });
     
-    $('#trimDos').keydown(function(event) {
+$('#trimDos').keydown(function(event) {
 // Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105 ) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57) {
-event.preventDefault();
-}
-}
+    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
+    // ...No ocurre nada aqui.
+    }
+    else {
+        // Solo numeros:
+        if (event.keyCode < 48 || event.keyCode > 57 ) {
+        event.preventDefault();
+        }
+    }
 });
-    $('#trimTres').keydown(function(event) {
+$('#trimTres').keydown(function(event) {
 // Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57 ) {
-event.preventDefault();
-}
-}
+    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
+    // ...No ocurre nada aqui.
+    }
+    else {
+        // Solo numeros:
+        if (event.keyCode < 48 || event.keyCode > 57 ) {
+        event.preventDefault();
+        }
+    }
 });
     
-    $('#trimCuatro').keydown(function(event) {
+$('#trimCuatro').keydown(function(event) {
 // Permitir borrar, suprimir, TAB, comas, izqda, derecha:
-if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
-// ...No ocurre nada aqui.
-}
-else {
-// Solo numeros:
-if (event.keyCode < 48 || event.keyCode > 57 ) {
-event.preventDefault();
-}
-}
+    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
+    // ...No ocurre nada aqui.
+    }
+    else {
+        // Solo numeros:
+        if (event.keyCode < 48 || event.keyCode > 57 ) {
+        event.preventDefault();
+        }
+    }
 });
     
  
 });
       
-    </script>
-    <style type="text/css">
-
-
-
-            form.cmxform label.error, label.error {
-                /* remove the next line when you have trouble in IE6 with labels in list */
-                color: red;
-                font-style: italic
-
-            }
-            input.error { border: 1px dotted red; }
-            textarea.error { border: 1px dotted red; }
-        </style>   
+</script>
+ <style type="text/css">
+form.cmxform label.error, label.error {
+  /* remove the next line when you have trouble in IE6 with labels in list */
+  color: red;
+   font-style: italic
+}
+input.error { border: 1px dotted red; }
+textarea.error { border: 1px dotted red; }
+</style>   
         <h1 style=" text-align: center">Ingresar Resultado Esperado</h1>
         <div id="tabs">
             <ul>

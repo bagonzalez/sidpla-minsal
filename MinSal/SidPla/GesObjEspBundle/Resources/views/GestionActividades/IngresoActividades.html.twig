@@ -2,7 +2,75 @@
 {% block body %}
 <script type="text/javascript">        
       $(document).ready(function(){
-          
+          $('#agregar').button();
+          $('#limpiar').button();
+          $('#regresar').button();
+          $('#regresar').click(function() {
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
+          });
+           
+          $('#agregar').click(function(evento) {
+            var suma = 0;
+            metaAnual= Number($("input[id='metaAnual']").val());
+            
+            suma = Number($("input[id='trimUno']").val());
+            suma += Number($("input[id='trimDos']").val());
+            suma += Number($("input[id='trimTres']").val());
+            suma += Number($("input[id='trimCuatro']").val());
+            
+            if(metaAnual==suma){
+             var enviar=0;
+               if(Number($("input[id='trimUno']").val())!=0){
+                    if($("input[id='datepickerInicioPrimer']").val()=="" | $("input[id='datepickerFinPrimer']").val()==""){
+                       alert("Debe de Ingresar la Fecha de Inicio y de Finalizacion del Primer Trimestre de la Programacion\nPara Continuar");
+                        evento.preventDefault();
+                    }
+                    else
+                    enviar++;
+           
+               }else
+                   enviar++;
+              if(Number($("input[id='trimDos']").val())!=0){
+                    if($("input[id='datepickerInicioSegundo']").val()=="" | $("input[id='datepickerFinSegundo']").val()==""){
+                       alert("Debe de Ingresar la Fecha de Inicio y de Finalizacion del Segundo Trimestre de la Programacion\nPara Continuar");
+                        evento.preventDefault();
+                    }
+                    else
+                    enviar++;
+           
+               }else
+                   enviar++;
+               if(Number($("input[id='trimTres']").val())!=0){
+                    if($("input[id='datepickerInicioTercer']").val()=="" | $("input[id='datepickerFintercer']").val()==""){
+                       alert("Debe de Ingresar la Fecha de Inicio y de Finalizacion del Tercer Trimestre de la Programacion\nPara Continuar");
+                        evento.preventDefault();
+                    }
+                    else
+                    enviar++;
+           
+               }else
+                   enviar++;
+               if(Number($("input[id='trimCuatro']").val())!=0){
+                    if($("input[id='datepickerInicioCuarto']").val()=="" | $("input[id='datepickerFinCuarto']").val()==""){
+                       alert("Debe de Ingresar la Fecha de Inicio y de Finalizacion del Cuarto Trimestre de la Programacion\nPara Continuar");
+                        evento.preventDefault();
+                    }
+                    else
+                    enviar++;
+           
+               }else
+                   enviar++;
+              if(enviar==4){
+                this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_guardarActividades') }}';
+              }
+            }
+            else{
+              alert("No coincide la meta anual con lo programado trimestralmente!");
+              evento.preventDefault();    
+            }
+             
+          });
+          //PARA MOSTRAR LA VENTANA DESPLEGABLE DEL LLENADO DE LA FECHA
           $('#dialogPrimer').jqm();
           $('#dialogSegundo').jqm();
           $('#dialogTercer').jqm();
@@ -44,17 +112,7 @@
           
           $( "#datepickerInicioCuarto" ).datepicker({ minDate: dateInicioCuatroTri, maxDate: dateFin });
           $( "#datepickerFinCuarto" ).datepicker({ minDate: dateInicioCuatroTri, maxDate: dateFin });
-          
-          $('#regresar').click(function() {
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarActividades') }}';
-           
-          });
-           
-           $('#agregar').click(function() {
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_guardarActividades') }}';
-             
-          });
-          
+
           $('#establecerFechaPrimer').click(function() {
             $('#dialogPrimer').jqmShow();              
           });
@@ -71,7 +129,10 @@
           $('#establecerFechaCuarto').click(function() {
             $('#dialogCuarto').jqmShow();              
           });
-          
+          $('#establecerFechaPrimer').button();
+          $('#establecerFechaSegundo').button();
+          $('#establecerFechaTercero').button();
+          $('#establecerFechaCuarto').button();
           
           
           $('#tabs').tabs();
@@ -86,181 +147,296 @@
                       }
                   });
           });
+ //validando el formulario
+ $("#formActividad").validate({
+  rules: {
+    metaAnual: {
+      required: true,
+      digits: true
+    },
+   
+   trimUno: {
+      required: true,
+      digits: true
+    },
     
+    trimDos: {
+      required: true,
+      digits: true
+    },
+    
+    trimTres: {
+      required: true,
+      digits: true
+    },
+    trimCuatro: {
+      required: true,
+      digits: true
+    }
+    
+  }
+}
+);
+  //PARA QUE REPARTA LA META ANUAL.
+$('#metaAnual').blur(function(event) {
+    metaAnual=Number($("input[id='metaAnual']").val());
+    $('#trimUno').attr('value',Math.round(metaAnual/4));
+    $('#trimDos').attr('value',Math.round(metaAnual/4));
+    $('#trimTres').attr('value',Math.round(metaAnual/4));
+    $('#trimCuatro').attr('value',metaAnual-(Number($("input[id='trimUno']").val())+Number($("input[id='trimDos']").val())+Number($("input[id='trimTres']").val())));
+});
 
+
+$('#metaAnual').keydown(function(event) {
+    // Permitir borrar, suprimir, TAB, comas, izqda, derecha:
+    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
+    // ...No ocurre nada aqui.
+    }
+    else {
+        // Solo numeros:
+        if (event.keyCode < 48 || event.keyCode > 57 ) {
+        event.preventDefault();
+        }
+    }
+});
+   
+ $('#trimUno').keydown(function(event) {
+// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
+    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
+    // ...No ocurre nada aqui.
+    }
+    else {
+        // Solo numeros:
+        if (event.keyCode < 48 || event.keyCode > 57 ) {
+        event.preventDefault();
+        }
+    }
+});
+    
+$('#trimDos').keydown(function(event) {
+// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
+    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
+    // ...No ocurre nada aqui.
+    }
+    else {
+        // Solo numeros:
+        if (event.keyCode < 48 || event.keyCode > 57 ) {
+        event.preventDefault();
+        }
+    }
+});
+$('#trimTres').keydown(function(event) {
+// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
+    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
+    // ...No ocurre nada aqui.
+    }
+    else {
+        // Solo numeros:
+        if (event.keyCode < 48 || event.keyCode > 57 ) {
+        event.preventDefault();
+        }
+    }
+});
+    
+$('#trimCuatro').keydown(function(event) {
+// Permitir borrar, suprimir, TAB, comas, izqda, derecha:
+    if ( event.keyCode == 46 || event.keyCode == 8 || event.keyCode == 9 || event.keyCode == 190 || event.keyCode==109 || event.keyCode==37 || event.keyCode==39 || event.keyCode == 188 || event.keyCode == 96 || event.keyCode == 97 || event.keyCode == 98 || event.keyCode == 99 || event.keyCode == 100 || event.keyCode == 101 || event.keyCode == 102 || event.keyCode == 103 || event.keyCode == 104 || event.keyCode == 105) {
+    // ...No ocurre nada aqui.
+    }
+    else {
+        // Solo numeros:
+        if (event.keyCode < 48 || event.keyCode > 57 ) {
+        event.preventDefault();
+        }
+    }
+});
+    
+ 
 });
       
-    </script>
-    <h2 class="demoHeaders">Ingreso de Actividades</h2>
-    <div id="tabs">
-        <ul>
-            <li><a href="#tabs-1">Nueva Actividad</a></li>
+</script>
+<style type="text/css">
+form.cmxform label.error, label.error {
+  /* remove the next line when you have trouble in IE6 with labels in list */
+  color: red;
+   font-style: italic
+}
+input.error { border: 1px dotted red; }
+textarea.error { border: 1px dotted red; }
+</style>    
+       <h1 style=" text-align: center">Ingresar Actividad</h1>
+        <div id="tabs">
+            <ul>
+                <li><a href="#tabs-1">Actividad</a></li>
 
-        </ul>
-        <form action="" method="post" >
-            <div id="tabs-1" >
+            </ul>
+                <form id="formActividad" action="" method="post" >
+                <div id="tabs-1" >
 
-                <table align="center" id="datos"  >
+                    <table align="center" id="datos"  >
 
-                    <tr>
-                        <td >Objetivo:</td>
-                        <td colspan="3" ><textarea readonly="readonly" rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
-                    </tr>
-                    <tr>
-                        <td >Resultado Esperado:</td>
-                        <td colspan="3" ><textarea readonly="readonly" rows="4" cols="100" name= 'resultadoEsperado'  size="60%" id="resultadoEsperado" >{{descripcionResultado}}</textarea></td>
-                    </tr>
-                    <tr>
-                        <td >Actividad:</td>
-                        <td colspan="3" ><input size="100%" name="actividad" id="actividad" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Indicador:</td>
-                        <td colspan="3" ><input size="100%" name="indicador" id="indicador" ></input></td>
-                    </tr>
-
-                    <tr>
-                        <td >Medio Verificacion:</td>
-                        <td colspan="3" ><input size="100%" name="medioverifindicador" id="medioverifindicador" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Responsables:</td>
-                        <td colspan="3" ><input size="100%" name="responsable" id="responsable" ></input></td>
-                    </tr>
-
-                    <tr>
-                        <td >Supuestos Factores:</td>
-                        <td colspan="3" ><input size="100%" name="supuestosfactores" id="supuestosfactores" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Meta anual:</td>
-                        <td colspan="3" ><input size="20%" name="metaAnual" id="metaAnual" ></input><select name="selectipometa"  id='selectipometa'></select></td>
-                    </tr>
-                    <tr>
-                        <td >Descripcion Meta anual:</td>
-                        <td colspan="3" ><input size="100%" name="descripMetaAnual" id="descripMetaAnual" ></input></td>
-                    </tr>
-                    <tr>
-                        <td >Costo: ($)</td>
-                        <td colspan="3" ><input size="20%"  name="costo" id="costo" ></input></td>
-                    </tr>
-
-
-                    <tr>
-                        <td >Fecha Inicio:</td>
-                        <td colspan="3" ><input size="20%" readonly="readonly" name="fechainicio" value="{{fechaInicio}}" id="fechainicio" ></input>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td >Fecha Fin:</td>
-                        <td colspan="3" ><input size="20%" readonly="readonly"  name="fechafin" value="{{fechaFin}}" id="fechafin" ></input></td>
-                    </tr>
-
-
-
-                    <tr>
-                        <td>Programado:</td>
-                    </tr>
-
-
-                    <tr>
-                        <TD WIDTH="25%"align="center">1er Trimestre</TD>
-                        <TD WIDTH="25%" align="center">2do trimestre</TD>
-                        <TD WIDTH="25%" align="center">3er Trimestre</TD>
-                        <TD WIDTH="25%" align="center">4to Trimestre</TD>
-                    </tr>
-                    <tr>
-                        <TD WIDTH="25%"align="center"> <input size="25%" name="trimUno" id="trimUno" ><input type="button" id="establecerFechaPrimer"  value="..."/></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimDos" id="trimDos" ><input type="button" id="establecerFechaSegundo"  value="..."/></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimTres" id="trimTres" ><input type="button" id="establecerFechaTercero"  value="..."/></input></TD>
-                        <TD WIDTH="25%"align="center"><input size="25%" name="trimCuatro" id="trimCuatro" ><input type="button" id="establecerFechaCuarto"  value="..."/></input></TD>
-                    </tr>   
-
-
-                    <tr>  
-                    <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
-                    <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
-                    <td colspan="4" align="center" >
-                        <button type="submmit" id="agregar"  >Guardar</button>
-                        <button type="reset"  >Limpiar</button>
-                        <button type="submmit" name ="regresar" id="regresar"  >Regresar</button>
-                    </td> 
-                    </tr>                    
-                </table>                       
-            </div>
-            <div class="jqmWindow" style="width: 400px; top: 45%; left:40%" id="dialogPrimer">
-                <a href="#" class="jqmClose">Cerrar</a>
-                <hr>
-                <p>Primer Trimestre </p>
-                <table>
-                    <tbody>
                         <tr>
-                            <td>
-                                <p>Fecha Inicio: <input id="datepickerInicioPrimer"  name="datepickerInicioPrimer"  type="text"></input></p> 
-                            </td>  
-                            <td>
-                                <p>Fecha Fin: <input id="datepickerFinPrimer" name="datepickerFinPrimer" type="text"></input></p>
-                            </td>                            
+                            <td >Objetivo:</td>
+                            <td><textarea readonly="readonly" rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="jqmWindow" style="width: 400px; top: 45%; left:60%" id="dialogSegundo">
-                <a href="#" class="jqmClose">Cerrar</a>
-                <hr>
-                <p>Segundo Trimestre </p>
-                <table>
-                    <tbody>
                         <tr>
-                            <td>
-                                <p>Fecha Inicio: <input id="datepickerInicioSegundo" name="datepickerInicioSegundo" type="text"></input></p> 
-                            </td>  
-                            <td>
-                                <p>Fecha Fin: <input id="datepickerFinSegundo" name="datepickerFinSegundo" type="text"></input></p>
-                            </td>                            
+                            <td >Resultado Esperado:</td>
+                            <td><textarea readonly="readonly" rows="4" cols="100" name= 'resultadoEsperado'  size="60%" id="resultadoEsperado" >{{descripcionResultado}}</textarea></td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="jqmWindow" style="width: 400px; top: 45%; left:80%" id="dialogTercer">
-                <a href="#" class="jqmClose">Cerrar</a>
-                <hr>
-                <p>Tercer Trimestre </p>
-                <table>
-                    <tbody>
                         <tr>
-                            <td>
-                                <p>Fecha Inicio: <input id="datepickerInicioTercer" name="datepickerInicioTercer" type="text"></input></p> 
-                            </td>  
-                            <td>
-                                <p>Fecha Fin: <input id="datepickerFinTercer"  name="datepickerFinTercer" type="text"></input></p>
-                            </td>                            
+                            <td >Actividad(*):</td>
+                            <td><input class="required"  size="100%" name="actividad" id="actividad" ></input></td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div class="jqmWindow" style="width: 400px; top: 45%; left:90%" id="dialogCuarto">
-                <a href="#" class="jqmClose">Cerrar</a>
-                <hr>
-                <p>Cuarto Trimestre </p>
-                <table>
-                    <tbody>
                         <tr>
-                            <td>
-                                <p>Fecha Inicio: <input id="datepickerInicioCuarto" name="datepickerInicioCuarto" type="text"></input></p> 
-                            </td>  
-                            <td>
-                                <p>Fecha Fin: <input id="datepickerFinCuarto" name="datepickerFinCuarto"  type="text"></input></p>
-                            </td>                            
+                            <td >Indicador(*):</td>
+                            <td><input class="required"  size="100%" name="indicador" id="indicador" ></input></td>
                         </tr>
-                    </tbody>
-                </table>
-            </div>
-        </form>
-    </div>
+
+                        <tr>
+                            <td >Medio Verificacion(*):</td>
+                            <td><input class="required"  size="100%" name="medioverifindicador" id="medioverifindicador" ></input></td>
+                        </tr>
+                        <tr>
+                            <td >Responsables(*):</td>
+                            <td><input class="required"  size="100%" name="responsable" id="responsable" ></input></td>
+                        </tr>
+
+                        <tr>
+                            <td >Supuestos Factores:</td>
+                            <td><input size="100%" name="supuestosfactores" id="supuestosfactores" ></input></td>
+                        </tr>
+                        <tr>
+                            <td >Meta anual(*):</td>
+                            <td><input  class="required"  size="20%" name="metaAnual" id="metaAnual" ></input>
+                                <select name="selectipometa"  id='selectipometa'></select></td>
+                        </tr>
+                        <tr>
+                            <td >Descripcion Meta anual(*):</td>
+                            <td><input class="required"  size="100%" name="descripMetaAnual" id="descripMetaAnual" ></input></td>
+                        </tr>
+                        <tr>
+                            <td >Costo(*): ($)</td>
+                            <td><input class="required"  size="20%"  name="costo" id="costo" ></input></td>
+                        </tr>
+
+
+                        <tr>
+                            <td >Fecha Inicio:</td>
+                            <td><input size="20%" readonly="readonly" name="fechainicio" value="{{fechaInicio}}" id="fechainicio" ></input>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td >Fecha Fin:</td>
+                            <td><input size="20%" readonly="readonly"  name="fechafin" value="{{fechaFin}}" id="fechafin" ></input></td>
+                        </tr>       
+                    </table>
+                    <table colspan="4"  align="center" id="datos2">
+                        <tr>
+                            <td colspan="2" >Programado:</td>
+                        </tr>                     
+
+                        <tr>
+                            <TD WIDTH="25%"align="center">1er Trimestre</TD>
+                            <TD WIDTH="25%" align="center">2do trimestre</TD>
+                            <TD WIDTH="25%" align="center">3er Trimestre</TD>
+                            <TD WIDTH="25%" align="center">4to Trimestre</TD>
+                        </tr>
+                        <tr>
+                            <TD WIDTH="25%"align="center"> <input class="required"  size="25%" name="trimUno" id="trimUno" value="0"  ><input type="button" id="establecerFechaPrimer"  value="..."/></input></TD>
+                            <TD WIDTH="25%"align="center"><input class="required"  size="25%" name="trimDos" id="trimDos" value="0"  ><input type="button" id="establecerFechaSegundo"  value="..."/></input></TD>
+                            <TD WIDTH="25%"align="center"><input class="required"  size="25%" name="trimTres" id="trimTres" value="0"  ><input type="button" id="establecerFechaTercero"  value="..."/></input></TD>
+                            <TD WIDTH="25%"align="center"><input class="required"  size="25%" name="trimCuatro" id="trimCuatro"  value="0" ><input type="button" id="establecerFechaCuarto"  value="..."/></input></TD>
+                        </tr>   
+                        <tr>  
+                            <td colspan="4" align="center" >
+                                <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
+                                <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
+                                <button type="submmit" id="agregar"  >Guardar</button>
+                                <button type="reset" id="limpiar"  >Limpiar</button>
+                                <button type="submmit" name ="regresar" class="cancel"  id="regresar">Regresar</button>
+                            </td> 
+                        </tr>                  
+                        <tr>
+                            <td align="left"><br>Campos marcados con (*) son Obligatorios</td>
+                        </tr>
+
+                    </table>
+                </div>
+<!--DESDE AQUI SE DEFINEN LAS VENTANAS EMERGENRES PARA LAS FECHAS-->
+                <div class="jqmWindow" style="width: 400px; top: 45%; left:40%" id="dialogPrimer">
+                    <a href="#" class="jqmClose">Cerrar</a>
+                    <hr>
+                    <p>Primer Trimestre </p>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>Fecha Inicio: <input id="datepickerInicioPrimer"  name="datepickerInicioPrimer"  type="text"></input></p> 
+                                </td>  
+                                <td>
+                                    <p>Fecha Fin: <input id="datepickerFinPrimer" name="datepickerFinPrimer" type="text"></input></p>
+                                </td>                            
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="jqmWindow" style="width: 400px; top: 45%; left:60%" id="dialogSegundo">
+                    <a href="#" class="jqmClose">Cerrar</a>
+                    <hr>
+                    <p>Segundo Trimestre </p>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>Fecha Inicio: <input id="datepickerInicioSegundo" name="datepickerInicioSegundo" type="text"></input></p> 
+                                </td>  
+                                <td>
+                                    <p>Fecha Fin: <input id="datepickerFinSegundo" name="datepickerFinSegundo" type="text"></input></p>
+                                </td>                            
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="jqmWindow" style="width: 400px; top: 45%; left:80%" id="dialogTercer">
+                    <a href="#" class="jqmClose">Cerrar</a>
+                    <hr>
+                    <p>Tercer Trimestre </p>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>Fecha Inicio: <input id="datepickerInicioTercer" name="datepickerInicioTercer" type="text"></input></p> 
+                                </td>  
+                                <td>
+                                    <p>Fecha Fin: <input id="datepickerFinTercer"  name="datepickerFinTercer" type="text"></input></p>
+                                </td>                            
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="jqmWindow" style="width: 400px; top: 45%; left:90%" id="dialogCuarto">
+                    <a href="#" class="jqmClose">Cerrar</a>
+                    <hr>
+                    <p>Cuarto Trimestre </p>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <p>Fecha Inicio: <input id="datepickerInicioCuarto" name="datepickerInicioCuarto" type="text"></input></p> 
+                                </td>  
+                                <td>
+                                    <p>Fecha Fin: <input id="datepickerFinCuarto" name="datepickerFinCuarto"  type="text"></input></p>
+                                </td>                            
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+<!--FIN DE VENTANAS EMERGENTES-->
+            </form>
+        </div>
 
 
 {% endblock %}

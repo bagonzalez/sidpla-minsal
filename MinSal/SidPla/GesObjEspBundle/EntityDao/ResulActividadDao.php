@@ -49,13 +49,14 @@ class ResulActividadDao {
         return $matrizMensajes;
     }
 
-    public function editResulActividad($trim, $id, $fechainicio, $fechafin) {
+    public function editResulActividad($trim, $id, $fechainicio, $fechafin,$costo) {
 
         $objResultadore = new ResulActividad();
         $objResultadore = $this->repositorio->find($id);
         $objResultadore->setResulActProgramado($trim);
         $objResultadore->setResulActFechaInicio($fechainicio);
         $objResultadore->setResulActFechaFin($fechafin);
+        $objResultadore->setCostoProgramado($costo);
         $this->em->flush();
         $matrizMensajes = array('El proceso de editar termino con exito');
 

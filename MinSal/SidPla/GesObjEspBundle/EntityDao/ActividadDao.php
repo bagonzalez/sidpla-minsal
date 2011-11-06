@@ -36,29 +36,27 @@ class ActividadDao {
         return $actividad;
     }
     
-     public function editActividad($idfilaResultado,
-                                       $tipometa,
+     public function editActividad($tipometa,
                                         $actividad,
-                                        $resEspNomencl,
                                         $supuestosfactores,
                                         $metaAnual,
                                         $descripMetaAnual,
                                         $responsable,
                                         $indicador,
                                         $medioverifindicador,
-                                        $id){
+                                        $id,$costo){
          
-         $objActividad=new Actividad();
+         //$objActividad=new Actividad();
          $objActividad=$this->repositorio->find($id);
          $objActividad->setIdTipoMeta($tipometa);                         
          $objActividad->setActDescripcion($actividad);                         
-         $objActividad->setActNomenclatura($resEspNomencl);                         
          $objActividad->setSupuestosFactores($supuestosfactores);                         
          $objActividad->setActMetaAnual($metaAnual);                         
          $objActividad->setActDescMetaAnu($descripMetaAnual);                         
          $objActividad->setActResponsable($responsable);                         
          $objActividad->setActIndicador($indicador);
          $objActividad->setIdTipoMedVeri($medioverifindicador);
+         $objActividad->setCosto($costo);
          $this->em->flush();            
          $matrizMensajes = array('El proceso de editar termino con exito');
  
@@ -68,8 +66,8 @@ class ActividadDao {
     public function agregarResulActividad($idActividad,$trimes,$trim,$fechInicio,$fechaFin, $programacionMonitoreo, $costoProgramadoSegmento) {
          
       
-           $resultadoAux=new Actividad();
-           $resultadoAux=$this->getActividad($idActividad); 
+         $resultadoAux=new Actividad();
+         $resultadoAux=$this->getActividad($idActividad); 
      
          $objresultadore=new ResulActividad();
          $objresultadore->setResulActTrimestre($trimes);                         

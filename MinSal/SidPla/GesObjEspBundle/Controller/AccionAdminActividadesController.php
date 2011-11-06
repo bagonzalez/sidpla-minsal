@@ -108,13 +108,8 @@ class AccionAdminActividadesController extends Controller {
         $fechasMin = $periodoPaoDao->getMinFechaSeguimientoPao($idPao);
         $fechasMax = $periodoPaoDao->getMaxFechaPao($idPao);
 
-
-
         $fechaInicioPeriodoPao = $fechasMin[0][1];
         $fechaFinPeriodoPao = $fechasMax[0][1];
-
-        //$minDate = date( 'y-m-d', $fechaInicioPeriodoPao );
-
 
         return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:IngresoActividades.html.twig', array('opciones' => $opciones, 'idfilaResultado' => $idfilaResultado,
                     'idfila' => $idfila, 'descripcion' => $objetivosEspec,
@@ -142,10 +137,6 @@ class AccionAdminActividadesController extends Controller {
         $costo = $request->get('costo');
 
 
-        //este  valor es  fusilados porque no se bien como  funcionan
-        //asi que solo los asigno y lo mando
-        $resEspNomencl = "pruebanomenc";
-
         //valores que representan lo programado         
         $cantrimUno = $request->get('trimUno');
         $cantrimDos = $request->get('trimDos');
@@ -166,16 +157,8 @@ class AccionAdminActividadesController extends Controller {
         $fechaInicioCuarto = $request->get('datepickerInicioCuarto');
         $fechaFinCuarto = $request->get('datepickerFinCuarto');
 
-
-        // $selectipometa=1;  
-
         $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());
-        $idActividad = $resultadoDao->agregarActividad($idfilaResultado, $tipometa, $actividad, $resEspNomencl, $supuestosfactores, $metaAnual, $descripMetaAnual, $responsable, $indicador, $medioverifindicador, $costo);
-
-
-
-        //aqui tiene que ir el codigo para guardar lo programado el sidpla_resultadoactividad
-
+        $idActividad = $resultadoDao->agregarActividad($idfilaResultado, $tipometa, $actividad, $supuestosfactores, $metaAnual, $descripMetaAnual, $responsable, $indicador, $medioverifindicador, $costo);
         $trimesuno = 1;
         $trimesdos = 2;
         $trimestres = 3;
@@ -229,18 +212,17 @@ class AccionAdminActividadesController extends Controller {
         $idfilaActividad = $request->get('idfilaActividad');
 
         //obteniendo el objetivo para mandarlo a la plantilla  
-        $objetivoAux = new ObjetivoEspecifico();
+       // $objetivoAux = new ObjetivoEspecifico();
         $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());
         $objetivoAux = $objetivoDao->getObjetEspecif($idfila);
         $objetivosEspec = $objetivoAux->getDescripcion();
 
         //obteniendo el resultado para mandarlo a la plantilla
-        $resultadoAux = new ResultadoEsperado();
+        
         $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());
         $resultadoAux = $resultadoDao->getResulEspera($idfilaResultado);
         $resultadoesperado = $resultadoAux->getResEspeDesc();
 
-        $actividadAux = new Actividad();
         $actividadDao = new ActividadDao($this->getDoctrine());
         $actividadAux = $actividadDao->getActividad($idfilaActividad);
 
@@ -252,11 +234,9 @@ class AccionAdminActividadesController extends Controller {
         $metaanual = $actividadAux->getActMetaAnual();
         $descmetaanual = $actividadAux->getActDescMetaAnu();
         $tipometa = $actividadAux->getIdTipoMeta();
-
-
+        $costo=$actividadAux->getCosto();
 
         //inicia el proceso  de recuperar los atos de la tabla resultadore
-        $resultAux = new Actividad();
         $resultDao = new ActividadDao($this->getDoctrine());
         $resultAux = $resultDao->getActividad($idfilaActividad);
         $resultaEspe = $resultAux->getResulAct();
@@ -280,7 +260,6 @@ class AccionAdminActividadesController extends Controller {
         $fechafintrimtres = 0;
         $fechafintrimcuatro = 0;
 
-
         foreach ($resultaEspe as $resultadoreEspec) {
 
             $trimestre = $resultadoreEspec->getResulActTrimestre();
@@ -288,36 +267,41 @@ class AccionAdminActividadesController extends Controller {
                 $programadoPrimerTrimestre = $resultadoreEspec->getResulActProgramado();
                 $fechainiciotrimuno = $resultadoreEspec->getResulActFechaInicio();
                 $fechafintrimuno = $resultadoreEspec->getResulActFechaFin();
-
                 $iduno = $resultadoreEspec->getIdResulAct();
             }
 
             if ($trimestre == 2) {
                 $programadoSegundoTrimestre = $resultadoreEspec->getResulActProgramado();
-                //$fechainiciotrimdos=$resultadoreEspec->getResulActFechaInicio();
-                //$fechafintrimdos=$resultadoreEspec->getResulActFechaFin();
+                $fechainiciotrimdos=$resultadoreEspec->getResulActFechaInicio();
+                $fechafintrimdos=$resultadoreEspec->getResulActFechaFin();
                 $iddos = $resultadoreEspec->getIdResulAct();
             }
 
             if ($trimestre == 3) {
                 $programadoTercerTrimestre = $resultadoreEspec->getResulActProgramado();
-                // $fechainiciotrimtres=$resultadoreEspec->getResulActFechaInicio();
-                // $fechafintrimtres=$resultadoreEspec->getResulActFechaFin();
+                $fechainiciotrimtres=$resultadoreEspec->getResulActFechaInicio();
+                $fechafintrimtres=$resultadoreEspec->getResulActFechaFin();
                 $idtres = $resultadoreEspec->getIdResulAct();
             }
 
             if ($trimestre == 4) {
                 $programadoCuartoTrimestre = $resultadoreEspec->getResulActProgramado();
-                // $fechainiciotrimcuatro=$resultadoreEspec->getResulActFechaInicio();
-                // $fechafintrimcuatro=$resultadoreEspec->getResulActFechaFin();
+                $fechainiciotrimcuatro=$resultadoreEspec->getResulActFechaInicio();
+                $fechafintrimcuatro=$resultadoreEspec->getResulActFechaFin();
                 $idcuatro = $resultadoreEspec->getIdResulAct();
             }
         }
 
+        $paoElaboracion = $this->obtenerPaoElaboracionAction();
+        $idPao = $paoElaboracion->getIdPao();
 
+        $periodoPaoDao = new PeriodoPaoDao($this->getDoctrine());
 
+        $fechasMin = $periodoPaoDao->getMinFechaSeguimientoPao($idPao);
+        $fechasMax = $periodoPaoDao->getMaxFechaPao($idPao);
 
-
+        $fechaInicioPeriodoPao = $fechasMin[0][1];
+        $fechaFinPeriodoPao = $fechasMax[0][1];
 
         return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:EditarActividades.html.twig', array('opciones' => $opciones,
                     'idfilaResultado' => $idfilaResultado,
@@ -328,6 +312,7 @@ class AccionAdminActividadesController extends Controller {
                     'medioverifi' => $medioverifi,
                     'responsable' => $responsable,
                     'supuestos' => $supuestos,
+                    'costo'=>$costo,
                     'metaanual' => $metaanual,
                     'descmetaanual' => $descmetaanual,
                     'tipometa' => $tipometa,
@@ -340,7 +325,17 @@ class AccionAdminActividadesController extends Controller {
                     , 'iduno' => $iduno
                     , 'iddos' => $iddos
                     , 'idtres' => $idtres
-                    , 'idcuatro' => $idcuatro
+                    , 'idcuatro' => $idcuatro,
+                    'fechainiciotrimuno'=>$fechainiciotrimuno,
+                    'fechainiciotrimdos'=>$fechainiciotrimdos,
+                    'fechainiciotrimtres'=>$fechainiciotrimtres,
+                    'fechainiciotrimcuatro'=>$fechainiciotrimcuatro,
+                    'fechafintrimuno'=>$fechafintrimuno,
+                    'fechafintrimdos'=>$fechafintrimdos,
+                    'fechafintrimtres'=>$fechafintrimtres,
+                    'fechafintrimcuatro'=>$fechafintrimcuatro,
+                    'fechaInicio' => $fechaInicioPeriodoPao,
+                    'fechaFin' => $fechaFinPeriodoPao
                 ));
     }
 
@@ -350,10 +345,7 @@ class AccionAdminActividadesController extends Controller {
         $request = $this->getRequest();
         $idfila = $request->get('idfila');
         $idfilaResultado = $request->get('idfilaResultado'); //representa en este caso el codigo de objetivo
-
-
         $id = $request->get('idfilaActividad');
-
         $actividad = $request->get('actividad');
         $indicador = $request->get('indicador');
         $medioverifindicador = $request->get('medioverifindicador');
@@ -362,27 +354,19 @@ class AccionAdminActividadesController extends Controller {
         $metaAnual = $request->get('metaAnual');
         $tipometa = $request->get('selectipometa');
         $descripMetaAnual = $request->get('descripMetaAnual');
+        $costo = $request->get('costo');
 
-
-
-
-        //este  valor es  fusilados porque no se bien como  funcionan
-        //asi que solo los asigno y lo mando
-        $resEspNomencl = "pruebanomenc";
-
-        //valores que representan lo programado         
+        //valores que representan lo programado
         $trimUno = $request->get('trimUno');
         $trimDos = $request->get('trimDos');
         $trimTres = $request->get('trimTres');
         $trimCuatro = $request->get('trimCuatro');
-
         $iduno = $request->get('iduno');
         $iddos = $request->get('iddos');
         $idtres = $request->get('idtres');
         $idcuatro = $request->get('idcuatro');
         $fechainicio = $request->get('fechainicio');
         $fechafin = $request->get('fechafin');
-        // $selectipometa=1;  
 
         $fechaInicioPrimer = $request->get('datepickerInicioPrimer');
         $fechaFinPrimer = $request->get('datepickerFinPrimer');
@@ -395,38 +379,35 @@ class AccionAdminActividadesController extends Controller {
 
         $fechaInicioCuarto = $request->get('datepickerInicioCuarto');
         $fechaFinCuarto = $request->get('datepickerFinCuarto');
-
-
-
-
+        
         $resultadoDao = new ActividadDao($this->getDoctrine());
-        $idActividad = $resultadoDao->editActividad($idfilaResultado, $tipometa, $actividad, $resEspNomencl, $supuestosfactores, $metaAnual, $descripMetaAnual, $responsable, $indicador, $medioverifindicador, $id);
+        $idActividad = $resultadoDao->editActividad($tipometa, $actividad, $supuestosfactores, 
+                $metaAnual, $descripMetaAnual, $responsable, $indicador, $medioverifindicador, $id,$costo);
 
+        $paoElaboracion = $this->obtenerPaoElaboracionAction();
+        $programacionMonitoreo = $paoElaboracion->getProgramacionMonitoreo();
+
+        //valor de cada segmento de actividad
+
+        $porcRepresentaUno = $trimUno / $metaAnual;
+        $porcRepresentaDos = $trimDos / $metaAnual;
+        $porcRepresentaTres = $trimTres / $metaAnual;
+        $porcRepresentaCuatro = $trimCuatro / $metaAnual;
+
+        $costoProgramadoSegmentoUno = $porcRepresentaUno * $costo;
+        $costoProgramadoSegmentoDos = $porcRepresentaDos * $costo;
+        $costoProgramadoSegmentoTres = $porcRepresentaTres * $costo;
+        $costoProgramadoSegmentoCuatro = $porcRepresentaCuatro * $costo;
 
 
         //inicia proceso de guardar el valor de lo programado en sidpla_resultadore
         $resultadoDao = new ResulActividadDao($this->getDoctrine());
-        $resultadoDao->editResulActividad($trimUno, $iduno, $fechaInicioPrimer, $fechaFinPrimer, $id);
-        $resultadoDao->editResulActividad($trimDos, $iddos, $fechaInicioSegundo, $fechaFinSegundo, $id);
-        $resultadoDao->editResulActividad($trimTres, $idtres, $fechaInicioTercero, $fechaFinTercero, $id);
-        $resultadoDao->editResulActividad($trimCuatro, $idcuatro, $fechaInicioCuarto, $fechaFinCuarto, $id);
+        $resultadoDao->editResulActividad($trimUno, $iduno, $fechaInicioPrimer, $fechaFinPrimer,$costoProgramadoSegmentoUno);
+        $resultadoDao->editResulActividad($trimDos, $iddos, $fechaInicioSegundo, $fechaFinSegundo,$costoProgramadoSegmentoDos);
+        $resultadoDao->editResulActividad($trimTres, $idtres, $fechaInicioTercero, $fechaFinTercero,$costoProgramadoSegmentoTres);
+        $resultadoDao->editResulActividad($trimCuatro, $idcuatro, $fechaInicioCuarto, $fechaFinCuarto,$costoProgramadoSegmentoCuatro);
 
-
-        $objetivoAux = new ObjetivoEspecifico();
-        $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());
-        $objetivoAux = $objetivoDao->getObjetEspecif($idfila);
-        $objetivosEspec = $objetivoAux->getDescripcion();
-
-        //obteniendo el resultado para mandarlo a la plantilla
-        $resultadoAux = new ResultadoEsperado();
-        $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());
-        $resultadoAux = $resultadoDao->getResulEspera($idfilaResultado);
-        $resultadoesperado = $resultadoAux->getResEspeDesc();
-
-
-
-
-        return $this->consultarActividadesAction();
+       return $this->consultarActividadesAction();
     }
 
 }
