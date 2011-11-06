@@ -110,12 +110,14 @@
                         </div>
                         
                             <div id="contenido">
-                               
-                {% block body %}
-
-
-                {% endblock %} 
-                                </div>
+                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}              
+                                {% block body %}
+                                {% endblock %} 
+                             {% else %}
+                                {% block login %}
+                                {% endblock %} 
+                             {% endif %}  
+                            </div>
                                 <div id="pie">Copyright (C) 2011 Ministerio de Salud</div>
 
                             </div>
