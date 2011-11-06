@@ -4,7 +4,7 @@
      
         
       $(document).ready(function(){           
-                    
+        $("#formulario1").validate();            
         $('#reportCarac').click(function() {
         $('#formulario').get(0).setAttribute('action', '{{ path('MinSalSidPlaReportesBundle_reporteCaracOrg') }}');            
         
@@ -26,6 +26,15 @@
       });
       
 </script>
+ <style type="text/css">
+form.cmxform label.error, label.error {
+  /* remove the next line when you have trouble in IE6 with labels in list */
+  color: red;
+   font-style: italic
+}
+input.error { border: 1px dotted red; }
+textarea.error { border: 1px dotted red; }
+</style> 
 <h1 style="text-align: center"> Informaci&oacute;n General y Caracteristicas de la Organizaci&oacute;n</h1>
 <div id="tabs">
         <ul>
@@ -33,7 +42,7 @@
                 <li><a href="#tabs-2">Caracteristicas Organizaci&oacute;n</a></li>                
         </ul>
         <div id="tabs-1" align="center">
-            <form action="{{ path('MinSalSidPlaUnidadOrgBundle_guardarInfoGeneral') }}" method="post" {{ form_enctype(form) }}>              
+            <form id ="formulario1"action="{{ path('MinSalSidPlaUnidadOrgBundle_guardarInfoGeneral') }}" method="post" {{ form_enctype(form) }}>              
                     <table size="100%" >
                         <tr>
                             <td size="30%" colspan="2" >Nombre Unidad:</td>
@@ -53,7 +62,7 @@
                         </tr> 
                         <tr>
                             <td colspan="2">Email:</td>
-                            <td colspan="3" ><input size="30%" name="mail" id="mail" value="{{infoGeneralcodmail}} "></input>
+                            <td colspan="3" ><input size="30%" class="required email" name="mail" id="mail" value="{{infoGeneralcodmail}} "></input>
                         </tr>
                         <tr>
                         <td >Responsable: </td>
