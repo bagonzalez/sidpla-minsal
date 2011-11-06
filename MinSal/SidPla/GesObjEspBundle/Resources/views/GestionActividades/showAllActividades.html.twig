@@ -6,6 +6,7 @@
     <table border="1" WIDTH='85%'>
         <thead>
             <tr  style=" font-size: 14px;">
+                <th><strong>  Cod </strong></th>
                 <th><strong> Actividades </strong>
                 </th>
                 <th><strong>  Acciones </strong>
@@ -16,6 +17,7 @@
     {% if actividades is defined %}   
         {% for  actividad in  actividades%}
                 <tr>
+                    <td style=" font-size: 12px;">{{actividad.actNomenclatura}}</td>
                     <td style=" font-size: 12px;">{{actividad.getActDescripcion}}
                     </td>
                     <td class="tdBotonesIconos" WIDTH='60' >

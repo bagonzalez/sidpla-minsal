@@ -60,24 +60,18 @@ class AccionAdminActividadesController extends Controller {
         //OBTENIENDO LAS ACTIVIDADES
         $Actividades = $resultadoAux->getActividades();
         
-        if(count($Actividades)==0)
-            if($objUniControl)
+        $x=count($Actividades);
+        if($x==0)
             return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:manttActividades.html.twig', 
                 array('opciones' => $opciones, 'idfila' => $idfila, 'idfilaResultado' => $idfilaResultado, 
                     'descripcion' => $objetivosEspec, 'descripcionResultado' => $resultadoesperado,'objUniControl'=>$objUniControl));
-            else
-                return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:manttActividades.html.twig', 
-                array('opciones' => $opciones, 'idfila' => $idfila, 'idfilaResultado' => $idfilaResultado, 
-                    'descripcion' => $objetivosEspec, 'descripcionResultado' => $resultadoesperado));
-        else
-            if($objUniControl)
-                return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:manttActividades.html.twig', 
-                array('opciones' => $opciones, 'idfila' => $idfila, 'idfilaResultado' => $idfilaResultado, 
-                    'descripcion' => $objetivosEspec, 'descripcionResultado' => $resultadoesperado,'actividades'=>$Actividades,'objUniControl'=>$objUniControl));
-            else    
-            return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:manttActividades.html.twig', 
-                array('opciones' => $opciones, 'idfila' => $idfila, 'idfilaResultado' => $idfilaResultado, 
+       else
+           return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:manttActividades.html.twig', 
+                array('opciones' => $opciones, 'idfila' => $idfila, 'idfilaResultado' => $idfilaResultado, 'objUniControl'=>$objUniControl,
                     'descripcion' => $objetivosEspec, 'descripcionResultado' => $resultadoesperado,'actividades'=>$Actividades));
+           
+                   
+        
     }
 
    public function ingresoActividadesAction() {
@@ -124,8 +118,7 @@ class AccionAdminActividadesController extends Controller {
         $request = $this->getRequest();
         $idfila = $request->get('idfila');
         $idfilaResultado = $request->get('idfilaResultado');  //representa en este caso el codigo del resultado esperado 
-        // $idfilaActividad=$request->get('idfilaActividad'); 
-
+        
         $actividad = $request->get('actividad');
         $indicador = $request->get('indicador');
         $medioverifindicador = $request->get('medioverifindicador');
@@ -189,17 +182,17 @@ class AccionAdminActividadesController extends Controller {
         $resultadoDao->agregarResulActividad($idActividad, $trimescuatro, $cantrimCuatro, $fechaInicioCuarto, $fechaFinCuarto, $programacionMonitoreo, $costoProgramadoSegmentoCuatro);
 
 
-        $objetivoAux = new ObjetivoEspecifico();
+       // $objetivoAux = new ObjetivoEspecifico();
         $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());
         $objetivoAux = $objetivoDao->getObjetEspecif($idfila);
         $objetivosEspec = $objetivoAux->getDescripcion();
 
         //obteniendo el resultado para mandarlo a la plantilla
-        $resultadoAux = new ResultadoEsperado();
+       // $resultadoAux = new ResultadoEsperado();
         $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());
         $resultadoAux = $resultadoDao->getResulEspera($idfilaResultado);
         $resultadoesperado = $resultadoAux->getResEspeDesc();
-
+        $objetivoDao->actualizaNomenclatura((int)$paoElaboracion->getUnidadOrganizativa()->getCaractOrg()->getIdCaractOrg(), (int)$paoElaboracion->getAnio());
         return $this->consultarActividadesAction();
     }
 

@@ -8,6 +8,7 @@
 <table border="1" WIDTH='85%'>
     <thead>
         <tr  style=" font-size: 14px;">
+            <th><strong>  Cod </strong></th>
             <th><strong>  Resultado Esperado </strong>
             </th>
             <th colspan="2"><strong>  Acciones </strong>
@@ -19,6 +20,8 @@
      {% if resultadosEsperado is defined %}   
         {% for  resultado in  resultadosEsperado%}
             <tr>
+                <td style=" font-size: 12px;">{{ resultado.resEspNomencl}}
+                </td>
                 <td style=" font-size: 12px;">{{ resultado.getResEspeDesc}}
                 </td>
                 <td class="tdBotonesIconos" WIDTH='60' >
@@ -36,6 +39,8 @@
     {% if resultadosEsperado is defined %}   
         {% for  resultado in  resultadosEsperado%}
             <tr>
+                <td style=" font-size: 12px;">{{ resultado.resEspNomencl}}
+                </td>
                 <td style=" font-size: 12px;">{{ resultado.getResEspeDesc}}
                 </td>
                 <td class="tdBotonesIconos" WIDTH='60' >

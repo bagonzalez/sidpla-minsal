@@ -54,6 +54,7 @@ class ObjTemplateDao {
         
         $objetivoEspecifico=new ObjetivoEspecifico();
         $objetivoEspecifico->setDescripcion($desObjEsp);
+        $objetivoEspecifico->setActivo(true);
         $this->em->persist($objetivoEspecifico);
         $objEspTmp->setIdObjEspec($objetivoEspecifico);
         $this->em->persist($objEspTmp);
