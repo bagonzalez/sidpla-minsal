@@ -109,10 +109,9 @@ class AccionEvaluaciondeResultadosUnisalController extends Controller{
         $proUnisalTmpDao= new ProUnisalTemplateDao($this->getDoctrine());
         $anio = date('Y');       
         
+        $objetivos=array();        
         $proTemplate=$proUnisalTmpDao->obtenerObjTempAnio($anio);
-        foreach ($proTemplate as $proUnisalTmp){
-            $objetivos=$proUnisalTmp->getObjeEspeProgra();            
-        }
+        $objetivos=$proTemplate->getObjeEspeProgra();
         
         return $objetivos;        
     }
@@ -123,10 +122,9 @@ class AccionEvaluaciondeResultadosUnisalController extends Controller{
         $proUnisalTmpDao= new ProUnisalTemplateDao($this->getDoctrine());
         $anio = date('Y')+1;       
         
+        $objetivos=array();        
         $proTemplate=$proUnisalTmpDao->obtenerObjTempAnio($anio);
-        foreach ($proTemplate as $proUnisalTmp){
-            $objetivos=$proUnisalTmp->getObjeEspeProgra();            
-        }
+        $objetivos=$proTemplate->getObjeEspeProgra();
         
         return $objetivos;        
     }
@@ -136,13 +134,13 @@ class AccionEvaluaciondeResultadosUnisalController extends Controller{
          $opciones=$this->getRequest()->getSession()->get('opciones');   
          $objetivos=$this->obtenerObjEspec();
          
-         $paoElaboracion=$this->obtenerPaoSeguimiento();
-         $evalIndicadorResultado=$paoElaboracion->getEvaluacionResultado();
+         $paoSeguimiento=$this->obtenerPaoSeguimiento();
+         $evalIndicadorResultado=$paoSeguimiento->getEvaluacionResultado();
          
          $paoAnioAnterior=$this->obtenerPaoAnioAnterior();
          $evalIndicadorResultadoAnioAnterior=$paoAnioAnterior->getEvaluacionResultado();
          
-         $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+         $programacionMonitoreo=$paoSeguimiento->getProgramacionMonitoreo();
          $actividadesProgramon=$programacionMonitoreo->getActividadesUniSal();
          $idProgramon=$programacionMonitoreo->getIdPrograMon();
          $areaClasificacionDao=new AreaClasificacionDao($this->getDoctrine());

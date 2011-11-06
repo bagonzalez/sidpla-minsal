@@ -54,9 +54,7 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
                 $i++;
             }
             
-        }
-
-        
+        } 
         if(count($objTemplates)==0)
             return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionObjetivosEspecificosTemplate:manttObjetivosEspecificos.html.twig', 
                 array('opciones' => $opciones));

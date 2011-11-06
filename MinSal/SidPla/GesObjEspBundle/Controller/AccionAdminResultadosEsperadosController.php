@@ -63,20 +63,35 @@ class AccionAdminResultadosEsperadosController extends Controller {
         $objetivoAux = $objetivoDao->getObjetEspecif($idfila);
         $objetivosEspec = $objetivoAux->getDescripcion();
         $resultadosEsperados = $objetivoAux->getResultadoEsperado();
-        
-        if(count($resultadosEsperados)==0)
-          if($objUniControl)
+        $x=count($resultadosEsperados);
+        if($x==0){
+          if(isset($objUniControl))
+           if($objUniControl=='true')
            return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
                 array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec,'objUniControl'=>$objUniControl));
+           else
+               return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
+                array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec));
           else
               return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
                 array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec));
-        else
+        }
+        else{
+            if(isset($objUniControl))
+              if($objUniControl=='true')
+                return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
+                array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec,'resultadosEsperado'=>$resultadosEsperados,
+                    'objUniControl'=>$objUniControl));
+              else
+                return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
+                array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec,'resultadosEsperado'=>$resultadosEsperados));  
+            else
             return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
                 array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec,'resultadosEsperado'=>$resultadosEsperados));
+        }
     }
 
-    public function manttResultadosEsperadosAction() {
+  /*  public function manttResultadosEsperadosAction() {
 
         $request = $this->getRequest();
         $id = $request->get('idfilaResultado');
@@ -113,7 +128,7 @@ class AccionAdminResultadosEsperadosController extends Controller {
         }
 
         return new Response("{sc:true,msg:''}");
-    }
+    }*/
 
     public function ingresoResultadosEsperadosAction() {
         $opciones = $this->getRequest()->getSession()->get('opciones');
@@ -147,35 +162,39 @@ class AccionAdminResultadosEsperadosController extends Controller {
         $resEspDescMetAnual = $request->get('descripMetaAnual');
         $entControl = $request->get('entControl');
 
-        $restmpcodigo = null;
-        if ($entControl)
+       
+        if (isset($entControl)){
             $resEspEntidadControl = true;
-        else
+            $restmpcodigo = null;//ENVIAR EL VALOR DEL RESTMPCODIGO
+        }
+        else{
             $resEspEntidadControl = false;
-
+            $restmpcodigo = null;
+        }
 
         $trimUno = $request->get('trimUno');
         $trimDos = $request->get('trimDos');
         $trimTres = $request->get('trimTres');
         $trimCuatro = $request->get('trimCuatro');
 
-        $unidad = new UnidadOrganizativa();
+       // $unidad = new UnidadOrganizativa();
         $unidad = $this->obtenerUnidadOrg();
 
         $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());
-        $idResultadoEsp = $objetivoDao->agregarResulEsperado($restmpcodigo, $tipometa, $resEspeDesc, $resEspCondi, $resEspMetAnual, $resEspDescMetAnual, $resEspResponsable, $resEspEntidadControl, $resEspIndicador, $idobjetivo, $medioverificacion, $unidad);
+        //$pao=new Pao();
+        $paoElaboracion = $this->obtenerPaoElaboracionAction();
+        $programacionMonitoreo = $paoElaboracion->getProgramacionMonitoreo();
+        
+        $idResultadoEsp=$objetivoDao->agregarResulEsperado( $tipometa, $resEspeDesc, $resEspCondi, 
+            $resEspMetAnual, $resEspDescMetAnual, $resEspResponsable, $resEspEntidadControl, 
+            $resEspIndicador, $idobjetivo, $medioverificacion, $unidad);
 
+        //inicia proceso de guardar el valor de lo programado en sidpla_resultadore
         $trimesuno = 1;
         $trimesdos = 2;
         $trimestres = 3;
         $trimescuatro = 4;
 
-        $paoElaboracion = $this->obtenerPaoElaboracionAction();
-        $programacionMonitoreo = $paoElaboracion->getProgramacionMonitoreo();
-
-
-
-        //inicia proceso de guardar el valor de lo programado en sidpla_resultadore
         $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());
         $resultadoDao->agregarResultadore($idResultadoEsp, $trimesuno, $trimUno, $programacionMonitoreo);
 
@@ -193,6 +212,7 @@ class AccionAdminResultadosEsperadosController extends Controller {
         $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());
         $objetivoAux = $objetivoDao->getObjetEspecif($idfila);
         $objetivosEspec = $objetivoAux->getDescripcion();
+        $objetivoDao->actualizaNomenclatura((int)$unidad->getCaractOrg()->getIdCaractOrg(), (int)$paoElaboracion->getAnio());
         return $this->consultarResultadosEsperadosAction();
     }
 

@@ -16,11 +16,11 @@ $(document).ready(function(){
             </tr>
             <td align="center" colspan="2" >
               <strong>
-                 {% if objUniControl is defined %}
-                     <a  style="font-size: 12px"  href="{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarObjetivosEspecificos') }}">Objetivos>></a>
+                 {% if objUniControl !='false' %}
+                     <a  style="font-size: 12px"  href="{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarObjetivosEspecificos') }}">Objetivos1>></a>
                      <a  style="font-size: 12px"  href="{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperados') }}?idfila={{idfila}}&objUniControl={{objUniControl}}">Resultados Esperados>></a>
                  {% else %}
-                    <a  style="font-size: 12px"  href="{{ path('MinSalSidPlaGesObjEspBundle_consultarObjetivosEspecificos') }}">Objetivos>></a>
+                    <a  style="font-size: 12px"  href="{{ path('MinSalSidPlaGesObjEspBundle_consultarObjetivosEspecificos') }}">Objetivos2>></a>
                     <a  style="font-size: 12px"  href="{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}?idfila={{idfila}}">Resultados Esperados>></a>
                  {% endif %}                                     
                </strong>

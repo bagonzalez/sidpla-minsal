@@ -78,9 +78,9 @@
   //PARA QUE REPARTA LA META ANUAL.
 $('#metaAnual').blur(function(event) {
     metaAnual=Number($("input[id='metaAnual']").val());
-    $('#trimUno').attr('value',Math.round(metaAnual/4));
-    $('#trimDos').attr('value',Math.round(metaAnual/4));
-    $('#trimTres').attr('value',Math.round(metaAnual/4));
+    $('#trimUno').attr('value',parseInt(metaAnual/4));
+    $('#trimDos').attr('value',parseInt(metaAnual/4));
+    $('#trimTres').attr('value',parseInt(metaAnual/4));
     $('#trimCuatro').attr('value',metaAnual-(Number($("input[id='trimUno']").val())+Number($("input[id='trimDos']").val())+Number($("input[id='trimTres']").val())));
 });
 

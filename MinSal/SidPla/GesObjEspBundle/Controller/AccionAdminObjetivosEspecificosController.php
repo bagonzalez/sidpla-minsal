@@ -34,8 +34,8 @@ class AccionAdminObjetivosEspecificosController extends Controller {
 
         return $paoElaboracion;
     }
-    
-        public function consultarObjetivosEspecificosAction() {
+
+    public function consultarObjetivosEspecificosAction() {
         $opciones = $this->getRequest()->getSession()->get('opciones');
 
         $user = new User();
@@ -49,20 +49,18 @@ class AccionAdminObjetivosEspecificosController extends Controller {
 
         $unidaDao = new UnidadOrganizativaDao($this->getDoctrine());
         $unidad = new UnidadOrganizativa();
-        
+
         $unidad = $unidaDao->getUnidadOrg($idUnidad);
         $caractOrg = $unidad->getCaractOrg();
         $objetivosEspec = $caractOrg->getObjetivosEspec();
-        
-        
-        
-        if(count($objetivosEspec)==0)
-            return $this->render('MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:manttObjetivosEspecificos.html.twig', 
-                array('opciones' => $opciones, 'idCaractOrg' => $caractOrg->getIdCaractOrg()));
-        else{
-            
-            return $this->render('MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:manttObjetivosEspecificos.html.twig', 
-                array('opciones' => $opciones, 'idCaractOrg' => $caractOrg->getIdCaractOrg(),'objetivos'=>$objetivosEspec));
+
+
+
+        if (count($objetivosEspec) == 0)
+            return $this->render('MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:manttObjetivosEspecificos.html.twig', array('opciones' => $opciones, 'idCaractOrg' => $caractOrg->getIdCaractOrg()));
+        else {
+
+            return $this->render('MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:manttObjetivosEspecificos.html.twig', array('opciones' => $opciones, 'idCaractOrg' => $caractOrg->getIdCaractOrg(), 'objetivos' => $objetivosEspec));
         }
     }
 
@@ -70,56 +68,51 @@ class AccionAdminObjetivosEspecificosController extends Controller {
         $opciones = $this->getRequest()->getSession()->get('opciones');
         $request = $this->getRequest();
         $idCaractOrg = $request->get('idCaractOrg');
-        
-        return $this->render('MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:gestionObjetivosEspecificos.html.twig', 
-                array('opciones' => $opciones, 'idCaractOrg' => $idCaractOrg));
+
+        return $this->render('MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:gestionObjetivosEspecificos.html.twig', array('opciones' => $opciones, 'idCaractOrg' => $idCaractOrg));
     }
-    
-   public function editarObjetivoEspecificoAction() {
+
+    public function editarObjetivoEspecificoAction() {
         $opciones = $this->getRequest()->getSession()->get('opciones');
         $request = $this->getRequest();
         $id = $request->get('id');
         $idCaractOrg = $request->get('idCaractOrg');
-        
-        $objetivoEspecificoDao=new ObjetivoEspecificoDao($this->getDoctrine());
-        $objetivoEspecifico=$objetivoEspecificoDao->getObjetEspecif($id);
-        
-        $objetivo=$objetivoEspecifico->getDescripcion();
 
-        return $this->render('MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:gestionObjetivosEspecificos.html.twig', 
-                array('opciones' => $opciones, 'id'=>$id,'objetivo'=>$objetivo,'idCaractOrg' => $idCaractOrg));
+        $objetivoEspecificoDao = new ObjetivoEspecificoDao($this->getDoctrine());
+        $objetivoEspecifico = $objetivoEspecificoDao->getObjetEspecif($id);
+
+        $objetivo = $objetivoEspecifico->getDescripcion();
+
+        return $this->render('MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:gestionObjetivosEspecificos.html.twig', array('opciones' => $opciones, 'id' => $id, 'objetivo' => $objetivo, 'idCaractOrg' => $idCaractOrg));
     }
-    
-
 
     public function manttObjetivosEspecificosAction() {
 
-        $request = $this->getRequest();
-        
-        $id = $request->get('id');
-        $objetivo = $request->get('objetivo');
-        $idCaractOrg = $request->get('idCaractOrg');
+      $request = $this->getRequest();
 
-        $operacion = $request->get('oper');
+      $id = $request->get('id');
+      $objetivo = $request->get('objetivo');
+      $idCaractOrg = $request->get('idCaractOrg');
 
-        $objDao = new ObjetivoEspecificoDao($this->getDoctrine());
+      $operacion = $request->get('oper');
 
-        if ($operacion == 'edit') {
-            $objDao->editObjEspec($objetivo, $id);
-        }
+      $objDao = new ObjetivoEspecificoDao($this->getDoctrine());
 
-        if ($operacion == 'add') {
-            $catOrgDao = new CaractOrgDao($this->getDoctrine());
+      if ($operacion == 'edit') {
+      $objDao->editObjEspec($objetivo, $id);
+      }
 
-            $paoElaboracion = $this->obtenerPaoElaboracionAction();
-            $programacionMonitoreo = $paoElaboracion->getProgramacionMonitoreo();
+      if ($operacion == 'add') {
+      $catOrgDao = new CaractOrgDao($this->getDoctrine());
 
-            $catOrgDao->agregarObjEspec($objetivo, $idCaractOrg, $programacionMonitoreo);
-        }
+      $paoElaboracion = $this->obtenerPaoElaboracionAction();
+      $programacionMonitoreo = $paoElaboracion->getProgramacionMonitoreo();
 
-        return $this->consultarObjetivosEspecificosAction();
-    }
+      $catOrgDao->agregarObjEspec($objetivo,(int) $idCaractOrg, (int)$programacionMonitoreo->getPao()->getAnio());
+      }
 
+      return $this->consultarObjetivosEspecificosAction();
+      } 
 }
 
 ?>
