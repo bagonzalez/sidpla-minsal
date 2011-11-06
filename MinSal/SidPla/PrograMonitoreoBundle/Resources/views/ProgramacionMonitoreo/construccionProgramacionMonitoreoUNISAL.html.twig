@@ -59,7 +59,7 @@
                                                 $('#metaAnualActividadUniSal_{{actividad.codActUni }}').blur(function(event) {
                                                     metaAnual=Number($("input[id='metaAnualActividadUniSal_{{actividad.codActUni }}']").val());
                                                     {% for resultadoAct in actividad.getResultadoactUniSal %}
-                                                         $('#resultadoProgramado_{{ resultadoAct.idResulAct }}').attr('value',Math.round(metaAnual/12));                                                                                                                   
+                                                         $('#resultadoProgramado_{{ resultadoAct.idResulAct }}').attr('value', parseInt(metaAnual/12));                                                                                                                   
                                                          {% if resultadoAct.mes==12 %}
                                                              $('#resultadoProgramado_{{ resultadoAct.idResulAct }}').attr('value',metaAnual- (
                                                                         {% for resultadoAct in actividad.getResultadoactUniSal %}
