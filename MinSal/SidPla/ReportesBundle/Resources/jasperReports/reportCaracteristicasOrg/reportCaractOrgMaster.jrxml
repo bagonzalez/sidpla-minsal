@@ -80,7 +80,7 @@ WHERE
 				<text><![CDATA[Vision:]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="76" y="74" width="402" height="20"/>
+				<reportElement x="76" y="74" width="412" height="20"/>
 				<textElement>
 					<font size="10" isBold="false"/>
 				</textElement>

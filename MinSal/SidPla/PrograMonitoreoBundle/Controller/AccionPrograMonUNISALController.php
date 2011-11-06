@@ -43,6 +43,8 @@ use MinSal\SidPla\TemplateUnisalBundle\EntityDao\ActividadUniSalDao;
 use MinSal\SidPla\TemplateUnisalBundle\Entity\ActividadUniSal;
 use MinSal\SidPla\TemplateUnisalBundle\EntityDao\AreaClasificacionDao;
 
+use MinSal\SidPla\CensoBundle\Entity\CensoPoblacion;
+
 
 /**
  * Description of AccionPrograMonUNISALController
@@ -120,9 +122,7 @@ class AccionPrograMonUNISALController extends Controller {
         $anio = date('Y')+1;       
         
         $proTemplate=$proUnisalTmpDao->obtenerObjTempAnio($anio);
-        foreach ($proTemplate as $proUnisalTmp){
-            $objetivos=$proUnisalTmp->getObjeEspeProgra();            
-        }
+        $objetivos=$proTemplate->getObjeEspeProgra();  
         
         return $objetivos;        
     }
@@ -156,10 +156,12 @@ class AccionPrograMonUNISALController extends Controller {
     public function construccionProgramacionMonitoreoUNISALAction()
     {
          $opciones=$this->getRequest()->getSession()->get('opciones');   
-         $objetivos=$this->obtenerObjEspec();
+         $objetivos=$this->obtenerObjEspecElaboracion();
          
-         $paoElaboracion=$this->obtenerPaoSeguimiento();
+         $paoElaboracion=$this->obtenerPaoElaboracion();
          $programacionMonitoreo=$paoElaboracion->getProgramacionMonitoreo();
+         $censopoblacio=$paoElaboracion->getCesopoblacion();         
+         
          $actividadesProgramon=$programacionMonitoreo->getActividadesUniSal();
          $idProgramon=$programacionMonitoreo->getIdPrograMon();
          $areaClasificacionDao=new AreaClasificacionDao($this->getDoctrine());
@@ -174,7 +176,8 @@ class AccionPrograMonUNISALController extends Controller {
          
          return $this->render('MinSalSidPlaPrograMonitoreoBundle:ProgramacionMonitoreo:construccionProgramacionMonitoreoUNISAL.html.twig', 
                 array( 'opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 
-                       'mes' => $mes, 'idUnidad' => $idUnidad, 'areasClasif' => $areasClasif ));
+                       'mes' => $mes, 'idUnidad' => $idUnidad, 'areasClasif' => $areasClasif,
+                        'censopoblacion' => $censopoblacio));
     }
     
     
@@ -240,6 +243,16 @@ class AccionPrograMonUNISALController extends Controller {
                     if($costo>0){                    
                         $actividadUnisal=$actividadUnisalDao->getActividadUniSal($idActividadUniSal);
                         $actividadUnisal->setCosto($costo);         
+                        $actividadUnisalDao->guardarActividad($actividadUnisal);                     
+                    }
+                }
+                
+                if((preg_match('/coberturaActividadUniSal_/',$cadena))==1){
+                    $idActividadUniSal=substr($tags[$i], 25);
+                    $cobertura=$valores[$i];
+                    if($cobertura>0){                    
+                        $actividadUnisal=$actividadUnisalDao->getActividadUniSal($idActividadUniSal);
+                        $actividadUnisal->setCoberActUni($cobertura);         
                         $actividadUnisalDao->guardarActividad($actividadUnisal);                     
                     }
                 }

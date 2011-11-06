@@ -137,6 +137,10 @@
                                                                                                             </tr>
                                                                                                             <tr>                                                                        
                                                                                                                 <th rowspan="2" >Descripcion</th>
+                                                                                                                <th rowspan="2" >Universo</th>                                                                                                                
+                                                                                                                <th rowspan="2" >Cobertura</th>
+                                                                                                                <th rowspan="2" >Cantidad</th>
+                                                                                                                <th rowspan="2" >Concentraci&oacute;n</th>
                                                                                                                 <th rowspan="2">Meta Anual</th>
                                                                                                                 <th rowspan="2">Responsable</th>
                                                                                                                 <th rowspan="2">Beneficiarios</th>
@@ -214,8 +218,56 @@
                                                                                                                             <td>
                                                                                                                                 {{ actividadAux.descActUniTemp }}
                                                                                                                             </td>
+                                                                                                                                {% set cantidad =0 %}
+                                                                                                                            
+                                                                                                                                {% for categoriaCenso in censopoblacion.getCategoriasCenso %}
+                                                                                                                                    {% if categoriaCenso.divTabla=='sidpla_poblacionhumana' %} 
+                                                                                                                                            {% if categoriaCenso.idCategoriaCenso==actividadAux.universo %}
+                                                                                                                                                {% if(actividadAux.tipoTotalUni==1) %}
+                                                                                                                            <td>  {{ censopoblacion.getTotalPobHumGeneral(actividadAux.universo) }} </td>
+                                                                                                                                                    {% set cantidad = (censopoblacion.getTotalPobHumGeneral(actividadAux.universo)*actividad.coberActUni )/100%}
+                                                                                                                                                {% endif %}
+                                                                                                                                                {% if(actividadAux.tipoTotalUni==2) %}
+                                                                                                                            <td>   {{ censopoblacion.getTotalPobHumPromotor(actividadAux.universo) }}    </td>
+                                                                                                                                                    {% set cantidad = (censopoblacion.getTotalPobHumPromotor(actividadAux.universo)*actividad.coberActUni )/100%}
+                                                                                                                                                {% endif %}
+                                                                                                                                            {% endif %}                                                                                                                                            
+                                                                                                                                    {% endif %}
+                                                                                                                                    
+                                                                                                                                    {% if categoriaCenso.divTabla=='sidpla_infcomplementaria' %} 
+                                                                                                                                            {% if categoriaCenso.idCategoriaCenso==actividadAux.universo %}
+                                                                                                                                                {% if(actividadAux.tipoTotalUni==1) %}
+                                                                                                                            <td>  {{ censopoblacion.getTotalInfCompGeneral(actividadAux.universo) }} </td>
+                                                                                                                                                {% endif %}
+                                                                                                                                                {% if(actividadAux.tipoTotalUni==2) %}
+                                                                                                                            <td>   {{ censopoblacion.getTotalInfCompPromotor(actividadAux.universo) }}    </td>
+                                                                                                                                                {% endif %}
+                                                                                                                                            {% endif %}                                                                                                                                            
+                                                                                                                                    {% endif %}
+                                                                                                                                    
+                                                                                                                                    
+                                                                                                                                     {% if categoriaCenso.divTabla=='sidpla_informacionrelevante' %} 
+                                                                                                                                            {% if categoriaCenso.idCategoriaCenso==actividadAux.universo %}
+                                                                                                                                                {% if(actividadAux.tipoTotalUni==1) %}
+                                                                                                                             <td>  {{ censopoblacion.getTotalInfRelevate(actividadAux.universo) }} </td>
+                                                                                                                                                {% endif %}                                                                                                                                                
+                                                                                                                                            {% endif %}                                                                                                                                            
+                                                                                                                                    {% endif %}
+                                                                                                                                    
+                                                                                                                                {% endfor %}   
+                                                                                                                              
+                                                                                                                            
+                                                                                                                             <td>
+                                                                                                                               <input name="coberturaActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividad.coberActUni }}"  ></input>                                                                                                                                
+                                                                                                                            </td>
+                                                                                                                             <td>
+                                                                                                                                {{cantidad}}
+                                                                                                                            </td>
+                                                                                                                             <td>
+                                                                                                                                {{ actividadAux.concenActUniTemp }}
+                                                                                                                            </td>
                                                                                                                             <td align="center">
-                                                                                                                                <input name="metaAnualActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividad.metaAnualActUni }}"  ></input>
+                                                                                                                                <input name="metaAnualActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividadAux.concenActUniTemp*cantidad }}"  ></input>
                                                                                                                             </td>
                                                                                                                             <td>
                                                                                                                                 <input name="responsableActividadUniSal_{{actividad.codActUni }}"  value="{{ actividad.getResponsableActUni }}"  ></input>                                                                                       
