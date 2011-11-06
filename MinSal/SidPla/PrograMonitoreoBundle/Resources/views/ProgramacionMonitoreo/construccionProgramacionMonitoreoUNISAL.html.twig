@@ -243,7 +243,7 @@
                                                                                                                {% if actividadAux.codActUniTemp == actividad.actTemp.codActUniTemp %}                                                                            
                                                                                                                         <tr>
                                                                                                                             <td>
-                                                                                                                                {{ actividadAux.descActUniTemp }}
+                                                                                                                                <textarea cols="15" rows="4" readonly="readonly" >{{ actividadAux.descActUniTemp }}</textarea>
                                                                                                                             </td>
                                                                                                                                 {% set cantidad =0 %}
                                                                                                                             
@@ -297,7 +297,7 @@
                                                                                                                                 <input id="metaAnualActividadUniSal_{{actividad.codActUni }}" name="metaAnualActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividadAux.concenActUniTemp*cantidad }}"  ></input>
                                                                                                                             </td>
                                                                                                                             <td>
-                                                                                                                                <input name="responsableActividadUniSal_{{actividad.codActUni }}"  value="{{ actividad.getResponsableActUni }}"  ></input>                                                                                       
+                                                                                                                                <textarea name="responsableActividadUniSal_{{actividad.codActUni }}" cols="20" rows="4"  >{{ actividad.getResponsableActUni }}</textarea>
                                                                                                                             </td>
                                                                                                                             <td align="center">
                                                                                                                                 <input name="actividadUniSal_{{actividad.codActUni }}"  value="{{ actividad.getBeneActUni }}"  ></input>
