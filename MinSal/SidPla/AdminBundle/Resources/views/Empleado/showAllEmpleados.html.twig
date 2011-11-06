@@ -11,12 +11,12 @@
           colNames:['Id','Primer Nombre', 'Segundo Nombre', 'Primer Apellido', 'Segundo Apellido', 'DUI','Email', 'Unidad Organizativa'],
           colModel:[
             { name:'id', index: 'id', width:20,editable:false,editoptions:{size:15}},
-            { name:'nombrePrimero', index: 'nombrePrimero', width:90,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:1, label: "Primer Nombre",elmprefix:"(*)"},editrules:{required:true}  },
-            { name:'nombreSegundo', index: 'nombreSegundo',width:90,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:2, label: "Segundo Nombre"} },
-            { name:'primerApellido', index: 'primerApellido', width:90,editable:true,editoptions:{size:25,maxlength: 35}, formoptions:{ rowpos:3, label: "Primer Apellido",elmprefix:"(*)"},editrules:{required:true}  },
-            { name:'segundoApellido', index: 'segundoApellido',width:90,editable:true,editoptions:{size:25,maxlength: 35} , formoptions:{ rowpos:4, label: "Segundo Apellido"} },
-            { name:'dui', index: 'dui',width:90,editable:true,editoptions:{size:25,maxlength: 10}, formoptions:{ rowpos:5, label: "DUI",elmprefix:"(*)"},editrules:{required:true}  },
-            { name:'email', index: 'email',width:150,editable:true,editoptions:{size:50,maxlength: 250}, formoptions:{ rowpos:6, label: "Email"} },
+            { name:'nombrePrimero', index: 'nombrePrimero', width:90,editable:true,editoptions:{size:25,maxlength: 35,dataInit:function(el){$(el).keyfilter(/[a-z]/i);}}, formoptions:{ rowpos:1, label: "Primer Nombre",elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'nombreSegundo', index: 'nombreSegundo',width:90,editable:true,editoptions:{size:25,maxlength: 35,dataInit:function(el){$(el).keyfilter(/[a-z]/i);}}, formoptions:{ rowpos:2, label: "Segundo Nombre"} },
+            { name:'primerApellido', index: 'primerApellido', width:90,editable:true,editoptions:{size:25,maxlength: 35,dataInit:function(el){$(el).keyfilter(/[a-z]/i);}}, formoptions:{ rowpos:3, label: "Primer Apellido",elmprefix:"(*)"},editrules:{required:true} },
+            { name:'segundoApellido', index: 'segundoApellido',width:90,editable:true,editoptions:{size:25,maxlength: 35,dataInit:function(el){$(el).keyfilter(/[a-z]/i);}} , formoptions:{ rowpos:4, label: "Segundo Apellido"} },
+            { name:'dui', index: 'dui',width:90,editable:true,editoptions:{size:25,maxlength: 10,dataInit:function(el){$(el).mask("99999999-9",{placeholder:" "});}}, formoptions:{ rowpos:5, label: "DUI",elmprefix:"(*)"},editrules:{required:true}  },
+            { name:'email', index: 'email',width:150,editable:true,editoptions:{size:50,maxlength: 250,dataInit:function(el){$(el).keyfilter(/[a-z0-9_\.\-@]/i);}}, formoptions:{ rowpos:6, label: "Email"},editrules:{email:true,required:false} },
             { name:'unidad', index: 'unidad',width:300,editable:true,edittype:"select",
                 editoptions:{ size: 1,
                    dataUrl: 'consultarUnidadesOrgJSONSelect',
@@ -38,7 +38,9 @@
           viewrecords: true, 
           caption: 'Empleados',
           height: "100%",
-          editurl: 'manttEmpleadoEdicion'
+          editurl: 'manttEmpleadoEdicion',
+          editCaption: "Editar Empleado",
+          addCaption: "Agregar Empleado"
         });
         myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,
         beforeRefresh: function() {$("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}
@@ -51,7 +53,7 @@
         $("#agregarEmpleado").click(function(){
         jQuery('#theGrid').jqGrid('editGridRow',"new",
              {
-              width:550,height:300,bottominfo:"Campos marcados con (*) son obligatorios",
+              addCaption: "Agregar Empleado",width:550,height:300,bottominfo:"Campos marcados con (*) son obligatorios",
               afterSubmit:despuesAgregarEditar,closeAfterAdd:true,closeOnEscape: true,align:'center',
               onclickSubmit: function(rp_ge, postdata){
                                   alert("datos guardados con exito!");                                  
@@ -65,10 +67,10 @@
           var gr = jQuery('#theGrid').jqGrid('getGridParam','selrow');
           if( gr != null )
              jQuery('#theGrid').jqGrid('editGridRow',gr,
-               { width:550,height:300,closeAfterAdd : true,bottominfo:"Campos marcados con (*) son obligatorios",closeAfterEdit:true,
+               { width:550,height:300,closeAfterAdd : true,editCaption: "Editar Empleado",bottominfo:"Campos marcados con (*) son obligatorios",closeAfterEdit:true,
                  afterSubmit:despuesAgregarEditar,reloadAfterSubmit:true,closeOnEscape: true,align:'center',
                  onclickSubmit: function(rp_ge, postdata) {
-                              alert("Empleado Guardado con exito!");
+                              alert("datos editados con exito!");
                    }   
                        });
           else alert("Por favor seleccione una fila para editar!"); 
