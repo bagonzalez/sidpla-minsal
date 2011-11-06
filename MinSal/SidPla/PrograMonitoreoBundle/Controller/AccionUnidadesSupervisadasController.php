@@ -67,10 +67,9 @@ class AccionUnidadesSupervisadasController extends Controller {
         $proUnisalTmpDao= new ProUnisalTemplateDao($this->getDoctrine());
         $anio = date('Y');       
         
+        $objetivos=array();        
         $proTemplate=$proUnisalTmpDao->obtenerObjTempAnio($anio);
-        foreach ($proTemplate as $proUnisalTmp){
-            $objetivos=$proUnisalTmp->getObjeEspeProgra();            
-        }
+        $objetivos=$proTemplate->getObjeEspeProgra();
         
         return $objetivos;        
     }
