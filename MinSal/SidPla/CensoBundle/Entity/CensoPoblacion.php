@@ -191,4 +191,85 @@ class CensoPoblacion
     {
         return $this->informacionComplementaria;
     }
+    
+    public function getTotalPobHumPromotor($idCategoria){
+        
+        $pobHum=new PoblacionHumana();
+        $total=0;
+        
+        foreach($this->poblacionHumana as $pobHum){
+            if($pobHum->getCategoriaCenso()->getIdCategoriaCenso()==$idCategoria){
+                if($pobHum->getPobHumArea()=='PROMOTOR'){
+                    $total=$total+$pobHum->getPobHumCant();
+                }                
+            }            
+        } 
+        
+        return $total;
+    }
+    
+    public function getTotalPobHumGeneral($idCategoria){
+        
+        $pobHum=new PoblacionHumana();
+        $total=0;
+        
+        foreach($this->poblacionHumana as $pobHum){
+            if($pobHum->getCategoriaCenso()->getIdCategoriaCenso()==$idCategoria){
+                if($pobHum->getPobHumArea()!='PROMOTOR'){
+                    $total=$total+$pobHum->getPobHumCant();
+                }                
+            }            
+        } 
+        
+        return $total;
+    }
+    
+     public function getTotalInfCompPromotor($idCategoria){
+        
+        $infCom=new InformacionComplementaria();
+        $total=0;
+        
+        foreach($this->informacionComplementaria as $infCom){
+            if($infCom->getCategoriaCenso()->getIdCategoriaCenso()==$idCategoria){
+                if($infCom->getAreaInfoComp()=='PROMOTOR'){
+                    $total=$total+$infCom->getCantidadInfoComp();
+                }                
+            }            
+        } 
+        
+        return $total;
+    }
+    
+    public function getTotalInfCompGeneral($idCategoria){
+        
+        $infCom=new InformacionComplementaria();
+        $total=0;
+        
+        foreach($this->informacionComplementaria as $infCom){
+            if($infCom->getCategoriaCenso()->getIdCategoriaCenso()==$idCategoria){
+                if($infCom->getAreaInfoComp()!='PROMOTOR'){
+                    $total=$total+$infCom->getCantidadInfoComp();
+                }                
+            }            
+        } 
+        
+        return $total;
+    }
+    
+     public function getTotalInfRelevate($idCategoria){
+        
+        $infRel=new InformacionRelevante();
+        $total=0;
+        
+        foreach($this->informacionRelevante as $infRel){
+            if($infRel->getCategoriaCenso()->getIdCategoriaCenso()==$idCategoria){                
+                    $total=$total+$infRel->getInfRelCant();
+            }            
+        } 
+        
+        return $total;
+    }
+    
+   
+    
 }
