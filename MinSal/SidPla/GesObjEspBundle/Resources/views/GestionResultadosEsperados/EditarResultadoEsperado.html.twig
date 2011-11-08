@@ -7,7 +7,7 @@
           $('#agregar').button();
           $('#regresar').button();
           
-           $('#regresar').click(function() {
+          $('#regresar').click(function() {
             this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}';
            
           });
@@ -235,6 +235,9 @@ textarea.error { border: 1px dotted red; }
                             <input type='hidden' name='iddos' id="iddos" value='{{iddos}}' /> 
                             <input type='hidden' name='idtres' id="idtres" value='{{idtres}}' /> 
                             <input type='hidden' name='idcuatro' id="idcuatro" value='{{idcuatro}}' />
+                            {%if objUniControl is defined %}
+                                <input type='hidden' name='objUniControl' id="objUniControl" value='{{objUniControl}}' /> 
+                            {%endif%}
                             <input type='hidden' name='oper' id="oper" value='edit' /> 
                             <button type="submmit" id="agregar"  >Guardar</button>
                             <button type="submmit" class="cancel" id="regresar"  >Regresar</button>

@@ -80,7 +80,7 @@ class AccionAdminActividadesController extends Controller {
         $request = $this->getRequest();
         $idfila = $request->get('idfila');
         $idfilaResultado = $request->get('idfilaResultado');
-
+        $objUniControl = $request->get('objUniControl');
 
         //obteniendo el objetivo para mandarlo a la plantilla  
         $objetivoAux = new ObjetivoEspecifico();
@@ -104,12 +104,13 @@ class AccionAdminActividadesController extends Controller {
 
         $fechaInicioPeriodoPao = $fechasMin[0][1];
         $fechaFinPeriodoPao = $fechasMax[0][1];
+       
 
         return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:IngresoActividades.html.twig', array('opciones' => $opciones, 'idfilaResultado' => $idfilaResultado,
                     'idfila' => $idfila, 'descripcion' => $objetivosEspec,
                     'descripcionResultado' => $resultadoesperado,
                     'fechaInicio' => $fechaInicioPeriodoPao,
-                    'fechaFin' => $fechaFinPeriodoPao));
+                    'fechaFin' => $fechaFinPeriodoPao,'objUniControl'=>$objUniControl));
     }
 
     public function guardarActividadesAction() {
@@ -128,7 +129,7 @@ class AccionAdminActividadesController extends Controller {
         $tipometa = $request->get('selectipometa');
         $descripMetaAnual = $request->get('descripMetaAnual');
         $costo = $request->get('costo');
-
+        $objUniControl = $request->get('objUniControl');
 
         //valores que representan lo programado         
         $cantrimUno = $request->get('trimUno');
@@ -192,7 +193,15 @@ class AccionAdminActividadesController extends Controller {
         $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());
         $resultadoAux = $resultadoDao->getResulEspera($idfilaResultado);
         $resultadoesperado = $resultadoAux->getResEspeDesc();
-        $objetivoDao->actualizaNomenclatura((int)$paoElaboracion->getUnidadOrganizativa()->getCaractOrg()->getIdCaractOrg(), (int)$paoElaboracion->getAnio());
+        if (isset($objUniControl))
+            if ($objUniControl== 'true')
+                $resultadoDao->actualizaNomenclatura($paoElaboracion->getUnidadOrganizativa()->getIdUnidadOrg(), $paoElaboracion->getAnio());
+            else
+                $objetivoDao->actualizaNomenclatura((int)$paoElaboracion->getUnidadOrganizativa()->getCaractOrg()->getIdCaractOrg(), (int)$paoElaboracion->getAnio());
+        else {
+            $objetivoDao->actualizaNomenclatura((int)$paoElaboracion->getUnidadOrganizativa()->getCaractOrg()->getIdCaractOrg(), (int)$paoElaboracion->getAnio());
+        }
+        
         return $this->consultarActividadesAction();
     }
 
@@ -203,7 +212,7 @@ class AccionAdminActividadesController extends Controller {
         $idfila = $request->get('idfila');
         $idfilaResultado = $request->get('idfilaResultado');
         $idfilaActividad = $request->get('idfilaActividad');
-
+         $objUniControl = $request->get('objUniControl');
         //obteniendo el objetivo para mandarlo a la plantilla  
        // $objetivoAux = new ObjetivoEspecifico();
         $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());
@@ -328,7 +337,7 @@ class AccionAdminActividadesController extends Controller {
                     'fechafintrimtres'=>$fechafintrimtres,
                     'fechafintrimcuatro'=>$fechafintrimcuatro,
                     'fechaInicio' => $fechaInicioPeriodoPao,
-                    'fechaFin' => $fechaFinPeriodoPao
+                    'fechaFin' => $fechaFinPeriodoPao,'objUniControl'=>$objUniControl
                 ));
     }
 
@@ -348,7 +357,7 @@ class AccionAdminActividadesController extends Controller {
         $tipometa = $request->get('selectipometa');
         $descripMetaAnual = $request->get('descripMetaAnual');
         $costo = $request->get('costo');
-
+        $objUniControl = $request->get('objUniControl');
         //valores que representan lo programado
         $trimUno = $request->get('trimUno');
         $trimDos = $request->get('trimDos');

@@ -4,6 +4,7 @@
     <input type='hidden' name='idfilaobj' id="idfilaobj" value='' />
     <input type='hidden' name='anio' id="anio" value='' />
     <input type='hidden' name='idfila' id="idfila" value='' />
+    <input type='hidden' name='objUniControl' id="objUniControl" value='true' />
 
     <table border="1" WIDTH='85%'>
         <thead>
@@ -22,7 +23,7 @@
                     <td style=" font-size: 12px;">{{ obj.getIdObjEspec.nomenclatura}}</td>    
                     <td style=" font-size: 12px;">{{ obj.getIdObjEspec.getDescripcion}}</td>
                     <td class="tdBotonesIconos" WIDTH='60' >
-                        <input width="50" height="50" type="image" src="{{ asset('/images/iconos/gestion.png')}}"  id="resultadoEsperado" onclick="$('#idfila').attr('value', {{obj.getIdObjEspec.getIdObjEspec}}); document.location.href='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}';" />
+                        <input width="50" height="50" type="image" src="{{ asset('/images/iconos/gestion.png')}}"  id="resultadoEsperado" onclick="$('#idfila').attr('value', {{obj.getIdObjEspec.getIdObjEspec}}); this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}';" />
                         <br/>Resultados Esperados
                     </td>
                 </tr>

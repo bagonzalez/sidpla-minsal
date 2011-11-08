@@ -353,7 +353,10 @@ textarea.error { border: 1px dotted red; }
                             <input type='hidden' name='iduno' id="iduno" value='{{iduno}}' />  
                             <input type='hidden' name='iddos' id="iddos" value='{{iddos}}' /> 
                             <input type='hidden' name='idtres' id="idtres" value='{{idtres}}' /> 
-                            <input type='hidden' name='idcuatro' id="idcuatro" value='{{idcuatro}}' /> 
+                            <input type='hidden' name='idcuatro' id="idcuatro" value='{{idcuatro}}' />
+                            {%if objUniControl is defined %}
+                                <input type='hidden' name='objUniControl' id="objUniControl" value='{{objUniControl}}' /> 
+                            {%endif%}
                             <button type="submmit" id="guardar"  >Guardar</button>
                             <button type="submmit" name="regresar" id="regresar"  >Regresar</button>
                         </td> 

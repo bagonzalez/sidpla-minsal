@@ -16,7 +16,11 @@ $(document).ready(function(){
                 <td align="center">
                     <strong>
                  {% if objUniControl is defined %}
+                   {% if objUniControl =='true' %}
                      <a  style="font-size: 12px"  href="{{ path('MinSalSidPlaGesObjEspEntControlBundle_consultarObjetivosEspecificos') }}">Objetivos>></a>
+                   {% else %}
+                      <a  style="font-size: 12px"  href="{{ path('MinSalSidPlaGesObjEspBundle_consultarObjetivosEspecificos') }}">Objetivos>></a>
+                   {% endif%}
                  {% else %}
                     <a  style="font-size: 12px"  href="{{ path('MinSalSidPlaGesObjEspBundle_consultarObjetivosEspecificos') }}">Objetivos>></a>
                  {% endif %}

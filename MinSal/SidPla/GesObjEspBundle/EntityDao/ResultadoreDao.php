@@ -1,18 +1,8 @@
 <?php
-
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of ResultadoreDao
- *
- * @author edwin
- */
 namespace MinSal\SidPla\GesObjEspBundle\EntityDao;
 
 use MinSal\SidPla\GesObjEspBundle\Entity\Resultadore;
+use Doctrine\ORM\Query\ResultSetMapping;
 class ResultadoreDao {
     //put your code here
 
@@ -57,6 +47,19 @@ class ResultadoreDao {
          $matrizMensajes = array('El proceso de editar termino con exito');
  
          return $matrizMensajes;
+    }
+    
+    public function hayResultadosRe($idResEsp) {
+
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('resp', 'resp');
+        $query = $this->em->createNativeQuery('SELECT count(*) resp
+                                                FROM sidpla_resultadore
+                                                WHERE resultadore_codigo = ?', $rsm);
+        $query->setParameter(1, $idResEsp);
+
+        $x = $query->getSingleScalarResult();
+        return $x;
     }
     
 }

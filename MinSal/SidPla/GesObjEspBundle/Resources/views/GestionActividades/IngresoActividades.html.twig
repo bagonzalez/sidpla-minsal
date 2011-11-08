@@ -350,7 +350,10 @@ textarea.error { border: 1px dotted red; }
                         <tr>  
                             <td colspan="4" align="center" >
                                 <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
-                                <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
+                                <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' />
+                                {%if objUniControl is defined %}
+                                    <input type='hidden' name='objUniControl' id="objUniControl" value='{{objUniControl}}' /> 
+                                {%endif%}
                                 <button type="submmit" id="agregar"  >Guardar</button>
                                 <button type="reset" id="limpiar"  >Limpiar</button>
                                 <button type="submmit" name ="regresar" class="cancel"  id="regresar">Regresar</button>

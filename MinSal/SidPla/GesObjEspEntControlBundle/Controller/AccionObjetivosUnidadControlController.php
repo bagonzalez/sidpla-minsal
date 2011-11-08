@@ -9,6 +9,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use MinSal\SidPla\GesObjEspEntControlBundle\EntityDao\ObjTemplateDao;
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjTemplate;
 use MinSal\SidPla\GesObjEspEntControlBundle\Entity\ObjespTemplate;
+use MinSal\SidPla\UsersBundle\Entity\User;
+use MinSal\SidPla\AdminBundle\Entity\Empleado;
+use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
+use MinSal\SidPla\PaoBundle\Entity\Pao;
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
+use MinSal\SidPla\PaoBundle\EntityDao\PeriodoPaoDao;
 
 class AccionObjetivosUnidadControlController extends Controller {
 
@@ -16,7 +22,8 @@ class AccionObjetivosUnidadControlController extends Controller {
         $opciones = $this->getRequest()->getSession()->get('opciones');
         
         $objTmpDao = new ObjTemplateDao($this->getDoctrine());
-        $objTmp = $objTmpDao->obtenerObjTempAnio(date('Y'));
+        $paoElaboracion=  $this->obtenerPaoElaboracionAction();
+        $objTmp = $objTmpDao->obtenerObjTempAnio($paoElaboracion->getAnio());
 
         $objTmpAux = new ObjTemplate();
         $objEspTmps = new ObjTemplate();
@@ -32,52 +39,24 @@ class AccionObjetivosUnidadControlController extends Controller {
                 return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionObjetivosEspecificos:manttObjetivosEspecificos.html.twig', 
                 array('opciones' => $opciones,'objetivos'=>$objEspTmps));
     }
+    
+    public function obtenerPaoElaboracionAction() {
 
-   /* public function consultarObjetivosEspecificosEntControlAction() {
-        $request = $this->getRequest();
-        $anio = $request->get('anio');
-        $objEntControl = $request->get('objEntControl');
+        $user = new User();
+        $empleado = new Empleado();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $empleado = $user->getEmpleado();
+        $idUnidad = $empleado->getUnidadOrganizativa()->getIdUnidadOrg();
+        $unidaDao = new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad = new UnidadOrganizativa();
+        $unidad = $unidaDao->getUnidadOrg($idUnidad);
 
-        $objTmpDao = new ObjTemplateDao($this->getDoctrine());
-        if ($objTmpDao->existeObjTmp($anio) == 0)
-            $objTmpDao->agregarObjetivoTemplate($anio);
-        $objTmp = $objTmpDao->obtenerObjTempAnio($anio);
+        $paoElaboracion = new Pao();
+        $paoElaboracion = $unidaDao->getPaoElaboracion($idUnidad);
 
-        $numfilas = 0;
-        $objTmpAux = new ObjTemplate();
-        $rows = '';
-        foreach ($objTmp as $objTmpAux) {
-            $i = 0;
-            $objEspTmps = $objTmpAux->getEspecificoObjTmp();
-            $aux = new ObjespTemplate();
-            $numfilas = count($objEspTmps);
-
-            foreach ($objEspTmps as $aux) {
-                $rows[$i]['id'] = $aux->getIdObjEspec()->getIdObjEspec();
-                $rows[$i]['cell'] = array($aux->getIdObjEspec()->getIdObjEspec(),
-                    $aux->getIdObjEspec()->getDescripcion(),
-                    $aux->getIdObjEspTempl()
-                );
-                $i++;
-            }
-        }
-
-
-
-        $datos = json_encode($rows);
-        $pages = floor($numfilas / 10) + 1;
-
-        $jsonresponse = '{
-               "page":"1",
-               "total":"1",
-               "records":"' . $numfilas . '", 
-               "rows":' . $datos . '}';
-
-
-        $response = new Response($jsonresponse);
-        return $response;
+        return $paoElaboracion;
     }
-*/
+
 }
 
 ?>

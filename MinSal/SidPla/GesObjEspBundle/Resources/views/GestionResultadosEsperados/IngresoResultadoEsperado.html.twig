@@ -8,7 +8,7 @@
           $('#limpiar').button();
           $('#regresar').button();
           $('#regresar').click(function() {
-                       this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}';
+              this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados') }}';
           });
           $('#guardar').click(function(evento) {
            
@@ -21,9 +21,7 @@
             suma += Number($("input[id='trimCuatro']").val());
             
             if(metaAnual==suma){
-           
-           
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_guardarResultadosEsperados') }}';
+                    this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_guardarResultadosEsperados') }}';
              }else{
                       alert("No coincide la meta anual con lo programado trimestralmente!");
                       evento.preventDefault();    
@@ -228,7 +226,10 @@ textarea.error { border: 1px dotted red; }
                         </tr>   
                       <tr>  
                         <td colspan="4" align="center" >
-                            <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
+                            <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' />
+                            {%if objUniControl is defined %}
+                                <input type='hidden' name='objUniControl' id="objUniControl" value='{{objUniControl}}' /> 
+                            {%endif%}
                             <input type='hidden' name='oper' id="oper" value='add' /> 
                             <button type="submmit" id="guardar"  >Guardar</button>
                             <button type="reset" id="limpiar"  >Limpiar</button>

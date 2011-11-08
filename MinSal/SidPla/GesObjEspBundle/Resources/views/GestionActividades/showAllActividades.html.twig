@@ -3,6 +3,11 @@
     <input type='hidden' name='idfila' id="idfila" value='{{idfila}}' /> 
     <input type='hidden' name='idfilaResultado' id="idfilaResultado" value='{{idfilaResultado}}' /> 
     <input type='hidden' name='idfilaActividad' id="idfilaActividad" value='' /> 
+     {% if objUniControl =='true' %}
+        <input type='hidden' name='objUniControl' id="objUniControl" value='true' />
+   {% else %}
+        <input type='hidden' name='objUniControl' id="objUniControl" value='false' />
+        {% endif %}
     <table border="1" WIDTH='85%'>
         <thead>
             <tr  style=" font-size: 14px;">
