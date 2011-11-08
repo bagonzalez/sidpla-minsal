@@ -19,12 +19,12 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
         $opciones = $this->getRequest()->getSession()->get('opciones');
         $objTmpAux = new ObjTemplate();
         $objTmpDao = new ObjTemplateDao($this->getDoctrine());
-        $i=0;
+        $i = 0;
         //DEL ANIO ACTUAL
         if ($objTmpDao->existeObjTmp(date('Y')) == 0)
             $objTmpDao->agregarObjetivoTemplate(date('Y'));
         $objTmp = $objTmpDao->obtenerObjTempAnio(date('Y'));
-        $objTemplates=array();
+        $objTemplates = array();
 
         foreach ($objTmp as $objTmpAux) {
             $objEspTmps = $objTmpAux->getEspecificoObjTmp();
@@ -32,38 +32,34 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
             $numfilas = count($objEspTmps);
 
             foreach ($objEspTmps as $aux) {
-                $objTemplates[0][$i] =$aux;
+                $objTemplates[0][$i] = $aux;
                 $i++;
             }
-            
         }
-        
+
         //DEL ANIO SIGUIENTE
-        $i=0;
-        if ($objTmpDao->existeObjTmp(date('Y')+1) == 0)
-            $objTmpDao->agregarObjetivoTemplate(date('Y')+1);
-        $objTmp = $objTmpDao->obtenerObjTempAnio(date('Y')+1);
+        $i = 0;
+        if ($objTmpDao->existeObjTmp(date('Y') +1) == 0)
+            $objTmpDao->agregarObjetivoTemplate(date('Y') +1);
+        $objTmp = $objTmpDao->obtenerObjTempAnio(date('Y') +1);
 
         foreach ($objTmp as $objTmpAux) {
             $objEspTmps = $objTmpAux->getEspecificoObjTmp();
             $aux = new ObjespTemplate();
             $numfilas = count($objEspTmps);
-
+            $b = $objTmpDao->hayObjetivosEnPlantillaEC($objTmpAux->getAnioObjTemp());
             foreach ($objEspTmps as $aux) {
-                $objTemplates[1][$i] =$aux;   
+                $objTemplates[1][$i] = $aux;
                 $i++;
             }
-            
-        } 
-        if(count($objTemplates)==0)
-            return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionObjetivosEspecificosTemplate:manttObjetivosEspecificos.html.twig', 
-                array('opciones' => $opciones));
+        }
+        if (count($objTemplates) == 0)
+            return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionObjetivosEspecificosTemplate:manttObjetivosEspecificos.html.twig', array('opciones' => $opciones, 'b' => $b));
         else
-            return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionObjetivosEspecificosTemplate:manttObjetivosEspecificos.html.twig', 
-                array('opciones' => $opciones,'objTemplates'=>$objTemplates));
+            return $this->render('MinSalSidPlaGesObjEspEntControlBundle:GestionObjetivosEspecificosTemplate:manttObjetivosEspecificos.html.twig', array('opciones' => $opciones, 'objTemplates' => $objTemplates, 'b' => $b));
     }
 
-     public function ingresarObjEspTemplateAction() {
+    public function ingresarObjEspTemplateAction() {
         $opciones = $this->getRequest()->getSession()->get('opciones');
         $request = $this->getRequest();
         $anio = $request->get('anio');
@@ -119,6 +115,24 @@ class AccionAdminObjetivosEspecificosTemplateController extends Controller {
         $objDao = new ObjetivoEspecificoDao($this->getDoctrine());
         $objDao->delObjEspec($id);
         return new Response("{sc:true,msg:''}");
+    }
+
+    public function crearPlantillaAction() {
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+        $request = $this->getRequest();
+        $anio = $request->get('anio');
+
+        $objTemDao = new ObjTemplateDao($this->getDoctrine());
+         
+        $objTem = $objTemDao->obtenerObjTempAnio($anio);
+        $objTmpAux = new ObjTemplate();
+
+        foreach ($objTem as $objTmpAux) {
+            $idPlantilla = $objTmpAux->getCodObjTmp();
+            $objTemDao->crearPlantilla(($anio-1), $idPlantilla);
+        }
+
+        return $this->consultarObjetivosEspecificosTemplateAction();
     }
 
 }

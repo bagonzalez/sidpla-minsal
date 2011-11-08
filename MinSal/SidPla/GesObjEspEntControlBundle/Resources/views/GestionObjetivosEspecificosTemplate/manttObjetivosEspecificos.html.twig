@@ -2,17 +2,28 @@
 {% block body %}
 <script type="text/javascript">
  $(document).ready(function(){
+    $('#crearPlantilla').button();
+    $('#crearPlantilla').hide();
    function cargarAnio(){
         $("#{{ "now" | date("Y") }}Div").hide(); 
         $("#{{ "now" | date("Y")+1 }}Div").hide(); 
-        
-      $("#"+$('#selanio').val()+"Div").show();
-      $('#theGridObj').setGridParam({
-          url:'consultarObjetivosEspecificosTemplateJSON?anio='+$('#selanio').val(),
-          datatype:'json'
-         }).trigger("reloadGrid"); 
+       
+        $("#"+$('#selanio').val()+"Div").show();
+     if($('#selanio').val()=='{{ "now" | date("Y") }}')
+        $('#crearPlantilla').hide(); 
+     else{
+       {% if b==0 %}
+            $('#crearPlantilla').show(); 
+       {% else%}
+            $('#crearPlantilla').hide(); 
+       {% endif%} 
+           }
    }
    $('#selanio').change(cargarAnio);
+   $('#crearPlantilla').click(function(evento) {
+          $('#anio').attr('value', $('#selanio').val());
+          this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_crearPlantilla') }}';
+    });
        
     {% if objTemplates is defined %}
     {%set i = 0 %}
@@ -45,6 +56,8 @@
                 <td align="center" class="tdBotonesIconos" >
                     <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}" id="agregarObjTempButton"/>
                     <br/>Agregar Objetivo
+                    
+                    <input width="60" height="60" type="submit" name="crearPlantilla" id="crearPlantilla" value="Crear Plantilla"/>
 
                 </td>
             </tr>

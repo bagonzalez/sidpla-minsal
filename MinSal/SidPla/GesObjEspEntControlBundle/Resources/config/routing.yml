@@ -20,6 +20,10 @@ MinSalSidPlaGesObjEspEntControlBundle_manttObjEspTemplate:
 MinSalSidPlaGesObjEspEntControlBundle_manttObjEspTemplatedos:
     pattern:  /manttObjEspTemplatedos
     defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:manttObjEspTemplatedos }
+    
+MinSalSidPlaGesObjEspEntControlBundle_crearPlantilla:
+    pattern:  /crearPlantilla
+    defaults: { _controller: MinSalSidPlaGesObjEspEntControlBundle:AccionAdminObjetivosEspecificosTemplate:crearPlantilla }
 
 #RESULTADOS ESPERADOS
 MinSalSidPlaGesObjEspEntControlBundle_consultarResultadosEsperadosTemplate:

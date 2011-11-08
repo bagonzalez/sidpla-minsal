@@ -59,7 +59,7 @@ class ObjTemplateDao {
         $this->em->persist($objEspTmp);
 
         $this->em->flush();
-        $anioTemplate=$objTmp->getAnioObjTemp();
+        $anioTemplate = $objTmp->getAnioObjTemp();
         $this->actualizaNomenclatura($anioTemplate);
 
 
@@ -89,6 +89,31 @@ class ObjTemplateDao {
         $query->setParameter(1, $anioTemplate);
 
         $x = $query->getSingleScalarResult();
+    }
+
+    public function crearPlantilla($anio, $idPlantillaEC) {
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('resp', 'resp');
+        $query = $this->em->createNativeQuery('SELECT "FN_CREAR_PLANTILLAENTIDADCONTROL"(?,?) resp', $rsm);
+        $query->setParameter(1, $anio);
+        $query->setParameter(2, $idPlantillaEC);
+
+        $x = $query->getSingleScalarResult();
+        
+    }
+
+    public function hayObjetivosEnPlantillaEC($idPlantillaEC) {
+
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('resp', 'resp');
+        $query = $this->em->createNativeQuery("SELECT count(* ) resp
+                                                FROM sidpla_objtemplate,sidpla_objespectemplate
+                                                WHERE sidpla_objtemplate.objtmp_codigo = sidpla_objespectemplate.objtmp_codigo AND
+                                                  sidpla_objtemplate.objtmp_anio = ?", $rsm);
+        $query->setParameter(1, $idPlantillaEC);
+
+        $x = $query->getSingleScalarResult();
+        return $x;
     }
 
 }
