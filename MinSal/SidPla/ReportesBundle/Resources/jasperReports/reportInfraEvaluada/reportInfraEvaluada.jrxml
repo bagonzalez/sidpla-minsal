@@ -75,7 +75,8 @@
      sidpla_unidadmedida."unimed_alias" AS Unidad_Medida,
      sidpla_evaluacionelementoinfra."evaleleifr_fechaevaluacion" AS Fecha_Evaluacion,
      sidpla_pao."pao_anio" AS sidpla_pao_pao_anio,
-     sidpla_unidadorganizativa."uniorg_nombre" AS "Nombre Unidad"
+     sidpla_unidadorganizativa."uniorg_nombre" AS Nombre_Unidad,
+     sidpla_evaluacionelementoinfra."evaleleifr_cantidadtotal" AS Cantidad_total
 FROM
      "public"."sidpla_pao" sidpla_pao INNER JOIN "public"."sidpla_infraestructuraevaluada" sidpla_infraestructuraevaluada ON sidpla_pao."pao_codigo" = sidpla_infraestructuraevaluada."pao_codigo"
      AND sidpla_infraestructuraevaluada."infeva_codigo" = sidpla_pao."infeva_codigo"
@@ -95,7 +96,8 @@ ORDER BY
 	<field name="unidad_medida" class="java.lang.String"/>
 	<field name="fecha_evaluacion" class="java.sql.Timestamp"/>
 	<field name="sidpla_pao_pao_anio" class="java.math.BigDecimal"/>
-	<field name="Nombre Unidad" class="java.lang.String"/>
+	<field name="nombre_unidad" class="java.lang.String"/>
+	<field name="cantidad_total" class="java.math.BigDecimal"/>
 	<background>
 		<band splitType="Stretch"/>
 	</background>
@@ -150,30 +152,23 @@ ORDER BY
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="47" splitType="Stretch">
+		<band height="57" splitType="Stretch">
 			<staticText>
-				<reportElement x="19" y="22" width="185" height="20"/>
-				<textElement textAlignment="Center">
+				<reportElement mode="Opaque" x="19" y="22" width="191" height="33" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Elemento Infraestructura]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="216" y="22" width="100" height="20"/>
-				<textElement textAlignment="Center">
+				<reportElement mode="Opaque" x="211" y="22" width="351" height="33" backcolor="#CCCCCC"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estado]]></text>
 			</staticText>
-			<staticText>
-				<reportElement x="442" y="22" width="116" height="20"/>
-				<textElement textAlignment="Center">
-					<font size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[Cantidad]]></text>
-			</staticText>
 			<line>
-				<reportElement x="19" y="42" width="553" height="2"/>
+				<reportElement x="19" y="55" width="543" height="1"/>
 				<graphicElement>
 					<pen lineWidth="1.75"/>
 				</graphicElement>
@@ -190,35 +185,53 @@ ORDER BY
 				<textElement>
 					<font size="12"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$F{Nombre Unidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{nombre_unidad}]]></textFieldExpression>
 			</textField>
 		</band>
 	</columnHeader>
 	<detail>
-		<band height="23" splitType="Stretch">
+		<band height="25" splitType="Stretch">
 			<textField>
-				<reportElement x="242" y="1" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="459" y="1" width="40" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement x="499" y="1" width="40" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[$F{unidad_medida}]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement stretchType="RelativeToBandHeight" x="33" y="1" width="100" height="20"/>
+				<reportElement stretchType="RelativeToBandHeight" x="33" y="1" width="171" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{nombre_elemento}]]></textFieldExpression>
 			</textField>
 			<line>
-				<reportElement x="19" y="19" width="553" height="1"/>
+				<reportElement x="11" y="21" width="543" height="1"/>
 			</line>
+			<line>
+				<reportElement x="210" y="-35" width="1" height="54"/>
+			</line>
+			<textField>
+				<reportElement x="245" y="1" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="285" y="1" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{unidad_medida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="342" y="1" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{estado}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="442" y="1" width="17" height="20"/>
+				<textElement/>
+				<text><![CDATA[De]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="522" y="1" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{unidad_medida}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="482" y="1" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{cantidad_total}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>

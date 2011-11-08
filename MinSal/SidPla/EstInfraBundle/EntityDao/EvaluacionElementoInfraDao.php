@@ -33,7 +33,7 @@ class EvaluacionElementoInfraDao {
         return $evaluacionElemento;
     }
 
-    public function editarEvaluacionElemento($codEvaEleInfra, $codEstInfra, $cantEvaEleInfra) {
+    public function editarEvaluacionElemento($codEvaEleInfra, $codEstInfra, $cantEvaEleInfra,$cantTot) {
 
         $evaluacionElemento = new EvaluacionElementoInfra();
         $evaluacionElemento = $this->getEvaluacionElementoEspecifica($codEvaEleInfra);
@@ -42,6 +42,8 @@ class EvaluacionElementoInfraDao {
         $estadoInfraestructuraDao = new EstadoInfraestructuraDao($this->doctrine);
         $estadoInfraestructura = $estadoInfraestructuraDao->getEstadoInfraestructuraEspecifico($codEstInfra);
         $evaluacionElemento->setEstInfCodigo($estadoInfraestructura);
+        $evaluacionElemento->setCantTot($cantTot);
+        $evaluacionElemento->setFechaEvaluacion( date('Y-m-d'));
 
         $this->em->persist($evaluacionElemento);
         $this->em->flush();
@@ -87,7 +89,8 @@ class EvaluacionElementoInfraDao {
         $evaluacionElemento->setElemInfCodigo($elementoInfraestructura);
         $evaluacionElemento->setEstInfCodigo($estadoInfraestructura);
         $evaluacionElemento->setInfraEvaluada($infraestructuraEvaluada);
-        //falta la fecha
+        $evaluacionElemento->setCantTot(0);
+        $evaluacionElemento->setFechaEvaluacion( date('Y-m-d'));
         
         $this->em->persist($evaluacionElemento);
         $this->em->flush();

@@ -56,6 +56,14 @@ class EvaluacionElementoInfra {
      * @ORM\Column(name="evaleleifr_cantidadelemento", type="float")
      */
     private $cantElemt;
+    /**
+     * @var float $cantTot;
+     *
+     * @ORM\Column(name="evaleleifr_cantidadtotal", type="float")
+     */
+    private $cantTot;
+    
+    
 
     /**
      * Get idEvaEleInfra
@@ -72,7 +80,8 @@ class EvaluacionElementoInfra {
      * @param datetime $fechaEvaluacion
      */
     public function setFechaEvaluacion($fechaEvaluacion) {
-        $this->fechaEvaluacion = $fechaEvaluacion;
+        $date = new \DateTime($fechaEvaluacion);
+        $this->fechaEvaluacion = $date;
     }
 
     /**
@@ -102,7 +111,23 @@ class EvaluacionElementoInfra {
         return $this->cantElemt;
     }
 
-   
+       /**
+     * Set cantTot
+     *
+     * @param float $cantTot
+     */
+    public function setCantTot($cantTot) {
+        $this->cantTot = $cantTot;
+    }
+
+    /**
+     * Get cantTot
+     *
+     * @return float 
+     */
+    public function getCantTot() {
+        return $this->cantTot;
+    }
 
     /**
      * Set EstInfCodigo

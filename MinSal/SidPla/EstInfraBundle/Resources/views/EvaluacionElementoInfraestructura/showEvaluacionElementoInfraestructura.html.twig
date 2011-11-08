@@ -7,14 +7,15 @@ $(document).ready(function(){
      url: 'consultarEvaluacionElementoJSON?idInfra={{idInfra}}',
      datatype:'json',
      altRows:true,
-     colNames:['Codigo','Elemento', 'Estado', 'Cantidad','Unidad','Accion'], 
+     colNames:['Codigo','Elemento', 'Estado', 'Cantidad','CantidadTotal','Unidad','Accion'], 
      colModel:[ 
         {name:'codigo',index:'codigo', width:50, editable: false,align:'center'},
         {name:'elemento',index:'elemento', width:180,editable: false,edittype:"select",editoptions: {value:"{{ elementoInfra }}" }},
         {name:'estado',index:'estado', width:100, editable: true,edittype:"select",editoptions: {value:"{{ estadosInfra }}" },align:'center',
               editrules:{custom:true, custom_func:validaEstado}
         },
-        {name:'cantidad',index:'cantidad', width:90, editable: true,align:'center'},
+        {name:'cantidad',index:'cantidad', width:90, editable: true,align:'center',editrules:{number:true}},
+        {name:'cantidadtot',index:'cantidadtot', width:90, editable: true,align:'center',editrules:{number:true}},
         {name:'unidad',index:'unidad', width:50, editable: false,edittype:"select",editoptions:{value:"{{ unidadMedida }}" },align:'center'},
         {name:'act',index:'act', width:100,sortable:false,align:'center'}           
      ],

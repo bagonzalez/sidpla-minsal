@@ -64,6 +64,7 @@ class AccionEstInfraEvaluacionElementoInfraController extends Controller {
                 $aux->getElemInfCodigo()->getNomElemInfra(),
                 $aux->getEstInfCodigo()->getNomEstado(),
                 $aux->getCantElemt(),
+                $aux->getCantTot(),
                 $aux->getElemInfCodigo()->getCodUnidadMed()->getAbreUnidMed()
             );
             $i++;
@@ -75,7 +76,7 @@ class AccionEstInfraEvaluacionElementoInfraController extends Controller {
             array_multisort($rows, SORT_ASC);
         } else {
             $rows[0]['id'] = 0;
-            $rows[0]['cell'] = array(' ', ' ', ' ', ' ',' ');
+            $rows[0]['cell'] = array(' ', ' ', ' ', ' ',' ',' ');
         }
 
         $datos = json_encode($rows);
@@ -98,14 +99,11 @@ class AccionEstInfraEvaluacionElementoInfraController extends Controller {
         $codEvaElemento = $request->get('id');
 
         $estInfCodigo = $request->get('estado');
-        if($estInfCodigo!='1')
-            $cantEvaElemento = (float) $request->get('cantidad');
-        else
-            $cantEvaElemento=0;
-
+        $cantEvaElemento = (float) $request->get('cantidad');
+        $canTot=(float) $request->get('cantidadtot');
+        
         $evaElementoDao = new EvaluacionElementoInfraDao($this->getDoctrine());
-
-        $evaElementoDao->editarEvaluacionElemento($codEvaElemento, $estInfCodigo, $cantEvaElemento);
+        $evaElementoDao->editarEvaluacionElemento($codEvaElemento, $estInfCodigo, $cantEvaElemento,$canTot);
 
 
 
