@@ -1,11 +1,11 @@
-<table border="1" WIDTH='85%'>
+<table WIDTH='85%' class="tablaPlantilla">
     <thead>
         <tr  style=" font-size: 14px;">
-            <th><strong>  Cod </strong>
+            <th class="thEncabezadoPlantilla"><strong>  Cod </strong>
                     </th>
-            <th><strong>  Resultado Esperado </strong>
+            <th class="thEncabezadoPlantilla"><strong>  Resultado Esperado </strong>
             </th>
-            <th colspan="2"><strong>  Acciones </strong>
+            <th colspan="2" class="thEncabezadoPlantilla"><strong>  Acciones </strong>
             </th>
         </tr>
     </thead>
@@ -13,9 +13,9 @@
 {% if resultadosUnisal is defined %}   
     {% for  resultado in  resultadosUnisal%}
     <tr>
-        <td style=" font-size: 12px;">{{ resultado.nomenResEspUni}}
+        <td class="tdCuerpoPlantilla">{%if resultado.nomenResEspUni is null%}<strong> En Asignación </strong>{%else%}{{ resultado.nomenResEspUni}}{%endif%}
                         </td>
-        <td style=" font-size: 12px;">{{ resultado.getDescResEspUni}}
+        <td class="tdCuerpoPlantilla">{{ resultado.getDescResEspUni}}
         </td>
          <td class="tdBotonesIconos" WIDTH='60' >
             <input width="50" height="50" type="image" src="{{ asset('/images/iconos/editar.png')}}" id="editar" onclick="$('#idResEsp').attr('value',{{resultado.getCodResEspUni}});this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarResEspeUnisal')}}';" />

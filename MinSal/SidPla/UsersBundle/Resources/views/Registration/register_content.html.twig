@@ -3,7 +3,7 @@
  $(document).ready(function(){
    $('#verificaEmpleado').button();
    $('#verificaEmpleado').click(function(evento) {
-       $.getJSON('{{ path('MinSalSidPlaUsersBundle_verificaCreacion') }}?idEmpleado='+$("#fos_user_registration_form_idEmpleado").get(0).value+'&username='+$("#fos_user_registration_form_username").get(0).value, function(data) {
+       $.getJSON('{{ path('MinSalSidPlaUsersBundle_verificaCreacion') }}?idEmpleado='+$("#fos_user_registration_form_idEmpleado").get(0).value+'&username='+$("#fos_user_registration_form_username").get(0).value+'&email='+$("#fos_user_registration_form_email").get(0).value, function(data) {
          $.each(data, function(key, val) {
            if(key=='msj'){
                 $.each(val, function(id, registro){

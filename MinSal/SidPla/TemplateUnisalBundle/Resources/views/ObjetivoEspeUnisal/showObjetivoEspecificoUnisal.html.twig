@@ -1,21 +1,21 @@
   {% for  area in  areas%}
 <div id="{{"now" | date("Y")}}{{area.getCodArea}}Div">
-    <table border="1" WIDTH='85%'>
+    <table WIDTH='85%' class="tablaPlantilla">
         <thead>
             <tr  style=" font-size: 14px;">
-                <th><strong>  Cod </strong>
+                <th class="thEncabezadoPlantilla"><strong>  Cod </strong>
                 </th>
-                <th><strong>  Objetivo </strong>
+                <th class="thEncabezadoPlantilla"><strong>  Objetivo </strong>
                 </th>
-                <th colspan="3"><strong>  Acciones </strong>
+                <th colspan="3" class="thEncabezadoPlantilla"><strong>  Acciones </strong>
                 </th>
             </tr>
         </thead>
         <tbody>
     {%for obj in objTemplateDao.obtenerPorArea(area.getCodArea ,proUnisalActual.anioProUniTem)%}
                 <tr>
-                    <td style=" font-size: 12px;">{{ obj.nomenObjEspUni}}</td>
-                    <td style=" font-size: 12px;" >{{ obj.getDescObjEspUni}}</td>
+                    <td class="tdCuerpoPlantilla" >{%if obj.nomenObjEspUni is null%}<strong> En Asignación </strong>{%else%}{{ obj.nomenObjEspUni}}{%endif%}</td>
+                    <td  class="tdCuerpoPlantilla"  >{{ obj.getDescObjEspUni}}</td>
                     <td class="tdBotonesIconos" WIDTH='60' >
                         <input width="50" height="50" type="image" src="{{ asset('/images/iconos/editar.png')}}"  id="editar" value="Editar" onclick="$('#idObj').attr('value',{{obj.getcodObjEspUni}});$('#anio').attr('value', $('#selanio').val());$('#idArea').attr('value', $('#selarea').val());this.form.action='{{path('MinSalSidPlaTemplateUnisalBundle_editarObjetivoEspeUnisal')}}';" />
                         <br/>Editar
@@ -40,23 +40,23 @@
 
  {% for  area in  areas%}
     <div id="{{"now" | date("Y")+1}}{{area.getCodArea}}Div">
-        <table border="1" WIDTH='85%'>
+       <table WIDTH='85%' class="tablaPlantilla">
             <thead>
-                <tr  style=" font-size: 14px;">
-                    <th><strong>  Cod </strong>
-                    </th>
-                    <th><strong>  Objetivo </strong>
-                    </th>
-                    <th colspan="3"><strong>  Acciones </strong>
-                    </th>
-                </tr>
+                  <tr  style=" font-size: 14px;">
+                <th class="thEncabezadoPlantilla"><strong>  Cod </strong>
+                </th>
+                <th class="thEncabezadoPlantilla"><strong>  Objetivo </strong>
+                </th>
+                <th colspan="3" class="thEncabezadoPlantilla"><strong>  Acciones </strong>
+                </th>
+            </tr>
             </thead>
             <tbody>
     {%for obj in objTemplateDao.obtenerPorArea(area.getCodArea ,proUnisalSiguiente.anioProUniTem)%}
                     <tr>
-                        <td style=" font-size: 12px;">{{ obj.nomenObjEspUni}}
+                        <td class="tdCuerpoPlantilla">{{ obj.nomenObjEspUni}}
                         </td>
-                        <td style=" font-size: 12px;">{{ obj.getDescObjEspUni}}
+                        <td class="tdCuerpoPlantilla">{{ obj.getDescObjEspUni}}
                         </td>
 
                         <td class="tdBotonesIconos" WIDTH='60' >

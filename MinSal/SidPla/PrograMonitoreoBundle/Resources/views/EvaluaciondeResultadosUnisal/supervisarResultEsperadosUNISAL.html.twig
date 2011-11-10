@@ -19,242 +19,238 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
 <script type="text/javascript">
-	Highcharts.theme = { colors: ['#4572A7'] };// prevent errors in default theme
-	var highchartsOptions = Highcharts.getOptions(); 
-</script>
-<script>
+        Highcharts.theme = { colors: ['#4572A7'] };// prevent errors in default theme
+        var highchartsOptions = Highcharts.getOptions(); 
+    </script>
+    <script>
     
-    var chart;
-    $(document).ready(function(){
-        {% if areasClasif is defined %} 
-                {% for area in areasClasif %}
-                     $("#{{  area.codArea }}AreaDiv").hide();
-                      $("#mostratArea{{area.codArea  }}").click(function(){ 
-                                $("#{{area.codArea  }}AreaDiv").toggle(400);
-                            }                            
-                         )
-                {% endfor %} 
-        {% endif %} 
-
-        {% if objetivos is defined %}
-                    
-                    
-                    {% for obj in objetivos %}
-                        $("#{{ obj.codObjEspUni }}Div").hide();                        
-                        
-                        $("#mostratObj{{ obj.codObjEspUni }}").click(function(){ 
-                                $("#{{ obj.codObjEspUni }}Div").toggle(400);
-                            }                            
-                         )
-                         
-                    
-                         {% for indi in obj.getIndicadoresSalud %} 
-                         
-                               $('#dialog{{ indi.codIndSalud }}').jqm();
-
-                                $('#grafico{{ indi.codIndSalud }}').click(function() {
-                                    $('#dialog{{ indi.codIndSalud }}').jqmShow();              
-                               });
-
-                               chart = new Highcharts.Chart({
-                                  chart: {
-                                     renderTo: 'container{{indi.codIndSalud }}',
-                                     defaultSeriesType: 'line',
-                                     marginRight: 130,
-                                     marginBottom: 25
-                                  },
-                                  title: {
-                                     text: '{{ indi.nombreIndSalud}}',
-                                     x: -20 //center
-                                  },
-                                  subtitle: {
-                                     text: 'Fuente: SIDPLA',
-                                     x: -20
-                                  },
-                                  xAxis: {
-                                     categories: ['Trim 1', 'Trim 2', 'Trim 3', 'Trim 4']
-                                  },
-                                  yAxis: {
-                                     title: {
-                                        text: 'Personas'
-                                     },
-                                     plotLines: [{
-                                        value: 0,
-                                        width: 1,
-                                        color: '#808080'
-                                     }]
-                                  },
-                                  tooltip: {
-                                     formatter: function() {
-                                               return '<b>'+ this.series.name +'</b><br/>'+
-                                           this.x +': '+ this.y +'';
-                                     }
-                                  },
-                                  legend: {
-                                     layout: 'vertical',
-                                     align: 'right',
-                                     verticalAlign: 'top',
-                                     x: -10,
-                                     y: 100,
-                                     borderWidth: 0
-                                  },
-                                  series: [                                        
-                                       {% if subUnidades is defined %} 
-                                        {% for unidad in  subUnidades  %}
-                                             {% for pao in paosSeguimiento %}                                                                       
-                                                {% if unidad.idUnidadOrg == pao.unidadOrganizativa.idUnidadOrg %}   
-                                                   {% set evalIndicadorResultado=pao.getEvaluacionResultado() %}
-                                                         {
-                                                             name: '{{unidad.nombreUnidad}}',
-                                                             data: [
-                                                                 {% for resulEvaIndicador in indi.getEvaluacionesIndicador %}
-                                                                      {% if evalIndicadorResultado.codEvaRes == resulEvaIndicador.evaResul.codEvaRes %}
-                                                                      {% if resulEvaIndicador.indSalud.codIndSalud == indi.codIndSalud %} 
-                                                                         {% if evalIndicadorResultado.codEvaRes == resulEvaIndicador.evaResul.codEvaRes %}
-                                                                             {{ resulEvaIndicador.getResEvaInd }},
-                                                                         {% endif %}
-                                                                      {% endif %} 
-                                                                      {% endif %}
-                                                                 {% endfor%}
-                                                             ]
-                                                          },  
-                                                {% endif %}
-                                            {% endfor %}
-                                        {% endfor %}
-                                    {% endif %}                                    
-                                    ]
-                           });
-                         {% endfor %} 
-                          
+        var chart;
+        $(document).ready(function(){
+            {% if areasClasif is defined %} 
+                    {% for area in areasClasif %}
+                         $("#{{  area.codArea }}AreaDiv").hide();
+                          $("#mostratArea{{area.codArea  }}").click(function(){ 
+                                    $("#{{area.codArea  }}AreaDiv").toggle(400);
+                                }                            
+                             )
                     {% endfor %} 
-        {% endif %}  
+            {% endif %} 
+
+            {% if objetivos is defined %}
+                    
+                    
+                        {% for obj in objetivos %}
+                            $("#{{ obj.codObjEspUni }}Div").hide();                        
+                        
+                            $("#mostratObj{{ obj.codObjEspUni }}").click(function(){ 
+                                    $("#{{ obj.codObjEspUni }}Div").toggle(400);
+                                }                            
+                             )
+                         
+                    
+                             {% for indi in obj.getIndicadoresSalud %} 
+                         
+                                   $('#dialog{{ indi.codIndSalud }}').jqm();
+
+                                    $('#grafico{{ indi.codIndSalud }}').click(function() {
+                                        $('#dialog{{ indi.codIndSalud }}').jqmShow();              
+                                   });
+
+                                   chart = new Highcharts.Chart({
+                                      chart: {
+                                         renderTo: 'container{{indi.codIndSalud }}',
+                                         defaultSeriesType: 'line',
+                                         marginRight: 130,
+                                         marginBottom: 25
+                                      },
+                                      title: {
+                                         text: '{{ indi.nombreIndSalud}}',
+                                         x: -20 //center
+                                      },
+                                      subtitle: {
+                                         text: 'Fuente: SIDPLA',
+                                         x: -20
+                                      },
+                                      xAxis: {
+                                         categories: ['Trim 1', 'Trim 2', 'Trim 3', 'Trim 4']
+                                      },
+                                      yAxis: {
+                                         title: {
+                                            text: 'Personas'
+                                         },
+                                         plotLines: [{
+                                            value: 0,
+                                            width: 1,
+                                            color: '#808080'
+                                         }]
+                                      },
+                                      tooltip: {
+                                         formatter: function() {
+                                                   return '<b>'+ this.series.name +'</b><br/>'+
+                                               this.x +': '+ this.y +'';
+                                         }
+                                      },
+                                      legend: {
+                                         layout: 'vertical',
+                                         align: 'right',
+                                         verticalAlign: 'top',
+                                         x: -10,
+                                         y: 100,
+                                         borderWidth: 0
+                                      },
+                                      series: [                                        
+                                           {% if subUnidades is defined %} 
+                                            {% for unidad in  subUnidades  %}
+                                                 {% for pao in paosSeguimiento %}                                                                       
+                                                    {% if unidad.idUnidadOrg == pao.unidadOrganizativa.idUnidadOrg %}   
+                                                       {% set evalIndicadorResultado=pao.getEvaluacionResultado() %}
+                                                             {
+                                                                 name: '{{unidad.nombreUnidad}}',
+                                                                 data: [
+                                                                     {% for resulEvaIndicador in indi.getEvaluacionesIndicador %}
+                                                                          {% if evalIndicadorResultado.codEvaRes == resulEvaIndicador.evaResul.codEvaRes %}
+                                                                          {% if resulEvaIndicador.indSalud.codIndSalud == indi.codIndSalud %} 
+                                                                             {% if evalIndicadorResultado.codEvaRes == resulEvaIndicador.evaResul.codEvaRes %}
+                                                                                 {{ resulEvaIndicador.getResEvaInd }},
+                                                                             {% endif %}
+                                                                          {% endif %} 
+                                                                          {% endif %}
+                                                                     {% endfor%}
+                                                                 ]
+                                                              },  
+                                                    {% endif %}
+                                                {% endfor %}
+                                            {% endfor %}
+                                        {% endif %}                                    
+                                        ]
+                               });
+                             {% endfor %} 
+                          
+                        {% endfor %} 
+            {% endif %}  
             
-         
+      {% if boton is defined %} 
+        $('#regresar').button();
+    {% endif%}         
                         
             
-    });
-</script>  
+        });
+        </script>  
 
-    <form id = "formulario"  action="{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarEvaluaciondeResultadosUNISAL') }}" method="post">
-        <table align="center"  >
-            <tr><td colspan="2" align="center"><h1>Evaluaci&oacute;n de Resultados - Unidad de Salud</h1>                    
-                </td>
-            </tr>
-           
-            
+        <form id = "formulario"  action="{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarEvaluaciondeResultadosUNISAL') }}" method="post">
+            <table align="center"  >
+                <tr><td colspan="2" align="center"><h1>Evaluaci&oacute;n de Resultados - Unidad de Salud</h1>                    
+                    </td>
+                </tr>
+             {% if boton is defined %} 
+                <tr>
+                    <td align="center" colspan="2"  >
+                        <input type="button" id="regresar" onclick="window.location='{{ path('MinSalSidPlaPrograMonitoreoBundle_supervisaUnidades') }}'" value="REGRESAR" />
+                    </td>
+                </tr>
+  {% endif%} 
+
              {% if areasClasif is defined %} 
                 {% for area in areasClasif %}
-                        <tr>
-                            <td>
-                                <h3>Area:</h3>
-                            </td>
-                            <td>
-                                 <h3>&RightTriangle;<a  id="mostratArea{{ area.codArea }}" href="#">{{ area.getNombreArea }}</a></h3>                                
-                            </td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" align="center" size="100%" >
-                                <div align="center"  class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{  area.codArea }}AreaDiv">
-                                <table align="center"  >
+                <tr>
+                    <td>
+                        <h3>Area:</h3>
+                    </td>
+                    <td>
+                        <h3>&RightTriangle;<a  id="mostratArea{{ area.codArea }}" href="#">{{ area.getNombreArea }}</a></h3>                                
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center" size="100%" >
+                        <div align="center"  class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{  area.codArea }}AreaDiv">
+                            <table align="center"  >
                                     {% if objetivos is defined %}                                                                          
                                             {% for obj in objetivos %}
                                                     {% if obj.areaClaObj.codArea == area.codArea  %}
-                                                                <tr>
-                                                                    <td>
-                                                                        <h3>Objetivo Especifico:</h3>
-                                                                    </td>
-                                                                    <td>
-                                                                         <h3>&RightTriangle;<a  id="mostratObj{{ obj.codObjEspUni }}" href="#">{{ obj.descObjEspUni }}</a></h3>                                                                                                        
-                                                                    </td>
-                                                                </tr>                        
-                                                                <tr>
-                                                                        <td colspan="3" align="center" size="100%" >                            
-                                                                            <div   class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{ obj.codObjEspUni }}Div">
-                                                                                <table border="1" >
-                                                                                    <thead>
-                                                                                                           <tr>
-                                                                                                               <th align="center" colspan="9" ><h3>Indicadores</h3> </th>
-                                                                                                                 
-                                                                                                            </tr>
-                                                                                                            <tr>                                                                        
-                                                                                                                <th rowspan="3" >Indicador</th>
-                                                                                                                <th rowspan="2">Carácter del indicador</th>
-                                                                                                                <th rowspan="2">Formula 1</th>
-                                                                                                                <th rowspan="2">Formula 2</th>
-                                                                                                                <th rowspan="2">Comparativo</th>
-                                                                                                              
-                                                                                                                
-                                                                                                           </tr>
+                                    <tr>
+                                        <td>
+                                            <h3>Objetivo Especifico:</h3>
+                                        </td>
+                                        <td>
+                                            <h3>&RightTriangle;<a  id="mostratObj{{ obj.codObjEspUni }}" href="#">{{ obj.descObjEspUni }}</a></h3>                                                                                                        
+                                        </td>
+                                    </tr>                        
+                                    <tr>
+                                        <td colspan="3" align="center" size="100%" >                            
+                                            <div   class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{ obj.codObjEspUni }}Div">
+                                                <table border="1" >
+                                                    <thead>
+                                                        <tr>
+                                                            <th align="center" colspan="9" ><h3>Indicadores</h3> </th>
 
-                                                                                                        </thead> 
-                                                                                                       
-                                                                                                        
-                                                                                                        <tbody>
+                                                    </tr>
+                                                    <tr>                                                                        
+                                                        <th rowspan="3" >Indicador</th>
+                                                        <th rowspan="2">Carácter del indicador</th>
+                                                        <th rowspan="2">Formula 1</th>
+                                                        <th rowspan="2">Formula 2</th>
+                                                        <th rowspan="2">Comparativo</th>
+
+
+                                                    </tr>
+
+                                                    </thead> 
+
+
+                                                    <tbody>
                                                                                                  {% for indi in obj.getIndicadoresSalud %}     
 
-                                                                                                        <tr>                       
-                                                                                                            <td>
+                                                            <tr>                       
+                                                                <td>
                                                                                                                 {{ indi.nombreIndSalud}}
-                                                                                                            </td>
-                                                                                                            <td align="center">
+                                                                    </td>
+                                                                    <td align="center">
                                                                                                                 {{ indi.tipoIndicador.getNombreTipIndi }}
-                                                                                                            </td>
-                                                                                                            <td >
+                                                                        </td>
+                                                                        <td >
                                                                                                                 {{  indi.form1IndSalud }}
-                                                                                                            </td>
-                                                                                                            <td align="center">
+                                                                            </td>
+                                                                            <td align="center">
                                                                                                                 {{ indi.form2IndSalud}}
-                                                                                                            </td>
-                                                                                                             <td  align="center">                                                                                                      
-                                                                                                                    <input type="button" id="grafico{{ indi.codIndSalud }}"  value="..."/>
-                                                                                                                     <div class="jqmWindow" style="width: 1100px; height: 500px; " id="dialog{{ indi.codIndSalud }}">
-                                                                                                                        <a href="#" class="jqmClose">Cerrar</a>
-                                                                                                                        <hr>
-                                                                                                                        <p>Comparativos</p>
-                                                                                                                        <table>
-                                                                                                                            <tbody>
-                                                                                                                                <tr>
-                                                                                                                                    <td>
-                                                                                                                                        <div id="container{{ indi.codIndSalud }}" class="highcharts-container" style="height:1px; margin: 0 2em; clear:both; min-width: 1000px"></div>
-                                                                                                                                    </td> 
-                                                                                                                                </tr>
-                                                                                                                            </tbody>
-                                                                                                                        </table>
-                                                                                                                    </div>  
-                                                                                                               </td>   
+                                                                                </td>
+                                                                                <td  align="center">                                                                                                      
+                                                                                    <input type="button" id="grafico{{ indi.codIndSalud }}"  value="..."/>
+                                                                                    <div class="jqmWindow" style="width: 1100px; height: 500px; " id="dialog{{ indi.codIndSalud }}">
+                                                                                        <a href="#" class="jqmClose">Cerrar</a>
+                                                                                        <hr>
+                                                                                        <p>Comparativos</p>
+                                                                                        <table>
+                                                                                            <tbody>
+                                                                                                <tr>
+                                                                                                    <td>
+                                                                                                        <div id="container{{ indi.codIndSalud }}" class="highcharts-container" style="height:1px; margin: 0 2em; clear:both; min-width: 1000px"></div>
+                                                                                                    </td> 
+                                                                                                </tr>
+                                                                                            </tbody>
+                                                                                        </table>
+                                                                                    </div>  
+                                                                                </td>   
 
-                                                                                                        </tr>                                                                                        
+                                                                            </tr>                                                                                        
                                                                                                    {%endfor%}
-                                                                                        </tbody>
-                                                                                </table>                                        
-                                                                            </div>
-                                                                        </td>                            
-                                                                </tr>
+                                                                        </tbody>
+                                                                    </table>                                        
+                                                                </div>
+                                                            </td>                            
+                                                        </tr>
                                                     {%endif%}                                              
                                             {%endfor%}                                                                                           
                                     {%endif%}  
-                                    
-                                </table>
-                                </div>
-                            </td>                           
-                        </tr>
+
+                                                    </table>
+                                                </div>
+                                            </td>                           
+                                        </tr>
                 {%endfor%}
             {%endif%}
-            
-            
-            
-            <tr>           
-                <td colspan="2" align="center">
-                <br></br>                                    
-                </td>
-            </tr>        
-            <tr>
-                <td colspan="2" align="center">
-                    <input type="submit" value="Guardar" name= "agregar" id="agregar"</input>                    
-                </td>
-            </tr>        
-        </table>   
-    </form>
-    <br></br>
-    
+
+                                    </table>   
+                                </form>
+                                <br></br>
+
 {% endblock %}

@@ -13,7 +13,9 @@ $(document).ready(function(){
     });
     $('#tabs').tabs();
     $("#formulario").validate();
-  
+    $('#guardar').button();
+    $('#regresar').button();
+    $('#limpiar').button();
 });
       
 </script>
@@ -29,20 +31,16 @@ form.cmxform label.error, label.error {
 }
 input.error { border: 1px dotted red; }
 textarea.error { border: 1px dotted red; }
-      </style>   
-<h2 class="demoHeaders">Ingreso de Resultados Esperados Para SIBASI y Regiones de Salud</h2>
+      </style> 
+<h1 style=" text-align: center">Ingresar el Resultado Esperado para los SIBASI y Regiones de Salud</h1>
 <div id="tabs">
         <ul>
-                <li><a href="#tabs-1">Nuevo Resultado</a></li>
+                <li><a href="#tabs-1">Resultado Esperado</a></li>
                 
         </ul>
         <div id="tabs-1" >
             <form id="formulario" action="{{ path('MinSalSidPlaGesObjEspBundle_guardarResultadosEsperados')}}" method="post" >
                 <table colspan="4"  align="center" id="datos"  >
-                    <tr>
-                        <td colspan="2" align="center" >Datos de Resultado Esperado Para SIBASI y Regiones de Salud <br><br></td>
-                    </tr>
-                    
                     <tr>
                         <td align="left">Objetivo:</td>
                         <td align="left" ><textarea rows="4"  cols="80" name= 'objetivo'  size="60%" id='objetivo' readonly="readonly" >{{descripcion}}</textarea></td>
@@ -60,7 +58,7 @@ textarea.error { border: 1px dotted red; }
                            
                     <td colspan="3" align="center" >
                             <button type="submmit" id="guardar"  >Guardar</button>
-                            <button type="reset"  >Limpiar</button>
+                            <button type="reset" id="limpiar"  >Limpiar</button>
                             <button type="submmit" class="cancel"  id="regresar"  >Regresar</button>
                         </td>
                     </tr>                    

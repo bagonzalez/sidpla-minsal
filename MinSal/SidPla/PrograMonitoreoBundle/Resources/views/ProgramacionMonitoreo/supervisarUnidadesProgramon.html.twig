@@ -23,6 +23,7 @@
 </script>
 <script>
     $(document).ready(function(){
+
          {% if subUnidades is defined %} 
             {% for unidad in  subUnidades  %}
                  $("#{{  unidad.idUnidadOrg }}UnidadDiv").hide();
@@ -115,13 +116,21 @@
                     ]
            });
 
-
-      
+{% if boton is defined %} 
+    $('#regresar').button();
+{% endif%}     
             
    });
 </script>    
 
 <table>
+  {% if boton is defined %} 
+        <tr>
+            <td align="center" >
+                <input type="button" id="regresar" onclick="window.location='{{ path('MinSalSidPlaPrograMonitoreoBundle_supervisaUnidades') }}'" value="REGRESAR" />
+            </td>
+        </tr>
+  {% endif%} 
   {% if subUnidades is defined %} 
     {% for unidad in  subUnidades  %}
         {% for pao in paosSeguimiento %}

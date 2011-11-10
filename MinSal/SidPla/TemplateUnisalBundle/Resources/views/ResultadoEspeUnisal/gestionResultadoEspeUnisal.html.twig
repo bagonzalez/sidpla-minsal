@@ -15,7 +15,7 @@ $(document).ready(function(){
    });
     
   $("#forResEsp").validate();   
-    
+  $('#tabs').tabs();  
 });
 </script>
 <style type="text/css">
@@ -30,13 +30,11 @@ textarea.error { border: 1px dotted red; }
 
 <form id="forResEsp" name="forResEsp" method="post" >
 {% if idResEsp is defined %}
+        <h1 style=" text-align: center">Modifique el Resultado Esperado para Unidades de Salud</h1>
+        <div id="tabs">
+                <ul><li><a href="#tabs-1">Resultado Esperado para Unidades de Salud</a></li></ul>
+                <div id="tabs-1" >
            <table colspan="4"  align="center"><!-- id="datos"  -->
-         <tr>
-            <td colspan='2'>
-                <h1 style=" text-align: center">Modifique el Resultado Esperado para Unidades de Salud</h1>
-                <br></br>
-            </td>
-        </tr>
         <tr>
             <td style=" font-size: 12px" >Objetivo:</td>   
             <td align="center" style=" font-size: 12px">
@@ -59,14 +57,14 @@ textarea.error { border: 1px dotted red; }
 <input type='hidden' name='idObj' id="idObj" value='{{idObj}}' />  
 <input type='hidden' name='idResEsp' id="idResEsp" value='{{idResEsp}}' />  
 <input type='hidden' name='oper' id="oper" value='edit' /> 
+</div>
+                </div>
 {% else%}
+        <h1 style=" text-align: center">Ingrese el Resultado Esperado para Unidades de Salud</h1>
+        <div id="tabs">
+                <ul><li><a href="#tabs-1">Resultado Esperado para Unidades de Salud</a></li></ul>
+                <div id="tabs-1" >
     <table colspan="4"  align="center"><!-- id="datos"  -->
-        <tr>
-            <td colspan='2'>
-                <h1 style=" text-align: center">Ingrese el Resultado Esperado para Unidades de Salud</h1>
-                <br></br>
-            </td>
-        </tr>
         <tr>
             <td style=" font-size: 12px" >Objetivo:</td>   
             <td align="center" style=" font-size: 12px">
@@ -88,6 +86,8 @@ textarea.error { border: 1px dotted red; }
     </table>
 <input type='hidden' name='idObj' id="idObj" value='{{idObj}}' />  
 <input type='hidden' name='oper' id="oper" value='add' />
+</div>
+                </div>
 {% endif%}
 </form>
 {% endblock %}

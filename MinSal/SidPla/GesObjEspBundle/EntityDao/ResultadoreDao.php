@@ -55,7 +55,7 @@ class ResultadoreDao {
         $rsm->addScalarResult('resp', 'resp');
         $query = $this->em->createNativeQuery('SELECT count(*) resp
                                                 FROM sidpla_resultadore
-                                                WHERE resultadore_codigo = ?', $rsm);
+                                                WHERE resesp_codigo = ?', $rsm);
         $query->setParameter(1, $idResEsp);
 
         $x = $query->getSingleScalarResult();

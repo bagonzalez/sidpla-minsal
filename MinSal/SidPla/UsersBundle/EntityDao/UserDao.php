@@ -73,6 +73,19 @@ class UserDao {
 
         return $x[0]['resp'];
     }
+    
+     public function emailDisponible($email) {
+        $rsm = new ResultSetMapping;
+        $rsm->addScalarResult('resp', 'resp');
+        $query = $this->em->createNativeQuery("SELECT count (*) resp
+                                               FROM sidpla_usuario
+                                               WHERE sidpla_usuario.email = ?", $rsm);
+        $query->setParameter(1, $email);
+
+        $x = $query->getResult();
+
+        return $x[0]['resp'];
+    }
 
 }
 

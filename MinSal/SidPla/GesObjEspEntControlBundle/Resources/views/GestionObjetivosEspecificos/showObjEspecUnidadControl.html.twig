@@ -6,13 +6,13 @@
     <input type='hidden' name='idfila' id="idfila" value='' />
     <input type='hidden' name='objUniControl' id="objUniControl" value='true' />
 
-    <table border="1" WIDTH='85%'>
+    <table WIDTH='85%' class="tablaPlantilla">
         <thead>
-            <tr  style=" font-size: 14px;">
-                <th><strong>  Cod </strong></th>
-                <th><strong>  Objetivo </strong>
+            <tr>
+                <th class="thEncabezadoPlantilla" ><strong>  Cod </strong></th>
+                <th class="thEncabezadoPlantilla" ><strong>  Objetivo </strong>
                 </th>
-                <th colspan="2"><strong>  Acciones </strong>
+                <th class="thEncabezadoPlantilla" ><strong>  Acciones </strong>
                 </th>
             </tr>
         </thead>
@@ -20,8 +20,8 @@
         {% if objetivos is defined %}
             {%for obj in objetivos%}
                 <tr>
-                    <td style=" font-size: 12px;">{{ obj.getIdObjEspec.nomenclatura}}</td>    
-                    <td style=" font-size: 12px;">{{ obj.getIdObjEspec.getDescripcion}}</td>
+                    <td class="tdCuerpoPlantilla" >{%if obj.getIdObjEspec.nomenclatura is null%}<strong> En Asignación </strong>{%else%}{{ obj.getIdObjEspec.nomenclatura}}{%endif%}</td>    
+                    <td class="tdCuerpoPlantilla">{{ obj.getIdObjEspec.getDescripcion}}</td>
                     <td class="tdBotonesIconos" WIDTH='60' >
                         <input width="50" height="50" type="image" src="{{ asset('/images/iconos/gestion.png')}}"  id="resultadoEsperado" onclick="$('#idfila').attr('value', {{obj.getIdObjEspec.getIdObjEspec}}); this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_consultarResultadosEsperados')}}';" />
                         <br/>Resultados Esperados

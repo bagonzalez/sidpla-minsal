@@ -1,17 +1,17 @@
-<table border="1" WIDTH='85%'>
+<table WIDTH='85%' class="tablaPlantilla">
     <thead>
         <tr  style=" font-size: 14px;">
-            <th><strong>  Indicador de Salud </strong></th>
-            <th><strong>  Tipo Indicador </strong></th>
-            <th><strong>  Acciones </strong></th>
+            <th class="thEncabezadoPlantilla"><strong>  Indicador de Salud </strong></th>
+            <th class="thEncabezadoPlantilla"><strong>  Tipo Indicador </strong></th>
+            <th class="thEncabezadoPlantilla"><strong>  Acciones </strong></th>
         </tr>
     </thead>
     <tbody>
 {% if indSalud is defined %}   
     {% for  indicador in  indSalud%}
     <tr>
-        <td style=" font-size: 12px;">{{ indicador.getNombreIndSalud}} </td>
-        <td style=" font-size: 12px; text-align: center" >{{ indicador.getTipoIndicador.getNombreTipIndi}} </td>
+        <td class="tdCuerpoPlantilla">{{ indicador.getNombreIndSalud}} </td>
+        <td class="tdCuerpoPlantilla" align="center" >{{ indicador.getTipoIndicador.getNombreTipIndi}} </td>
          <td class="tdBotonesIconos" WIDTH='60' >
             <input width="50" height="50" type="image" src="{{ asset('/images/iconos/gestion.png')}}" id="editar" onclick="$('#idIndSal').attr('value',{{indicador.getCodIndSalud}});this.form.action='{{path('MinSalSidPlaIndicadoresTemplateBundle_editarIndicadorSalud')}}';" />
             <br/>Editar

@@ -33,7 +33,8 @@ $(document).ready(function(){
    $("#categoriaCenso").combobox();
    $('#categoriaCenso').css("width", '150px');
     
-    $("#forResEsp").validate();   
+    $("#forResEsp").validate();
+    $('#tabs').tabs();
     
 });
     </script>
@@ -49,14 +50,12 @@ $(document).ready(function(){
 
         <form id="forResEsp" name="forResEsp" method="post" >
 {% if idAct is defined %}
+                 <h1 style=" text-align: center">Modifique la Actividad para Unidades de Salud</h1>
+        <div id="tabs">
+                <ul><li><a href="#tabs-1">Actividad para Unidades de Salud</a></li></ul>
+                <div id="tabs-1" >
              <table colspan="4"  align="center">
-                    <tr>
-                        <td colspan='2'>
-                            <h1 style=" text-align: center">Ingrese la Actividad para Unidades de Salud</h1>
-                          
-                        </td>
-                    </tr>
-                    <tr>
+                     <tr>
                         <td style=" font-size: 12px" >Objetivo:</td>   
                         <td align="center" style=" font-size: 12px">
                             <textarea readonly="readonly"  rows="4" cols="83" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{descObj}}</textarea>
@@ -133,14 +132,14 @@ $(document).ready(function(){
                 <input type='hidden' name='idResEsp' id="idResEsp" value='{{idResEsp}}' />  
                 <input type='hidden' name='idAct' id="idAct" value='{{idAct}}' />  
                 <input type='hidden' name='oper' id="oper" value='edit' /> 
+                  </div>
+                </div>
 {% else%}
+                  <h1 style=" text-align: center">Ingrese la Actividad para Unidades de Salud</h1>
+        <div id="tabs">
+                <ul><li><a href="#tabs-1">Actividad para Unidades de Salud</a></li></ul>
+                <div id="tabs-1" >
                 <table colspan="4"  align="center"><!-- id="datos"  -->
-                    <tr>
-                        <td colspan='2'>
-                            <h1 style=" text-align: center">Ingrese la Actividad para Unidades de Salud</h1>
-                          
-                        </td>
-                    </tr>
                     <tr>
                         <td style=" font-size: 12px" >Objetivo:</td>   
                         <td align="center" style=" font-size: 12px">
@@ -214,6 +213,8 @@ $(document).ready(function(){
                 <input type='hidden' name='idObj' id="idObj" value='{{idObj}}' />
                 <input type='hidden' name='idResEsp' id="idResEsp" value='{{idResEsp}}' />  
                 <input type='hidden' name='oper' id="oper" value='add' />
+                  </div>
+                </div>
 {% endif%}
             </form>
 {% endblock %}

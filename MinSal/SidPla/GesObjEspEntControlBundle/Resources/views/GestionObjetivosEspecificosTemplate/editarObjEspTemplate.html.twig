@@ -5,9 +5,14 @@ $(document).ready(function(){
     $("#forObjTmp").validate();
     $('#guardarObj').button();
     $('#limpiarObj').button();
+    $('#regresarObj').button();
     $('#guardarObj').click(function(evento) {
          this.form.action='{{ path('MinSalSidPlaGesObjEspEntControlBundle_manttObjEspTemplate') }}';
     });
+     $("#regresarObj").click(function(){
+       window.location='consultarObjetivosEspecificosTemplate';
+    });
+    $('#tabs').tabs();
    
 });
 </script>
@@ -22,13 +27,11 @@ textarea.error { border: 1px dotted red; }
  </style>  
 
 <form id="forObjTmp" method="post" >
-    <table colspan="4"  align="center"><!-- id="datos"  -->
-        <tr>
-            <td colspan='2'>
-                <h1>Edite el Objetivo Especifico para los SIBASI y Regiones de Salud</h1>
-                <br></br>
-            </td>
-        </tr>
+     <h1 style=" text-align: center">Edite el Objetivo Especifico para los SIBASI y Regiones de Salud</h1>
+            <div id="tabs">
+                <ul><li><a href="#tabs-1">Objetivo Especifico SIBASI y Region de Salud</a></li></ul>
+                <div id="tabs-1" >
+    <table colspan="4"  align="center">
         <tr>
             <td style=" font-size: 12px" >Objetivo Especifico(*):</td>
             <td  ><textarea class="required" rows="4" cols="83" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{objEsp}}</textarea></td>
@@ -37,6 +40,7 @@ textarea.error { border: 1px dotted red; }
             <td colspan="2" align="center">
                 <button type="submmit" id="guardarObj"  >Guardar</button>
                 <button type="reset" id="limpiarObj"  >Limpiar</button>
+                <button type="button" id="regresarObj"  >Regresar</button>
             </td>
         </tr>
 
@@ -44,7 +48,8 @@ textarea.error { border: 1px dotted red; }
 <input type='hidden' name='idfilaobj' id="idfila" value='{{id}}' />
 <input type='hidden' name='anio' id="anio" value='{{anio}}' />
 <input type='hidden' name='oper' id="oper" value='edit' />
-
+ </div>
+</div>
 </form>
 
 {% endblock %}
