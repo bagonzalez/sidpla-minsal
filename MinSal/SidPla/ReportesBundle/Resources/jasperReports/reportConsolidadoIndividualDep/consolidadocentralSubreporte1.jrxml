@@ -5,7 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="promonID" class="java.lang.Integer"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/home/edwin/Escritorio/reportes/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/jasperReports/reportConsolidadoIndividualDep/"]]></defaultValueExpression>
 	</parameter>
 	<queryString>
 		<![CDATA[SELECT
@@ -58,7 +58,7 @@ FROM
 					<subreportParameterExpression><![CDATA[$F{sidpla_objetivoespecifico_objesp_codigo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA["consolidadocentralSubreporte1SubR1.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"consolidadocentralSubreporte1SubR1.jasper"]]></subreportExpression>
 			</subreport>
 		</band>
 	</detail>

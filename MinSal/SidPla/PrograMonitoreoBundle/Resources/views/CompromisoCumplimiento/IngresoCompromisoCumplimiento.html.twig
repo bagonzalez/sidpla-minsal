@@ -2,6 +2,9 @@
 {% block body %}
 <script type="text/javascript">
 $(document).ready(function(){
+    $('#nprogra2').keyfilter(/[\d\.]/); 
+    $('#nprogra3').keyfilter(/[\d\.]/);
+    $('#nprogra4').keyfilter(/[\d\.]/);
     $('#guardar').button();
     $('#limpiar').button();
     $('#regresar').button();
