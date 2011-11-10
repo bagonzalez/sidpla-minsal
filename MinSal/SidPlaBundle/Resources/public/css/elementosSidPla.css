@@ -7,6 +7,40 @@
   text-align: center; 
   font-weight: bolder; 
   font-family: Verdana, Geneva, sans-serif;
+  border-style:  solid;
+  border-color: #00BFFF; 
+  border-width: thin;
   border-left:0;
   border-right:0;
+}
+
+.tdBotonIconoAgregar{
+  text-align: center; 
+  font-weight: bolder; 
+  font-family: Verdana, Geneva, sans-serif;
+
+}
+
+.thEncabezadoPlantilla{
+ font-size: 14px; 
+ background-color: #A9D0F5;
+ border-style:  solid; 
+ /*color: #013ADF;*/
+ border-color: #00BFFF; 
+ border-width: thin
+}
+
+.tdCuerpoPlantilla{
+  font-size: 12px;
+  border-style:  solid;
+  border-color:#00BFFF; 
+  border-width: thin;
+  font-size: 12px
+}
+
+.tablaPlantilla{
+  border-style:  solid; 
+  border-color: #00BFFF; 
+  border-width: thin;
+  border-collapse: collapse
 }

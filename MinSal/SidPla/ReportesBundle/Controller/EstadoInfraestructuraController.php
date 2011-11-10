@@ -2,6 +2,11 @@
 namespace MinSal\SidPla\ReportesBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use MinSal\SidPla\PaoBundle\Entity\Pao;
 use \Java;
 use \JavaClass;
 
@@ -23,10 +28,11 @@ class EstadoInfraestructuraController extends Controller {
         return $Conn;
     }
     
-     //Reporte Elementos Infraestructura Evaluada
+    //Reporte Elementos Infraestructura Evaluada
     public function reporteInfraEvaluadaAction() {
         $request = $this->getRequest();
         $id = $request->get('idInfra');
+        $idUniSal=$request->get('idUniSal');
 
         try {
 
@@ -35,6 +41,14 @@ class EstadoInfraestructuraController extends Controller {
             $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
 
             $params = new Java("java.util.HashMap");
+            if(isset($idUniSal)){
+                $unidaDao = new UnidadOrganizativaDao($this->getDoctrine());
+                $paoSegumiento = new Pao();
+                $paoSegumiento = $unidaDao->getPaoSeguimiento($idUniSal);
+                $id=$paoSegumiento->getInfraEvaluadaPao()->getIdInfraEva();
+                
+            }
+            
             $params->put("infraEvaluada", new java("java.lang.Integer", $id));
 
             $Conn = $this->crearConexion();

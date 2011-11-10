@@ -262,7 +262,13 @@ class UnidadOrganizativaDao {
         return $obtenerUnidad->getResult();
     }
     
-
+     public function obtenerUniSal() {
+        $obtenerUnidad = $this->em->createQuery("SELECT UO
+                                                FROM MinSalSidPlaAdminBundle:UnidadOrganizativa UO
+                                                WHERE UO.tipoUnidad IN ('2')
+                                                ORDER BY UO.nombreUnidad ASC");
+        return $obtenerUnidad->getResult();
+    }
 
 }
 

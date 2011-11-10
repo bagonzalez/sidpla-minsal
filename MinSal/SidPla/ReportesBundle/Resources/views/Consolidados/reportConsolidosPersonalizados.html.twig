@@ -4,6 +4,8 @@
 {% block body %}
 <script type="text/javascript">
 $(document).ready(function(){
+    $('#reporteMatrix').button();
+    $('#reporteConsolidado').button();
     $('#reporteConsolidado').click(function() {
             this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteConsolidadoNivelCentral')}}';
     });

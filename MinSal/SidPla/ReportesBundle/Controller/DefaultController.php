@@ -48,7 +48,7 @@ class DefaultController extends Controller {
     public function indexAction() {
         return $this->render('MinSalSidPlaReportesBundle:Default:index.html.twig');
     }
-
+    
     public function reporteActividadesAtrasadasAction() {
         $request = $this->getRequest();
         //  $JustiPao=$request->get('justificacion');            

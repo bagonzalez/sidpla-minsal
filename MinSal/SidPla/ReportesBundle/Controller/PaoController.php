@@ -3,6 +3,11 @@
 namespace MinSal\SidPla\ReportesBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use MinSal\SidPla\PaoBundle\Entity\Pao;
 use \Java;
 use \JavaClass;
 
@@ -26,7 +31,7 @@ class PaoController extends Controller {
         $request = $this->getRequest();
         $JustiPao = $request->get('justificacion');
         $id = $request->get('id');
-
+        $idUniSal=$request->get('idUniSal');
         try {
 
             $compileManager = new JavaClass("net.sf.jasperreports.engine.JasperCompileManager");
@@ -34,6 +39,13 @@ class PaoController extends Controller {
             $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
 
             $params = new Java("java.util.HashMap");
+            if(isset($idUniSal)){
+                $unidaDao = new UnidadOrganizativaDao($this->getDoctrine());
+                $paoSegumiento = new Pao();
+                $paoSegumiento = $unidaDao->getPaoSeguimiento($idUniSal);
+                $id=$paoSegumiento->getJustificacion()->getIdJustificacion();
+                
+            }
             $params->put("idJustificacion", new java("java.lang.Integer", $id));
 
             $Conn = $this->crearConexion();
