@@ -104,6 +104,15 @@
             
     });
 </script>
+<style type="text/css">
+form.cmxform label.error, label.error {
+	/* remove the next line when you have trouble in IE6 with labels in list */
+	color: red;
+	font-style: italic
+}
+input.error { border: 1px dotted red; }
+textarea.error { border: 1px dotted red; }
+ </style> 
 
     <br></br>    
     <br></br>  
@@ -263,9 +272,9 @@
                                                                                             </td>
                                                                                             <td align="center">
                                                                                                 {% if resultadoAct.resulActTrimestre == trimestre   %}
-                                                                                                    <input name="resultadoRealizado_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}"  ></input>
+                                                                                                    <input name="resultadoRealizado_{{ resultadoAct.idResulAct }}" id="resultadoRealizado_{{ resultadoAct.idResulAct }}"  size="2" value="{{ resultadoAct.getResulActRealizado }}"  ></input>
                                                                                                 {% else %}
-                                                                                                    <input name="resultadoRealizado_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}" readonly="readonly"  ></input>
+                                                                                                    <input name="resultadoRealizado_{{ resultadoAct.idResulAct }}" id="resultadoRealizado_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}" readonly="readonly"  ></input>
                                                                                                 {% endif %}  
                                                                                                 
                                                                                             </td> 
@@ -275,9 +284,9 @@
                                                                                             <td align="center">
                                                                                                 {% if trimestre == resultadoAct.resulActTrimestre  %}
                                                                                                     <input name="costoReal_{{ resultadoAct.idResulAct }}" id="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}"  ></input>
-                                                                                                <script type="text/javascript"> $(document).ready(function(){ $('#costoReal_{{ resultadoAct.idResulAct }}').keyfilter(/[\d\.]/);  }); </script>
+                                                                                                <script type="text/javascript"> $(document).ready(function(){ $('#costoReal_{{ resultadoAct.idResulAct }}').keyfilter(/[\d\.]/);   $('#resultadoRealizado_{{ resultadoAct.idResulAct }}').keyfilter(/[\d\.]/);  }); </script>
                                                                                                      {% else %}
-                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}" readonly="readonly"  ></input>
+                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" id="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}" readonly="readonly"  ></input>
                                                                                                 {% endif %}
                                                                                             </td>
                                                                                             <td align="center">
@@ -319,4 +328,52 @@
     <br></br>
     <br></br>
 
+    <script type="text/javascript">
+$(document).ready(function(){
+ $("#formulario").validate({
+    rules: {
+ {% if objetivos is defined %}                                                                          
+                    {% for obj in objetivos %}
+                           {% for res in obj.getResultadoEsperado %}                                               
+                           {% if( (res.unidadOrganizativa.getIdUnidadOrg == idUnidad) or (res.unidadOrganizativa is null ) ) %}                                                 				{% for actividadAux in res.actividades %}                                                                       
+                                       {% for actividad in actividades %}                                                                     
+                                                 {% if actividadAux.idAct == actividad.idAct %}                                                                            
+                                                                               
+                                                                                    {% for resultadoAct in actividad.getResulAct %}
+                                                                                        {% if trimestre >= resultadoAct.resulActTrimestre  %}
+                                                                                             {% if resultadoAct.resulActTrimestre == trimestre   %}
+                                                                                                 resultadoRealizado_{{ resultadoAct.idResulAct }}: {
+                                                                                                 required: false,
+                                                                                                 number: true
+                                                                                                 },
+                                                                                                
+											      {% else %}
+
+                                                                                                
+												{% endif %}  
+                                                                                                
+                                                                                            
+                                                                                                {% if trimestre == resultadoAct.resulActTrimestre  %}
+                                                                                                costoReal_{{ resultadoAct.idResulAct }}: {
+                                                                                                required: false,
+                                                                                                number: true
+                                                                                                }, 
+                                                                                                     {% else %}
+                                                                                                   
+                                                                                                {% endif %}
+                                                                                            
+                                                                                 {%endif%}                                                                                    
+                                                                                    {% endfor %}
+                                                                                                                                                        
+                                                                       {% endif %}
+                                                                    {% endfor %}
+                                                                {% endfor %}                                                                                
+                                                                                                             
+                                                {% endif %}
+                                            {% endfor %}
+                                       
+                    {% endfor %}                                                                                           
+            {% endif %}  
+}});});</script>  
+            
 {% endblock %}
