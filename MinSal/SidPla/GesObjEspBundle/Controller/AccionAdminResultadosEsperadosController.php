@@ -62,6 +62,7 @@ class AccionAdminResultadosEsperadosController extends Controller {
         $objetivoDao = new ObjetivoEspecificoDao($this->getDoctrine());
         $objetivoAux = $objetivoDao->getObjetEspecif($idfila);
         $objetivosEspec = $objetivoAux->getDescripcion();
+        $resultadoReDao = new ResultadoreDao($this->getDoctrine());
         if (isset($objUniControl)) {
             if ($objUniControl == 'true') {
                 $uniOrg = $this->obtenerUnidadOrg();
@@ -77,7 +78,9 @@ class AccionAdminResultadosEsperadosController extends Controller {
         if ($x == 0) {
             if (isset($objUniControl)) {
                 if ($objUniControl == 'true')
-                    return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec, 'objUniControl' => $objUniControl));
+                    return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
+                            array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec,
+                                'objUniControl' => $objUniControl,'resultadoDao'=>$resultadoReDao));
                 else
                     return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec));
             }
@@ -88,7 +91,7 @@ class AccionAdminResultadosEsperadosController extends Controller {
             if (isset($objUniControl)) {
                 if ($objUniControl == 'true')
                     return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec, 'resultadosEsperado' => $resultadosEsperados,
-                                'objUniControl' => $objUniControl));
+                                'objUniControl' => $objUniControl,'resultadoDao'=>$resultadoReDao));
                 else
                     return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec, 'resultadosEsperado' => $resultadosEsperados));
             }

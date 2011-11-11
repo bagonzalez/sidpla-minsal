@@ -15,6 +15,7 @@ $(document).ready(function(){
    });
     
    $("#forIndSal").validate();   
+   $('#tabs').tabs();
     
 });
     </script>
@@ -30,13 +31,10 @@ $(document).ready(function(){
 
         <form id="forIndSal" name="forIndSal" method="post" >
 {% if idIndSal is defined %}
-                <table colspan="4"  align="center"><!-- id="datos"  -->
-                                      <tr>
-                        <td colspan='2'>
-                            <h1 style=" text-align: center">Modificar el Indicador de Salud para Unidades de Salud</h1>
-                            <br></br>
-                        </td>
-                    </tr>
+                 <h1 style=" text-align: center">Modificar el Indicador de Salud para Unidades de Salud</h1>
+        <div id="tabs">
+                <ul><li><a href="#tabs-1">Indicador de Salud</a></li></ul>
+                <table colspan="4"  align="center">
                     <tr>
                         <td style=" font-size: 12px" >Objetivo:</td>   
                         <td align="center" style=" font-size: 12px">
@@ -84,16 +82,16 @@ $(document).ready(function(){
                 </table>
                 <input type='hidden' name='idObj' id="idObj" value='{{idObj}}' />  
                 <input type='hidden' name='idIndSal' id="idIndSal" value='{{idIndSal}}' />  
-                <input type='hidden' name='oper' id="oper" value='edit' /> 
+                <input type='hidden' name='oper' id="oper" value='edit' />
+            </div>
+                </div>
 {% else%}
+                 <h1 style=" text-align: center">Ingrese el Indicador de Salud para Unidades de Salud</h1>
+        <div id="tabs">
+                <ul><li><a href="#tabs-1">Indicador de Salud</a></li></ul>
+                <div id="tabs-1" >
                 <table colspan="4"  align="center">
-                    <tr>
-                        <td colspan='2'>
-                            <h1 style=" text-align: center">Ingrese el Indicador de Salud para Unidades de Salud</h1>
-                            <br></br>
-                        </td>
-                    </tr>
-                    <tr>
+                   <tr>
                         <td style=" font-size: 12px" >Objetivo:</td>   
                         <td align="center" style=" font-size: 12px">
                             <textarea readonly="readonly"  rows="4" cols="100" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{descObj}}</textarea>
@@ -139,6 +137,8 @@ $(document).ready(function(){
                 </table>
                 <input type='hidden' name='idObj' id="idObj" value='{{idObj}}' />  
                 <input type='hidden' name='oper' id="oper" value='add' />
+                  </div>
+                </div>
 {% endif%}
             </form>
 {% endblock %}

@@ -1,6 +1,15 @@
 MinSalSidPlaPrograMonitoreoBundle_homepage:
     pattern:  /
     defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:Default:index }
+    
+MinSalSidPlaPrograMonitoreoBundle_supervisaUnidades:
+    pattern:  /supervisaUnidades
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:Default:supervisaUnidades }
+
+MinSalSidPlaPrograMonitoreoBundle_supervisaUnidadesJSON:
+    pattern:  /supervisaUnidadesJSON
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:Default:supervisaUnidadesJSON }
+
 
 MinSalSidPlaPrograMonitoreoBundle_generarProgramacionJSON:
     pattern:  /generarProgramacionJSON
@@ -70,5 +79,14 @@ MinSalSidPlaPrograMonitoreoBundle_guardarEvaluaciondeResultadosUNISAL:
 
 MinSalSidPlaPrograMonitoreoBundle_supervisarResultadosEspec:
     pattern:  /supervisarResultadosEspec
-    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionUnidadesSupervisadas:supervisarResultadosEspec }   
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionUnidadesSupervisadas:supervisarResultadosEspec }
+
+#SUPERVISADAS POR DIRECCION DE PLANIFICACION
+MinSalSidPlaPrograMonitoreoBundle_supervisarProgramonUnidadesXDirPla:
+    pattern:  /supervisarProgramonUnidadesXDirPla
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionUnidadesSupervisadas:supervisarProgramonUnidadesXDirPla}
+    
+MinSalSidPlaPrograMonitoreoBundle_supervisarResultadosEspecXDirPla:
+    pattern:  /supervisarResultadosEspecXDirPla
+    defaults: { _controller: MinSalSidPlaPrograMonitoreoBundle:AccionUnidadesSupervisadas:supervisarResultadosEspecXDirPla }
 

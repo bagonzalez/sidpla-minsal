@@ -5,6 +5,12 @@ $(document).ready(function(){
     $('#agregar').click(function() {
         this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_ingresoResultadosEsperados') }}';
      });
+    $('#editarResultado').click(function(evento) {
+       alert("Debe editar el Resultado Esperado con su Informacion antes de agregar Actividades\nPor favor seleccione EDITAR y luego podra agregar Actividades");
+       evento.preventDefault();
+         
+         
+    });
 });
  </script>
    <form action= "" method="post">
@@ -32,7 +38,7 @@ $(document).ready(function(){
                 </td>
             </tr>
             <tr colspan="2">
-                <td align="center" class="tdBotonesIconos" >
+                <td align="center" class="tdBotonIconoAgregar">
                    <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}" name="agregar" id="agregar"/>
                    <br/>Agregar Resultado Esperado
                 </td>

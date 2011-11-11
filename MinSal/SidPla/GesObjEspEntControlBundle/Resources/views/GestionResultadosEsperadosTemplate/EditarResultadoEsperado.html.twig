@@ -12,6 +12,8 @@
        });
        $('#tabs').tabs();
        $("#formulario").validate();
+       $('#agregar').button();
+       $('#regresar').button();
     
         
 });
@@ -29,20 +31,15 @@
             input.error { border: 1px dotted red; }
             textarea.error { border: 1px dotted red; }
         </style>
-
-        <h2 class="demoHeaders">Edicion del Resultado Esperado</h2>
+        <h1 style=" text-align: center">Edite el Resultado Esperado para los SIBASI y Regiones de Salud</h1>
         <div id="tabs">
             <ul>
-                <li><a href="#tabs-1">Editar Resultado</a></li>
+                <li><a href="#tabs-1">Resultado Esperado</a></li>
 
             </ul>
             <div id="tabs-1" >
                 <form id="formulario" action="{{ path('MinSalSidPlaGesObjEspEntControlBundle_editandoResultadosEsperadosTemplate')}}" method="post" >
                     <table align="center" id="datos"  >
-                        <tr>
-                            <td colspan="4" align="center" >Datos de Resultado Esperado <br><br></td>
-                        </tr>
-
                         <tr>
                             <td >Objetivo:</td>
                             <td colspan="3" ><textarea rows="4" cols="100" name= 'objetivo'  size="60%" id='objetivo' >{{descripcion}}</textarea></td>

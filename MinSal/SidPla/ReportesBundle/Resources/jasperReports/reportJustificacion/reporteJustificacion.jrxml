@@ -20,66 +20,86 @@ AND just.justificacion_codigo= $P{idJustificacion}]]>
 		<band splitType="Stretch"/>
 	</background>
 	<pageHeader>
-		<band height="113" splitType="Stretch">
+		<band height="189" splitType="Stretch">
 			<staticText>
-				<reportElement x="139" y="50" width="259" height="20"/>
+				<reportElement x="55" y="81" width="396" height="20"/>
 				<textElement textAlignment="Center">
-					<font size="12" isBold="true"/>
+					<font size="11" isBold="true"/>
 				</textElement>
-				<text><![CDATA[Justificacion]]></text>
-			</staticText>
-			<textField pattern="dd/MM/yyyy">
-				<reportElement x="472" y="0" width="100" height="20"/>
-				<textElement/>
-				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
-			</textField>
-			<staticText>
-				<reportElement x="184" y="10" width="171" height="20"/>
-				<textElement textAlignment="Center">
-					<font size="14"/>
-				</textElement>
-				<text><![CDATA[MINISTERIO DE SALUD]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="171" y="30" width="214" height="20"/>
-				<textElement textAlignment="Center">
-					<font size="12"/>
-				</textElement>
-				<text><![CDATA[PLANIFICACION ANUAL OPERATIVA]]></text>
+				<text><![CDATA[Formulario 3: Justificación del Plan Operativo ]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="122" y="70" width="100" height="20"/>
-				<textElement/>
+				<reportElement x="252" y="58" width="100" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{pao_anio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement mode="Transparent" x="122" y="90" width="438" height="20" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="122" y="112" width="438" height="20" backcolor="#FFFFFF"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{uniorg_nombre}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement mode="Transparent" x="3" y="90" width="119" height="20" backcolor="#FFFFFF"/>
+				<reportElement mode="Transparent" x="3" y="112" width="119" height="20" backcolor="#FFFFFF"/>
 				<textElement>
 					<font isBold="true"/>
 				</textElement>
 				<text><![CDATA[Unidad Organizativa:]]></text>
 			</staticText>
+			<image>
+				<reportElement x="453" y="10" width="79" height="47"/>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/minsalud.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="23" y="10" width="80" height="45"/>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/escudo.gif"]]></imageExpression>
+			</image>
 			<staticText>
-				<reportElement x="3" y="70" width="102" height="20"/>
-				<textElement>
-					<font isBold="true"/>
+				<reportElement x="105" y="57" width="233" height="24"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
 				</textElement>
-				<text><![CDATA[PAO:]]></text>
+				<text><![CDATA[AÑO]]></text>
 			</staticText>
+			<staticText>
+				<reportElement x="105" y="10" width="346" height="24"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MINISTERIO DE SALUD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="105" y="34" width="346" height="24"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PLANIFICACIÓN ANUAL OPERATIVA]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="399" y="81" width="100" height="20"/>
+				<textElement>
+					<font size="11" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{pao_anio}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement mode="Opaque" x="11" y="140" width="547" height="47" forecolor="#000000" backcolor="#FFFFFF"/>
+				<textElement textAlignment="Justified"/>
+				<text><![CDATA[JUSTIFICACIÓN (Incluya un resumen del diagnóstico situacional actual del establecimiento de salud y su área geo-poblacional en término de indicadores de salud, etc. Debe incluir información relevante del entorno externo y del entorno interno.)]]></text>
+			</staticText>
+			<rectangle>
+				<reportElement mode="Transparent" x="3" y="140" width="569" height="46"/>
+			</rectangle>
 		</band>
 	</pageHeader>
 	<columnHeader>
-		<band height="11" splitType="Stretch"/>
+		<band height="3" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
 		<band height="47" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
-				<reportElement x="0" y="14" width="572" height="26"/>
+				<reportElement x="0" y="4" width="572" height="26"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[$F{justificacion_descripcion}]]></textFieldExpression>
 			</textField>
@@ -89,7 +109,18 @@ AND just.justificacion_codigo= $P{idJustificacion}]]>
 		<band height="45" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="28" splitType="Stretch">
+			<textField>
+				<reportElement x="452" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="532" y="0" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>

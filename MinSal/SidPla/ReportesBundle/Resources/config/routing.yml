@@ -19,7 +19,7 @@ MinSalSidPlaReportesBundle_reporteElementoInfra:
 #DEFAULTCONTROLLER
 MinSalSidPlaReportesBundle_reporteActividadesAtrasadas:
     pattern:  /reporteActividadesAtrasadas
-    defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteActividadesAtrasadas }    
+    defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteActividadesAtrasadas }  
 #INFORMACION GERNERAL UNIDAD ORGA    
 MinSalSidPlaReportesBundle_reporteInfoGeneral:
     pattern:  /reporteInfoGeneral
@@ -38,6 +38,18 @@ MinSalSidPlaReportesBundle_reporteMatrizdeObjetivosyResultados:
 MinSalSidPlaReportesBundle_showConsolidadosNivelCentral:
     pattern:  /showConsolidadosNivelCentral
     defaults: { _controller: MinSalSidPlaReportesBundle:AccionConsolidadosNivelCentral:showConsolidadosNivelCentral } 
+    
+MinSalSidPlaReportesBundle_reportesUniSal:
+    pattern:  /reportesUniSal
+    defaults: { _controller: MinSalSidPlaReportesBundle:AccionConsolidadosNivelCentral:reportesUniSal }
+
+MinSalSidPlaReportesBundle_reportesUniSalJSON:
+    pattern:  /reportesUniSalJSON
+    defaults: { _controller: MinSalSidPlaReportesBundle:AccionConsolidadosNivelCentral:reportesUniSalJSON}
+    
+MinSalSidPlaReportesBundle_reporteSeleccionadoJSON:
+    pattern:  /reporteSeleccionadoJSON
+    defaults: { _controller: MinSalSidPlaReportesBundle:AccionConsolidadosNivelCentral:reporteSeleccionadoJSON} 
     
 #REPORTE EMPLEADOS DE UNIDADES ORG  
 MinSalSidPlaReportesBundle_reporteEmpleadosOrg:

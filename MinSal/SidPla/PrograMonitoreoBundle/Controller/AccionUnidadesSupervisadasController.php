@@ -143,6 +143,63 @@ class AccionUnidadesSupervisadasController extends Controller {
         
     }
     
+    public function supervisarProgramonUnidadesXDirPlaAction(){
+        
+        $opciones=$this->getRequest()->getSession()->get('opciones');
+        $request = $this->getRequest();
+        $idPadre = $request->get('idPadre');
+        
+       // $subUnidad=new UnidadOrganizativa();
+        $unidadDao=new UnidadOrganizativaDao($this->getDoctrine());
+        $unidadPadre=$unidadDao->getUnidadOrg($idPadre);
+        $subunidades=$unidadPadre->getSubUnidades();
+        
+        $paosSeguimiento= array();
+        $pao;
+        $prograMacionesMonitoreo=array();        
+        $objetivos=$this->obtenerObjEspec();
+        
+        foreach ($subunidades as $subUnidad){             
+            $pao=$this->obtenerPaoSeguimiento($subUnidad->getIdUnidadOrg());
+            $paosSeguimiento[]=$pao;   
+        }
+        
+       return $this->render('MinSalSidPlaPrograMonitoreoBundle:ProgramacionMonitoreo:supervisarUnidadesProgramon.html.twig', 
+                array( 'opciones' => $opciones, 'subUnidades' => $subunidades ,
+                       'paosSeguimiento' => $paosSeguimiento, 'objetivos' => $objetivos,'boton'=>true  ));
+        
+    }
+    
+    public function supervisarResultadosEspecXDirPlaAction(){
+        
+        $opciones=$this->getRequest()->getSession()->get('opciones');        
+        $request = $this->getRequest();
+        $idPadre = $request->get('idPadre2');
+        
+        $unidadDao=new UnidadOrganizativaDao($this->getDoctrine());
+        $unidadPadre=$unidadDao->getUnidadOrg($idPadre);
+        $subunidades=$unidadPadre->getSubUnidades();
+        $objetivos=$this->obtenerObjEspec();
+        $paosSeguimiento= array();
+        $pao;
+        $prograMacionesMonitoreo=array();    
+        
+         $areaClasificacionDao=new AreaClasificacionDao($this->getDoctrine());
+         $areasClasif=$areaClasificacionDao->getAreaClasificacions();
+        
+        
+        foreach ($subunidades as $subUnidad){             
+            $pao=$this->obtenerPaoSeguimiento($subUnidad->getIdUnidadOrg());
+            $paosSeguimiento[]=$pao;   
+        }
+        
+       return $this->render('MinSalSidPlaPrograMonitoreoBundle:EvaluaciondeResultadosUnisal:supervisarResultEsperadosUNISAL.html.twig', 
+                array( 'opciones' => $opciones, 'subUnidades' => $subunidades ,
+                       'paosSeguimiento' => $paosSeguimiento, 'objetivos' => $objetivos
+                    ,'areasClasif' => $areasClasif ,'boton'=>true ));
+        
+    }
+    
 }
 
 ?>

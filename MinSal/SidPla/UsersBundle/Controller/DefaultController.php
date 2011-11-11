@@ -91,6 +91,7 @@ class DefaultController extends Controller {
         $request = $this->getRequest();
         $idEmpleado = $request->get('idEmpleado');
         $username = $request->get('username');
+        $email = $request->get('email');
 
         $empleadoDao = new EmpleadoDao($this->getDoctrine());
         $be = $empleadoDao->existeEmpleado($idEmpleado);
@@ -98,6 +99,7 @@ class DefaultController extends Controller {
         $userDao = new UserDao($this->getDoctrine());
         $bu = $userDao->tieneOtroUsuario($idEmpleado);
         $bud = $userDao->usernameDisponible($username);
+        $bemail = $userDao->emailDisponible($email);
 
         if ($be == 0) {
             $msj[0][0] = 'NO EXISTE EL EMPLEADO';
@@ -111,8 +113,13 @@ class DefaultController extends Controller {
                     $msj[0][0] = 'ESTE USUARIO YA ESTA EN USO, ESCRIBA UNO NUEVA EN NOMBRE DE USUARIO';
                     $msj[0][1] = FALSE;
                 } else {
-                    $msj[0][0] = 'SE CREADO EXITOSAMENTE';
-                    $msj[0][1] = TRUE;
+                    if ($bemail != 0) {
+                        $msj[0][0] = 'ESTE EMAIL NO PUEDE UTILIZARSE, PORQUE YA TIENE USUARIO ASIGNADO';
+                        $msj[0][1] = FALSE;
+                    } else {
+                        $msj[0][0] = 'SE HA CREADO EXITOSAMENTE';
+                        $msj[0][1] = TRUE;
+                    }
                 }
             }
         }

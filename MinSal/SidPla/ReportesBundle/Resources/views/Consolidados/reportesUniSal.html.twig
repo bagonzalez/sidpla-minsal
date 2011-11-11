@@ -1,0 +1,83 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+
+{% block body %}
+<script type="text/javascript">
+$(document).ready(function(){
+   
+   $("#idUniSal").combobox();
+   $('#idUnisal').css("width", '150px');
+   
+   $('#enviar3').button();
+   $('#enviar3').click(function(evento) {
+          if($("#idUniSal").val()==0){
+                       alert("Seleccione una Unidad de Salud para generar el Reporte");
+                        evento.preventDefault();
+          }
+         else 
+             this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteJustificacion') }}';
+    });
+    
+   $('#enviar4').button();
+   $('#enviar4').click(function(evento) {
+          if($("#idUniSal").val()==0){
+                       alert("Seleccione una Unidad de Salud para generar el Reporte");
+                        evento.preventDefault();
+          }
+         else{ 
+              this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteInfraEvaluada') }}';
+        }
+    });
+    
+    
+    $.getJSON('reportesUniSalJSON', function(data) {
+         var i=0;
+         $.each(data, function(key, val) {
+           if(key=='rows'){
+             $.each(val, function(id, registro){
+                 $('#idUniSal').append('<option value="'+registro['cell'][1]+'">'+registro['cell'][0]+'</option>');
+             });
+            }
+          });
+    });
+});	
+
+ </script>
+
+    <br></br>               
+    <form action="" method="post">
+        <table align="center">
+            <tr>
+                <td colspan="2" align="center"><h1>Reportes de Unidades de Salud</h1>                    
+                </td>
+            </tr>
+            <tr>
+                <td align="center">
+                    <p style=" font-family: Verdana, Geneva, sans-serif; font-size: 12px;" > Seleccione la Unidad de Salud para generar el reporte<br/>
+                        Luego de Clic en el reporte que desea Generar   
+                    </p>
+                </td>
+                <td>
+                    <select id='idUniSal' name='idUniSal'>
+                        <option value="0" >Seleccione</option>
+                    </select>
+                </td>
+                
+            </tr>
+            <tr>
+                <td colspan="2"  align="center">
+                    <br/><br/><br/>
+                </td>
+            </tr> 
+            <tr>
+                <td colspan="2"  align="center">
+                    <input type="submit" value="Justificacion" id="enviar3"/>
+                    <input type="submit" value="Evaluacion Infraestructura" id="enviar4"/>
+                </td>
+            </tr> 
+                  
+        </table>
+    </form>
+    <br></br>
+    <br></br>
+
+{% endblock %}

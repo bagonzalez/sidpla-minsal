@@ -8,13 +8,13 @@
    {% else %}
         <input type='hidden' name='objUniControl' id="objUniControl" value='false' />
         {% endif %}
-    <table border="1" WIDTH='85%'>
+    <table WIDTH='85%' class="tablaPlantilla">
         <thead>
             <tr  style=" font-size: 14px;">
-                <th><strong>  Cod </strong></th>
-                <th><strong> Actividades </strong>
+                <th class="thEncabezadoPlantilla"><strong>  Cod </strong></th>
+                <th class="thEncabezadoPlantilla"><strong> Actividades </strong>
                 </th>
-                <th><strong>  Acciones </strong>
+                <th class="thEncabezadoPlantilla"><strong>  Acciones </strong>
                 </th>
             </tr>
         </thead>
@@ -22,8 +22,8 @@
     {% if actividades is defined %}   
         {% for  actividad in  actividades%}
                 <tr>
-                    <td style=" font-size: 12px;">{{actividad.actNomenclatura}}</td>
-                    <td style=" font-size: 12px;">{{actividad.getActDescripcion}}
+                    <td class="tdCuerpoPlantilla">{%if actividad.actNomenclatura is null%}<strong> En Asignación </strong>{%else%}{{actividad.actNomenclatura}}{%endif%}</td>
+                    <td class="tdCuerpoPlantilla">{{actividad.getActDescripcion}}
                     </td>
                     <td class="tdBotonesIconos" WIDTH='60' >
                         <input width="50" height="50" type="image" src="{{ asset('/images/iconos/editar.png')}}" id="editar" value="Editar" onclick="$('#idfilaActividad').attr('value',{{actividad.getIdAct}});this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_editarActividad') }}';" />
@@ -34,13 +34,6 @@
     {% endif %}
         </tbody>
     </table>
-
-
-        <div id="grid_wrapper" class="ui-corner-all floatLeft">
-            <table id="theGridObj" class="scroll" ></table> 
-            <div id="pagerObj"  class="scroll" style="text-align:center;"></div> 
-        </div>
-
 
 {% endblock %}
 

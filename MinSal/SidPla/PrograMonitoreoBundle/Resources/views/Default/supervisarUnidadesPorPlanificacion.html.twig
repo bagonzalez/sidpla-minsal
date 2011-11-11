@@ -1,0 +1,77 @@
+{% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
+
+{% block titulo %}SIDPLA-Supervisión de Unidades de Salud{% endblock %}
+
+{% block body %} 
+<script type="text/javascript">
+ $(document).ready(function(){
+     $('#enviar').button();
+     $('#enviar').click(function(evento) {
+        if($("#idPadre").val()==""){
+                       alert("Seleccione una Unidad a supervisar en la Primera Lista Desplegable");
+                        evento.preventDefault();
+          }
+         else 
+          this.form.action='{{ path('MinSalSidPlaPrograMonitoreoBundle_supervisarProgramonUnidadesXDirPla') }}';
+     });
+     
+     $('#enviar2').button();
+     $('#enviar2').click(function(evento) {
+          if($("#idPadre2").val()==""){
+                       alert("Seleccione una Unidad a supervisar en la Segunda Lista Desplegable");
+                        evento.preventDefault();
+          }
+         else 
+             this.form.action='{{ path('MinSalSidPlaPrograMonitoreoBundle_supervisarResultadosEspecXDirPla') }}';
+    });
+     $.getJSON('supervisaUnidadesJSON', function(data) {
+         var i=0;
+         $.each(data, function(key, val) {
+           if(key=='rows'){
+             $.each(val, function(id, registro){
+                 $('#idPadre').append('<option value="'+registro['cell'][1]+'">'+registro['cell'][0]+'</option>');
+                 $('#idPadre2').append('<option value="'+registro['cell'][1]+'">'+registro['cell'][0]+'</option>');
+             });
+            }
+          });
+      });
+});
+    </script>
+    <form method="POST" >
+        <table align="center">
+            <tr>
+                <td align="center" colspan="3" ><h1>Supervisión de Unidades de Salud</h1>
+                </td>
+            </tr>
+            <tr>
+                <td align="center" style=" font-size: 12px" WIDTH='300' >Seleccione el Area a Supervisar para la Plantilla de Actividades Trazadoras
+                </td>
+                <td>
+                <select id='idPadre' name='idPadre'>
+                        <option value=''>Seleccione</option>
+                    </select>
+                </td>
+                <td>
+                <input type="submit" id="enviar" value="Generar"  />
+                </td>
+            </tr>
+            <tr>
+                <td colspan="3" ><br/><br/><br/></td>
+            </tr>
+            <tr>
+                <td align="center" style=" font-size: 12px" WIDTH='300' >Seleccione el Area a Supervisar para los Indicadores de Salud
+                </td>
+                <td>
+                <select id='idPadre2' name='idPadre2'>
+                        <option value=''>Seleccione</option>
+                    </select>
+                </td>
+                <td>
+                <input type="submit" id="enviar2" value="Generar"  />
+                </td>
+            </tr>
+       
+        </table>
+    </form>
+
+{% endblock %}

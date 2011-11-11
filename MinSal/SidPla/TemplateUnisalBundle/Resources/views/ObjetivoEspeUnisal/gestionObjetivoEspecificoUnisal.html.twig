@@ -15,6 +15,7 @@ $(document).ready(function(){
    });
     
   $("#forObjEspTmp").validate();   
+   $('#tabs').tabs();
     
 });
 </script>
@@ -30,14 +31,12 @@ textarea.error { border: 1px dotted red; }
 
 <form id="forObjEspTmp" name="forObjEspTmp" method="post" >
 {% if idObj is defined %}
-           <table colspan="4"  align="center"><!-- id="datos"  -->
-        <tr>
-            <td colspan='2'>
-                <h1 style=" text-align: center">Ingrese el Objetivo Especifico para Unidades de salud</h1>
-                <br></br>
-            </td>
-        </tr>
-        <tr>
+        <h1 style=" text-align: center">Modifique el Objetivo Especifico para Unidades de salud</h1>
+        <div id="tabs">
+                <ul><li><a href="#tabs-1">Objetivo Especifico para Unidades de Salud</a></li></ul>
+                <div id="tabs-1" >
+      <table colspan="4"  align="center">
+         <tr>
             <td style=" font-size: 12px" >Objetivo(*):</td>
             <td><textarea class="required" rows="4" cols="83" name= 'objEspTmp'  size="83%" id="objEspTmp" >{{descObj}}</textarea></td>
         </tr>
@@ -50,18 +49,18 @@ textarea.error { border: 1px dotted red; }
         </tr>
 
     </table>
+                        </div>
+                </div>
 <input type='hidden' name='anio' id="anio" value='{{anio}}' />
 <input type='hidden' name='idArea' id="idArea" value='{{idArea}}' /> 
 <input type='hidden' name='idObj' id="idObj" value='{{idObj}}' /> 
 <input type='hidden' name='oper' id="oper" value='edit' /> 
 {% else%}
+<h1 style=" text-align: center">Ingrese el Objetivo Especifico para Unidades de salud</h1>
+        <div id="tabs">
+                <ul><li><a href="#tabs-1">Objetivo Especifico para Unidades de Salud</a></li></ul>
+                <div id="tabs-1" >
     <table colspan="4"  align="center"><!-- id="datos"  -->
-        <tr>
-            <td colspan='2'>
-                <h1 style=" text-align: center">Ingrese el Objetivo Especifico para Unidades de salud</h1>
-                <br></br>
-            </td>
-        </tr>
         <tr>
             <td style=" font-size: 12px" >Objetivo(*):</td>
             <td><textarea class="required" rows="4" cols="83" name= 'objEspTmp'  size="83%" id="objEspTmp" ></textarea></td>
@@ -78,6 +77,8 @@ textarea.error { border: 1px dotted red; }
 <input type='hidden' name='anio' id="anio" value='{{anio}}' />
 <input type='hidden' name='idArea' id="idArea" value='{{idArea}}' />  
 <input type='hidden' name='oper' id="oper" value='add' />
+                    </div>
+                </div>
 {% endif%}
 </form>
 {% endblock %}
