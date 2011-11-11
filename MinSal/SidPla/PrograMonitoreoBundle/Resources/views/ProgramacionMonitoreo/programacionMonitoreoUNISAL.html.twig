@@ -23,9 +23,9 @@
 	var highchartsOptions = Highcharts.getOptions(); 
 </script>
 <script>
-    
-    
     $(document).ready(function(){
+    
+   
         {% if areasClasif is defined %} 
                 {% for area in areasClasif %}
                      $("#{{  area.codArea }}AreaDiv").hide();
@@ -111,6 +111,15 @@
             
     });
 </script>
+<style type="text/css">
+form.cmxform label.error, label.error {
+	/* remove the next line when you have trouble in IE6 with labels in list */
+	color: red;
+	font-style: italic
+}
+input.error { border: 1px dotted red; }
+textarea.error { border: 1px dotted red; }
+ </style>  
 
     <br></br>   
     <br></br>              
@@ -289,22 +298,26 @@
                                                                                                                                     </td>
                                                                                                                                     <td align="center">
                                                                                                                                         {% if resultadoAct.mes == mes   %}
-                                                                                                                                            <input name="resultadoRealizado_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}"  ></input>
-                                                                                                                                        {% else %}
-                                                                                                                                            <input name="resultadoRealizado_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}" readonly="readonly"  ></input>
+                                                                                                                                            <input name="resultadoRealizado_{{ resultadoAct.idResulAct }}" id="resultadoRealizado_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}"  ></input>
+                                                                                                                                           {% else %}
+                                                                                                                                            <input name="resultadoRealizado_{{ resultadoAct.idResulAct }}"id="resultadoRealizado_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActRealizado }}" readonly="readonly"  ></input>
                                                                                                                                         {% endif %}  
-
+                                                                                                                                       
                                                                                                                                     </td> 
+                                                                                                                                   
                                                                                                                                     <td align="center">
                                                                                                                                          {{ "$ " ~ resultadoAct.getCostoProgramado }}
                                                                                                                                     </td>
                                                                                                                                     <td align="center">
                                                                                                                                         {% if mes == resultadoAct.mes  %}
-                                                                                                                                            <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}"  ></input>
-                                                                                                                                        {% else %}
-                                                                                                                                            <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}" readonly="readonly"  ></input>
+                                                                                                                                            <input  name="costoReal_{{ resultadoAct.idResulAct }}" id="costoReal_{{ resultadoAct.idResulAct }}"  size="2" value="{{ resultadoAct.getCostoReal }}"></input>
+                                                                                                                                            <script type="text/javascript"> $(function(){ $('#resultadoRealizado_{{ resultadoAct.idResulAct }}').keyfilter(/[\d.]/); $('#costoReal_{{ resultadoAct.idResulAct }}').keyfilter(/[\d\.]/);  }); </script>
+                                                                                                                                  
+                                                                                                                                            {% else %}
+                                                                                                                                            <input type="text" name="costoReal_{{ resultadoAct.idResulAct }}" size="2" id="costoReal_{{ resultadoAct.idResulAct }}" value="{{ resultadoAct.getCostoReal }}" readonly="readonly"  ></input>
                                                                                                                                         {% endif %}
                                                                                                                                     </td>
+                                                                                                                                  
                                                                                                                                     <td align="center">
                                                                                                                                             {{  resultadoAct.getPorcentajeCumplimiento ~ "%"  }}
                                                                                                                                     </td>
@@ -353,5 +366,50 @@
     </form>
     <br></br>
     <br></br>
+    
+<script type="text/javascript">
+$(document).ready(function(){
+ $("#formulario").validate({
+    rules: {
+        {% if areasClasif is defined %} 
+                {% for area in areasClasif %}
+                          {% if objetivos is defined %}                                                                          
+                                            {% for obj in objetivos %}
+                                                    {% if obj.areaClaObj.codArea == area.codArea  %}
+                                                                {% for res in obj.getResultEspObjT %}                                               
+                                                                      {% for actividadAux in res.actividadesTemplate%}                                                          									{% for actividad in actividades%}
+                                                                           {% if actividadAux.codActUniTemp == actividad.actTemp.codActUniTemp%}                                                                            
+                                                                                 {% for resultadoAct in actividad.getResultadoactUniSal %}
+                                                                                      {% if mes >= resultadoAct.mes  %}
+                                                                                         {% if resultadoAct.mes == mes   %}
+                        
+
+                                                                                        resultadoRealizado_{{ resultadoAct.idResulAct }}: {
+                                                                                         required: false,
+                                                                                           number: true
+                                                                                            },
+                                                                                          {% else %}
+                                                                                          {% endif %}  
+                                                                                           {% if mes == resultadoAct.mes  %}
+                                                                                           costoReal_{{ resultadoAct.idResulAct }}: {
+                                                                                           required: false,
+                                                                                           number: true
+                                                                                           },  
+                                                                                           {% else %}
+                                                                                           {% endif %}
+                                                                                      {%  endif%}                                                                                    
+                                                                                    {% endfor %}
+                                                                                {% endif %}
+                                                                            {% endfor %}
+                                                                        {% endfor %}  
+                                                                   {% endfor %}
+                                                               {% endif %}                                              
+                                                           {% endfor %}                                                                                           
+                                                      {% endif %}
+                                                  {% endfor %}
+                                             {% endif %}
+      
+     }});});</script>      
+            
 
 {% endblock %}

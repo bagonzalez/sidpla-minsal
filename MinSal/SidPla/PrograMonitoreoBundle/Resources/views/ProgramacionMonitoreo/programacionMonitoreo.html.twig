@@ -274,8 +274,9 @@
                                                                                             </td>
                                                                                             <td align="center">
                                                                                                 {% if trimestre == resultadoAct.resulActTrimestre  %}
-                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}"  ></input>
-                                                                                                {% else %}
+                                                                                                    <input name="costoReal_{{ resultadoAct.idResulAct }}" id="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}"  ></input>
+                                                                                                <script type="text/javascript"> $(document).ready(function(){ $('#costoReal_{{ resultadoAct.idResulAct }}').keyfilter(/[\d\.]/);  }); </script>
+                                                                                                     {% else %}
                                                                                                     <input name="costoReal_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getCostoReal }}" readonly="readonly"  ></input>
                                                                                                 {% endif %}
                                                                                             </td>
