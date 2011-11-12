@@ -141,7 +141,7 @@ class AccionPrograMonUNISALController extends Controller {
         
          $promMonDao=new ProgramacionMonitoreoDao($this->getDoctrine());
          //$actividadesProgramon=$promMonDao->getActividadesUniSal($idProgramon);
-         $mes=3;
+         $mes=date('mm');
          
          $uniControl=new UnidadOrganizativa();            
          $uniControl=$this->obtenerUnidadOrg();

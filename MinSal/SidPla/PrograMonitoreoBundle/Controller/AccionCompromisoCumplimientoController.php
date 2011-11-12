@@ -201,7 +201,8 @@ class AccionCompromisoCumplimientoController extends Controller {
         $idProgramon = $programacionMonitoreo->getIdPrograMon();
 
         $promMonDao = new CompromisoCumplimientoDao($this->getDoctrine());
-        $trimestre = $promMonDao->trimestrePao();
+        $programacionMonDao=new ProgramacionMonitoreoDao($this->getDoctrine());
+        $trimestre = $programacionMonDao->trimestrePao();
         $actividadesProgramon = $promMonDao->getActividades($idProgramon, $trimestre);
         $anio=$paoElaboracion->getAnio();
         $idUniOrg=$paoElaboracion->getUnidadOrganizativa()->getIdUnidadOrg();
