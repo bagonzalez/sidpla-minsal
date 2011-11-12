@@ -13,9 +13,9 @@ $(document).ready(function(){
                        alert("Seleccione una Unidad de Salud para generar el Reporte");
                         evento.preventDefault();
           }
-         /*else{ 
-             this.form.action='{{ path('MinSalSidPlaCensoBundle_generarCensoUsuario') }}';
-         }*/
+          else{ 
+             this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteDependenciaInvidual') }}';
+          }
     });
     
     
@@ -80,6 +80,7 @@ $(document).ready(function(){
 
     <br></br>               
     <form action="" method="post">
+        <input type="hidden" name="anioConsultar" value="{{"now" | date("Y")}} " />
         <table align="center">
             <tr>
                 <td colspan="2" align="center"><h1>Reportes de Dependencias</h1>                    

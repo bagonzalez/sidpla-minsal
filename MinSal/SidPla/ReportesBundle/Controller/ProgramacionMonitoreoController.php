@@ -85,6 +85,45 @@ class ProgramacionMonitoreoController extends Controller {
 
         return $this->getResponse();
     }
+    
+     public function reporteDependenciaInvidualAction() {
+       $request = $this->getRequest();
+       $unidad = (int) $request->get('idDepen');
+       $anio = (int) $request->get('anioConsultar');
+     try {
+         $compileManager = new JavaClass("net.sf.jasperreports.engine.JasperCompileManager");
+         $report = $compileManager->compileReport(__DIR__ . "/../Resources/jasperReports/reportConsolidadoIndividualDep/consolidadocentral.jrxml");
+         $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
+         
+         $params = new Java("java.util.HashMap");
+         $params->put("anioPao", new java("java.lang.Integer", $anio)); //asignando valor al parametro
+         $params->put("idUnidadOrg", new java("java.lang.Integer", $unidad)); //asignando valor al parametro
+         
+         $Conn = $this->crearConexion();
+         
+         $jasperPrint = $fillManager->fillReport($report, $params, $Conn);
+         
+         $outputPath = realpath(".") . "/" . "output.pdf"; //mostrar el reporte en pdf
+         $exportManager = new JavaClass("net.sf.jasperreports.engine.JasperExportManager");
+         $exportManager->exportReportToPdfFile($jasperPrint, $outputPath);
+         header("Content-type: application/pdf");
+         readfile($outputPath);
+         unlink($outputPath);
+         $Conn->close();
+         $this->getResponse()->clearHttpHeaders();
+         $this->getResponse()->setHttpHeader('Pragma: public', true);
+         $this->getResponse()->setContentType('application/pdf');
+         $this->getResponse()->sendHttpHeaders();
+        } 
+        catch (Exception $ex) {
+            print $ex->getCause();
+            if ($Conn != null) {
+                $Conn->close();
+            }
+        throw $ex;
+        }
+        return $this->getResponse();
+    }
 
 }
 

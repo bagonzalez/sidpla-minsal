@@ -57,10 +57,10 @@ class AccionAdminObjetivosEspecificosController extends Controller {
 
 
         if (count($objetivosEspec) == 0)
-            return $this->render('MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:manttObjetivosEspecificos.html.twig', array('opciones' => $opciones, 'idCaractOrg' => $caractOrg->getIdCaractOrg()));
+            return $this->render('MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:manttObjetivosEspecificos.html.twig', array('opciones' => $opciones, 'idCaractOrg' => $caractOrg->getIdCaractOrg(), 'idDepen' => $idUnidad));
         else {
 
-            return $this->render('MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:manttObjetivosEspecificos.html.twig', array('opciones' => $opciones, 'idCaractOrg' => $caractOrg->getIdCaractOrg(), 'objetivos' => $objetivosEspec));
+            return $this->render('MinSalSidPlaGesObjEspBundle:GestionObjetivosEspecificos:manttObjetivosEspecificos.html.twig', array('opciones' => $opciones, 'idCaractOrg' => $caractOrg->getIdCaractOrg(), 'objetivos' => $objetivosEspec, 'idDepen' => $idUnidad));
         }
     }
 

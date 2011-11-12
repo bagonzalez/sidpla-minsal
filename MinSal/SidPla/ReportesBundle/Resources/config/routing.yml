@@ -74,4 +74,9 @@ MinSalSidPlaReportesBundle_reporteCompromisoCumplimiento:
 MinSalSidPlaReportesBundle_reporteCaracOrg:
     pattern:  /reporteCaracOrg
     defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteCaracOrg } 
+
+MinSalSidPlaReportesBundle_reporteDependenciaInvidual:
+    pattern:  /reporteDependenciaInvidual
+    defaults: { _controller: MinSalSidPlaReportesBundle:ProgramacionMonitoreo:reporteDependenciaInvidual } 
+    
     

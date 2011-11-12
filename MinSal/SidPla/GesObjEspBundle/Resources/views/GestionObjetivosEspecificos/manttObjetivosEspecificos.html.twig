@@ -7,9 +7,17 @@ $(document).ready(function(){
           this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_ingresarObjetivoEspecifico') }}';
     });
     
+      
+    $('#reporteProgramon').click(function(evento) {
+          this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteDependenciaInvidual') }}';
+    });
+    
 });
 </script>
     <form action="" method="post">
+        <input type="hidden" name="anioConsultar" value="{{"now" | date("Y")+1}} " />
+        <input type="hidden" name="idDepen" value="{{ idDepen }} " />
+        
         <table align="center">
             <tr>
                 <td align="center"><h1>Gestion de Objetivos Especificos</h1>
@@ -18,9 +26,11 @@ $(document).ready(function(){
             <tr>
                 <td align="center" class="tdBotonIconoAgregar" >
                     <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}" id="agregar"/>
-                    <br/>Agregar Objetivo
-
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input width="60" height="60" type="image" src="{{ asset('/images/iconos/gestion.png')}}" id="reporteProgramon"/>
+                    <br/>Agregar Objetivo &nbsp;&nbsp;&nbsp; Reporte
                 </td>
+                               
             </tr>
             <tr>
                 <td align="center">               
