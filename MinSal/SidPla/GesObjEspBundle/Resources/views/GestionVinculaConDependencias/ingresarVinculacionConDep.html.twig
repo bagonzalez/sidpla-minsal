@@ -37,11 +37,11 @@
               $('#tabActividad').jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');
               cargarActVin();             
           }
-          
+          $('#vincular').button();
           $('#vincular').click(function() {
                     $('#dialogJustificacion').jqmShow();                     
           }); 
-          
+           $('#vincularFin').button();
           $('#vincularFin').click(function() {                    
                     $('#vincularForm').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_vincularActividades') }}');                    
                     $('#vincularForm').submit();

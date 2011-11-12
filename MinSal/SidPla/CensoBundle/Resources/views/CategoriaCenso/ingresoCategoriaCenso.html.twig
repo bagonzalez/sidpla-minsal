@@ -1,40 +1,55 @@
 {% extends 'MinSalSidPlaBundle:Default:index.html.twig' %}
 {% block body %}
+<script type="text/javascript">
+$(document).ready(function(){
+    $('#ingresar').button();
+    $('#limpiar').button();
+    $('#regresar').button();
+    $("#regresar").click(function(){
+       window.location='{{path ('MinSalSidPlaCensoBundle_manttCatCenso')}}';
+    });
+    $('#tabs').tabs();
+    
+});
+    </script>
 
-<br></br>
-<br></br>
-<br></br>
-<form action="{{ path('MinSalSidPlaCensoBundle_addCategoria') }}" method="post" {{ form_enctype(form) }}>
-    
-     <table align='center' >
-            <tr>
-                <td align='center' colspan="2"><h3>Registro de Nuevas Categorias</h3></td>
-            </tr>
-            <tr>
-                <td><label id="nombreCategoria" >Nombre de Categoria:</label></td>
-                <td>{{ form_widget(form.descripcionCategoria) }}</td>
-            </tr>
-             <tr>
-                <td><label id="tabla" >Clasificacion:</label></td>
-                <td>{{ form_widget(form.divTabla) }}</td>
-            </tr>
-            
-            <tr>
-                <td><label id="activo" >Activo:</label></td>
-                <td>{{ form_widget(form.activo) }}</td>
-            </tr>
-             <tr>
-                <td><label id="bloque" >Bloque:</label></td>
-                <td>{{ form_widget(form.bloque) }}</td>
-            </tr>
-            <tr>
-                
-                <td align='center' colspan="2" ><br></br><input value="Ingresar" type="submit" /></td>
-            </tr>
-     </table>
-    
+    <form action="{{ path('MinSalSidPlaCensoBundle_addCategoria') }}" method="post" {{ form_enctype(form) }}>
+        <h1 style=" text-align: center">Registro de Nuevas Categorias</h1>
+        <div id="tabs">
+            <ul><li><a href="#tabs-1">Categoria Censo</a></li></ul>
+            <div id="tabs-1" >
+                <table align='center' >
+                    <tr>
+                        <td><label id="nombreCategoria" >Nombre de Categoria:</label></td>
+                        <td>{{ form_widget(form.descripcionCategoria) }}</td>
+                    </tr>
+                    <tr>
+                        <td><label id="tabla" >Clasificacion:</label></td>
+                        <td>{{ form_widget(form.divTabla) }}</td>
+                    </tr>
+
+                    <tr>
+                        <td><label id="activo" >Activo:</label></td>
+                        <td>{{ form_widget(form.activo) }}</td>
+                    </tr>
+                    <tr>
+                        <td><label id="bloque" >Bloque:</label></td>
+                        <td>{{ form_widget(form.bloque) }}</td>
+                    </tr>
+                    <tr>
+
+                        <td align='center' colspan="2" ><br/>
+                            <button type="reset" id="limpiar"  >Limpiar</button>
+                            <input id='ingresar' value="Ingresar" type="submit" />
+                            <button type="button" id="regresar"  >Regresar</button>
+                        </td>
+
+                    </tr>
+                </table>
+            </div>
+        </div>
     {{ form_rest(form) }}
-    
-</form>
+
+    </form>
 
 {% endblock body %}

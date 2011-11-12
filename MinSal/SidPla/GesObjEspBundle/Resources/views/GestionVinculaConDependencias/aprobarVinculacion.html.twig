@@ -5,6 +5,7 @@
         
         {% if actividadesVinculadasDestino is defined %}
             {% for actVin in actividadesVinculadasDestino  %}
+                $('#aprobarVinDepen{{ actVin.idActVincu }}').button();
                 $('#aprobarVinDepen{{ actVin.idActVincu }}').click(function() {                    
                                 $('#apruebaForm{{ actVin.idActVincu }}').get(0).setAttribute('action', '{{ path('MinSalSidPlaGesObjEspBundle_guardaEvaluacionVincula') }}');                    
                                 $('#apruebaForm{{ actVin.idActVincu }}').submit();                        

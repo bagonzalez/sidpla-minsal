@@ -166,15 +166,19 @@ class AccionPaoPeriodoOficialController extends Controller {
                 if($bec==0)
                     $mostrarboton=FALSE;
                 else
-                    if($bp!=0)
+                    if($bp!=0){
                         $mostrarboton=FALSE;
+                        $msj="LA PAO PARA ESTE ANIO (".$anio.") YA HA SIDO CREADA";
+                    }
                     else
                         $mostrarboton=TRUE;
                     
             
-        
-        
-        return $this->render('MinSalSidPlaPaoBundle:CrearPao:manttCrearPao.html.twig'
+        if(isset($msj))
+         return $this->render('MinSalSidPlaPaoBundle:CrearPao:manttCrearPao.html.twig'
+                        , array('opciones' => $opciones,'mostrarboton'=>$mostrarboton,'msj'=>$msj));
+        else
+            return $this->render('MinSalSidPlaPaoBundle:CrearPao:manttCrearPao.html.twig'
                         , array('opciones' => $opciones,'mostrarboton'=>$mostrarboton));
     }
 
