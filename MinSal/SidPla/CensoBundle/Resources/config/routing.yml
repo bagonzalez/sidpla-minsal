@@ -93,4 +93,8 @@ MinSalSidPlaCensoBundle_generarCensoUsuario:
     pattern:  /generarCensoUsuario
     defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:generarCensoUsuario }
  
+MinSalSidPlaCensoBundle_generarCensoUsuarioDirPla:
+    pattern:  /generarCensoUsuarioDirPla
+    defaults: { _controller: MinSalSidPlaCensoBundle:AccionAdminCensoUsuario:generarCensoUsuarioDirPla }
+
     

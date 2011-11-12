@@ -85,6 +85,19 @@ class AccionAdminCensoUsuarioController extends Controller{
         
     }
     
+    public function obtenerPaoSeguimientoUnidadAction($idUnidad){        
+               
+        $unidaDao=new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad=new UnidadOrganizativa();              
+        $unidad=$unidaDao->getUnidadOrg($idUnidad);
+        
+        $paoElaboracion=new Pao();        
+        $paoElaboracion=$unidaDao->getPaoSeguimiento($idUnidad);
+        
+        return $paoElaboracion;
+        
+    }
+    
     public function consultarInformacionComplementariaAction(){
         
         $opciones=$this->getRequest()->getSession()->get('opciones');
@@ -306,11 +319,13 @@ class AccionAdminCensoUsuarioController extends Controller{
         
     }
     
-     public function procesarPoblacionHumanaAction($objPHPExcel){
+     public function procesarPoblacionHumanaAction($objPHPExcel, $idUnidad = 0){
          
+        if($idUnidad!=0)
+            $paoElaboracion=$this->obtenerPaoSeguimientoUnidadAction ($idUnidad);
+        else
+            $paoElaboracion=$this->obtenerPaoElaboracionAction();       
         
-         
-        $paoElaboracion=$this->obtenerPaoElaboracionAction();       
         $censoPoblacion=$paoElaboracion->getCesopoblacion();
            
         $poblacionHumana=$censoPoblacion->getPoblacionHumana();
@@ -452,9 +467,13 @@ class AccionAdminCensoUsuarioController extends Controller{
         
      }
      
-      public function procesarInfRelevanteAction($objPHPExcel){
+      public function procesarInfRelevanteAction($objPHPExcel, $idUnidad = 0){
         
-        $paoElaboracion=$this->obtenerPaoElaboracionAction();       
+        if($idUnidad!=0)
+            $paoElaboracion=$this->obtenerPaoSeguimientoUnidadAction ($idUnidad);
+        else
+            $paoElaboracion=$this->obtenerPaoElaboracionAction(); 
+        
         $censoPoblacion=$paoElaboracion->getCesopoblacion();
         
         $infRelevante=$censoPoblacion->getInformacionRelevante();
@@ -505,9 +524,13 @@ class AccionAdminCensoUsuarioController extends Controller{
        
   }
   
-   public function procesarInfComplementariaAction($objPHPExcel){
+   public function procesarInfComplementariaAction($objPHPExcel, $idUnidad = 0){
         
-        $paoElaboracion=$this->obtenerPaoElaboracionAction();       
+        if($idUnidad!=0)
+            $paoElaboracion=$this->obtenerPaoSeguimientoUnidadAction ($idUnidad);
+        else
+            $paoElaboracion=$this->obtenerPaoElaboracionAction(); 
+        
         $censoPoblacion=$paoElaboracion->getCesopoblacion();
         
         $infComplementaria=$censoPoblacion->getInformacionComplementaria();
@@ -886,6 +909,28 @@ class AccionAdminCensoUsuarioController extends Controller{
        $objPHPExcel=$this->procesarPoblacionHumanaAction($objPHPExcel);
        $objPHPExcel=$this->procesarInfRelevanteAction($objPHPExcel);
        $objPHPExcel=$this->procesarInfComplementariaAction($objPHPExcel);       
+
+       
+        header('Content-Type: application/vnd.ms-excel');
+        header('Content-Disposition: attachment;filename="censopoblacion.xls"');
+        header('Cache-Control: max-age=0');
+
+        $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
+        $objWriter->save('php://output');
+                                 
+        return $this->consultarInformacionComplementariaAction();                  
+    }  
+    
+      public function generarCensoUsuarioDirPlaAction(){
+          
+       $request = $this->getRequest();
+       $unidad = (int) $request->get('idUniSal');
+        
+       $objPHPExcel = PHPExcel_IOFactory::load(dirname(__FILE__).'/PAO_CENSOPOBLACION.xls');
+       
+       $objPHPExcel=$this->procesarPoblacionHumanaAction($objPHPExcel, $unidad );
+       $objPHPExcel=$this->procesarInfRelevanteAction($objPHPExcel, $unidad);
+       $objPHPExcel=$this->procesarInfComplementariaAction($objPHPExcel, $unidad);       
 
        
         header('Content-Type: application/vnd.ms-excel');
