@@ -20,11 +20,7 @@ MinSalSidPlaReportesBundle_reporteElementoInfra:
 MinSalSidPlaReportesBundle_reporteActividadesAtrasadas:
     pattern:  /reporteActividadesAtrasadas
     defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteActividadesAtrasadas }  
-#INFORMACION GERNERAL UNIDAD ORGA    
-MinSalSidPlaReportesBundle_reporteInfoGeneral:
-    pattern:  /reporteInfoGeneral
-    defaults: { _controller: MinSalSidPlaReportesBundle:Admin:reporteInfoGeneral } 
-     
+
 MinSalSidPlaReportesBundle_reporteConsolidadoNivelCentral:
     pattern:  /reporteConsolidadoNivelCentral
     defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteConsolidadoNivelCentral } 
@@ -32,6 +28,16 @@ MinSalSidPlaReportesBundle_reporteConsolidadoNivelCentral:
 MinSalSidPlaReportesBundle_reporteMatrizdeObjetivosyResultados:
     pattern:  /reporteMatrizdeObjetivosyResultados
     defaults: { _controller: MinSalSidPlaReportesBundle:Default:reporteMatrizdeObjetivosyResultados } 
+
+#INFORMACION GERNERAL UNIDAD ORGA    
+MinSalSidPlaReportesBundle_reporteInfoGeneral:
+    pattern:  /reporteInfoGeneral
+    defaults: { _controller: MinSalSidPlaReportesBundle:Admin:reporteInfoGeneral }
+
+MinSalSidPlaReportesBundle_reporteFormulario1:
+    pattern:  /reporteFormulario1
+    defaults: { _controller: MinSalSidPlaReportesBundle:Admin:reporteFormulario1 } 
+     
 
 
 #ACCIONCONSOLIDADOSNIVELCENTRAL
@@ -47,9 +53,13 @@ MinSalSidPlaReportesBundle_reportesUniSalJSON:
     pattern:  /reportesUniSalJSON
     defaults: { _controller: MinSalSidPlaReportesBundle:AccionConsolidadosNivelCentral:reportesUniSalJSON}
     
-MinSalSidPlaReportesBundle_reporteSeleccionadoJSON:
-    pattern:  /reporteSeleccionadoJSON
-    defaults: { _controller: MinSalSidPlaReportesBundle:AccionConsolidadosNivelCentral:reporteSeleccionadoJSON} 
+MinSalSidPlaReportesBundle_reportesDepen:
+    pattern:  /reportesDepen
+    defaults: { _controller: MinSalSidPlaReportesBundle:AccionConsolidadosNivelCentral:reportesDepen }
+
+MinSalSidPlaReportesBundle_reportesDepenJSON:
+    pattern:  /reportesDepenJSON
+    defaults: { _controller: MinSalSidPlaReportesBundle:AccionConsolidadosNivelCentral:reportesDepenJSON}
     
 #REPORTE EMPLEADOS DE UNIDADES ORG  
 MinSalSidPlaReportesBundle_reporteEmpleadosOrg:

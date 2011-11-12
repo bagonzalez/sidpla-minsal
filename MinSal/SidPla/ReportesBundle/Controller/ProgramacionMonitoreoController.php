@@ -2,6 +2,13 @@
 namespace MinSal\SidPla\ReportesBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use MinSal\SidPla\PaoBundle\Entity\Pao;
+use MinSal\SidPla\PrograMonitoreoBundle\EntityDao\ProgramacionMonitoreoDao;
+
 use \Java;
 use \JavaClass;
 
@@ -27,6 +34,7 @@ class ProgramacionMonitoreoController extends Controller {
         $anio = $request->get('anio');
         $trimestre= $request->get('trimestre');
         $uniOrg = $request->get('idUniOrg');
+        $idDepen=$request->get('idDepen');
 
         try {
 
@@ -35,6 +43,17 @@ class ProgramacionMonitoreoController extends Controller {
             $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
 
             $params = new Java("java.util.HashMap");
+            if(isset($idDepen)){
+                $uniOrg=$idDepen;
+                $unidaDao = new UnidadOrganizativaDao($this->getDoctrine());
+                $programonDao=new ProgramacionMonitoreoDao($this->getDoctrine());
+                $paoSegumiento = new Pao();
+                $paoSegumiento = $unidaDao->getPaoSeguimiento($idDepen);
+                $anio=$paoSegumiento->getAnio();
+                $uniOrg=$idDepen;
+                $trimestre=$programonDao->trimestrePao();
+                
+            }
             $params->put("ve_anio", new java("java.lang.Integer", $anio));
             $params->put("ve_trimestre", new java("java.lang.Integer", $trimestre));
             $params->put("ve_uniorg", new java("java.lang.Integer", $uniOrg));

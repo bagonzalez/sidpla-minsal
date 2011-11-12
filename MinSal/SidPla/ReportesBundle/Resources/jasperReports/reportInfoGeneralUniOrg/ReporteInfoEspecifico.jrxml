@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportprueba1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="22"/>
+	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
+	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
+	<style name="Detail" fontName="Arial" fontSize="12"/>
+	<style name="Row" mode="Transparent">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style backcolor="#E6DAC3"/>
+		</conditionalStyle>
+	</style>
+	<parameter name="ve_uniorg" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[select d.numero_unidadesdeptos,d.uniorg_codigo as "cod_padre",d.uniorg_nombre as "nom_padre",
+	(Select uniorg_nombre FROM sidpla_unidadorganizativa WHERE uniorg_codigo=d.uniorg_codigo1) papaDeEsta,
+	c.uniorg_codigo,c.uniorg_nombre,e.infgen_direccion,e.infgen_telefono,e.infgen_fax,
+	e.infgen_email,h.numero_unidad,to_char(e.infgen_fechaactualizacion,'dd-mm-YYYY') infgen_fechaactualizacion,(SELECT empleado_primernombre||' '||empleado_segundonombre||' '||empleado_primerapellido||' '||empleado_segundoapellido
+FROM sidpla_empleado
+WHERE empleado_codigo = d.uniorg_responsable) NombreRes
+from(select  count(a.uniorg_nombre)as"numero_unidadesdeptos",a.uniorg_codigo, a.uniorg_nombre,a.uniorg_codigo1,a.uniorg_responsable
+  	from sidpla_unidadorganizativa a
+	inner join sidpla_unidadorganizativa b on (a.uniorg_codigo=b.uniorg_codigo1)
+	group by a.uniorg_nombre, a.uniorg_codigo,a.uniorg_codigo1,a.uniorg_responsable
+	order by a.uniorg_nombre) d
+right join  sidpla_unidadorganizativa c on (d.uniorg_codigo=c.uniorg_codigo1)
+left join  sidpla_informaciongeneral e on (e.uniorg_codigo=d.uniorg_codigo)
+left join  sidpla_informaciongeneral r on (r.uniorg_codigo=c.uniorg_codigo)
+left join  sidpla_departamentounidad g on (d.uniorg_codigo=g.uniorg_codigo) and (g.depuni_nombre=c.uniorg_nombre)
+left join  (select sum(rechum_cantidad)as "numero_unidad",depuni_codigo
+            from  sidpla_recursohumano
+            group by  depuni_codigo,depuni_codigo) h using (depuni_codigo)
+WHERE d.uniorg_codigo=$P{ve_uniorg}
+order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
+	</queryString>
+	<field name="numero_unidadesdeptos" class="java.lang.Long"/>
+	<field name="cod_padre" class="java.lang.Integer"/>
+	<field name="nom_padre" class="java.lang.String"/>
+	<field name="papadeesta" class="java.lang.String"/>
+	<field name="uniorg_codigo" class="java.lang.Integer"/>
+	<field name="uniorg_nombre" class="java.lang.String"/>
+	<field name="infgen_direccion" class="java.lang.String"/>
+	<field name="infgen_telefono" class="java.lang.String"/>
+	<field name="infgen_fax" class="java.lang.String"/>
+	<field name="infgen_email" class="java.lang.String"/>
+	<field name="numero_unidad" class="java.lang.Long"/>
+	<field name="infgen_fechaactualizacion" class="java.lang.String"/>
+	<field name="nombreres" class="java.lang.String"/>
+	<group name="NOMBRE UNIDAD">
+		<groupExpression><![CDATA[$F{nom_padre}]]></groupExpression>
+		<groupHeader>
+			<band height="327">
+				<textField isStretchWithOverflow="true">
+					<reportElement mode="Opaque" x="238" y="2" width="317" height="25" backcolor="#99FF99"/>
+					<box leftPadding="5">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement>
+						<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
+					</textElement>
+					<textFieldExpression><![CDATA[$F{nom_padre}]]></textFieldExpression>
+				</textField>
+				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="237" y="83" width="319" height="30" backcolor="#99FF99"/>
+					<box leftPadding="5">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{infgen_direccion}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="3" y="83" width="214" height="30"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[1.3 Dirección]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="239" y="126" width="316" height="15" backcolor="#99FF99"/>
+					<box leftPadding="6">
+						<pen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="0.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{infgen_telefono}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="3" y="126" width="214" height="30"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[1.4 Teléfono y/o Fax]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="3" y="167" width="214" height="15"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[1.5 E mail]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="239" y="140" width="316" height="15" backcolor="#99FF99"/>
+					<box leftPadding="6">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="0.0"/>
+						<leftPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{infgen_fax}]]></textFieldExpression>
+				</textField>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="240" y="167" width="315" height="15" backcolor="#99FF99"/>
+					<box leftPadding="5">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{infgen_email}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="67" y="311" width="150" height="15"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[unidad/Dependencia]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="415" y="311" width="73" height="15"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[ Empleados]]></text>
+				</staticText>
+				<textField isBlankWhenNull="true">
+					<reportElement mode="Opaque" x="450" y="275" width="100" height="15" backcolor="#99FF99"/>
+					<box>
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement textAlignment="Center" verticalAlignment="Middle"/>
+					<textFieldExpression><![CDATA[$F{numero_unidadesdeptos}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="3" y="265" width="447" height="35"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[1.8 Departamentos, Unidades, Secciones o Disciplinas que componen la dependencia y número de empleados.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="0" width="216" height="27"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[1.1 Nombre de la Dependencia que programa]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="1" y="42" width="216" height="27"/>
+					<textElement>
+						<font size="10" isBold="true"/>
+					</textElement>
+					<text><![CDATA[1.2 Instancia de la que depende]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="239" y="42" width="316" height="27" backcolor="#99FF99"/>
+					<box leftPadding="5">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{papadeesta}]]></textFieldExpression>
+				</textField>
+				<staticText>
+					<reportElement x="3" y="199" width="214" height="28"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[1.6 Nombre del Director(a) o Coordinador(a)]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="3" y="232" width="214" height="17"/>
+					<textElement>
+						<font isBold="true"/>
+					</textElement>
+					<text><![CDATA[1.7 Fecha de Elaboración de los datos]]></text>
+				</staticText>
+				<textField>
+					<reportElement mode="Opaque" x="239" y="232" width="316" height="17" backcolor="#99FF99"/>
+					<box leftPadding="5">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{infgen_fechaactualizacion}]]></textFieldExpression>
+				</textField>
+				<textField>
+					<reportElement mode="Opaque" x="240" y="199" width="316" height="25" backcolor="#99FF99"/>
+					<box leftPadding="5">
+						<pen lineWidth="1.0"/>
+						<topPen lineWidth="1.0"/>
+						<leftPen lineWidth="1.0"/>
+						<bottomPen lineWidth="1.0"/>
+						<rightPen lineWidth="1.0"/>
+					</box>
+					<textElement/>
+					<textFieldExpression><![CDATA[$F{nombreres}]]></textFieldExpression>
+				</textField>
+			</band>
+		</groupHeader>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="106" splitType="Stretch">
+			<image>
+				<reportElement x="451" y="16" width="105" height="65"/>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/minsalud.jpg"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="27" y="16" width="105" height="50"/>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/escudo.gif"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="101" y="10" width="346" height="24"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[MINISTERIO DE SALUD]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="57" width="233" height="24"/>
+				<textElement textAlignment="Center">
+					<font size="13" isBold="true"/>
+				</textElement>
+				<text><![CDATA[AÑO]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="101" y="34" width="346" height="24"/>
+				<textElement textAlignment="Center">
+					<font size="16" isBold="true"/>
+				</textElement>
+				<text><![CDATA[PLANIFICACIÓN ANUAL OPERATIVA]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="3" y="81" width="552" height="20"/>
+				<textElement textAlignment="Center">
+					<font size="11" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Formulario No 1: Información General de la Dependencia]]></text>
+			</staticText>
+			<textField pattern="yyyy">
+				<reportElement x="240" y="57" width="100" height="20"/>
+				<textElement>
+					<font size="13" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="6" splitType="Stretch"/>
+	</columnHeader>
+	<detail>
+		<band height="27" splitType="Stretch">
+			<textField isStretchWithOverflow="true">
+				<reportElement mode="Opaque" x="45" y="0" width="321" height="20" backcolor="#99FF99"/>
+				<box topPadding="4" leftPadding="5">
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{uniorg_nombre}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement mode="Opaque" x="415" y="0" width="74" height="20" backcolor="#99FF99"/>
+				<box>
+					<pen lineWidth="1.0"/>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="7" splitType="Stretch">
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="0" y="3" width="555" height="1"/>
+				<graphicElement>
+					<pen lineWidth="0.5" lineColor="#999999"/>
+				</graphicElement>
+			</line>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="26" splitType="Stretch">
+			<textField>
+				<reportElement x="450" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" De"]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="530" y="0" width="40" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band splitType="Stretch"/>
+	</summary>
+</jasperReport>

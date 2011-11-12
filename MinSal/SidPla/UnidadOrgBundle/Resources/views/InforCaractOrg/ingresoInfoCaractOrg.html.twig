@@ -4,7 +4,13 @@
      
         
       $(document).ready(function(){           
-        $("#formulario1").validate();            
+        $("#formulario1").validate();
+        $('#form1').button();
+        $('#form1').click(function() {
+            this.form.action= '{{ path('MinSalSidPlaReportesBundle_reporteFormulario1') }}';            
+        
+        });
+        
         $('#reportCarac').click(function() {
         $('#formulario').get(0).setAttribute('action', '{{ path('MinSalSidPlaReportesBundle_reporteCaracOrg') }}');            
         
@@ -76,7 +82,7 @@ textarea.error { border: 1px dotted red; }
                             <td colspan="4"><br></br>Departamentos, Unidades, Secciones, ó Disciplinas que componen la dependencia y número de empleados. 
                                 <br></br>
                             {%include 'MinSalSidPlaDepUniBundle:DepartamentoUni:gridDeptoUni.html.twig' %}
-                                <p>Si desea cambiar la cantidad de personas asignadas a su departamento de <a href="{{ path('MinSalSidPlaDepUniBundle_principal') }}">De clic aqui</a> </p>
+                                <p>Si desea cambiar la cantidad de personas asignadas a su departamento o agregar mas departamentos de <a href="{{ path('MinSalSidPlaDepUniBundle_principal') }}">De clic aqui</a> </p>
                             </td>
                         </tr>
                         <tr>
@@ -84,7 +90,8 @@ textarea.error { border: 1px dotted red; }
                               <input type='hidden' name='idempleado' id="idempleado" value='{{responsable}}'> </input>
                                <input type='hidden' name='unidadorgcod' id="unidadorgcod" value='{{unidadorgcod}}'> </input>
                                 <input type='hidden' name='infoGeneralcod' id="infoGeneralcod" value='{{infoGeneralcod}}'> </input>
-                                <button type="submmit" id="guardarInfoGen"  >Guardar</button>                                
+                                <button type="submmit" id="guardarInfoGen"  >Guardar</button>
+                                <button type="submmit" id="form1"  >Reporte</button> 
                             </td>                            
                         </tr>
                       </table>     

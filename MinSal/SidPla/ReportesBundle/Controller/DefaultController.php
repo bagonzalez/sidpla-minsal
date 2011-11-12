@@ -26,6 +26,11 @@
 namespace MinSal\SidPla\ReportesBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use MinSal\SidPla\AdminBundle\Entity\UnidadOrganizativa;
+use MinSal\SidPla\AdminBundle\EntityDao\UnidadOrganizativaDao;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
+use MinSal\SidPla\PaoBundle\Entity\Pao;
 use \Java;
 use \JavaClass;
 
@@ -51,9 +56,9 @@ class DefaultController extends Controller {
     
     public function reporteActividadesAtrasadasAction() {
         $request = $this->getRequest();
-        //  $JustiPao=$request->get('justificacion');            
         $id = $request->get('id');
-        //$id="874";
+        $idDepen=$request->get('idDepen');
+        
         try {
 
             $compileManager = new JavaClass("net.sf.jasperreports.engine.JasperCompileManager");
@@ -61,6 +66,13 @@ class DefaultController extends Controller {
             $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
 
             $params = new Java("java.util.HashMap");
+            if(isset($idDepen)){
+                $unidaDao = new UnidadOrganizativaDao($this->getDoctrine());
+                $paoSegumiento = new Pao();
+                $paoSegumiento = $unidaDao->getPaoSeguimiento($idDepen);
+                $id=$paoSegumiento->getProgramacionMonitoreo()->getIdPrograMon();
+                
+            }
             $params->put("idPrograMonit", new java("java.lang.Integer", $id));
 
             $Conn = $this->crearConexion();
@@ -175,6 +187,7 @@ class DefaultController extends Controller {
     public function reporteCaracOrgAction() {
        $request = $this->getRequest();
        $idUnidad = $request->get('idUnidad');
+       $idDepen=$request->get('idDepen');
       
      try {
          $compileManager = new JavaClass("net.sf.jasperreports.engine.JasperCompileManager");
@@ -182,6 +195,10 @@ class DefaultController extends Controller {
          $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
          
          $params = new Java("java.util.HashMap");
+         if(isset($idDepen)){
+                $idUnidad=$idDepen;
+                
+            }
          $params->put("idUorg", new java("java.lang.Integer", $idUnidad)); //asignando valor al parametro
          
          $Conn = $this->crearConexion();

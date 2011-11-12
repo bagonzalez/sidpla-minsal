@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportprueba1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="30"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -14,39 +14,23 @@
 		</conditionalStyle>
 	</style>
 	<queryString>
-		<![CDATA[select
-d.numero_unidadesdeptos,
-d.uniorg_codigo as "cod_padre",
-d.uniorg_nombre as "nom_padre",
-c.uniorg_codigo,
-c.uniorg_nombre,
-e.infgen_direccion,
-e.infgen_telefono,
-e.infgen_fax,
-e.infgen_email,
-r.infgen_direccion as "dep_direccion",
-r.infgen_telefono as "dep_telefon",
-r.infgen_fax as "depUni_fax",
-r.infgen_email as "depuni_email",
-depuni_codigo,
-h.numero_unidad
-from
-  (select
-  count(a.uniorg_nombre)as"numero_unidadesdeptos",
-  a.uniorg_codigo,
-  a.uniorg_nombre
-  from sidpla_unidadorganizativa a
-inner join sidpla_unidadorganizativa b on(a.uniorg_codigo=b.uniorg_codigo1)
-group by a.uniorg_nombre, a.uniorg_codigo
-order by a.uniorg_nombre) d
+		<![CDATA[select d.numero_unidadesdeptos,d.uniorg_codigo as "cod_padre",d.uniorg_nombre as "nom_padre",
+	c.uniorg_codigo,c.uniorg_nombre,e.infgen_direccion,e.infgen_telefono,e.infgen_fax,
+	e.infgen_email,r.infgen_direccion as "dep_direccion",r.infgen_telefono as "dep_telefon",
+	r.infgen_fax as "depUni_fax",r.infgen_email as "depuni_email",depuni_codigo,h.numero_unidad
+from(select  count(a.uniorg_nombre)as"numero_unidadesdeptos",a.uniorg_codigo, a.uniorg_nombre,a.uniorg_tipounidad
+  	from sidpla_unidadorganizativa a
+	inner join sidpla_unidadorganizativa b on (a.uniorg_codigo=b.uniorg_codigo1)
+	group by a.uniorg_nombre, a.uniorg_codigo,a.uniorg_tipounidad
+	order by a.uniorg_nombre) d
 right join  sidpla_unidadorganizativa c on (d.uniorg_codigo=c.uniorg_codigo1)
 left join  sidpla_informaciongeneral e on (e.uniorg_codigo=d.uniorg_codigo)
 left join  sidpla_informaciongeneral r on (r.uniorg_codigo=c.uniorg_codigo)
-
 left join  sidpla_departamentounidad g on (d.uniorg_codigo=g.uniorg_codigo) and (g.depuni_nombre=c.uniorg_nombre)
 left join  (select sum(rechum_cantidad)as "numero_unidad",depuni_codigo
             from  sidpla_recursohumano
             group by  depuni_codigo,depuni_codigo) h using (depuni_codigo)
+WHERE d.uniorg_tipounidad='1'
 order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 	</queryString>
 	<field name="numero_unidadesdeptos" class="java.lang.Long"/>
@@ -67,110 +51,110 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 	<group name="NOMBRE UNIDAD">
 		<groupExpression><![CDATA[$F{nom_padre}]]></groupExpression>
 		<groupHeader>
-			<band height="175">
+			<band height="168">
 				<rectangle>
-					<reportElement x="0" y="139" width="555" height="20" forecolor="#6B7277" backcolor="#6B7277"/>
+					<reportElement x="0" y="132" width="555" height="20" forecolor="#6B7277" backcolor="#6B7277"/>
 				</rectangle>
 				<rectangle>
-					<reportElement x="0" y="159" width="555" height="15" forecolor="#A39999" backcolor="#A39999"/>
+					<reportElement x="0" y="152" width="555" height="15" forecolor="#A39999" backcolor="#A39999"/>
 				</rectangle>
 				<textField isStretchWithOverflow="true">
-					<reportElement x="4" y="27" width="543" height="20"/>
+					<reportElement x="4" y="20" width="543" height="20"/>
 					<textElement>
 						<font size="12" isBold="true" isItalic="true" isUnderline="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{nom_padre}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement x="132" y="53" width="416" height="15"/>
+					<reportElement x="132" y="46" width="416" height="15"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{infgen_direccion}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="4" y="52" width="120" height="15"/>
+					<reportElement x="4" y="45" width="120" height="15"/>
 					<textElement>
 						<font size="10" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Direccion]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement x="132" y="69" width="151" height="15"/>
+					<reportElement x="132" y="62" width="151" height="15"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{infgen_telefono}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="4" y="68" width="120" height="15"/>
+					<reportElement x="4" y="61" width="120" height="15"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Telefono]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="5" y="84" width="120" height="15"/>
+					<reportElement x="5" y="77" width="120" height="15"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Fax]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="5" y="100" width="120" height="15"/>
+					<reportElement x="5" y="93" width="120" height="15"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Email]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement x="132" y="84" width="100" height="15"/>
+					<reportElement x="132" y="77" width="100" height="15"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{infgen_fax}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
-					<reportElement x="132" y="100" width="415" height="15"/>
+					<reportElement x="132" y="93" width="415" height="15"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{infgen_email}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="6" y="142" width="538" height="20" forecolor="#0E0404"/>
+					<reportElement x="6" y="135" width="538" height="20" forecolor="#0E0404"/>
 					<textElement textAlignment="Center">
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Departamentos y Unidades que forman la Dependencia con sus empleados]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="3" y="158" width="150" height="15"/>
+					<reportElement x="3" y="151" width="150" height="15"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[unidad/Dependencia]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="238" y="157" width="73" height="15"/>
+					<reportElement x="238" y="150" width="73" height="15"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[ Empleados]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="312" y="157" width="100" height="15"/>
+					<reportElement x="312" y="150" width="100" height="15"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[telefono]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="410" y="157" width="100" height="15"/>
+					<reportElement x="410" y="150" width="100" height="15"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
 					<text><![CDATA[Fax]]></text>
 				</staticText>
 				<textField isBlankWhenNull="true">
-					<reportElement x="236" y="116" width="100" height="15"/>
+					<reportElement x="236" y="109" width="100" height="15"/>
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{numero_unidadesdeptos}]]></textFieldExpression>
 				</textField>
 				<staticText>
-					<reportElement x="4" y="116" width="213" height="15"/>
+					<reportElement x="4" y="109" width="213" height="15"/>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
@@ -200,11 +184,11 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 			</staticText>
 			<image>
 				<reportElement x="453" y="5" width="105" height="65"/>
-				<imageExpression><![CDATA["/var/www/images/minsalud.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/minsalud.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="5" y="17" width="105" height="50"/>
-				<imageExpression><![CDATA["/var/www/images/sidpla1.png"]]></imageExpression>
+				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/escudo.gif"]]></imageExpression>
 			</image>
 		</band>
 	</title>
@@ -212,7 +196,7 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 		<band splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="15" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement style="Column header" x="42" y="-16" width="197" height="20" forecolor="#0A0701"/>
 				<textElement verticalAlignment="Middle">
@@ -269,17 +253,13 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 	<pageFooter>
 		<band height="26" splitType="Stretch">
 			<textField>
-				<reportElement x="472" y="3" width="100" height="20"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
-				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+				<reportElement x="450" y="0" width="80" height="20"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" De"]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement x="517" y="3" width="56" height="20"/>
-				<textElement>
-					<font size="8"/>
-				</textElement>
+			<textField evaluationTime="Report">
+				<reportElement x="530" y="0" width="40" height="20"/>
+				<textElement/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 		</band>

@@ -269,6 +269,14 @@ class UnidadOrganizativaDao {
                                                 ORDER BY UO.nombreUnidad ASC");
         return $obtenerUnidad->getResult();
     }
+    
+     public function obtenerDepen() {
+        $obtenerUnidad = $this->em->createQuery("SELECT UO
+                                                FROM MinSalSidPlaAdminBundle:UnidadOrganizativa UO
+                                                WHERE UO.tipoUnidad IN ('1')
+                                                ORDER BY UO.nombreUnidad ASC");
+        return $obtenerUnidad->getResult();
+    }
 
 }
 

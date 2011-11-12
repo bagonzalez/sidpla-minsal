@@ -28,6 +28,39 @@ $(document).ready(function(){
         }
     });
     
+   $('#enviar2').button();
+   $('#enviar2').click(function(evento) {
+          if($("#idUniSal").val()==0){
+                       alert("Seleccione una Unidad de Salud para generar el Reporte");
+                        evento.preventDefault();
+          }
+         /*else{ 
+             this.form.action='{{ path('MinSalSidPlaCensoBundle_generarCensoUsuario') }}';
+         }*/
+    });
+    
+   $('#enviar1').button();
+   $('#enviar1').click(function(evento) {
+          if($("#idUniSal").val()==0){
+                       alert("Seleccione una Unidad de Salud para generar el Reporte");
+                        evento.preventDefault();
+          }
+         /*else{ 
+             this.form.action='{{ path('MinSalSidPlaCensoBundle_generarCensoUsuario') }}';
+         }*/
+    });
+    
+   $('#enviar5').button();
+   $('#enviar5').click(function(evento) {
+          if($("#idUniSal").val()==0){
+                       alert("Seleccione una Unidad de Salud para generar el Reporte");
+                        evento.preventDefault();
+          }
+         /*else{ 
+             this.form.action='{{ path('MinSalSidPlaCensoBundle_generarCensoUsuario') }}';
+         }*/
+    });
+    
     
     $.getJSON('reportesUniSalJSON', function(data) {
          var i=0;
@@ -72,6 +105,9 @@ $(document).ready(function(){
                 <td colspan="2"  align="center">
                     <input type="submit" value="Justificacion" id="enviar3"/>
                     <input type="submit" value="Evaluacion Infraestructura" id="enviar4"/>
+                    <input type="submit" value="Censo Poblacion" id="enviar2"/>
+                    <input type="submit" value="Indicadores de Salud" id="enviar1"/>
+                    <input type="submit" value="Plantilla de Act. Trazadoras" id="enviar5"/>
                 </td>
             </tr> 
                   

@@ -1,9 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 namespace MinSal\SidPla\PrograMonitoreoBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -29,12 +25,6 @@ use MinSal\SidPla\TemplateUnisalBundle\EntityDao\AreaClasificacionDao;
 use MinSal\SidPla\IndicadoresTemplateBundle\EntityDao\EvaluacionIndicadorDao;
 use MinSal\SidPla\IndicadoresTemplateBundle\Entity\EvaluacionIndicador;
 
-
-/**
- * Description of AccionEvaluaciondeResultadosUnisalController
- *
- * @author edwin
- */
 class AccionEvaluaciondeResultadosUnisalController extends Controller{
  
     public function obtenerPaoSeguimiento(){
@@ -148,7 +138,7 @@ class AccionEvaluaciondeResultadosUnisalController extends Controller{
          
          $promMonDao=new ProgramacionMonitoreoDao($this->getDoctrine());
        
-         $trimestre=4;
+         $trimestre = $promMonDao->trimestrePao();
          $mes=3;
          
          $uniControl=new UnidadOrganizativa();            

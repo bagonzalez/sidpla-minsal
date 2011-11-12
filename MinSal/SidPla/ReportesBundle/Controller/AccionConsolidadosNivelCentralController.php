@@ -61,28 +61,28 @@ class AccionConsolidadosNivelCentralController extends Controller {
         return $response;
     }
     
-    public function reporteSeleccionadoJSONAction() {
-        $request = $this->getRequest();
-        $id = $request->get('idUniSal');
-                
+    public function reportesDepenAction() {
+        $opciones = $this->getRequest()->getSession()->get('opciones');
+        return $this->render('MinSalSidPlaReportesBundle:Consolidados:reportesDependencias.html.twig', array('opciones' => $opciones));
+    }
+    
+    public function reportesDepenJSONAction() {
         $unidadOrgDao = new UnidadOrganizativaDao($this->getDoctrine());
-        $unidad = $unidadOrgDao->getUnidadOrg($id);
+        $unidades = $unidadOrgDao->obtenerDepen();
 
-        $numfilas = count($unidad);
+        $numfilas = count($unidades);
 
+        $aux = new UnidadOrganizativa();
         $i = 0;
-        $paoSegumiento = new Pao();
-        $paoSegumiento = $unidadOrgDao->getPaoSeguimiento($id);
         
-        $rows[$i]['id']=$id;
-        $rows[$i]['cell'][0]=$unidad->getNombreUnidad();
-        $rows[$i]['cell'][1]=$unidad->getIdUnidadOrg();
-        $rows[$i]['cell'][2]=$paoSegumiento->getCesopoblacion()->getIdCensoPoblacion();
-        $rows[$i]['cell'][3]=$paoSegumiento->getJustificacion()->getIdJustificacion();
-        $rows[$i]['cell'][4]=$paoSegumiento->getInfraEvaluadaPao()->getIdInfraEva();
-        $rows[$i]['cell'][5]=$paoSegumiento->getEvaluacionResultado()->getEvaIndi();
-        $rows[$i]['cell'][6]=$paoSegumiento->getIdPao();
-         
+        foreach ($unidades as $aux) {
+            $rows[$i]['id'] =$aux->getIdUnidadOrg();
+            $rows[$i]['cell'] = array($aux->getNombreUnidad(),
+                $aux->getIdUnidadOrg()
+            );            
+            $i++;
+        }
+
         if ($numfilas != 0) {
             array_multisort($rows, SORT_ASC);
         } else {
@@ -102,9 +102,6 @@ class AccionConsolidadosNivelCentralController extends Controller {
         $response = new Response($jsonresponse);
         return $response;
     }
-    
-
-
 }
 
 ?>
