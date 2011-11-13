@@ -36,9 +36,14 @@
             </td>            
         </tr>
         <tr>
-            <td colspan="2">
+            <td colspan="2" style=" font-size: 12px; font-family: Verdana, Geneva, sans-serif; color: red " >
                 {% if error %}
-                    <div>{{ error }}</div>
+                 {% if error=='Bad credentials' %}
+                    <div>NO EXISTE ESE USUARIO</div>
+                 {% endif %}
+                 {% if error=='The presented password is invalid.' %}
+                    <div>PASSWORD EQUIVOCADO VUELVA A DIGITARLO</div>
+                 {% endif %}
                 {% endif %}
             </td>
         </tr>

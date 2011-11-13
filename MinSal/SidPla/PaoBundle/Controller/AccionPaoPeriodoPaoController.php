@@ -123,7 +123,7 @@ class AccionPaoPeriodoPaoController extends Controller {
         $periodoPaoDao = new PeriodoPaoDao($this->getDoctrine());
         
         
-        $periodoPaoDao->editarPeriodoOficial($codPerPao, $tipoPeriodoCodigo, $fechIniPerPao, $fechFinPerPao);
+        $periodoPaoDao->editarPeriodoPao($codPerPao, $fechIniPerPao, $fechFinPerPao);
 
 
 

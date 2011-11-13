@@ -59,8 +59,8 @@ class IndicadorSaludDao {
 
     public function editarIndicadorSalud($idIndSal,$idTipInd, $nombreIndSalud,$form1IndSalud,$form2IndSalud,$tipoEvalua, $correlativo) {
 
-        /*$tipoIndicadorDao = new TipoIndicadorDao($this->doctrine);
-        $tipoIndicador = $tipoIndicadorDao->getTipoIndicadorEspecifico($idTipInd);*/
+        $tipoIndicadorDao = new TipoIndicadorDao($this->doctrine);
+        $tipoIndicador = $tipoIndicadorDao->getTipoIndicadorEspecifico($idTipInd);
 
         $indicadorSalud = $this->getIndicadorSaludEspecifico($idIndSal);
         $indicadorSalud->setForm1IndSalud($form1IndSalud);
@@ -69,12 +69,12 @@ class IndicadorSaludDao {
         $indicadorSalud->setTipoEvalua($tipoEvalua);
         $indicadorSalud->setCorrelativo($correlativo);
         
-        //$indicadorSalud->setTipoIndicador($tipoIndicador);
+        $indicadorSalud->setTipoIndicador($tipoIndicador);
         
         
         $this->em->persist($indicadorSalud);
-       // $tipoIndicador->addIndicadoresAsoc($indicadorSalud);
-        //$this->em->persist($tipoIndicador);
+        $tipoIndicador->addIndicadoresAsoc($indicadorSalud);
+        $this->em->persist($tipoIndicador);
         $this->em->flush();
 
         $matrizMensajes = array('El proceso de ingresar Resultado Esperado termino con exito ');
