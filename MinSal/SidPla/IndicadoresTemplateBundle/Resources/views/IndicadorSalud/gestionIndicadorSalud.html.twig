@@ -45,6 +45,10 @@ $(document).ready(function(){
                         <td style=" font-size: 12px" >Nombre del Indicador(*):</td>
                         <td><textarea class="required" rows="4" cols="83" name= 'descIndSal'  size="83%" id="descIndSal" >{{descIndSal}}</textarea></td>
                     </tr>
+                     <tr>
+                        <td style=" font-size: 12px" >Correlativo(*):</td>
+                        <td><input class="required" name="correlativo" id="correlativo" value="{{ correlativo }}" type="text" size="2" maxlength="10"/></td></td>
+                    </tr>
                     <tr>
                         <td style=" font-size: 12px" >Tipo de Indicador(*):</td>
                         <td><select id='tipInd' name='tipInd'>
@@ -59,7 +63,7 @@ $(document).ready(function(){
                     </tr>
                     <tr>
                         <td style=" font-size: 12px" >Formula 1(*):</td>
-                        <td><input class="required" name="form1IndSal" id="form1IndSal" type="text" size="80" maxlength="250"value="{{form1IndSal}}"/></td>
+                        <td><input class="required" name="form1IndSal" id="form1IndSal" type="text" size="80" maxlength="250" value="{{form1IndSal}}"/></td>
                     </tr>
                     <tr>
                         <td style=" font-size: 12px" >Formula 2(*):</td>
@@ -101,6 +105,10 @@ $(document).ready(function(){
                         <td style=" font-size: 12px" >Nombre del Indicador(*):</td>
                         <td><textarea class="required" rows="4" cols="83" name= 'descIndSal'  size="83%" id="descIndSal" ></textarea></td>
                     </tr>
+                     <tr>
+                        <td style=" font-size: 12px" >Correlativo(*):</td>
+                        <td><input class="required" name="correlativo" id="correlativo" type="text" size="2" maxlength="10"/></td></td>
+                    </tr>
                     <tr>
                         <td style=" font-size: 12px" >Tipo de Indicador(*):</td>
                         <td><select id='tipInd' name='tipInd'>
@@ -118,7 +126,7 @@ $(document).ready(function(){
                     </tr>
                     <tr>
                         <td style=" font-size: 12px" >Formula 2(*):</td>
-                        <td><input class="required" name="form2IndSal" id="form2IndSal" type="text" size="80" maxlength="50"/></td>
+                        <td><input class="required" name="form2IndSal" id="form2IndSal" type="text" size="80" maxlength="250"/></td>
                     </tr>
                     <tr>
                         <td style=" font-size: 12px; text-align: right" valign="top"  >Resultado(*):</td>
