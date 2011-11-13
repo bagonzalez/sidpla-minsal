@@ -38,6 +38,9 @@ MinSalSidPlaReportesBundle_reporteFormulario1:
     pattern:  /reporteFormulario1
     defaults: { _controller: MinSalSidPlaReportesBundle:Admin:reporteFormulario1 } 
      
+MinSalSidPlaReportesBundle_reporteFormulario1Unisal:
+    pattern:  /reporteFormulario1Unisal
+    defaults: { _controller: MinSalSidPlaReportesBundle:Admin:reporteFormulario1Unisal } 
 
 
 #ACCIONCONSOLIDADOSNIVELCENTRAL

@@ -74,29 +74,36 @@ class AccionAdminResultadosEsperadosController extends Controller {
         }else
             $resultadosEsperados = $objetivoAux->getResultadoEsperado();
         $x = count($resultadosEsperados);
-
+        
+        $idUnidad=$this->obtenerUnidadOrg()->getIdUnidadOrg();
         if ($x == 0) {
             if (isset($objUniControl)) {
                 if ($objUniControl == 'true')
                     return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
                             array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec,
-                                'objUniControl' => $objUniControl,'resultadoDao'=>$resultadoReDao));
+                                'objUniControl' => $objUniControl,'resultadoDao'=>$resultadoReDao,'idDepen' => $idUnidad));
                 else
-                    return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec));
+                    return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
+                            array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec,'idDepen' => $idUnidad));
             }
             else
-                return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec));
+                return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
+                        array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec,'idDepen' => $idUnidad));
         }
         else {
             if (isset($objUniControl)) {
                 if ($objUniControl == 'true')
                     return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec, 'resultadosEsperado' => $resultadosEsperados,
-                                'objUniControl' => $objUniControl,'resultadoDao'=>$resultadoReDao));
+                                'objUniControl' => $objUniControl,'resultadoDao'=>$resultadoReDao,'idDepen' => $idUnidad));
                 else
-                    return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec, 'resultadosEsperado' => $resultadosEsperados));
+                    return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
+                            array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec, 
+                                'resultadosEsperado' => $resultadosEsperados,'idDepen' => $idUnidad));
             }
             else
-                return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec, 'resultadosEsperado' => $resultadosEsperados));
+                return $this->render('MinSalSidPlaGesObjEspBundle:GestionResultadosEsperados:manttResultadosEsperados.html.twig', 
+                        array('opciones' => $opciones, 'idfila' => $idfila, 'descripcion' => $objetivosEspec, 
+                            'resultadosEsperado' => $resultadosEsperados,'idDepen' => $idUnidad));
         }
     }
 

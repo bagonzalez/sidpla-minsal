@@ -61,6 +61,28 @@ $(document).ready(function(){
          }*/
     });
     
+   $('#enviar6').button();
+   $('#enviar6').click(function(evento) {
+          if($("#idUniSal").val()==0){
+                       alert("Seleccione una Unidad de Salud para generar el Reporte");
+                        evento.preventDefault();
+          }
+         else{ 
+             this.form.action= '{{ path('MinSalSidPlaReportesBundle_reporteFormulario1Unisal') }}';
+         }
+    });
+    
+   $('#enviar7').button();
+   $('#enviar7').click(function(evento) {
+          if($("#idUniSal").val()==0){
+                       alert("Seleccione una Unidad de Salud para generar el Reporte");
+                        evento.preventDefault();
+          }
+         else{ 
+             this.form.action= '{{ path('MinSalSidPlaReportesBundle_reporteCaracOrg') }}';
+         }
+    });
+    
     
     $.getJSON('reportesUniSalJSON', function(data) {
          var i=0;
@@ -103,7 +125,14 @@ $(document).ready(function(){
             </tr> 
             <tr>
                 <td colspan="2"  align="center">
+                    <input type="submit" value="Informacion General" id="enviar6"/>
+                    <input type="submit" value="Caracteristicas de la Organizacion" id="enviar7"/>
                     <input type="submit" value="Justificacion" id="enviar3"/>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"  align="center">
+                   <br/>
                     <input type="submit" value="Evaluacion Infraestructura" id="enviar4"/>
                     <input type="submit" value="Censo Poblacion" id="enviar2"/>
                     <input type="submit" value="Indicadores de Salud" id="enviar1"/>

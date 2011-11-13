@@ -11,9 +11,17 @@ $(document).ready(function(){
          
          
     });
+    $('#reporteProgramon').click(function(evento) {
+          this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteDependenciaInvidual') }}';
+    });
+    $('#agregar').click(function() {
+            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_ingresoActividades') }}';
+    });
 });
  </script>
    <form action= "" method="post">
+       <input type="hidden" name="anioConsultar" value="{{"now" | date("Y")+1}} " />
+        <input type="hidden" name="idDepen" value="{{ idDepen }} " />
         <table align="center">
             <tr><td align="center"><h1>Gestion de Resultados Esperados</h1>
                 </td>
@@ -40,7 +48,13 @@ $(document).ready(function(){
             <tr colspan="2">
                 <td align="center" class="tdBotonIconoAgregar">
                    <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}" name="agregar" id="agregar"/>
-                   <br/>Agregar Resultado Esperado
+                    {% if objUniControl is defined %}
+                   {% if objUniControl =='false' %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input width="60" height="60" type="image" src="{{ asset('/images/iconos/documento.png')}}" id="reporteProgramon"/>
+                    {% endif%}{% endif%}
+                   <br/>Agregar Res. Esperado {% if objUniControl is defined %}
+                   {% if objUniControl =='false' %}&nbsp;&nbsp;&nbsp; Reporte{% endif%}{% endif%}
                 </td>
             </tr>
             <tr>

@@ -5,9 +5,14 @@ $(document).ready(function(){
     $('#agregar').click(function() {
             this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_ingresoActividades') }}';
     });
+    $('#reporteProgramon').click(function(evento) {
+          this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteDependenciaInvidual') }}';
+    });
 });
       </script>
    <form id = "formulario"  action="" method="post">
+       <input type="hidden" name="anioConsultar" value="{{"now" | date("Y")+1}} " />
+        <input type="hidden" name="idDepen" value="{{ idDepen }} " />
         <table align="center">
             <tr>
                 <td align="center" colspan="2" >
@@ -42,7 +47,11 @@ $(document).ready(function(){
            <tr>
                 <td align="center" class="tdBotonIconoAgregar" colspan="2">
                    <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}" name="agregar" id="agregar" />
-                   <br/>Agregar Actividad
+                   {% if objUniControl =='false' %}
+                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <input width="60" height="60" type="image" src="{{ asset('/images/iconos/documento.png')}}" id="reporteProgramon"/>
+                     {% endif%}
+                   <br/>Agregar Actividad {% if objUniControl =='false' %}&nbsp;&nbsp;&nbsp; Reporte{% endif%}
                 </td>
             </tr>
             <tr>
