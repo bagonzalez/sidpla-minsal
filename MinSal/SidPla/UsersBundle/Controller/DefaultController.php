@@ -109,7 +109,7 @@ class DefaultController extends Controller {
                 $msj[0][0] = 'NO SE PUEDE CREAR UN USUARIO PARA ESTE EMPLEADO PORQUE YA TIENE ASIGNADO UNO';
                 $msj[0][1] = FALSE;
             } else {
-                if ($bu != 0) {
+                if ($bud != 0) {
                     $msj[0][0] = 'ESTE USUARIO YA ESTA EN USO, ESCRIBA UNO NUEVA EN NOMBRE DE USUARIO';
                     $msj[0][1] = FALSE;
                 } else {
