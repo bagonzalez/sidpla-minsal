@@ -1,13 +1,17 @@
 {% extends "MinSalSidPlaUsersBundle::layout.html.twig" %}
 
 {% block fos_user_content %}
-
+<script type="text/javascript">
+  $(document).ready(function(){
+      $("#_submit").button();
+});
+</script>
 <br></br>
     
 <form  action="{{ path("fos_user_security_check") }}" method="post">
     <table align='center'>
         <tr>
-            <td colspan="2" align='center' ><h3>Ingreso al Sitema</h3></td>
+            <td colspan="2" align='center' ><h1>Ingreso al Sistema</h1></td>
         </tr>
         <tr>
             <td>
