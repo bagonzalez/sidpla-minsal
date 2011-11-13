@@ -102,39 +102,44 @@
                                                          y: 100,
                                                          borderWidth: 0
                                                       },
-                                                      series: [{
+                                                      series: [
+                                                      {% if evalIndicadorResultado.paoEvaResul is defined %} 
+                                                      {                                                         
                                                          name: '{{evalIndicadorResultado.paoEvaResul.anio}}',
                                                          data: [
                                                              {% for resulEvaIndicador in indi.getEvaluacionesIndicador %}                                                                                         
                                                                   {% if resulEvaIndicador.indSalud.codIndSalud == indi.codIndSalud %} 
                                                                      {% if evalIndicadorResultado.codEvaRes == resulEvaIndicador.evaResul.codEvaRes %}
-                                                                         {{ resulEvaIndicador.getResEvaInd }},
+                                                                         {% if trimestre >= resulEvaIndicador.trimEvaInd  %}
+                                                                            {{ resulEvaIndicador.getResEvaInd }},
+                                                                         {% endif %}           
                                                                      {% endif %}
                                                                   {% endif %} 
                                                              {% endfor%}
                                                          ]
-                                                      }, {
+                                                      },
+                                                      {% endif %}
+                                                      {% if evalIndicadorResultadoAnioAnterior.paoEvaResul is defined %} 
+                                                      {
                                                          name: '{{evalIndicadorResultadoAnioAnterior.paoEvaResul.anio}}',
                                                          data: [
                                                              {% for resulEvaIndicador in indi.getEvaluacionesIndicador %}                                                                                         
                                                                   {% if resulEvaIndicador.indSalud.codIndSalud == indi.codIndSalud %} 
                                                                      {% if evalIndicadorResultadoAnioAnterior.codEvaRes == resulEvaIndicador.evaResul.codEvaRes %}
-                                                                         {{ resulEvaIndicador.getResEvaInd }},
+                                                                         {% if trimestre >= resulEvaIndicador.trimEvaInd  %}
+                                                                            {{ resulEvaIndicador.getResEvaInd }},
+                                                                         {% endif %}
                                                                      {% endif %}
                                                                   {% endif %} 
                                                              {% endfor%}                                                             
                                                                  
                                                          ]
-                                                      }]
+                                                      }
+                                                      {% endif %}
+                                                      ]
                                                    });
    
-   
-                                          
-                                                
-                                               {% for evaluacionIndicaAnt in evalIndicadorResultadoAnioAnterior.getEvaIndi  %}
-                                                   
-                                               {% endfor %}
-                                                   
+                      
                                                    
                                         {% endif %}
                                     {% endif %}
