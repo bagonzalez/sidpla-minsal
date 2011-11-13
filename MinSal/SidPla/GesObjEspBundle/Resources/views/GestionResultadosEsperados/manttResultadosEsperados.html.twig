@@ -14,9 +14,7 @@ $(document).ready(function(){
     $('#reporteProgramon').click(function(evento) {
           this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteDependenciaInvidual') }}';
     });
-    $('#agregar').click(function() {
-            this.form.action='{{ path('MinSalSidPlaGesObjEspBundle_ingresoActividades') }}';
-    });
+    
 });
  </script>
    <form action= "" method="post">
@@ -49,12 +47,18 @@ $(document).ready(function(){
                 <td align="center" class="tdBotonIconoAgregar">
                    <input width="60" height="60" type="image" src="{{ asset('/images/iconos/agregar.png')}}" name="agregar" id="agregar"/>
                     {% if objUniControl is defined %}
-                   {% if objUniControl =='false' %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input width="60" height="60" type="image" src="{{ asset('/images/iconos/documento.png')}}" id="reporteProgramon"/>
-                    {% endif%}{% endif%}
+                        {% if objUniControl =='false' %}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input width="60" height="60" type="image" src="{{ asset('/images/iconos/documento.png')}}" id="reporteProgramon"/>
+                        {% endif%}
+                    {% else%}
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <input width="60" height="60" type="image" src="{{ asset('/images/iconos/documento.png')}}" id="reporteProgramon"/>
+             
+                    {% endif%}
                    <br/>Agregar Res. Esperado {% if objUniControl is defined %}
-                   {% if objUniControl =='false' %}&nbsp;&nbsp;&nbsp; Reporte{% endif%}{% endif%}
+                   {% if objUniControl =='false' %}&nbsp;&nbsp;&nbsp; Reporte{% endif%}{% else %}&nbsp;&nbsp;&nbsp; Reporte{% endif%}
                 </td>
             </tr>
             <tr>
