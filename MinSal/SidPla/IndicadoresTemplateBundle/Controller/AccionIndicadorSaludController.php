@@ -79,7 +79,8 @@ class AccionIndicadorSaludController extends Controller  {
         return $this->render('MinSalSidPlaIndicadoresTemplateBundle:IndicadorSalud:gestionIndicadorSalud.html.twig', 
                 array('opciones' => $opciones, 'idObj'=>$idObj,'descObj'=>$descObj,'idIndSal'=>$indicador->getCodIndSalud(),'tipoIndicador'=>$tipoIndicador,
                     'tipInd'=>$indicador->getTipoIndicador()->getCodTipIndi(),'descIndSal'=>$indicador->getNombreIndSalud(),
-                    'form1IndSal'=>$indicador->getForm1IndSalud(),'form2IndSal'=>$indicador->getForm2IndSalud(),'resIndSal'=>$indicador->getTipoEvalua()));
+                    'form1IndSal'=>$indicador->getForm1IndSalud(),'form2IndSal'=>$indicador->getForm2IndSalud(),'resIndSal'=>$indicador->getTipoEvalua(),
+                    'correlativo'=>$indicador->getCorrelativo() ));
     }
 
     public function manttIndicadorSaludAction() {
@@ -93,16 +94,17 @@ class AccionIndicadorSaludController extends Controller  {
         $form1IndSalud=$request->get('form1IndSal');
         $form2IndSalud=$request->get('form2IndSal');
         $tipoEvalua=$request->get('resIndSal');
+        $correlativo=$request->get('correlativo');
 
         $indicadorSaludDao= new IndicadorSaludDao($this->getDoctrine());
 
         
         switch ($operacion) {
             case 'add':
-                $indicadorSaludDao->agregarIndicadorSalud($idObj, $idTipInd, $nombreIndSalud, $form1IndSalud, $form2IndSalud,$tipoEvalua);
+                $indicadorSaludDao->agregarIndicadorSalud($idObj, $idTipInd, $nombreIndSalud, $form1IndSalud, $form2IndSalud,$tipoEvalua, $correlativo);
              break;
             case 'edit':
-             $indicadorSaludDao->editarIndicadorSalud($idIndSal, $idTipInd, $nombreIndSalud, $form1IndSalud, $form2IndSalud, $tipoEvalua);
+             $indicadorSaludDao->editarIndicadorSalud($idIndSal, $idTipInd, $nombreIndSalud, $form1IndSalud, $form2IndSalud, $tipoEvalua, $correlativo);
             break;
         }
 

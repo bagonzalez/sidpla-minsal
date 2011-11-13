@@ -58,6 +58,7 @@ class ObjetivoEspeUnisal {
      *      joinColumns={@ORM\JoinColumn(name="objespuni_codigo", referencedColumnName="objespuni_codigo")},
      *      inverseJoinColumns={@ORM\JoinColumn(name="indsalu_codigo", referencedColumnName="indsalu_codigo")}
      *      ) 
+     * @ORM\OrderBy({"correlativo" = "ASC"})
      */   
     private $indicadoresSalud;
 

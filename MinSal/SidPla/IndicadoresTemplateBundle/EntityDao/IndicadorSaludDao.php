@@ -26,10 +26,11 @@ class IndicadorSaludDao {
         return $indicadorSalud;
     }
 
-    public function agregarIndicadorSalud($idObj,$idTipInd, $nombreIndSalud,$form1IndSalud,$form2IndSalud,$tipoEvalua) {
+    public function agregarIndicadorSalud($idObj,$idTipInd, $nombreIndSalud,$form1IndSalud,$form2IndSalud,$tipoEvalua, $numIndicadores) {
 
         $objEspUnidalDao = new ObjetivoEspeUnisalDao($this->doctrine);
         $objEspUnidal = $objEspUnidalDao->getObjetivoEspeUnisalEspecifico($idObj);
+        
         
         $tipoIndicadorDao = new TipoIndicadorDao($this->doctrine);
         $tipoIndicador = $tipoIndicadorDao->getTipoIndicadorEspecifico($idTipInd);
@@ -39,6 +40,7 @@ class IndicadorSaludDao {
         $indicadorSalud->setForm2IndSalud($form2IndSalud);
         $indicadorSalud->setNombreIndSalud($nombreIndSalud);
         $indicadorSalud->setTipoEvalua($tipoEvalua);
+        $indicadorSalud->setCorrelativo($numIndicadores);
         
         $indicadorSalud->setTipoIndicador($tipoIndicador);
         $indicadorSalud->setObjEspUnisal($objEspUnidal);
@@ -55,7 +57,7 @@ class IndicadorSaludDao {
         return $matrizMensajes;
     }
 
-    public function editarIndicadorSalud($idIndSal,$idTipInd, $nombreIndSalud,$form1IndSalud,$form2IndSalud,$tipoEvalua) {
+    public function editarIndicadorSalud($idIndSal,$idTipInd, $nombreIndSalud,$form1IndSalud,$form2IndSalud,$tipoEvalua, $correlativo) {
 
         /*$tipoIndicadorDao = new TipoIndicadorDao($this->doctrine);
         $tipoIndicador = $tipoIndicadorDao->getTipoIndicadorEspecifico($idTipInd);*/
@@ -65,6 +67,7 @@ class IndicadorSaludDao {
         $indicadorSalud->setForm2IndSalud($form2IndSalud);
         $indicadorSalud->setNombreIndSalud($nombreIndSalud);
         $indicadorSalud->setTipoEvalua($tipoEvalua);
+        $indicadorSalud->setCorrelativo($correlativo);
         
         //$indicadorSalud->setTipoIndicador($tipoIndicador);
         

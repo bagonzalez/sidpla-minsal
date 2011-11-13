@@ -48,6 +48,13 @@ class IndicadorSalud {
      * @ORM\Column(name="indsalu_tipoevalua", type="integer")
      */
     private $tipoEvalua;
+    
+    /**
+     * @var integer $correlativo
+     *
+     * @ORM\Column(name="indsalu_correlativo", type="integer")
+     */
+    private $correlativo;
 
     /**
      * @ORM\OneToMany(targetEntity="FormulaIndicador", mappedBy="indicadorSalud")
@@ -98,6 +105,25 @@ class IndicadorSalud {
      */
     public function getTipoEvalua() {
         return $this->tipoEvalua;
+    }
+    
+    
+     /**
+     * Set correlativo
+     *
+     * @param integer $correlativo
+     */
+    public function setCorrelativo($correlativo) {
+        $this->correlativo = $correlativo;
+    }
+
+    /**
+     * Get correlativo
+     *
+     * @return integer 
+     */
+    public function getCorrelativo() {
+        return $this->correlativo;
     }
 
     /**

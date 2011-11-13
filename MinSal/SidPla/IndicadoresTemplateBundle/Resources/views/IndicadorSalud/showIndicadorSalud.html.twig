@@ -1,6 +1,7 @@
 <table WIDTH='85%' class="tablaPlantilla">
     <thead>
         <tr  style=" font-size: 14px;">
+            <th class="thEncabezadoPlantilla"><strong>  Correlativo </strong></th>
             <th class="thEncabezadoPlantilla"><strong>  Indicador de Salud </strong></th>
             <th class="thEncabezadoPlantilla"><strong>  Tipo Indicador </strong></th>
             <th class="thEncabezadoPlantilla"><strong>  Acciones </strong></th>
@@ -10,6 +11,7 @@
 {% if indSalud is defined %}   
     {% for  indicador in  indSalud%}
     <tr>
+        <td class="tdCuerpoPlantilla">{{ indicador.getCorrelativo}} </td>
         <td class="tdCuerpoPlantilla">{{ indicador.getNombreIndSalud}} </td>
         <td class="tdCuerpoPlantilla" align="center" >{{ indicador.getTipoIndicador.getNombreTipIndi}} </td>
          <td class="tdBotonesIconos" WIDTH='60' >

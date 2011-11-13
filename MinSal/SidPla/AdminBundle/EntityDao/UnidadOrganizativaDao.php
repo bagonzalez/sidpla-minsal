@@ -153,14 +153,16 @@ class UnidadOrganizativaDao {
 
         $anio = date('Y') - 1;
         $pao = new Pao();
+        $paoAnioAnt = new Pao();
 
         foreach ($paos as $pao) {
             if ($pao->getAnio() == $anio) {
-                return $pao;
+                $paoAnioAnt=$pao;
+                return $paoAnioAnt;
             }
         }
 
-        return $pao;
+        return $paoAnioAnt;
     }
 
     public function getPaoAnio($id, $anio) {
