@@ -923,6 +923,8 @@ class AccionAdminCensoUsuarioController extends Controller{
     
       public function generarCensoUsuarioDirPlaAction(){
           
+       $opciones = $this->getRequest()->getSession()->get('opciones');
+          
        $request = $this->getRequest();
        $unidad = (int) $request->get('idUniSal');
         
@@ -940,7 +942,7 @@ class AccionAdminCensoUsuarioController extends Controller{
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
         $objWriter->save('php://output');
                                  
-        return $this->consultarInformacionComplementariaAction();                  
+        return $this->render('MinSalSidPlaReportesBundle:Consolidados:reportesUniSal.html.twig', array('opciones' => $opciones));                 
     }  
     
 }
