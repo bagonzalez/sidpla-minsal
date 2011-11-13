@@ -142,6 +142,49 @@ class AdminController extends Controller {
         }
         return $this->getResponse();
     }
+    
+     public function reporteFormulario1UnisalAction() {
+        $request=$this->getRequest();
+        $idUniOrg=$request->get('unidadorgcod');           
+        $idUnisal=$request->get('idUniSal');
+        try {
+            // obtiene la ruta del reporte 
+            $compileManager = new JavaClass("net.sf.jasperreports.engine.JasperCompileManager");
+            $report = $compileManager->compileReport(__DIR__ . "/../Resources/jasperReports/reportInfoGeneralUniOrg/ReporteInfoEspecificoUnisal.jrxml");
+            $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
+
+            $params = new Java("java.util.HashMap");
+            if(isset($idUnisal))
+                $idUniOrg=$idUnisal;
+                
+            $params->put("ve_uniorg", new java("java.lang.Integer", $idUniOrg));
+
+            $Conn = $this->crearConexion();
+
+            $jasperPrint = $fillManager->fillReport($report, $params, $Conn);
+            $outputPath = realpath(".") . "/" . "output.pdf";
+
+            $exportManager = new JavaClass("net.sf.jasperreports.engine.JasperExportManager");
+            $exportManager->exportReportToPdfFile($jasperPrint, $outputPath);
+
+            header("Content-type: application/pdf");
+            readfile($outputPath);
+            unlink($outputPath);
+            $Conn->close();
+
+            $this->getResponse()->clearHttpHeaders();
+            $this->getResponse()->setHttpHeader('Pragma: public', true);
+            $this->getResponse()->setContentType('application/pdf');
+            $this->getResponse()->sendHttpHeaders();
+        } catch (Exception $ex) {
+            print $ex->getCause();
+            if ($Conn != null) {
+                $Conn->close();
+            }
+            throw $ex;
+        }
+        return $this->getResponse();
+    }
 
 }
 

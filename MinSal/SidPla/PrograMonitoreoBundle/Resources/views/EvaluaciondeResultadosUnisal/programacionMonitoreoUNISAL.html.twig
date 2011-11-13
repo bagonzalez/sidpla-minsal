@@ -81,59 +81,59 @@
                                                                 <tr>
                                                                         <td colspan="3" align="center" size="100%" >                            
                                                                             <div   class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{ obj.codObjEspUni }}Div">
-                                                                                <table border="1" >
+                                                                                <table class="tablaPlantilla" >
                                                                                     <thead>
                                                                                                            <tr>
                                                                                                             {% if trimestre == 1 %} 
-                                                                                                              <th align="center" colspan="9" ><h3>Indicadores</h3> </th>
+                                                                                                              <th align="center" colspan="9" class="thEncabezadoPlantilla"><h3>Indicadores</h3> </th>
                                                                                                                {% endif %}     
                                                                                                                 {% if trimestre == 2 %} 
-                                                                                                                 <th align="center" colspan="14" ><h3>Indicadores</h3> </th>
+                                                                                                                 <th align="center" colspan="14" class="thEncabezadoPlantilla" ><h3>Indicadores</h3> </th>
                                                                                                                 {% endif %}
                                                                                                                 {% if trimestre == 3 %} 
-                                                                                                                 <th align="center" colspan="19" ><h3>Indicadores</h3> </th>
+                                                                                                                 <th align="center" colspan="19" class="thEncabezadoPlantilla" ><h3>Indicadores</h3> </th>
                                                                                                                 {% endif %}
                                                                                                                 {% if trimestre == 4 %} 
-                                                                                                                 <th align="center" colspan="24" ><h3>Indicadores</h3> </th>
+                                                                                                                 <th align="center" colspan="24" class="thEncabezadoPlantilla" ><h3>Indicadores</h3> </th>
                                                                                                                 {% endif %}
                                                                                                             </tr>
                                                                                                             <tr>                                                                        
-                                                                                                                <th rowspan="2" >Indicador</th>
-                                                                                                                <th rowspan="2">Carácter del indicador</th>
-                                                                                                                <th rowspan="2">Formula 1</th>
-                                                                                                                <th rowspan="2">Formula 2</th>
+                                                                                                                <th rowspan="2" class="thEncabezadoPlantilla" >Indicador</th>
+                                                                                                                <th rowspan="2" class="thEncabezadoPlantilla">Carácter del indicador</th>
+                                                                                                                <th rowspan="2" class="thEncabezadoPlantilla">Formula 1</th>
+                                                                                                                <th rowspan="2" class="thEncabezadoPlantilla">Formula 2</th>
                                                                                                                 {% if trimestre >= 1 %} 
-                                                                                                                    <th colspan="5" >Primer Trimestre</th>
+                                                                                                                    <th colspan="5" class="thEncabezadoPlantilla" >Primer Trimestre</th>
                                                                                                                 {% endif %}
                                                                                                                 {% if trimestre >= 2 %} 
-                                                                                                                    <th colspan="5" >Segundo Trimestre</th>
+                                                                                                                    <th colspan="5" class="thEncabezadoPlantilla" >Segundo Trimestre</th>
                                                                                                                 {% endif %}
                                                                                                                 {% if trimestre >= 3 %} 
-                                                                                                                    <th colspan="5" >Tercer Trimestre</th>
+                                                                                                                    <th colspan="5" class="thEncabezadoPlantilla" >Tercer Trimestre</th>
                                                                                                                 {% endif %}
                                                                                                                 {% if trimestre >= 4 %} 
-                                                                                                                    <th colspan="5" >Cuarto Trimestre</th>
+                                                                                                                    <th colspan="5" class="thEncabezadoPlantilla" >Cuarto Trimestre</th>
                                                                                                                 {% endif %}
                                                                                                             <tr>
                                                                                                                {% if trimestre >= 1 %} 
-                                                                                                                    <th>AL TRIM 1</th>
+                                                                                                                    <th class="thEncabezadoPlantilla">AL TRIM 1</th>
                                                                                                                     
                                                                                                                {% endif %}
 
                                                                                                                {% if trimestre >= 2 %} 
 
-                                                                                                                    <th>AL TRIM 2.</th>
+                                                                                                                    <th class="thEncabezadoPlantilla">AL TRIM 2.</th>
                                                                                                                                                                                           
                                                                                                                {% endif %} 
 
                                                                                                                {% if trimestre >= 3 %} 
-                                                                                                                    <th>AL TRIM 3.</th>
+                                                                                                                    <th class="thEncabezadoPlantilla">AL TRIM 3.</th>
                                                                                                                   
                                                                                                                {% endif %} 
 
                                                                                                                {% if trimestre >= 4 %}  
-                                                                                                                    <th>AL TRIM 4.</th>
-                                                                                                                    <th>AL final.</th>
+                                                                                                                    <th class="thEncabezadoPlantilla">AL TRIM 4.</th>
+                                                                                                                    <th class="thEncabezadoPlantilla">AL final.</th>
                                                                                                                {% endif %}  
 
                                                                                                             </tr>
@@ -144,16 +144,16 @@
                                                                                                         <tfoot>
                                                                                                             <tr>
                                                                                                                 {% if trimestre == 1 %} 
-                                                                                                                 <td align="center" colspan="9" > 
+                                                                                                                 <td align="center" colspan="9" class="tdCuerpoPlantilla" > 
                                                                                                                 {% endif %}     
                                                                                                                 {% if trimestre == 2 %} 
-                                                                                                                 <td align="center" colspan="14" > 
+                                                                                                                 <td align="center" colspan="14" class="tdCuerpoPlantilla" > 
                                                                                                                 {% endif %}
                                                                                                                 {% if trimestre == 3 %} 
-                                                                                                                 <td align="center" colspan="19" > 
+                                                                                                                 <td align="center" colspan="19" class="tdCuerpoPlantilla" > 
                                                                                                                 {% endif %}
                                                                                                                 {% if trimestre == 4 %} 
-                                                                                                                 <td align="center" colspan="24" > 
+                                                                                                                 <td align="center" colspan="24" class="tdCuerpoPlantilla"> 
                                                                                                                 {% endif %}
                                                                                                                   
                                                                                                                                                                       
@@ -167,22 +167,22 @@
                                                                                                             <tbody>
                                                                                                             {% for indi in obj.getIndicadoresSalud %}    {# for res in obj.getResultEspObjT) ) #}  
                                                                                       <tr>                       
-                                                                                    <td>
+                                                                                    <td class="tdCuerpoPlantilla">
                                                                                         {{ indi.nombreIndSalud}}
                                                                                     </td>
-                                                                                    <td align="center">
+                                                                                    <td align="center" class="tdCuerpoPlantilla">
                                                                                         {{ indi.tipoIndicador.getNombreTipIndi }}
                                                                                     </td>
-                                                                                    <td >
+                                                                                    <td class="tdCuerpoPlantilla">
                                                                                         {{  indi.form1IndSalud }}
                                                                                     </td>
-                                                                                    <td align="center">
+                                                                                    <td align="center" class="tdCuerpoPlantilla">
                                                                                         {{ indi.form2IndSalud}}
                                                                                     </td>
                                                                                 
                                                                                       
                                                                                     {% for resulEvaIndicador in indi.getEvaluacionesIndicador %} 
-                                                                                      <td align="center">                                                                                    
+                                                                                      <td align="center" class="tdCuerpoPlantilla">                                                                                    
                                                                                        {% if resulEvaIndicador.trimEvaInd == trimestre   %}    
                                                                                      <input name="resultadoEvaIndicador_{{ resulEvaIndicador.codEvaInd }}" size="2" value="{{ resulEvaIndicador.getResEvaInd }}"  ></input>
                                                                                             

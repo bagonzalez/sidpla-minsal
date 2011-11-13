@@ -188,6 +188,7 @@ class DefaultController extends Controller {
        $request = $this->getRequest();
        $idUnidad = $request->get('idUnidad');
        $idDepen=$request->get('idDepen');
+       $idUnisal=$request->get('idUniSal');
       
      try {
          $compileManager = new JavaClass("net.sf.jasperreports.engine.JasperCompileManager");
@@ -198,7 +199,11 @@ class DefaultController extends Controller {
          if(isset($idDepen)){
                 $idUnidad=$idDepen;
                 
-            }
+         }
+         if(isset($idUnisal)){
+                $idUnidad=$idUnisal;
+                
+         }
          $params->put("idUorg", new java("java.lang.Integer", $idUnidad)); //asignando valor al parametro
          
          $Conn = $this->crearConexion();

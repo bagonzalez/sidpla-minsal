@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportprueba1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="81"/>
+	<property name="ireport.y" value="83"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -17,42 +17,41 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<queryString>
-		<![CDATA[select d.numero_unidadesdeptos,d.uniorg_codigo as "cod_padre",d.uniorg_nombre as "nom_padre",
-	(Select uniorg_nombre FROM sidpla_unidadorganizativa WHERE uniorg_codigo=d.uniorg_codigo1) papaDeEsta,
-	c.uniorg_codigo,c.uniorg_nombre,e.infgen_direccion,e.infgen_telefono,e.infgen_fax,
-	e.infgen_email,h.numero_unidad,to_char(e.infgen_fechaactualizacion,'dd-mm-YYYY') infgen_fechaactualizacion,(SELECT empleado_primernombre||' '||empleado_segundonombre||' '||empleado_primerapellido||' '||empleado_segundoapellido
+		<![CDATA[SELECT x.nomhija, x.nompapa, x.infgen_direccion, x.infgen_email,x.infgen_fax,
+ 	to_char(x.infgen_fechaactualizacion,'dd-mm-YYYY') fecha, x.infgen_telefono,y.subDpto,y.cant,
+(SELECT empleado_primernombre||' '||empleado_segundonombre||' '||empleado_primerapellido||' '||empleado_segundoapellido
 FROM sidpla_empleado
-WHERE empleado_codigo = d.uniorg_responsable) NombreRes
-from(select  count(a.uniorg_nombre)as"numero_unidadesdeptos",a.uniorg_codigo, a.uniorg_nombre,a.uniorg_codigo1,a.uniorg_responsable
-  	from sidpla_unidadorganizativa a
-	inner join sidpla_unidadorganizativa b on (a.uniorg_codigo=b.uniorg_codigo1)
-	group by a.uniorg_nombre, a.uniorg_codigo,a.uniorg_codigo1,a.uniorg_responsable
-	order by a.uniorg_nombre) d
-right join  sidpla_unidadorganizativa c on (d.uniorg_codigo=c.uniorg_codigo1)
-left join  sidpla_informaciongeneral e on (e.uniorg_codigo=d.uniorg_codigo)
-left join  sidpla_informaciongeneral r on (r.uniorg_codigo=c.uniorg_codigo)
-left join  sidpla_departamentounidad g on (d.uniorg_codigo=g.uniorg_codigo) and (g.depuni_nombre=c.uniorg_nombre)
-left join  (select sum(rechum_cantidad)as "numero_unidad",depuni_codigo
-            from  sidpla_recursohumano
-            group by  depuni_codigo,depuni_codigo) h using (depuni_codigo)
-WHERE d.uniorg_codigo=$P{ve_uniorg}
-order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
+WHERE empleado_codigo = x.uniorg_responsable) NombreRes
+FROM (SELECT "uniHija".uniorg_nombre nomhija, "uniPapa".uniorg_nombre nompapa, sidpla_informaciongeneral.infgen_direccion, sidpla_informaciongeneral.infgen_email,
+		sidpla_informaciongeneral.infgen_fax, sidpla_informaciongeneral.infgen_fechaactualizacion,
+		sidpla_informaciongeneral.infgen_telefono, "uniHija".uniorg_responsable,"uniHija".uniorg_codigo uniorg
+	FROM sidpla_informaciongeneral, sidpla_unidadorganizativa "uniHija",sidpla_unidadorganizativa "uniPapa"
+	WHERE sidpla_informaciongeneral.uniorg_codigo = "uniHija".uniorg_codigo AND "uniHija".uniorg_codigo1 = "uniPapa".uniorg_codigo AND
+		"uniHija".uniorg_codigo = $P{ve_uniorg}) x
+left Join
+	(Select  sidpla_tiporecursohumano.tiprechum_descripcion||' de '||sidpla_departamentounidad.depuni_nombre subDpto,
+		sidpla_recursohumano.rechum_cantidad cant,sidpla_departamentounidad.uniorg_codigo
+	 FROM  sidpla_departamentounidad, sidpla_recursohumano, sidpla_tiporecursohumano
+	 WHERE  sidpla_departamentounidad.depuni_codigo = sidpla_recursohumano.depuni_codigo AND
+		sidpla_recursohumano.tiprechum_codigo = sidpla_tiporecursohumano.tiprechum_codigo AND
+		sidpla_departamentounidad.uniorg_codigo = $P{ve_uniorg}) y
+ON (x.uniorg=y.uniorg_codigo)]]>
 	</queryString>
-	<field name="numero_unidadesdeptos" class="java.lang.Long"/>
-	<field name="cod_padre" class="java.lang.Integer"/>
-	<field name="nom_padre" class="java.lang.String"/>
-	<field name="papadeesta" class="java.lang.String"/>
-	<field name="uniorg_codigo" class="java.lang.Integer"/>
-	<field name="uniorg_nombre" class="java.lang.String"/>
+	<field name="nomhija" class="java.lang.String"/>
+	<field name="nompapa" class="java.lang.String"/>
 	<field name="infgen_direccion" class="java.lang.String"/>
-	<field name="infgen_telefono" class="java.lang.String"/>
-	<field name="infgen_fax" class="java.lang.String"/>
 	<field name="infgen_email" class="java.lang.String"/>
-	<field name="numero_unidad" class="java.lang.Long"/>
-	<field name="infgen_fechaactualizacion" class="java.lang.String"/>
+	<field name="infgen_fax" class="java.lang.String"/>
+	<field name="fecha" class="java.lang.String"/>
+	<field name="infgen_telefono" class="java.lang.String"/>
+	<field name="subdpto" class="java.lang.String"/>
+	<field name="cant" class="java.lang.Integer"/>
 	<field name="nombreres" class="java.lang.String"/>
-	<group name="NOMBRE UNIDAD">
-		<groupExpression><![CDATA[$F{nom_padre}]]></groupExpression>
+	<variable name="nomhija_1" class="java.lang.Integer" resetType="Group" resetGroup="nomhija" calculation="Count">
+		<variableExpression><![CDATA[$F{nomhija}]]></variableExpression>
+	</variable>
+	<group name="nomhija">
+		<groupExpression><![CDATA[]]></groupExpression>
 		<groupHeader>
 			<band height="327">
 				<textField isStretchWithOverflow="true">
@@ -67,7 +66,7 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 					<textElement>
 						<font size="10" isBold="false" isItalic="false" isUnderline="false"/>
 					</textElement>
-					<textFieldExpression><![CDATA[$F{nom_padre}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{nomhija}]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 					<reportElement mode="Opaque" x="237" y="83" width="319" height="30" backcolor="#99FF99"/>
@@ -141,7 +140,7 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 					<textElement>
 						<font isBold="true"/>
 					</textElement>
-					<text><![CDATA[Unidad/Dependencia]]></text>
+					<text><![CDATA[unidad/Dependencia]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="415" y="311" width="73" height="15"/>
@@ -150,18 +149,6 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 					</textElement>
 					<text><![CDATA[ Empleados]]></text>
 				</staticText>
-				<textField isBlankWhenNull="true">
-					<reportElement mode="Opaque" x="450" y="275" width="100" height="15" backcolor="#99FF99"/>
-					<box>
-						<pen lineWidth="1.0"/>
-						<topPen lineWidth="1.0"/>
-						<leftPen lineWidth="1.0"/>
-						<bottomPen lineWidth="1.0"/>
-						<rightPen lineWidth="1.0"/>
-					</box>
-					<textElement textAlignment="Center" verticalAlignment="Middle"/>
-					<textFieldExpression><![CDATA[$F{numero_unidadesdeptos}]]></textFieldExpression>
-				</textField>
 				<staticText>
 					<reportElement x="3" y="265" width="447" height="35"/>
 					<textElement>
@@ -193,7 +180,7 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement/>
-					<textFieldExpression><![CDATA[$F{papadeesta}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{nompapa}]]></textFieldExpression>
 				</textField>
 				<staticText>
 					<reportElement x="3" y="199" width="214" height="28"/>
@@ -219,7 +206,7 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 						<rightPen lineWidth="1.0"/>
 					</box>
 					<textElement/>
-					<textFieldExpression><![CDATA[$F{infgen_fechaactualizacion}]]></textFieldExpression>
+					<textFieldExpression><![CDATA[$F{fecha}]]></textFieldExpression>
 				</textField>
 				<textField isBlankWhenNull="true">
 					<reportElement mode="Opaque" x="240" y="199" width="316" height="25" backcolor="#99FF99"/>
@@ -304,7 +291,7 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{uniorg_nombre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{subdpto}]]></textFieldExpression>
 			</textField>
 			<textField isBlankWhenNull="true">
 				<reportElement mode="Opaque" x="415" y="0" width="74" height="20" backcolor="#99FF99"/>
@@ -316,41 +303,41 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 					<rightPen lineWidth="1.0"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<textFieldExpression><![CDATA[$F{numero_unidad}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{cant}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="66" splitType="Stretch">
+		<band height="68" splitType="Stretch">
 			<staticText>
-				<reportElement x="27" y="40" width="161" height="26"/>
+				<reportElement x="32" y="41" width="188" height="27"/>
 				<box>
-					<topPen lineWidth="0.5"/>
+					<topPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Firma y sello
-Responsable Dependencia]]></text>
+Director(a) Establecimiento de Salud]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="327" y="40" width="203" height="26"/>
+				<reportElement x="349" y="41" width="188" height="27"/>
 				<box>
-					<topPen lineWidth="0.5"/>
+					<topPen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center"/>
 				<text><![CDATA[Firma y sello
-Responsable Dependencia que aprueba Plan]]></text>
+Coordinador(a) SIBASI]]></text>
 			</staticText>
 		</band>
 	</columnFooter>
 	<pageFooter>
 		<band height="26" splitType="Stretch">
 			<textField>
-				<reportElement x="450" y="0" width="80" height="20"/>
+				<reportElement x="429" y="0" width="80" height="20"/>
 				<textElement textAlignment="Right"/>
 				<textFieldExpression><![CDATA["Pagina "+$V{PAGE_NUMBER}+" De"]]></textFieldExpression>
 			</textField>
 			<textField evaluationTime="Report">
-				<reportElement x="530" y="0" width="40" height="20"/>
+				<reportElement x="509" y="0" width="40" height="20"/>
 				<textElement/>
 				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>

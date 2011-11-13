@@ -59,16 +59,17 @@ class AccionAdminActividadesController extends Controller {
         $resultadoesperado = $resultadoAux->getResEspeDesc();
         //OBTENIENDO LAS ACTIVIDADES
         $Actividades = $resultadoAux->getActividades();
+        $idUnidad=$this->obtenerUnidadOrg()->getIdUnidadOrg();
         
         $x=count($Actividades);
         if($x==0)
             return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:manttActividades.html.twig', 
                 array('opciones' => $opciones, 'idfila' => $idfila, 'idfilaResultado' => $idfilaResultado, 
-                    'descripcion' => $objetivosEspec, 'descripcionResultado' => $resultadoesperado,'objUniControl'=>$objUniControl));
+                    'descripcion' => $objetivosEspec, 'descripcionResultado' => $resultadoesperado,'objUniControl'=>$objUniControl,'idDepen' => $idUnidad));
        else
            return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:manttActividades.html.twig', 
                 array('opciones' => $opciones, 'idfila' => $idfila, 'idfilaResultado' => $idfilaResultado, 'objUniControl'=>$objUniControl,
-                    'descripcion' => $objetivosEspec, 'descripcionResultado' => $resultadoesperado,'actividades'=>$Actividades));
+                    'descripcion' => $objetivosEspec, 'descripcionResultado' => $resultadoesperado,'actividades'=>$Actividades,'idDepen' => $idUnidad));
            
                    
         
@@ -410,6 +411,19 @@ class AccionAdminActividadesController extends Controller {
         $resultadoDao->editResulActividad($trimCuatro, $idcuatro, $fechaInicioCuarto, $fechaFinCuarto,$costoProgramadoSegmentoCuatro);
 
        return $this->consultarActividadesAction();
+    }
+      public function obtenerUnidadOrg() {
+
+        $user = new User();
+        $empleado = new Empleado();
+        $user = $this->get('security.context')->getToken()->getUser();
+        $empleado = $user->getEmpleado();
+        $idUnidad = $empleado->getUnidadOrganizativa()->getIdUnidadOrg();
+        $unidaDao = new UnidadOrganizativaDao($this->getDoctrine());
+        $unidad = new UnidadOrganizativa();
+        $unidad = $unidaDao->getUnidadOrg($idUnidad);
+
+        return $unidad;
     }
 
 }

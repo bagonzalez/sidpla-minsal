@@ -119,68 +119,68 @@
                                                                                             <tr>
                                                                                                 <td colspan="3" >
                                                                                                     <div align="center"  class="visibility:visible;overflow-y:auto;overflow-x:auto;top:0;width:100%;height:135;position:relative;"  id="{{ res.codResEspUni }}ResDiv">
-                                                                                                        <table border="1">
+                                                                                                        <table class="tablaPlantilla" >
                                                                                                         <thead>
                                                                                                             <tr>
                                                                                                                 {% if mes == 1 %} 
-                                                                                                                    <th align="center" colspan="9" ><h3>Actividades</h3> </th>
+                                                                                                                    <th align="center" colspan="9" class="thEncabezadoPlantilla"><h3>Actividades</h3> </th>
                                                                                                                 {% endif %}     
                                                                                                                 {% if mes == 2 %} 
-                                                                                                                 <th align="center" colspan="14" ><h3>Actividades</h3> </th>
+                                                                                                                 <th align="center" colspan="14" class="thEncabezadoPlantilla"><h3>Actividades</h3> </th>
                                                                                                                 {% endif %}
                                                                                                                 {% if mes == 3 %} 
-                                                                                                                 <th align="center" colspan="19" ><h3>Actividades</h3> </th>
+                                                                                                                 <th align="center" colspan="19" class="thEncabezadoPlantilla"><h3>Actividades</h3> </th>
                                                                                                                 {% endif %}
                                                                                                                 {% if mes == 4 %} 
-                                                                                                                 <th align="center" colspan="24" ><h3>Actividades</h3> </th>
+                                                                                                                 <th align="center" colspan="24" class="thEncabezadoPlantilla"><h3>Actividades</h3> </th>
                                                                                                                 {% endif %}
                                                                                                             </tr>
                                                                                                             <tr>                                                                        
-                                                                                                                <th rowspan="2" >Descripcion</th>
-                                                                                                                <th rowspan="2">Meta Anual</th>
-                                                                                                                <th rowspan="2">Responsable</th>
-                                                                                                                <th rowspan="2">Beneficiarios</th>
-                                                                                                                <th rowspan="2">Costo Programado</th>
+                                                                                                                <th rowspan="2" class="thEncabezadoPlantilla">Descripcion</th>
+                                                                                                                <th rowspan="2"class="thEncabezadoPlantilla">Meta Anual</th>
+                                                                                                                <th rowspan="2"class="thEncabezadoPlantilla">Responsable</th>
+                                                                                                                <th rowspan="2"class="thEncabezadoPlantilla">Beneficiarios</th>
+                                                                                                                <th rowspan="2"class="thEncabezadoPlantilla">Costo Programado</th>
                                                                                                                 {% if mes >= 1 %} 
-                                                                                                                    <th colspan="1" >Enero</th>
+                                                                                                                    <th colspan="1" class="thEncabezadoPlantilla">Enero</th>
                                                                                                                 {% endif %}
                                                                                                                 {% if mes >= 2 %} 
-                                                                                                                    <th colspan="1" >Febrero</th>
+                                                                                                                    <th colspan="1" class="thEncabezadoPlantilla">Febrero</th>
                                                                                                                 {% endif %}
                                                                                                                 {% if mes >= 3 %} 
-                                                                                                                    <th colspan="1" >Marzo</th>
+                                                                                                                    <th colspan="1" class="thEncabezadoPlantilla">Marzo</th>
                                                                                                                 {% endif %}
                                                                                                                 {% if mes >= 4 %} 
-                                                                                                                    <th colspan="1" >Abril</th>
+                                                                                                                    <th colspan="1" class="thEncabezadoPlantilla">Abril</th>
                                                                                                                 {% endif %}
                                                                                                                 {% if mes >= 5 %} 
-                                                                                                                    <th colspan="1" >Mayo</th>
+                                                                                                                    <th colspan="1" class="thEncabezadoPlantilla">Mayo</th>
                                                                                                                 {% endif %}
                                                                                                                 {% if mes >= 6 %} 
-                                                                                                                    <th colspan="1" >Junio</th>
+                                                                                                                    <th colspan="1" class="thEncabezadoPlantilla">Junio</th>
                                                                                                                 {% endif %}
                                                                                                                 {% if mes >= 7 %} 
-                                                                                                                    <th colspan="1" >Julio</th>
+                                                                                                                    <th colspan="1" class="thEncabezadoPlantilla">Julio</th>
                                                                                                                 {% endif %}
                                                                                                                 {% if mes >= 8 %} 
-                                                                                                                    <th colspan="1" >Agosto</th>
+                                                                                                                    <th colspan="1" class="thEncabezadoPlantilla">Agosto</th>
                                                                                                                 {% endif %}  
                                                                                                                 {% if mes >= 9 %} 
-                                                                                                                    <th colspan="1" >Septiembre</th>
+                                                                                                                    <th colspan="1" class="thEncabezadoPlantilla">Septiembre</th>
                                                                                                                 {% endif %}  
                                                                                                                 {% if mes >= 10 %} 
-                                                                                                                    <th colspan="1" >Octubre</th>
+                                                                                                                    <th colspan="1" class="thEncabezadoPlantilla">Octubre</th>
                                                                                                                 {% endif %}  
                                                                                                                 {% if mes >= 11 %} 
-                                                                                                                    <th colspan="1" >Noviembre</th>
+                                                                                                                    <th colspan="1" class="thEncabezadoPlantilla">Noviembre</th>
                                                                                                                 {% endif %}  
                                                                                                                 {% if mes >= 12 %} 
-                                                                                                                    <th colspan="1" >Diciembre</th>
+                                                                                                                    <th colspan="1" class="thEncabezadoPlantilla">Diciembre</th>
                                                                                                                 {% endif %}  
 
                                                                                                             <tr>
                                                                                                                {% for i in range(1, mes) %} 
-                                                                                                                    <th>Program.</th>
+                                                                                                                    <th class="thEncabezadoPlantilla">Program.</th>
                                                                                                                {% endfor %} 
 
                                                                                                             </tr>
@@ -191,16 +191,16 @@
                                                                                                         <tfoot>
                                                                                                             <tr>
                                                                                                                 {% if mes == 1 %} 
-                                                                                                                 <td align="center" colspan="9" > 
+                                                                                                                 <td align="center" colspan="9" class="tdCuerpoPlantilla"> 
                                                                                                                 {% endif %}     
                                                                                                                 {% if mes == 2 %} 
-                                                                                                                 <td align="center" colspan="14" > 
+                                                                                                                 <td align="center" colspan="14" class="tdCuerpoPlantilla"> 
                                                                                                                 {% endif %}
                                                                                                                 {% if mes == 3 %} 
-                                                                                                                 <td align="center" colspan="19" > 
+                                                                                                                 <td align="center" colspan="19" class="tdCuerpoPlantilla"> 
                                                                                                                 {% endif %}
                                                                                                                 {% if mes == 4 %} 
-                                                                                                                 <td align="center" colspan="24" > 
+                                                                                                                 <td align="center" colspan="24" class="tdCuerpoPlantilla"> 
                                                                                                                 {% endif %}                                                                                 
 
                                                                                                                  </td>
@@ -211,24 +211,24 @@
                                                                                                             {% for actividad in actividades %}                                                                     
                                                                                                                {% if actividadAux.codActUniTemp == actividad.actTemp.codActUniTemp %}                                                                            
                                                                                                                         <tr>
-                                                                                                                            <td>
+                                                                                                                            <td class="tdCuerpoPlantilla">
                                                                                                                                 {{ actividadAux.descActUniTemp }}
                                                                                                                             </td>
-                                                                                                                            <td align="center">
+                                                                                                                            <td align="center" class="tdCuerpoPlantilla">
                                                                                                                                 <input name="metaAnualActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividad.metaAnualActUni }}"  ></input>
                                                                                                                             </td>
-                                                                                                                            <td>
+                                                                                                                            <td class="tdCuerpoPlantilla">
                                                                                                                                 <input name="responsableActividadUniSal_{{actividad.codActUni }}"  value="{{ actividad.getResponsableActUni }}"  ></input>                                                                                       
                                                                                                                             </td>
-                                                                                                                            <td align="center">
+                                                                                                                            <td align="center" class="tdCuerpoPlantilla">
                                                                                                                                 <input name="actividadUniSal_{{actividad.codActUni }}"  value="{{ actividad.getBeneActUni }}"  ></input>
                                                                                                                             </td>
-                                                                                                                            <td align="center">
+                                                                                                                            <td align="center" class="tdCuerpoPlantilla">
                                                                                                                                 <input name="costoProgramon_{{actividad.codActUni }}" size="2" value="{{ actividad.getCosto }}"  ></input>
                                                                                                                             </td>
                                                                                                                             {% for resultadoAct in actividad.getResultadoactUniSal %}
                                                                                                                                 {% if mes >= resultadoAct.mes  %}
-                                                                                                                                    <td align="center">
+                                                                                                                                    <td align="center" class="tdCuerpoPlantilla">
                                                                                                                                         <input name="resultadoProgramado_{{ resultadoAct.idResulAct }}" size="2" value="{{ resultadoAct.getResulActProgramado }}"  ></input>
                                                                                                                                     </td>
 

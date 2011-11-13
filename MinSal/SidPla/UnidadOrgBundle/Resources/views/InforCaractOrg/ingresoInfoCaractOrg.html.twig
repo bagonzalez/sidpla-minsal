@@ -7,12 +7,17 @@
         $("#formulario1").validate();
         $('#form1').button();
         $('#form1').click(function() {
+          {%if tipoUnidad!='2'%}
             this.form.action= '{{ path('MinSalSidPlaReportesBundle_reporteFormulario1') }}';            
-        
+          {%else%}
+            this.form.action= '{{ path('MinSalSidPlaReportesBundle_reporteFormulario1Unisal') }}';            
+          {%endif%}    
         });
         
         $('#reportCarac').click(function() {
-        $('#formulario').get(0).setAttribute('action', '{{ path('MinSalSidPlaReportesBundle_reporteCaracOrg') }}');            
+            $('#formulario').get(0).setAttribute('action', '{{ path('MinSalSidPlaReportesBundle_reporteCaracOrg') }}');            
+           
+                
         
         }); 
         
