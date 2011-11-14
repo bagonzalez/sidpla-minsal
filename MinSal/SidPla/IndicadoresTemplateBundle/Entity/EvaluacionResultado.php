@@ -23,6 +23,7 @@ class EvaluacionResultado {
 
     /**
      * @ORM\OneToMany(targetEntity="EvaluacionIndicador", mappedBy="evaResul")
+     * @ORM\OrderBy({ "trimEvaInd" = "ASC"})
      */
     private $evaIndi;
 
