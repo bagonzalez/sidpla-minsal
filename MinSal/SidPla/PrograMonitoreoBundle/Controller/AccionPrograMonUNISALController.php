@@ -223,18 +223,20 @@ class AccionPrograMonUNISALController extends Controller {
                     $idActividadUniSal=substr($tags[$i], 25);
                     $valorRealizado=$valores[$i];
                     
-                    $actividadUnisal=$actividadUnisalDao->getActividadUniSal($idActividadUniSal);
-                    $actividadUnisal->setMetaAnualActUni($valorRealizado);         
-                    $actividadUnisalDao->guardarActividad($actividadUnisal);       
+                    if($valorRealizado>=0){                    
+                        $actividadUnisal=$actividadUnisalDao->getActividadUniSal($idActividadUniSal);
+                        $actividadUnisal->setMetaAnualActUni($valorRealizado);         
+                        $actividadUnisalDao->guardarActividad($actividadUnisal);       
+                    }
                 }                
                  
                 if((preg_match('/responsableActividadUniSal_/',$cadena))==1){
                     $idActividadUniSal=substr($tags[$i], 27);
                     $responsableActUni=$valores[$i];                    
                     
-                    $actividadUnisal=$actividadUnisalDao->getActividadUniSal($idActividadUniSal);
-                    $actividadUnisal->setResponsableActUni($responsableActUni);         
-                    $actividadUnisalDao->guardarActividad($actividadUnisal);                     
+                    //$actividadUnisal=$actividadUnisalDao->getActividadUniSal($idActividadUniSal);
+                    //$actividadUnisal->setResponsableActUni($responsableActUni);         
+                    //$actividadUnisalDao->guardarActividad($actividadUnisal);                     
                 }
                 
                 if((preg_match('/costoProgramon_/',$cadena))==1){
