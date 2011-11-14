@@ -138,7 +138,7 @@ class AccionEvaluaciondeResultadosUnisalController extends Controller{
          
          $promMonDao=new ProgramacionMonitoreoDao($this->getDoctrine());
        
-         $trimestre = 3;
+         $trimestre = $promMonDao->trimestrePao();
          $mes=date('m');
          
          $uniControl=new UnidadOrganizativa();            
