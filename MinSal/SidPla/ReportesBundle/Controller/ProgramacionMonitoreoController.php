@@ -89,7 +89,7 @@ class ProgramacionMonitoreoController extends Controller {
         $request = $this->getRequest();
         $unidad = (int) $request->get('idDepen');
         $anio = (int) $request->get('anioConsultar');
-        $idDepen = $request->get('idDepen');
+        $idDepen = (int)$request->get('idDepen');
         try {
             $compileManager = new JavaClass("net.sf.jasperreports.engine.JasperCompileManager");
             $report = $compileManager->compileReport(__DIR__ . "/../Resources/jasperReports/reportConsolidadoIndividualDep/consolidadocentral.jrxml");
