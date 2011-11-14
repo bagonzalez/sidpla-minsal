@@ -33,19 +33,13 @@ class PeriodoPaoDao {
         return $periodoPao;
     }
     
-    public function editarPeriodoOficial($codPerPao,$tipPerioPerPao,$fechIniPerPao,$fechFinPerPao) {
+    public function editarPeriodoPao($codPerPao,$fechIniPerPao,$fechFinPerPao) {
 
         $periodoPao= $this->getPeriodoPaoEspecifico($codPerPao);
         
         $periodoPao->setFechIniPerPao($fechIniPerPao);
         $periodoPao->setFechFinPerPao($fechFinPerPao);
-        $idTipoPeriodo=(int) $tipPerioPerPao;
-        
-        $tipoPeriodoDao = new TipoPeriodoDao($this->doctrine);
                
-        $tipoPeriodo = $tipoPeriodoDao->getTipoPeriodoEspecifico($idTipoPeriodo);
-        $periodoPao->setTipPeriodoPerPao($tipoPeriodo);
-        
 
         $this->em->persist($periodoPao);
         $this->em->flush();

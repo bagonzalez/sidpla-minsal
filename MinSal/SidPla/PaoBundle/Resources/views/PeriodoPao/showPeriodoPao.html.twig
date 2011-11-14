@@ -62,7 +62,7 @@
      var gr = jQuery('#tabperiodopao').jqGrid('getGridParam','selrow');
      if( gr != null )
        jQuery("#tabperiodopao").jqGrid('editGridRow',gr,{closeAfterEdit:true,editCaption: "Editando Cronograma PAO",
-                 width:550,height:200,closeAfterEdit : true,align:'center',reloadAfterSubmit:true,
+                 width:550,height:200,closeAfterEdit : true,align:'center',reloadAfterSubmit:true,afterSubmit:despuesEditar, 
                  top : 250 ,left: 250,width: 600,processData: "Cargando...",
                  onclickSubmit: function(rp_ge, postdata) {
                         alert("Periodo Pao Editado con exito!");
