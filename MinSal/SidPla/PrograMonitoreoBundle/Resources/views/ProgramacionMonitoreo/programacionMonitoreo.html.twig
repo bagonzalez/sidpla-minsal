@@ -40,54 +40,90 @@
                              
                           {% for res in obj.getResultadoEsperado %}
                             {% if( (res.unidadOrganizativa.getIdUnidadOrg == idUnidad) or (res.unidadOrganizativa is null ) ) %} 
-                               
-                                           var chart{{ res.idResEsp }};
-                                           var colores=['#4572A7','#AA4643','#89A54E','#80699B','#3D96AE','#DB843D' ];
+                                
+                                            var chart{{ res.idResEsp }};
+        
                                            chart = new Highcharts.Chart({
                                               chart: {
-                                                 renderTo: 'container{{ res.idResEsp }}',
-                                                 margin: [50, 0, 0, 0],
-                                                 plotBackgroundColor: 'none',
-                                                 plotBorderWidth: 0,
-                                                 plotShadow: false            
+                                                 renderTo: 'container{{ res.idResEsp}}',
+                                                 defaultSeriesType: 'bar'
                                               },
                                               title: {
-                                                 text: 'Resultado Global de Actividades'
+                                                 text: 'Porcentaje Cumplimiento de Actividades'
                                               },
                                               subtitle: {
-                                                 text: 'Segun Trimestre'
+                                                 text: 'Fuente: SidPla'
+                                              },
+                                              xAxis: {
+                                                 categories: [
+                                                     
+                                                      {% for actividadAux in res.actividades %}                                                                            
+                                                            {% for actividad in actividades %}                                                                     
+                                                               {% if actividadAux.idAct == actividad.idAct %}  
+                                                                        '{{ actividad.getActDescripcion }}',
+                                                               {% endif %}                                                                                   
+                                                            {% endfor %}
+                                                     {% endfor %}                                                  
+                                                 ],
+                                                 title: {
+                                                    text: null
+                                                 }
+                                              },
+                                              yAxis: {
+                                                 min: 0,
+                                                 title: {
+                                                    text: 'Porcentaje Cumplimiento',
+                                                    align: 'high'
+                                                 }
                                               },
                                               tooltip: {
                                                  formatter: function() {
-                                                    return '<b>'+ this.series.name +'</b><br/>'+ 
-                                                       this.point.name +': '+ this.y +' %';
+                                                    return ''+
+                                                        this.series.name +': '+ this.y +' %';
                                                  }
                                               },
-                                               series: 
-                                                   [{
-                                                         type: 'pie',
-                                                         name: 'Trimestre {{trimestre}}',
-                                                         size: '40%',
-                                                         innerSize: '20%',
-                                                         data: [                                                   
+                                              plotOptions: {
+                                                 bar: {
+                                                    dataLabels: {
+                                                       enabled: true
+                                                    }
+                                                 }
+                                              },
+                                              legend: {
+                                                 layout: 'vertical',
+                                                 align: 'right',
+                                                 verticalAlign: 'top',
+                                                 x: -100,
+                                                 y: 100,
+                                                 floating: true,
+                                                 borderWidth: 1,
+                                                 backgroundColor: Highcharts.theme.legendBackgroundColor || '#FFFFFF',
+                                                 shadow: true
+                                              },
+                                              credits: {
+                                                 enabled: false
+                                              },
+                                                   series: [
+                                                         {
+                                                                name: '{{ 'now' | date('Y')}}',                                                                                         
+                                                                data: [
+                                                                    
                                                             {% for actividadAux in res.actividades %}                                                                            
-                                                                            {% for actividad in actividades %}                                                                     
-                                                                               {% if actividadAux.idAct == actividad.idAct %}  
-                                                                                        { name: '{{ actividad.getActDescripcion }}', y: {{ actividad.getPorcentajeCumplimiento}} , color: colores[ Math.floor(Math.random()*(5-(0-1)))+0   ] },                                                                                           
-                                                                               {% endif %}                                                                                   
-                                                                            {% endfor %}
+                                                                    {% for actividad in actividades %}                                                                     
+                                                                       {% if actividadAux.idAct == actividad.idAct %}  
+                                                                                {{ actividad.getPorcentajeCumplimiento}} ,
+                                                                       {% endif %}                                                                                   
+                                                                    {% endfor %}
                                                             {% endfor %}
-                                                            
-                                                            
-                                                       ],
-                                                       dataLabels: {
-                                                       enabled: true,
-                                                       color: Highcharts.theme.textColor || '#000000',
-                                                       connectorColor: Highcharts.theme.textColor || '#000000'
-                                                        }
-                                                }]
-                                         });
-                          
+                                                    
+                                                         ]
+                                                      },   
+                                                       
+                                                       
+                                                   
+                                                    ]
+                                           });
+                                           
                                
                                 $("#{{ res.idResEsp }}ResDiv").hide();  
                                 
@@ -245,7 +281,7 @@ textarea.error { border: 1px dotted red; }
                                                                          <td align="center" colspan="24" > 
                                                                         {% endif %}
                                                                                  
-                                                                             <div id="container{{ res.idResEsp }}" class="highcharts-container" style="height:210px; margin: 0 2em; clear:both; min-width: 1000px"></div>
+                                                                             <div id="container{{ res.idResEsp }}" class="highcharts-container" style="height:410px; margin: 0 2em; clear:both; min-width: 1000px"></div>
                                                                          </td>
                                                                     </tr> 
                                                                 </tfoot>
