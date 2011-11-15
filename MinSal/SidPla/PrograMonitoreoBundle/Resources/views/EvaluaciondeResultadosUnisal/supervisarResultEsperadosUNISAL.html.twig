@@ -107,7 +107,7 @@
                                                              {
                                                                  name: '{{unidad.nombreUnidad}}',
                                                                  data: [
-                                                                     {% for resulEvaIndicador in indi.getEvaluacionesIndicador %}
+                                                                     {% for resulEvaIndicador in evalIndicadorResultado.getEvaIndi %}
                                                                           {% if evalIndicadorResultado.codEvaRes == resulEvaIndicador.evaResul.codEvaRes %}
                                                                           {% if resulEvaIndicador.indSalud.codIndSalud == indi.codIndSalud %} 
                                                                              {% if evalIndicadorResultado.codEvaRes == resulEvaIndicador.evaResul.codEvaRes %}
