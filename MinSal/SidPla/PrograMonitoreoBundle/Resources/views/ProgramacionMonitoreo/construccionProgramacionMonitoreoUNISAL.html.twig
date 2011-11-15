@@ -62,6 +62,31 @@
                                                     
                                                     $('#cantidadActividadUniSal_{{actividad.codActUni }}').attr('value', coberturaPct*universo);                                                    
                                                 });
+                                                
+                                                $('#guardarAct{{actividad.codActUni}}').click(function(){
+                                                    var textResponsable= $('textarea#responsableActividadUniSal_{{actividad.codActUni }}').val();
+                                                    $('#guardarAct{{actividad.codActUni}}').attr("disabled", true); 
+                                                    $.ajax({
+                                                        type: "POST",
+                                                        url: "{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarProgramacioUniSal') }}",
+                                                        data: "metaAnualActividadUniSal_{{actividad.codActUni }}="+$('#metaAnualActividadUniSal_{{actividad.codActUni }}').val()+"&"+
+                                                              "responsableActividadUniSal_{{actividad.codActUni }}="+textResponsable+"&"+
+                                                              "beneficiarioActividadUniSal_{{actividad.codActUni }}="+$('textarea#beneficiarioActividadUniSal_{{actividad.codActUni }}').val()+"&"+
+                                                              "costoProgramon_{{actividad.codActUni }}="+$('#costoProgramon_{{actividad.codActUni }}').val()+"&"+
+                                                                  {% for resultadoAct in actividad.getResultadoactUniSal %}
+                                                                    {% if mes >= resultadoAct.mes  %}                                                                    
+                                                                        "resultadoProgramado_{{ resultadoAct.idResulAct }}="+$('#resultadoProgramado_{{ resultadoAct.idResulAct }}').val()+"&"+ 
+                                                                    {%  endif%}                                                                                    
+                                                                  {% endfor %}
+                                                              "coberturaActivicoberturdadUniSal_{{actividad.codActUni }}="+$('#coberturaActivicoberturdadUniSal_{{actividad.codActUni }}').val(), 
+                                                              
+                                                        success: function(datos){
+                                                            $('#guardarAct{{actividad.codActUni}}').hide();
+                                                      }
+                                                    });                                                    
+                                                });
+                                                
+                                                
                                              
                                                 $('#metaAnualActividadUniSal_{{actividad.codActUni }}').blur(function(event) {
                                                     metaAnual=Number($("input[id='metaAnualActividadUniSal_{{actividad.codActUni }}']").val());
@@ -300,7 +325,7 @@
                                                                                                                                <input {% if actividadAux.metaAnualActUniTemp == 1 %}  
                                                                                                                                         readonly="readonly"
                                                                                                                                       {% endif%}                                                                                                                                   
-                                                                                                                                   name="coberturaActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividad.coberActUni }}"  ></input>                                                                                                                                
+                                                                                                                                   name="coberturaActivicoberturdadUniSal_{{actividad.codActUni }}" id="coberturaActivicoberturdadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividad.coberActUni }}"  ></input>                                                                                                                               
                                                                                                                             </td>
                                                                                                                              <td align="center">
                                                                                                                                  <input   {% if actividadAux.metaAnualActUniTemp == 1 %}  
@@ -316,19 +341,20 @@
                                                                                                                             </td>
                                                                                                                             <td align="center">
                                                                                                                                 {% if actividadAux.metaAnualActUniTemp == 1 %}  
-                                                                                                                                    <input id="metaAnualActividadUniSal_{{actividad.codActUni }}" name="metaAnualActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividadAux.concenActUniTemp*cantidad }}"  ></input>
+                                                                                                                                    <input id="metaAnualActividadUniSal_{{actividad.codActUni }}" name="metaAnualActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividad.metaAnualActUni }}"  ></input>
                                                                                                                                 {% else %}   
                                                                                                                                     <input readonly="readonly" id="metaAnualActividadUniSal_{{actividad.codActUni }}" name="metaAnualActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividadAux.concenActUniTemp*cantidad }}"  ></input>
                                                                                                                                 {% endif %}
+                                                                                                                                    <input type="button" id="guardarAct{{actividad.codActUni}}" value="Guardar" />
                                                                                                                             </td>
                                                                                                                             <td>
-                                                                                                                                <textarea name="responsableActividadUniSal_{{actividad.codActUni }}" cols="15" rows="4"  >{{ actividad.getResponsableActUni }}</textarea>
+                                                                                                                                <textarea name="responsableActividadUniSal_{{actividad.codActUni }}" id="responsableActividadUniSal_{{actividad.codActUni }}" cols="15" rows="4"  >{{ actividad.getResponsableActUni }}</textarea>
                                                                                                                             </td>
                                                                                                                             <td align="center">
-                                                                                                                                <textarea name="actividadUniSal_{{actividad.codActUni }}" cols="10" rows="4"   >{{ actividad.getBeneActUni }}</textarea>
+                                                                                                                                <textarea name="beneficiarioActividadUniSal_{{actividad.codActUni }}" id="beneficiarioActividadUniSal_{{actividad.codActUni }}"   cols="10" rows="4"   >{{ actividad.getBeneActUni }}</textarea>
                                                                                                                             </td>
                                                                                                                             <td align="center">
-                                                                                                                                <input name="costoProgramon_{{actividad.codActUni }}" size="2" value="{{ actividad.getCosto }}"  ></input>
+                                                                                                                                <input name="costoProgramon_{{actividad.codActUni }}" id="costoProgramon_{{actividad.codActUni }}" size="2" value="{{ actividad.getCosto }}"  ></input>
                                                                                                                             </td>
                                                                                                                             {% for resultadoAct in actividad.getResultadoactUniSal %}
                                                                                                                                 {% if mes >= resultadoAct.mes  %}

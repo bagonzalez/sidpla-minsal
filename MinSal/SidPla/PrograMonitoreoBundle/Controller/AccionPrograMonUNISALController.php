@@ -228,15 +228,15 @@ class AccionPrograMonUNISALController extends Controller {
                         $actividadUnisal->setMetaAnualActUni($valorRealizado);         
                         $actividadUnisalDao->guardarActividad($actividadUnisal);       
                     }
-                }                
+                }  
                  
                 if((preg_match('/responsableActividadUniSal_/',$cadena))==1){
                     $idActividadUniSal=substr($tags[$i], 27);
                     $responsableActUni=$valores[$i];                    
                     
-                    //$actividadUnisal=$actividadUnisalDao->getActividadUniSal($idActividadUniSal);
-                    //$actividadUnisal->setResponsableActUni($responsableActUni);         
-                    //$actividadUnisalDao->guardarActividad($actividadUnisal);                     
+                    $actividadUnisal=$actividadUnisalDao->getActividadUniSal($idActividadUniSal);
+                    $actividadUnisal->setResponsableActUni($responsableActUni);         
+                    $actividadUnisalDao->guardarActividad($actividadUnisal);                     
                 }
                 
                 if((preg_match('/costoProgramon_/',$cadena))==1){
@@ -249,7 +249,7 @@ class AccionPrograMonUNISALController extends Controller {
                     }
                 }
                 
-                if((preg_match('/coberturaActividadUniSal_/',$cadena))==1){
+               if((preg_match('/coberturaActividadUniSal_/',$cadena))==1){
                     $idActividadUniSal=substr($tags[$i], 25);
                     $cobertura=$valores[$i];
                     if($cobertura>0){                    
@@ -259,9 +259,22 @@ class AccionPrograMonUNISALController extends Controller {
                     }
                 }
                 
+                if((preg_match('/beneficiarioActividadUniSal_/',$cadena))==1){
+                    $idActividadUniSal=substr($tags[$i], 28);
+                    $benefic=$valores[$i];
+                                        
+                        $actividadUnisal=$actividadUnisalDao->getActividadUniSal($idActividadUniSal);
+                        $actividadUnisal->setBeneActUni($benefic);         
+                        $actividadUnisalDao->guardarActividad($actividadUnisal);                     
+                    
+                }
+                
             }
+        
+          $respuesta=new Response('true');
+          
          
-         return $this->construccionProgramacionMonitoreoUNISALAction();
+         return $respuesta ;
     }
     
     
