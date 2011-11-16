@@ -50,9 +50,7 @@
                      {% if trimestre == 4   %}
                          {% for indi in obj.getIndicadoresSalud %} 
                              
-                                {% for resulEvaIndicador in evalIndicadorResultado.getEvaIndi %}                                                              
-                                    {% if resulEvaIndicador.indSalud.codIndSalud == indi.codIndSalud %} 
-                                        {% if evalIndicadorResultado.codEvaRes == resulEvaIndicador.evaResul.codEvaRes %}
+                              
                                                     
                                                    $('#dialog{{ indi.codIndSalud }}').jqm();
                                                    
@@ -141,9 +139,7 @@
    
                       
                                                    
-                                        {% endif %}
-                                    {% endif %}
-                                {% endfor %}                         
+                                                               
                          {% endfor %}                             
                      {% endif %}
                            
