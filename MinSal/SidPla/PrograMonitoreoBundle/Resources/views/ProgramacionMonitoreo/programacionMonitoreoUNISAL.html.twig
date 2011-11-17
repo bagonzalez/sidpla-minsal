@@ -155,11 +155,11 @@ input.error { border: 1px dotted red; }
 textarea.error { border: 1px dotted red; }
  </style>  
 
-    <br></br>   
-    <br></br>              
+    <br></br>                   
     <form id = "formulario"  action="{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarSeguimientoProgramacioUniSal') }}" method="post">
         <table align="center"  >
-            <tr><td colspan="2" align="center"><h1>Ingreso de Resultados de Actividades - Programaci&oacute;n Monitoreo</h1>                    
+            <tr><td colspan="2" align="center"><h1>Ingreso de Resultados de Actividades - Programaci&oacute;n Monitoreo</h1>
+                    <h1>PAO: {{"now" | date('Y')}}</h1>
                 </td>
             </tr>
             <tr>

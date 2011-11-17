@@ -124,7 +124,8 @@
     <br></br>               
     <form id = "formulario"  action="{{ path('MinSalSidPlaPrograMonitoreoBundle_guardarProgramacioUniSal') }}" method="post">
         <table align="center"  >
-            <tr><td colspan="2" align="center"><h1>Ingreso de Programacion de Actividades - Programaci&oacute;n Monitoreo</h1>                    
+            <tr><td colspan="2" align="center"><h1>Ingreso de Programacion de Actividades - Programaci&oacute;n Monitoreo</h1>
+                    <h1>PAO: {{"now" | date('Y')+1}}</h1>
                 </td>
             </tr>
             <tr>

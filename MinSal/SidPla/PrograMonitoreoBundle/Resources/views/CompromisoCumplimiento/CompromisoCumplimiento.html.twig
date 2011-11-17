@@ -95,7 +95,8 @@ $(document).ready(function(){
 </script>
     <form id = "formulario"  action="{{ path('MinSalSidPlaReportesBundle_reporteActividadesAtrasadas')}}" method="post">
         <table align="center"  >
-            <tr><td colspan="2" align="center"><h1>Forma Seguimiento Plan</h1>                    
+            <tr><td colspan="2" align="center"><h1>Forma Seguimiento Plan</h1>  
+                    <h1>PAO: {{"now" | date('Y')}}</h1>
                 </td>
             </tr>
             <tr>
