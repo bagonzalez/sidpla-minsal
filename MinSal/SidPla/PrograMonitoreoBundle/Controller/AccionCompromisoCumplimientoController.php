@@ -280,14 +280,14 @@ class AccionCompromisoCumplimientoController extends Controller {
                 $resultadoTrimestre4 = $resultadoDao->consultarResulActPorTrim(4, $idfilaActividad);
                 return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:IngresoCompromisoCumplimiento.html.twig', array('opciones' => $opciones, 'objetivo' => $descrObjetivo, 'actividad' => $descrActividad,
                             'resultado' => $descrResultado, 'idresact' => $idResultActividad, 'idfilaResultado' => $idfilaResultado,
-                            'idfila' => $idfila, 'idfilaActividad' => $idfilaActividad, 'trimestre' => $trimestre, 'reprogramar' => $totalReprogramar,
+                            'fechaOriginal' => $fechaOrigal,'idfila' => $idfila, 'idfilaActividad' => $idfilaActividad, 'trimestre' => $trimestre, 'reprogramar' => $totalReprogramar,
                             'fechIniTrm2' => $fechIniTrm2, 'fechIniTrm3' => $fechIniTrm3, 'fechIniTrm4' => $fechIniTrm4, 'fechFinTrm2' => $fechFinTrm2, 'fechFinTrm3' => $fechFinTrm3, 'fechFinTrm4' => $fechFinTrm4));
                 break;
             case 4:
                 $resultadoTrimestre4 = $resultadoDao->consultarResulActPorTrim(4, $idfilaActividad);
                 return $this->render('MinSalSidPlaPrograMonitoreoBundle:CompromisoCumplimiento:IngresoCompromisoCumplimiento.html.twig', array('opciones' => $opciones, 'objetivo' => $descrObjetivo, 'actividad' => $descrActividad,
                             'resultado' => $descrResultado, 'idresact' => $idResultActividad, 'idfilaResultado' => $idfilaResultado,
-                            'idfila' => $idfila, 'idfilaActividad' => $idfilaActividad, 'trimestre' => $trimestre, 'reprogramar' => $totalReprogramar,
+                            'fechaOriginal' => $fechaOrigal, 'idfila' => $idfila, 'idfilaActividad' => $idfilaActividad, 'trimestre' => $trimestre, 'reprogramar' => $totalReprogramar,
                             'fechIniTrm2' => $fechIniTrm2, 'fechIniTrm3' => $fechIniTrm3, 'fechIniTrm4' => $fechIniTrm4, 'fechFinTrm2' => $fechFinTrm2, 'fechFinTrm3' => $fechFinTrm3, 'fechFinTrm4' => $fechFinTrm4));
                 break;
         }
