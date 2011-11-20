@@ -2,70 +2,78 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportIndicadoresSaludPorUnidad" language="groovy" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="108"/>
+	<property name="ireport.y" value="19"/>
+	<parameter name="paoActual" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<parameter name="paoAnterior" class="java.lang.Integer">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
 	<queryString>
-		<![CDATA[SELECT
-  sidpla_indicadorsalud.indsalu_nombre,
-  sidpla_evaluacionindicador.evaind_trimestre,
-  sidpla_evaluacionindicador.evaind_resultadoevaluacion,
-  sidpla_objetivoespeunisal.objespuni_codigo,
-  sidpla_objetivoespeunisal.objespuni_descripcion,
+		<![CDATA[SELECT DISTINCT  sidpla_indicadorsalud.indsalu_nombre,
   sidpla_indicadorsalud.indsalu_codigo,
   sidpla_evaluacionresultado.pao_codigo,
   sidpla_unidadorganizativa.uniorg_nombre,
   sidpla_pao.pao_anio,
+  evaTrim1.evaind_resultadoevaluacion as resulTrim1,
+  evaTrim2.evaind_resultadoevaluacion  as resulTrim2,
+  evaTrim3.evaind_resultadoevaluacion  as resulTrim3,
+  evaTrim4.evaind_resultadoevaluacion  as resulTrim4,
   sidpla_indicadorsalud.indsalu_formula1,
   sidpla_indicadorsalud.indsalu_formula2
 FROM
   public.sidpla_objetivoespeunisal,
   public.sidpla_indicadorsalud,
   public.sidpla_objespeunisal_indicadorsalud,
-  public.sidpla_evaluacionindicador,
   public.sidpla_evaluacionresultado,
   public.sidpla_pao,
-  public.sidpla_unidadorganizativa
+  public.sidpla_unidadorganizativa,
+  public.sidpla_evaluacionindicador evaTrim1,
+  public.sidpla_evaluacionindicador evaTrim2,
+  public.sidpla_evaluacionindicador evaTrim3,
+  public.sidpla_evaluacionindicador evaTrim4
 WHERE
   sidpla_objespeunisal_indicadorsalud.indsalu_codigo = sidpla_indicadorsalud.indsalu_codigo AND
   sidpla_objespeunisal_indicadorsalud.objespuni_codigo = sidpla_objetivoespeunisal.objespuni_codigo AND
-  sidpla_evaluacionindicador.indsalu_codigo = sidpla_indicadorsalud.indsalu_codigo AND
-  sidpla_evaluacionindicador.evares_codigo = sidpla_evaluacionresultado.evares_codigo AND
+
+  evaTrim1.indsalu_codigo = sidpla_indicadorsalud.indsalu_codigo AND
+  evaTrim1.evares_codigo = sidpla_evaluacionresultado.evares_codigo AND
+
+  evaTrim2.indsalu_codigo = sidpla_indicadorsalud.indsalu_codigo AND
+  evaTrim2.evares_codigo = sidpla_evaluacionresultado.evares_codigo AND
+
+  evaTrim3.indsalu_codigo = sidpla_indicadorsalud.indsalu_codigo AND
+  evaTrim3.evares_codigo = sidpla_evaluacionresultado.evares_codigo AND
+
+  evaTrim4.indsalu_codigo = sidpla_indicadorsalud.indsalu_codigo AND
+  evaTrim4.evares_codigo = sidpla_evaluacionresultado.evares_codigo AND
+
+  evaTrim1.evaind_trimestre=1 AND
+  evaTrim2.evaind_trimestre=2 AND
+  evaTrim3.evaind_trimestre=3 AND
+  evaTrim4.evaind_trimestre=4 AND
+
   sidpla_pao.pao_codigo = sidpla_evaluacionresultado.pao_codigo AND
   sidpla_pao.uniorg_codigo = sidpla_unidadorganizativa.uniorg_codigo  AND
-  sidpla_pao.pao_codigo =90
- ORDER BY sidpla_objetivoespeunisal.objespuni_codigo, sidpla_indicadorsalud.indsalu_codigo, sidpla_evaluacionindicador.evaind_trimestre  ;]]>
+  sidpla_pao.pao_codigo  IN ($P{paoActual},$P{paoAnterior} )
+
+ ORDER BY sidpla_indicadorsalud.indsalu_codigo ;]]>
 	</queryString>
 	<field name="indsalu_nombre" class="java.lang.String"/>
-	<field name="evaind_trimestre" class="java.lang.Integer"/>
-	<field name="evaind_resultadoevaluacion" class="java.math.BigDecimal"/>
-	<field name="objespuni_codigo" class="java.lang.Integer"/>
-	<field name="objespuni_descripcion" class="java.lang.String"/>
 	<field name="indsalu_codigo" class="java.lang.Integer"/>
 	<field name="pao_codigo" class="java.lang.Integer"/>
 	<field name="uniorg_nombre" class="java.lang.String"/>
 	<field name="pao_anio" class="java.math.BigDecimal"/>
+	<field name="resultrim1" class="java.math.BigDecimal"/>
+	<field name="resultrim2" class="java.math.BigDecimal"/>
+	<field name="resultrim3" class="java.math.BigDecimal"/>
+	<field name="resultrim4" class="java.math.BigDecimal"/>
 	<field name="indsalu_formula1" class="java.lang.String"/>
 	<field name="indsalu_formula2" class="java.lang.String"/>
-	<group name="objetivos_group">
-		<groupExpression><![CDATA[$F{objespuni_codigo}]]></groupExpression>
-		<groupHeader>
-			<band height="24">
-				<textField isStretchWithOverflow="true">
-					<reportElement mode="Opaque" x="56" y="0" width="516" height="20" backcolor="#C6CAC2"/>
-					<textElement/>
-					<textFieldExpression><![CDATA[$F{objespuni_descripcion}]]></textFieldExpression>
-				</textField>
-				<staticText>
-					<reportElement x="0" y="0" width="56" height="20"/>
-					<textElement/>
-					<text><![CDATA[Objetivo:]]></text>
-				</staticText>
-			</band>
-		</groupHeader>
-		<groupFooter>
-			<band height="50"/>
-		</groupFooter>
-	</group>
-	<group name="indicadores_grup" isStartNewPage="true">
+	<variable name="variable1" class="java.lang.Float" resetType="Group" resetGroup="indicadores_grup" calculation="System">
+		<variableExpression><![CDATA[$F{resultrim1}]]></variableExpression>
+	</variable>
+	<group name="indicadores_grup">
 		<groupExpression><![CDATA[$F{indsalu_codigo}]]></groupExpression>
 		<groupHeader>
 			<band height="99">
@@ -74,16 +82,6 @@ WHERE
 					<textElement/>
 					<textFieldExpression><![CDATA[$F{indsalu_nombre}]]></textFieldExpression>
 				</textField>
-				<staticText>
-					<reportElement x="140" y="79" width="100" height="20"/>
-					<textElement/>
-					<text><![CDATA[Trimeste]]></text>
-				</staticText>
-				<staticText>
-					<reportElement x="269" y="79" width="100" height="20"/>
-					<textElement/>
-					<text><![CDATA[Resultado]]></text>
-				</staticText>
 				<textField isStretchWithOverflow="true">
 					<reportElement x="56" y="24" width="516" height="20"/>
 					<textElement/>
@@ -109,30 +107,35 @@ WHERE
 					<textElement/>
 					<text><![CDATA[Indicador:]]></text>
 				</staticText>
+				<staticText>
+					<reportElement x="131" y="79" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Primer Trim.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="24" y="79" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Año]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="231" y="79" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Segundo Trim.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="331" y="79" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Tercer Trim.]]></text>
+				</staticText>
+				<staticText>
+					<reportElement x="431" y="79" width="100" height="20"/>
+					<textElement/>
+					<text><![CDATA[Cuarto Trim.]]></text>
+				</staticText>
 			</band>
 		</groupHeader>
 		<groupFooter>
-			<band height="103">
-				<lineChart>
-					<chart>
-						<reportElement x="56" y="0" width="418" height="100"/>
-						<chartTitle/>
-						<chartSubtitle/>
-						<chartLegend/>
-					</chart>
-					<categoryDataset>
-						<dataset resetType="Group" resetGroup="indicadores_grup"/>
-						<categorySeries>
-							<seriesExpression><![CDATA[$F{indsalu_nombre}]]></seriesExpression>
-							<categoryExpression><![CDATA[$F{evaind_trimestre}]]></categoryExpression>
-							<valueExpression><![CDATA[$F{evaind_resultadoevaluacion}]]></valueExpression>
-						</categorySeries>
-					</categoryDataset>
-					<linePlot>
-						<plot/>
-					</linePlot>
-				</lineChart>
-			</band>
+			<band height="31"/>
 		</groupFooter>
 	</group>
 	<background>
@@ -156,26 +159,12 @@ WHERE
 				<text><![CDATA[MINISTERIO DE SALUD]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="92" y="57" width="233" height="24"/>
-				<textElement textAlignment="Center">
-					<font size="13" isBold="true"/>
-				</textElement>
-				<text><![CDATA[AÑO]]></text>
-			</staticText>
-			<staticText>
 				<reportElement x="92" y="34" width="346" height="24"/>
 				<textElement textAlignment="Center">
 					<font size="16" isBold="true"/>
 				</textElement>
 				<text><![CDATA[PLANIFICACIÓN ANUAL OPERATIVA]]></text>
 			</staticText>
-			<textField>
-				<reportElement x="241" y="56" width="100" height="20"/>
-				<textElement>
-					<font size="12"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$F{pao_anio}]]></textFieldExpression>
-			</textField>
 			<staticText>
 				<reportElement x="90" y="81" width="384" height="20"/>
 				<textElement textAlignment="Justified">
@@ -193,24 +182,39 @@ WHERE
 		</band>
 	</pageHeader>
 	<detail>
-		<band height="23" splitType="Stretch">
+		<band height="21" splitType="Stretch">
 			<textField>
-				<reportElement x="140" y="0" width="100" height="20"/>
+				<reportElement x="24" y="0" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{evaind_trimestre}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{pao_anio}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="269" y="0" width="100" height="20"/>
+				<reportElement x="131" y="0" width="100" height="20"/>
 				<textElement/>
-				<textFieldExpression><![CDATA[$F{evaind_resultadoevaluacion}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{resultrim1}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="231" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{resultrim2}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="331" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{resultrim3}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="431" y="0" width="100" height="20"/>
+				<textElement/>
+				<textFieldExpression><![CDATA[$F{resultrim4}]]></textFieldExpression>
 			</textField>
 		</band>
 	</detail>
 	<columnFooter>
-		<band height="45" splitType="Stretch"/>
+		<band height="20" splitType="Stretch"/>
 	</columnFooter>
 	<pageFooter>
-		<band height="54" splitType="Stretch"/>
+		<band height="14" splitType="Stretch"/>
 	</pageFooter>
 	<summary>
 		<band height="42" splitType="Stretch"/>

@@ -6,6 +6,11 @@ MinSalSidPlaReportesBundle_homepage:
 MinSalSidPlaReportesBundle_reporteJustificacion:
     pattern:  /reportjustificacion
     defaults: { _controller: MinSalSidPlaReportesBundle:Pao:reporteJustificacion }
+
+MinSalSidPlaReportesBundle_reporteIndicadoresSalud:
+    pattern:  /reporteIndicadoresSalud
+    defaults: { _controller: MinSalSidPlaReportesBundle:Pao:reporteIndicadoresSalud }    
+    
     
 #ESTADOINFRAESTRUCTURACONTROLLER
 MinSalSidPlaReportesBundle_reporteInfraEvaluada:

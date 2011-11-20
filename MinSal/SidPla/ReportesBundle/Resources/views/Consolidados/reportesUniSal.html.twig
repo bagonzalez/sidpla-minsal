@@ -45,9 +45,9 @@ $(document).ready(function(){
                        alert("Seleccione una Unidad de Salud para generar el Reporte");
                         evento.preventDefault();
           }
-         /*else{ 
-             this.form.action='{{ path('MinSalSidPlaCensoBundle_generarCensoUsuario') }}';
-         }*/
+         else{ 
+             this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteIndicadoresSalud') }}';
+         }
     });
     
    $('#enviar5').button();

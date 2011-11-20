@@ -75,6 +75,63 @@ class PaoController extends Controller {
 
         return $this->getResponse();
     }
+    
+    
+    
+    public function reporteIndicadoresSaludAction() {
+        $request = $this->getRequest();
+        
+        $id = $request->get('id');
+        $idUniSal=$request->get('idUniSal');
+        try {
+
+            $compileManager = new JavaClass("net.sf.jasperreports.engine.JasperCompileManager");
+            $report = $compileManager->compileReport(__DIR__ . "/../Resources/jasperReports/reportIndicadoresSalud/reportIndicadoresSaludPorUnidad.jrxml");
+            $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
+
+            $params = new Java("java.util.HashMap");
+            if(isset($idUniSal)){
+                $unidaDao = new UnidadOrganizativaDao($this->getDoctrine());
+                $paoSegumiento = new Pao();
+                $paoAnioAnt = new Pao();
+                $paoSegumiento = $unidaDao->getPaoSeguimiento($idUniSal);
+                $paoAnioAnt=$unidaDao->getPaoAnioAnterior($idUniSal);
+                $idPaoActual=$paoSegumiento->getIdPao();
+                $idPaoAnterior=$paoAnioAnt->getIdPao();
+                
+            }
+            $params->put("paoActual", new java("java.lang.Integer", $idPaoActual));
+            $params->put("paoAnterior", new java("java.lang.Integer", $idPaoAnterior));
+            
+            
+
+            $Conn = $this->crearConexion();
+
+            $jasperPrint = $fillManager->fillReport($report, $params, $Conn);
+            $outputPath = realpath(".") . "/" . "output.pdf";
+
+            $exportManager = new JavaClass("net.sf.jasperreports.engine.JasperExportManager");
+            $exportManager->exportReportToPdfFile($jasperPrint, $outputPath);
+
+            header("Content-type: application/pdf");
+            readfile($outputPath);
+            unlink($outputPath);
+            $Conn->close();
+
+            $this->getResponse()->clearHttpHeaders();
+            $this->getResponse()->setHttpHeader('Pragma: public', true);
+            $this->getResponse()->setContentType('application/pdf');
+            $this->getResponse()->sendHttpHeaders();
+        } catch (Exception $ex) {
+            print $ex->getCause();
+            if ($Conn != null) {
+                $Conn->close();
+            }
+            throw $ex;
+        }
+
+        return $this->getResponse();
+    }
 
 }
 
