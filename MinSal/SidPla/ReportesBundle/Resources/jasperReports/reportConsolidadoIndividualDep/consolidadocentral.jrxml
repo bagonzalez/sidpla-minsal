@@ -46,7 +46,7 @@ WHERE
 			</staticText>
 			<image>
 				<reportElement x="589" y="23" width="79" height="47"/>
-				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/minsalud.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../../img-reportes/minsalud.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="227" y="17" width="346" height="24"/>
@@ -57,7 +57,7 @@ WHERE
 			</staticText>
 			<image>
 				<reportElement x="159" y="23" width="80" height="45"/>
-				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/escudo.gif"]]></imageExpression>
+				<imageExpression><![CDATA["../../img-reportes/escudo.gif"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="227" y="41" width="346" height="24"/>

@@ -108,11 +108,11 @@ ORDER BY
 		<band height="121" splitType="Stretch">
 			<image>
 				<reportElement x="45" y="6" width="80" height="45"/>
-				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/escudo.gif"]]></imageExpression>
+				<imageExpression><![CDATA["../../img-reportes/escudo.gif"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="475" y="6" width="79" height="47"/>
-				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/minsalud.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../../img-reportes/minsalud.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="113" y="0" width="346" height="24"/>

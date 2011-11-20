@@ -47,7 +47,7 @@ uorg.uniorg_codigo=caractorg.uniorg_codigo  AND caractorg.carorg_codigo=objes.ca
 		<band height="115" splitType="Stretch">
 			<image>
 				<reportElement x="10" y="16" width="80" height="45"/>
-				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/escudo.gif"]]></imageExpression>
+				<imageExpression><![CDATA["../../img-reportes/escudo.gif"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="78" y="34" width="346" height="24"/>
@@ -65,7 +65,7 @@ uorg.uniorg_codigo=caractorg.uniorg_codigo  AND caractorg.carorg_codigo=objes.ca
 			</staticText>
 			<image>
 				<reportElement x="440" y="16" width="79" height="47"/>
-				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/minsalud.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["../../img-reportes/minsalud.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="78" y="63" width="346" height="16"/>

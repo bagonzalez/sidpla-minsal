@@ -243,11 +243,11 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 		<band height="106" splitType="Stretch">
 			<image>
 				<reportElement x="451" y="16" width="105" height="65"/>
-				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/minsalud.jpg"]]></imageExpression>
+				<imageExpression><![CDATA["/../../img-reportes/minsalud.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="27" y="16" width="105" height="50"/>
-				<imageExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/img-reportes/escudo.gif"]]></imageExpression>
+				<imageExpression><![CDATA["../../img-reportes/escudo.gif"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="101" y="10" width="346" height="24"/>
