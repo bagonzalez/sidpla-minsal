@@ -85,7 +85,7 @@ class DefaultController extends Controller {
 
             header("Content-type: application/pdf");
             readfile($outputPath);
-            unlink($outputPath);
+            //unlink($outputPath);
             $Conn->close();
 
             $this->getResponse()->clearHttpHeaders();
@@ -128,7 +128,7 @@ class DefaultController extends Controller {
 
             header("Content-type: application/pdf");
             readfile($outputPath);
-            unlink($outputPath);
+            //unlink($outputPath);
             $Conn->close();
 
             $this->getResponse()->clearHttpHeaders();
