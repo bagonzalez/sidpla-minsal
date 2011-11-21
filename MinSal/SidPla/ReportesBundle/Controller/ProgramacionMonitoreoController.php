@@ -106,6 +106,8 @@ class ProgramacionMonitoreoController extends Controller {
                 $anio = $paoSegumiento->getAnio();
                 $unidad=$idDepen;
             }
+            
+            $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
             $params->put("anioPao", new java("java.lang.Integer", $anio)); //asignando valor al parametro
             $params->put("idUnidadOrg", new java("java.lang.Integer", $unidad)); //asignando valor al parametro
 
