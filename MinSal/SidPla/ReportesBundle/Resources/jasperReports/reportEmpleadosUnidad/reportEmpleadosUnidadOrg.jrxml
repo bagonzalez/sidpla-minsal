@@ -8,6 +8,7 @@
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
 	<style name="Detail" fontName="Arial" fontSize="12"/>
 	<subDataset name="dataset1"/>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
      uniorg_nombre,
@@ -83,11 +84,11 @@ FROM
 			</staticText>
 			<image>
 				<reportElement x="40" y="10" width="80" height="45"/>
-				<imageExpression><![CDATA["../../img-reportes/escudo.gif"]]></imageExpression>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/img-reportes/escudo.gif"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="440" y="10" width="79" height="47"/>
-				<imageExpression><![CDATA["../../img-reportes/minsalud.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/img-reportes/minsalud.jpg"]]></imageExpression>
 			</image>
 		</band>
 	</title>

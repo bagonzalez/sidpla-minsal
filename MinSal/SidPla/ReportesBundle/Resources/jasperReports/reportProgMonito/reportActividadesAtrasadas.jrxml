@@ -6,6 +6,7 @@
 	<parameter name="idPrograMonit" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT
                       DISTINCT sidpla_actividad.actividad_descripcion,
@@ -47,7 +48,7 @@ uorg.uniorg_codigo=caractorg.uniorg_codigo  AND caractorg.carorg_codigo=objes.ca
 		<band height="115" splitType="Stretch">
 			<image>
 				<reportElement x="10" y="16" width="80" height="45"/>
-				<imageExpression><![CDATA["../../img-reportes/escudo.gif"]]></imageExpression>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/img-reportes/escudo.gif"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="78" y="34" width="346" height="24"/>
@@ -65,7 +66,7 @@ uorg.uniorg_codigo=caractorg.uniorg_codigo  AND caractorg.carorg_codigo=objes.ca
 			</staticText>
 			<image>
 				<reportElement x="440" y="16" width="79" height="47"/>
-				<imageExpression><![CDATA["../../img-reportes/minsalud.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/img-reportes/minsalud.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="78" y="63" width="346" height="16"/>

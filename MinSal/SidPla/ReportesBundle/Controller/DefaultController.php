@@ -115,6 +115,7 @@ class DefaultController extends Controller {
             $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
             //pasando parametros al reporte
             $params = new Java("java.util.HashMap");
+            $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
             $params->put("tipoUnidad", new java("java.lang.String", $tipoUnidad)); //asignando valor al parametro
             $params->put("anioPao", new java("java.lang.Integer", $anio));
             $Conn = $this->crearConexion();
@@ -155,6 +156,7 @@ class DefaultController extends Controller {
          $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
          
          $params = new Java("java.util.HashMap");
+         $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
          $params->put("anioPao", new java("java.lang.Integer", $anio)); //asignando valor al parametro
          
          $Conn = $this->crearConexion();
@@ -204,6 +206,9 @@ class DefaultController extends Controller {
                 $idUnidad=$idUnisal;
                 
          }
+         
+         
+         $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
          $params->put("idUorg", new java("java.lang.Integer", $idUnidad)); //asignando valor al parametro
          
          $Conn = $this->crearConexion();

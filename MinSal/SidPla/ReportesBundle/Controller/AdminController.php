@@ -33,6 +33,7 @@ class AdminController extends Controller {
             $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
 
             $params = new Java("java.util.HashMap");
+            $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
           //  $params->put("nomrepot", new java("java.lang.String", $id));
 
             $Conn = $this->crearConexion();
@@ -71,6 +72,7 @@ class AdminController extends Controller {
             $fillManager = new JavaClass("net.sf.jasperreports.engine.JasperFillManager");
 
             $params = new Java("java.util.HashMap");
+            $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
            // $params->put("nomrepot", new java("java.lang.String", $id));
 
             $Conn = $this->crearConexion();
@@ -113,6 +115,9 @@ class AdminController extends Controller {
             $params = new Java("java.util.HashMap");
             if(isset($idDepen))
                 $idUniOrg=$idDepen;
+            
+            
+            $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
                 
             $params->put("ve_uniorg", new java("java.lang.Integer", $idUniOrg));
 
@@ -158,7 +163,7 @@ class AdminController extends Controller {
                 $idUniOrg=$idUnisal;
                 
             $params->put("ve_uniorg", new java("java.lang.Integer", $idUniOrg));
-
+            $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
             $Conn = $this->crearConexion();
 
             $jasperPrint = $fillManager->fillReport($report, $params, $Conn);

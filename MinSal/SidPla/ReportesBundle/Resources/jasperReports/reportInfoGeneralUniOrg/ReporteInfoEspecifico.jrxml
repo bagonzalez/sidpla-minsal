@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reportprueba1" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="81"/>
+	<property name="ireport.y" value="0"/>
 	<style name="Title" fontName="Times New Roman" fontSize="50" isBold="true" pdfFontName="Times-Bold"/>
 	<style name="SubTitle" forecolor="#736343" fontName="Arial" fontSize="18"/>
 	<style name="Column header" forecolor="#666666" fontName="Arial" fontSize="12" isBold="true"/>
@@ -16,6 +16,7 @@
 	<parameter name="ve_uniorg" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[select d.numero_unidadesdeptos,d.uniorg_codigo as "cod_padre",d.uniorg_nombre as "nom_padre",
 	(Select uniorg_nombre FROM sidpla_unidadorganizativa WHERE uniorg_codigo=d.uniorg_codigo1) papaDeEsta,
@@ -243,11 +244,11 @@ order by d.uniorg_nombre,c.uniorg_codigo,h.numero_unidad]]>
 		<band height="106" splitType="Stretch">
 			<image>
 				<reportElement x="451" y="16" width="105" height="65"/>
-				<imageExpression><![CDATA["/../../img-reportes/minsalud.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/img-reportes/minsalud.jpg"]]></imageExpression>
 			</image>
 			<image>
 				<reportElement x="27" y="16" width="105" height="50"/>
-				<imageExpression><![CDATA["../../img-reportes/escudo.gif"]]></imageExpression>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/img-reportes/escudo.gif"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="101" y="10" width="346" height="24"/>

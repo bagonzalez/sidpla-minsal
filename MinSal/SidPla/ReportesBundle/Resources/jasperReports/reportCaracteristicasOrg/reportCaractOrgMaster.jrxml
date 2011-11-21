@@ -3,9 +3,10 @@
 	<property name="ireport.zoom" value="1.0"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
+    <parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/jasperReports/reportCaracteristicasOrg/"]]></defaultValueExpression>
-	</parameter>
+		<defaultValueExpression><![CDATA[$P{ubicacionReport}+"/../Resources/jasperReports/reportCaracteristicasOrg/"]]></defaultValueExpression>
+	</parameter>	
 	<parameter name="idUorg" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
@@ -35,7 +36,7 @@ WHERE
 		<band height="252" splitType="Stretch">
 			<image>
 				<reportElement x="23" y="1" width="80" height="45"/>
-				<imageExpression><![CDATA["../../img-reportes/escudo.gif"]]></imageExpression>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/img-reportes/escudo.gif"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="106" y="2" width="372" height="24"/>
@@ -53,7 +54,7 @@ WHERE
 			</staticText>
 			<image>
 				<reportElement x="478" y="2" width="79" height="47"/>
-				<imageExpression><![CDATA["../../img-reportes/minsalud.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/img-reportes/minsalud.jpg"]]></imageExpression>
 			</image>
 			<textField>
 				<reportElement x="0" y="210" width="571" height="42"/>

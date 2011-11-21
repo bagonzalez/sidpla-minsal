@@ -50,7 +50,7 @@ class EstadoInfraestructuraController extends Controller {
             }
             
             $params->put("infraEvaluada", new java("java.lang.Integer", $id));
-
+            $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
             $Conn = $this->crearConexion();
 
             $jasperPrint = $fillManager->fillReport($report, $params, $Conn);
@@ -93,7 +93,7 @@ class EstadoInfraestructuraController extends Controller {
 
             $params = new Java("java.util.HashMap");
             $params->put("infraEvaluada", new java("java.lang.Integer", $id));
-
+            $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
             $Conn = $this->crearConexion();
 
             $jasperPrint = $fillManager->fillReport($report, $params, $Conn);

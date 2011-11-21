@@ -46,6 +46,8 @@ class PaoController extends Controller {
                 $id=$paoSegumiento->getJustificacion()->getIdJustificacion();
                 
             }
+            
+            $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
             $params->put("idJustificacion", new java("java.lang.Integer", $id));
 
             $Conn = $this->crearConexion();
@@ -100,6 +102,7 @@ class PaoController extends Controller {
                 $idPaoAnterior=$paoAnioAnt->getIdPao();
                 
             }
+            $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
             $params->put("paoActual", new java("java.lang.Integer", $idPaoActual));
             $params->put("paoAnterior", new java("java.lang.Integer", $idPaoAnterior));
             

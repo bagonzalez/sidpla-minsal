@@ -4,8 +4,9 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="promonID" class="java.lang.Integer"/>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/jasperReports/reportConsolidadosDep/"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA[$P{ubicacionReport}+"/../Resources/jasperReports/reportConsolidadosDep/"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="obj" class="java.lang.Integer"/>
 	<queryString>
@@ -58,6 +59,9 @@
 				</subreportParameter>
 				<subreportParameter name="resultadoID">
 					<subreportParameterExpression><![CDATA[$F{resesp_codigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="ubicacionReport">
+					<subreportParameterExpression><![CDATA[$P{ubicacionReport}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
 				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"consolidadocentralSubreporte1SubR1_subreport1.jasper"]]></subreportExpression>

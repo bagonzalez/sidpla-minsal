@@ -4,9 +4,6 @@
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="promonID" class="java.lang.Integer"/>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["/var/www/sidpla-minsal/MinSal/SidPla/ReportesBundle/Resources/jasperReports/reportMatrizdeObjetivosyResultados/"]]></defaultValueExpression>
-	</parameter>
 	<parameter name="obj" class="java.lang.Integer"/>
 	<queryString>
 		<![CDATA[SELECT DISTINCT resesp.resesp_codigo,resesp.reses_descripcion,promon.promon_codigo,resesp.resesp_indicador,resesp.resesp_medioverificacion,

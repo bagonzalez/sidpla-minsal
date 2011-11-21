@@ -53,6 +53,8 @@ class ProgramacionMonitoreoController extends Controller {
                 $uniOrg = $idDepen;
                 $trimestre = $programonDao->trimestrePao();
             }
+            
+            $params->put("ubicacionReport", new java("java.lang.String", __DIR__));
             $params->put("ve_anio", new java("java.lang.Integer", $anio));
             $params->put("ve_trimestre", new java("java.lang.Integer", $trimestre));
             $params->put("ve_uniorg", new java("java.lang.Integer", $uniOrg));

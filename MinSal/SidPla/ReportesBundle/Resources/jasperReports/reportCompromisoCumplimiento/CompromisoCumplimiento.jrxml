@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="CompromisoCumplimiento" language="groovy" pageWidth="792" pageHeight="612" orientation="Landscape" columnWidth="752" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20">
 	<property name="ireport.zoom" value="1.0"/>
-	<property name="ireport.x" value="54"/>
+	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
 	<parameter name="ve_anio" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -12,6 +12,7 @@
 	<parameter name="ve_uniorg" class="java.lang.Integer">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT * from fn_generacompromisocumplimiento($P{ve_anio},$P{ve_trimestre},$P{ve_uniorg}) AS ("Resultado Esperado" TEXT, "Hallazgos Encontrados" TEXT,"Responsables" TEXT,"Medidas a Adoptar" TEXT,"Fecha Cumplimiento" TEXT);]]>
 	</queryString>
@@ -44,7 +45,7 @@
 			</staticText>
 			<image>
 				<reportElement x="143" y="10" width="80" height="45"/>
-				<imageExpression><![CDATA["../../img-reportes/escudo.gif"]]></imageExpression>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/img-reportes/escudo.gif"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="112" y="85" width="540" height="25"/>
@@ -55,7 +56,7 @@
 			</staticText>
 			<image>
 				<reportElement x="573" y="10" width="79" height="47"/>
-				<imageExpression><![CDATA["../../img-reportes/minsalud.jpg"]]></imageExpression>
+				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/img-reportes/minsalud.jpg"]]></imageExpression>
 			</image>
 			<staticText>
 				<reportElement x="211" y="4" width="346" height="24"/>
