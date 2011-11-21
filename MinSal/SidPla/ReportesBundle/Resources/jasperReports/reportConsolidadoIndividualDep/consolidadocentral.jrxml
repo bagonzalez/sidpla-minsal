@@ -57,7 +57,7 @@ WHERE
 				<text><![CDATA[MINISTERIO DE SALUD]]></text>
 			</staticText>
 			<image>
-				<reportElement x="159" y="23" width="80" height="45"/>
+				<reportElement x="110" y="23" width="80" height="45"/>
 				<imageExpression><![CDATA[$P{ubicacionReport}+"/../Resources/img-reportes/escudo.gif"]]></imageExpression>
 			</image>
 			<staticText>
