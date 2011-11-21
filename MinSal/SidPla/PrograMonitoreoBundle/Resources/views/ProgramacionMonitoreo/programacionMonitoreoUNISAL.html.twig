@@ -188,7 +188,7 @@ textarea.error { border: 1px dotted red; }
                                                     {% if obj.areaClaObj.codArea == area.codArea  %}
                                                                 <tr>
                                                                     <td>
-                                                                        <h3>Objetivo Especifico:</h3>
+                                                                        <h3>Objetivo Especifico: {{ obj.nomenObjEspUni }}</h3>
                                                                     </td>
                                                                     <td>
                                                                          <h3>&RightTriangle;<a  id="mostratObj{{ obj.codObjEspUni }}" href="#">{{ obj.descObjEspUni }}</a></h3>                                
@@ -203,7 +203,7 @@ textarea.error { border: 1px dotted red; }
                                                                                        {# if( (res.unidadOrganizativa.getIdUnidadOrg == idUnidad) or (res.unidadOrganizativa is null ) ) #}                                                                                                
                                                                                             <tr>
                                                                                                 <td>
-                                                                                                    <h4>Resultado Esperado:</h4>
+                                                                                                    <h4>Resultado Esperado:  {{ res.nomenResEspUni}}</h4>
                                                                                                 </td>
                                                                                                 <td>
                                                                                                     <h4> <a  id="mostratRes{{ res.codResEspUni }}" href="#">{{ res.descResEspUni }}</a></h4>
@@ -313,7 +313,7 @@ textarea.error { border: 1px dotted red; }
                                                                                                             {% for actividad in actividades %}                                                                     
                                                                                                                {% if actividadAux.codActUniTemp == actividad.actTemp.codActUniTemp %}                                                                            
                                                                                                                         <tr>
-                                                                                                                            <td>
+                                                                                                                            <td align="center"><h4>{{ actividadAux.nomenActUniTemp }}</h4>
                                                                                                                                 {{ actividadAux.descActUniTemp }}
                                                                                                                             </td>
                                                                                                                             <td align="center">
