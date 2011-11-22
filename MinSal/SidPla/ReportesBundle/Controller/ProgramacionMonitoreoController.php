@@ -69,7 +69,7 @@ class ProgramacionMonitoreoController extends Controller {
 
             header("Content-type: application/pdf");
             readfile($outputPath);
-            unlink($outputPath);
+            //unlink($outputPath);
             $Conn->close();
 
             $this->getResponse()->clearHttpHeaders();
@@ -120,7 +120,7 @@ class ProgramacionMonitoreoController extends Controller {
             $exportManager->exportReportToPdfFile($jasperPrint, $outputPath);
             header("Content-type: application/pdf");
             readfile($outputPath);
-            unlink($outputPath);
+            //unlink($outputPath);
             $Conn->close();
             $this->getResponse()->clearHttpHeaders();
             $this->getResponse()->setHttpHeader('Pragma: public', true);

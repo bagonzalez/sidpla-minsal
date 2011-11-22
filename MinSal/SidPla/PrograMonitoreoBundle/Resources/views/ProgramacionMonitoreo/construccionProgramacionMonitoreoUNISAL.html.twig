@@ -59,8 +59,29 @@
                                                 $('#coberturaActividadUniSal_{{actividad.codActUni }}').blur(function(event) {
                                                     coberturaPct=Number($("input[id='coberturaActividadUniSal_{{actividad.codActUni }}']").val());                                                    
                                                     universo=Number($("input[id='universoActividadUniSal_{{actividad.codActUni }}']").val());                                                    
+                                                    concentracion=Number($("input[id='concentracionActividadUniSal_{{actividad.codActUni }}']").val());                                                    
                                                     
-                                                    $('#cantidadActividadUniSal_{{actividad.codActUni }}').attr('value', coberturaPct*universo);                                                    
+                                                    $('#cantidadActividadUniSal_{{actividad.codActUni }}').attr('value', (coberturaPct/100)*universo); 
+                                                    
+                                                    cantidad=Number($("input[id='cantidadActividadUniSal_{{actividad.codActUni }}']").val());                                                    
+                                                    $('#metaAnualActividadUniSal_{{actividad.codActUni }}').attr('value', cantidad*concentracion); 
+                                                    
+                                                    metaAnual=Number($("input[id='metaAnualActividadUniSal_{{actividad.codActUni }}']").val());
+                                                    {% for resultadoAct in actividad.getResultadoactUniSal %}
+                                                         $('#resultadoProgramado_{{ resultadoAct.idResulAct }}').attr('value', parseInt(metaAnual/12));                                                                                                                   
+                                                         {% if resultadoAct.mes==12 %}
+                                                             $('#resultadoProgramado_{{ resultadoAct.idResulAct }}').attr('value',metaAnual- (
+                                                                        {% for resultadoAct in actividad.getResultadoactUniSal %}
+                                                                            {% if resultadoAct.mes!=12 %}
+                                                                                Number($("input[id='resultadoProgramado_{{ resultadoAct.idResulAct }}']").val())+                                                                            
+                                                                            {% endif %} 
+                                                                        {% endfor %} 
+                                                                            0)
+                                                             );
+                                                         {% endif %}                                                             
+                                                    {% endfor %}
+                                                    
+                                                    
                                                 });
                                                 
                                                 $('#guardarAct{{actividad.codActUni}}').click(function(){
@@ -78,7 +99,7 @@
                                                                         "resultadoProgramado_{{ resultadoAct.idResulAct }}="+$('#resultadoProgramado_{{ resultadoAct.idResulAct }}').val()+"&"+ 
                                                                     {%  endif%}                                                                                    
                                                                   {% endfor %}
-                                                              "coberturaActivicoberturdadUniSal_{{actividad.codActUni }}="+$('#coberturaActivicoberturdadUniSal_{{actividad.codActUni }}').val(), 
+                                                              "coberturaActividadUniSal_{{actividad.codActUni }}="+$('#coberturaActividadUniSal_{{actividad.codActUni }}').val(), 
                                                               
                                                         success: function(datos){
                                                             $('#guardarAct{{actividad.codActUni}}').hide();
@@ -153,7 +174,7 @@
                                                 {% if obj.areaClaObj.codArea == area.codArea  %}
                                                                 <tr>
                                                                     <td>
-                                                                        <h3>Objetivo Especifico:</h3>
+                                                                        <h3>Objetivo Especifico: {{ obj.nomenObjEspUni }}</h3>
                                                                     </td>
                                                                     <td>
                                                                          <h3>&RightTriangle;<a  id="mostratObj{{ obj.codObjEspUni }}" href="#">{{ obj.descObjEspUni }}</a></h3>                                
@@ -167,7 +188,7 @@
                                                                                        {# if( (res.unidadOrganizativa.getIdUnidadOrg == idUnidad) or (res.unidadOrganizativa is null ) ) #}                                                                                                
                                                                                             <tr>
                                                                                                 <td>
-                                                                                                    <h4>Resultado Esperado:</h4>
+                                                                                                    <h4>Resultado Esperado: {{ res.nomenResEspUni}}</h4>
                                                                                                 </td>
                                                                                                 <td>
                                                                                                     <h4> <a  id="mostratRes{{ res.codResEspUni }}" href="#">{{ res.descResEspUni }}</a></h4>
@@ -275,7 +296,7 @@
                                                                                                             {% for actividad in actividades %}                                                                     
                                                                                                                {% if actividadAux.codActUniTemp == actividad.actTemp.codActUniTemp %}                                                                            
                                                                                                                         <tr>
-                                                                                                                            <td>
+                                                                                                                            <td align="center"><h4>{{ actividadAux.nomenActUniTemp }}</h4>
                                                                                                                                 <textarea cols="15" rows="4" readonly="readonly" >{{ actividadAux.descActUniTemp }}</textarea>
                                                                                                                             </td>
                                                                                                                                 {% set cantidad =0 %}
@@ -326,7 +347,7 @@
                                                                                                                                <input {% if actividadAux.metaAnualActUniTemp == 1 %}  
                                                                                                                                         readonly="readonly"
                                                                                                                                       {% endif%}                                                                                                                                   
-                                                                                                                                   name="coberturaActivicoberturdadUniSal_{{actividad.codActUni }}" id="coberturaActivicoberturdadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividad.coberActUni }}"  ></input>                                                                                                                               
+                                                                                                                                   name="coberturaActividadUniSal_{{actividad.codActUni }}" id="coberturaActividadUniSal_{{actividad.codActUni }}" size="2" value="{{ actividad.coberActUni }}"  ></input>                                                                                                                               
                                                                                                                             </td>
                                                                                                                              <td align="center">
                                                                                                                                  <input   {% if actividadAux.metaAnualActUniTemp == 1 %}  

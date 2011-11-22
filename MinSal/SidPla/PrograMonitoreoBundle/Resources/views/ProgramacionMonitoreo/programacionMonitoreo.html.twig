@@ -168,7 +168,7 @@ textarea.error { border: 1px dotted red; }
                     {% for obj in objetivos %}
                         <tr>
                             <td>
-                                <h3>Objetivo Especifico:</h3>
+                                <h3>Objetivo Especifico: {{ obj.nomenclatura }}</h3>
                             </td>
                             <td>
                                  <h3>&RightTriangle;<a  id="mostratObj{{ obj.idObjEspec }}" href="#">{{ obj.descripcion }}</a></h3>                                
@@ -182,7 +182,7 @@ textarea.error { border: 1px dotted red; }
                                                {% if( (res.unidadOrganizativa.getIdUnidadOrg == idUnidad) or (res.unidadOrganizativa is null ) ) %}                                                                                                
                                                     <tr>
                                                         <td class="tdCuerpoPlantilla">
-                                                            <h4>Resultado Esperado:</h4>
+                                                            <h4>Resultado Esperado:  {{ res.resEspNomencl }}</h4>
                                                         </td>
                                                         <td class="tdCuerpoPlantilla"> 
                                                             <h4> <a  id="mostratRes{{ res.idResEsp }}" href="#">{{ res.resEspeDesc }}</a></h4>
@@ -290,7 +290,7 @@ textarea.error { border: 1px dotted red; }
                                                                     {% for actividad in actividades %}                                                                     
                                                                        {% if actividadAux.idAct == actividad.idAct %}                                                                            
                                                                                 <tr>
-                                                                                    <td class="tdCuerpoPlantilla">
+                                                                                    <td class="tdCuerpoPlantilla"><h4>{{ actividad.actNomenclatura }}</h4>
                                                                                         {{ actividad.getActDescripcion }}
                                                                                     </td class="tdCuerpoPlantilla">
                                                                                     <td align="center" class="tdCuerpoPlantilla">

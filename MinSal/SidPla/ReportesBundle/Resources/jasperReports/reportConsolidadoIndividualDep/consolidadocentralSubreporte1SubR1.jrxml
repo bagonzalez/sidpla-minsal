@@ -54,11 +54,11 @@
 		<band height="48" splitType="Stretch">
 			<subreport>
 				<reportElement x="0" y="48" width="200" height="0"/>
-				<subreportParameter name="promonID">
-					<subreportParameterExpression><![CDATA[$F{promon_codigo}]]></subreportParameterExpression>
-				</subreportParameter>
 				<subreportParameter name="resultadoID">
 					<subreportParameterExpression><![CDATA[$F{resesp_codigo}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="promonID">
+					<subreportParameterExpression><![CDATA[$F{promon_codigo}]]></subreportParameterExpression>
 				</subreportParameter>
 				<subreportParameter name="ubicacionReport">
 					<subreportParameterExpression><![CDATA[$P{ubicacionReport}]]></subreportParameterExpression>

@@ -5,6 +5,7 @@
 	<property name="ireport.y" value="0"/>
 	<parameter name="promonID" class="java.lang.Integer"/>
 	<parameter name="resultadoID" class="java.lang.Integer"/>
+	<parameter name="ubicacionReport" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT DISTINCT act.actividad_codigo,act.actividad_descripcion,act.actividad_indicador,act.actividad_medioverificacion,
                    act.activiadad_responsable,act.tipometa_codigo, act.actividad_metanual,
