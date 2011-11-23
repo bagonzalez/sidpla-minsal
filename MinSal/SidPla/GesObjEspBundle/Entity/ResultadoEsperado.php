@@ -466,7 +466,7 @@ class ResultadoEsperado
         return $this->unidadOrganizativa;
     }
     
-    public function getPorcentajeCumplimiento()
+    public function getPorcentajeCumplimiento($idProgramon)
     {
         $actividad=new Actividad();        
         $porcentajeResul=0;        
@@ -476,33 +476,33 @@ class ResultadoEsperado
             $razon=1/$numAct;
         
         foreach ($this->actividades as $actividad){
-               $porcentajeResul= $actividad->getPorcentajeCumplimiento()*$razon+$porcentajeResul;                                                 
+               $porcentajeResul= $actividad->getPorcentajeCumplimiento($idProgramon)*$razon+$porcentajeResul;                                                 
         }
             
         return round($porcentajeResul,2);
     }
     
-     public function getCostoTotalReal()
+     public function getCostoTotalReal($idProgramon)
     {
         $actividad=new Actividad();        
         $costo=0;        
         $numAct=count($this->actividades );
         
         foreach ($this->actividades as $actividad){
-               $costo= $actividad->getCostoTotalReal()+$costo;                                              
+               $costo= $actividad->getCostoTotalReal($idProgramon)+$costo;                                              
         }
             
         return round($costo,2);
     }
     
-    public function getCostoTotalProgramado()
+    public function getCostoTotalProgramado($idProgramon)
     {
         $actividad=new Actividad();        
         $costo=0;        
         $numAct=count($this->actividades );
         
         foreach ($this->actividades as $actividad){
-               $costo= $actividad->getCosto()+$costo;                                              
+               $costo= $actividad->getCostoProgramado($idProgramon)+$costo;                                              
         }
         
         return round($costo,2);

@@ -232,7 +232,9 @@ class AccionSeguimientoProgramacionController extends Controller {
         $uniControl = $this->obtenerUnidadOrg();
         $idUnidad = $uniControl->getIdUnidadOrg();
 
-        return $this->render('MinSalSidPlaPrograMonitoreoBundle:ProgramacionMonitoreo:programacionMonitoreo.html.twig', array('opciones' => $opciones, 'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 'trimestre' => $trimestre, 'idUnidad' => $idUnidad));
+        return $this->render('MinSalSidPlaPrograMonitoreoBundle:ProgramacionMonitoreo:programacionMonitoreo.html.twig', array('opciones' => $opciones, 
+            'objetivos' => $objetivos, 'actividades' => $actividadesProgramon, 
+            'trimestre' => $trimestre, 'idUnidad' => $idUnidad, 'idProgramon' =>$idProgramon));
     }
 
     public function guardarSegumientoAction() {

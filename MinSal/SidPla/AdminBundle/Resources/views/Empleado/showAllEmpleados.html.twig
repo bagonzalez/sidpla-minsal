@@ -44,7 +44,7 @@
         });
         myGrid.jqGrid('navGrid','#pager',{edit:false,add:false,del:false,
         beforeRefresh: function() {$("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');}}
-        ).hideCol('id');
+        );
        
        function despuesAgregarEditar() {
         $("#theGrid").jqGrid('setGridParam',{datatype:'json',loadonce:true}).trigger('reloadGrid');

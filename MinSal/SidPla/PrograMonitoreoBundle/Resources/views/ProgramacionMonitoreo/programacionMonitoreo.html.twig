@@ -186,9 +186,9 @@ textarea.error { border: 1px dotted red; }
                                                         </td>
                                                         <td class="tdCuerpoPlantilla"> 
                                                             <h4> <a  id="mostratRes{{ res.idResEsp }}" href="#">{{ res.resEspeDesc }}</a></h4>
-                                                            <h4> Realizado : {{ res.getPorcentajeCumplimiento }} % </h4>
-                                                            <h4> Costo Real : $ {{ res.getCostoTotalReal }} </h4>
-                                                            <h4> Costo Programado : $ {{ res.getCostoTotalProgramado }} </h4>                                                            
+                                                            <h4> Realizado : {{ res.getPorcentajeCumplimiento(idProgramon)  }} % </h4>
+                                                            <h4> Costo Real : $ {{ res.getCostoTotalReal(idProgramon)  }} </h4>
+                                                            <h4> Costo Programado : $ {{ res.getCostoTotalProgramado(idProgramon) }} </h4>                                                            
                                                         </td>
                                                     </tr>                                                                                                        
                                                     <tr>

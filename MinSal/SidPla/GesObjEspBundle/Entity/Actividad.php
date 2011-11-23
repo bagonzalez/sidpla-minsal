@@ -426,14 +426,15 @@ class Actividad
         return $this->actdestinos;
     }
     
-    public function getPorcentajeCumplimiento()
+    public function getPorcentajeCumplimiento($idProgramon)
     {
         $resultado=new ResulActividad();
         $metaAnual=$this->getActMetaAnual();
         $porcentaje=0;
         $porcentajeResul=0;
         
-        foreach ($this->resulAct as $resultado){            
+        foreach ($this->resulAct as $resultado){ 
+             if($resultado->getProgramacionMonitoreo()->getIdPrograMon()==$idProgramon )
                  $porcentajeResul=$resultado->getResulActRealizado()+$porcentajeResul;
                  
         }
@@ -443,16 +444,33 @@ class Actividad
         return round($porcentaje*100,2);
     }
     
-    public function getCostoTotalReal()
+    public function getCostoTotalReal($idProgramon)
     {
         $resultado=new ResulActividad();
         $metaAnual=$this->getActMetaAnual();
         $costoReal=0;
         
-        foreach ($this->resulAct as $resultado){            
+        foreach ($this->resulAct as $resultado){
+             if($resultado->getProgramacionMonitoreo()->getIdPrograMon()==$idProgramon )
                  $costoReal=$resultado->getCostoReal()+$costoReal;
         }
         
         return round($costoReal,2);
     }
+    
+    public function getCostoProgramado( $idProgramon )
+    {
+        $resultado=new ResulActividad();
+        $metaAnual=$this->getActMetaAnual();
+        $costoReal=0;
+        
+        foreach ($this->resulAct as $resultado){
+                 if($resultado->getProgramacionMonitoreo()->getIdPrograMon()==$idProgramon )
+                        $costoReal=$resultado->getCostoReal()+$costoReal;
+        }
+        
+        return round($costoReal,2);
+    }
+    
+    
 }

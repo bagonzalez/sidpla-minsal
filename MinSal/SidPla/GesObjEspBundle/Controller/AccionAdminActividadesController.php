@@ -56,7 +56,10 @@ class AccionAdminActividadesController extends Controller {
         //obteniendo el resultado para mandarlo a la plantilla
         $resultadoDao = new ResultadoEsperadoDao($this->getDoctrine());
         $resultadoAux = $resultadoDao->getResulEspera($idfilaResultado);
-        $resultadoesperado = $resultadoAux->getResEspeDesc();
+        $resultadoesperado = $resultadoAux->getResEspeDesc(); 
+        
+        $idProgramon=$this->obtenerPaoElaboracionAction()->getProgramacionMonitoreo()->getIdPrograMon();
+        $costoProgramado=$resultadoAux->getCostoTotalProgramado($idProgramon);
         //OBTENIENDO LAS ACTIVIDADES
         $Actividades = $resultadoAux->getActividades();
         $idUnidad=$this->obtenerUnidadOrg()->getIdUnidadOrg();
@@ -65,11 +68,13 @@ class AccionAdminActividadesController extends Controller {
         if($x==0)
             return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:manttActividades.html.twig', 
                 array('opciones' => $opciones, 'idfila' => $idfila, 'idfilaResultado' => $idfilaResultado, 
-                    'descripcion' => $objetivosEspec, 'descripcionResultado' => $resultadoesperado,'objUniControl'=>$objUniControl,'idDepen' => $idUnidad));
+                    'descripcion' => $objetivosEspec, 'descripcionResultado' => $resultadoesperado,
+                    'objUniControl'=>$objUniControl,'idDepen' => $idUnidad, 'costoProgramado' =>$costoProgramado));
        else
            return $this->render('MinSalSidPlaGesObjEspBundle:GestionActividades:manttActividades.html.twig', 
                 array('opciones' => $opciones, 'idfila' => $idfila, 'idfilaResultado' => $idfilaResultado, 'objUniControl'=>$objUniControl,
-                    'descripcion' => $objetivosEspec, 'descripcionResultado' => $resultadoesperado,'actividades'=>$Actividades,'idDepen' => $idUnidad));
+                    'descripcion' => $objetivosEspec, 'descripcionResultado' => $resultadoesperado,
+                    'actividades'=>$Actividades,'idDepen' => $idUnidad, 'costoProgramado' =>$costoProgramado));
            
                    
         
