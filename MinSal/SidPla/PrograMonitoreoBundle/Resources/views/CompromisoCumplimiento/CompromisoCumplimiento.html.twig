@@ -133,8 +133,8 @@ $(document).ready(function(){
                                                         </td>
                                                         <td class="tdCuerpoPlantilla">
                                                             <h4> <a  id="mostratRes{{ res.idResEsp }}" href="#">{{ res.resEspeDesc }}</a></h4>
-                                                            <h4> Realizado : {{ res.getPorcentajeCumplimiento }} % </h4>
-                                                            <h4> Costo Real de Resultado Esperado: $ {{ res.getCostoTotalReal }} </h4>
+                                                            <h4> Realizado : {{ res.getPorcentajeCumplimiento(id) }} % </h4>
+                                                            <h4> Costo Real de Resultado Esperado: $ {{ res.getCostoTotalReal(id) }} </h4>
                                                         </td>
                                                     </tr>                                                                                                        
                                                     <tr>
@@ -257,7 +257,7 @@ $(document).ready(function(){
                                                                                                 
                                                                                             </td>
                                                                                             <td align="center" class="tdCuerpoPlantilla">
-                                                                                                    {{  resultadoAct.getPorcentajeCumplimiento ~ "%"  }}
+                                                                                                    {{  resultadoAct.getPorcentajeCumplimiento(id) ~ "%"  }}
                                                                                             </td>
                                                                                              <td align="center" class="tdCuerpoPlantilla">
                                                                                                  {% if resultadoAct.getResulActRealizado < resultadoAct.getResulActProgramado  %}
