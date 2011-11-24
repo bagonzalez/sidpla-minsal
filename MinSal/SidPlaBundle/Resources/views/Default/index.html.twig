@@ -38,12 +38,13 @@
                          {% set nivel = 1 %} 
                          $(function crearMenu() {
                              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %} 
-                                 {% if opciones is defined %}                                     
+                                 {% if opciones is defined %}
+                                     $('#nav').append('<li id="liInicio0" class="top"><a  class="top_link" href="{{ path('MinSalSidPlaBundle_homepage') }}"><span >Inicio</span></a></li>');                                        
                                      {% if nivel < 3  %}                                    
                                         {% for opc in opciones %}
                                             {% if opc.idOpcionSistema2 is empty %}
                                                 {%if(opc.nombreOpcion == 'Inicio') %}                                                    
-                                                    $('#nav').append('<li id="li{{ opc.idOpcionSistema }}" class="top"><a  class="top_link" href="{{ path(opc.enlace) }}"><span >{{ opc.nombreOpcion }}</span></a></li>');                                        
+                                                    
                                                 {% else %}
                                                     $('#nav').append('<li id="li{{ opc.idOpcionSistema }}" class="top"><a  class="top_link" href="{{ path(opc.enlace) }}"><span class="down">{{ opc.nombreOpcion }}</span></a></li>');                                        
                                                     $('#li{{ opc.idOpcionSistema }}').append('<ul id="opc{{ opc.idOpcionSistema }}" class="sub"></ul>');  
@@ -101,7 +102,7 @@
                                                
                                             </td>
                                             <td>
-                                                <img align="right" src="{{ asset('/images/planificacion.png') }}" alt="descripción"  />                                    
+                                                <img align="right" src="{{ asset('/images/planificacion.png') }}" alt="descripción" height="280px"  />                                    
                                             </td>
                                         </tr>
                                         <tr>
