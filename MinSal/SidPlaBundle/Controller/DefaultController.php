@@ -26,15 +26,11 @@ class DefaultController extends Controller
             $opciones=$rol->getOpcionesSistema();            
         }
         
-        
-        
-        //$opcDao=new OpcionSistemaDao($this->getDoctrine());
-        //$opciones=$opcDao->getOpciones();        
-        
         $peticion =$this->getRequest();
         $sesion = $peticion->getSession();
         $sesion->set('opciones', $opciones);
         
+      
         return $this->render('MinSalSidPlaBundle:Default:index.html.twig', array('opciones' => $opciones)); 
     }
 }
