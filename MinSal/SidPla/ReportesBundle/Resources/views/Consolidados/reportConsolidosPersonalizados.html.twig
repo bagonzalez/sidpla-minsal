@@ -6,13 +6,36 @@
 $(document).ready(function(){
     $('#reporteMatrix').button();
     $('#reporteConsolidado').button();
-    $('#reporteConsolidado').click(function() {
+    $('#reporteConsolidado').click(function(evento) {
+        if($("#tipoUnidad").val()==''){
+            alert("Seleccione Dependencia o SIBASI/Region de Salud para generar el Reporte");
+            evento.preventDefault();
+        }
+        else{
+          if($("#anio").val()==''){
+            alert("Seleccione un Año");
+            evento.preventDefault();
+          }
+          else
             this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteConsolidadoNivelCentral')}}';
+         }
     });
     
-    $('#reporteMatrix').click(function() {
+    $('#reporteMatrix').click(function(evento) {
+         if($("#tipoUnidadec").val()==''){
+            alert("Seleccione Dependencia o SIBASI/Region de Salud para generar el Reporte");
+            evento.preventDefault();
+        }
+        else{
+          if($("#anioec").val()==''){
+            alert("Seleccione un Año");
+            evento.preventDefault();
+          }
+          else
             this.form.action='{{ path('MinSalSidPlaReportesBundle_reporteMatrizdeObjetivosyResultados')}}';
+        }
     });
+    
 });	
 
  </script>
@@ -33,12 +56,12 @@ $(document).ready(function(){
            
             <tr>
                
-                        <td  >Consolidado de Nivel Central y Entidad de Control:<br></td>
+                        <td  >Consolidado de Nivel Central y SIBASI/Regiones de Salud:<br></td>
                         <td colspan="3">
                             <select id="tipoUnidad" class="required" name="tipoUnidad">
-                                 <option value=''selected="selected" >Seleccione el tipo de unidad</option>
+                                 <option value='' selected="selected" >Seleccione el tipo de unidad</option>
                                  <option value="1" >Dependencia</option>    
-                                 <option value="3" >Entidad de Control</option>    
+                                 <option value="3" >SIBASI/Regiones de Salud</option>    
                                    
                             </select>
                         </td>
@@ -60,12 +83,12 @@ $(document).ready(function(){
                         
                          <tr>
                
-                        <td  >Matriz de Objetivos y Resultados Dependecias y Entidad de Control:<br></td>
+                        <td  >Matriz de Objetivos y Resultados de Dependecias y SIBASI/Regiones de Salud:<br></td>
                         <td colspan="3">
                             <select id="tipoUnidadec" class="required" name="tipoUnidadec">
                                  <option value=''selected="selected" >Seleccione el tipo de unidad</option>
                                  <option value="1" >Dependencia</option>    
-                                 <option value="3" >Entidad de Control</option>    
+                                 <option value="3" >SIBASI/Regiones de Salud</option>    
                                    
                             </select>
                         </td>

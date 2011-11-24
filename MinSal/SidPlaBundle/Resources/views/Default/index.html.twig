@@ -96,6 +96,9 @@
                             <div id="contenido">
                              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}              
                                 {% block body %}
+                                    {% if opciones is not defined %}
+                                    <h2>Contacte al Administrador del Sistema para que le asigne un rol y asi podra ingresar al sistema correctamente</h2>
+                                    {% endif %}
                                 {% endblock %} 
                              {% else %}
                                 {% block login %}
