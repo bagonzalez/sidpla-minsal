@@ -72,19 +72,11 @@
                           });
                       });
                 </script>
-
-                
-                   
                     <div class="container">
-
                         <div id="header">
                              <span class="preload1"></span>
-                            <span class="preload2"></span>
-                            <img align="left" src="{{ asset('/images/sidpla1.png') }}" alt="descripción" height="100px" />
-                            <img align="right" src="{{ asset('/images/minsalud.jpg') }}" alt="descripción" height="100px" />
-                            <center><h1>SISTEMA DE PLANIFICACION <br> ANUAL OPERATIVA <br> PARA LA DIRECCION DE PLANIFICACION<br>MINISTERIO DE SALUD</h1></center>                
-                
-                            <div class="disclaimer">Ministerio de Salud</div>
+                            <span class="preload2"></span>                            
+                            <img align="center" src="{{ asset('/images/logo_sidpla.png') }}" height="115px" alt="" />
                             <br/>
                             <ul id="nav"></ul>
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
@@ -94,18 +86,43 @@
                         </div>
                         
                             <div id="contenido">
+                                
+                             
                              {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}              
-                                {% block body %}
+                                {% block body %}                                    
                                     {% if opciones is not defined %}
                                     <h2>Contacte al Administrador del Sistema para que le asigne un rol y asi podra ingresar al sistema correctamente</h2>
                                     {% endif %}
+                                    <table>
+                                        <tr>
+                                            <td align="center">                                                
+                                                <br>                                               
+                                                <img align="center" src="{{ asset('/images/sidpla1.png') }}" alt="descripción" height="100px" />                                    
+                                               
+                                            </td>
+                                            <td>
+                                                <img align="right" src="{{ asset('/images/planificacion.png') }}" alt="descripción"  />                                    
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td >
+                                                <h3>“El Plan, lejos de ser un requisito jurídico legal, es
+                                                 una herramienta para cuantificar los productos y
+                                                        efectos reales que como gobierno generamos en la
+                                                        sociedad a partir de la ejecución de nuestra
+                                                        política y reforma de salud”.  </h3>                                                      
+                                                <h4>Adaptado de la Guía metodológica aplicada para la formulación de indicadores y el seguimiento a metas de gobierno en el municipio de Tocancipá, Cundinamarca, Colombia.</h4>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    
                                 {% endblock %} 
                              {% else %}
                                 {% block login %}
-                                {% endblock %} 
+                                {% endblock %}                                                                  
                              {% endif %}  
                             </div>
-                                <div id="pie">Copyright (C) 2011 Ministerio de Salud</div>
+                                <div id="pie">Copyright (C) 2011 Universidad de El Salvador,  (C) 2011 Ministerio de Salud</div>
 
                             </div>
                         </body>
