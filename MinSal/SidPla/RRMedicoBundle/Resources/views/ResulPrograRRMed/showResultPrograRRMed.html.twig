@@ -11,7 +11,7 @@ $(document).ready(function(){
      colModel:[ 
         {name:'codigo',index:'codigo', width:50, editable: false,align:'center'},
         { name:'horarioRM', index: 'horarioRM', width:250,editable:false,editoptions:{size:100}},
-        {name:'cantidad',index:'cantidad', width:90, editable: true,align:'center'},
+        {name:'cantidad',index:'cantidad', width:90, editable: true,align:'center',editrules:{number:true}},
         {name:'totalHoras',index:'totalHoras', width:90, editable: false,align:'center'},
         {name:'totalMin',index:'totalMin', width:90, editable: false,align:'center'},
         {name:'totalConsultas',index:'totalConsultas', width:120, editable: false,align:'center'},
