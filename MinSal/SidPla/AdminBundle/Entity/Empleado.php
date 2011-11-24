@@ -63,7 +63,7 @@ class Empleado {
     protected $unidadOrganizativa;
 
     /**
-     * @ORM\OneToOne(targetEntity="MinSal\SidPla\UsersBundle\Entity\User", inversedBy="empleado")
+     * @ORM\OneToOne(targetEntity="MinSal\SidPla\UsersBundle\Entity\User", inversedBy="empleado",orphanRemoval=true)
      * @ORM\JoinColumn(name="usuario_codigo", referencedColumnName="usuario_codigo")
      */
     private $usuario;

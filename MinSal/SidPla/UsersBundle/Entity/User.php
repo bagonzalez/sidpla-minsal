@@ -19,7 +19,7 @@ class User extends BaseUser {
     protected $idUsuario;
 
     /**
-     * @ORM\OneToOne(targetEntity="MinSal\SidPla\AdminBundle\Entity\Empleado", mappedBy="usuario")
+     * @ORM\OneToOne(targetEntity="MinSal\SidPla\AdminBundle\Entity\Empleado", mappedBy="usuario",orphanRemoval=true)
      * @ORM\JoinColumn(name="empleado_codigo", referencedColumnName="empleado_codigo")
      */
     private $empleado;
