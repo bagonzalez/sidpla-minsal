@@ -111,7 +111,7 @@
                                                             {% for actividadAux in res.actividades %}                                                                            
                                                                     {% for actividad in actividades %}                                                                     
                                                                        {% if actividadAux.idAct == actividad.idAct %}  
-                                                                                {{ actividad.getPorcentajeCumplimiento}} ,
+                                                                                {{ actividad.getPorcentajeCumplimiento(idProgramon)}} ,
                                                                        {% endif %}                                                                                   
                                                                     {% endfor %}
                                                             {% endfor %}
