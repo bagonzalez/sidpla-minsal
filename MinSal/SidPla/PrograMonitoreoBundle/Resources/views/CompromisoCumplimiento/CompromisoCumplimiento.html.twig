@@ -62,7 +62,7 @@ $(document).ready(function(){
                                                             {% for actividadAux in res.actividades %}                                                                            
                                                                             {% for actividad in actividades %}                                                                     
                                                                                {% if actividadAux.idAct == actividad.idAct %}  
-                                                                                        { name: '{{ actividad.getActDescripcion }}', y: {{ actividad.getPorcentajeCumplimiento}} , color: colores[ Math.floor(Math.random()*(5-(0-1)))+0   ] },                                                                                           
+                                                                                        { name: '{{ actividad.getActDescripcion }}', y: {{ actividad.getPorcentajeCumplimiento(id)}} , color: colores[ Math.floor(Math.random()*(5-(0-1)))+0   ] },                                                                                           
                                                                                {% endif %}                                                                                   
                                                                             {% endfor %}
                                                             {% endfor %}
