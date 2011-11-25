@@ -466,7 +466,7 @@ class Actividad
         
         foreach ($this->resulAct as $resultado){
                  if($resultado->getProgramacionMonitoreo()->getIdPrograMon()==$idProgramon )
-                        $costoReal=$resultado->getCostoReal()+$costoReal;
+                        $costoReal=$resultado->getCostoProgramado()+$costoReal;
         }
         
         return round($costoReal,2);
