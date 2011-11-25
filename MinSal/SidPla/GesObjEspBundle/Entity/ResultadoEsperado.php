@@ -78,7 +78,7 @@ class ResultadoEsperado
     /**
      * @var string $resEspDescMetAnual
      *
-     * @ORM\Column(name="resesp_descripmetanual", type="string", length=600)
+     * @ORM\Column(name="resesp_descripmetanual", type="string", length=150)
      */
     private $resEspDescMetAnual;
 
