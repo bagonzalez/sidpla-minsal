@@ -78,14 +78,14 @@ class ResultadoEsperado
     /**
      * @var string $resEspDescMetAnual
      *
-     * @ORM\Column(name="resesp_descripmetanual", type="string", length=50)
+     * @ORM\Column(name="resesp_descripmetanual", type="string", length=150)
      */
     private $resEspDescMetAnual;
 
     /**
      * @var string $resEspResponsable
      *
-     * @ORM\Column(name="resesp_responsable", type="string", length=60)
+     * @ORM\Column(name="resesp_responsable", type="string", length=150)
      */
     private $resEspResponsable;
 

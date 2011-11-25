@@ -46,14 +46,14 @@ class Actividad
     /**
      * @var string $actDescMetaAnu
      *
-     * @ORM\Column(name="actividad_descripmetanual", type="string", length=50)
+     * @ORM\Column(name="actividad_descripmetanual", type="string", length=600)
      */
     private $actDescMetaAnu;
 
     /**
      * @var string $actResponsable
      *
-     * @ORM\Column(name="activiadad_responsable", type="string", length=60)
+     * @ORM\Column(name="activiadad_responsable", type="string", length=300)
      */
     private $actResponsable;
 
