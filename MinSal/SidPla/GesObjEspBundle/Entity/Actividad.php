@@ -472,5 +472,19 @@ class Actividad
         return round($costoReal,2);
     }
     
+     public function getResulActProgramon( $idProgramon )
+    {
+        $resultado=new ResulActividad();
+        $resultadosProgramon= new ArrayCollection(); 
+        
+        
+        foreach ($this->resulAct as $resultado){
+                 if($resultado->getProgramacionMonitoreo()->getIdPrograMon()==$idProgramon )
+                        $resultadosProgramon[]=$resultado;
+        }
+        
+        return $resultadosProgramon;
+    }
+    
     
 }

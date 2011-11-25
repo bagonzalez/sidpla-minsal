@@ -247,8 +247,24 @@ class AccionAdminActividadesController extends Controller {
         //inicia el proceso  de recuperar los atos de la tabla resultadore
         $resultDao = new ActividadDao($this->getDoctrine());
         $resultAux = $resultDao->getActividad($idfilaActividad);
-        $resultaEspe = $resultAux->getResulAct();
+        
+        $paoElaboracion = $this->obtenerPaoElaboracionAction();
+        $programacionMonitoreo = $paoElaboracion->getProgramacionMonitoreo();
+        $resultaEspe = $resultAux->getResulActProgramon($programacionMonitoreo->getIdPrograMon());
         $numfilas = count($resultaEspe);
+        
+        if($numfilas==0){
+            //inicia proceso de guardar el valor de lo programado en sidpla_resultadore
+                $resultadoDao = new ActividadDao($this->getDoctrine());
+                $resultadoDao->agregarResulActividad($idfilaActividad, 1, 0, null, null, $programacionMonitoreo, 0);
+                $resultadoDao->agregarResulActividad($idfilaActividad, 2, 0, null, null, $programacionMonitoreo, 0);
+                $resultadoDao->agregarResulActividad($idfilaActividad, 3, 0, null, null, $programacionMonitoreo, 0);
+                $resultadoDao->agregarResulActividad($idfilaActividad, 4, 0, null, null, $programacionMonitoreo, 0);
+                $resultaEspe = $resultAux->getResulActProgramon($programacionMonitoreo->getIdPrograMon());
+        }
+        
+        $numfilas = count($resultaEspe);
+        
         $resultadoreEspec = new ResulActividad();
         $i = 0;
         $programadoPrimerTrimestre = 0;

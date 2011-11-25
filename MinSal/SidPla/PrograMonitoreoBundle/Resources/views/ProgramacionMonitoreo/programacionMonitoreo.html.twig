@@ -302,7 +302,7 @@ textarea.error { border: 1px dotted red; }
                                                                                     <td align="center" class="tdCuerpoPlantilla">
                                                                                         {{ "$ "  ~ actividad.getCosto}}
                                                                                     </td>
-                                                                                    {% for resultadoAct in actividad.getResulAct %}
+                                                                                    {% for resultadoAct in actividad.getResulActProgramon(idProgramon) %}
                                                                                         {% if trimestre >= resultadoAct.resulActTrimestre  %}
                                                                                             <td align="center" class="tdCuerpoPlantilla">
                                                                                                 {{ resultadoAct.getResulActProgramado }}
@@ -376,7 +376,7 @@ $(document).ready(function(){
                                        {% for actividad in actividades %}                                                                     
                                                  {% if actividadAux.idAct == actividad.idAct %}                                                                            
                                                                                
-                                                                                    {% for resultadoAct in actividad.getResulAct %}
+                                                                                    {% for resultadoAct in actividad.getResulActProgramon(idProgramon) %}
                                                                                         {% if trimestre >= resultadoAct.resulActTrimestre  %}
                                                                                              {% if resultadoAct.resulActTrimestre == trimestre   %}
                                                                                                  resultadoRealizado_{{ resultadoAct.idResulAct }}: {
