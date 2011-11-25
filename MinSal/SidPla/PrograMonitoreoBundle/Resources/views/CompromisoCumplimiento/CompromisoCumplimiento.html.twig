@@ -237,7 +237,7 @@ $(document).ready(function(){
                                                                                         {{ actividad.getActDescripcion }}
                                                                                     </td>
                                                                                     
-                                                                                    {% for resultadoAct in actividad.getResulAct %}
+                                                                                    {% for resultadoAct in actividad.getResulActProgramon(id) %}
                                                                                         {% if trimestre >= resultadoAct.resulActTrimestre  %}
                                                                                             <td align="center" class="tdCuerpoPlantilla">
                                                                                                 {{ resultadoAct.getResulActProgramado }}
